@@ -1,0 +1,135 @@
+import 'package:flutter/material.dart';
+
+import '../../app/theme/app_colors.dart';
+import '../../app/theme/app_radii.dart';
+import '../../app/theme/app_spacing.dart';
+import 'vit_card.dart';
+
+class VitSkeleton extends StatefulWidget {
+  const VitSkeleton({
+    super.key,
+    required this.width,
+    required this.height,
+    this.borderRadius = AppRadii.smRadius,
+  });
+
+  final double? width;
+  final double height;
+  final BorderRadius borderRadius;
+
+  @override
+  State<VitSkeleton> createState() => _VitSkeletonState();
+}
+
+class _VitSkeletonState extends State<VitSkeleton>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<Color?> _color;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 900),
+      vsync: this,
+    )..repeat(reverse: true);
+    _color = ColorTween(
+      begin: AppColors.surface2,
+      end: AppColors.surface3,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ExcludeSemantics(
+      child: AnimatedBuilder(
+        animation: _color,
+        builder: (context, child) {
+          return Container(
+            width: widget.width,
+            height: widget.height,
+            decoration: BoxDecoration(
+              color: _color.value,
+              borderRadius: widget.borderRadius,
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class VitSkeletonRow extends StatelessWidget {
+  const VitSkeletonRow({super.key, this.showAvatar = true});
+
+  final bool showAvatar;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.x4,
+        vertical: AppSpacing.rowPy,
+      ),
+      child: Row(
+        children: [
+          if (showAvatar) ...[
+            const VitSkeleton(
+              width: 40,
+              height: 40,
+              borderRadius: AppRadii.smRadius,
+            ),
+            const SizedBox(width: AppSpacing.x3),
+          ],
+          const Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                VitSkeleton(width: 150, height: 14),
+                SizedBox(height: AppSpacing.x3),
+                VitSkeleton(width: 92, height: 10),
+              ],
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          const Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              VitSkeleton(width: 70, height: 14),
+              SizedBox(height: AppSpacing.x3),
+              VitSkeleton(width: 48, height: 18),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class VitSkeletonList extends StatelessWidget {
+  const VitSkeletonList({super.key, this.rows = 5});
+
+  final int rows;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      clip: true,
+      child: Column(
+        children: [
+          for (var i = 0; i < rows; i++) ...[
+            const VitSkeletonRow(),
+            if (i < rows - 1)
+              const Divider(height: 1, thickness: 1, color: AppColors.divider),
+          ],
+        ],
+      ),
+    );
+  }
+}

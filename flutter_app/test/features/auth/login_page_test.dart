@@ -1,0 +1,163 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/auth/data/auth_repository.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/login_page.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
+
+void _setPhoneViewport(WidgetTester tester) {
+  tester.view.devicePixelRatio = 1;
+  tester.view.physicalSize = const Size(440, 956);
+  addTearDown(tester.view.resetPhysicalSize);
+  addTearDown(tester.view.resetDevicePixelRatio);
+}
+
+Widget _app({
+  String initialLocation = AppRoutePaths.authLogin,
+  ShellRenderMode shellRenderMode = ShellRenderMode.native,
+}) {
+  return ProviderScope(
+    overrides: [
+      authRepositoryProvider.overrideWithValue(
+        const MockAuthRepository(delay: Duration.zero),
+      ),
+    ],
+    child: VitTradeApp(
+      shellRenderMode: shellRenderMode,
+      routerConfig: createAppRouter(
+        initialLocation: initialLocation,
+        shellRenderMode: shellRenderMode,
+      ),
+    ),
+  );
+}
+
+void main() {
+  testWidgets('/auth/login renders as a standalone auth route', (tester) async {
+    _setPhoneViewport(tester);
+
+    await tester.pumpWidget(_app());
+    await tester.pumpAndSettle();
+
+    expect(find.byType(LoginPage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsNothing);
+    expect(find.byType(VitPhoneFrame), findsNothing);
+    expect(find.byType(VitStatusBar), findsNothing);
+    expect(find.text('VitTrade'), findsOneWidget);
+    expect(find.text('Đăng nhập'), findsOneWidget);
+  });
+
+  testWidgets('/auth/login visual QA shell keeps fake status only', (
+    tester,
+  ) async {
+    _setPhoneViewport(tester);
+
+    await tester.pumpWidget(_app(shellRenderMode: ShellRenderMode.visualQa));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(LoginPage), findsOneWidget);
+    expect(find.byType(VitStatusBar), findsOneWidget);
+    expect(find.byType(VitPhoneFrame), findsNothing);
+    expect(find.byType(VitBottomNav), findsNothing);
+  });
+
+  testWidgets('SC-001 validates required login fields', (tester) async {
+    _setPhoneViewport(tester);
+
+    await tester.pumpWidget(_app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(LoginPage.submitKey));
+    await tester.pump();
+
+    expect(
+      find.text('Vui lòng nhập email hoặc số điện thoại.'),
+      findsOneWidget,
+    );
+
+    await tester.enterText(
+      find.byKey(LoginPage.identifierFieldKey),
+      'user@vittrade.vn',
+    );
+    await tester.tap(find.byKey(LoginPage.submitKey));
+    await tester.pump();
+
+    expect(find.text('Vui lòng nhập mật khẩu.'), findsOneWidget);
+  });
+
+  testWidgets('SC-001 toggles password visibility', (tester) async {
+    _setPhoneViewport(tester);
+
+    await tester.pumpWidget(_app());
+    await tester.pumpAndSettle();
+
+    var passwordField = tester.widget<TextField>(
+      find.byKey(LoginPage.passwordFieldKey),
+    );
+    expect(passwordField.obscureText, isTrue);
+
+    await tester.tap(find.byKey(LoginPage.passwordToggleKey));
+    await tester.pump();
+
+    passwordField = tester.widget<TextField>(
+      find.byKey(LoginPage.passwordFieldKey),
+    );
+    expect(passwordField.obscureText, isFalse);
+  });
+
+  testWidgets('SC-001 login and demo actions navigate to Home', (tester) async {
+    _setPhoneViewport(tester);
+
+    await tester.pumpWidget(_app());
+    await tester.pumpAndSettle();
+
+    await tester.enterText(
+      find.byKey(LoginPage.identifierFieldKey),
+      'user@vittrade.vn',
+    );
+    await tester.enterText(find.byKey(LoginPage.passwordFieldKey), 'password');
+    await tester.tap(find.byKey(LoginPage.submitKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byKey(const Key('vit_bottom_nav_active_home')), findsOneWidget);
+
+    await tester.pumpWidget(_app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(LoginPage.demoSubmitKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byKey(const Key('vit_bottom_nav_active_home')), findsOneWidget);
+  });
+
+  testWidgets('SC-001 outgoing auth links open placeholders only', (
+    tester,
+  ) async {
+    _setPhoneViewport(tester);
+
+    await tester.pumpWidget(_app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(LoginPage.forgotPasswordKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Forgot Password'), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsNothing);
+
+    await tester.pumpWidget(_app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(LoginPage.registerKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Register'), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsNothing);
+  });
+}
