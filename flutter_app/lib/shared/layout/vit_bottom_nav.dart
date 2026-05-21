@@ -34,12 +34,14 @@ class VitBottomNav extends StatelessWidget {
     this.onDestinationSelected,
     this.homeBadgeCount = 0,
     this.renderMode = ShellRenderMode.native,
+    this.accentColor,
   });
 
   final VitBottomNavDestination activeDestination;
   final ValueChanged<VitBottomNavDestination>? onDestinationSelected;
   final int homeBadgeCount;
   final ShellRenderMode renderMode;
+  final Color? accentColor;
 
   static const List<_VitBottomNavItem> _items = [
     _VitBottomNavItem(
@@ -97,7 +99,7 @@ class VitBottomNav extends StatelessWidget {
                       end: Alignment.bottomCenter,
                       colors: [
                         Colors.transparent,
-                        AppColors.bg.withValues(alpha: 0.6),
+                        AppColors.bg.withValues(alpha: 0.25),
                         AppColors.navBg,
                       ],
                       stops: const [0, 0.5, 1],
@@ -124,6 +126,7 @@ class VitBottomNav extends StatelessWidget {
                             item: item,
                             active: item.destination == activeDestination,
                             renderMode: renderMode,
+                            accentColor: accentColor,
                             badgeCount:
                                 item.destination == VitBottomNavDestination.home
                                 ? homeBadgeCount
@@ -164,6 +167,7 @@ class _VitBottomNavButton extends StatelessWidget {
     required this.active,
     required this.onTap,
     required this.renderMode,
+    required this.accentColor,
     this.badgeCount = 0,
   });
 
@@ -171,10 +175,17 @@ class _VitBottomNavButton extends StatelessWidget {
   final bool active;
   final VoidCallback? onTap;
   final ShellRenderMode renderMode;
+  final Color? accentColor;
   final int badgeCount;
 
   @override
   Widget build(BuildContext context) {
+    final activeColor = accentColor ?? AppColors.navActive;
+    final activeDark = accentColor == null
+        ? AppColors.primaryDark
+        : Color.lerp(accentColor, Colors.black, .18)!;
+    final activeShadow = accentColor ?? AppColors.primary;
+
     if (item.isCenter) {
       return Semantics(
         key: Key('vit_bottom_nav_${item.destination.name}'),
@@ -196,16 +207,25 @@ class _VitBottomNavButton extends StatelessWidget {
                   child: Container(
                     width: renderMode.usesVisualQaFrame ? 52 : 48,
                     height: renderMode.usesVisualQaFrame ? 52 : 48,
-                    decoration: const BoxDecoration(
-                      gradient: AppGradients.navCenter,
+                    decoration: BoxDecoration(
+                      gradient: accentColor == null
+                          ? AppGradients.navCenter
+                          : LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [activeColor, activeDark],
+                            ),
                       borderRadius: AppRadii.cardRadius,
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.primary40,
+                          color: activeShadow.withValues(alpha: .40),
                           blurRadius: 16,
                           offset: Offset(0, 4),
                         ),
-                        BoxShadow(color: AppColors.primary20, blurRadius: 32),
+                        BoxShadow(
+                          color: activeShadow.withValues(alpha: .20),
+                          blurRadius: 32,
+                        ),
                       ],
                     ),
                     child: Icon(
@@ -220,7 +240,7 @@ class _VitBottomNavButton extends StatelessWidget {
                   child: Text(
                     item.label,
                     style: AppTextStyles.micro.copyWith(
-                      color: AppColors.navActive,
+                      color: activeColor,
                       fontWeight: AppTextStyles.medium,
                     ),
                   ),
@@ -252,7 +272,7 @@ class _VitBottomNavButton extends StatelessWidget {
                 children: [
                   Icon(
                     item.icon,
-                    color: active ? AppColors.navActive : AppColors.navInactive,
+                    color: active ? activeColor : AppColors.navInactive,
                     size: AppSpacing.iconMd,
                   ),
                   if (active)
@@ -264,12 +284,12 @@ class _VitBottomNavButton extends StatelessWidget {
                         ),
                         width: 4,
                         height: 4,
-                        decoration: const BoxDecoration(
-                          color: AppColors.navActive,
+                        decoration: BoxDecoration(
+                          color: activeColor,
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.primary60,
+                              color: activeShadow.withValues(alpha: .60),
                               blurRadius: 8,
                             ),
                           ],
@@ -289,7 +309,7 @@ class _VitBottomNavButton extends StatelessWidget {
                 item.label,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.micro.copyWith(
-                  color: active ? AppColors.navActive : AppColors.navInactive,
+                  color: active ? activeColor : AppColors.navInactive,
                   fontWeight: active
                       ? AppTextStyles.medium
                       : AppTextStyles.normal,

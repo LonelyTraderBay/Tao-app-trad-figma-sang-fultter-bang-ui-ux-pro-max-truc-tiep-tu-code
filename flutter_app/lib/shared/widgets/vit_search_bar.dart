@@ -18,6 +18,7 @@ class VitSearchBar extends StatefulWidget {
     this.autofocus = false,
     this.enabled = true,
     this.filterActive = false,
+    this.filterInline = false,
     this.trailing,
     this.onChanged,
     this.onSubmitted,
@@ -33,6 +34,7 @@ class VitSearchBar extends StatefulWidget {
   final bool autofocus;
   final bool enabled;
   final bool filterActive;
+  final bool filterInline;
   final Widget? trailing;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
@@ -167,11 +169,25 @@ class _VitSearchBarState extends State<VitSearchBar> {
                     variant: VitIconButtonVariant.defaultAction,
                     size: VitIconButtonSize.sm,
                   ),
+                if (widget.onFilterTap != null && widget.filterInline)
+                  VitIconButton(
+                    icon: Icons.tune_rounded,
+                    tooltip: widget.filterActive
+                        ? 'Disable filters'
+                        : 'Enable filters',
+                    onPressed: widget.onFilterTap,
+                    variant: widget.filterActive
+                        ? VitIconButtonVariant.primary
+                        : VitIconButtonVariant.defaultAction,
+                    size: VitIconButtonSize.sm,
+                  ),
               ],
             ),
           ),
         ),
-        if (widget.onFilterTap != null && widget.trailing == null) ...[
+        if (widget.onFilterTap != null &&
+            widget.trailing == null &&
+            !widget.filterInline) ...[
           const SizedBox(width: AppSpacing.x3),
           VitIconButton(
             icon: Icons.tune_rounded,

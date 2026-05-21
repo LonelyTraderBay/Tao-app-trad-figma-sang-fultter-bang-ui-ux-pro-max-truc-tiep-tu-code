@@ -4,7 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/auth/data/auth_repository.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/forgot_password_page.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/login_page.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/register_page.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -137,9 +139,7 @@ void main() {
     expect(find.byKey(const Key('vit_bottom_nav_active_home')), findsOneWidget);
   });
 
-  testWidgets('SC-001 outgoing auth links open placeholders only', (
-    tester,
-  ) async {
+  testWidgets('SC-001 outgoing auth links open auth routes', (tester) async {
     _setPhoneViewport(tester);
 
     await tester.pumpWidget(_app());
@@ -148,7 +148,8 @@ void main() {
     await tester.tap(find.byKey(LoginPage.forgotPasswordKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Forgot Password'), findsOneWidget);
+    expect(find.byType(ForgotPasswordPage), findsOneWidget);
+    expect(find.text('Quên mật khẩu'), findsOneWidget);
     expect(find.byType(VitBottomNav), findsNothing);
 
     await tester.pumpWidget(_app());
@@ -157,7 +158,8 @@ void main() {
     await tester.tap(find.byKey(LoginPage.registerKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Register'), findsOneWidget);
+    expect(find.byType(RegisterPage), findsOneWidget);
+    expect(find.text('Tạo tài khoản'), findsOneWidget);
     expect(find.byType(VitBottomNav), findsNothing);
   });
 }

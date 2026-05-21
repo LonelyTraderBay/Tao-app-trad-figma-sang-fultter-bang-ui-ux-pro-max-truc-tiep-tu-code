@@ -4,7 +4,8 @@ final class DeviceMetrics {
   const DeviceMetrics._();
 
   static const double width = 440;
-  static const double height = 956;
+  static const double height =
+      1.0 * int.fromEnvironment('VISUAL_QA_HEIGHT', defaultValue: 956);
   static const Size viewport = Size(width, height);
 
   static const double safeTop = 59;

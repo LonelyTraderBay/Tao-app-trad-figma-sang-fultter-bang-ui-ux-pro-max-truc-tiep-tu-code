@@ -1,0 +1,146 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/dispute_resolution_page.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
+
+void main() {
+  Future<void> pumpDisputeResolution(WidgetTester tester) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(
+            initialLocation: AppRoutePaths.tradeCopyDisputeResolution,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> fillComplaintForm(WidgetTester tester) async {
+    await tester.tap(
+      find.byKey(DisputeResolutionPage.complaintTypeKey('execution_issue')),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(DisputeResolutionPage.providerKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('SwingMaster').last);
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(DisputeResolutionPage.subjectKey),
+      'Excessive slippage on BTC trade',
+    );
+    await tester.pumpAndSettle();
+    await tester.drag(
+      find.byKey(DisputeResolutionPage.contentKey),
+      const Offset(0, -360),
+    );
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(DisputeResolutionPage.descriptionKey),
+      'Provider executed at a materially different price.',
+    );
+    await tester.pumpAndSettle();
+  }
+
+  test('SC-082 mock repository exposes dispute resolution BE draft', () {
+    final snapshot = const MockTradeRepository().getDisputeResolution();
+
+    expect(snapshot.defaultTabId, 'file');
+    expect(snapshot.noticeTitle, 'Fair Dispute Resolution');
+    expect(snapshot.complaintTypes, hasLength(5));
+    expect(snapshot.providers.map((provider) => provider.name), [
+      'CryptoKing',
+      'SwingMaster',
+      'AlgoTrader',
+    ]);
+    expect(snapshot.activeCases, hasLength(1));
+    expect(snapshot.resolvedCases, hasLength(1));
+    expect(
+      snapshot.supportedStates,
+      containsAll([
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ]),
+    );
+
+    final result = const MockTradeRepository().submitDisputeComplaint(
+      const TradeDisputeComplaintDraft(
+        complaintType: 'execution_issue',
+        providerId: 'trader-2',
+        subject: 'Excessive slippage',
+        description: 'Provider executed at a materially different price.',
+      ),
+    );
+    expect(result.caseId, 'case-003');
+    expect(result.status, 'submitted');
+  });
+
+  testWidgets('SC-082 renders complaint form inside the Trade shell', (
+    tester,
+  ) async {
+    await pumpDisputeResolution(tester);
+
+    expect(find.byType(DisputeResolutionPage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byType(VitPhoneFrame), findsNothing);
+    expect(find.byType(VitStatusBar), findsNothing);
+    expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
+    expect(find.text('Dispute Resolution'), findsOneWidget);
+    expect(find.text('Fair Dispute Resolution'), findsOneWidget);
+    expect(find.text('Complaint Type'), findsOneWidget);
+    expect(find.text('Execution Issue'), findsOneWidget);
+    expect(find.text('Fee Discrepancy'), findsOneWidget);
+    expect(find.text('Provider Misconduct'), findsOneWidget);
+    expect(find.text('Submit Complaint'), findsOneWidget);
+  });
+
+  testWidgets('SC-082 submits complaint and switches to active cases', (
+    tester,
+  ) async {
+    await pumpDisputeResolution(tester);
+
+    await tester.tap(find.byKey(DisputeResolutionPage.submitKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Active Cases'), findsNothing);
+
+    await fillComplaintForm(tester);
+    await tester.tap(find.byKey(DisputeResolutionPage.submitKey));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('Complaint submitted successfully: case-003'),
+      findsOneWidget,
+    );
+    expect(find.text('Active Cases'), findsOneWidget);
+    expect(find.text('Excessive slippage on BTC trade'), findsOneWidget);
+    expect(find.text('UNDER REVIEW'), findsOneWidget);
+  });
+
+  testWidgets('SC-082 history tab shows resolved case', (tester) async {
+    await pumpDisputeResolution(tester);
+
+    await fillComplaintForm(tester);
+    await tester.tap(find.byKey(DisputeResolutionPage.submitKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(DisputeResolutionPage.tabKey('history')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Refund Issued'), findsOneWidget);
+    expect(find.text('Charged 15% instead of 10%'), findsOneWidget);
+  });
+}

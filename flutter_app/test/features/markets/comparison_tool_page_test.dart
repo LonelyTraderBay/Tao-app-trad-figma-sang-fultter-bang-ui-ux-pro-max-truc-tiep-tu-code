@@ -1,0 +1,140 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/comparison_tool_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/market_list_page.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
+
+void main() {
+  Future<void> pumpCompare(WidgetTester tester) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(
+            initialLocation: AppRoutePaths.marketsCompare,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  test('SC-016 mock repository exposes the BE draft read model', () {
+    final snapshot = const MockMarketRepository().getMarketComparison();
+
+    expect(snapshot.marketPairs, hasLength(10));
+    expect(snapshot.selectedPairIds, ['btcusdt', 'ethusdt']);
+    expect(snapshot.popularPairIds, [
+      'btcusdt',
+      'ethusdt',
+      'solusdt',
+      'bnbusdt',
+    ]);
+    expect(snapshot.metrics.map((metric) => metric.key), [
+      'price',
+      'mcap',
+      'vol',
+      'chg',
+      'high',
+      'low',
+      'range',
+      'volmcap',
+    ]);
+    expect(snapshot.watchlist, containsAll(['btcusdt', 'ethusdt', 'solusdt']));
+    expect(snapshot.alerts, hasLength(2));
+    expect(snapshot.chartSeries['btcusdt'], isNotEmpty);
+    expect(snapshot.lastUpdatedLabel, 'realtime-refresh');
+    expect(
+      snapshot.supportedStates,
+      containsAll([
+        MarketScreenState.loading,
+        MarketScreenState.empty,
+        MarketScreenState.error,
+        MarketScreenState.offline,
+        MarketScreenState.realtimeRefresh,
+      ]),
+    );
+  });
+
+  testWidgets('SC-016 renders inside the Markets shell', (tester) async {
+    await pumpCompare(tester);
+
+    expect(find.byType(ComparisonToolPage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byType(VitPhoneFrame), findsNothing);
+    expect(find.byType(VitStatusBar), findsNothing);
+    expect(
+      find.byKey(const Key('vit_bottom_nav_active_markets')),
+      findsOneWidget,
+    );
+    expect(find.text('So sánh'), findsOneWidget);
+    expect(find.byKey(ComparisonToolPage.tokenKey('btcusdt')), findsOneWidget);
+    expect(find.byKey(ComparisonToolPage.tokenKey('ethusdt')), findsOneWidget);
+    expect(find.byKey(ComparisonToolPage.addTokenKey), findsOneWidget);
+    expect(find.text('Biểu đồ giá 24h'), findsOneWidget);
+    expect(find.text('So sánh chi tiết'), findsOneWidget);
+    expect(find.text('Giá hiện tại'), findsOneWidget);
+    expect(find.text(r'$67,543.21'), findsOneWidget);
+  });
+
+  testWidgets('SC-016 opens picker and adds/removes a token', (tester) async {
+    await pumpCompare(tester);
+
+    await tester.tap(find.byKey(ComparisonToolPage.addTokenKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(ComparisonToolPage.pickerKey), findsOneWidget);
+
+    await tester.tap(find.byKey(ComparisonToolPage.pickerTokenKey('solusdt')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(ComparisonToolPage.tokenKey('solusdt')), findsOneWidget);
+    expect(
+      find.byKey(ComparisonToolPage.removeTokenKey('solusdt')),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.byKey(ComparisonToolPage.removeTokenKey('ethusdt')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(ComparisonToolPage.tokenKey('ethusdt')), findsNothing);
+  });
+
+  testWidgets('SC-016 picker search filters available tokens', (tester) async {
+    await pumpCompare(tester);
+
+    await tester.tap(find.byKey(ComparisonToolPage.addTokenKey));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextField), 'link');
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(ComparisonToolPage.pickerTokenKey('linkusdt')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(ComparisonToolPage.pickerTokenKey('solusdt')),
+      findsNothing,
+    );
+  });
+
+  testWidgets('SC-016 back button returns to SC-008 Markets', (tester) async {
+    await pumpCompare(tester);
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(MarketListPage), findsOneWidget);
+  });
+}

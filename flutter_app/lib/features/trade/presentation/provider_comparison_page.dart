@@ -1,0 +1,287 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../app/router/app_router.dart';
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_text_styles.dart';
+import '../../../app/theme/device_metrics.dart';
+import '../../../shared/layout/shell_render_mode.dart';
+import '../../../shared/layout/vit_header.dart';
+import '../../../shared/layout/vit_page_layout.dart';
+import '../../../shared/widgets/widgets.dart';
+import '../data/trade_repository.dart';
+
+const _comparisonBlue = Color(0xFF3B82F6);
+const _comparisonRed = Color(0xFFEF4444);
+const _comparisonAmber = Color(0xFFF59E0B);
+const _comparisonGreen = Color(0xFF10B981);
+
+class ProviderComparisonPage extends ConsumerWidget {
+  const ProviderComparisonPage({super.key, this.shellRenderMode});
+
+  static const contentKey = Key('sc076_provider_comparison_content');
+  static const addProviderActionKey = Key('sc076_add_provider_action');
+  static const addProviderLinkKey = Key('sc076_add_provider_link');
+
+  final ShellRenderMode? shellRenderMode;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final snapshot = ref.watch(tradeRepositoryProvider).getProviderComparison();
+    final mode = shellRenderMode ?? defaultShellRenderMode();
+    final bottomChrome = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final bottomInset =
+        bottomChrome +
+        MediaQuery.paddingOf(context).bottom +
+        (mode.usesVisualQaFrame ? 26 : 14);
+
+    return VitPageLayout(
+      semanticLabel: 'SC-076 ProviderComparisonPage',
+      child: Material(
+        type: MaterialType.transparency,
+        child: Column(
+          children: [
+            VitHeader(
+              title: 'So sánh Providers',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+              trailing: IconButton(
+                key: addProviderActionKey,
+                onPressed: () => context.go(AppRoutePaths.tradeCopyTrading),
+                style: IconButton.styleFrom(
+                  backgroundColor: AppColors.surface3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.inputRadius,
+                  ),
+                  fixedSize: const Size(40, 40),
+                ),
+                icon: const Icon(Icons.add, color: AppColors.text1),
+              ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                key: contentKey,
+                padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _WarningBanner(text: snapshot.disclaimer),
+                    const SizedBox(height: 26),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Đang so sánh ${snapshot.selectedCount}/${snapshot.maxProviders} providers',
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.text2,
+                            ),
+                          ),
+                        ),
+                        if (snapshot.selectedCount < snapshot.maxProviders)
+                          TextButton(
+                            key: addProviderLinkKey,
+                            onPressed: () =>
+                                context.go(AppRoutePaths.tradeCopyTrading),
+                            child: const Text('+ Thêm provider'),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 38),
+                    _ComparisonTable(snapshot: snapshot),
+                    const SizedBox(height: 22),
+                    _LegendPanel(text: snapshot.legend),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _WarningBanner extends StatelessWidget {
+  const _WarningBanner({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: AppColors.warningBg,
+        border: Border.all(color: AppColors.warningBorder),
+        borderRadius: AppRadii.inputRadius,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: AppColors.warningText,
+            size: 15,
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.warningText,
+                height: 1.45,
+                fontSize: 10,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ComparisonTable extends StatelessWidget {
+  const _ComparisonTable({required this.snapshot});
+
+  final TradeProviderComparisonSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 12, bottom: 18),
+          child: Text(
+            'Metric',
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+        for (final group in TradeProviderComparisonCategory.values) ...[
+          _CategoryRow(category: group),
+          const SizedBox(height: 22),
+          for (final metric in snapshot.metrics.where(
+            (metric) => metric.category == group,
+          )) ...[
+            Padding(
+              padding: const EdgeInsets.only(left: 12),
+              child: SizedBox(
+                height: 26,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    metric.label,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 22),
+          ],
+        ],
+      ],
+    );
+  }
+}
+
+class _CategoryRow extends StatelessWidget {
+  const _CategoryRow({required this.category});
+
+  final TradeProviderComparisonCategory category;
+
+  @override
+  Widget build(BuildContext context) {
+    final (label, color, icon) = switch (category) {
+      TradeProviderComparisonCategory.performance => (
+        'Performance',
+        _comparisonBlue,
+        Icons.trending_up_rounded,
+      ),
+      TradeProviderComparisonCategory.risk => (
+        'Risk',
+        _comparisonRed,
+        Icons.shield_outlined,
+      ),
+      TradeProviderComparisonCategory.execution => (
+        'Execution',
+        _comparisonBlue,
+        Icons.show_chart_rounded,
+      ),
+      TradeProviderComparisonCategory.cost => (
+        'Cost',
+        _comparisonAmber,
+        Icons.attach_money_rounded,
+      ),
+    };
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 8),
+      child: Row(
+        children: [
+          Icon(icon, color: color, size: 13),
+          const SizedBox(width: 8),
+          Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: color,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LegendPanel extends StatelessWidget {
+  const _LegendPanel({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 12,
+                height: 12,
+                decoration: const BoxDecoration(
+                  color: _comparisonGreen,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                '= Giá trị tốt nhất trong nhóm',
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            text,
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              height: 1.35,
+              fontSize: 9,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

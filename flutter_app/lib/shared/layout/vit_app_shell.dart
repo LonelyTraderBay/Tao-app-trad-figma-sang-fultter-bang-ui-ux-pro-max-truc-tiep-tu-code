@@ -5,6 +5,9 @@ import 'shell_render_mode.dart';
 import 'vit_bottom_nav.dart';
 import 'vit_status_bar.dart';
 
+const _predictionNavAccent = Color(0xFF3B82F6);
+const _tradeNavAccent = Color(0xFF3B82F6);
+
 class VitAppShell extends StatefulWidget {
   const VitAppShell({
     super.key,
@@ -149,9 +152,17 @@ class _VitAppShellState extends State<VitAppShell> {
       onDestinationSelected: widget.onDestinationSelected,
       homeBadgeCount: widget.homeBadgeCount,
       renderMode: widget.renderMode,
+      accentColor: _bottomNavAccentForPath(widget.currentPath),
     );
 
     if (widget.renderMode.usesVisualQaFrame) return nav;
     return SafeArea(top: false, child: nav);
   }
+}
+
+Color? _bottomNavAccentForPath(String? path) {
+  if (path == null) return null;
+  if (path.startsWith('/markets/predictions')) return _predictionNavAccent;
+  if (path.startsWith('/trade')) return _tradeNavAccent;
+  return null;
 }

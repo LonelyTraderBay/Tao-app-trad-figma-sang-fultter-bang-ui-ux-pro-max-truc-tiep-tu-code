@@ -1,0 +1,165 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/prediction_event_detail_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/prediction_order_receipt_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/predictions_portfolio_page.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
+
+void main() {
+  Future<void> pumpPortfolio(WidgetTester tester) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(
+            initialLocation: AppRoutePaths.marketsPredictionsPortfolio,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  test('SC-031 mock repository exposes the portfolio BE draft', () {
+    final repo = const MockPredictionsRepository();
+    final snapshot = repo.getPortfolio();
+
+    expect(snapshot.positions, hasLength(7));
+    expect(snapshot.activeCount, 5);
+    expect(snapshot.closedCount, 2);
+    expect(snapshot.openOrders, hasLength(3));
+    expect(snapshot.receipts, hasLength(6));
+    expect(snapshot.historyCount, 3);
+    expect(snapshot.rewards, isNotEmpty);
+    expect(snapshot.totalCurrentValue, 1787);
+    expect(snapshot.totalPnl, 440.5);
+    expect(snapshot.lastUpdatedLabel, 'realtime-refresh');
+    expect(
+      snapshot.supportedStates,
+      containsAll([
+        PredictionScreenState.loading,
+        PredictionScreenState.empty,
+        PredictionScreenState.error,
+        PredictionScreenState.offline,
+        PredictionScreenState.realtimeRefresh,
+      ]),
+    );
+  });
+
+  testWidgets('SC-031 renders portfolio inside the Markets shell', (
+    tester,
+  ) async {
+    await pumpPortfolio(tester);
+
+    expect(find.byType(PredictionsPortfolioPage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byType(VitPhoneFrame), findsNothing);
+    expect(find.byType(VitStatusBar), findsNothing);
+    expect(
+      find.byKey(const Key('vit_bottom_nav_active_markets')),
+      findsOneWidget,
+    );
+    expect(find.text('Prediction Portfolio'), findsOneWidget);
+    expect(find.text('Danh mục · Prediction'), findsOneWidget);
+    expect(find.text('\$1787.00'), findsOneWidget);
+    expect(find.text('Portfolio Value'), findsOneWidget);
+    expect(find.textContaining('Shares'), findsOneWidget);
+    expect(find.text('Active'), findsOneWidget);
+    expect(find.text('Closed'), findsOneWidget);
+    expect(find.text('History'), findsOneWidget);
+    expect(
+      find.byKey(PredictionsPortfolioPage.positionKey('pos-1')),
+      findsOneWidget,
+    );
+    expect(find.text('Bitcoin reaches \$150K before July 2026?'), findsWidgets);
+    expect(find.text('Open Orders'), findsWidgets);
+    expect(
+      find.byKey(PredictionsPortfolioPage.openOrderKey('oo-1')),
+      findsOneWidget,
+    );
+    expect(find.text('Khám phá Arena cùng chủ đề'), findsOneWidget);
+    expect(find.text('Arena Points'), findsOneWidget);
+  });
+
+  testWidgets('SC-031 local tabs, visibility and cancel state work', (
+    tester,
+  ) async {
+    await pumpPortfolio(tester);
+
+    await tester.tap(find.byKey(PredictionsPortfolioPage.visibilityToggleKey));
+    await tester.pumpAndSettle();
+    expect(find.text('\$1787.00'), findsNothing);
+    expect(find.text('••••••'), findsOneWidget);
+
+    await tester.tap(find.byKey(PredictionsPortfolioPage.closedTabKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Bitcoin above \$100K by Feb 2026?'), findsOneWidget);
+    expect(find.text('Super Bowl LX Winner: Kansas City?'), findsOneWidget);
+
+    await tester.tap(find.byKey(PredictionsPortfolioPage.historyTabKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Lịch sử lệnh'), findsOneWidget);
+    expect(
+      find.byKey(PredictionsPortfolioPage.receiptKey('po-4')),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.byKey(PredictionsPortfolioPage.activeTabKey));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(PredictionsPortfolioPage.cancelOrderKey('oo-1')),
+    );
+    await tester.tap(
+      find.byKey(PredictionsPortfolioPage.cancelOrderKey('oo-1')),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(PredictionsPortfolioPage.openOrderKey('oo-1')),
+      findsNothing,
+    );
+  });
+
+  testWidgets('SC-031 navigation edges use event detail and placeholders', (
+    tester,
+  ) async {
+    await pumpPortfolio(tester);
+
+    await tester.tap(find.byKey(PredictionsPortfolioPage.positionKey('pos-1')));
+    await tester.pumpAndSettle();
+    expect(find.byType(PredictionEventDetailPage), findsOneWidget);
+    expect(find.text('Event Detail'), findsOneWidget);
+  });
+
+  testWidgets('SC-031 receipt and Arena edges are wired safely', (
+    tester,
+  ) async {
+    await pumpPortfolio(tester);
+
+    await tester.ensureVisible(
+      find.byKey(PredictionsPortfolioPage.openOrderKey('oo-1')),
+    );
+    await tester.tap(find.byKey(PredictionsPortfolioPage.openOrderKey('oo-1')));
+    await tester.pumpAndSettle();
+    expect(find.byType(PredictionOrderReceiptPage), findsOneWidget);
+    expect(find.text('Chi tiết lệnh'), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(PredictionsPortfolioPage.arenaBridgeKey),
+    );
+    await tester.tap(find.byKey(PredictionsPortfolioPage.arenaBridgeKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Open Arena'), findsOneWidget);
+  });
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_radii.dart';
@@ -21,6 +22,8 @@ class VitInput extends StatelessWidget {
     this.autofocus = false,
     this.keyboardType,
     this.textInputAction,
+    this.textCapitalization = TextCapitalization.none,
+    this.inputFormatters,
     this.autofillHints,
     this.onChanged,
     this.onSubmitted,
@@ -39,6 +42,8 @@ class VitInput extends StatelessWidget {
   final bool autofocus;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
+  final TextCapitalization textCapitalization;
+  final List<TextInputFormatter>? inputFormatters;
   final Iterable<String>? autofillHints;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
@@ -79,6 +84,8 @@ class VitInput extends StatelessWidget {
               obscureText: obscureText,
               keyboardType: keyboardType,
               textInputAction: textInputAction,
+              textCapitalization: textCapitalization,
+              inputFormatters: inputFormatters,
               autofillHints: autofillHints,
               cursorColor: AppColors.primary,
               style: AppTextStyles.body.copyWith(fontSize: 15),
