@@ -9,15 +9,17 @@ This repository has many historical guidance files. This file is the required re
 3. Read `docs/01_AI_RULES/AI_EXECUTION_CONTRACT.md`.
 4. Read `docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md`.
 5. Read `docs/02_FLUTTER_MIGRATION/Flutter-Migration-Execution-Runbook.md`.
-6. Read `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`.
-7. Read the Flutter foundation docs in `docs/02_FLUTTER_MIGRATION/`.
-8. Read `docs/03_DESIGN_SYSTEM/Guidelines.md`.
-9. Read screen-specific references only when working on that screen.
+6. Read `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md`.
+7. Read `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`.
+8. Read the Flutter foundation docs in `docs/02_FLUTTER_MIGRATION/`.
+9. Read `docs/03_DESIGN_SYSTEM/Guidelines.md`.
+10. Read screen-specific references only when working on that screen.
 
 ## Source Of Truth
 
 - Migration coverage: `output/flutter-ui-reference/manifest.json` and `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`.
-- Visual parity: `output/flutter-ui-reference/screenshots/`.
+- Flutter native color/size/chrome standard: `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md` and `docs/04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md`.
+- Visual parity: `output/flutter-ui-reference/screenshots/` for `ShellRenderMode.visualQa` structure/content comparison.
 - Product and design rules: `docs/03_DESIGN_SYSTEM/Guidelines.md`.
 - Coding constraints for this React repo: root `AGENTS.md`.
 - Generated capture artifacts: `output/flutter-ui-reference/`.
@@ -66,6 +68,7 @@ This repository has many historical guidance files. This file is the required re
 | `docs/01_AI_RULES/AI_EXECUTION_CONTRACT.md` | Hard migration rules for AI execution. |
 | `docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md` | Conflict resolution when docs disagree. |
 | `docs/02_FLUTTER_MIGRATION/Flutter-Migration-Execution-Runbook.md` | Single execution order for Flutter migration stages. |
+| `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md` | Global Flutter native standard based on `SC-007 HomePage` colors, sizes, chrome, and shared component treatment. |
 | `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md` | Screen-by-screen migration tracker and BE draft. |
 | `docs/02_FLUTTER_MIGRATION/Flutter-UI-Reference.md` | Screenshot capture pipeline and visual baseline notes. |
 | `docs/02_FLUTTER_MIGRATION/Flutter-App-Foundation.md` | Flutter project location, stack defaults, and app foundation rules. |
@@ -75,7 +78,7 @@ This repository has many historical guidance files. This file is the required re
 | `docs/02_FLUTTER_MIGRATION/Flutter-Visual-QA.md` | Screenshot comparison workflow and visual acceptance criteria. |
 | `docs/03_DESIGN_SYSTEM/Guidelines.md` | Product/design rules. |
 | `docs/04_SCREEN_REFERENCES/home/` | Home screen pixel, design, and navigation references. |
-| `docs/04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md` | Approved Flutter native UX standard for `SC-007 HomePage`; does not replace the React baseline. |
+| `docs/04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md` | Approved Flutter native UX reference captures and decisions for `SC-007 HomePage`; does not replace the React baseline. |
 | `docs/05_ARCHITECTURE/VitTrade-Enterprise-Architecture-Report.md` | Architecture reference. It must not override the manifest or master plan. |
 | `docs/99_LEGAL/ATTRIBUTIONS.md` | Third-party attribution and legal notices. |
 | `.codex/skills/ui-ux-pro-max/SKILL.md` | Optional local Codex design-assist skill. It is not a source of truth. |

@@ -84,6 +84,29 @@ abstract interface class TradeRepository {
   TradePerformanceScenariosSnapshot getPerformanceScenarios();
   TradeRiskIndicatorSnapshot getRiskIndicatorExplainer();
   TradeComplaintsHandlingSnapshot getComplaintsHandling();
+  TradeComplaintSubmissionSnapshot getComplaintSubmission();
+  TradeComplaintTrackingSnapshot getComplaintTracking({String? complaintId});
+  TradeOmbudsmanReferralSnapshot getOmbudsmanReferral();
+  TradeAuditTrailSnapshot getAuditTrail();
+  TradeRegulatoryInspectionSnapshot getRegulatoryInspectionReady();
+  TradeBotTermsSnapshot getBotTermsOfService();
+  TradeBotRiskDisclosureSnapshot getBotRiskDisclosure();
+  TradeBotSuitabilityAssessmentSnapshot getBotSuitabilityAssessment();
+  TradeBotRiskDashboardSnapshot getBotRiskDashboard();
+  TradeBotEmergencyStopSnapshot getBotEmergencyStop();
+  TradeBotSecuritySettingsSnapshot getBotSecuritySettings();
+  TradeBotHistorySnapshot getBotHistory();
+  TradeBotPerformanceAnalyticsSnapshot getBotPerformanceAnalytics();
+  TradeBotBacktestingSnapshot getBotBacktesting();
+  TradeBotStrategyCompareSnapshot getBotStrategyCompare();
+  TradeBotOptimizationSnapshot getBotOptimization();
+  TradeBotPortfolioDashboardSnapshot getBotPortfolioDashboard();
+  TradeBotDrawdownAnalyzerSnapshot getBotDrawdownAnalyzer();
+  TradeBotEquityCurveSnapshot getBotEquityCurve();
+  TradeBotGuideSnapshot getBotGuide();
+  TradeBotFaqSnapshot getBotFaq();
+  TradeBotTaxReportingSnapshot getBotTaxReporting();
+  TradeBotApiDocumentationSnapshot getBotApiDocumentation();
   TradeSettings patchTradeSettings(TradeSettings settings);
   TradeCopySettingsSaveResult patchCopySettings(TradeCopySettings settings);
   TradeCopyConfigurationPreview previewCopyConfiguration(
@@ -102,6 +125,9 @@ abstract interface class TradeRepository {
     TradeDisputeComplaintDraft draft,
   );
   TradeExportResult createTradeExport(TradeExportRequest request);
+  TradeBotTaxReportExportResult createBotTaxReportExport(
+    TradeBotTaxReportExportRequest request,
+  );
   TradeExPostCostsReportExportResult createExPostCostsReportExport({
     int year = 2025,
   });
@@ -116,6 +142,19 @@ abstract interface class TradeRepository {
     TradeFuturesLeverageRequest request,
   );
   TradeBotActionResult submitBotAction(TradeBotActionRequest request);
+  TradeBotEmergencyStopResult submitBotEmergencyStop(
+    TradeBotEmergencyStopDraft draft,
+  );
+  TradeBotSecuritySettingsResult patchBotSecuritySettings(
+    TradeBotSecuritySettingsDraft draft,
+  );
+  TradeBotHistoryExportResult createBotHistoryExport(
+    TradeBotHistoryExportRequest request,
+  );
+  TradeBotBacktestResult runBotBacktest(TradeBotBacktestRequest request);
+  TradeBotOptimizationResult runBotOptimization(
+    TradeBotOptimizationRequest request,
+  );
   TradeBotCreateResult createTradingBot(TradeBotCreateRequest request);
   TradeOcoOrderResult submitOcoOrder(TradeOcoOrderDraft draft);
   TradePositionSizeResult calculatePositionSize(
@@ -5178,6 +5217,1745 @@ final class TradeComplaintsHandlingSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+final class TradeComplaintSubmissionSnapshot {
+  const TradeComplaintSubmissionSnapshot({
+    required this.processTitle,
+    required this.processDescription,
+    required this.categories,
+    required this.subjectMinLength,
+    required this.subjectMaxLength,
+    required this.descriptionMinLength,
+    required this.descriptionMaxLength,
+    required this.termsIntro,
+    required this.terms,
+    required this.confirmationComplaintId,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final String processTitle;
+  final String processDescription;
+  final List<String> categories;
+  final int subjectMinLength;
+  final int subjectMaxLength;
+  final int descriptionMinLength;
+  final int descriptionMaxLength;
+  final String termsIntro;
+  final List<String> terms;
+  final String confirmationComplaintId;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeComplaintTrackingSnapshot {
+  const TradeComplaintTrackingSnapshot({
+    required this.complaintId,
+    required this.statusLabel,
+    required this.submittedLabel,
+    required this.responseDueLabel,
+    required this.daysRemaining,
+    required this.deadlineNotice,
+    required this.timeline,
+    required this.actions,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final String complaintId;
+  final String statusLabel;
+  final String submittedLabel;
+  final String responseDueLabel;
+  final int daysRemaining;
+  final String deadlineNotice;
+  final List<TradeComplaintTrackingStep> timeline;
+  final List<TradeComplaintTrackingAction> actions;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeComplaintTrackingStep {
+  const TradeComplaintTrackingStep({
+    required this.title,
+    required this.description,
+    required this.dateLabel,
+    required this.state,
+  });
+
+  final String title;
+  final String description;
+  final String dateLabel;
+  final TradeComplaintTrackingStepState state;
+}
+
+final class TradeComplaintTrackingAction {
+  const TradeComplaintTrackingAction({
+    required this.id,
+    required this.label,
+    required this.icon,
+    this.routePath,
+  });
+
+  final String id;
+  final String label;
+  final TradeComplaintTrackingActionIcon icon;
+  final String? routePath;
+}
+
+enum TradeComplaintTrackingStepState { completed, current, pending }
+
+enum TradeComplaintTrackingActionIcon { message, document, warning }
+
+final class TradeOmbudsmanReferralSnapshot {
+  const TradeOmbudsmanReferralSnapshot({
+    required this.infoTitle,
+    required this.infoDescription,
+    required this.eligibility,
+    required this.contacts,
+    required this.processSteps,
+    required this.ctaLabel,
+    required this.externalUrl,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final String infoTitle;
+  final String infoDescription;
+  final List<TradeOmbudsmanEligibility> eligibility;
+  final List<TradeOmbudsmanContact> contacts;
+  final List<TradeOmbudsmanProcessStep> processSteps;
+  final String ctaLabel;
+  final String externalUrl;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeOmbudsmanEligibility {
+  const TradeOmbudsmanEligibility({
+    required this.title,
+    required this.description,
+  });
+
+  final String title;
+  final String description;
+}
+
+final class TradeOmbudsmanContact {
+  const TradeOmbudsmanContact({
+    required this.label,
+    required this.value,
+    required this.icon,
+    this.detail,
+  });
+
+  final String label;
+  final String value;
+  final TradeOmbudsmanContactIcon icon;
+  final String? detail;
+}
+
+final class TradeOmbudsmanProcessStep {
+  const TradeOmbudsmanProcessStep({
+    required this.step,
+    required this.title,
+    required this.description,
+  });
+
+  final int step;
+  final String title;
+  final String description;
+}
+
+enum TradeOmbudsmanContactIcon { phone, website, address }
+
+final class TradeAuditTrailSnapshot {
+  const TradeAuditTrailSnapshot({
+    required this.noticeTitle,
+    required this.noticeDescription,
+    required this.stats,
+    required this.searchPlaceholder,
+    required this.tabs,
+    required this.entries,
+    required this.exportFormats,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final String noticeTitle;
+  final String noticeDescription;
+  final List<TradeAuditStat> stats;
+  final String searchPlaceholder;
+  final List<TradeAuditTab> tabs;
+  final List<TradeAuditEntry> entries;
+  final List<String> exportFormats;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeAuditStat {
+  const TradeAuditStat({
+    required this.label,
+    required this.value,
+    this.emphasized = false,
+  });
+
+  final String label;
+  final String value;
+  final bool emphasized;
+}
+
+final class TradeAuditTab {
+  const TradeAuditTab({required this.id, required this.label});
+
+  final String id;
+  final String label;
+}
+
+final class TradeAuditEntry {
+  const TradeAuditEntry({
+    required this.id,
+    required this.timestampLabel,
+    required this.category,
+    required this.categoryLabel,
+    required this.action,
+    required this.details,
+    this.user,
+    this.ipAddress,
+  });
+
+  final String id;
+  final String timestampLabel;
+  final TradeAuditCategory category;
+  final String categoryLabel;
+  final String action;
+  final String details;
+  final String? user;
+  final String? ipAddress;
+}
+
+enum TradeAuditCategory { trade, compliance, clientAction, system }
+
+final class TradeRegulatoryInspectionSnapshot {
+  const TradeRegulatoryInspectionSnapshot({
+    required this.complianceScore,
+    required this.scoreLabel,
+    required this.readyTitle,
+    required this.readyDescription,
+    required this.stats,
+    required this.frameworks,
+    required this.documents,
+    required this.portalTitle,
+    required this.portalDescription,
+    required this.portalCta,
+    required this.reportCta,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final int complianceScore;
+  final String scoreLabel;
+  final String readyTitle;
+  final String readyDescription;
+  final List<TradeRegulatoryInspectionStat> stats;
+  final List<TradeRegulatoryFramework> frameworks;
+  final List<TradeRegulatoryDocument> documents;
+  final String portalTitle;
+  final String portalDescription;
+  final String portalCta;
+  final String reportCta;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeRegulatoryInspectionStat {
+  const TradeRegulatoryInspectionStat({
+    required this.label,
+    required this.value,
+    required this.icon,
+  });
+
+  final String label;
+  final String value;
+  final TradeRegulatoryInspectionStatIcon icon;
+}
+
+enum TradeRegulatoryInspectionStatIcon {
+  documents,
+  clients,
+  auditLogs,
+  retention,
+}
+
+final class TradeRegulatoryFramework {
+  const TradeRegulatoryFramework({
+    required this.name,
+    required this.compliance,
+    required this.requirements,
+  });
+
+  final String name;
+  final int compliance;
+  final List<String> requirements;
+}
+
+final class TradeRegulatoryDocument {
+  const TradeRegulatoryDocument({
+    required this.name,
+    required this.countLabel,
+    required this.status,
+  });
+
+  final String name;
+  final String countLabel;
+  final String status;
+}
+
+final class TradeBotTermsSnapshot {
+  const TradeBotTermsSnapshot({
+    required this.infoTitle,
+    required this.infoDescription,
+    required this.title,
+    required this.lastUpdatedLabel,
+    required this.sections,
+    required this.acceptSectionLabel,
+    required this.scrollWarning,
+    required this.agreementTitle,
+    required this.agreementDescription,
+    required this.disabledCta,
+    required this.enabledCta,
+    required this.complianceTitle,
+    required this.complianceDescription,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final String infoTitle;
+  final String infoDescription;
+  final String title;
+  final String lastUpdatedLabel;
+  final List<TradeBotTermsSection> sections;
+  final String acceptSectionLabel;
+  final String scrollWarning;
+  final String agreementTitle;
+  final String agreementDescription;
+  final String disabledCta;
+  final String enabledCta;
+  final String complianceTitle;
+  final String complianceDescription;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeBotTermsSection {
+  const TradeBotTermsSection({
+    required this.title,
+    required this.paragraphs,
+    this.warningTitle,
+    this.warningBody,
+    this.bullets = const [],
+  });
+
+  final String title;
+  final List<String> paragraphs;
+  final String? warningTitle;
+  final String? warningBody;
+  final List<String> bullets;
+}
+
+final class TradeBotRiskDisclosureSnapshot {
+  const TradeBotRiskDisclosureSnapshot({
+    required this.highRiskTitle,
+    required this.highRiskBody,
+    required this.pastPerformanceTitle,
+    required this.pastPerformanceBody,
+    required this.riskSectionLabel,
+    required this.categories,
+    required this.additionalWarningsLabel,
+    required this.additionalWarnings,
+    required this.regulatoryNoticeLabel,
+    required this.regulatoryTitle,
+    required this.regulatoryBody,
+    required this.regulatoryNotes,
+    required this.acknowledgmentLabel,
+    required this.acknowledgmentTitle,
+    required this.acknowledgmentDescription,
+    required this.disabledCta,
+    required this.enabledCta,
+    required this.helpTitle,
+    required this.helpDescription,
+    required this.helpCta,
+    required this.nextPath,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final String highRiskTitle;
+  final String highRiskBody;
+  final String pastPerformanceTitle;
+  final String pastPerformanceBody;
+  final String riskSectionLabel;
+  final List<TradeBotRiskCategory> categories;
+  final String additionalWarningsLabel;
+  final List<TradeBotRiskWarning> additionalWarnings;
+  final String regulatoryNoticeLabel;
+  final String regulatoryTitle;
+  final String regulatoryBody;
+  final List<String> regulatoryNotes;
+  final String acknowledgmentLabel;
+  final String acknowledgmentTitle;
+  final String acknowledgmentDescription;
+  final String disabledCta;
+  final String enabledCta;
+  final String helpTitle;
+  final String helpDescription;
+  final String helpCta;
+  final String nextPath;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeBotRiskCategory {
+  const TradeBotRiskCategory({
+    required this.id,
+    required this.kind,
+    required this.title,
+    required this.description,
+    required this.examples,
+    required this.mitigation,
+  });
+
+  final String id;
+  final TradeBotRiskKind kind;
+  final String title;
+  final String description;
+  final List<String> examples;
+  final String mitigation;
+}
+
+enum TradeBotRiskKind {
+  market,
+  leverage,
+  liquidity,
+  technical,
+  timing,
+  regulatory,
+}
+
+final class TradeBotRiskWarning {
+  const TradeBotRiskWarning({required this.title, required this.text});
+
+  final String title;
+  final String text;
+}
+
+final class TradeBotSuitabilityAssessmentSnapshot {
+  const TradeBotSuitabilityAssessmentSnapshot({
+    required this.questions,
+    required this.infoTitle,
+    required this.infoDescription,
+    required this.pass,
+    required this.warning,
+    required this.fail,
+    required this.regulatoryTitle,
+    required this.regulatoryDescription,
+    required this.completionPath,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final List<TradeBotSuitabilityQuestion> questions;
+  final String infoTitle;
+  final String infoDescription;
+  final TradeBotSuitabilityOutcomeCopy pass;
+  final TradeBotSuitabilityOutcomeCopy warning;
+  final TradeBotSuitabilityOutcomeCopy fail;
+  final String regulatoryTitle;
+  final String regulatoryDescription;
+  final String completionPath;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+
+  int get maxScore => questions.length * 3;
+}
+
+final class TradeBotSuitabilityQuestion {
+  const TradeBotSuitabilityQuestion({
+    required this.id,
+    required this.category,
+    required this.question,
+    required this.options,
+  });
+
+  final String id;
+  final TradeBotSuitabilityCategory category;
+  final String question;
+  final List<TradeBotSuitabilityOption> options;
+}
+
+final class TradeBotSuitabilityOption {
+  const TradeBotSuitabilityOption({
+    required this.id,
+    required this.text,
+    required this.score,
+  });
+
+  final String id;
+  final String text;
+  final int score;
+}
+
+enum TradeBotSuitabilityCategory { experience, knowledge, risk, financial }
+
+enum TradeBotSuitabilityOutcome { pass, warning, fail }
+
+final class TradeBotSuitabilityOutcomeCopy {
+  const TradeBotSuitabilityOutcomeCopy({
+    required this.outcome,
+    required this.title,
+    required this.message,
+    required this.recommendations,
+    required this.ctaLabel,
+  });
+
+  final TradeBotSuitabilityOutcome outcome;
+  final String title;
+  final String message;
+  final List<String> recommendations;
+  final String ctaLabel;
+}
+
+final class TradeBotRiskDashboardSnapshot {
+  const TradeBotRiskDashboardSnapshot({
+    required this.riskScore,
+    required this.riskLabel,
+    required this.riskMessage,
+    required this.currentDrawdown,
+    required this.maxDrawdownLimit,
+    required this.dailyLoss,
+    required this.dailyLossLimit,
+    required this.totalExposure,
+    required this.maxExposure,
+    required this.var95,
+    required this.runningBots,
+    required this.drawdownPoints,
+    required this.exposures,
+    required this.varHistory,
+    required this.safetyControls,
+    required this.emergencyPath,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final int riskScore;
+  final String riskLabel;
+  final String riskMessage;
+  final double currentDrawdown;
+  final double maxDrawdownLimit;
+  final double dailyLoss;
+  final double dailyLossLimit;
+  final double totalExposure;
+  final double maxExposure;
+  final double var95;
+  final int runningBots;
+  final List<TradeBotDrawdownPoint> drawdownPoints;
+  final List<TradeBotExposure> exposures;
+  final List<TradeBotVarPoint> varHistory;
+  final List<TradeBotSafetyControl> safetyControls;
+  final String emergencyPath;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeBotDrawdownPoint {
+  const TradeBotDrawdownPoint({required this.label, required this.value});
+
+  final String label;
+  final double value;
+}
+
+final class TradeBotExposure {
+  const TradeBotExposure({
+    required this.asset,
+    required this.exposure,
+    required this.percentage,
+    required this.colorHex,
+  });
+
+  final String asset;
+  final double exposure;
+  final int percentage;
+  final int colorHex;
+}
+
+final class TradeBotVarPoint {
+  const TradeBotVarPoint({required this.label, required this.value});
+
+  final String label;
+  final double value;
+}
+
+final class TradeBotSafetyControl {
+  const TradeBotSafetyControl({required this.label, required this.value});
+
+  final String label;
+  final String value;
+}
+
+final class TradeBotEmergencyStopSnapshot {
+  const TradeBotEmergencyStopSnapshot({
+    required this.warningTitle,
+    required this.warningDescription,
+    required this.bots,
+    required this.reasons,
+    required this.closePositionsTitle,
+    required this.closePositionsDescription,
+    required this.confirmationTitle,
+    required this.confirmationDescription,
+    required this.supportTitle,
+    required this.supportDescription,
+    required this.completionPath,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final String warningTitle;
+  final String warningDescription;
+  final List<TradeBotEmergencyBot> bots;
+  final List<TradeBotEmergencyReason> reasons;
+  final String closePositionsTitle;
+  final String closePositionsDescription;
+  final String confirmationTitle;
+  final String confirmationDescription;
+  final String supportTitle;
+  final String supportDescription;
+  final String completionPath;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeBotEmergencyBot {
+  const TradeBotEmergencyBot({
+    required this.id,
+    required this.name,
+    required this.pair,
+    required this.profit,
+    required this.statusLabel,
+  });
+
+  final String id;
+  final String name;
+  final String pair;
+  final double profit;
+  final String statusLabel;
+}
+
+final class TradeBotEmergencyReason {
+  const TradeBotEmergencyReason({
+    required this.id,
+    required this.label,
+    required this.iconName,
+  });
+
+  final String id;
+  final String label;
+  final String iconName;
+}
+
+final class TradeBotEmergencyStopDraft {
+  const TradeBotEmergencyStopDraft({
+    required this.reasonId,
+    required this.closePositions,
+    required this.confirmed,
+  });
+
+  final String reasonId;
+  final bool closePositions;
+  final bool confirmed;
+}
+
+final class TradeBotEmergencyStopResult {
+  const TradeBotEmergencyStopResult({
+    required this.status,
+    required this.stoppedBotCount,
+    required this.redirectPath,
+  });
+
+  final String status;
+  final int stoppedBotCount;
+  final String redirectPath;
+}
+
+final class TradeBotSecuritySettingsSnapshot {
+  const TradeBotSecuritySettingsSnapshot({
+    required this.twoFaEnabled,
+    required this.apiKeys,
+    required this.ipWhitelist,
+    required this.recentActivity,
+    required this.securityTips,
+    required this.generatedApiKeyPreview,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final bool twoFaEnabled;
+  final List<TradeBotApiKey> apiKeys;
+  final List<TradeBotIpWhitelistEntry> ipWhitelist;
+  final List<TradeBotSecurityActivity> recentActivity;
+  final List<String> securityTips;
+  final String generatedApiKeyPreview;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeBotApiKey {
+  const TradeBotApiKey({
+    required this.id,
+    required this.name,
+    required this.permissions,
+    required this.lastUsed,
+    required this.created,
+  });
+
+  final String id;
+  final String name;
+  final String permissions;
+  final String lastUsed;
+  final String created;
+}
+
+final class TradeBotIpWhitelistEntry {
+  const TradeBotIpWhitelistEntry({
+    required this.id,
+    required this.ip,
+    required this.label,
+    required this.added,
+  });
+
+  final String id;
+  final String ip;
+  final String label;
+  final String added;
+}
+
+enum TradeBotSecurityActivityStatus { success, warning }
+
+final class TradeBotSecurityActivity {
+  const TradeBotSecurityActivity({
+    required this.id,
+    required this.action,
+    required this.time,
+    required this.status,
+  });
+
+  final String id;
+  final String action;
+  final String time;
+  final TradeBotSecurityActivityStatus status;
+}
+
+final class TradeBotSecuritySettingsDraft {
+  const TradeBotSecuritySettingsDraft({required this.twoFaEnabled});
+
+  final bool twoFaEnabled;
+}
+
+final class TradeBotSecuritySettingsResult {
+  const TradeBotSecuritySettingsResult({
+    required this.status,
+    required this.twoFaEnabled,
+  });
+
+  final String status;
+  final bool twoFaEnabled;
+}
+
+final class TradeBotHistorySnapshot {
+  const TradeBotHistorySnapshot({
+    required this.trades,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final List<TradeBotHistoryTrade> trades;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+enum TradeBotHistorySide { buy, sell }
+
+final class TradeBotHistoryTrade {
+  const TradeBotHistoryTrade({
+    required this.id,
+    required this.timestamp,
+    required this.botName,
+    required this.strategy,
+    required this.pair,
+    required this.side,
+    required this.qty,
+    required this.price,
+    required this.fee,
+    required this.pnl,
+    required this.status,
+  });
+
+  final String id;
+  final String timestamp;
+  final String botName;
+  final String strategy;
+  final String pair;
+  final TradeBotHistorySide side;
+  final double qty;
+  final double price;
+  final double fee;
+  final double pnl;
+  final String status;
+}
+
+final class TradeBotHistoryExportRequest {
+  const TradeBotHistoryExportRequest({required this.format});
+
+  final String format;
+}
+
+final class TradeBotHistoryExportResult {
+  const TradeBotHistoryExportResult({
+    required this.status,
+    required this.downloadUrl,
+  });
+
+  final String status;
+  final String downloadUrl;
+}
+
+final class TradeBotPerformanceAnalyticsSnapshot {
+  const TradeBotPerformanceAnalyticsSnapshot({
+    required this.metrics,
+    required this.pnlPoints,
+    required this.winLossPoints,
+    required this.strategyPerformance,
+    required this.durationDistribution,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final TradeBotPerformanceMetrics metrics;
+  final List<TradeBotPnlPoint> pnlPoints;
+  final List<TradeBotWinLossPoint> winLossPoints;
+  final List<TradeBotStrategyPerformance> strategyPerformance;
+  final List<TradeBotDurationDistribution> durationDistribution;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeBotPerformanceMetrics {
+  const TradeBotPerformanceMetrics({
+    required this.totalPnl,
+    required this.winRate,
+    required this.sharpeRatio,
+    required this.avgWin,
+    required this.avgLoss,
+    required this.profitFactor,
+    required this.totalTrades,
+    required this.bestTrade,
+    required this.worstTrade,
+  });
+
+  final double totalPnl;
+  final double winRate;
+  final double sharpeRatio;
+  final double avgWin;
+  final double avgLoss;
+  final double profitFactor;
+  final int totalTrades;
+  final double bestTrade;
+  final double worstTrade;
+}
+
+final class TradeBotPnlPoint {
+  const TradeBotPnlPoint({required this.date, required this.pnl});
+
+  final String date;
+  final double pnl;
+}
+
+final class TradeBotWinLossPoint {
+  const TradeBotWinLossPoint({
+    required this.week,
+    required this.wins,
+    required this.losses,
+  });
+
+  final String week;
+  final int wins;
+  final int losses;
+}
+
+final class TradeBotStrategyPerformance {
+  const TradeBotStrategyPerformance({
+    required this.strategy,
+    required this.pnl,
+    required this.colorHex,
+  });
+
+  final String strategy;
+  final double pnl;
+  final int colorHex;
+}
+
+final class TradeBotDurationDistribution {
+  const TradeBotDurationDistribution({
+    required this.duration,
+    required this.count,
+  });
+
+  final String duration;
+  final int count;
+}
+
+final class TradeBotBacktestingSnapshot {
+  const TradeBotBacktestingSnapshot({
+    required this.strategies,
+    required this.pairs,
+    required this.dateRanges,
+    required this.defaultStrategyId,
+    required this.defaultPair,
+    required this.defaultDateRangeId,
+    required this.defaultCapital,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final List<TradeBotBacktestStrategy> strategies;
+  final List<String> pairs;
+  final List<TradeBotBacktestDateRange> dateRanges;
+  final String defaultStrategyId;
+  final String defaultPair;
+  final String defaultDateRangeId;
+  final double defaultCapital;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeBotBacktestStrategy {
+  const TradeBotBacktestStrategy({
+    required this.id,
+    required this.name,
+    required this.colorHex,
+  });
+
+  final String id;
+  final String name;
+  final int colorHex;
+}
+
+final class TradeBotBacktestDateRange {
+  const TradeBotBacktestDateRange({
+    required this.id,
+    required this.label,
+    required this.periodLabel,
+  });
+
+  final String id;
+  final String label;
+  final String periodLabel;
+}
+
+final class TradeBotBacktestRequest {
+  const TradeBotBacktestRequest({
+    required this.strategyId,
+    required this.pair,
+    required this.dateRangeId,
+    required this.initialCapital,
+  });
+
+  final String strategyId;
+  final String pair;
+  final String dateRangeId;
+  final double initialCapital;
+}
+
+final class TradeBotBacktestResult {
+  const TradeBotBacktestResult({
+    required this.status,
+    required this.reportId,
+    required this.progress,
+  });
+
+  final String status;
+  final String reportId;
+  final int progress;
+}
+
+final class TradeBotStrategyCompareSnapshot {
+  const TradeBotStrategyCompareSnapshot({
+    required this.strategies,
+    required this.equityPoints,
+    required this.recommendations,
+    required this.defaultSelectedIds,
+    required this.analysisPeriod,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final List<TradeBotCompareStrategy> strategies;
+  final List<TradeBotCompareEquityPoint> equityPoints;
+  final List<TradeBotRecommendation> recommendations;
+  final List<String> defaultSelectedIds;
+  final String analysisPeriod;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeBotCompareStrategy {
+  const TradeBotCompareStrategy({
+    required this.id,
+    required this.name,
+    required this.colorHex,
+    required this.metrics,
+  });
+
+  final String id;
+  final String name;
+  final int colorHex;
+  final TradeBotCompareMetrics metrics;
+}
+
+final class TradeBotCompareMetrics {
+  const TradeBotCompareMetrics({
+    required this.totalReturn,
+    required this.sharpeRatio,
+    required this.maxDrawdown,
+    required this.winRate,
+    required this.profitFactor,
+    required this.totalTrades,
+    required this.avgTradeDuration,
+    required this.volatility,
+  });
+
+  final double totalReturn;
+  final double sharpeRatio;
+  final double maxDrawdown;
+  final double winRate;
+  final double profitFactor;
+  final int totalTrades;
+  final String avgTradeDuration;
+  final double volatility;
+}
+
+final class TradeBotCompareEquityPoint {
+  const TradeBotCompareEquityPoint({
+    required this.date,
+    required this.dca,
+    required this.grid,
+    required this.momentum,
+    required this.martingale,
+  });
+
+  final String date;
+  final double dca;
+  final double grid;
+  final double momentum;
+  final double martingale;
+
+  double valueFor(String strategyId) {
+    return switch (strategyId) {
+      'dca' => dca,
+      'grid' => grid,
+      'momentum' => momentum,
+      'martingale' => martingale,
+      _ => 0,
+    };
+  }
+}
+
+final class TradeBotRecommendation {
+  const TradeBotRecommendation({
+    required this.title,
+    required this.strategyId,
+    required this.strategy,
+    required this.reason,
+  });
+
+  final String title;
+  final String strategyId;
+  final String strategy;
+  final String reason;
+}
+
+final class TradeBotOptimizationSnapshot {
+  const TradeBotOptimizationSnapshot({
+    required this.targets,
+    required this.parameterRanges,
+    required this.steps,
+    required this.defaultTargetId,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final List<TradeBotOptimizationTarget> targets;
+  final List<TradeBotOptimizationRange> parameterRanges;
+  final List<String> steps;
+  final String defaultTargetId;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeBotOptimizationTarget {
+  const TradeBotOptimizationTarget({
+    required this.id,
+    required this.label,
+    required this.description,
+  });
+
+  final String id;
+  final String label;
+  final String description;
+}
+
+final class TradeBotOptimizationRange {
+  const TradeBotOptimizationRange({
+    required this.id,
+    required this.label,
+    required this.min,
+    required this.max,
+    required this.step,
+    required this.defaultValue,
+    this.unit = '',
+  });
+
+  final String id;
+  final String label;
+  final double min;
+  final double max;
+  final double step;
+  final double defaultValue;
+  final String unit;
+}
+
+final class TradeBotOptimizationRequest {
+  const TradeBotOptimizationRequest({
+    required this.targetId,
+    required this.gridCount,
+    required this.gridRangePct,
+  });
+
+  final String targetId;
+  final double gridCount;
+  final double gridRangePct;
+}
+
+final class TradeBotOptimizationResult {
+  const TradeBotOptimizationResult({
+    required this.status,
+    required this.jobId,
+    required this.estimatedMinutes,
+  });
+
+  final String status;
+  final String jobId;
+  final int estimatedMinutes;
+}
+
+final class TradeBotPortfolioDashboardSnapshot {
+  const TradeBotPortfolioDashboardSnapshot({
+    required this.summary,
+    required this.allocations,
+    required this.equityPoints,
+    required this.correlations,
+    required this.healthItems,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final TradeBotPortfolioSummary summary;
+  final List<TradeBotPortfolioAllocation> allocations;
+  final List<TradeBotPortfolioEquityPoint> equityPoints;
+  final List<TradeBotCorrelationRow> correlations;
+  final List<String> healthItems;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeBotPortfolioSummary {
+  const TradeBotPortfolioSummary({
+    required this.totalEquity,
+    required this.totalInvestment,
+    required this.totalPnl,
+    required this.pnlPercent,
+    required this.portfolioSharpe,
+    required this.diversificationScore,
+    required this.activeBots,
+    required this.totalTrades,
+  });
+
+  final double totalEquity;
+  final double totalInvestment;
+  final double totalPnl;
+  final double pnlPercent;
+  final double portfolioSharpe;
+  final int diversificationScore;
+  final int activeBots;
+  final int totalTrades;
+}
+
+final class TradeBotPortfolioAllocation {
+  const TradeBotPortfolioAllocation({
+    required this.strategy,
+    required this.value,
+    required this.pnl,
+    required this.colorHex,
+  });
+
+  final String strategy;
+  final double value;
+  final double pnl;
+  final int colorHex;
+}
+
+final class TradeBotPortfolioEquityPoint {
+  const TradeBotPortfolioEquityPoint({
+    required this.date,
+    required this.equity,
+  });
+
+  final String date;
+  final double equity;
+}
+
+final class TradeBotCorrelationRow {
+  const TradeBotCorrelationRow({required this.bot, required this.values});
+
+  final String bot;
+  final Map<String, double> values;
+}
+
+final class TradeBotDrawdownAnalyzerSnapshot {
+  const TradeBotDrawdownAnalyzerSnapshot({
+    required this.summary,
+    required this.underwaterPoints,
+    required this.durationBuckets,
+    required this.events,
+    required this.insights,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final TradeBotDrawdownSummary summary;
+  final List<TradeBotUnderwaterPoint> underwaterPoints;
+  final List<TradeBotDrawdownDurationBucket> durationBuckets;
+  final List<TradeBotDrawdownEvent> events;
+  final List<TradeBotDrawdownInsight> insights;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeBotDrawdownSummary {
+  const TradeBotDrawdownSummary({
+    required this.maxDrawdownPct,
+    required this.avgDrawdownPct,
+    required this.drawdownDays,
+    required this.totalDays,
+    required this.frequency,
+  });
+
+  final double maxDrawdownPct;
+  final double avgDrawdownPct;
+  final int drawdownDays;
+  final int totalDays;
+  final int frequency;
+}
+
+final class TradeBotUnderwaterPoint {
+  const TradeBotUnderwaterPoint({
+    required this.date,
+    required this.monthLabel,
+    required this.underwaterPct,
+  });
+
+  final String date;
+  final String monthLabel;
+  final double underwaterPct;
+}
+
+final class TradeBotDrawdownDurationBucket {
+  const TradeBotDrawdownDurationBucket({
+    required this.range,
+    required this.count,
+  });
+
+  final String range;
+  final int count;
+}
+
+final class TradeBotDrawdownEvent {
+  const TradeBotDrawdownEvent({
+    required this.id,
+    required this.startLabel,
+    required this.depthPct,
+    required this.duration,
+    required this.recovery,
+    required this.severe,
+  });
+
+  final int id;
+  final String startLabel;
+  final double depthPct;
+  final String duration;
+  final String recovery;
+  final bool severe;
+}
+
+final class TradeBotDrawdownInsight {
+  const TradeBotDrawdownInsight({
+    required this.symbol,
+    required this.colorHex,
+    required this.text,
+  });
+
+  final String symbol;
+  final int colorHex;
+  final String text;
+}
+
+final class TradeBotEquityCurveSnapshot {
+  const TradeBotEquityCurveSnapshot({
+    required this.summary,
+    required this.equityPoints,
+    required this.monthlyReturns,
+    required this.performanceStats,
+    required this.analysisItems,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final TradeBotEquityCurveSummary summary;
+  final List<TradeBotEquityCurvePoint> equityPoints;
+  final List<TradeBotMonthlyReturn> monthlyReturns;
+  final List<TradeBotPerformanceStat> performanceStats;
+  final List<String> analysisItems;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeBotEquityCurveSummary {
+  const TradeBotEquityCurveSummary({
+    required this.botReturnPct,
+    required this.buyHoldReturnPct,
+    required this.alphaPct,
+  });
+
+  final double botReturnPct;
+  final double buyHoldReturnPct;
+  final double alphaPct;
+}
+
+final class TradeBotEquityCurvePoint {
+  const TradeBotEquityCurvePoint({
+    required this.date,
+    required this.monthLabel,
+    required this.equity,
+    required this.buyHold,
+    this.rollingSharpe,
+  });
+
+  final String date;
+  final String monthLabel;
+  final double equity;
+  final double buyHold;
+  final double? rollingSharpe;
+}
+
+final class TradeBotMonthlyReturn {
+  const TradeBotMonthlyReturn({
+    required this.month,
+    required this.botReturn,
+    required this.marketReturn,
+    required this.alpha,
+  });
+
+  final String month;
+  final double botReturn;
+  final double marketReturn;
+  final double alpha;
+}
+
+final class TradeBotPerformanceStat {
+  const TradeBotPerformanceStat({
+    required this.id,
+    required this.label,
+    required this.value,
+    required this.colorHex,
+  });
+
+  final String id;
+  final String label;
+  final String value;
+  final int colorHex;
+}
+
+final class TradeBotGuideSnapshot {
+  const TradeBotGuideSnapshot({
+    required this.strategies,
+    required this.bestPractices,
+    required this.mistakes,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final List<TradeBotGuideStrategy> strategies;
+  final List<TradeBotGuidePractice> bestPractices;
+  final List<TradeBotGuideMistake> mistakes;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeBotGuideStrategy {
+  const TradeBotGuideStrategy({
+    required this.id,
+    required this.name,
+    required this.iconKey,
+    required this.colorHex,
+    required this.difficulty,
+    required this.description,
+    required this.howItWorks,
+    required this.pros,
+    required this.cons,
+    required this.bestFor,
+    required this.example,
+  });
+
+  final String id;
+  final String name;
+  final String iconKey;
+  final int colorHex;
+  final String difficulty;
+  final String description;
+  final List<String> howItWorks;
+  final List<String> pros;
+  final List<String> cons;
+  final String bestFor;
+  final TradeBotGuideExample example;
+}
+
+final class TradeBotGuideExample {
+  const TradeBotGuideExample({
+    required this.setup,
+    required this.duration,
+    required this.result,
+    required this.profit,
+  });
+
+  final String setup;
+  final String duration;
+  final String result;
+  final String profit;
+}
+
+final class TradeBotGuidePractice {
+  const TradeBotGuidePractice({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.iconKey,
+  });
+
+  final String id;
+  final String title;
+  final String description;
+  final String iconKey;
+}
+
+final class TradeBotGuideMistake {
+  const TradeBotGuideMistake({
+    required this.mistake,
+    required this.why,
+    required this.fix,
+  });
+
+  final String mistake;
+  final String why;
+  final String fix;
+}
+
+final class TradeBotFaqSnapshot {
+  const TradeBotFaqSnapshot({
+    required this.categories,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final List<TradeBotFaqCategory> categories;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+
+  int get totalFaqs =>
+      categories.fold<int>(0, (sum, category) => sum + category.items.length);
+}
+
+final class TradeBotFaqCategory {
+  const TradeBotFaqCategory({
+    required this.id,
+    required this.label,
+    required this.items,
+  });
+
+  final String id;
+  final String label;
+  final List<TradeBotFaqItem> items;
+}
+
+final class TradeBotFaqItem {
+  const TradeBotFaqItem({required this.question, required this.answer});
+
+  final String question;
+  final String answer;
+}
+
+final class TradeBotTaxReportingSnapshot {
+  const TradeBotTaxReportingSnapshot({
+    required this.taxYears,
+    required this.defaultYear,
+    required this.defaultCostBasisMethod,
+    required this.summary,
+    required this.reportTypes,
+    required this.breakdown,
+    required this.taxNotes,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final List<String> taxYears;
+  final String defaultYear;
+  final String defaultCostBasisMethod;
+  final TradeBotTaxSummary summary;
+  final List<TradeBotTaxReportType> reportTypes;
+  final TradeBotTaxBreakdown breakdown;
+  final List<String> taxNotes;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeBotTaxSummary {
+  const TradeBotTaxSummary({
+    required this.totalTrades,
+    required this.realizedGains,
+    required this.realizedLosses,
+    required this.netGainLoss,
+    required this.shortTermGains,
+    required this.longTermGains,
+    required this.totalFees,
+  });
+
+  final int totalTrades;
+  final double realizedGains;
+  final double realizedLosses;
+  final double netGainLoss;
+  final double shortTermGains;
+  final double longTermGains;
+  final double totalFees;
+}
+
+final class TradeBotTaxReportType {
+  const TradeBotTaxReportType({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.format,
+    required this.recommended,
+    required this.selectedByDefault,
+  });
+
+  final String id;
+  final String name;
+  final String description;
+  final String format;
+  final bool recommended;
+  final bool selectedByDefault;
+}
+
+final class TradeBotTaxBreakdown {
+  const TradeBotTaxBreakdown({
+    required this.shortTermLabel,
+    required this.shortTermDescription,
+    required this.longTermLabel,
+    required this.longTermDescription,
+  });
+
+  final String shortTermLabel;
+  final String shortTermDescription;
+  final String longTermLabel;
+  final String longTermDescription;
+}
+
+final class TradeBotTaxReportExportRequest {
+  const TradeBotTaxReportExportRequest({
+    required this.year,
+    required this.reportTypeIds,
+    required this.costBasisMethod,
+  });
+
+  final String year;
+  final List<String> reportTypeIds;
+  final String costBasisMethod;
+}
+
+final class TradeBotTaxReportExportResult {
+  const TradeBotTaxReportExportResult({
+    required this.status,
+    required this.year,
+    required this.reportCount,
+    required this.exportId,
+  });
+
+  final String status;
+  final String year;
+  final int reportCount;
+  final String exportId;
+}
+
+final class TradeBotApiDocumentationSnapshot {
+  const TradeBotApiDocumentationSnapshot({
+    required this.tabs,
+    required this.defaultView,
+    required this.defaultLanguage,
+    required this.endpoints,
+    required this.websocketUrl,
+    required this.websocketEvents,
+    required this.codeExamples,
+    required this.rateLimits,
+    required this.authenticationHeader,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final List<TradeBotApiTab> tabs;
+  final String defaultView;
+  final String defaultLanguage;
+  final List<TradeBotApiEndpoint> endpoints;
+  final String websocketUrl;
+  final List<TradeBotWebSocketEvent> websocketEvents;
+  final List<TradeBotCodeExample> codeExamples;
+  final List<TradeBotRateLimit> rateLimits;
+  final String authenticationHeader;
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+}
+
+final class TradeBotApiTab {
+  const TradeBotApiTab({required this.id, required this.label});
+
+  final String id;
+  final String label;
+}
+
+final class TradeBotApiEndpoint {
+  const TradeBotApiEndpoint({
+    required this.method,
+    required this.path,
+    required this.description,
+    required this.params,
+    required this.response,
+  });
+
+  final String method;
+  final String path;
+  final String description;
+  final List<TradeBotApiParameter> params;
+  final String response;
+}
+
+final class TradeBotApiParameter {
+  const TradeBotApiParameter({
+    required this.name,
+    required this.type,
+    required this.required,
+    required this.description,
+  });
+
+  final String name;
+  final String type;
+  final bool required;
+  final String description;
+}
+
+final class TradeBotWebSocketEvent {
+  const TradeBotWebSocketEvent({
+    required this.event,
+    required this.description,
+    required this.payload,
+  });
+
+  final String event;
+  final String description;
+  final String payload;
+}
+
+final class TradeBotCodeExample {
+  const TradeBotCodeExample({
+    required this.language,
+    required this.label,
+    required this.title,
+    required this.source,
+  });
+
+  final String language;
+  final String label;
+  final String title;
+  final String source;
+}
+
+final class TradeBotRateLimit {
+  const TradeBotRateLimit({required this.label, required this.value});
+
+  final String label;
+  final String value;
+}
+
 final class TradeComplaintCategory {
   const TradeComplaintCategory({
     required this.id,
@@ -7095,6 +8873,715 @@ final class MockTradeRepository implements TradeRepository {
   }
 
   @override
+  TradeComplaintSubmissionSnapshot getComplaintSubmission() {
+    return const TradeComplaintSubmissionSnapshot(
+      processTitle: 'Complaint Process',
+      processDescription:
+          "We'll acknowledge your complaint within 5 business days and "
+          'provide a final response within 8 weeks.',
+      categories: [
+        'Trade Execution',
+        'Account Management',
+        'Payments & Withdrawals',
+        'Customer Service',
+        'Fees & Charges',
+        'Other',
+      ],
+      subjectMinLength: 10,
+      subjectMaxLength: 100,
+      descriptionMinLength: 50,
+      descriptionMaxLength: 2000,
+      termsIntro:
+          'I confirm that the information provided is accurate and I understand:',
+      terms: [
+        'We will respond within 8 weeks',
+        'I can refer to the Financial Ombudsman if not satisfied',
+        'My complaint will be investigated fairly',
+      ],
+      confirmationComplaintId: 'COMP-2026-NEW',
+      endpoint: '/api/mobile/trade/trade-copy-trading-complaint-submission',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /copy-trading/follow|configure|stop where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeComplaintTrackingSnapshot getComplaintTracking({String? complaintId}) {
+    return TradeComplaintTrackingSnapshot(
+      complaintId: complaintId ?? 'undefined',
+      statusLabel: 'Under Review',
+      submittedLabel: 'Feb 15, 2026',
+      responseDueLabel: 'Apr 12, 2026',
+      daysRemaining: 34,
+      deadlineNotice:
+          'We must provide a final response by April 12, 2026 '
+          '(8 weeks from submission).',
+      timeline: _complaintTrackingTimeline,
+      actions: _complaintTrackingActions,
+      endpoint: '/api/mobile/trade/trade-copy-trading-complaint-tracking',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /copy-trading/follow|configure|stop where applicable',
+      supportedStates: const [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeOmbudsmanReferralSnapshot getOmbudsmanReferral() {
+    return const TradeOmbudsmanReferralSnapshot(
+      infoTitle: 'Free & Independent',
+      infoDescription:
+          'The Financial Ombudsman Service (FOS) is a free service that '
+          'settles complaints between consumers and financial businesses.',
+      eligibility: _ombudsmanEligibility,
+      contacts: _ombudsmanContacts,
+      processSteps: _ombudsmanProcessSteps,
+      ctaLabel: 'Visit FOS Website',
+      externalUrl: 'https://www.financial-ombudsman.org.uk',
+      endpoint: '/api/mobile/trade/trade-copy-trading-ombudsman-referral',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /copy-trading/follow|configure|stop where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeAuditTrailSnapshot getAuditTrail() {
+    return const TradeAuditTrailSnapshot(
+      noticeTitle: 'Complete Record-Keeping',
+      noticeDescription:
+          'All actions are logged for 7 years as required by MiFID II. '
+          'This audit trail is available for regulatory inspection.',
+      stats: _auditTrailStats,
+      searchPlaceholder: 'Search audit trail...',
+      tabs: _auditTrailTabs,
+      entries: _auditTrailEntries,
+      exportFormats: ['CSV', 'PDF'],
+      endpoint: '/api/mobile/trade/trade-copy-trading-audit-trail',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /copy-trading/follow|configure|stop where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeRegulatoryInspectionSnapshot getRegulatoryInspectionReady() {
+    return const TradeRegulatoryInspectionSnapshot(
+      complianceScore: 97,
+      scoreLabel: 'Overall Compliance Score',
+      readyTitle: 'Inspection Ready:',
+      readyDescription:
+          'All regulatory requirements met. Full documentation available '
+          'for FCA/ESMA inspection.',
+      stats: _regulatoryInspectionStats,
+      frameworks: _regulatoryFrameworks,
+      documents: _regulatoryDocuments,
+      portalTitle: 'Secure Inspector Portal',
+      portalDescription:
+          'FCA/ESMA inspectors can access all required documents through '
+          'our secure portal with audit logging.',
+      portalCta: 'Inspector Portal Access',
+      reportCta: 'Download Full Compliance Report (PDF)',
+      endpoint:
+          '/api/mobile/trade/trade-copy-trading-regulatory-inspection-ready',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /copy-trading/follow|configure|stop where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotTermsSnapshot getBotTermsOfService() {
+    return const TradeBotTermsSnapshot(
+      infoTitle: 'Legal Agreement Required',
+      infoDescription:
+          'You must read and accept these terms before using Trading Bots. '
+          'Scroll to the bottom to enable acceptance.',
+      title: 'Trading Bots Terms of Service',
+      lastUpdatedLabel: 'Last Updated: March 8, 2026',
+      sections: _botTermsSections,
+      acceptSectionLabel: 'Accept Terms',
+      scrollWarning:
+          'Please scroll to the bottom of the terms to enable acceptance.',
+      agreementTitle:
+          'I have read and agree to the Trading Bots Terms of Service',
+      agreementDescription:
+          'By checking this box, you acknowledge that you understand the '
+          'risks of automated trading and accept the terms outlined above.',
+      disabledCta: 'Read Terms to Continue',
+      enabledCta: 'Accept & Continue',
+      complianceTitle: 'Regulatory Compliance',
+      complianceDescription:
+          'These terms comply with MiFID II (EU), SEC regulations (US), '
+          'FCA guidelines (UK), and other applicable financial regulations. '
+          'Acceptance is recorded and auditable.',
+      endpoint: '/api/mobile/trade/trade-bots-terms-of-service',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotRiskDisclosureSnapshot getBotRiskDisclosure() {
+    return const TradeBotRiskDisclosureSnapshot(
+      highRiskTitle: 'HIGH RISK WARNING',
+      highRiskBody:
+          'Trading Bots are complex financial products involving significant '
+          'risk of loss. You may lose your entire investment. Only use '
+          'capital you can afford to lose completely.',
+      pastPerformanceTitle: 'Past Performance Disclaimer',
+      pastPerformanceBody:
+          'Backtest results and historical performance do not guarantee '
+          'future results. Market conditions change, and strategies that '
+          'worked in the past may fail in the future. Always assume actual '
+          'performance will be worse than backtests due to slippage, fees, '
+          'and execution delays.',
+      riskSectionLabel: 'Risk Categories',
+      categories: _botRiskCategories,
+      additionalWarningsLabel: 'Additional Warnings',
+      additionalWarnings: _botRiskWarnings,
+      regulatoryNoticeLabel: 'Regulatory Notice',
+      regulatoryTitle: 'MiFID II / ESMA / SEC Compliance',
+      regulatoryBody:
+          'Trading Bots are classified as complex financial products under '
+          'European (MiFID II) and US (SEC) regulations. You must complete '
+          'an appropriateness assessment to ensure you understand the risks '
+          'before using this service.',
+      regulatoryNotes: [
+        'EU residents: Subject to ESMA leverage limits and negative balance protection',
+        'US residents: May be restricted based on accredited investor status',
+        'UK residents: FCA appropriateness test required for complex products',
+      ],
+      acknowledgmentLabel: 'Acknowledgment',
+      acknowledgmentTitle: 'I acknowledge and accept all risks disclosed above',
+      acknowledgmentDescription:
+          'I understand that Trading Bots are high-risk, I may lose my '
+          'entire investment, and past performance does not guarantee future '
+          'results. I accept full responsibility for my trading decisions.',
+      disabledCta: 'Acknowledge Risks to Continue',
+      enabledCta: 'I Understand the Risks - Continue',
+      helpTitle: 'Need Help Understanding Risks?',
+      helpDescription:
+          "If you don't fully understand these risks, we recommend consulting "
+          'a financial advisor before proceeding.',
+      helpCta: 'View Risk Education Guide ->',
+      nextPath: '/trade/bots/suitability-assessment',
+      endpoint: '/api/mobile/trade/trade-bots-risk-disclosure',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotSuitabilityAssessmentSnapshot getBotSuitabilityAssessment() {
+    return const TradeBotSuitabilityAssessmentSnapshot(
+      questions: _botSuitabilityQuestions,
+      infoTitle: 'Why we ask:',
+      infoDescription:
+          'These questions help determine if Trading Bots are suitable for '
+          'your experience level and risk profile. Answer honestly for '
+          'accurate results.',
+      pass: TradeBotSuitabilityOutcomeCopy(
+        outcome: TradeBotSuitabilityOutcome.pass,
+        title: 'Suitable for Trading Bots',
+        message:
+            'Based on your responses, you have sufficient knowledge and risk '
+            'tolerance to use Trading Bots.',
+        recommendations: [
+          'You may use all bot strategies (DCA, Grid, Momentum, Martingale)',
+          'Still recommended to start with small amounts (\$100-500)',
+          'Monitor performance daily and adjust parameters as needed',
+        ],
+        ctaLabel: 'Continue to Trading Bots',
+      ),
+      warning: TradeBotSuitabilityOutcomeCopy(
+        outcome: TradeBotSuitabilityOutcome.warning,
+        title: 'Proceed with Caution',
+        message:
+            'You have some experience, but we recommend starting with small '
+            'amounts and simpler strategies like DCA. Avoid high-risk '
+            'strategies like Martingale.',
+        recommendations: [
+          'Start with DCA Bot only - avoid Grid and Martingale',
+          'Use small amounts (\$50-200 maximum per bot)',
+          'Complete the Bot Guide tutorial before creating your first bot',
+        ],
+        ctaLabel: 'Continue to Trading Bots',
+      ),
+      fail: TradeBotSuitabilityOutcomeCopy(
+        outcome: TradeBotSuitabilityOutcome.fail,
+        title: 'Not Recommended',
+        message:
+            'Based on your responses, Trading Bots may not be suitable for '
+            'you at this time. We recommend gaining more trading experience '
+            'and knowledge before using automated strategies.',
+        recommendations: [
+          'Not recommended to proceed at this time',
+          'Gain more manual trading experience first (3-6 months)',
+          'Review educational materials and retake assessment later',
+        ],
+        ctaLabel: 'Review Educational Materials',
+      ),
+      regulatoryTitle: 'Regulatory Compliance (MiFID II)',
+      regulatoryDescription:
+          'This appropriateness assessment is required under European '
+          'regulations for complex financial products. Your responses have '
+          'been recorded for compliance purposes.',
+      completionPath: '/trade/bots',
+      endpoint: '/api/mobile/trade/trade-bots-suitability-assessment',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotRiskDashboardSnapshot getBotRiskDashboard() {
+    return const TradeBotRiskDashboardSnapshot(
+      riskScore: 68,
+      riskLabel: 'Medium Risk',
+      riskMessage:
+          'Moderate risk detected. Consider reducing position sizes or '
+          'stopping high-risk bots.',
+      currentDrawdown: -15.2,
+      maxDrawdownLimit: -20,
+      dailyLoss: -127,
+      dailyLossLimit: -500,
+      totalExposure: 2500,
+      maxExposure: 5000,
+      var95: 178,
+      runningBots: 3,
+      drawdownPoints: _botRiskDrawdownPoints,
+      exposures: _botRiskExposures,
+      varHistory: _botRiskVarHistory,
+      safetyControls: _botRiskSafetyControls,
+      emergencyPath: '/trade/bots/emergency-stop',
+      endpoint: '/api/mobile/trade/trade-bots-risk-dashboard',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotEmergencyStopSnapshot getBotEmergencyStop() {
+    return const TradeBotEmergencyStopSnapshot(
+      warningTitle: 'EMERGENCY STOP',
+      warningDescription:
+          'This will immediately stop all running bots and cancel pending '
+          'orders. Use this only in emergency situations (market crash, '
+          'technical issues, unauthorized activity).',
+      bots: _botEmergencyStopBots,
+      reasons: _botEmergencyStopReasons,
+      closePositionsTitle: 'Also close all open positions (market sell)',
+      closePositionsDescription:
+          'WARNING: This will sell all holdings at market price. Only use if '
+          'you need to exit immediately. May incur slippage.',
+      confirmationTitle: 'I understand this is a destructive action',
+      confirmationDescription:
+          'All running bots will stop immediately. Pending orders will be '
+          'cancelled. This action cannot be undone. I take full '
+          'responsibility for this decision.',
+      supportTitle: 'Support Will Be Notified',
+      supportDescription:
+          'Our security team will be automatically notified of this emergency '
+          'stop for review and assistance. You will receive a confirmation '
+          'email within 5 minutes.',
+      completionPath: '/trade/bots',
+      endpoint: '/api/mobile/trade/trade-bots-emergency-stop',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.submitting,
+        TradeScreenState.success,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotSecuritySettingsSnapshot getBotSecuritySettings() {
+    return const TradeBotSecuritySettingsSnapshot(
+      twoFaEnabled: true,
+      apiKeys: _botSecurityApiKeys,
+      ipWhitelist: _botSecurityIpWhitelist,
+      recentActivity: _botSecurityRecentActivity,
+      securityTips: _botSecurityTips,
+      generatedApiKeyPreview: 'sk_live_vittrade_demo_122',
+      endpoint: '/api/mobile/trade/trade-bots-security-settings',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable; '
+          'PATCH /user/settings or module settings',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.submitting,
+        TradeScreenState.success,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotHistorySnapshot getBotHistory() {
+    return const TradeBotHistorySnapshot(
+      trades: _botHistoryTrades,
+      endpoint: '/api/mobile/trade/trade-bots-history',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotPerformanceAnalyticsSnapshot getBotPerformanceAnalytics() {
+    return const TradeBotPerformanceAnalyticsSnapshot(
+      metrics: TradeBotPerformanceMetrics(
+        totalPnl: 199.30,
+        winRate: 68.2,
+        sharpeRatio: 1.87,
+        avgWin: 12.30,
+        avgLoss: -8.50,
+        profitFactor: 2.14,
+        totalTrades: 96,
+        bestTrade: 42.80,
+        worstTrade: -24.50,
+      ),
+      pnlPoints: _botPerformancePnlPoints,
+      winLossPoints: _botPerformanceWinLossPoints,
+      strategyPerformance: _botStrategyPerformance,
+      durationDistribution: _botDurationDistribution,
+      endpoint: '/api/mobile/trade/trade-bots-performance-analytics',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotBacktestingSnapshot getBotBacktesting() {
+    return const TradeBotBacktestingSnapshot(
+      strategies: _botBacktestStrategies,
+      pairs: _botBacktestPairs,
+      dateRanges: _botBacktestDateRanges,
+      defaultStrategyId: 'grid',
+      defaultPair: 'BTC/USDT',
+      defaultDateRangeId: '6m',
+      defaultCapital: 1000,
+      endpoint: '/api/mobile/trade/trade-bots-backtesting',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable; '
+          'POST /bots/backtest/run',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.submitting,
+        TradeScreenState.success,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotStrategyCompareSnapshot getBotStrategyCompare() {
+    return const TradeBotStrategyCompareSnapshot(
+      strategies: _botCompareStrategies,
+      equityPoints: _botCompareEquityPoints,
+      recommendations: _botCompareRecommendations,
+      defaultSelectedIds: ['grid', 'momentum'],
+      analysisPeriod:
+          'All strategies backtested on BTC/USDT from Sep 2025 - Mar 2026 '
+          'with \$1,000 initial capital. Results assume same market '
+          'conditions - actual performance will vary.',
+      endpoint: '/api/mobile/trade/trade-bots-strategy-compare',
+      actionDraft:
+          'GET /bots/strategy-compare?strategies=grid,momentum; '
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotOptimizationSnapshot getBotOptimization() {
+    return const TradeBotOptimizationSnapshot(
+      targets: _botOptimizationTargets,
+      parameterRanges: _botOptimizationRanges,
+      steps: _botOptimizationSteps,
+      defaultTargetId: 'sharpe',
+      endpoint: '/api/mobile/trade/trade-bots-optimization',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable; '
+          'POST /bots/optimization/run',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.submitting,
+        TradeScreenState.success,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotPortfolioDashboardSnapshot getBotPortfolioDashboard() {
+    return const TradeBotPortfolioDashboardSnapshot(
+      summary: _botPortfolioSummary,
+      allocations: _botPortfolioAllocations,
+      equityPoints: _botPortfolioEquity,
+      correlations: _botPortfolioCorrelations,
+      healthItems: _botPortfolioHealthItems,
+      endpoint: '/api/mobile/trade/trade-bots-portfolio-dashboard',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotDrawdownAnalyzerSnapshot getBotDrawdownAnalyzer() {
+    return const TradeBotDrawdownAnalyzerSnapshot(
+      summary: _botDrawdownSummary,
+      underwaterPoints: _botUnderwaterPoints,
+      durationBuckets: _botDrawdownDurationBuckets,
+      events: _botDrawdownEvents,
+      insights: _botDrawdownInsights,
+      endpoint: '/api/mobile/trade/trade-bots-drawdown-analyzer',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotEquityCurveSnapshot getBotEquityCurve() {
+    return const TradeBotEquityCurveSnapshot(
+      summary: _botEquityCurveSummary,
+      equityPoints: _botEquityCurvePoints,
+      monthlyReturns: _botEquityMonthlyReturns,
+      performanceStats: _botEquityPerformanceStats,
+      analysisItems: _botEquityAnalysisItems,
+      endpoint: '/api/mobile/trade/trade-bots-equity-curve',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotGuideSnapshot getBotGuide() {
+    return const TradeBotGuideSnapshot(
+      strategies: _botGuideStrategies,
+      bestPractices: _botGuideBestPractices,
+      mistakes: _botGuideMistakes,
+      endpoint: '/api/mobile/trade/trade-bots-guide',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotFaqSnapshot getBotFaq() {
+    return const TradeBotFaqSnapshot(
+      categories: _botFaqCategories,
+      endpoint: '/api/mobile/trade/trade-bots-faq',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotTaxReportingSnapshot getBotTaxReporting() {
+    return const TradeBotTaxReportingSnapshot(
+      taxYears: ['2026', '2025', '2024', '2023'],
+      defaultYear: '2025',
+      defaultCostBasisMethod: 'FIFO',
+      summary: _botTaxSummary,
+      reportTypes: _botTaxReportTypes,
+      breakdown: _botTaxBreakdown,
+      taxNotes: _botTaxNotes,
+      endpoint: '/api/mobile/trade/trade-bots-tax-reporting',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable; '
+          'POST /exports',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
+  TradeBotApiDocumentationSnapshot getBotApiDocumentation() {
+    return const TradeBotApiDocumentationSnapshot(
+      tabs: [
+        TradeBotApiTab(id: 'endpoints', label: 'endpoints'),
+        TradeBotApiTab(id: 'websocket', label: 'websocket'),
+        TradeBotApiTab(id: 'examples', label: 'examples'),
+      ],
+      defaultView: 'endpoints',
+      defaultLanguage: 'javascript',
+      endpoints: _botApiEndpoints,
+      websocketUrl: 'wss://ws.tradingplatform.com/bots?apiKey=YOUR_API_KEY',
+      websocketEvents: _botApiWebSocketEvents,
+      codeExamples: _botApiCodeExamples,
+      rateLimits: _botApiRateLimits,
+      authenticationHeader: 'Authorization: Bearer YOUR_API_KEY',
+      endpoint: '/api/mobile/trade/trade-bots-api-documentation',
+      actionDraft:
+          'POST /trade/order-preview + POST /trade/orders; '
+          'POST /bots/create|pause|stop|optimize where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.realtimeRefresh,
+      ],
+    );
+  }
+
+  @override
   TradeSettings patchTradeSettings(TradeSettings settings) {
     return settings;
   }
@@ -7182,6 +9669,19 @@ final class MockTradeRepository implements TradeRepository {
       format: request.format,
       status: 'ready',
       downloadUrl: '/exports/EXP-TRADE-054.${request.format}',
+    );
+  }
+
+  @override
+  TradeBotTaxReportExportResult createBotTaxReportExport(
+    TradeBotTaxReportExportRequest request,
+  ) {
+    return TradeBotTaxReportExportResult(
+      status: request.reportTypeIds.isEmpty ? 'blocked' : 'ready',
+      year: request.year,
+      reportCount: request.reportTypeIds.length,
+      exportId:
+          'BOT-TAX-${request.year}-${request.costBasisMethod.toUpperCase()}',
     );
   }
 
@@ -7299,6 +9799,58 @@ final class MockTradeRepository implements TradeRepository {
       botId: request.botId,
       action: request.action,
       status: 'accepted',
+    );
+  }
+
+  @override
+  TradeBotEmergencyStopResult submitBotEmergencyStop(
+    TradeBotEmergencyStopDraft draft,
+  ) {
+    final snapshot = getBotEmergencyStop();
+    return TradeBotEmergencyStopResult(
+      status: draft.confirmed ? 'accepted' : 'rejected',
+      stoppedBotCount: draft.confirmed ? snapshot.bots.length : 0,
+      redirectPath: snapshot.completionPath,
+    );
+  }
+
+  @override
+  TradeBotSecuritySettingsResult patchBotSecuritySettings(
+    TradeBotSecuritySettingsDraft draft,
+  ) {
+    return TradeBotSecuritySettingsResult(
+      status: 'saved',
+      twoFaEnabled: draft.twoFaEnabled,
+    );
+  }
+
+  @override
+  TradeBotHistoryExportResult createBotHistoryExport(
+    TradeBotHistoryExportRequest request,
+  ) {
+    return TradeBotHistoryExportResult(
+      status: 'ready',
+      downloadUrl: '/exports/BOT-HISTORY-123.${request.format}',
+    );
+  }
+
+  @override
+  TradeBotBacktestResult runBotBacktest(TradeBotBacktestRequest request) {
+    return const TradeBotBacktestResult(
+      status: 'queued',
+      reportId: 'BOT-BACKTEST-125',
+      progress: 0,
+    );
+  }
+
+  @override
+  TradeBotOptimizationResult runBotOptimization(
+    TradeBotOptimizationRequest request,
+  ) {
+    return const TradeBotOptimizationResult(
+      status: 'queued',
+      jobId: 'BOT-OPT-127',
+      estimatedMinutes: 3,
     );
   }
 
@@ -12521,6 +15073,2354 @@ const List<TradeComplaintProcessStep> _complaintProcessSteps = [
         "If you're not satisfied, you can refer to the Financial Ombudsman "
         'Service (free)',
   ),
+];
+
+const List<TradeComplaintTrackingStep> _complaintTrackingTimeline = [
+  TradeComplaintTrackingStep(
+    title: 'Complaint Submitted',
+    description: 'Your complaint has been received',
+    dateLabel: 'February 15, 2026',
+    state: TradeComplaintTrackingStepState.completed,
+  ),
+  TradeComplaintTrackingStep(
+    title: 'Acknowledgement Sent',
+    description: 'We acknowledged your complaint within 5 business days',
+    dateLabel: 'February 16, 2026',
+    state: TradeComplaintTrackingStepState.completed,
+  ),
+  TradeComplaintTrackingStep(
+    title: 'Investigation Started',
+    description: 'Our compliance team is investigating',
+    dateLabel: 'February 20, 2026',
+    state: TradeComplaintTrackingStepState.completed,
+  ),
+  TradeComplaintTrackingStep(
+    title: 'Under Review',
+    description: 'Currently reviewing evidence and preparing response',
+    dateLabel: 'March 10, 2026',
+    state: TradeComplaintTrackingStepState.current,
+  ),
+  TradeComplaintTrackingStep(
+    title: 'Final Response',
+    description: 'Deadline for our final response',
+    dateLabel: 'April 12, 2026',
+    state: TradeComplaintTrackingStepState.pending,
+  ),
+];
+
+const List<TradeComplaintTrackingAction> _complaintTrackingActions = [
+  TradeComplaintTrackingAction(
+    id: 'add-info',
+    label: 'Add Information',
+    icon: TradeComplaintTrackingActionIcon.message,
+  ),
+  TradeComplaintTrackingAction(
+    id: 'correspondence',
+    label: 'View Correspondence',
+    icon: TradeComplaintTrackingActionIcon.document,
+  ),
+  TradeComplaintTrackingAction(
+    id: 'ombudsman',
+    label: 'Ombudsman Referral Info',
+    icon: TradeComplaintTrackingActionIcon.warning,
+    routePath: '/trade/copy-trading/ombudsman-referral',
+  ),
+];
+
+const List<TradeOmbudsmanEligibility> _ombudsmanEligibility = [
+  TradeOmbudsmanEligibility(
+    title: 'After 8 Weeks',
+    description: "If we haven't sent you a final response within 8 weeks",
+  ),
+  TradeOmbudsmanEligibility(
+    title: 'Not Satisfied',
+    description: "If you're not satisfied with our final response",
+  ),
+  TradeOmbudsmanEligibility(
+    title: 'Within 6 Months',
+    description: 'You must refer within 6 months of our final response',
+  ),
+];
+
+const List<TradeOmbudsmanContact> _ombudsmanContacts = [
+  TradeOmbudsmanContact(
+    label: 'Phone',
+    value: '0800 023 4567',
+    detail: 'Monday to Friday, 8am to 8pm - Saturday, 9am to 1pm',
+    icon: TradeOmbudsmanContactIcon.phone,
+  ),
+  TradeOmbudsmanContact(
+    label: 'Website',
+    value: 'www.financial-ombudsman.org.uk',
+    icon: TradeOmbudsmanContactIcon.website,
+  ),
+  TradeOmbudsmanContact(
+    label: 'Address',
+    value: 'Financial Ombudsman Service\nExchange Tower\nLondon E14 9SR',
+    icon: TradeOmbudsmanContactIcon.address,
+  ),
+];
+
+const List<TradeOmbudsmanProcessStep> _ombudsmanProcessSteps = [
+  TradeOmbudsmanProcessStep(
+    step: 1,
+    title: 'Submit Your Complaint',
+    description: 'Contact FOS with your complaint details',
+  ),
+  TradeOmbudsmanProcessStep(
+    step: 2,
+    title: 'FOS Reviews',
+    description: 'They review both sides of the story',
+  ),
+  TradeOmbudsmanProcessStep(
+    step: 3,
+    title: 'Investigation',
+    description: 'Independent investigation of the facts',
+  ),
+  TradeOmbudsmanProcessStep(
+    step: 4,
+    title: 'Decision',
+    description: 'FOS makes a binding decision (for us, not you)',
+  ),
+];
+
+const List<TradeAuditStat> _auditTrailStats = [
+  TradeAuditStat(label: 'Total Events', value: '3'),
+  TradeAuditStat(label: 'Today', value: '12'),
+  TradeAuditStat(label: 'Retention', value: '7yr', emphasized: true),
+];
+
+const List<TradeAuditTab> _auditTrailTabs = [
+  TradeAuditTab(id: 'all', label: 'All Events'),
+  TradeAuditTab(id: 'trades', label: 'Trades'),
+  TradeAuditTab(id: 'compliance', label: 'Compliance'),
+  TradeAuditTab(id: 'client', label: 'Client Actions'),
+];
+
+const List<TradeAuditEntry> _auditTrailEntries = [
+  TradeAuditEntry(
+    id: 'AUD-2026-001234',
+    timestampLabel: '3/8/2026, 9:23:15 PM',
+    category: TradeAuditCategory.trade,
+    categoryLabel: 'Trade',
+    action: 'Order Executed',
+    details: 'BUY 0.5 BTC @ \$65,234.50 (Mirror copy from Provider #123)',
+    user: 'user@example.com',
+    ipAddress: '192.168.1.1',
+  ),
+  TradeAuditEntry(
+    id: 'AUD-2026-001233',
+    timestampLabel: '3/8/2026, 9:20:00 PM',
+    category: TradeAuditCategory.compliance,
+    categoryLabel: 'Compliance',
+    action: 'Suitability Assessment Passed',
+    details: 'Risk tolerance: High, Knowledge: Advanced, Portfolio: \u20ac50k+',
+    user: 'user@example.com',
+    ipAddress: '192.168.1.1',
+  ),
+  TradeAuditEntry(
+    id: 'AUD-2026-001232',
+    timestampLabel: '3/8/2026, 9:15:30 PM',
+    category: TradeAuditCategory.clientAction,
+    categoryLabel: 'Client Action',
+    action: 'Copy Trading Activated',
+    details: 'Provider #123 (Conservative Crypto) - Allocation: 30%',
+    user: 'user@example.com',
+    ipAddress: '192.168.1.1',
+  ),
+];
+
+const List<TradeRegulatoryInspectionStat> _regulatoryInspectionStats = [
+  TradeRegulatoryInspectionStat(
+    label: 'Documents',
+    value: '10',
+    icon: TradeRegulatoryInspectionStatIcon.documents,
+  ),
+  TradeRegulatoryInspectionStat(
+    label: 'Clients',
+    value: '3.4k',
+    icon: TradeRegulatoryInspectionStatIcon.clients,
+  ),
+  TradeRegulatoryInspectionStat(
+    label: 'Audit Logs',
+    value: '45k',
+    icon: TradeRegulatoryInspectionStatIcon.auditLogs,
+  ),
+  TradeRegulatoryInspectionStat(
+    label: 'Retention',
+    value: '7yr',
+    icon: TradeRegulatoryInspectionStatIcon.retention,
+  ),
+];
+
+const List<TradeRegulatoryFramework> _regulatoryFrameworks = [
+  TradeRegulatoryFramework(
+    name: 'MiFID II',
+    compliance: 98,
+    requirements: [
+      'Client categorization',
+      'Suitability assessment',
+      'Best execution',
+      'Transaction reporting',
+      'Record-keeping (7 years)',
+      'Complaints handling',
+    ],
+  ),
+  TradeRegulatoryFramework(
+    name: 'PRIIPs Regulation',
+    compliance: 100,
+    requirements: [
+      'KID document',
+      'Ex-ante cost disclosure',
+      'Ex-post reporting',
+      'Performance scenarios',
+      'Risk indicator (SRI)',
+    ],
+  ),
+  TradeRegulatoryFramework(
+    name: 'FCA CASS 7',
+    compliance: 100,
+    requirements: [
+      'Segregated client money',
+      'Daily reconciliation',
+      'Client money letters',
+      'Insolvency protection',
+    ],
+  ),
+  TradeRegulatoryFramework(
+    name: 'FCA DISP',
+    compliance: 95,
+    requirements: [
+      'Complaints procedure',
+      '8-week resolution',
+      'FOS referral rights',
+      'Annual reporting',
+    ],
+  ),
+];
+
+const List<TradeRegulatoryDocument> _regulatoryDocuments = [
+  TradeRegulatoryDocument(
+    name: 'Transaction Reports (ARM)',
+    countLabel: '1,247 records',
+    status: 'Ready',
+  ),
+  TradeRegulatoryDocument(
+    name: 'Best Execution Reports',
+    countLabel: '52 records',
+    status: 'Ready',
+  ),
+  TradeRegulatoryDocument(
+    name: 'Client Categorization Records',
+    countLabel: '3,421 records',
+    status: 'Ready',
+  ),
+  TradeRegulatoryDocument(
+    name: 'Suitability Assessments',
+    countLabel: '2,890 records',
+    status: 'Ready',
+  ),
+  TradeRegulatoryDocument(
+    name: 'KID Documents',
+    countLabel: '15 records',
+    status: 'Ready',
+  ),
+  TradeRegulatoryDocument(
+    name: 'Cost Disclosures (Ex-Ante)',
+    countLabel: '2,890 records',
+    status: 'Ready',
+  ),
+  TradeRegulatoryDocument(
+    name: 'Cost Reports (Ex-Post)',
+    countLabel: '1,834 records',
+    status: 'Ready',
+  ),
+  TradeRegulatoryDocument(
+    name: 'CASS Reconciliations',
+    countLabel: '365 records',
+    status: 'Ready',
+  ),
+  TradeRegulatoryDocument(
+    name: 'Complaints Records',
+    countLabel: '127 records',
+    status: 'Ready',
+  ),
+  TradeRegulatoryDocument(
+    name: 'Audit Trail Logs',
+    countLabel: '45,892 records',
+    status: 'Ready',
+  ),
+];
+
+const List<TradeBotTermsSection> _botTermsSections = [
+  TradeBotTermsSection(
+    title: '1. Acceptance of Terms',
+    paragraphs: [
+      'By using our Trading Bots service ("Service"), you agree to be bound '
+          'by these Terms of Service ("Terms"). If you do not agree to these '
+          'Terms, you must not use the Service.',
+      'These Terms constitute a legally binding agreement between you and the '
+          'Company. Your use of automated trading algorithms is subject to '
+          'additional regulatory requirements which you acknowledge and accept.',
+    ],
+  ),
+  TradeBotTermsSection(
+    title: '2. No Profit Guarantee',
+    warningTitle: 'CRITICAL WARNING:',
+    warningBody:
+        'Trading Bots do NOT guarantee profits. Past performance does not '
+        'predict future results. You may lose some or all of your invested '
+        'capital.',
+    paragraphs: [
+      'Automated trading carries significant risk. Market conditions, '
+          'volatility, liquidity, technical failures, and other factors can '
+          'result in substantial losses. You should only invest capital you '
+          'can afford to lose entirely.',
+    ],
+  ),
+  TradeBotTermsSection(
+    title: '3. Risk Acknowledgment',
+    paragraphs: ['You acknowledge and accept the following risks:'],
+    bullets: [
+      'Market Risk: Cryptocurrency markets are highly volatile.',
+      'Liquidity Risk: Orders may not execute at desired prices.',
+      'Slippage Risk: Execution prices may differ from expected prices.',
+      'Technical Risk: System failures may cause unexpected behavior.',
+    ],
+  ),
+  TradeBotTermsSection(
+    title: '4. User Responsibilities',
+    paragraphs: [
+      'You are solely responsible for configuring bot parameters, monitoring '
+          'performance, maintaining sufficient balance, understanding each '
+          'strategy, and complying with applicable laws.',
+    ],
+  ),
+  TradeBotTermsSection(
+    title: '5. Liability Limitation',
+    paragraphs: [
+      'To the maximum extent permitted by law, the Company shall not be liable '
+          'for trading losses, inaccurate projections, downtime, exchange '
+          'failures, or regulatory changes affecting your trading ability.',
+    ],
+  ),
+  TradeBotTermsSection(
+    title: '6. Service Modifications & Termination',
+    paragraphs: [
+      'We reserve the right to modify, suspend, or terminate the Service at '
+          'any time to comply with regulations or protect user interests.',
+    ],
+  ),
+  TradeBotTermsSection(
+    title: '7. Dispute Resolution',
+    paragraphs: [
+      'Any disputes arising from these Terms or your use of the Service shall '
+          'be resolved through binding arbitration in accordance with the '
+          'applicable rules.',
+    ],
+  ),
+  TradeBotTermsSection(
+    title: '8. Regulatory Compliance',
+    paragraphs: [
+      'Trading Bots may be classified as complex financial products under '
+          'MiFID II, requiring appropriateness assessment and local compliance.',
+    ],
+  ),
+  TradeBotTermsSection(
+    title: '9. Data Usage & Privacy',
+    paragraphs: [
+      'We collect and process trading data, bot performance metrics, and '
+          'account information to provide and improve the Service.',
+    ],
+  ),
+  TradeBotTermsSection(
+    title: '10. Contact Information',
+    paragraphs: [
+      'For questions about these Terms, contact legal@tradingplatform.com or '
+          'support@tradingplatform.com.',
+    ],
+  ),
+];
+
+const List<TradeBotRiskCategory> _botRiskCategories = [
+  TradeBotRiskCategory(
+    id: 'market',
+    kind: TradeBotRiskKind.market,
+    title: 'Market Volatility Risk',
+    description:
+        'Cryptocurrency markets are extremely volatile and can move rapidly '
+        'against your positions.',
+    examples: [
+      'Bitcoin dropped 30% in a single day during flash crashes',
+      'Altcoins can lose 50-90% of value in bear markets',
+      'News events can cause sudden price swings of 10-20% in minutes',
+    ],
+    mitigation:
+        'Use stop-loss orders, diversify across assets, and never invest '
+        'more than you can afford to lose.',
+  ),
+  TradeBotRiskCategory(
+    id: 'leverage',
+    kind: TradeBotRiskKind.leverage,
+    title: 'Leverage & Martingale Risk',
+    description:
+        'Strategies that increase position size (like Martingale) can '
+        'amplify losses exponentially.',
+    examples: [
+      'Martingale can require 10x initial capital after 3-4 consecutive losses',
+      'Liquidation can occur if market moves against you before recovery',
+      'Compound losses can exceed total account balance',
+    ],
+    mitigation:
+        'Set strict maximum position size limits, use conservative '
+        'multipliers, and monitor drawdown closely.',
+  ),
+  TradeBotRiskCategory(
+    id: 'liquidity',
+    kind: TradeBotRiskKind.liquidity,
+    title: 'Liquidity & Slippage Risk',
+    description:
+        'Low liquidity markets may not execute your orders at expected prices.',
+    examples: [
+      'Limit orders may not fill during volatile periods',
+      'Market orders can execute 2-5% worse than displayed price',
+      'Large orders can move the market against you',
+    ],
+    mitigation:
+        'Trade liquid pairs (BTC/USDT, ETH/USDT), use limit orders, and '
+        'split large orders into smaller chunks.',
+  ),
+  TradeBotRiskCategory(
+    id: 'technical',
+    kind: TradeBotRiskKind.technical,
+    title: 'Technical Failure Risk',
+    description:
+        'System bugs, network issues, or exchange downtime can cause '
+        'unexpected bot behavior.',
+    examples: [
+      'Exchange API failures can prevent bot execution',
+      'Network latency can cause missed opportunities or double orders',
+      'Software bugs may execute unintended trades',
+    ],
+    mitigation:
+        'Enable emergency stop alerts, monitor bot activity regularly, and '
+        'test strategies in demo mode first.',
+  ),
+  TradeBotRiskCategory(
+    id: 'timing',
+    kind: TradeBotRiskKind.timing,
+    title: 'Execution & Timing Risk',
+    description:
+        'Delays between signal generation and order execution can reduce '
+        'profitability.',
+    examples: [
+      'Backtest results assume instant execution (unrealistic)',
+      'Real trading incurs 0.1-1 second delays affecting entry/exit prices',
+      'High-frequency strategies are most sensitive to timing issues',
+    ],
+    mitigation:
+        'Account for realistic execution delays in backtests, avoid '
+        'over-optimized strategies, and use VPS for stable connectivity.',
+  ),
+  TradeBotRiskCategory(
+    id: 'regulatory',
+    kind: TradeBotRiskKind.regulatory,
+    title: 'Regulatory & Legal Risk',
+    description:
+        'Changes in regulations may affect your ability to trade or access '
+        'funds.',
+    examples: [
+      'Automated trading may be restricted in certain jurisdictions',
+      'KYC/AML requirements can freeze withdrawals pending verification',
+      'Tax reporting obligations apply to all bot trades',
+    ],
+    mitigation:
+        'Ensure compliance with local laws, keep detailed trade records, and '
+        'consult a tax professional.',
+  ),
+];
+
+const List<TradeBotRiskWarning> _botRiskWarnings = [
+  TradeBotRiskWarning(
+    title: 'No Guarantee of Profit',
+    text:
+        'Bots can lose money consistently. A strategy that works in '
+        'backtests may fail in live trading due to changing market conditions.',
+  ),
+  TradeBotRiskWarning(
+    title: 'Fees Compound Losses',
+    text:
+        'Every trade incurs exchange fees (0.1-0.5%). High-frequency bots can '
+        'lose money purely from fees even if price moves are neutral.',
+  ),
+  TradeBotRiskWarning(
+    title: 'Market Manipulation',
+    text:
+        'Cryptocurrency markets are less regulated and more susceptible to '
+        'manipulation, wash trading, and pump-and-dump schemes.',
+  ),
+  TradeBotRiskWarning(
+    title: 'Account Liquidation',
+    text:
+        'If using margin or leverage, your entire account can be liquidated '
+        'if the market moves against you before stop-loss triggers.',
+  ),
+  TradeBotRiskWarning(
+    title: 'No Recourse for Losses',
+    text:
+        'Unlike traditional finance, crypto trading is largely uninsured. '
+        'Lost funds cannot be recovered through deposit insurance schemes.',
+  ),
+];
+
+const List<TradeBotSuitabilityQuestion> _botSuitabilityQuestions = [
+  TradeBotSuitabilityQuestion(
+    id: 'q1',
+    category: TradeBotSuitabilityCategory.experience,
+    question: 'How long have you been trading cryptocurrencies?',
+    options: [
+      TradeBotSuitabilityOption(
+        id: 'a',
+        text: 'Never traded before / Less than 3 months',
+        score: 0,
+      ),
+      TradeBotSuitabilityOption(id: 'b', text: '3-12 months', score: 1),
+      TradeBotSuitabilityOption(id: 'c', text: '1-3 years', score: 2),
+      TradeBotSuitabilityOption(id: 'd', text: 'More than 3 years', score: 3),
+    ],
+  ),
+  TradeBotSuitabilityQuestion(
+    id: 'q2',
+    category: TradeBotSuitabilityCategory.experience,
+    question: 'Have you ever used trading bots or algorithmic trading before?',
+    options: [
+      TradeBotSuitabilityOption(
+        id: 'a',
+        text: 'No, this is my first time',
+        score: 0,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'b',
+        text: 'Yes, but only in demo/paper trading',
+        score: 1,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'c',
+        text: 'Yes, with real money for less than 6 months',
+        score: 2,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'd',
+        text: 'Yes, extensively with real money for over 6 months',
+        score: 3,
+      ),
+    ],
+  ),
+  TradeBotSuitabilityQuestion(
+    id: 'q3',
+    category: TradeBotSuitabilityCategory.knowledge,
+    question: 'Do you understand how Grid Bots work?',
+    options: [
+      TradeBotSuitabilityOption(
+        id: 'a',
+        text: "No, I don't know what a Grid Bot is",
+        score: 0,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'b',
+        text: 'Slightly - I have a basic idea',
+        score: 1,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'c',
+        text: 'Yes - I understand the concept and risks',
+        score: 2,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'd',
+        text: 'Expert - I can explain it and have used it before',
+        score: 3,
+      ),
+    ],
+  ),
+  TradeBotSuitabilityQuestion(
+    id: 'q4',
+    category: TradeBotSuitabilityCategory.knowledge,
+    question: 'Do you understand what "slippage" means in trading?',
+    options: [
+      TradeBotSuitabilityOption(
+        id: 'a',
+        text: 'No, never heard of it',
+        score: 0,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'b',
+        text: "Vaguely - I've seen the term but not sure what it means",
+        score: 1,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'c',
+        text:
+            "Yes - I know it's the difference between expected and actual price",
+        score: 2,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'd',
+        text: 'Expert - I know how to mitigate slippage',
+        score: 3,
+      ),
+    ],
+  ),
+  TradeBotSuitabilityQuestion(
+    id: 'q5',
+    category: TradeBotSuitabilityCategory.risk,
+    question:
+        'What percentage of your total savings/investments are you planning '
+        'to allocate to trading bots?',
+    options: [
+      TradeBotSuitabilityOption(
+        id: 'a',
+        text: 'More than 50% of my total savings',
+        score: 0,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'b',
+        text: '20-50% of my total savings',
+        score: 1,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'c',
+        text: '5-20% of my total savings',
+        score: 2,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'd',
+        text: 'Less than 5% - only money I can afford to lose',
+        score: 3,
+      ),
+    ],
+  ),
+  TradeBotSuitabilityQuestion(
+    id: 'q6',
+    category: TradeBotSuitabilityCategory.risk,
+    question:
+        'If your bot lost 30% of its value in one week, what would you do?',
+    options: [
+      TradeBotSuitabilityOption(
+        id: 'a',
+        text: 'Panic and sell immediately',
+        score: 0,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'b',
+        text: 'Feel very uncomfortable but hold',
+        score: 1,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'c',
+        text: 'Accept it as normal volatility and continue',
+        score: 2,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'd',
+        text: 'See it as a buying opportunity and add more',
+        score: 3,
+      ),
+    ],
+  ),
+  TradeBotSuitabilityQuestion(
+    id: 'q7',
+    category: TradeBotSuitabilityCategory.financial,
+    question: 'What is your primary investment goal with trading bots?',
+    options: [
+      TradeBotSuitabilityOption(
+        id: 'a',
+        text: 'Get rich quick / Double my money fast',
+        score: 0,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'b',
+        text: 'Earn steady income to replace my salary',
+        score: 1,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'c',
+        text: 'Long-term wealth accumulation over years',
+        score: 2,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'd',
+        text: 'Experiment and learn, with small capital',
+        score: 3,
+      ),
+    ],
+  ),
+  TradeBotSuitabilityQuestion(
+    id: 'q8',
+    category: TradeBotSuitabilityCategory.knowledge,
+    question:
+        'Do you understand the difference between DCA, Grid, and Martingale '
+        'strategies?',
+    options: [
+      TradeBotSuitabilityOption(
+        id: 'a',
+        text: "No, I don't know any of them",
+        score: 0,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'b',
+        text: 'I know DCA but not the others',
+        score: 1,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'c',
+        text: 'I understand all three conceptually',
+        score: 2,
+      ),
+      TradeBotSuitabilityOption(
+        id: 'd',
+        text: 'Expert - I know when to use each strategy',
+        score: 3,
+      ),
+    ],
+  ),
+];
+
+const List<TradeBotDrawdownPoint> _botRiskDrawdownPoints = [
+  TradeBotDrawdownPoint(label: '00:00', value: 0),
+  TradeBotDrawdownPoint(label: '04:00', value: -2.3),
+  TradeBotDrawdownPoint(label: '08:00', value: -5.1),
+  TradeBotDrawdownPoint(label: '12:00', value: -8.4),
+  TradeBotDrawdownPoint(label: '16:00', value: -12.2),
+  TradeBotDrawdownPoint(label: '20:00', value: -15.2),
+  TradeBotDrawdownPoint(label: 'Now', value: -15.2),
+];
+
+const List<TradeBotExposure> _botRiskExposures = [
+  TradeBotExposure(
+    asset: 'BTC',
+    exposure: 1250,
+    percentage: 50,
+    colorHex: 0xFFF7931A,
+  ),
+  TradeBotExposure(
+    asset: 'ETH',
+    exposure: 750,
+    percentage: 30,
+    colorHex: 0xFF627EEA,
+  ),
+  TradeBotExposure(
+    asset: 'SOL',
+    exposure: 500,
+    percentage: 20,
+    colorHex: 0xFF14F195,
+  ),
+];
+
+const List<TradeBotVarPoint> _botRiskVarHistory = [
+  TradeBotVarPoint(label: 'Mon', value: 142),
+  TradeBotVarPoint(label: 'Tue', value: 156),
+  TradeBotVarPoint(label: 'Wed', value: 134),
+  TradeBotVarPoint(label: 'Thu', value: 167),
+  TradeBotVarPoint(label: 'Fri', value: 189),
+  TradeBotVarPoint(label: 'Sat', value: 201),
+  TradeBotVarPoint(label: 'Sun', value: 178),
+];
+
+const List<TradeBotSafetyControl> _botRiskSafetyControls = [
+  TradeBotSafetyControl(label: 'Drawdown limit', value: '-20%'),
+  TradeBotSafetyControl(label: 'Daily loss limit', value: '-\$500'),
+  TradeBotSafetyControl(label: 'Max position size', value: '\$1,000'),
+  TradeBotSafetyControl(label: 'Emergency stop', value: 'Enabled'),
+];
+
+const List<TradeBotEmergencyBot> _botEmergencyStopBots = [
+  TradeBotEmergencyBot(
+    id: 'bot1',
+    name: 'DCA Bot #1',
+    pair: 'BTC/USDT',
+    profit: 84.20,
+    statusLabel: 'Running',
+  ),
+  TradeBotEmergencyBot(
+    id: 'bot2',
+    name: 'Grid Bot #1',
+    pair: 'ETH/USDT',
+    profit: 127.40,
+    statusLabel: 'Running',
+  ),
+  TradeBotEmergencyBot(
+    id: 'bot3',
+    name: 'Momentum Bot #1',
+    pair: 'SOL/USDT',
+    profit: -12.30,
+    statusLabel: 'Running',
+  ),
+];
+
+const List<TradeBotEmergencyReason> _botEmergencyStopReasons = [
+  TradeBotEmergencyReason(
+    id: 'crash',
+    label: 'Market crash / extreme volatility',
+    iconName: 'crash',
+  ),
+  TradeBotEmergencyReason(
+    id: 'bug',
+    label: 'Technical bug / unexpected behavior',
+    iconName: 'bug',
+  ),
+  TradeBotEmergencyReason(
+    id: 'unauthorized',
+    label: 'Unauthorized access detected',
+    iconName: 'unauthorized',
+  ),
+  TradeBotEmergencyReason(
+    id: 'drawdown',
+    label: 'Drawdown limit approaching',
+    iconName: 'drawdown',
+  ),
+  TradeBotEmergencyReason(
+    id: 'other',
+    label: 'Other reason',
+    iconName: 'other',
+  ),
+];
+
+const List<TradeBotApiKey> _botSecurityApiKeys = [
+  TradeBotApiKey(
+    id: '1',
+    name: 'Trading Bot Key #1',
+    permissions: 'Trade + Read',
+    lastUsed: '2 hours ago',
+    created: '2026-01-15',
+  ),
+  TradeBotApiKey(
+    id: '2',
+    name: 'Analytics Key',
+    permissions: 'Read Only',
+    lastUsed: '1 day ago',
+    created: '2026-02-20',
+  ),
+];
+
+const List<TradeBotIpWhitelistEntry> _botSecurityIpWhitelist = [
+  TradeBotIpWhitelistEntry(
+    id: '1',
+    ip: '192.168.1.100',
+    label: 'Home Network',
+    added: '2026-03-01',
+  ),
+  TradeBotIpWhitelistEntry(
+    id: '2',
+    ip: '203.0.113.42',
+    label: 'VPS Server',
+    added: '2026-03-05',
+  ),
+];
+
+const List<TradeBotSecurityActivity> _botSecurityRecentActivity = [
+  TradeBotSecurityActivity(
+    id: '1',
+    action: 'Bot created: DCA Bot #1',
+    time: '2 hours ago',
+    status: TradeBotSecurityActivityStatus.success,
+  ),
+  TradeBotSecurityActivity(
+    id: '2',
+    action: 'API key generated',
+    time: '1 day ago',
+    status: TradeBotSecurityActivityStatus.success,
+  ),
+  TradeBotSecurityActivity(
+    id: '3',
+    action: 'Failed login attempt',
+    time: '3 days ago',
+    status: TradeBotSecurityActivityStatus.warning,
+  ),
+  TradeBotSecurityActivity(
+    id: '4',
+    action: 'Bot stopped: Grid Bot #2',
+    time: '5 days ago',
+    status: TradeBotSecurityActivityStatus.success,
+  ),
+];
+
+const List<String> _botSecurityTips = [
+  'Never share your API keys with anyone',
+  'Use Read-Only keys for analytics, Trade keys only for bots',
+  'Restrict API access to specific IP addresses',
+  'Enable 2FA for all bot-related actions',
+  'Regularly review activity log for suspicious behavior',
+];
+
+const List<TradeBotHistoryTrade> _botHistoryTrades = [
+  TradeBotHistoryTrade(
+    id: 't1',
+    timestamp: '2026-03-08 14:32:15',
+    botName: 'DCA Bot #1',
+    strategy: 'DCA',
+    pair: 'BTC/USDT',
+    side: TradeBotHistorySide.buy,
+    qty: 0.001,
+    price: 68450,
+    fee: 0.034,
+    pnl: 0,
+    status: 'filled',
+  ),
+  TradeBotHistoryTrade(
+    id: 't2',
+    timestamp: '2026-03-08 13:15:08',
+    botName: 'Grid Bot #1',
+    strategy: 'Grid',
+    pair: 'ETH/USDT',
+    side: TradeBotHistorySide.sell,
+    qty: 0.05,
+    price: 3850,
+    fee: 0.096,
+    pnl: 12.50,
+    status: 'filled',
+  ),
+  TradeBotHistoryTrade(
+    id: 't3',
+    timestamp: '2026-03-08 12:00:42',
+    botName: 'Grid Bot #1',
+    strategy: 'Grid',
+    pair: 'ETH/USDT',
+    side: TradeBotHistorySide.buy,
+    qty: 0.05,
+    price: 3800,
+    fee: 0.095,
+    pnl: 0,
+    status: 'filled',
+  ),
+  TradeBotHistoryTrade(
+    id: 't4',
+    timestamp: '2026-03-08 10:45:30',
+    botName: 'Momentum Bot #1',
+    strategy: 'Momentum',
+    pair: 'SOL/USDT',
+    side: TradeBotHistorySide.buy,
+    qty: 5,
+    price: 142.30,
+    fee: 0.356,
+    pnl: 0,
+    status: 'filled',
+  ),
+  TradeBotHistoryTrade(
+    id: 't5',
+    timestamp: '2026-03-08 09:20:15',
+    botName: 'DCA Bot #1',
+    strategy: 'DCA',
+    pair: 'BTC/USDT',
+    side: TradeBotHistorySide.buy,
+    qty: 0.001,
+    price: 68200,
+    fee: 0.034,
+    pnl: 0,
+    status: 'filled',
+  ),
+  TradeBotHistoryTrade(
+    id: 't6',
+    timestamp: '2026-03-07 18:30:22',
+    botName: 'Grid Bot #1',
+    strategy: 'Grid',
+    pair: 'ETH/USDT',
+    side: TradeBotHistorySide.sell,
+    qty: 0.05,
+    price: 3820,
+    fee: 0.096,
+    pnl: 8.75,
+    status: 'filled',
+  ),
+  TradeBotHistoryTrade(
+    id: 't7',
+    timestamp: '2026-03-07 16:15:10',
+    botName: 'Momentum Bot #1',
+    strategy: 'Momentum',
+    pair: 'SOL/USDT',
+    side: TradeBotHistorySide.sell,
+    qty: 5,
+    price: 138.50,
+    fee: 0.346,
+    pnl: -19.75,
+    status: 'filled',
+  ),
+];
+
+const List<TradeBotPnlPoint> _botPerformancePnlPoints = [
+  TradeBotPnlPoint(date: 'Mar 1', pnl: 12.5),
+  TradeBotPnlPoint(date: 'Mar 2', pnl: 28.3),
+  TradeBotPnlPoint(date: 'Mar 3', pnl: 45.7),
+  TradeBotPnlPoint(date: 'Mar 4', pnl: 32.1),
+  TradeBotPnlPoint(date: 'Mar 5', pnl: 58.9),
+  TradeBotPnlPoint(date: 'Mar 6', pnl: 91.2),
+  TradeBotPnlPoint(date: 'Mar 7', pnl: 127.4),
+  TradeBotPnlPoint(date: 'Mar 8', pnl: 199.3),
+];
+
+const List<TradeBotWinLossPoint> _botPerformanceWinLossPoints = [
+  TradeBotWinLossPoint(week: 'W1', wins: 18, losses: 7),
+  TradeBotWinLossPoint(week: 'W2', wins: 22, losses: 5),
+  TradeBotWinLossPoint(week: 'W3', wins: 15, losses: 12),
+  TradeBotWinLossPoint(week: 'W4', wins: 25, losses: 8),
+];
+
+const List<TradeBotStrategyPerformance> _botStrategyPerformance = [
+  TradeBotStrategyPerformance(strategy: 'DCA', pnl: 84.2, colorHex: 0xFF3B82F6),
+  TradeBotStrategyPerformance(
+    strategy: 'Grid',
+    pnl: 127.4,
+    colorHex: 0xFFF59E0B,
+  ),
+  TradeBotStrategyPerformance(
+    strategy: 'Momentum',
+    pnl: -12.3,
+    colorHex: 0xFF10B981,
+  ),
+];
+
+const List<TradeBotDurationDistribution> _botDurationDistribution = [
+  TradeBotDurationDistribution(duration: '<1h', count: 45),
+  TradeBotDurationDistribution(duration: '1-6h', count: 28),
+  TradeBotDurationDistribution(duration: '6-24h', count: 15),
+  TradeBotDurationDistribution(duration: '>24h', count: 8),
+];
+
+const List<TradeBotBacktestStrategy> _botBacktestStrategies = [
+  TradeBotBacktestStrategy(id: 'dca', name: 'DCA Bot', colorHex: 0xFF3B82F6),
+  TradeBotBacktestStrategy(id: 'grid', name: 'Grid Bot', colorHex: 0xFFF59E0B),
+  TradeBotBacktestStrategy(
+    id: 'momentum',
+    name: 'Momentum Bot',
+    colorHex: 0xFF10B981,
+  ),
+  TradeBotBacktestStrategy(
+    id: 'martingale',
+    name: 'Martingale Bot',
+    colorHex: 0xFF8B5CF6,
+  ),
+];
+
+const List<String> _botBacktestPairs = [
+  'BTC/USDT',
+  'ETH/USDT',
+  'SOL/USDT',
+  'BNB/USDT',
+  'ADA/USDT',
+];
+
+const List<TradeBotBacktestDateRange> _botBacktestDateRanges = [
+  TradeBotBacktestDateRange(
+    id: '1m',
+    label: '1 Month',
+    periodLabel: 'Feb 8 - Mar 8, 2026',
+  ),
+  TradeBotBacktestDateRange(
+    id: '3m',
+    label: '3 Months',
+    periodLabel: 'Dec 8, 2025 - Mar 8, 2026',
+  ),
+  TradeBotBacktestDateRange(
+    id: '6m',
+    label: '6 Months',
+    periodLabel: 'Sep 8, 2025 - Mar 8, 2026',
+  ),
+  TradeBotBacktestDateRange(
+    id: '1y',
+    label: '1 Year',
+    periodLabel: 'Mar 8, 2025 - Mar 8, 2026',
+  ),
+];
+
+const List<TradeBotCompareStrategy> _botCompareStrategies = [
+  TradeBotCompareStrategy(
+    id: 'dca',
+    name: 'DCA Bot',
+    colorHex: 0xFF3B82F6,
+    metrics: TradeBotCompareMetrics(
+      totalReturn: 42.3,
+      sharpeRatio: 1.52,
+      maxDrawdown: -8.4,
+      winRate: 65.2,
+      profitFactor: 1.87,
+      totalTrades: 89,
+      avgTradeDuration: '24h',
+      volatility: 12.4,
+    ),
+  ),
+  TradeBotCompareStrategy(
+    id: 'grid',
+    name: 'Grid Bot',
+    colorHex: 0xFFF59E0B,
+    metrics: TradeBotCompareMetrics(
+      totalReturn: 68.7,
+      sharpeRatio: 2.14,
+      maxDrawdown: -12.1,
+      winRate: 72.3,
+      profitFactor: 2.45,
+      totalTrades: 234,
+      avgTradeDuration: '6h',
+      volatility: 18.7,
+    ),
+  ),
+  TradeBotCompareStrategy(
+    id: 'momentum',
+    name: 'Momentum Bot',
+    colorHex: 0xFF10B981,
+    metrics: TradeBotCompareMetrics(
+      totalReturn: 55.9,
+      sharpeRatio: 1.89,
+      maxDrawdown: -15.3,
+      winRate: 68.4,
+      profitFactor: 2.12,
+      totalTrades: 156,
+      avgTradeDuration: '12h',
+      volatility: 22.3,
+    ),
+  ),
+  TradeBotCompareStrategy(
+    id: 'martingale',
+    name: 'Martingale Bot',
+    colorHex: 0xFF8B5CF6,
+    metrics: TradeBotCompareMetrics(
+      totalReturn: 89.4,
+      sharpeRatio: 1.34,
+      maxDrawdown: -28.7,
+      winRate: 78.9,
+      profitFactor: 2.87,
+      totalTrades: 312,
+      avgTradeDuration: '4h',
+      volatility: 34.2,
+    ),
+  ),
+];
+
+const List<TradeBotCompareEquityPoint> _botCompareEquityPoints = [
+  TradeBotCompareEquityPoint(
+    date: 'Sep',
+    dca: 1042,
+    grid: 1068,
+    momentum: 1055,
+    martingale: 1089,
+  ),
+  TradeBotCompareEquityPoint(
+    date: 'Oct',
+    dca: 1087,
+    grid: 1142,
+    momentum: 1128,
+    martingale: 1178,
+  ),
+  TradeBotCompareEquityPoint(
+    date: 'Nov',
+    dca: 1134,
+    grid: 1223,
+    momentum: 1198,
+    martingale: 1267,
+  ),
+  TradeBotCompareEquityPoint(
+    date: 'Dec',
+    dca: 1189,
+    grid: 1298,
+    momentum: 1256,
+    martingale: 1345,
+  ),
+  TradeBotCompareEquityPoint(
+    date: 'Jan',
+    dca: 1245,
+    grid: 1387,
+    momentum: 1334,
+    martingale: 1456,
+  ),
+  TradeBotCompareEquityPoint(
+    date: 'Feb',
+    dca: 1298,
+    grid: 1478,
+    momentum: 1412,
+    martingale: 1589,
+  ),
+  TradeBotCompareEquityPoint(
+    date: 'Mar',
+    dca: 1423,
+    grid: 1687,
+    momentum: 1559,
+    martingale: 1894,
+  ),
+];
+
+const List<TradeBotRecommendation> _botCompareRecommendations = [
+  TradeBotRecommendation(
+    title: 'For Beginners',
+    strategyId: 'dca',
+    strategy: 'DCA Bot',
+    reason:
+        'Lowest risk (drawdown -8.4%), simplest to understand, steady returns over time.',
+  ),
+  TradeBotRecommendation(
+    title: 'For Sideways Markets',
+    strategyId: 'grid',
+    strategy: 'Grid Bot',
+    reason:
+        'Best Sharpe ratio (2.14), high win rate (72.3%), optimized for range-bound trading.',
+  ),
+  TradeBotRecommendation(
+    title: 'For Trending Markets',
+    strategyId: 'momentum',
+    strategy: 'Momentum Bot',
+    reason:
+        'Captures trends effectively, balanced risk-reward, good for bull/bear markets.',
+  ),
+  TradeBotRecommendation(
+    title: 'For Experienced Traders',
+    strategyId: 'martingale',
+    strategy: 'Martingale Bot',
+    reason:
+        'Highest returns (+89.4%) but high risk (drawdown -28.7%). Requires large capital.',
+  ),
+];
+
+const List<TradeBotOptimizationTarget> _botOptimizationTargets = [
+  TradeBotOptimizationTarget(
+    id: 'sharpe',
+    label: 'Maximize Sharpe Ratio',
+    description: 'Best risk-adjusted returns',
+  ),
+  TradeBotOptimizationTarget(
+    id: 'returns',
+    label: 'Maximize Total Returns',
+    description: 'Highest absolute profit',
+  ),
+  TradeBotOptimizationTarget(
+    id: 'drawdown',
+    label: 'Minimize Drawdown',
+    description: 'Lowest risk',
+  ),
+];
+
+const List<TradeBotOptimizationRange> _botOptimizationRanges = [
+  TradeBotOptimizationRange(
+    id: 'gridCount',
+    label: 'Grid Count',
+    min: 10,
+    max: 40,
+    step: 5,
+    defaultValue: 25,
+  ),
+  TradeBotOptimizationRange(
+    id: 'gridRange',
+    label: 'Grid Range (%)',
+    min: 20,
+    max: 50,
+    step: 5,
+    defaultValue: 35,
+    unit: '%',
+  ),
+];
+
+const List<String> _botOptimizationSteps = [
+  'Tests multiple parameter combinations',
+  'Backtests each combination on historical data',
+  'Ranks results by target metric (Sharpe Ratio)',
+  'Recommends optimal parameters',
+];
+
+const TradeBotPortfolioSummary _botPortfolioSummary = TradeBotPortfolioSummary(
+  totalEquity: 3245,
+  totalInvestment: 2500,
+  totalPnl: 745,
+  pnlPercent: 29.8,
+  portfolioSharpe: 1.92,
+  diversificationScore: 78,
+  activeBots: 3,
+  totalTrades: 479,
+);
+
+const List<TradeBotPortfolioAllocation> _botPortfolioAllocations = [
+  TradeBotPortfolioAllocation(
+    strategy: 'DCA',
+    value: 1000,
+    pnl: 84,
+    colorHex: 0xFF3B82F6,
+  ),
+  TradeBotPortfolioAllocation(
+    strategy: 'Grid',
+    value: 500,
+    pnl: 127,
+    colorHex: 0xFFF59E0B,
+  ),
+  TradeBotPortfolioAllocation(
+    strategy: 'Momentum',
+    value: 500,
+    pnl: -12,
+    colorHex: 0xFF10B981,
+  ),
+  TradeBotPortfolioAllocation(
+    strategy: 'Cash Reserve',
+    value: 1245,
+    pnl: 0,
+    colorHex: 0xFF64748B,
+  ),
+];
+
+const List<TradeBotPortfolioEquityPoint> _botPortfolioEquity = [
+  TradeBotPortfolioEquityPoint(date: 'Sep', equity: 2500),
+  TradeBotPortfolioEquityPoint(date: 'Oct', equity: 2587),
+  TradeBotPortfolioEquityPoint(date: 'Nov', equity: 2734),
+  TradeBotPortfolioEquityPoint(date: 'Dec', equity: 2898),
+  TradeBotPortfolioEquityPoint(date: 'Jan', equity: 3045),
+  TradeBotPortfolioEquityPoint(date: 'Feb', equity: 3178),
+  TradeBotPortfolioEquityPoint(date: 'Mar', equity: 3245),
+];
+
+const List<TradeBotCorrelationRow> _botPortfolioCorrelations = [
+  TradeBotCorrelationRow(
+    bot: 'DCA',
+    values: {'DCA': 1, 'Grid': .34, 'Momentum': .12},
+  ),
+  TradeBotCorrelationRow(
+    bot: 'Grid',
+    values: {'DCA': .34, 'Grid': 1, 'Momentum': -.08},
+  ),
+  TradeBotCorrelationRow(
+    bot: 'Momentum',
+    values: {'DCA': .12, 'Grid': -.08, 'Momentum': 1},
+  ),
+];
+
+const List<String> _botPortfolioHealthItems = [
+  'Strong diversification (correlation < 0.4)',
+  'Healthy cash reserve (38% allocation)',
+  'Portfolio Sharpe above 1.5 (excellent risk-adjusted returns)',
+];
+
+const TradeBotDrawdownSummary _botDrawdownSummary = TradeBotDrawdownSummary(
+  maxDrawdownPct: -10.3,
+  avgDrawdownPct: -5.2,
+  drawdownDays: 9,
+  totalDays: 15,
+  frequency: 5,
+);
+
+const List<TradeBotUnderwaterPoint> _botUnderwaterPoints = [
+  TradeBotUnderwaterPoint(
+    date: '2025-09-01',
+    monthLabel: 'Sep',
+    underwaterPct: 0,
+  ),
+  TradeBotUnderwaterPoint(
+    date: '2025-09-15',
+    monthLabel: 'Sep',
+    underwaterPct: -2.3,
+  ),
+  TradeBotUnderwaterPoint(
+    date: '2025-10-01',
+    monthLabel: 'Oct',
+    underwaterPct: 0,
+  ),
+  TradeBotUnderwaterPoint(
+    date: '2025-10-15',
+    monthLabel: 'Oct',
+    underwaterPct: -4.5,
+  ),
+  TradeBotUnderwaterPoint(
+    date: '2025-10-30',
+    monthLabel: 'Oct',
+    underwaterPct: -8.2,
+  ),
+  TradeBotUnderwaterPoint(
+    date: '2025-11-10',
+    monthLabel: 'Nov',
+    underwaterPct: 0,
+  ),
+  TradeBotUnderwaterPoint(
+    date: '2025-11-25',
+    monthLabel: 'Nov',
+    underwaterPct: -3.1,
+  ),
+  TradeBotUnderwaterPoint(
+    date: '2025-12-05',
+    monthLabel: 'Dec',
+    underwaterPct: 0,
+  ),
+  TradeBotUnderwaterPoint(
+    date: '2025-12-20',
+    monthLabel: 'Dec',
+    underwaterPct: -6.7,
+  ),
+  TradeBotUnderwaterPoint(
+    date: '2026-01-05',
+    monthLabel: 'Jan',
+    underwaterPct: -10.3,
+  ),
+  TradeBotUnderwaterPoint(
+    date: '2026-01-20',
+    monthLabel: 'Jan',
+    underwaterPct: 0,
+  ),
+  TradeBotUnderwaterPoint(
+    date: '2026-02-01',
+    monthLabel: 'Feb',
+    underwaterPct: -2.8,
+  ),
+  TradeBotUnderwaterPoint(
+    date: '2026-02-15',
+    monthLabel: 'Feb',
+    underwaterPct: 0,
+  ),
+  TradeBotUnderwaterPoint(
+    date: '2026-03-01',
+    monthLabel: 'Mar',
+    underwaterPct: -5.4,
+  ),
+  TradeBotUnderwaterPoint(
+    date: '2026-03-08',
+    monthLabel: 'Mar',
+    underwaterPct: -3.2,
+  ),
+];
+
+const List<TradeBotDrawdownDurationBucket> _botDrawdownDurationBuckets = [
+  TradeBotDrawdownDurationBucket(range: '<1 week', count: 8),
+  TradeBotDrawdownDurationBucket(range: '1-2 weeks', count: 5),
+  TradeBotDrawdownDurationBucket(range: '2-4 weeks', count: 3),
+  TradeBotDrawdownDurationBucket(range: '>1 month', count: 1),
+];
+
+const List<TradeBotDrawdownEvent> _botDrawdownEvents = [
+  TradeBotDrawdownEvent(
+    id: 1,
+    startLabel: 'Sep 10',
+    depthPct: -2.3,
+    duration: '20 days',
+    recovery: '21 days',
+    severe: false,
+  ),
+  TradeBotDrawdownEvent(
+    id: 2,
+    startLabel: 'Oct 10',
+    depthPct: -8.2,
+    duration: '29 days',
+    recovery: '2 days',
+    severe: true,
+  ),
+  TradeBotDrawdownEvent(
+    id: 3,
+    startLabel: 'Nov 20',
+    depthPct: -3.1,
+    duration: '13 days',
+    recovery: '2 days',
+    severe: false,
+  ),
+  TradeBotDrawdownEvent(
+    id: 4,
+    startLabel: 'Dec 15',
+    depthPct: -10.3,
+    duration: '34 days',
+    recovery: '2 days',
+    severe: true,
+  ),
+  TradeBotDrawdownEvent(
+    id: 5,
+    startLabel: 'Feb 28',
+    depthPct: -5.4,
+    duration: '8 days',
+    recovery: 'Ongoing',
+    severe: false,
+  ),
+];
+
+const List<TradeBotDrawdownInsight> _botDrawdownInsights = [
+  TradeBotDrawdownInsight(
+    symbol: 'check',
+    colorHex: 0xFF10B981,
+    text: 'Max drawdown (-10.3%) is within acceptable range (<15%)',
+  ),
+  TradeBotDrawdownInsight(
+    symbol: 'check',
+    colorHex: 0xFF10B981,
+    text: 'Average recovery time is short (2-21 days)',
+  ),
+  TradeBotDrawdownInsight(
+    symbol: 'alert',
+    colorHex: 0xFFF59E0B,
+    text: 'Currently in drawdown (-3.2%), monitor closely',
+  ),
+  TradeBotDrawdownInsight(
+    symbol: 'check',
+    colorHex: 0xFF10B981,
+    text: 'Most drawdowns are short-term (<1 week)',
+  ),
+];
+
+const TradeBotEquityCurveSummary _botEquityCurveSummary =
+    TradeBotEquityCurveSummary(
+      botReturnPct: 74.5,
+      buyHoldReturnPct: 62.1,
+      alphaPct: 12.4,
+    );
+
+const List<TradeBotEquityCurvePoint> _botEquityCurvePoints = [
+  TradeBotEquityCurvePoint(
+    date: '2025-09-01',
+    monthLabel: 'Sep',
+    equity: 1000,
+    buyHold: 1000,
+  ),
+  TradeBotEquityCurvePoint(
+    date: '2025-09-15',
+    monthLabel: 'Sep',
+    equity: 1042,
+    buyHold: 1035,
+  ),
+  TradeBotEquityCurvePoint(
+    date: '2025-10-01',
+    monthLabel: 'Oct',
+    equity: 1087,
+    buyHold: 1098,
+    rollingSharpe: 1.52,
+  ),
+  TradeBotEquityCurvePoint(
+    date: '2025-10-15',
+    monthLabel: 'Oct',
+    equity: 1134,
+    buyHold: 1076,
+    rollingSharpe: 1.67,
+  ),
+  TradeBotEquityCurvePoint(
+    date: '2025-11-01',
+    monthLabel: 'Nov',
+    equity: 1189,
+    buyHold: 1142,
+    rollingSharpe: 1.89,
+  ),
+  TradeBotEquityCurvePoint(
+    date: '2025-11-15',
+    monthLabel: 'Nov',
+    equity: 1245,
+    buyHold: 1198,
+    rollingSharpe: 2.01,
+  ),
+  TradeBotEquityCurvePoint(
+    date: '2025-12-01',
+    monthLabel: 'Dec',
+    equity: 1298,
+    buyHold: 1256,
+    rollingSharpe: 2.14,
+  ),
+  TradeBotEquityCurvePoint(
+    date: '2025-12-15',
+    monthLabel: 'Dec',
+    equity: 1356,
+    buyHold: 1289,
+    rollingSharpe: 2.07,
+  ),
+  TradeBotEquityCurvePoint(
+    date: '2026-01-01',
+    monthLabel: 'Jan',
+    equity: 1423,
+    buyHold: 1334,
+    rollingSharpe: 1.94,
+  ),
+  TradeBotEquityCurvePoint(
+    date: '2026-01-15',
+    monthLabel: 'Jan',
+    equity: 1489,
+    buyHold: 1412,
+    rollingSharpe: 1.89,
+  ),
+  TradeBotEquityCurvePoint(
+    date: '2026-02-01',
+    monthLabel: 'Feb',
+    equity: 1556,
+    buyHold: 1478,
+    rollingSharpe: 1.92,
+  ),
+  TradeBotEquityCurvePoint(
+    date: '2026-02-15',
+    monthLabel: 'Feb',
+    equity: 1623,
+    buyHold: 1534,
+    rollingSharpe: 1.97,
+  ),
+  TradeBotEquityCurvePoint(
+    date: '2026-03-01',
+    monthLabel: 'Mar',
+    equity: 1689,
+    buyHold: 1589,
+    rollingSharpe: 2.02,
+  ),
+  TradeBotEquityCurvePoint(
+    date: '2026-03-08',
+    monthLabel: 'Mar',
+    equity: 1745,
+    buyHold: 1621,
+    rollingSharpe: 2.08,
+  ),
+];
+
+const List<TradeBotMonthlyReturn> _botEquityMonthlyReturns = [
+  TradeBotMonthlyReturn(
+    month: 'Sep 2025',
+    botReturn: 4.2,
+    marketReturn: 3.5,
+    alpha: .7,
+  ),
+  TradeBotMonthlyReturn(
+    month: 'Oct 2025',
+    botReturn: 4.3,
+    marketReturn: 6.1,
+    alpha: -1.8,
+  ),
+  TradeBotMonthlyReturn(
+    month: 'Nov 2025',
+    botReturn: 4.9,
+    marketReturn: 4.0,
+    alpha: .9,
+  ),
+  TradeBotMonthlyReturn(
+    month: 'Dec 2025',
+    botReturn: 4.4,
+    marketReturn: 3.7,
+    alpha: .7,
+  ),
+  TradeBotMonthlyReturn(
+    month: 'Jan 2026',
+    botReturn: 4.8,
+    marketReturn: 5.1,
+    alpha: -.3,
+  ),
+  TradeBotMonthlyReturn(
+    month: 'Feb 2026',
+    botReturn: 4.7,
+    marketReturn: 4.5,
+    alpha: .2,
+  ),
+  TradeBotMonthlyReturn(
+    month: 'Mar 2026',
+    botReturn: 4.2,
+    marketReturn: 3.8,
+    alpha: .4,
+  ),
+];
+
+const List<TradeBotPerformanceStat> _botEquityPerformanceStats = [
+  TradeBotPerformanceStat(
+    id: 'total',
+    label: 'Total Return',
+    value: '+74.5%',
+    colorHex: 0xFF10B981,
+  ),
+  TradeBotPerformanceStat(
+    id: 'annualized',
+    label: 'Annualized Return',
+    value: '+52.3%',
+    colorHex: 0xFF10B981,
+  ),
+  TradeBotPerformanceStat(
+    id: 'outperformance',
+    label: 'Outperformance',
+    value: '+12.4%',
+    colorHex: 0xFF10B981,
+  ),
+  TradeBotPerformanceStat(
+    id: 'average',
+    label: 'Avg Monthly',
+    value: '+4.5%',
+    colorHex: 0xFFF5F7FA,
+  ),
+];
+
+const List<String> _botEquityAnalysisItems = [
+  'Bot returned +74.5% vs buy & hold +62.1% (alpha: +12.4%)',
+  'Consistent positive alpha in 5 out of 7 months',
+  'Rolling Sharpe ratio stayed above 1.5 (excellent risk-adjusted returns)',
+];
+
+const List<TradeBotGuideStrategy> _botGuideStrategies = [
+  TradeBotGuideStrategy(
+    id: 'dca',
+    name: 'DCA Bot (Dollar Cost Averaging)',
+    iconKey: 'trending',
+    colorHex: 0xFF3B82F6,
+    difficulty: 'Beginner',
+    description:
+        'Automatically buy crypto at regular intervals regardless of price.',
+    howItWorks: [
+      'Set investment amount (e.g., \$100)',
+      'Choose frequency (daily, weekly, monthly)',
+      'Bot buys automatically on schedule',
+      'Averages out market volatility',
+      'Best for long-term accumulation',
+    ],
+    pros: [
+      'Simplest strategy to understand',
+      'Removes emotion from buying decisions',
+      'Reduces timing risk',
+      'Good for volatile markets',
+    ],
+    cons: [
+      'No profit taking mechanism',
+      'Continues buying in downtrends',
+      'Requires consistent capital',
+    ],
+    bestFor: 'Long-term investors, beginners, volatile markets',
+    example: TradeBotGuideExample(
+      setup: 'Buy \$100 BTC every Monday',
+      duration: '6 months',
+      result: 'Average buy price: \$67,500 vs spot price: \$68,450',
+      profit: '+\$127 (1.8%)',
+    ),
+  ),
+  TradeBotGuideStrategy(
+    id: 'grid',
+    name: 'Grid Bot',
+    iconKey: 'grid',
+    colorHex: 0xFFF59E0B,
+    difficulty: 'Intermediate',
+    description:
+        'Place buy and sell orders at multiple price levels to profit from price fluctuations.',
+    howItWorks: [
+      'Define price range (e.g., \$65,000 - \$70,000)',
+      'Set number of grids (e.g., 20 grids)',
+      'Bot places buy/sell orders at each grid level',
+      'Profits from each price swing',
+      'Works best in sideways markets',
+    ],
+    pros: [
+      'Profits from volatility',
+      'No need to predict direction',
+      'Automated 24/7 trading',
+      'High win rate (70-80%)',
+    ],
+    cons: [
+      'Loses money in strong trends',
+      'Requires sufficient capital for all grids',
+      'Can miss big moves outside range',
+    ],
+    bestFor: 'Sideways/ranging markets, active traders, volatility lovers',
+    example: TradeBotGuideExample(
+      setup: '20 grids, \$65K-\$70K range, \$1,000 capital',
+      duration: '1 month',
+      result: '156 trades executed, 72.3% win rate',
+      profit: '+\$127.40 (12.7%)',
+    ),
+  ),
+  TradeBotGuideStrategy(
+    id: 'momentum',
+    name: 'Momentum Bot',
+    iconKey: 'bolt',
+    colorHex: 0xFF10B981,
+    difficulty: 'Advanced',
+    description:
+        'Follow trends by buying when price rises and selling when it falls.',
+    howItWorks: [
+      'Monitor price movement and indicators',
+      'Buy when uptrend detected (e.g., price > MA)',
+      'Sell when downtrend detected',
+      'Trail stop-loss to protect profits',
+      'Best for trending markets',
+    ],
+    pros: [
+      'Captures large trend movements',
+      'Built-in stop-loss protection',
+      'Can make big profits in trends',
+      'Adapts to market conditions',
+    ],
+    cons: [
+      'Frequent false signals in choppy markets',
+      'Requires parameter tuning',
+      'Can whipsaw in sideways markets',
+    ],
+    bestFor: 'Trending markets (bull/bear), experienced traders',
+    example: TradeBotGuideExample(
+      setup: 'MA crossover strategy, 3% stop-loss',
+      duration: '2 months',
+      result: '23 trades, 68.4% win rate',
+      profit: '+\$559 (55.9%)',
+    ),
+  ),
+  TradeBotGuideStrategy(
+    id: 'martingale',
+    name: 'Martingale Bot',
+    iconKey: 'alert',
+    colorHex: 0xFFEF4444,
+    difficulty: 'Expert',
+    description:
+        'Double position size after each loss to recover all losses with one win.',
+    howItWorks: [
+      'Start with base position (e.g., \$100)',
+      'If loss, double next position (\$200)',
+      'If loss again, double again (\$400)',
+      'One win recovers all previous losses',
+      'High risk - can blow up account',
+    ],
+    pros: ['High win rate (78%+)', 'Recovers losses quickly', 'Simple logic'],
+    cons: [
+      'Catastrophic risk if many losses',
+      'Requires large capital',
+      'Can hit max drawdown (-30%+)',
+      'Not suitable for beginners',
+    ],
+    bestFor: 'Experienced traders with large capital, high risk tolerance',
+    example: TradeBotGuideExample(
+      setup: 'Base \$100, 2x multiplier, max 5 doublings',
+      duration: '1 month',
+      result: '312 trades, 78.9% win rate, max DD -28.7%',
+      profit: '+\$894 (89.4%) - High risk',
+    ),
+  ),
+];
+
+const List<TradeBotGuidePractice> _botGuideBestPractices = [
+  TradeBotGuidePractice(
+    id: 'small',
+    title: 'Start Small',
+    description: 'Begin with \$50-200 to test strategies before scaling up.',
+    iconKey: 'idea',
+  ),
+  TradeBotGuidePractice(
+    id: 'backtest',
+    title: 'Backtest First',
+    description:
+        'Always backtest your strategy on historical data before deploying.',
+    iconKey: 'chart',
+  ),
+  TradeBotGuidePractice(
+    id: 'stop-loss',
+    title: 'Set Stop-Loss',
+    description: 'Use drawdown limits and emergency stops to protect capital.',
+    iconKey: 'shield',
+  ),
+  TradeBotGuidePractice(
+    id: 'monitor',
+    title: 'Monitor Daily',
+    description: 'Check bot performance at least once a day for anomalies.',
+    iconKey: 'eye',
+  ),
+  TradeBotGuidePractice(
+    id: 'diversify',
+    title: 'Diversify',
+    description:
+        "Don't put all capital in one bot - spread across multiple strategies.",
+    iconKey: 'target',
+  ),
+  TradeBotGuidePractice(
+    id: 'fomo',
+    title: 'Avoid FOMO',
+    description: "Don't create bots during extreme market conditions.",
+    iconKey: 'warning',
+  ),
+];
+
+const List<TradeBotGuideMistake> _botGuideMistakes = [
+  TradeBotGuideMistake(
+    mistake: 'Over-optimizing parameters',
+    why: 'Parameters optimized on past data may not work in future.',
+    fix: 'Use simple, robust parameters. Test walk-forward validation.',
+  ),
+  TradeBotGuideMistake(
+    mistake: 'Ignoring fees',
+    why: 'High-frequency bots can lose money purely from trading fees.',
+    fix: 'Calculate fee impact. Aim for profit > 2x fees per trade.',
+  ),
+  TradeBotGuideMistake(
+    mistake: 'No risk management',
+    why: 'Bots can compound losses without stop-loss limits.',
+    fix: 'Set max drawdown (-20%), daily loss limits, use emergency stop.',
+  ),
+  TradeBotGuideMistake(
+    mistake: 'Changing strategy mid-run',
+    why: 'Interrupts strategy logic, can cause losses.',
+    fix: 'Let bot run for full cycle (7-30 days) before adjusting.',
+  ),
+  TradeBotGuideMistake(
+    mistake: 'Using demo results as guarantee',
+    why: 'Demo has no slippage, instant fills, no network issues.',
+    fix: 'Expect real results to be 10-20% worse than demo.',
+  ),
+];
+
+const List<TradeBotFaqCategory> _botFaqCategories = [
+  TradeBotFaqCategory(
+    id: 'general',
+    label: 'General',
+    items: [
+      TradeBotFaqItem(
+        question: 'What is a trading bot?',
+        answer:
+            'A trading bot is an automated program that executes buy and sell orders based on predefined rules and strategies. It trades 24/7 without human intervention, following your configured parameters.',
+      ),
+      TradeBotFaqItem(
+        question: 'Are trading bots profitable?',
+        answer:
+            'Profitability depends on market conditions, strategy, and parameters. Bots can be profitable but are NOT guaranteed to make money. Past performance does not predict future results. You may lose some or all of your capital.',
+      ),
+      TradeBotFaqItem(
+        question: 'How much money do I need to start?',
+        answer:
+            'You can start with as little as \$50-100 for testing. For serious trading, we recommend \$500-1,000 minimum to handle market volatility and trading fees. Grid bots need more capital.',
+      ),
+      TradeBotFaqItem(
+        question: 'Do I need coding skills?',
+        answer:
+            'No coding required. Our bots use a simple configuration interface. Just select strategy, set parameters, and start. Advanced users can use API for custom strategies.',
+      ),
+      TradeBotFaqItem(
+        question: 'Can I lose more than I invest?',
+        answer:
+            'No. Bots only trade with your available balance. You cannot lose more than your deposited amount. However, you can lose your entire investment if the market moves against you.',
+      ),
+    ],
+  ),
+  TradeBotFaqCategory(
+    id: 'safety',
+    label: 'Safety',
+    items: [
+      TradeBotFaqItem(
+        question: 'What happens if the exchange goes down?',
+        answer:
+            'If the exchange API fails, the bot stops executing new orders until connection is restored. Open orders remain on exchange books. Use exchanges with 99.9%+ uptime.',
+      ),
+      TradeBotFaqItem(
+        question: 'Can hackers steal my funds?',
+        answer:
+            'We never have custody of your funds. They stay on the exchange. We only use API keys with trade permissions, not withdrawal permissions.',
+      ),
+      TradeBotFaqItem(
+        question: 'How do I stop a bot in emergency?',
+        answer:
+            'Go to Risk Dashboard > Emergency Stop, or use the stop button on bot detail page. This immediately stops new orders and can optionally close open positions.',
+      ),
+      TradeBotFaqItem(
+        question: 'What if I find a bug?',
+        answer:
+            'Use the emergency stop immediately. Report the bug to support@tradingplatform.com with screenshots and bot ID. We review verified bugs and related losses.',
+      ),
+      TradeBotFaqItem(
+        question: 'Are my API keys stored securely?',
+        answer:
+            'Yes. API keys are encrypted using AES-256 and stored in secure vaults. Keys are never logged or displayed in plain text after creation.',
+      ),
+    ],
+  ),
+  TradeBotFaqCategory(
+    id: 'technical',
+    label: 'Technical',
+    items: [
+      TradeBotFaqItem(
+        question: 'How accurate is backtesting?',
+        answer:
+            'Backtests use historical data but cannot predict future performance. Expect real results to be 10-20% worse due to slippage, fees, network delays, and partial fills.',
+      ),
+      TradeBotFaqItem(
+        question: 'What fees apply to bot trading?',
+        answer:
+            'Exchange trading fees apply to every order. Our platform charges no extra fees for bot usage. High-frequency strategies can rack up fees quickly.',
+      ),
+      TradeBotFaqItem(
+        question: 'Can I edit a running bot?',
+        answer:
+            'No. You must stop the bot, edit parameters, then restart. This prevents strategy corruption mid-cycle and keeps audit history clear.',
+      ),
+      TradeBotFaqItem(
+        question: 'Why did my order not fill?',
+        answer:
+            'Common reasons include insufficient liquidity, fast price moves, exchange balance or limit rejection, and network latency. Check order history for the exact message.',
+      ),
+      TradeBotFaqItem(
+        question: 'What is slippage and how do I reduce it?',
+        answer:
+            'Slippage is the difference between expected and actual execution price. Reduce it by trading liquid pairs, using limit orders, splitting large orders, and avoiding low-volume periods.',
+      ),
+    ],
+  ),
+  TradeBotFaqCategory(
+    id: 'strategies',
+    label: 'Strategies',
+    items: [
+      TradeBotFaqItem(
+        question: 'Which bot strategy is best for beginners?',
+        answer:
+            'DCA is simplest and safest for beginners. It removes emotion, reduces timing risk, and works well long-term. Avoid Martingale until experienced.',
+      ),
+      TradeBotFaqItem(
+        question: 'When should I use a Grid Bot?',
+        answer:
+            'Use Grid Bots in sideways or ranging markets where price bounces inside a channel. They are not recommended during strong bull or bear runs.',
+      ),
+      TradeBotFaqItem(
+        question: 'What is the Martingale risk?',
+        answer:
+            'Martingale doubles position after each loss and requires exponential capital. After 5 losses, you need 32x initial capital and max drawdown can exceed -30%.',
+      ),
+      TradeBotFaqItem(
+        question: 'How do I choose the right parameters?',
+        answer:
+            'Start with recommended defaults, then adjust based on backtest results, your risk tolerance, and market conditions. Avoid over-optimizing.',
+      ),
+      TradeBotFaqItem(
+        question: 'Can I run multiple bots at once?',
+        answer:
+            'Yes. Free tier supports 1 bot, Pro tier supports 5 bots, and Enterprise supports unlimited bots. Diversify across strategies and pairs for lower risk.',
+      ),
+    ],
+  ),
+  TradeBotFaqCategory(
+    id: 'troubleshooting',
+    label: 'Troubleshooting',
+    items: [
+      TradeBotFaqItem(
+        question: 'My bot is losing money - what should I do?',
+        answer:
+            'First check whether losses are within expected drawdown. If limits are exceeded, stop the bot, review backtest results, and check whether market conditions changed.',
+      ),
+      TradeBotFaqItem(
+        question: 'Bot stopped working after I changed settings',
+        answer:
+            'You likely have insufficient balance for new parameters. Check wallet balance, locked funds in other bots, and min or max order sizes.',
+      ),
+      TradeBotFaqItem(
+        question: 'Why is my Grid Bot not executing trades?',
+        answer:
+            'Grid Bots only trade when price crosses grid levels. If price is stable, no trades execute. Check range, grid spacing, and liquidity.',
+      ),
+      TradeBotFaqItem(
+        question: 'How long should I run a bot before stopping?',
+        answer:
+            'Minimum 7 days for DCA and 30 days for Grid or Momentum. Bots need time to complete cycles and recover from temporary drawdowns.',
+      ),
+      TradeBotFaqItem(
+        question: 'Can I transfer funds while bot is running?',
+        answer:
+            'Withdrawing funds may cause a bot to stop if balance drops below minimum. Depositing is safe. Keep a 20% extra buffer for volatility and fees.',
+      ),
+    ],
+  ),
+];
+
+const TradeBotTaxSummary _botTaxSummary = TradeBotTaxSummary(
+  totalTrades: 1247,
+  realizedGains: 3842.50,
+  realizedLosses: -1127.30,
+  netGainLoss: 2715.20,
+  shortTermGains: 2318.40,
+  longTermGains: 396.80,
+  totalFees: 287.60,
+);
+
+const List<TradeBotTaxReportType> _botTaxReportTypes = [
+  TradeBotTaxReportType(
+    id: 'irs-8949',
+    name: 'IRS Form 8949',
+    description: 'US tax form for capital gains/losses',
+    format: 'PDF',
+    recommended: true,
+    selectedByDefault: true,
+  ),
+  TradeBotTaxReportType(
+    id: 'turbotax',
+    name: 'TurboTax CSV',
+    description: 'Import directly into TurboTax software',
+    format: 'CSV',
+    recommended: true,
+    selectedByDefault: true,
+  ),
+  TradeBotTaxReportType(
+    id: 'detailed-csv',
+    name: 'Detailed Trade Log',
+    description: 'All trades with timestamps, fees, PnL',
+    format: 'CSV',
+    recommended: false,
+    selectedByDefault: false,
+  ),
+  TradeBotTaxReportType(
+    id: 'summary-pdf',
+    name: 'Summary Report',
+    description: 'Overview of yearly gains/losses',
+    format: 'PDF',
+    recommended: false,
+    selectedByDefault: false,
+  ),
+];
+
+const TradeBotTaxBreakdown _botTaxBreakdown = TradeBotTaxBreakdown(
+  shortTermLabel: 'Short-Term Gains',
+  shortTermDescription: 'Held < 1 year (taxed as income)',
+  longTermLabel: 'Long-Term Gains',
+  longTermDescription: 'Held > 1 year (lower tax rate)',
+);
+
+const List<String> _botTaxNotes = [
+  'Bot trades are taxable events (buy/sell, not just withdrawal)',
+  'Trading fees can be deducted from capital gains',
+  'Crypto-to-crypto trades (BTC->ETH) are taxable',
+  'Consult a tax professional for accurate filing',
+  'Keep reports for 7 years (IRS audit protection)',
+];
+
+const List<TradeBotApiEndpoint> _botApiEndpoints = [
+  TradeBotApiEndpoint(
+    method: 'GET',
+    path: '/api/v1/bots',
+    description: 'List all user bots',
+    params: [
+      TradeBotApiParameter(
+        name: 'status',
+        type: 'string',
+        required: false,
+        description: 'Filter by status (running, stopped, paused)',
+      ),
+      TradeBotApiParameter(
+        name: 'limit',
+        type: 'number',
+        required: false,
+        description: 'Max results (default: 20)',
+      ),
+    ],
+    response: r'''{
+  "bots": [
+    {
+      "id": "bot_abc123",
+      "name": "DCA Bot #1",
+      "strategy": "dca",
+      "status": "running",
+      "profit": 84.20,
+      "createdAt": "2026-01-15T10:30:00Z"
+    }
+  ],
+  "total": 3
+}''',
+  ),
+  TradeBotApiEndpoint(
+    method: 'POST',
+    path: '/api/v1/bots',
+    description: 'Create a new bot',
+    params: [
+      TradeBotApiParameter(
+        name: 'name',
+        type: 'string',
+        required: true,
+        description: 'Bot name',
+      ),
+      TradeBotApiParameter(
+        name: 'strategy',
+        type: 'string',
+        required: true,
+        description: 'dca | grid | momentum | martingale',
+      ),
+      TradeBotApiParameter(
+        name: 'pair',
+        type: 'string',
+        required: true,
+        description: 'Trading pair (e.g., BTC/USDT)',
+      ),
+      TradeBotApiParameter(
+        name: 'config',
+        type: 'object',
+        required: true,
+        description: 'Strategy-specific parameters',
+      ),
+    ],
+    response: r'''{
+  "bot": {
+    "id": "bot_xyz789",
+    "name": "My Grid Bot",
+    "strategy": "grid",
+    "status": "running",
+    "createdAt": "2026-03-08T14:23:00Z"
+  }
+}''',
+  ),
+  TradeBotApiEndpoint(
+    method: 'DELETE',
+    path: '/api/v1/bots/:botId',
+    description: 'Stop and delete a bot',
+    params: [],
+    response: r'''{
+  "success": true,
+  "message": "Bot stopped and deleted"
+}''',
+  ),
+  TradeBotApiEndpoint(
+    method: 'GET',
+    path: '/api/v1/bots/:botId/history',
+    description: 'Get bot trade history',
+    params: [
+      TradeBotApiParameter(
+        name: 'startDate',
+        type: 'string',
+        required: false,
+        description: 'ISO date',
+      ),
+      TradeBotApiParameter(
+        name: 'endDate',
+        type: 'string',
+        required: false,
+        description: 'ISO date',
+      ),
+      TradeBotApiParameter(
+        name: 'limit',
+        type: 'number',
+        required: false,
+        description: 'Max results',
+      ),
+    ],
+    response: r'''{
+  "trades": [
+    {
+      "id": "trade_123",
+      "side": "buy",
+      "price": 68450,
+      "qty": 0.001,
+      "fee": 0.034,
+      "timestamp": "2026-03-08T14:32:15Z"
+    }
+  ],
+  "total": 247
+}''',
+  ),
+];
+
+const List<TradeBotWebSocketEvent> _botApiWebSocketEvents = [
+  TradeBotWebSocketEvent(
+    event: 'bot.status',
+    description: 'Bot status changed',
+    payload: r'''{
+  "botId": "bot_abc123",
+  "status": "stopped",
+  "reason": "manual_stop",
+  "timestamp": "2026-03-08T15:00:00Z"
+}''',
+  ),
+  TradeBotWebSocketEvent(
+    event: 'bot.trade',
+    description: 'New trade executed',
+    payload: r'''{
+  "botId": "bot_abc123",
+  "tradeId": "trade_xyz",
+  "side": "buy",
+  "price": 68450,
+  "qty": 0.001,
+  "fee": 0.034
+}''',
+  ),
+  TradeBotWebSocketEvent(
+    event: 'bot.profit',
+    description: 'Profit/loss update',
+    payload: r'''{
+  "botId": "bot_abc123",
+  "profit": 127.40,
+  "profitPercent": 12.74,
+  "totalTrades": 156
+}''',
+  ),
+];
+
+const List<TradeBotCodeExample> _botApiCodeExamples = [
+  TradeBotCodeExample(
+    language: 'javascript',
+    label: 'JavaScript',
+    title: 'JavaScript SDK',
+    source: r'''// Install SDK
+npm install @tradingplatform/bot-sdk
+
+// Import and initialize
+const BotSDK = require('@tradingplatform/bot-sdk');
+const client = new BotSDK({
+  apiKey: 'YOUR_API_KEY',
+  apiSecret: 'YOUR_API_SECRET'
+});
+
+// List all bots
+const bots = await client.bots.list();
+console.log(bots);
+
+// Create a new Grid Bot
+const newBot = await client.bots.create({
+  name: 'My Grid Bot',
+  strategy: 'grid',
+  pair: 'BTC/USDT',
+  config: {
+    gridCount: 20,
+    upperPrice: 70000,
+    lowerPrice: 65000,
+    investment: 1000
+  }
+});
+
+// Subscribe to bot events
+client.on('bot.trade', (data) => {
+  console.log('New trade:', data);
+});''',
+  ),
+  TradeBotCodeExample(
+    language: 'python',
+    label: 'Python',
+    title: 'Python SDK',
+    source: r'''# Install SDK
+pip install tradingplatform-bot-sdk
+
+# Import and initialize
+from tradingplatform import BotClient
+
+client = BotClient(
+    api_key='YOUR_API_KEY',
+    api_secret='YOUR_API_SECRET'
+)
+
+# List all bots
+bots = client.bots.list()
+print(bots)
+
+# Create a new DCA Bot
+new_bot = client.bots.create(
+    name='My DCA Bot',
+    strategy='dca',
+    pair='BTC/USDT',
+    config={
+        'amount': 100,
+        'frequency': 'weekly'
+    }
+)
+
+# Subscribe to WebSocket events
+@client.on('bot.trade')
+def on_trade(data):
+    print(f"New trade: {data}")''',
+  ),
+  TradeBotCodeExample(
+    language: 'curl',
+    label: 'cURL',
+    title: 'cURL Commands',
+    source: r'''# List all bots
+curl -X GET https://api.tradingplatform.com/v1/bots \
+  -H "Authorization: Bearer YOUR_API_KEY"
+
+# Create a new bot
+curl -X POST https://api.tradingplatform.com/v1/bots \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "My Grid Bot",
+    "strategy": "grid",
+    "pair": "BTC/USDT",
+    "config": {
+      "gridCount": 20,
+      "upperPrice": 70000,
+      "lowerPrice": 65000,
+      "investment": 1000
+    }
+  }'
+
+# Get bot history
+curl -X GET https://api.tradingplatform.com/v1/bots/bot_abc123/history \
+  -H "Authorization: Bearer YOUR_API_KEY"''',
+  ),
+];
+
+const List<TradeBotRateLimit> _botApiRateLimits = [
+  TradeBotRateLimit(label: 'REST API:', value: '100 requests / minute'),
+  TradeBotRateLimit(label: 'WebSocket:', value: 'Unlimited subscriptions'),
+  TradeBotRateLimit(label: 'Max bots (API):', value: 'Enterprise tier only'),
 ];
 
 const List<TradeFuturesPosition> _futuresPositions = [

@@ -1,6 +1,6 @@
 # Flutter UI Reference
 
-This React/Vite bundle is the phone UI reference for the future Flutter app.
+This React/Vite bundle is the phone UI reference for Flutter visual-QA parity. It is not the authority for Flutter native brand color or native sizing; those come from `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md` and `SC-007 HomePage`.
 
 ## Entry Points
 
@@ -59,6 +59,9 @@ Capture runs with coachmarks disabled in browser storage so onboarding tips do n
 ## Notes For Flutter Port
 
 - Treat the React app as visual and interaction reference, not as production architecture.
+- Use React screenshots/source for structure, content, scroll behavior, and navigation intent.
+- Use the Home native standard for Flutter runtime colors, page sizing, bottom chrome, CTAs, cards, and shared component treatment.
+- Do not copy legacy React blue brand values into native Flutter unless a screen-specific exception is documented.
 - Keep the `401` phone-screen baseline in `output/flutter-ui-reference/manifest.json` as the route coverage source of truth.
 - Capture tooling lives in `scripts/capture-flutter-ui-reference.mjs`; it is part of the Flutter reference pipeline.
 - Shared visual primitives live mostly in `src/app/components/ui`, `src/app/components/layout`, `src/app/components/states`, and module-specific component folders.

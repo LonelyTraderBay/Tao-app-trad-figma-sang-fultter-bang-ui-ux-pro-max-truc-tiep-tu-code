@@ -1,4 +1,7 @@
 # VitTrade HomePage - Design Analysis Report
+
+> Historical React/visual-QA note: this file documents the old React Home analysis and may mention legacy blue tokens such as `#3B82F6`. For Flutter native migration, do not use those historical colors or sizes as the app standard. The current global Flutter native standard is `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md` and `docs/04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md`.
+
 ## Chi tiết thiết kế UI/UX cho đối tác tham khảo
 
 ---

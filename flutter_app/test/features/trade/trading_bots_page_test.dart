@@ -133,12 +133,12 @@ void main() {
     expect(find.byType(TradingBotsPage), findsNothing);
   });
 
-  testWidgets('SC-059 scoped bot placeholders return to TradingBotsPage', (
+  testWidgets('SC-059 scoped bot child routes return to TradingBotsPage', (
     tester,
   ) async {
     await pumpTradingBots(tester, initialLocation: '/trade/bots/history');
 
-    expect(find.text('Bot History'), findsOneWidget);
+    expect(find.text('Trade History'), findsOneWidget);
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));
     await tester.pumpAndSettle();
     expect(find.byType(TradingBotsPage), findsOneWidget);

@@ -1,6 +1,6 @@
 # Flutter Design Tokens
 
-Use this file to translate React/CSS tokens into Flutter constants. Source of truth: `src/styles/theme.css` and `src/app/hooks/useThemeColors.ts`.
+Use this file to define Flutter constants for the native app. The global native source of truth is `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md` and the approved `SC-007 HomePage` native implementation. React/CSS tokens in `src/styles/theme.css` and `src/app/hooks/useThemeColors.ts` are historical inputs for visual-QA parity, not authority for Flutter native brand drift.
 
 `SC-007 HomePage` now defines the approved native Flutter brand treatment: a Bybit-inspired dark orange palette on a cleaner neutral dark background. This is a Flutter native runtime standard and does not overwrite the React screenshot baseline under `output/flutter-ui-reference/screenshots/`.
 
@@ -8,8 +8,21 @@ Use this file to translate React/CSS tokens into Flutter constants. Source of tr
 
 - Do not hardcode repeated colors, spacing, radii, typography, or device metrics inside screens.
 - Add shared values to `flutter_app/lib/app/theme/` first.
-- If this file conflicts with screenshots, the screenshot wins and this file must be updated.
+- If this file conflicts with screenshots during `ShellRenderMode.visualQa`, the screenshot wins for React parity and this file must be updated when the token is wrong.
+- In `ShellRenderMode.native`, the approved `SC-007 HomePage` native standard wins for global brand color, neutral dark surfaces, chrome sizing, and shared card treatment unless the `SC-xxx` blueprint explicitly documents a screen-specific exception.
 - If a one-off screen value is required, document it in the screen-specific blueprint for that `SC-xxx`.
+- If a repeated value is needed by more than one screen, add it to `flutter_app/lib/app/theme/` before reuse.
+
+## Native Brand Enforcement
+
+The Flutter native runtime must use Home as the practical brand standard, not a per-screen legacy React palette.
+
+- Use `AppColors.primary`, `AppColors.primaryDark`, and `AppColors.primarySoft` for brand accents, selected states, primary CTAs, focus borders, active chips, and active nav.
+- Use `AppColors.bg`, `AppColors.surface`, `AppColors.surface2`, `AppColors.surface3`, `AppColors.cardBorder`, `AppColors.divider`, and `AppColors.borderSolid` for page backgrounds, cards, panels, dividers, and inputs.
+- Legacy React blue values such as `#3B82F6` are not the default Flutter native brand color. Use them only when a screen-specific reference documents a non-brand semantic accent.
+- Screen-local color aliases are allowed only as readability aliases to shared tokens, for example `const _apiBg = AppColors.bg;`. Do not introduce repeated local `Color(0x...)` palettes for backgrounds, surfaces, borders, or brand accents.
+- Keep semantic state colors separate: success uses `AppColors.buy`, danger uses `AppColors.sell`, warning uses `AppColors.warn`, and secondary technical accents can use `AppColors.accent` when the screen meaning requires it.
+- Bottom navigation active state is not module-specific. Home, Markets, Trade, Wallet, and Profile all use `AppColors.navActive`.
 
 ## AppColors
 
@@ -108,8 +121,16 @@ Use tabular figures for financial values where possible.
 | `contentPad` | 20 |
 | `sectionGap` | 20 |
 | `rowPy` | 14 |
+| `inputHeight` | 52 |
+| `ctaHeight` | 52 |
+| `buttonCompact` | 34 |
+| `buttonStandard` | 55 |
+| `buttonHero` | 89 |
+| `iconSm` | 13 |
+| `iconMd` | 21 |
+| `iconLg` | 34 |
 
-React utility spacing may use 4pt/Tailwind values. When a screenshot proves a value, match the screenshot even if the token scale differs.
+React utility spacing may use 4pt/Tailwind values in the legacy source. In Flutter native, prefer the Home token scale above; match screenshots for structure in `ShellRenderMode.visualQa`, then normalize repeated native spacing back to these tokens.
 
 ## AppRadii
 
@@ -162,3 +183,13 @@ Flutter screenshots for visual QA must use `440x956`.
 | Flutter native hero card | Dark portfolio gradient with restrained orange shadow/glow |
 
 Do not apply native spacing changes to `ShellRenderMode.visualQa` unless the visual QA reference is intentionally updated.
+
+## Conversion Gate
+
+Before a new Flutter screen is marked done:
+
+- repeated background/surface/brand colors use `AppColors`;
+- repeated spacing and dimensions use `AppSpacing` or `DeviceMetrics`;
+- repeated radii use `AppRadii`;
+- repeated text sizes use `AppTextStyles`;
+- any exception is documented in the screen-specific `SC-xxx` reference or master-plan notes.

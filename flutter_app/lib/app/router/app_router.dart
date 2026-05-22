@@ -49,9 +49,18 @@ import '../../features/predictions/presentation/predictions_leaderboard_page.dar
 import '../../features/predictions/presentation/predictions_portfolio_page.dart';
 import '../../features/predictions/presentation/predictions_rewards_page.dart';
 import '../../features/predictions/presentation/predictions_search_page.dart';
+import '../../features/profile/presentation/edit_profile_page.dart';
+import '../../features/profile/presentation/activity_log_page.dart';
+import '../../features/profile/presentation/api_management_page.dart';
+import '../../features/profile/presentation/api_key_create_page.dart';
+import '../../features/profile/presentation/kyc_page.dart';
+import '../../features/profile/presentation/profile_page.dart';
+import '../../features/profile/presentation/security_page.dart';
+import '../../features/profile/presentation/settings_page.dart';
 import '../../features/trade/presentation/trade_page.dart';
 import '../../features/trade/presentation/orders_history_page.dart';
 import '../../features/trade/presentation/order_receipt_page.dart';
+import '../../features/trade/presentation/ombudsman_referral_page.dart';
 import '../../features/trade/presentation/trade_settings_page.dart';
 import '../../features/trade/presentation/transaction_reporting_page.dart';
 import '../../features/trade/presentation/position_dashboard_page.dart';
@@ -62,10 +71,31 @@ import '../../features/trade/presentation/advanced_tools_demo_page.dart';
 import '../../features/trade/presentation/advanced_trading_demo_page.dart';
 import '../../features/trade/presentation/active_copies_page.dart';
 import '../../features/trade/presentation/arm_integration_status_page.dart';
+import '../../features/trade/presentation/audit_trail_page.dart';
 import '../../features/trade/presentation/best_execution_reports_page.dart';
+import '../../features/trade/presentation/bot_api_documentation_page.dart';
+import '../../features/trade/presentation/bot_backtesting_page.dart';
+import '../../features/trade/presentation/bot_drawdown_analyzer_page.dart';
+import '../../features/trade/presentation/bot_equity_curve_page.dart';
+import '../../features/trade/presentation/bot_faq_page.dart';
+import '../../features/trade/presentation/bot_guide_page.dart';
+import '../../features/trade/presentation/bot_history_page.dart';
+import '../../features/trade/presentation/bot_optimization_page.dart';
+import '../../features/trade/presentation/bot_performance_analytics_page.dart';
+import '../../features/trade/presentation/bot_portfolio_dashboard_page.dart';
+import '../../features/trade/presentation/bot_strategy_compare_page.dart';
+import '../../features/trade/presentation/bot_tax_reporting_page.dart';
+import '../../features/trade/presentation/bot_emergency_stop_page.dart';
+import '../../features/trade/presentation/bot_risk_dashboard_page.dart';
+import '../../features/trade/presentation/bot_risk_disclosure_page.dart';
+import '../../features/trade/presentation/bot_security_settings_page.dart';
+import '../../features/trade/presentation/bot_suitability_assessment_page.dart';
+import '../../features/trade/presentation/bot_terms_of_service_page.dart';
 import '../../features/trade/presentation/cass_reconciliation_page.dart';
 import '../../features/trade/presentation/client_categorization_page.dart';
 import '../../features/trade/presentation/client_money_protection_page.dart';
+import '../../features/trade/presentation/complaint_submission_page.dart';
+import '../../features/trade/presentation/complaint_tracking_page.dart';
 import '../../features/trade/presentation/complaints_handling_page.dart';
 import '../../features/trade/presentation/copy_audit_log_page.dart';
 import '../../features/trade/presentation/copy_confirmation_page.dart';
@@ -102,6 +132,7 @@ import '../../features/trade/presentation/provider_governance_page.dart';
 import '../../features/trade/presentation/provider_leaderboard_page.dart';
 import '../../features/trade/presentation/provider_application_page.dart';
 import '../../features/trade/presentation/regulatory_disclosures_page.dart';
+import '../../features/trade/presentation/regulatory_inspection_ready_page.dart';
 import '../../features/trade/presentation/regulatory_reports_dashboard_page.dart';
 import '../../features/trade/presentation/risk_indicator_explainer_page.dart';
 import '../../features/trade/presentation/risk_management_demo_page.dart';
@@ -111,6 +142,25 @@ import '../../features/trade/presentation/slippage_monitoring_page.dart';
 import '../../features/trade/presentation/target_market_definition_page.dart';
 import '../../features/trade/presentation/trading_bots_page.dart';
 import '../../features/trade/presentation/trader_profile_page.dart';
+import '../../features/wallet/presentation/address_add_page.dart';
+import '../../features/wallet/presentation/address_book_page.dart';
+import '../../features/wallet/presentation/asset_detail_page.dart';
+import '../../features/wallet/presentation/buy_crypto_page.dart';
+import '../../features/wallet/presentation/deposit_page.dart';
+import '../../features/wallet/presentation/dust_converter_page.dart';
+import '../../features/wallet/presentation/network_status_page.dart';
+import '../../features/wallet/presentation/pending_deposits_page.dart';
+import '../../features/wallet/presentation/portfolio_analytics_page.dart';
+import '../../features/wallet/presentation/transaction_detail_page.dart';
+import '../../features/wallet/presentation/transaction_history_page.dart';
+import '../../features/wallet/presentation/transfer_page.dart';
+import '../../features/wallet/presentation/wallet_gas_optimizer_page.dart';
+import '../../features/wallet/presentation/wallet_health_score_page.dart';
+import '../../features/wallet/presentation/wallet_multi_manager_page.dart';
+import '../../features/wallet/presentation/wallet_page.dart';
+import '../../features/wallet/presentation/wallet_token_approval_page.dart';
+import '../../features/wallet/presentation/withdraw_page.dart';
+import '../../features/wallet/presentation/withdraw_limits_page.dart';
 import '../../app/theme/app_colors.dart';
 import '../../shared/layout/vit_app_shell.dart';
 import '../../shared/layout/vit_bottom_nav.dart';
@@ -249,6 +299,61 @@ final class AppRouteNames {
   static const String sc110RiskIndicatorExplainer =
       'sc110RiskIndicatorExplainer';
   static const String sc111ComplaintsHandling = 'sc111ComplaintsHandling';
+  static const String sc112ComplaintSubmission = 'sc112ComplaintSubmission';
+  static const String sc113ComplaintTracking = 'sc113ComplaintTracking';
+  static const String sc114OmbudsmanReferral = 'sc114OmbudsmanReferral';
+  static const String sc115AuditTrail = 'sc115AuditTrail';
+  static const String sc116RegulatoryInspectionReady =
+      'sc116RegulatoryInspectionReady';
+  static const String sc117BotTermsOfService = 'sc117BotTermsOfService';
+  static const String sc118BotRiskDisclosure = 'sc118BotRiskDisclosure';
+  static const String sc119BotSuitabilityAssessment =
+      'sc119BotSuitabilityAssessment';
+  static const String sc120BotRiskDashboard = 'sc120BotRiskDashboard';
+  static const String sc121BotEmergencyStop = 'sc121BotEmergencyStop';
+  static const String sc122BotSecuritySettings = 'sc122BotSecuritySettings';
+  static const String sc123BotHistory = 'sc123BotHistory';
+  static const String sc124BotPerformanceAnalytics =
+      'sc124BotPerformanceAnalytics';
+  static const String sc125BotBacktesting = 'sc125BotBacktesting';
+  static const String sc126BotStrategyCompare = 'sc126BotStrategyCompare';
+  static const String sc127BotOptimization = 'sc127BotOptimization';
+  static const String sc128BotPortfolioDashboard = 'sc128BotPortfolioDashboard';
+  static const String sc129BotDrawdownAnalyzer = 'sc129BotDrawdownAnalyzer';
+  static const String sc130BotEquityCurve = 'sc130BotEquityCurve';
+  static const String sc131BotGuide = 'sc131BotGuide';
+  static const String sc132BotFaq = 'sc132BotFaq';
+  static const String sc133BotTaxReporting = 'sc133BotTaxReporting';
+  static const String sc134BotApiDocumentation = 'sc134BotApiDocumentation';
+  static const String sc135Wallet = 'sc135Wallet';
+  static const String sc136TxHistory = 'sc136TxHistory';
+  static const String sc137Deposit = 'sc137Deposit';
+  static const String sc138DepositUsdt = 'sc138DepositUsdt';
+  static const String sc139Withdraw = 'sc139Withdraw';
+  static const String sc140WithdrawUsdt = 'sc140WithdrawUsdt';
+  static const String sc141TransactionDetail = 'sc141TransactionDetail';
+  static const String sc142PortfolioAnalytics = 'sc142PortfolioAnalytics';
+  static const String sc143AddressAdd = 'sc143AddressAdd';
+  static const String sc144AddressBook = 'sc144AddressBook';
+  static const String sc145BuyCrypto = 'sc145BuyCrypto';
+  static const String sc146Transfer = 'sc146Transfer';
+  static const String sc147AssetDetail = 'sc147AssetDetail';
+  static const String sc148MultiManager = 'sc148MultiManager';
+  static const String sc149GasOptimizer = 'sc149GasOptimizer';
+  static const String sc150TokenApproval = 'sc150TokenApproval';
+  static const String sc151HealthScore = 'sc151HealthScore';
+  static const String sc152PendingDeposits = 'sc152PendingDeposits';
+  static const String sc153WithdrawLimits = 'sc153WithdrawLimits';
+  static const String sc154DustConverter = 'sc154DustConverter';
+  static const String sc155NetworkStatus = 'sc155NetworkStatus';
+  static const String sc156Profile = 'sc156Profile';
+  static const String sc157EditProfile = 'sc157EditProfile';
+  static const String sc158Security = 'sc158Security';
+  static const String sc159Kyc = 'sc159Kyc';
+  static const String sc160Settings = 'sc160Settings';
+  static const String sc161ActivityLog = 'sc161ActivityLog';
+  static const String sc162ApiKeyCreate = 'sc162ApiKeyCreate';
+  static const String sc163ApiManagement = 'sc163ApiManagement';
 }
 
 final class AppRoutePaths {
@@ -331,6 +436,30 @@ final class AppRoutePaths {
   static const String tradeExport = '/trade/export';
   static const String tradeConvert = '/trade/convert';
   static const String tradeBots = '/trade/bots';
+  static const String tradeBotTermsOfService = '/trade/bots/terms-of-service';
+  static const String tradeBotRiskDisclosure = '/trade/bots/risk-disclosure';
+  static const String tradeBotSuitabilityAssessment =
+      '/trade/bots/suitability-assessment';
+  static const String tradeBotRiskDashboard = '/trade/bots/risk-dashboard';
+  static const String tradeBotEmergencyStop = '/trade/bots/emergency-stop';
+  static const String tradeBotSecuritySettings =
+      '/trade/bots/security-settings';
+  static const String tradeBotHistory = '/trade/bots/history';
+  static const String tradeBotPerformanceAnalytics =
+      '/trade/bots/performance-analytics';
+  static const String tradeBotBacktesting = '/trade/bots/backtesting';
+  static const String tradeBotStrategyCompare = '/trade/bots/strategy-compare';
+  static const String tradeBotOptimization = '/trade/bots/optimization';
+  static const String tradeBotPortfolioDashboard =
+      '/trade/bots/portfolio-dashboard';
+  static const String tradeBotDrawdownAnalyzer =
+      '/trade/bots/drawdown-analyzer';
+  static const String tradeBotEquityCurve = '/trade/bots/equity-curve';
+  static const String tradeBotGuide = '/trade/bots/guide';
+  static const String tradeBotFaq = '/trade/bots/faq';
+  static const String tradeBotTaxReporting = '/trade/bots/tax-reporting';
+  static const String tradeBotApiDocumentation =
+      '/trade/bots/api-documentation';
   static const String tradeRiskManagement = '/trade/risk-management';
   static const String tradeExecutionQuality = '/trade/execution-quality';
   static const String tradeAdvancedTools = '/trade/advanced-tools';
@@ -430,10 +559,15 @@ final class AppRoutePaths {
       '/trade/copy-trading/complaints-handling';
   static const String tradeCopyComplaintSubmission =
       '/trade/copy-trading/complaint-submission';
+  static const String tradeCopyComplaintTrackingBase =
+      '/trade/copy-trading/complaint-tracking';
   static String tradeCopyComplaintTracking(String complaintId) =>
       '/trade/copy-trading/complaint-tracking/$complaintId';
   static const String tradeCopyOmbudsmanReferral =
       '/trade/copy-trading/ombudsman-referral';
+  static const String tradeCopyAuditTrail = '/trade/copy-trading/audit-trail';
+  static const String tradeCopyRegulatoryInspectionReady =
+      '/trade/copy-trading/regulatory-inspection-ready';
   static const String settingsSecurity = '/settings/security';
   static const String tradeMargin = '/trade/margin';
   static const String tradeMarginBtcusdt = '/trade/margin/btcusdt';
@@ -453,7 +587,40 @@ final class AppRoutePaths {
   static const String arenaStudio = '/arena/studio';
   static const String trade = '/trade';
   static const String wallet = '/wallet';
+  static const String walletHistory = '/wallet/history';
+  static const String walletDeposit = '/wallet/deposit';
+  static String walletDepositAsset(String asset) => '/wallet/deposit/$asset';
+  static const String walletWithdraw = '/wallet/withdraw';
+  static String walletWithdrawAsset(String asset) => '/wallet/withdraw/$asset';
+  static String walletTransaction(String transactionId) =>
+      '/wallet/transaction/$transactionId';
+  static const String walletPortfolioAnalytics = '/wallet/portfolio-analytics';
+  static const String walletAddressBook = '/wallet/address-book';
+  static const String walletAddressBookAdd = '/wallet/address-book/add';
+  static const String walletBuyCrypto = '/wallet/buy-crypto';
+  static const String walletTransfer = '/wallet/transfer';
+  static String walletAsset(String assetId) => '/wallet/asset/$assetId';
+  static const String walletMultiManager = '/wallet/multi-manager';
+  static const String walletGasOptimizer = '/wallet/gas-optimizer';
+  static const String walletTokenApproval = '/wallet/token-approval';
+  static const String walletHealthScore = '/wallet/health-score';
+  static const String walletPendingDeposits = '/wallet/pending-deposits';
+  static const String walletLimits = '/wallet/limits';
+  static const String walletDustConverter = '/wallet/dust-converter';
+  static const String walletNetworkStatus = '/wallet/network-status';
   static const String profile = '/profile';
+  static const String profileEdit = '/profile/edit';
+  static const String profileKyc = '/profile/kyc';
+  static const String profileSecurity = '/profile/security';
+  static const String profileVip = '/profile/vip';
+  static const String profileApi = '/profile/api';
+  static const String profileApiCreate = '/profile/api/create';
+  static const String profileDevices = '/profile/devices';
+  static const String profileSubAccounts = '/profile/sub-accounts';
+  static const String profileSettings = '/profile/settings';
+  static const String profileActivity = '/profile/activity';
+  static const String profileArena = '/profile/arena';
+  static const String onboarding = '/onboarding';
 }
 
 const String _initialRouteFromEnvironment = String.fromEnvironment(
@@ -836,6 +1003,111 @@ GoRouter createAppRouter({
                 TradingBotsPage(shellRenderMode: shellRenderMode),
           ),
           GoRoute(
+            path: AppRoutePaths.tradeBotTermsOfService,
+            name: AppRouteNames.sc117BotTermsOfService,
+            builder: (_, _) =>
+                BotTermsOfServicePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotRiskDisclosure,
+            name: AppRouteNames.sc118BotRiskDisclosure,
+            builder: (_, _) =>
+                BotRiskDisclosurePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotSuitabilityAssessment,
+            name: AppRouteNames.sc119BotSuitabilityAssessment,
+            builder: (_, _) =>
+                BotSuitabilityAssessmentPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotRiskDashboard,
+            name: AppRouteNames.sc120BotRiskDashboard,
+            builder: (_, _) =>
+                BotRiskDashboardPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotEmergencyStop,
+            name: AppRouteNames.sc121BotEmergencyStop,
+            builder: (_, _) =>
+                BotEmergencyStopPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotSecuritySettings,
+            name: AppRouteNames.sc122BotSecuritySettings,
+            builder: (_, _) =>
+                BotSecuritySettingsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotHistory,
+            name: AppRouteNames.sc123BotHistory,
+            builder: (_, _) => BotHistoryPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotPerformanceAnalytics,
+            name: AppRouteNames.sc124BotPerformanceAnalytics,
+            builder: (_, _) =>
+                BotPerformanceAnalyticsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotBacktesting,
+            name: AppRouteNames.sc125BotBacktesting,
+            builder: (_, _) =>
+                BotBacktestingPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotStrategyCompare,
+            name: AppRouteNames.sc126BotStrategyCompare,
+            builder: (_, _) =>
+                BotStrategyComparePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotOptimization,
+            name: AppRouteNames.sc127BotOptimization,
+            builder: (_, _) =>
+                BotOptimizationPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotPortfolioDashboard,
+            name: AppRouteNames.sc128BotPortfolioDashboard,
+            builder: (_, _) =>
+                BotPortfolioDashboardPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotDrawdownAnalyzer,
+            name: AppRouteNames.sc129BotDrawdownAnalyzer,
+            builder: (_, _) =>
+                BotDrawdownAnalyzerPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotEquityCurve,
+            name: AppRouteNames.sc130BotEquityCurve,
+            builder: (_, _) =>
+                BotEquityCurvePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotGuide,
+            name: AppRouteNames.sc131BotGuide,
+            builder: (_, _) => BotGuidePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotFaq,
+            name: AppRouteNames.sc132BotFaq,
+            builder: (_, _) => BotFaqPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotTaxReporting,
+            name: AppRouteNames.sc133BotTaxReporting,
+            builder: (_, _) =>
+                BotTaxReportingPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeBotApiDocumentation,
+            name: AppRouteNames.sc134BotApiDocumentation,
+            builder: (_, _) =>
+                BotApiDocumentationPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
             path: AppRoutePaths.tradeRiskManagement,
             name: AppRouteNames.sc060RiskManagement,
             builder: (_, _) =>
@@ -1065,6 +1337,42 @@ GoRouter createAppRouter({
             builder: (_, _) =>
                 ComplaintsHandlingPage(shellRenderMode: shellRenderMode),
           ),
+          GoRoute(
+            path: AppRoutePaths.tradeCopyComplaintSubmission,
+            name: AppRouteNames.sc112ComplaintSubmission,
+            builder: (_, _) =>
+                ComplaintSubmissionPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeCopyComplaintTrackingBase,
+            name: AppRouteNames.sc113ComplaintTracking,
+            builder: (_, _) =>
+                ComplaintTrackingPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: '/trade/copy-trading/complaint-tracking/:complaintId',
+            builder: (_, state) => ComplaintTrackingPage(
+              complaintId: state.pathParameters['complaintId'],
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeCopyOmbudsmanReferral,
+            name: AppRouteNames.sc114OmbudsmanReferral,
+            builder: (_, _) =>
+                OmbudsmanReferralPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeCopyAuditTrail,
+            name: AppRouteNames.sc115AuditTrail,
+            builder: (_, _) => AuditTrailPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.tradeCopyRegulatoryInspectionReady,
+            name: AppRouteNames.sc116RegulatoryInspectionReady,
+            builder: (_, _) =>
+                RegulatoryInspectionReadyPage(shellRenderMode: shellRenderMode),
+          ),
           ..._tradeCopyTradingOutgoingPlaceholders,
           GoRoute(
             path: AppRoutePaths.tradeMargin,
@@ -1258,12 +1566,180 @@ GoRouter createAppRouter({
           ),
           GoRoute(
             path: AppRoutePaths.wallet,
-            builder: (_, _) => const _BottomNavRouteSkeleton(title: 'Wallet'),
+            name: AppRouteNames.sc135Wallet,
+            builder: (_, _) => WalletPage(shellRenderMode: shellRenderMode),
           ),
           GoRoute(
-            path: AppRoutePaths.profile,
-            builder: (_, _) => const _BottomNavRouteSkeleton(title: 'Profile'),
+            path: AppRoutePaths.walletHistory,
+            name: AppRouteNames.sc136TxHistory,
+            builder: (_, _) =>
+                TransactionHistoryPage(shellRenderMode: shellRenderMode),
           ),
+          GoRoute(
+            path: AppRoutePaths.walletDeposit,
+            name: AppRouteNames.sc137Deposit,
+            builder: (_, _) => DepositPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: '${AppRoutePaths.walletDeposit}/:asset',
+            name: AppRouteNames.sc138DepositUsdt,
+            builder: (_, state) => DepositPage(
+              asset: state.pathParameters['asset'] ?? 'USDT',
+              assetScoped: true,
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.walletWithdraw,
+            name: AppRouteNames.sc139Withdraw,
+            builder: (_, _) => WithdrawPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: '${AppRoutePaths.walletWithdraw}/:asset',
+            name: AppRouteNames.sc140WithdrawUsdt,
+            builder: (_, state) => WithdrawPage(
+              asset: state.pathParameters['asset'] ?? 'USDT',
+              assetScoped: true,
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/wallet/transaction/:txId',
+            name: AppRouteNames.sc141TransactionDetail,
+            builder: (_, state) => TransactionDetailPage(
+              transactionId: state.pathParameters['txId'] ?? 'tx001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.walletPortfolioAnalytics,
+            name: AppRouteNames.sc142PortfolioAnalytics,
+            builder: (_, _) =>
+                PortfolioAnalyticsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.walletAddressBookAdd,
+            name: AppRouteNames.sc143AddressAdd,
+            builder: (_, _) => AddressAddPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.walletAddressBook,
+            name: AppRouteNames.sc144AddressBook,
+            builder: (_, _) =>
+                AddressBookPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.walletBuyCrypto,
+            name: AppRouteNames.sc145BuyCrypto,
+            builder: (_, _) => BuyCryptoPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.walletTransfer,
+            name: AppRouteNames.sc146Transfer,
+            builder: (_, _) => TransferPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: '/wallet/asset/:assetId',
+            name: AppRouteNames.sc147AssetDetail,
+            builder: (_, state) => AssetDetailPage(
+              assetId: state.pathParameters['assetId'] ?? 'btc',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.walletMultiManager,
+            name: AppRouteNames.sc148MultiManager,
+            builder: (_, _) =>
+                WalletMultiManagerPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.walletGasOptimizer,
+            name: AppRouteNames.sc149GasOptimizer,
+            builder: (_, _) =>
+                WalletGasOptimizerPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.walletTokenApproval,
+            name: AppRouteNames.sc150TokenApproval,
+            builder: (_, _) =>
+                WalletTokenApprovalPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.walletHealthScore,
+            name: AppRouteNames.sc151HealthScore,
+            builder: (_, _) =>
+                WalletHealthScorePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.walletPendingDeposits,
+            name: AppRouteNames.sc152PendingDeposits,
+            builder: (_, _) =>
+                PendingDepositsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.walletLimits,
+            name: AppRouteNames.sc153WithdrawLimits,
+            builder: (_, _) =>
+                WithdrawLimitsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.walletDustConverter,
+            name: AppRouteNames.sc154DustConverter,
+            builder: (_, _) =>
+                DustConverterPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.walletNetworkStatus,
+            name: AppRouteNames.sc155NetworkStatus,
+            builder: (_, _) =>
+                NetworkStatusPage(shellRenderMode: shellRenderMode),
+          ),
+          ..._walletOutgoingPlaceholders,
+          GoRoute(
+            path: AppRoutePaths.profile,
+            name: AppRouteNames.sc156Profile,
+            builder: (_, _) => ProfilePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.profileEdit,
+            name: AppRouteNames.sc157EditProfile,
+            builder: (_, _) =>
+                EditProfilePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.profileKyc,
+            name: AppRouteNames.sc159Kyc,
+            builder: (_, _) => KYCPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.profileSecurity,
+            name: AppRouteNames.sc158Security,
+            builder: (_, _) => SecurityPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.profileSettings,
+            name: AppRouteNames.sc160Settings,
+            builder: (_, _) => SettingsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.profileActivity,
+            name: AppRouteNames.sc161ActivityLog,
+            builder: (_, _) =>
+                ActivityLogPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.profileApi,
+            name: AppRouteNames.sc163ApiManagement,
+            builder: (_, _) =>
+                ApiManagementPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.profileApiCreate,
+            name: AppRouteNames.sc162ApiKeyCreate,
+            builder: (_, _) =>
+                ApiKeyCreatePage(shellRenderMode: shellRenderMode),
+          ),
+          ..._profileOutgoingPlaceholders,
           ..._homeOutgoingPlaceholders,
           ..._marketOutgoingPlaceholders,
         ],
@@ -1384,6 +1860,24 @@ String _visualQaStatusBarTimeForPath(String path) {
   if (path.startsWith('/pair/')) return '23:29';
   if (path == AppRoutePaths.news) return '23:29';
   if (path == AppRoutePaths.trade) return '23:29';
+  if (path == AppRoutePaths.tradeBotTermsOfService) return '23:31';
+  if (path == AppRoutePaths.tradeBotRiskDisclosure) return '23:31';
+  if (path == AppRoutePaths.tradeBotSuitabilityAssessment) return '23:31';
+  if (path == AppRoutePaths.tradeBotRiskDashboard) return '23:31';
+  if (path == AppRoutePaths.tradeBotEmergencyStop) return '23:31';
+  if (path == AppRoutePaths.tradeBotSecuritySettings) return '23:31';
+  if (path == AppRoutePaths.tradeBotHistory) return '23:31';
+  if (path == AppRoutePaths.tradeBotPerformanceAnalytics) return '23:31';
+  if (path == AppRoutePaths.tradeBotBacktesting) return '23:31';
+  if (path == AppRoutePaths.tradeBotStrategyCompare) return '23:31';
+  if (path == AppRoutePaths.tradeBotOptimization) return '23:31';
+  if (path == AppRoutePaths.tradeBotPortfolioDashboard) return '23:31';
+  if (path == AppRoutePaths.tradeBotDrawdownAnalyzer) return '23:32';
+  if (path == AppRoutePaths.tradeBotEquityCurve) return '23:32';
+  if (path == AppRoutePaths.tradeBotGuide) return '23:32';
+  if (path == AppRoutePaths.tradeBotFaq) return '23:32';
+  if (path == AppRoutePaths.tradeBotTaxReporting) return '23:32';
+  if (path == AppRoutePaths.tradeBotApiDocumentation) return '23:32';
   if (path.startsWith('/trade/advanced-chart/')) return '23:29';
   if (path.startsWith(AppRoutePaths.tradeCopyTargetMarketDefinition)) {
     return '23:31';
@@ -1398,12 +1892,22 @@ String _visualQaStatusBarTimeForPath(String path) {
   if (path == AppRoutePaths.tradeCopyPerformanceScenarios) return '23:31';
   if (path == AppRoutePaths.tradeCopyRiskIndicatorExplainer) return '23:31';
   if (path == AppRoutePaths.tradeCopyComplaintsHandling) return '23:31';
+  if (path == AppRoutePaths.tradeCopyComplaintSubmission) return '23:31';
+  if (path == AppRoutePaths.tradeCopyComplaintTrackingBase ||
+      path.startsWith('${AppRoutePaths.tradeCopyComplaintTrackingBase}/')) {
+    return '23:31';
+  }
+  if (path == AppRoutePaths.tradeCopyOmbudsmanReferral) return '23:31';
+  if (path == AppRoutePaths.tradeCopyAuditTrail) return '23:31';
+  if (path == AppRoutePaths.tradeCopyRegulatoryInspectionReady) return '23:31';
   if (path == AppRoutePaths.tradeCopyRegulatoryDisclosures) return '23:30';
   if (path.startsWith('/trade/margin')) return '23:30';
   if (path.startsWith('/trade/trader/')) return '23:30';
   if (path.startsWith('/trade/copy-provider/')) return '23:30';
   if (path.startsWith('/trade/copy-performance/')) return '23:30';
   if (path.startsWith('/trade/')) return '23:29';
+  if (path.startsWith(AppRoutePaths.wallet)) return '23:32';
+  if (path.startsWith(AppRoutePaths.profile)) return '23:33';
   if (path == AppRoutePaths.marketsDepth) return '23:28';
   if (path == AppRoutePaths.marketsDerivatives) return '23:28';
   if (path == AppRoutePaths.marketsCalendar) return '23:28';
@@ -1418,8 +1922,11 @@ String _visualQaStatusBarTimeForPath(String path) {
 final List<GoRoute> _homeOutgoingPlaceholders = [
   _placeholderRoute('/search', 'Search'),
   _placeholderRoute('/notifications', 'Notifications'),
-  _placeholderRoute('/wallet/deposit/:asset', 'Deposit'),
-  _placeholderRoute('/wallet/withdraw/:asset', 'Withdraw'),
+  _placeholderRoute(
+    '/support',
+    'Support',
+    backPath: AppRoutePaths.walletHistory,
+  ),
   _placeholderRoute('/topics', 'Topics'),
   _placeholderRoute('/p2p', 'P2P'),
   _placeholderRoute('/launchpad', 'Launchpad'),
@@ -1444,24 +1951,39 @@ final List<GoRoute> _marketOutgoingPlaceholders = [
   ),
 ];
 
+final List<GoRoute> _walletOutgoingPlaceholders = [];
+
+final List<GoRoute> _profileOutgoingPlaceholders = [
+  _placeholderRoute(
+    AppRoutePaths.profileVip,
+    'VIP Program',
+    backPath: AppRoutePaths.profile,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.profileDevices,
+    'Device Management',
+    backPath: AppRoutePaths.profile,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.profileSubAccounts,
+    'Sub Accounts',
+    backPath: AppRoutePaths.profile,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.profileArena,
+    'My Arena',
+    backPath: AppRoutePaths.profile,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.onboarding,
+    'Onboarding',
+    backPath: AppRoutePaths.profile,
+  ),
+];
+
 final List<GoRoute> _tradeMarginOutgoingPlaceholders = [];
 
 final List<GoRoute> _tradeCopyTradingOutgoingPlaceholders = [
-  _placeholderRoute(
-    AppRoutePaths.tradeCopyComplaintSubmission,
-    'Complaint Submission',
-    backPath: AppRoutePaths.tradeCopyComplaintsHandling,
-  ),
-  _placeholderRoute(
-    '/trade/copy-trading/complaint-tracking/:complaintId',
-    'Complaint Tracking',
-    backPath: AppRoutePaths.tradeCopyComplaintsHandling,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.tradeCopyOmbudsmanReferral,
-    'Ombudsman Referral',
-    backPath: AppRoutePaths.tradeCopyComplaintsHandling,
-  ),
   _placeholderRoute(
     AppRoutePaths.tradeCopyClientOptUpRequest,
     'Client Opt-Up Request',
@@ -1478,98 +2000,7 @@ final List<GoRoute> _tradeCopyTradingOutgoingPlaceholders = [
   ),
 ];
 
-final List<GoRoute> _tradeBotsOutgoingPlaceholders = [
-  _placeholderRoute(
-    '/trade/bots/terms-of-service',
-    'Bot Terms of Service',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/risk-disclosure',
-    'Bot Risk Disclosure',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/suitability-assessment',
-    'Bot Suitability',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/risk-dashboard',
-    'Bot Risk Dashboard',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/emergency-stop',
-    'Bot Emergency Stop',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/security-settings',
-    'Bot Security Settings',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/history',
-    'Bot History',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/performance-analytics',
-    'Bot Performance',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/backtesting',
-    'Bot Backtesting',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/strategy-compare',
-    'Bot Strategy Compare',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/optimization',
-    'Bot Optimization',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/portfolio-dashboard',
-    'Bot Portfolio',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/drawdown-analyzer',
-    'Bot Drawdown Analyzer',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/equity-curve',
-    'Bot Equity Curve',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/guide',
-    'Bot Guide',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/faq',
-    'Bot FAQ',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/tax-reporting',
-    'Bot Tax Reporting',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-  _placeholderRoute(
-    '/trade/bots/api-documentation',
-    'Bot API Documentation',
-    backPath: AppRoutePaths.tradeBots,
-  ),
-];
+final List<GoRoute> _tradeBotsOutgoingPlaceholders = [];
 
 GoRoute _placeholderRoute(
   String path,

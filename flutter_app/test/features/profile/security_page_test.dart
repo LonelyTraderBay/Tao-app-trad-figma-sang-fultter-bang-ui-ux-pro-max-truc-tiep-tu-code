@@ -1,0 +1,142 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/forgot_password_page.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/two_fa_setup_page.dart';
+import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/activity_log_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/security_page.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
+
+void main() {
+  Future<void> pumpSecurity(
+    WidgetTester tester, {
+    String initialLocation = AppRoutePaths.profileSecurity,
+  }) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(initialLocation: initialLocation),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  test('SC-158 mock repository exposes security BE draft', () {
+    final snapshot = const MockProfileRepository().getSecurity();
+
+    expect(snapshot.endpoint, '/api/mobile/profile/profile-security');
+    expect(
+      snapshot.actionDraft,
+      'PATCH /user/settings + local navigation to auth and activity routes',
+    );
+    expect(snapshot.score, 3);
+    expect(snapshot.scoreLabel, 'Cao');
+    expect(snapshot.scoreColorHex, 0xFF10B981);
+    expect(snapshot.items.map((item) => item.id), [
+      'two-factor',
+      'password',
+      'withdraw-whitelist',
+      'devices',
+      'activity',
+    ]);
+    expect(snapshot.devices, hasLength(3));
+    expect(snapshot.devices.first.name, 'iPhone 14 Pro');
+    expect(
+      snapshot.supportedStates,
+      containsAll([
+        ProfileScreenState.loading,
+        ProfileScreenState.empty,
+        ProfileScreenState.error,
+        ProfileScreenState.offline,
+        ProfileScreenState.submitting,
+        ProfileScreenState.success,
+      ]),
+    );
+  });
+
+  testWidgets('SC-158 renders security baseline shell', (tester) async {
+    await pumpSecurity(tester);
+
+    expect(find.byType(SecurityPage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byType(VitPhoneFrame), findsNothing);
+    expect(find.byType(VitStatusBar), findsNothing);
+    expect(find.byKey(const Key('vit_bottom_nav_profile')), findsOneWidget);
+    expect(
+      find.byKey(const Key('vit_bottom_nav_active_profile')),
+      findsOneWidget,
+    );
+    expect(find.text('Bảo mật'), findsOneWidget);
+    expect(find.text('Bảo mật · Profile'), findsOneWidget);
+    expect(find.text('Điểm bảo mật'), findsOneWidget);
+    expect(find.text('Cao (3/4)'), findsOneWidget);
+    expect(find.text('Xác thực 2 lớp (2FA)'), findsOneWidget);
+    expect(find.text('Đổi mật khẩu'), findsOneWidget);
+    expect(find.text('Whitelist địa chỉ rút tiền'), findsOneWidget);
+    expect(find.text('Quản lý thiết bị đăng nhập'), findsOneWidget);
+    expect(find.text('Nhật ký hoạt động'), findsOneWidget);
+    expect(find.text('Đang bật'), findsOneWidget);
+    expect(find.text('Chưa cài đặt'), findsOneWidget);
+    expect(find.text('Mã chống lừa đảo'), findsOneWidget);
+    expect(find.text('Nhập mã 4–8 ký tự'), findsOneWidget);
+    expect(find.text('Lưu'), findsOneWidget);
+  });
+
+  testWidgets('SC-158 wires direct navigation and local device reveal', (
+    tester,
+  ) async {
+    await pumpSecurity(tester);
+
+    await tester.tap(find.byKey(SecurityPage.itemKey('two-factor')));
+    await tester.pumpAndSettle();
+    expect(find.byType(TwoFASetupPage), findsOneWidget);
+    expect(find.text('Thiết lập 2FA'), findsOneWidget);
+
+    await pumpSecurity(tester);
+    await tester.tap(find.byKey(SecurityPage.itemKey('password')));
+    await tester.pumpAndSettle();
+    expect(find.byType(ForgotPasswordPage), findsOneWidget);
+    expect(find.text('Quên mật khẩu'), findsOneWidget);
+
+    await pumpSecurity(tester);
+    await tester.tap(find.byKey(SecurityPage.itemKey('devices')));
+    await tester.pumpAndSettle();
+    expect(find.text('iPhone 14 Pro'), findsOneWidget);
+    expect(find.text('MacBook Pro'), findsOneWidget);
+    expect(find.text('Samsung Galaxy S23'), findsOneWidget);
+
+    await pumpSecurity(tester);
+    await tester.tap(find.byKey(SecurityPage.itemKey('activity')));
+    await tester.pumpAndSettle();
+    expect(find.byType(ActivityLogPage), findsOneWidget);
+    expect(
+      find.text('Nh\u1EADt k\u00FD ho\u1EA1t \u0111\u1ED9ng'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-158 anti-phishing save stays local', (tester) async {
+    await pumpSecurity(tester);
+
+    await tester.enterText(
+      find.byKey(SecurityPage.antiPhishingFieldKey),
+      'VIT4',
+    );
+    await tester.tap(find.byKey(SecurityPage.antiPhishingSaveKey));
+    await tester.pump();
+    expect(find.text('...'), findsOneWidget);
+    await tester.pumpAndSettle(const Duration(milliseconds: 320));
+    expect(find.byType(SecurityPage), findsOneWidget);
+  });
+}

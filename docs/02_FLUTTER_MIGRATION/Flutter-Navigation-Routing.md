@@ -62,6 +62,17 @@ Use the same sample params as the capture pipeline and master plan:
 
 Prediction Markets, P2P, Arena, Earn, Launchpad, DCA, Referral, Support, and Admin are reached through in-app links, cards, search, or module entry points, not as extra bottom tabs.
 
+## Bottom Nav Visual Standard
+
+The bottom nav follows the Home native standard from `Flutter-Native-Design-Standard.md`:
+
+- Native height is `DeviceMetrics.nativeBottomChrome = 56`.
+- Visual-QA height is `DeviceMetrics.bottomChrome = 90`.
+- Active state uses `AppColors.navActive` / `AppColors.primary` for all tabs.
+- Center Trade action uses `AppGradients.navCenter`.
+- Do not create per-module active colors for Markets, Trade, Wallet, Profile, Prediction, or any nested module.
+- Bottom nav may auto-hide in `ShellRenderMode.native`; it stays visible in `ShellRenderMode.visualQa` for screenshot parity.
+
 ## Navigation QA
 
 For each `SC-xxx`:

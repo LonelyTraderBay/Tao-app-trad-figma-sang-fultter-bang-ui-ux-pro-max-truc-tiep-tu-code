@@ -1,0 +1,129 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/bot_emergency_stop_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/trading_bots_page.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
+
+void main() {
+  Future<void> pumpEmergencyStop(WidgetTester tester) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(
+            initialLocation: AppRoutePaths.tradeBotEmergencyStop,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  test('SC-121 mock repository exposes emergency stop BE draft', () {
+    final repo = const MockTradeRepository();
+    final snapshot = repo.getBotEmergencyStop();
+    final result = repo.submitBotEmergencyStop(
+      const TradeBotEmergencyStopDraft(
+        reasonId: 'crash',
+        closePositions: true,
+        confirmed: true,
+      ),
+    );
+
+    expect(snapshot.warningTitle, 'EMERGENCY STOP');
+    expect(snapshot.bots, hasLength(3));
+    expect(snapshot.reasons.map((item) => item.id), [
+      'crash',
+      'bug',
+      'unauthorized',
+      'drawdown',
+      'other',
+    ]);
+    expect(snapshot.completionPath, '/trade/bots');
+    expect(snapshot.endpoint, '/api/mobile/trade/trade-bots-emergency-stop');
+    expect(snapshot.actionDraft, contains('POST /bots/create'));
+    expect(result.status, 'accepted');
+    expect(result.stoppedBotCount, 3);
+    expect(result.redirectPath, '/trade/bots');
+    expect(
+      snapshot.supportedStates,
+      containsAll([
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+        TradeScreenState.submitting,
+        TradeScreenState.success,
+        TradeScreenState.realtimeRefresh,
+      ]),
+    );
+  });
+
+  testWidgets('SC-121 renders emergency stop baseline in Trade shell', (
+    tester,
+  ) async {
+    await pumpEmergencyStop(tester);
+
+    expect(find.byType(BotEmergencyStopPage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byType(VitPhoneFrame), findsNothing);
+    expect(find.byType(VitStatusBar), findsNothing);
+    expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
+    expect(find.text('Emergency Stop'), findsOneWidget);
+    expect(find.text('EMERGENCY STOP'), findsOneWidget);
+    expect(find.text('Bots to Stop (3)'), findsOneWidget);
+    expect(find.text('DCA Bot #1'), findsOneWidget);
+    expect(find.text('Reason for Emergency Stop'), findsOneWidget);
+
+    final button = tester.widget<FilledButton>(
+      find.byKey(BotEmergencyStopPage.submitKey),
+    );
+    expect(button.onPressed, isNull);
+  });
+
+  testWidgets('SC-121 enables destructive action after reason and confirm', (
+    tester,
+  ) async {
+    await pumpEmergencyStop(tester);
+
+    await tester.tap(find.byKey(BotEmergencyStopPage.reasonKey('crash')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(BotEmergencyStopPage.confirmationKey),
+    );
+    await tester.tap(find.byKey(BotEmergencyStopPage.confirmationKey));
+    await tester.pumpAndSettle();
+
+    final button = tester.widget<FilledButton>(
+      find.byKey(BotEmergencyStopPage.submitKey),
+    );
+    expect(button.onPressed, isNotNull);
+  });
+
+  testWidgets('SC-121 submit navigates back to trading bots', (tester) async {
+    await pumpEmergencyStop(tester);
+
+    await tester.tap(find.byKey(BotEmergencyStopPage.reasonKey('crash')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(BotEmergencyStopPage.confirmationKey),
+    );
+    await tester.tap(find.byKey(BotEmergencyStopPage.confirmationKey));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(BotEmergencyStopPage.submitKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TradingBotsPage), findsOneWidget);
+  });
+}

@@ -1,0 +1,143 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/withdraw_page.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
+
+void main() {
+  Future<void> pumpWithdraw(
+    WidgetTester tester, {
+    String initialLocation = AppRoutePaths.walletWithdraw,
+  }) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(initialLocation: initialLocation),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  test('SC-139 mock repository exposes withdraw BE draft', () {
+    final snapshot = const MockWalletRepository().getWithdraw('USDT');
+
+    expect(snapshot.asset, 'USDT');
+    expect(snapshot.available, 10200);
+    expect(snapshot.endpoint, '/api/mobile/wallet/wallet-withdraw');
+    expect(
+      snapshot.actionDraft,
+      'POST /wallet/withdraw-preview + POST /wallet/withdraw-confirm',
+    );
+    expect(snapshot.networks.first.name, 'TRC20 (TRON)');
+    expect(snapshot.recentAddresses, hasLength(3));
+    expect(
+      snapshot.supportedStates,
+      containsAll([
+        WalletScreenState.loading,
+        WalletScreenState.empty,
+        WalletScreenState.error,
+        WalletScreenState.offline,
+        WalletScreenState.submitting,
+        WalletScreenState.success,
+      ]),
+    );
+  });
+
+  test('SC-140 mock repository exposes asset-scoped withdraw BE draft', () {
+    final snapshot = const MockWalletRepository().getWithdraw(
+      'USDT',
+      assetScoped: true,
+    );
+
+    expect(snapshot.asset, 'USDT');
+    expect(snapshot.endpoint, '/api/mobile/wallet/wallet-withdraw-usdt');
+    expect(
+      snapshot.actionDraft,
+      'POST /wallet/withdraw-preview + POST /wallet/withdraw-confirm',
+    );
+    expect(
+      snapshot.supportedStates,
+      containsAll([
+        WalletScreenState.loading,
+        WalletScreenState.empty,
+        WalletScreenState.error,
+        WalletScreenState.offline,
+        WalletScreenState.submitting,
+        WalletScreenState.success,
+      ]),
+    );
+  });
+
+  testWidgets('SC-139 renders withdraw baseline in Wallet shell', (
+    tester,
+  ) async {
+    await pumpWithdraw(tester);
+
+    expect(find.byType(WithdrawPage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byType(VitPhoneFrame), findsNothing);
+    expect(find.byType(VitStatusBar), findsNothing);
+    expect(find.byKey(const Key('vit_bottom_nav_wallet')), findsOneWidget);
+    expect(
+      find.byKey(const Key('vit_bottom_nav_active_wallet')),
+      findsOneWidget,
+    );
+    expect(find.text('Rút USDT'), findsOneWidget);
+    expect(find.text('Rút tiền · Wallet'), findsOneWidget);
+    expect(find.text('Số dư khả dụng'), findsOneWidget);
+    expect(find.text('10,200.00 USDT'), findsOneWidget);
+    expect(find.text('TRC20 (TRON)'), findsOneWidget);
+    expect(find.text('Địa chỉ ví nhận'), findsOneWidget);
+    expect(find.text('Ví lạnh cá nhân'), findsOneWidget);
+    expect(find.text('Số lượng rút'), findsOneWidget);
+    expect(find.text('Tiếp tục →'), findsOneWidget);
+  });
+
+  testWidgets('SC-139 network picker and amount shortcut work', (tester) async {
+    await pumpWithdraw(tester);
+
+    await tester.tap(find.byKey(WithdrawPage.networkSelectorKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(WithdrawPage.networkKey('erc20')));
+    await tester.pumpAndSettle();
+    expect(find.text('ERC20 (Ethereum)'), findsOneWidget);
+
+    await tester.tap(find.byKey(WithdrawPage.allAmountKey));
+    await tester.pumpAndSettle();
+    expect(find.text('10,200.00'), findsOneWidget);
+  });
+
+  testWidgets('SC-140 renders asset-scoped withdraw route in Wallet shell', (
+    tester,
+  ) async {
+    await pumpWithdraw(
+      tester,
+      initialLocation: AppRoutePaths.walletWithdrawAsset('USDT'),
+    );
+
+    expect(find.byType(WithdrawPage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byType(VitPhoneFrame), findsNothing);
+    expect(find.byType(VitStatusBar), findsNothing);
+    expect(find.byKey(const Key('vit_bottom_nav_wallet')), findsOneWidget);
+    expect(
+      find.byKey(const Key('vit_bottom_nav_active_wallet')),
+      findsOneWidget,
+    );
+    expect(find.text('Rút USDT'), findsOneWidget);
+    expect(find.text('TRC20 (TRON)'), findsOneWidget);
+    expect(find.text('10,200.00 USDT'), findsOneWidget);
+    expect(find.text('Tiếp tục →'), findsOneWidget);
+  });
+}

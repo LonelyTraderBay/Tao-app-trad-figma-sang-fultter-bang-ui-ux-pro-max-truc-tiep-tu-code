@@ -1,6 +1,6 @@
 # Flutter Component Mapping
 
-Use this file before implementing any Flutter screen. It maps React primitives to Flutter shared widgets so screens do not reinvent layout and styling.
+Use this file before implementing any Flutter screen. It maps React primitives to Flutter shared widgets so screens do not reinvent layout, styling, color, or sizing. The native color and size authority is `Flutter-Native-Design-Standard.md`.
 
 ## Mapping Table
 
@@ -13,10 +13,10 @@ Use this file before implementing any Flutter screen. It maps React primitives t
 | `PageContent` | `VitPageContent` | Owns horizontal padding, top padding, and section gaps. |
 | `PageSection` | `VitPageSection` | Labeled groups for cards, controls, and settings. |
 | `Header` | `VitHeader` | Standard back button, centered title, optional subtitle/action/search/bell. |
-| `BottomNav` | `VitBottomNav` | Five tabs only: Home, Markets, Trade, Wallet, Profile; compact and auto-hide in native mode. |
+| `BottomNav` | `VitBottomNav` | Five tabs only: Home, Markets, Trade, Wallet, Profile; compact and auto-hide in native mode; active color is always the Home brand token. |
 | `TabBar` | `VitTabBar` | Variants: underline, pill, segment. |
 | `TrCard` | `VitCard` | Dark surface card with tokenized border/radius. Use `VitCardVariant.hero` for native hero/portfolio cards with the approved Home gradient and restrained shadow. |
-| `CTAButton` | `VitCtaButton` | Primary/secondary/destructive buttons with 52-55px height. |
+| `CTAButton` | `VitCtaButton` | Primary/auth use Home orange gradient; default height `52`, standard action height `55`. |
 | `IconButton` | `VitIconButton` | Fixed touch target, token background, icon-only action. |
 | `BottomSheetV2` | `VitBottomSheet` | Modal/bottom sheet with token radius and safe bottom. |
 | `StatusPill` | `VitStatusPill` | Semantic status colors, no ad hoc pill styling. |
@@ -35,6 +35,22 @@ Use this file before implementing any Flutter screen. It maps React primitives t
 | `ShellRenderMode.visualQa` | `VitAppShell` is wrapped by `VitPhoneFrame` and renders `VitStatusBar` for reference captures. | `VitBottomNav` stays visible and uses the full visual QA bottom chrome. |
 
 The current native UX standard is `SC-007 HomePage`: Home header hides on downward scroll, reappears on upward scroll, and the native bottom nav hides on downward scroll through `VitAppShell`. Use the approved Home dark orange brand, neutral dark surfaces, and softened portfolio/hero card treatment for later native Flutter screens.
+
+## Home Native Component Sizes
+
+| Component | Required native sizing |
+| --- | --- |
+| Page horizontal padding | `AppSpacing.contentPad = 20` |
+| Standard section gap | `AppSpacing.sectionGap = 20` |
+| Compact Home rhythm | `12` where used by shared Home/native layout |
+| Input/search field | `AppSpacing.inputHeight = 52`, `AppRadii.input = 14` |
+| Primary CTA | `AppSpacing.ctaHeight = 52`, Home orange gradient |
+| Standard action button | `AppSpacing.buttonStandard = 55` |
+| Compact chip/button | `AppSpacing.buttonCompact = 34` |
+| Card | `AppRadii.card = 16`, `AppColors.surface`, `AppColors.cardBorder` |
+| Hero card | `AppRadii.cardLarge = 24`, Home portfolio gradient/treatment |
+| Native bottom nav | `DeviceMetrics.nativeBottomChrome = 56` |
+| Visual QA bottom nav | `DeviceMetrics.bottomChrome = 90` |
 
 ## Card Rules
 
@@ -66,6 +82,7 @@ Map React `PageLayout` variants directly:
 - The only bottom nav tabs are Home, Markets, Trade, Wallet, Profile.
 - Do not add Arena, P2P, Predictions, Earn, or Launchpad as bottom nav tabs.
 - The center Trade tab uses the primary gradient button treatment.
+- Do not assign module-specific active colors to bottom nav. Active nav uses `AppColors.navActive` for every tab.
 - Native runtime uses compact bottom chrome and scroll-driven auto-hide.
 - Visual QA runtime keeps the full bottom chrome visible for screenshot parity.
 - Use the screenshot as the final authority for active tab state and badge placement.
@@ -78,5 +95,6 @@ Before building a screen:
 2. If missing, add the shared widget first.
 3. Build the screen using shared widgets.
 4. Only add screen-local widgets for content that is truly unique to that screen.
+5. If screen-local constants are needed, they may alias shared tokens only.
 
 Do not copy one-off styling into multiple screens. Promote repeated UI into `shared/widgets/` or `shared/layout/`.

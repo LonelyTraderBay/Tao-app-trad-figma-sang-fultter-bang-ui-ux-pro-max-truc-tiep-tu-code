@@ -97,6 +97,24 @@ Prediction Markets và Open Arena là **secondary modules inside the ecosystem**
 
 ## 2) Visual system for current app
 
+### 2.0 Flutter native Home standard
+
+For Flutter migration and new Flutter-native screens, `SC-007 HomePage` is the global color and size standard.
+
+**MUST**
+
+- Follow `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md`.
+- Use Home orange brand tokens for primary actions, selected states, focus, and active bottom nav.
+- Use Home neutral dark/OLED-clean surfaces for backgrounds, cards, panels, inputs, and navigation chrome.
+- Use Home sizing tokens for page padding, section gaps, input/CTA heights, card radii, typography scale, and bottom chrome.
+- Treat React screenshots as visual-QA structure references, not permission to copy legacy blue brand palettes into Flutter native.
+
+**MUST NOT**
+
+- Use `#3B82F6` as the default Flutter native brand color.
+- Create repeated screen-local colors, spacing, radius, or shadow systems.
+- Add per-module active colors to bottom navigation.
+
 ### 2.1 Visual identity
 
 **MUST**
@@ -1309,7 +1327,7 @@ Dùng đúng preset, không hard-code padding:
 Khi nhóm các controls/cards trong bottom sheets hoặc toolbox, dùng `PageSection` có label:
 
 ```tsx
-<PageSection label="Giao dịch" accentColor="#3B82F6">
+<PageSection label="Giao dịch" accentColor="var(--tr-primary)">
   <Button>Thanh toán</Button>
   <Button>Sổ lệnh</Button>
 </PageSection>

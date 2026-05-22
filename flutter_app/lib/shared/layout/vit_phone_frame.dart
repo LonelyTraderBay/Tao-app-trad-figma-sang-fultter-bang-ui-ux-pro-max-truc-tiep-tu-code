@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../app/theme/app_colors.dart';
@@ -25,22 +27,31 @@ class VitPhoneFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: const BoxDecoration(gradient: AppGradients.frameOuter),
-      child: Center(
-        child: SizedBox(
-          key: frameKey,
-          width: DeviceMetrics.width,
-          height: DeviceMetrics.height,
-          child: ColoredBox(
-            color: AppColors.frameBg,
-            child: Stack(
-              children: [
-                Positioned.fill(child: child),
-                if (showDynamicIsland) const _DynamicIsland(),
-                if (showHomeIndicator) const _HomeIndicator(),
-              ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final frameHeight = constraints.hasBoundedHeight
+              ? math.max(DeviceMetrics.height, constraints.maxHeight)
+              : DeviceMetrics.height;
+          return Align(
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+              key: frameKey,
+              width: DeviceMetrics.width,
+              height: frameHeight,
+              child: ColoredBox(
+                color: AppColors.frameBg,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Positioned.fill(child: child),
+                    if (showDynamicIsland) const _DynamicIsland(),
+                    if (showHomeIndicator) const _HomeIndicator(),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

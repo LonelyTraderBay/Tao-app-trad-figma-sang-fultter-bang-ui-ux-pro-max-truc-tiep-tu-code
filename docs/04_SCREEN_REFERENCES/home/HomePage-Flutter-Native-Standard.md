@@ -3,6 +3,8 @@
 This file records the approved native Flutter UX standard for `SC-007 HomePage`.
 It complements the React screenshot baseline; it does not replace it.
 
+For cross-project Flutter migration work, the concise global contract is `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md`. This file is the Home-specific evidence and reference capture log behind that contract.
+
 ## Status
 
 - Screen: `SC-007 HomePage`
@@ -22,6 +24,16 @@ It complements the React screenshot baseline; it does not replace it.
 - Do not overwrite the React baseline with native captures.
 - Do not tick master plan status unless Flutter UI, navigation, BE draft, and QA acceptance are complete.
 - The Bybit-inspired Flutter native palette is an original VitTrade treatment; it is not an exact copy of Bybit brand assets.
+
+## Global Standard Scope
+
+The following Home decisions apply to every later Flutter native screen unless a documented screen-specific exception passes the exception process:
+
+- brand color, selected states, active nav, CTA, and focus styling use `AppColors.primary = 0xFFE58A00`;
+- neutral surfaces use `AppColors.bg`, `surface`, `surface2`, `surface3`, `cardBorder`, `divider`, and `borderSolid`;
+- native bottom nav active state is the same Home brand color across Home, Markets, Trade, Wallet, and Profile;
+- page padding, input/CTA heights, card radii, text scale, and bottom insets use the shared Home tokens;
+- legacy React blue values are visual-QA history, not native Flutter brand.
 
 ## Approved Native Captures
 
@@ -70,3 +82,4 @@ Use this Home screen as the practical native UX bar for future Flutter phone scr
 - Preserve minimum tap targets and readable financial data; do not trade clarity for density.
 - Use the approved Home card treatment as the default for high-value hero cards: dark gradient, soft orange accent, restrained shadow.
 - Keep Prediction Markets value surfaces and Open Arena points-only surfaces visually and semantically separate.
+- Do not copy module-local palettes, per-module nav accents, or old React blue-tinted surfaces into native runtime.

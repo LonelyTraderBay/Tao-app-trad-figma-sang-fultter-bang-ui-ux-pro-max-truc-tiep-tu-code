@@ -86,7 +86,7 @@ void main() {
     expect(find.text('Final Response'), findsOneWidget);
   });
 
-  testWidgets('SC-111 resolved complaint submission edge opens placeholder', (
+  testWidgets('SC-111 resolved complaint submission edge opens SC-112', (
     tester,
   ) async {
     await pumpComplaints(tester);
@@ -94,10 +94,11 @@ void main() {
     await tester.tap(find.byKey(ComplaintsHandlingPage.submitKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Complaint Submission'), findsOneWidget);
+    expect(find.text('Submit Complaint'), findsWidgets);
+    expect(find.text('FCA Regulated Process'), findsOneWidget);
   });
 
-  testWidgets('SC-111 dynamic complaint tracking edge opens safe placeholder', (
+  testWidgets('SC-111 dynamic complaint tracking edge opens SC-113', (
     tester,
   ) async {
     await pumpComplaints(tester);
@@ -109,6 +110,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Complaint Tracking'), findsOneWidget);
+    expect(find.text('Complaint COMP-2026-001'), findsOneWidget);
+    expect(find.text('Under Review'), findsWidgets);
   });
 }

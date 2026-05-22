@@ -477,6 +477,121 @@ class _CapturingTradeRepository implements TradeRepository {
   }
 
   @override
+  TradeComplaintSubmissionSnapshot getComplaintSubmission() {
+    return _delegate.getComplaintSubmission();
+  }
+
+  @override
+  TradeComplaintTrackingSnapshot getComplaintTracking({String? complaintId}) {
+    return _delegate.getComplaintTracking(complaintId: complaintId);
+  }
+
+  @override
+  TradeOmbudsmanReferralSnapshot getOmbudsmanReferral() {
+    return _delegate.getOmbudsmanReferral();
+  }
+
+  @override
+  TradeAuditTrailSnapshot getAuditTrail() {
+    return _delegate.getAuditTrail();
+  }
+
+  @override
+  TradeRegulatoryInspectionSnapshot getRegulatoryInspectionReady() {
+    return _delegate.getRegulatoryInspectionReady();
+  }
+
+  @override
+  TradeBotTermsSnapshot getBotTermsOfService() {
+    return _delegate.getBotTermsOfService();
+  }
+
+  @override
+  TradeBotRiskDisclosureSnapshot getBotRiskDisclosure() {
+    return _delegate.getBotRiskDisclosure();
+  }
+
+  @override
+  TradeBotSuitabilityAssessmentSnapshot getBotSuitabilityAssessment() {
+    return _delegate.getBotSuitabilityAssessment();
+  }
+
+  @override
+  TradeBotRiskDashboardSnapshot getBotRiskDashboard() {
+    return _delegate.getBotRiskDashboard();
+  }
+
+  @override
+  TradeBotEmergencyStopSnapshot getBotEmergencyStop() {
+    return _delegate.getBotEmergencyStop();
+  }
+
+  @override
+  TradeBotSecuritySettingsSnapshot getBotSecuritySettings() {
+    return _delegate.getBotSecuritySettings();
+  }
+
+  @override
+  TradeBotHistorySnapshot getBotHistory() {
+    return _delegate.getBotHistory();
+  }
+
+  @override
+  TradeBotPerformanceAnalyticsSnapshot getBotPerformanceAnalytics() {
+    return _delegate.getBotPerformanceAnalytics();
+  }
+
+  @override
+  TradeBotBacktestingSnapshot getBotBacktesting() {
+    return _delegate.getBotBacktesting();
+  }
+
+  @override
+  TradeBotStrategyCompareSnapshot getBotStrategyCompare() {
+    return _delegate.getBotStrategyCompare();
+  }
+
+  @override
+  TradeBotOptimizationSnapshot getBotOptimization() {
+    return _delegate.getBotOptimization();
+  }
+
+  @override
+  TradeBotPortfolioDashboardSnapshot getBotPortfolioDashboard() {
+    return _delegate.getBotPortfolioDashboard();
+  }
+
+  @override
+  TradeBotDrawdownAnalyzerSnapshot getBotDrawdownAnalyzer() {
+    return _delegate.getBotDrawdownAnalyzer();
+  }
+
+  @override
+  TradeBotEquityCurveSnapshot getBotEquityCurve() {
+    return _delegate.getBotEquityCurve();
+  }
+
+  @override
+  TradeBotGuideSnapshot getBotGuide() {
+    return _delegate.getBotGuide();
+  }
+
+  @override
+  TradeBotFaqSnapshot getBotFaq() {
+    return _delegate.getBotFaq();
+  }
+
+  @override
+  TradeBotTaxReportingSnapshot getBotTaxReporting() {
+    return _delegate.getBotTaxReporting();
+  }
+
+  @override
+  TradeBotApiDocumentationSnapshot getBotApiDocumentation() {
+    return _delegate.getBotApiDocumentation();
+  }
+
+  @override
   TradeSettings patchTradeSettings(TradeSettings settings) {
     return _delegate.patchTradeSettings(settings);
   }
@@ -528,6 +643,13 @@ class _CapturingTradeRepository implements TradeRepository {
   }
 
   @override
+  TradeBotTaxReportExportResult createBotTaxReportExport(
+    TradeBotTaxReportExportRequest request,
+  ) {
+    return _delegate.createBotTaxReportExport(request);
+  }
+
+  @override
   TradeExPostCostsReportExportResult createExPostCostsReportExport({
     int year = 2025,
   }) {
@@ -571,6 +693,39 @@ class _CapturingTradeRepository implements TradeRepository {
   @override
   TradeBotActionResult submitBotAction(TradeBotActionRequest request) {
     return _delegate.submitBotAction(request);
+  }
+
+  @override
+  TradeBotEmergencyStopResult submitBotEmergencyStop(
+    TradeBotEmergencyStopDraft draft,
+  ) {
+    return _delegate.submitBotEmergencyStop(draft);
+  }
+
+  @override
+  TradeBotSecuritySettingsResult patchBotSecuritySettings(
+    TradeBotSecuritySettingsDraft draft,
+  ) {
+    return _delegate.patchBotSecuritySettings(draft);
+  }
+
+  @override
+  TradeBotHistoryExportResult createBotHistoryExport(
+    TradeBotHistoryExportRequest request,
+  ) {
+    return _delegate.createBotHistoryExport(request);
+  }
+
+  @override
+  TradeBotBacktestResult runBotBacktest(TradeBotBacktestRequest request) {
+    return _delegate.runBotBacktest(request);
+  }
+
+  @override
+  TradeBotOptimizationResult runBotOptimization(
+    TradeBotOptimizationRequest request,
+  ) {
+    return _delegate.runBotOptimization(request);
   }
 
   @override

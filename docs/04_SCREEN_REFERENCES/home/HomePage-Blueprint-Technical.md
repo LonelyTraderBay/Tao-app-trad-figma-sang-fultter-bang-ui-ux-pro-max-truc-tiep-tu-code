@@ -1,4 +1,7 @@
 # VitTrade HomePage - Technical Blueprint
+
+> Historical React/visual-QA note: this file documents the old React Home pixel blueprint and may mention legacy blue tokens such as `#3B82F6` or fake device-frame dimensions. For Flutter native migration, use it only for structure/reference context. The current global Flutter native color and size standard is `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md` and `docs/04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md`.
+
 ## Sơ đồ kỹ thuật chi tiết từng pixel
 
 ---

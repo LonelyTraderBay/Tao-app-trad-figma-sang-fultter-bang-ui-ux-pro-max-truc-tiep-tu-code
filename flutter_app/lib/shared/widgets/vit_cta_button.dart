@@ -84,13 +84,9 @@ class VitCtaButton extends StatelessWidget {
         );
       case VitCtaButtonVariant.auth:
         return const _CtaStyle(
-          gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [Color(0xFF3B82F6), Color(0xFF2563EB)],
-          ),
+          gradient: AppGradients.navCenter,
           foreground: Colors.white,
-          shadow: Color(0x663B82F6),
+          shadow: AppColors.primary30,
         );
     }
   }

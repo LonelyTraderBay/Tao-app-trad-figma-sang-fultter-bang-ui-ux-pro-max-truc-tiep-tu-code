@@ -252,6 +252,70 @@ void main() {
       'sc110RiskIndicatorExplainer',
     );
     expect(AppRouteNames.sc111ComplaintsHandling, 'sc111ComplaintsHandling');
+    expect(AppRouteNames.sc112ComplaintSubmission, 'sc112ComplaintSubmission');
+    expect(AppRouteNames.sc113ComplaintTracking, 'sc113ComplaintTracking');
+    expect(AppRouteNames.sc114OmbudsmanReferral, 'sc114OmbudsmanReferral');
+    expect(AppRouteNames.sc115AuditTrail, 'sc115AuditTrail');
+    expect(
+      AppRouteNames.sc116RegulatoryInspectionReady,
+      'sc116RegulatoryInspectionReady',
+    );
+    expect(AppRouteNames.sc117BotTermsOfService, 'sc117BotTermsOfService');
+    expect(AppRouteNames.sc118BotRiskDisclosure, 'sc118BotRiskDisclosure');
+    expect(
+      AppRouteNames.sc119BotSuitabilityAssessment,
+      'sc119BotSuitabilityAssessment',
+    );
+    expect(AppRouteNames.sc120BotRiskDashboard, 'sc120BotRiskDashboard');
+    expect(AppRouteNames.sc121BotEmergencyStop, 'sc121BotEmergencyStop');
+    expect(AppRouteNames.sc122BotSecuritySettings, 'sc122BotSecuritySettings');
+    expect(AppRouteNames.sc123BotHistory, 'sc123BotHistory');
+    expect(
+      AppRouteNames.sc124BotPerformanceAnalytics,
+      'sc124BotPerformanceAnalytics',
+    );
+    expect(AppRouteNames.sc125BotBacktesting, 'sc125BotBacktesting');
+    expect(AppRouteNames.sc126BotStrategyCompare, 'sc126BotStrategyCompare');
+    expect(AppRouteNames.sc127BotOptimization, 'sc127BotOptimization');
+    expect(
+      AppRouteNames.sc128BotPortfolioDashboard,
+      'sc128BotPortfolioDashboard',
+    );
+    expect(AppRouteNames.sc129BotDrawdownAnalyzer, 'sc129BotDrawdownAnalyzer');
+    expect(AppRouteNames.sc130BotEquityCurve, 'sc130BotEquityCurve');
+    expect(AppRouteNames.sc131BotGuide, 'sc131BotGuide');
+    expect(AppRouteNames.sc132BotFaq, 'sc132BotFaq');
+    expect(AppRouteNames.sc133BotTaxReporting, 'sc133BotTaxReporting');
+    expect(AppRouteNames.sc134BotApiDocumentation, 'sc134BotApiDocumentation');
+    expect(AppRouteNames.sc135Wallet, 'sc135Wallet');
+    expect(AppRouteNames.sc136TxHistory, 'sc136TxHistory');
+    expect(AppRouteNames.sc137Deposit, 'sc137Deposit');
+    expect(AppRouteNames.sc138DepositUsdt, 'sc138DepositUsdt');
+    expect(AppRouteNames.sc139Withdraw, 'sc139Withdraw');
+    expect(AppRouteNames.sc140WithdrawUsdt, 'sc140WithdrawUsdt');
+    expect(AppRouteNames.sc141TransactionDetail, 'sc141TransactionDetail');
+    expect(AppRouteNames.sc142PortfolioAnalytics, 'sc142PortfolioAnalytics');
+    expect(AppRouteNames.sc143AddressAdd, 'sc143AddressAdd');
+    expect(AppRouteNames.sc144AddressBook, 'sc144AddressBook');
+    expect(AppRouteNames.sc145BuyCrypto, 'sc145BuyCrypto');
+    expect(AppRouteNames.sc146Transfer, 'sc146Transfer');
+    expect(AppRouteNames.sc147AssetDetail, 'sc147AssetDetail');
+    expect(AppRouteNames.sc148MultiManager, 'sc148MultiManager');
+    expect(AppRouteNames.sc149GasOptimizer, 'sc149GasOptimizer');
+    expect(AppRouteNames.sc150TokenApproval, 'sc150TokenApproval');
+    expect(AppRouteNames.sc151HealthScore, 'sc151HealthScore');
+    expect(AppRouteNames.sc152PendingDeposits, 'sc152PendingDeposits');
+    expect(AppRouteNames.sc153WithdrawLimits, 'sc153WithdrawLimits');
+    expect(AppRouteNames.sc154DustConverter, 'sc154DustConverter');
+    expect(AppRouteNames.sc155NetworkStatus, 'sc155NetworkStatus');
+    expect(AppRouteNames.sc156Profile, 'sc156Profile');
+    expect(AppRouteNames.sc157EditProfile, 'sc157EditProfile');
+    expect(AppRouteNames.sc158Security, 'sc158Security');
+    expect(AppRouteNames.sc159Kyc, 'sc159Kyc');
+    expect(AppRouteNames.sc160Settings, 'sc160Settings');
+    expect(AppRouteNames.sc161ActivityLog, 'sc161ActivityLog');
+    expect(AppRouteNames.sc162ApiKeyCreate, 'sc162ApiKeyCreate');
+    expect(AppRouteNames.sc163ApiManagement, 'sc163ApiManagement');
     expect(AppRoutePaths.authLogin, '/auth/login');
     expect(AppRoutePaths.authRegister, '/auth/register');
     expect(AppRoutePaths.authOtp, '/auth/otp');
@@ -367,6 +431,48 @@ void main() {
     expect(AppRoutePaths.tradeExport, '/trade/export');
     expect(AppRoutePaths.tradeConvert, '/trade/convert');
     expect(AppRoutePaths.tradeBots, '/trade/bots');
+    expect(
+      AppRoutePaths.tradeBotTermsOfService,
+      '/trade/bots/terms-of-service',
+    );
+    expect(AppRoutePaths.tradeBotRiskDisclosure, '/trade/bots/risk-disclosure');
+    expect(
+      AppRoutePaths.tradeBotSuitabilityAssessment,
+      '/trade/bots/suitability-assessment',
+    );
+    expect(AppRoutePaths.tradeBotRiskDashboard, '/trade/bots/risk-dashboard');
+    expect(AppRoutePaths.tradeBotEmergencyStop, '/trade/bots/emergency-stop');
+    expect(
+      AppRoutePaths.tradeBotSecuritySettings,
+      '/trade/bots/security-settings',
+    );
+    expect(AppRoutePaths.tradeBotHistory, '/trade/bots/history');
+    expect(
+      AppRoutePaths.tradeBotPerformanceAnalytics,
+      '/trade/bots/performance-analytics',
+    );
+    expect(AppRoutePaths.tradeBotBacktesting, '/trade/bots/backtesting');
+    expect(
+      AppRoutePaths.tradeBotStrategyCompare,
+      '/trade/bots/strategy-compare',
+    );
+    expect(AppRoutePaths.tradeBotOptimization, '/trade/bots/optimization');
+    expect(
+      AppRoutePaths.tradeBotPortfolioDashboard,
+      '/trade/bots/portfolio-dashboard',
+    );
+    expect(
+      AppRoutePaths.tradeBotDrawdownAnalyzer,
+      '/trade/bots/drawdown-analyzer',
+    );
+    expect(AppRoutePaths.tradeBotEquityCurve, '/trade/bots/equity-curve');
+    expect(AppRoutePaths.tradeBotGuide, '/trade/bots/guide');
+    expect(AppRoutePaths.tradeBotFaq, '/trade/bots/faq');
+    expect(AppRoutePaths.tradeBotTaxReporting, '/trade/bots/tax-reporting');
+    expect(
+      AppRoutePaths.tradeBotApiDocumentation,
+      '/trade/bots/api-documentation',
+    );
     expect(AppRoutePaths.tradeRiskManagement, '/trade/risk-management');
     expect(AppRoutePaths.tradeExecutionQuality, '/trade/execution-quality');
     expect(AppRoutePaths.tradeAdvancedTools, '/trade/advanced-tools');
@@ -534,12 +640,24 @@ void main() {
       '/trade/copy-trading/complaint-submission',
     );
     expect(
+      AppRoutePaths.tradeCopyComplaintTrackingBase,
+      '/trade/copy-trading/complaint-tracking',
+    );
+    expect(
       AppRoutePaths.tradeCopyComplaintTracking('COMP-2026-001'),
       '/trade/copy-trading/complaint-tracking/COMP-2026-001',
     );
     expect(
       AppRoutePaths.tradeCopyOmbudsmanReferral,
       '/trade/copy-trading/ombudsman-referral',
+    );
+    expect(
+      AppRoutePaths.tradeCopyAuditTrail,
+      '/trade/copy-trading/audit-trail',
+    );
+    expect(
+      AppRoutePaths.tradeCopyRegulatoryInspectionReady,
+      '/trade/copy-trading/regulatory-inspection-ready',
     );
     expect(AppRoutePaths.settingsSecurity, '/settings/security');
     expect(AppRoutePaths.tradeMargin, '/trade/margin');
@@ -562,6 +680,46 @@ void main() {
       '/trade/margin/advanced-analytics',
     );
     expect(AppRoutePaths.tradeTrader('trader001'), '/trade/trader/trader001');
+    expect(AppRoutePaths.wallet, '/wallet');
+    expect(AppRoutePaths.walletHistory, '/wallet/history');
+    expect(AppRoutePaths.walletDeposit, '/wallet/deposit');
+    expect(AppRoutePaths.walletDepositAsset('USDT'), '/wallet/deposit/USDT');
+    expect(AppRoutePaths.walletWithdraw, '/wallet/withdraw');
+    expect(AppRoutePaths.walletWithdrawAsset('USDT'), '/wallet/withdraw/USDT');
+    expect(
+      AppRoutePaths.walletTransaction('tx001'),
+      '/wallet/transaction/tx001',
+    );
+    expect(
+      AppRoutePaths.walletPortfolioAnalytics,
+      '/wallet/portfolio-analytics',
+    );
+    expect(AppRoutePaths.walletAddressBook, '/wallet/address-book');
+    expect(AppRoutePaths.walletAddressBookAdd, '/wallet/address-book/add');
+    expect(AppRoutePaths.walletBuyCrypto, '/wallet/buy-crypto');
+    expect(AppRoutePaths.walletTransfer, '/wallet/transfer');
+    expect(AppRoutePaths.walletAsset('btc'), '/wallet/asset/btc');
+    expect(AppRoutePaths.walletMultiManager, '/wallet/multi-manager');
+    expect(AppRoutePaths.walletGasOptimizer, '/wallet/gas-optimizer');
+    expect(AppRoutePaths.walletTokenApproval, '/wallet/token-approval');
+    expect(AppRoutePaths.walletHealthScore, '/wallet/health-score');
+    expect(AppRoutePaths.walletPendingDeposits, '/wallet/pending-deposits');
+    expect(AppRoutePaths.walletLimits, '/wallet/limits');
+    expect(AppRoutePaths.walletDustConverter, '/wallet/dust-converter');
+    expect(AppRoutePaths.walletNetworkStatus, '/wallet/network-status');
+    expect(AppRoutePaths.profile, '/profile');
+    expect(AppRoutePaths.profileEdit, '/profile/edit');
+    expect(AppRoutePaths.profileKyc, '/profile/kyc');
+    expect(AppRoutePaths.profileSecurity, '/profile/security');
+    expect(AppRoutePaths.profileVip, '/profile/vip');
+    expect(AppRoutePaths.profileApi, '/profile/api');
+    expect(AppRoutePaths.profileApiCreate, '/profile/api/create');
+    expect(AppRoutePaths.profileDevices, '/profile/devices');
+    expect(AppRoutePaths.profileSubAccounts, '/profile/sub-accounts');
+    expect(AppRoutePaths.profileSettings, '/profile/settings');
+    expect(AppRoutePaths.profileActivity, '/profile/activity');
+    expect(AppRoutePaths.profileArena, '/profile/arena');
+    expect(AppRoutePaths.onboarding, '/onboarding');
     expect(AppRoutePaths.dca, '/dca');
     expect(AppRoutePaths.profilePredictions, '/profile/predictions');
     expect(AppRoutePaths.arena, '/arena');
