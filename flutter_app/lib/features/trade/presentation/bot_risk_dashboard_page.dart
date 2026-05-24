@@ -14,10 +14,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _riskBg = Color(0xFF080C14);
-const _riskSurface = Color(0xFF151A23);
-const _riskSurface2 = Color(0xFF1D2436);
-const _riskBlue = Color(0xFF3B82F6);
+const _riskBackground = AppColors.bg;
+const _riskPanel = AppColors.surface;
+const _riskPanel2 = AppColors.surface2;
+const _riskPrimary = AppColors.primary;
 const _riskGreen = Color(0xFF10B981);
 const _riskAmber = Color(0xFFF59E0B);
 const _riskRed = Color(0xFFEF4444);
@@ -47,7 +47,7 @@ class BotRiskDashboardPage extends ConsumerWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-120 BotRiskDashboardPage',
       child: Material(
-        color: _riskBg,
+        color: _riskBackground,
         child: Column(
           children: [
             VitHeader(
@@ -116,15 +116,15 @@ class _HeaderEmergencyButton extends StatelessWidget {
     return InkWell(
       key: BotRiskDashboardPage.emergencyHeaderKey,
       onTap: onTap,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: AppRadii.inputRadius,
       child: Container(
         width: 40,
         height: 40,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _riskSurface2,
+          color: _riskPanel2,
           border: Border.all(color: AppColors.cardBorder),
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: AppRadii.inputRadius,
         ),
         child: const Icon(
           Icons.error_outline_rounded,
@@ -198,7 +198,7 @@ class _RiskScoreCard extends StatelessWidget {
                       height: 80,
                       alignment: Alignment.center,
                       decoration: const BoxDecoration(
-                        color: _riskSurface,
+                        color: _riskPanel,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -219,7 +219,7 @@ class _RiskScoreCard extends StatelessWidget {
             decoration: BoxDecoration(
               color: color.withValues(alpha: .08),
               border: Border.all(color: color.withValues(alpha: .28)),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: AppRadii.cardRadius,
             ),
             child: Text(
               snapshot.riskMessage,
@@ -265,7 +265,7 @@ class _CriticalMetricsGrid extends StatelessWidget {
         label: 'Total Exposure',
         value: '\$${_formatCompact(snapshot.totalExposure)}',
         limit: 'Max: \$${_formatCompact(snapshot.maxExposure)}',
-        color: _riskBlue,
+        color: _riskPrimary,
         percent: snapshot.totalExposure / snapshot.maxExposure,
       ),
       _MetricData(
@@ -560,8 +560,8 @@ class _SafetyControlsCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.fromLTRB(12, 10, 10, 10),
               decoration: BoxDecoration(
-                color: _riskSurface2,
-                borderRadius: BorderRadius.circular(14),
+                color: _riskPanel2,
+                borderRadius: AppRadii.inputRadius,
               ),
               child: Row(
                 children: [
@@ -615,14 +615,14 @@ class _EmergencyActionCard extends StatelessWidget {
     return InkWell(
       key: BotRiskDashboardPage.emergencyButtonKey,
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         constraints: const BoxConstraints(minHeight: 70),
         padding: const EdgeInsets.fromLTRB(16, 15, 12, 15),
         decoration: BoxDecoration(
           color: _riskRed.withValues(alpha: .08),
           border: Border.all(color: _riskRed.withValues(alpha: .48), width: 2),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           children: [
@@ -678,7 +678,7 @@ class _RiskExplanationCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
       decoration: BoxDecoration(
-        color: _riskSurface2,
+        color: _riskPanel2,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -740,7 +740,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _riskBlue,
+            color: _riskPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),
@@ -792,7 +792,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _riskSurface,
+        color: _riskPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),

@@ -12,12 +12,12 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _govBg = Color(0xFF080C14);
-const _govSurface = Color(0xFF151A23);
-const _govSurface2 = Color(0xFF1E2535);
-const _govBorder = Color(0xFF273142);
+const _govBackground = AppColors.bg;
+const _govPanel = AppColors.surface;
+const _govPanel2 = AppColors.surface2;
+const _govBorder = AppColors.borderSolid;
 const _govGreen = Color(0xFF10B981);
-const _govBlue = Color(0xFF3B82F6);
+const _govPrimary = AppColors.primary;
 const _govAmber = Color(0xFFF59E0B);
 const _govRed = Color(0xFFEF4444);
 
@@ -54,7 +54,7 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-100 ProductGovernancePage',
       child: Material(
-        color: _govBg,
+        color: _govBackground,
         child: Column(
           children: [
             VitHeader(
@@ -202,7 +202,7 @@ class _StatCard extends StatelessWidget {
       height: 89,
       padding: const EdgeInsets.fromLTRB(12, 14, 12, 12),
       decoration: BoxDecoration(
-        color: _govSurface,
+        color: _govPanel,
         border: Border.all(color: _govBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -261,7 +261,7 @@ class _Tabs extends StatelessWidget {
     ];
     return Container(
       height: 53,
-      color: _govSurface,
+      color: _govPanel,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -277,7 +277,7 @@ class _Tabs extends StatelessWidget {
                           tab.$2,
                           style: AppTextStyles.caption.copyWith(
                             color: activeId == tab.$1
-                                ? _govBlue
+                                ? _govPrimary
                                 : AppColors.text3,
                             fontSize: 12,
                             fontWeight: AppTextStyles.bold,
@@ -289,7 +289,7 @@ class _Tabs extends StatelessWidget {
                     Container(
                       width: activeId == tab.$1 ? 100 : 0,
                       height: 2,
-                      color: _govBlue,
+                      color: _govPrimary,
                     ),
                   ],
                 ),
@@ -374,13 +374,13 @@ class _ProductCard extends StatelessWidget {
                     product.id,
                   ),
                 ),
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: AppRadii.cardRadius,
                 child: Container(
                   width: 34,
                   height: 34,
                   decoration: BoxDecoration(
-                    color: _govSurface2,
-                    borderRadius: BorderRadius.circular(18),
+                    color: _govPanel2,
+                    borderRadius: AppRadii.cardRadius,
                   ),
                   child: const Icon(
                     Icons.chevron_right_rounded,
@@ -447,7 +447,7 @@ class _TagSection extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                 decoration: BoxDecoration(
-                  color: _govSurface2,
+                  color: _govPanel2,
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Text(
@@ -518,8 +518,8 @@ class _DateBox extends StatelessWidget {
       height: 47,
       padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
       decoration: BoxDecoration(
-        color: _govSurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: _govPanel2,
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -587,8 +587,8 @@ class _ReviewRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: _govSurface2,
-        borderRadius: BorderRadius.circular(13),
+        color: _govPanel2,
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Row(
         children: [
@@ -670,12 +670,12 @@ class _DistributionTab extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: _govBlue.withValues(alpha: .13),
-                    borderRadius: BorderRadius.circular(15),
+                    color: _govPrimary.withValues(alpha: .13),
+                    borderRadius: AppRadii.inputRadius,
                   ),
                   child: const Icon(
                     Icons.monitor_heart_outlined,
-                    color: _govBlue,
+                    color: _govPrimary,
                     size: 18,
                   ),
                 ),
@@ -760,7 +760,7 @@ class _SectionLabel extends StatelessWidget {
           width: 3,
           height: 16,
           decoration: BoxDecoration(
-            color: _govBlue,
+            color: _govPrimary,
             borderRadius: BorderRadius.circular(999),
           ),
         ),
@@ -790,7 +790,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _govSurface,
+        color: _govPanel,
         border: Border.all(color: _govBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),

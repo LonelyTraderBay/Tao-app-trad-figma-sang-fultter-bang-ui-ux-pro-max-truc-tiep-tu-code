@@ -16,7 +16,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 enum _TokenInfoTab { overview, onchain, project }
 
@@ -167,7 +167,7 @@ class _TabButton extends StatelessWidget {
                 child: Text(
                   label,
                   style: AppTextStyles.caption.copyWith(
-                    color: active ? _marketBlue : AppColors.text3,
+                    color: active ? _marketPrimary : AppColors.text3,
                     fontWeight: active
                         ? AppTextStyles.bold
                         : AppTextStyles.medium,
@@ -179,7 +179,7 @@ class _TabButton extends StatelessWidget {
                 height: 2,
                 width: active ? 116 : 0,
                 decoration: BoxDecoration(
-                  color: _marketBlue,
+                  color: _marketPrimary,
                   borderRadius: BorderRadius.circular(1),
                 ),
               ),
@@ -223,7 +223,7 @@ class _OverviewTab extends StatelessWidget {
           rows: [
             _InfoRowData(
               icon: Icons.bar_chart_rounded,
-              iconColor: _marketBlue,
+              iconColor: _marketPrimary,
               label: 'Von hoa thi truong',
               value: _formatCompact(fundamentalsMarketCap(pair), prefix: r'$'),
             ),
@@ -259,7 +259,7 @@ class _OverviewTab extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 14),
-        const _SectionHeader(label: 'Cung token', accentColor: _marketBlue),
+        const _SectionHeader(label: 'Cung token', accentColor: _marketPrimary),
         _SupplyCard(fundamentals: fundamentals, supplyPct: supplyPct),
         const SizedBox(height: 14),
         const _SectionHeader(
@@ -294,8 +294,8 @@ class _HeroCard extends StatelessWidget {
     final fundamentals = snapshot.fundamentals;
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: const Color(0xFF0D1833),
-        border: Border.all(color: _marketBlue.withValues(alpha: 0.22)),
+        color: AppColors.surface,
+        border: Border.all(color: _marketPrimary.withValues(alpha: 0.22)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Padding(
@@ -848,10 +848,10 @@ class _ChartLink extends StatelessWidget {
             width: 42,
             height: 42,
             decoration: BoxDecoration(
-              color: _marketBlue.withValues(alpha: 0.12),
+              color: _marketPrimary.withValues(alpha: 0.12),
               borderRadius: AppRadii.cardRadius,
             ),
-            child: const Icon(Icons.bar_chart_rounded, color: _marketBlue),
+            child: const Icon(Icons.bar_chart_rounded, color: _marketPrimary),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -956,13 +956,13 @@ class _OnchainTab extends StatelessWidget {
         const SizedBox(height: 14),
         const _SectionHeader(
           label: 'Thong tin mang luoi',
-          accentColor: _marketBlue,
+          accentColor: _marketPrimary,
         ),
         _InfoCard(
           rows: [
             _InfoRowData(
               icon: Icons.public_rounded,
-              iconColor: _marketBlue,
+              iconColor: _marketPrimary,
               label: 'Mang luoi',
               value: f.network,
             ),
@@ -1037,7 +1037,7 @@ class _ProjectTab extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.article_outlined,
-                    color: _marketBlue,
+                    color: _marketPrimary,
                     size: 16,
                   ),
                   const SizedBox(width: 8),
@@ -1056,7 +1056,7 @@ class _ProjectTab extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 14),
-        const _SectionHeader(label: 'Lien ket', accentColor: _marketBlue),
+        const _SectionHeader(label: 'Lien ket', accentColor: _marketPrimary),
         _ProjectLinks(fundamentals: f),
         const SizedBox(height: 14),
         const _SectionHeader(
@@ -1067,7 +1067,7 @@ class _ProjectTab extends StatelessWidget {
           rows: [
             _InfoRowData(
               icon: Icons.bar_chart_rounded,
-              iconColor: _marketBlue,
+              iconColor: _marketPrimary,
               label: 'Von hoa',
               value: _formatCompact(snapshot.pair.marketCap, prefix: r'$'),
             ),
@@ -1144,7 +1144,7 @@ class _LinkRow extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       child: Row(
         children: [
-          Icon(icon, color: _marketBlue, size: 18),
+          Icon(icon, color: _marketPrimary, size: 18),
           const SizedBox(width: 10),
           Expanded(
             child: Column(

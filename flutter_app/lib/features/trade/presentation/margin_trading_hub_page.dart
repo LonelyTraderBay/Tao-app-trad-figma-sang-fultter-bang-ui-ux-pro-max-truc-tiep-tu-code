@@ -12,12 +12,12 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _hubBg = Color(0xFF080C14);
-const _hubSurface = Color(0xFF151A23);
-const _hubHero = Color(0xFF101B39);
-const _hubHeroBorder = Color(0xFF19315C);
-const _hubBorder = Color(0xFF273142);
-const _hubBlue = Color(0xFF3B82F6);
+const _hubBackground = AppColors.bg;
+const _hubPanel = AppColors.surface;
+const _hubHero = AppColors.surface;
+const _hubHeroBorder = AppColors.primary20;
+const _hubBorder = AppColors.borderSolid;
+const _hubPrimary = AppColors.primary;
 const _hubGreen = Color(0xFF10B981);
 const _hubPurple = Color(0xFF8B5CF6);
 
@@ -44,7 +44,7 @@ class MarginTradingHubPage extends ConsumerWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-090 MarginTradingHubPage',
       child: Material(
-        color: _hubBg,
+        color: _hubBackground,
         child: Column(
           children: [
             VitHeader(
@@ -103,7 +103,7 @@ class _HeroCard extends StatelessWidget {
                 height: 64,
                 decoration: BoxDecoration(
                   color: Colors.white.withValues(alpha: .10),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 child: const Icon(
                   Icons.trending_up_rounded,
@@ -219,7 +219,7 @@ class _NavigationCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.bar_chart_rounded, color: _hubBlue, size: 22),
+              const Icon(Icons.bar_chart_rounded, color: _hubPrimary, size: 22),
               const SizedBox(width: 9),
               Expanded(
                 child: Text(
@@ -274,7 +274,7 @@ class _MenuItem extends StatelessWidget {
         constraints: const BoxConstraints(minHeight: 92),
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
         decoration: BoxDecoration(
-          color: _hubSurface,
+          color: _hubPanel,
           border: Border.all(color: color.withValues(alpha: .28)),
           borderRadius: AppRadii.cardRadius,
         ),
@@ -285,7 +285,7 @@ class _MenuItem extends StatelessWidget {
               height: 48,
               decoration: BoxDecoration(
                 color: color.withValues(alpha: .10),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: AppRadii.cardRadius,
               ),
               child: Icon(_menuIcon(item.id), color: color, size: 24),
             ),
@@ -534,7 +534,7 @@ class _ComplianceCard extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: _hubGreen.withValues(alpha: .16),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 child: Text(
                   '${compliance.regulations[index]} v',
@@ -565,7 +565,7 @@ class _HubCard extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _hubSurface,
+        color: _hubPanel,
         border: Border.all(color: _hubBorder.withValues(alpha: .68)),
         borderRadius: AppRadii.cardRadius,
       ),

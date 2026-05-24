@@ -1,0 +1,114 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/p2p_order_rate_page.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+
+void main() {
+  Future<void> pumpP2POrderRate(WidgetTester tester) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(
+            initialLocation: AppRoutePaths.p2pOrderRate('p2p001'),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  test('SC-213 mock repository exposes P2P order rate BE draft', () {
+    final snapshot = const MockP2PRepository().getOrderRate('p2p001');
+
+    expect(snapshot.endpoint, '/api/mobile/p2p/p2p-order-rate-p2p001');
+    expect(
+      snapshot.actionDraft,
+      'POST /orders/:id/action where applicable; POST /p2p/* workflow action where applicable',
+    );
+    expect(snapshot.order.id, 'p2p001');
+    expect(snapshot.order.merchant, 'CryptoKing_VN');
+    expect(snapshot.quickTags.length, 6);
+    expect(snapshot.quickTags.first.iconKey, 'speed');
+    expect(snapshot.contractNotes, contains('escrow'));
+    expect(
+      snapshot.supportedStates,
+      containsAll([
+        P2PScreenState.loading,
+        P2PScreenState.empty,
+        P2PScreenState.error,
+        P2PScreenState.offline,
+        P2PScreenState.submitting,
+        P2PScreenState.success,
+      ]),
+    );
+  });
+
+  testWidgets('SC-213 renders P2P order rating initial baseline', (
+    tester,
+  ) async {
+    await pumpP2POrderRate(tester);
+
+    expect(find.byType(P2POrderRatePage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
+    expect(find.text('Danh gia giao dich'), findsOneWidget);
+    expect(find.text('Danh gia - P2P'), findsOneWidget);
+    expect(find.text('CryptoKing_VN'), findsOneWidget);
+    expect(find.text('Mua 200.0000 USDT - 5.070.000'), findsOneWidget);
+    expect(find.text('Ban danh gia merchant nay the nao?'), findsOneWidget);
+    expect(find.byKey(P2POrderRatePage.starKey(5)), findsOneWidget);
+    expect(find.text('Bo qua'), findsOneWidget);
+    expect(find.text('Gui danh gia'), findsOneWidget);
+    expect(find.text('Nhan xet nhanh'), findsNothing);
+  });
+
+  testWidgets('SC-213 rating unlocks tags, review, and submit success', (
+    tester,
+  ) async {
+    await pumpP2POrderRate(tester);
+
+    await tester.tap(find.byKey(P2POrderRatePage.starKey(5)));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Xuat sac!'), findsOneWidget);
+    expect(find.text('Nhan xet nhanh'), findsOneWidget);
+    expect(find.text('Giao dich nhanh'), findsOneWidget);
+    expect(find.byKey(P2POrderRatePage.reviewKey), findsOneWidget);
+
+    await tester.tap(find.byKey(P2POrderRatePage.tagKey('Giao dich nhanh')));
+    await tester.enterText(
+      find.byKey(P2POrderRatePage.reviewKey),
+      'Fast and clear escrow flow.',
+    );
+    await tester.ensureVisible(find.byKey(P2POrderRatePage.submitKey));
+    await tester.tap(find.byKey(P2POrderRatePage.submitKey));
+    await tester.pump();
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+    await tester.pump(const Duration(milliseconds: 350));
+    await tester.pumpAndSettle();
+    expect(find.text('Cam on ban!'), findsOneWidget);
+    expect(
+      find.text('Danh gia cua ban giup cong dong giao dich an toan hon.'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-213 skip returns to P2P order placeholder', (tester) async {
+    await pumpP2POrderRate(tester);
+
+    await tester.tap(find.byKey(P2POrderRatePage.skipKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Chi tiết đơn hàng'), findsOneWidget);
+  });
+}

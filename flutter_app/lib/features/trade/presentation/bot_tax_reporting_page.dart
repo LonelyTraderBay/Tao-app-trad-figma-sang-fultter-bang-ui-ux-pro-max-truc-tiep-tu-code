@@ -12,10 +12,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _taxBg = Color(0xFF080C14);
-const _taxSurface = Color(0xFF151A23);
-const _taxSurface2 = Color(0xFF1D2436);
-const _taxBlue = Color(0xFF3B82F6);
+const _taxBackground = AppColors.bg;
+const _taxPanel = AppColors.surface;
+const _taxPanel2 = AppColors.surface2;
+const _taxPrimary = AppColors.primary;
 const _taxGreen = Color(0xFF10B981);
 const _taxAmber = Color(0xFFF59E0B);
 const _taxRed = Color(0xFFEF4444);
@@ -71,7 +71,7 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-133 BotTaxReportingPage',
       child: Material(
-        color: _taxBg,
+        color: _taxBackground,
         child: Stack(
           children: [
             Column(
@@ -187,7 +187,7 @@ class _TaxNotice extends StatelessWidget {
       decoration: BoxDecoration(
         color: _taxAmber.withValues(alpha: .10),
         border: Border.all(color: _taxAmber.withValues(alpha: .30)),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,13 +260,15 @@ class _YearPicker extends StatelessWidget {
                 height: 46,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: selectedYear == years[i] ? _taxBlue : _taxBg,
+                  color: selectedYear == years[i]
+                      ? _taxPrimary
+                      : _taxBackground,
                   border: Border.all(
                     color: selectedYear == years[i]
-                        ? _taxBlue
+                        ? _taxPrimary
                         : _taxOptionBorder,
                   ),
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 child: Text(
                   years[i],
@@ -437,14 +439,14 @@ class _CostBasisPicker extends StatelessWidget {
                 height: 82,
                 padding: const EdgeInsets.fromLTRB(12, 12, 12, 10),
                 decoration: BoxDecoration(
-                  color: _taxSurface,
+                  color: _taxPanel,
                   border: Border.all(
                     color: selectedMethod == methods[i].$1
-                        ? _taxBlue
+                        ? _taxPrimary
                         : _taxOptionBorder,
                     width: 2,
                   ),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -457,7 +459,7 @@ class _CostBasisPicker extends StatelessWidget {
                           methods[i].$1,
                           style: AppTextStyles.caption.copyWith(
                             color: selectedMethod == methods[i].$1
-                                ? _taxBlue
+                                ? _taxPrimary
                                 : AppColors.text1,
                             fontSize: 13,
                             fontWeight: AppTextStyles.bold,
@@ -512,12 +514,12 @@ class _ReportTypeCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
         decoration: BoxDecoration(
-          color: _taxSurface,
+          color: _taxPanel,
           border: Border.all(
-            color: selected ? _taxBlue : _taxOptionBorder,
+            color: selected ? _taxPrimary : _taxOptionBorder,
             width: 2,
           ),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -536,7 +538,7 @@ class _ReportTypeCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
-                            color: selected ? _taxBlue : AppColors.text1,
+                            color: selected ? _taxPrimary : AppColors.text1,
                             fontSize: 13,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
@@ -547,7 +549,7 @@ class _ReportTypeCard extends StatelessWidget {
                       _Pill(
                         text: report.format,
                         color: AppColors.text3,
-                        background: _taxSurface2,
+                        background: _taxPanel2,
                       ),
                       if (report.recommended) ...[
                         const SizedBox(width: 8),
@@ -671,7 +673,7 @@ class _TaxNotesCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
       decoration: BoxDecoration(
-        color: _taxSurface2,
+        color: _taxPanel2,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -748,7 +750,7 @@ class _GenerateFooter extends StatelessWidget {
         DeviceMetrics.height - DeviceMetrics.bottomChrome - 46 - topOffset;
     final child = Container(
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-      color: _taxBg.withValues(alpha: .96),
+      color: _taxBackground.withValues(alpha: .96),
       child: GestureDetector(
         key: BotTaxReportingPage.generateKey,
         behavior: HitTestBehavior.opaque,
@@ -757,8 +759,8 @@ class _GenerateFooter extends StatelessWidget {
           height: 42,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: disabled ? _taxSurface2 : _taxBlue,
-            borderRadius: BorderRadius.circular(14),
+            color: disabled ? _taxPanel2 : _taxPrimary,
+            borderRadius: AppRadii.inputRadius,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -829,7 +831,7 @@ class _RadioDot extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: selected ? _taxBlue : _taxOptionBorder,
+          color: selected ? _taxPrimary : _taxOptionBorder,
           width: 2,
         ),
       ),
@@ -838,7 +840,7 @@ class _RadioDot extends StatelessWidget {
               width: 8,
               height: 8,
               decoration: const BoxDecoration(
-                color: _taxBlue,
+                color: _taxPrimary,
                 shape: BoxShape.circle,
               ),
             )
@@ -859,9 +861,9 @@ class _CheckBox extends StatelessWidget {
       height: 24,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: selected ? _taxBlue : Colors.transparent,
+        color: selected ? _taxPrimary : Colors.transparent,
         border: Border.all(
-          color: selected ? _taxBlue : _taxOptionBorder,
+          color: selected ? _taxPrimary : _taxOptionBorder,
           width: 2,
         ),
         borderRadius: BorderRadius.circular(7),
@@ -920,7 +922,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _taxSurface,
+        color: _taxPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -942,7 +944,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _taxBlue,
+            color: _taxPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),

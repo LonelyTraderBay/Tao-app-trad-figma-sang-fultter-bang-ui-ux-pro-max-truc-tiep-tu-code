@@ -16,7 +16,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 const _purple = Color(0xFF8B5CF6);
 
 enum _ChartTab { chart, indicators, analysis }
@@ -198,7 +198,7 @@ class _AdvancedChartTabBar extends StatelessWidget {
                             item.label,
                             style: AppTextStyles.caption.copyWith(
                               color: activeTab == item.tab
-                                  ? _predictionBlue
+                                  ? _predictionPrimary
                                   : AppColors.text3,
                               fontWeight: AppTextStyles.bold,
                               fontSize: 12,
@@ -211,7 +211,7 @@ class _AdvancedChartTabBar extends StatelessWidget {
                         height: 2,
                         width: activeTab == item.tab ? 116 : 0,
                         decoration: BoxDecoration(
-                          color: _predictionBlue,
+                          color: _predictionPrimary,
                           borderRadius: BorderRadius.circular(1),
                         ),
                       ),
@@ -272,18 +272,18 @@ class _TimeframeButton extends StatelessWidget {
     return SizedBox(
       height: 36,
       child: Material(
-        color: active ? _predictionBlue : AppColors.bg,
-        borderRadius: BorderRadius.circular(18),
+        color: active ? _predictionPrimary : AppColors.bg,
+        borderRadius: AppRadii.cardRadius,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
               border: Border.all(
                 color: active ? Colors.transparent : AppColors.border,
               ),
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: AppRadii.cardRadius,
             ),
             child: Text(
               label,
@@ -458,7 +458,7 @@ class _ChartLayerControls extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Lop hien thi',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         GridView.count(
           crossAxisCount: 2,
@@ -492,7 +492,7 @@ class _ChartLayerControls extends StatelessWidget {
             _LayerButton(
               key: PredictionAdvancedChartPage.volumeToggleKey,
               label: 'Volume',
-              color: _predictionBlue,
+              color: _predictionPrimary,
               active: showVolume,
               onTap: onVolume,
             ),
@@ -521,15 +521,15 @@ class _LayerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: active ? color.withValues(alpha: .08) : AppColors.bg,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: AppRadii.cardRadius,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 13),
           decoration: BoxDecoration(
             border: Border.all(color: active ? color : AppColors.border),
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: AppRadii.cardRadius,
           ),
           child: Row(
             children: [
@@ -632,7 +632,7 @@ class _IndicatorSummarySection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Technical Indicators',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         for (final indicator in snapshot.indicators)
           _IndicatorCard(indicator: indicator),
@@ -816,7 +816,7 @@ class _SupportResistanceSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Support & Resistance',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         _LevelCard(
           label: 'Resistance',
@@ -1219,13 +1219,13 @@ class _ProbabilityPainter extends CustomPainter {
       ..shader = const LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [Color(0x4D3B82F6), Color(0x003B82F6)],
+        colors: [AppColors.primary30, Colors.transparent],
       ).createShader(chart);
     canvas.drawPath(fillPath, fillPaint);
     canvas.drawPath(
       path,
       Paint()
-        ..color = _predictionBlue
+        ..color = _predictionPrimary
         ..strokeWidth = 2.4
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round,
@@ -1278,7 +1278,7 @@ class _VolumePainter extends CustomPainter {
         topLeft: const Radius.circular(4),
         topRight: const Radius.circular(4),
       );
-      canvas.drawRRect(rect, Paint()..color = _predictionBlue);
+      canvas.drawRRect(rect, Paint()..color = _predictionPrimary);
     }
     final textPainter = TextPainter(textDirection: TextDirection.ltr);
     for (final value in [0, 16000, 32000]) {

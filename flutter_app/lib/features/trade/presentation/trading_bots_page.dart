@@ -5,16 +5,17 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _botBlue = Color(0xFF3B82F6);
-const _botBlueDark = Color(0xFF1D4ED8);
-const _panelBg = Color(0xFF121721);
-const _chipBg = Color(0xFF1D263B);
+const _botPrimary = AppColors.primary;
+const _botPrimaryDark = AppColors.primaryDark;
+const _panelBackground = AppColors.surface;
+const _chipBackground = AppColors.surface2;
 
 enum _TradingBotsTab { myBots, strategies }
 
@@ -202,7 +203,7 @@ class _TradingBotsHeader extends StatelessWidget {
           InkWell(
             key: TradingBotsPage.backKey,
             onTap: onBack,
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: AppRadii.cardRadius,
             child: const SizedBox(
               width: 36,
               height: 36,
@@ -262,13 +263,13 @@ class _BotsHero extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF152655), Color(0xFF101936)],
+          colors: [AppColors.surface3, AppColors.surface],
         ),
         borderRadius: AppRadii.cardLargeRadius,
-        border: Border.all(color: const Color(0x333B82F6)),
+        border: Border.all(color: AppColors.primary20),
         boxShadow: [
           BoxShadow(
-            color: _botBlue.withValues(alpha: .10),
+            color: _botPrimary.withValues(alpha: .10),
             blurRadius: 24,
             offset: const Offset(0, 8),
           ),
@@ -284,16 +285,16 @@ class _BotsHero extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      _botBlue.withValues(alpha: .28),
-                      const Color(0xFF6366F1).withValues(alpha: .18),
+                      _botPrimary.withValues(alpha: .28),
+                      AppColors.accent20,
                     ],
                   ),
                   borderRadius: AppRadii.cardRadius,
-                  border: Border.all(color: _botBlue.withValues(alpha: .32)),
+                  border: Border.all(color: _botPrimary.withValues(alpha: .32)),
                 ),
                 child: const Icon(
                   Icons.smart_toy_outlined,
-                  color: Color(0xFF60A5FA),
+                  color: AppColors.primarySoft,
                   size: 27,
                 ),
               ),
@@ -418,7 +419,7 @@ class _BotsTabs extends StatelessWidget {
       height: 48,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: _chipBg,
+        color: _chipBackground,
         borderRadius: AppRadii.cardLargeRadius,
       ),
       child: Row(
@@ -469,7 +470,7 @@ class _TabButton extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             gradient: active
-                ? const LinearGradient(colors: [_botBlue, _botBlueDark])
+                ? const LinearGradient(colors: [_botPrimary, _botPrimaryDark])
                 : null,
             borderRadius: AppRadii.lgRadius,
           ),
@@ -532,25 +533,25 @@ class _MyBotsTab extends StatelessWidget {
           onTap: onAdd,
           borderRadius: AppRadii.cardRadius,
           child: Container(
-            height: 48,
+            height: AppSpacing.inputHeight,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: _panelBg,
+              color: _panelBackground,
               borderRadius: AppRadii.cardRadius,
               border: Border.all(
-                color: _botBlue.withValues(alpha: .48),
+                color: _botPrimary.withValues(alpha: .48),
                 style: BorderStyle.solid,
               ),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.add_rounded, color: _botBlue, size: 20),
+                const Icon(Icons.add_rounded, color: _botPrimary, size: 20),
                 const SizedBox(width: 8),
                 Text(
                   'Thêm Bot mới',
                   style: AppTextStyles.body.copyWith(
-                    color: _botBlue,
+                    color: _botPrimary,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -582,7 +583,7 @@ class _BotCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _panelBg,
+        color: _panelBackground,
         borderRadius: AppRadii.cardRadius,
         border: Border.all(color: AppColors.cardBorder),
       ),
@@ -717,7 +718,7 @@ class _BotCard extends StatelessWidget {
                 key: TradingBotsPage.botSettingsKey(bot.id),
                 label: 'Cài đặt',
                 icon: Icons.settings_outlined,
-                color: _botBlue,
+                color: _botPrimary,
                 compact: true,
                 onTap: () {},
               ),
@@ -805,7 +806,7 @@ class _BotMiniStat extends StatelessWidget {
         height: 56,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
         decoration: BoxDecoration(
-          color: _chipBg,
+          color: _chipBackground,
           borderRadius: AppRadii.cardRadius,
         ),
         child: Column(
@@ -925,21 +926,21 @@ class _PerformanceCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _panelBg,
+        color: _panelBackground,
         borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _botBlue.withValues(alpha: .20)),
+        border: Border.all(color: _botPrimary.withValues(alpha: .20)),
       ),
       child: Column(
         children: [
           Row(
             children: [
-              const Icon(Icons.bar_chart_rounded, color: _botBlue, size: 17),
+              const Icon(Icons.bar_chart_rounded, color: _botPrimary, size: 17),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   'Hiệu suất chiến lược (30 ngày gần đây)',
                   style: AppTextStyles.caption.copyWith(
-                    color: _botBlue,
+                    color: _botPrimary,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -949,7 +950,11 @@ class _PerformanceCard extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             children: [
-              _StrategyStat(label: 'DCA Bot', value: '+9.4%', color: _botBlue),
+              _StrategyStat(
+                label: 'DCA Bot',
+                value: '+9.4%',
+                color: _botPrimary,
+              ),
               const SizedBox(width: 8),
               _StrategyStat(
                 label: 'Grid Bot',
@@ -987,7 +992,7 @@ class _StrategyStat extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: _chipBg,
+          color: _chipBackground,
           borderRadius: AppRadii.cardRadius,
         ),
         child: Column(
@@ -1020,7 +1025,7 @@ class _StrategyCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _panelBg,
+        color: _panelBackground,
         borderRadius: AppRadii.cardRadius,
         border: Border.all(color: AppColors.cardBorder),
       ),
@@ -1102,7 +1107,7 @@ class _StrategyCard extends StatelessWidget {
             onTap: onCreate,
             borderRadius: AppRadii.cardRadius,
             child: Container(
-              height: 48,
+              height: AppSpacing.inputHeight,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -1156,7 +1161,7 @@ class _StrategyDetail extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: _chipBg,
+          color: _chipBackground,
           borderRadius: AppRadii.cardRadius,
         ),
         child: Column(
@@ -1187,7 +1192,7 @@ class _BotInfoCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _panelBg,
+        color: _panelBackground,
         borderRadius: AppRadii.cardRadius,
         border: Border.all(color: AppColors.warn.withValues(alpha: .20)),
       ),
@@ -1231,7 +1236,7 @@ class _EmptyBots extends StatelessWidget {
           width: 64,
           height: 64,
           decoration: BoxDecoration(
-            color: _chipBg,
+            color: _chipBackground,
             borderRadius: AppRadii.cardRadius,
           ),
           child: const Icon(
@@ -1249,7 +1254,7 @@ class _EmptyBots extends StatelessWidget {
         _BotActionButton(
           label: 'Tạo Bot mới',
           icon: Icons.add_rounded,
-          color: _botBlue,
+          color: _botPrimary,
           onTap: onAdd,
         ),
       ],
@@ -1401,7 +1406,7 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
                   height: 52,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: _agreed ? null : _chipBg,
+                    color: _agreed ? null : _chipBackground,
                     gradient: _agreed
                         ? LinearGradient(
                             colors: [color, color.withValues(alpha: .70)],
@@ -1452,7 +1457,7 @@ class _ParamPreview extends StatelessWidget {
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.symmetric(horizontal: 14),
           decoration: BoxDecoration(
-            color: _chipBg,
+            color: _chipBackground,
             borderRadius: AppRadii.inputRadius,
             border: Border.all(color: color.withValues(alpha: .26)),
           ),

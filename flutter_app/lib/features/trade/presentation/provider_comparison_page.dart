@@ -13,7 +13,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/trade_repository.dart';
 
-const _comparisonBlue = Color(0xFF3B82F6);
+const _comparisonPrimary = AppColors.primary;
 const _comparisonRed = Color(0xFFEF4444);
 const _comparisonAmber = Color(0xFFF59E0B);
 const _comparisonGreen = Color(0xFF10B981);
@@ -203,7 +203,7 @@ class _CategoryRow extends StatelessWidget {
     final (label, color, icon) = switch (category) {
       TradeProviderComparisonCategory.performance => (
         'Performance',
-        _comparisonBlue,
+        _comparisonPrimary,
         Icons.trending_up_rounded,
       ),
       TradeProviderComparisonCategory.risk => (
@@ -213,7 +213,7 @@ class _CategoryRow extends StatelessWidget {
       ),
       TradeProviderComparisonCategory.execution => (
         'Execution',
-        _comparisonBlue,
+        _comparisonPrimary,
         Icons.show_chart_rounded,
       ),
       TradeProviderComparisonCategory.cost => (

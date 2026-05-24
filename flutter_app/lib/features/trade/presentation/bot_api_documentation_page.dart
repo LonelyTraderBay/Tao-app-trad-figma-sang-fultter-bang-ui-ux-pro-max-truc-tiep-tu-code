@@ -13,13 +13,13 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _apiBg = Color(0xFF080C14);
-const _apiSurface = Color(0xFF151A23);
-const _apiSurface2 = Color(0xFF1D2436);
-const _apiBlue = Color(0xFF3B82F6);
+const _apiBackground = AppColors.bg;
+const _apiPanel = AppColors.surface;
+const _apiPanel2 = AppColors.surface2;
+const _apiPrimary = AppColors.primary;
 const _apiGreen = Color(0xFF10B981);
 const _apiRed = Color(0xFFEF4444);
-const _apiTabBg = Color(0xFF1D2436);
+const _apiTabBackground = AppColors.surface2;
 
 class BotApiDocumentationPage extends ConsumerStatefulWidget {
   const BotApiDocumentationPage({super.key, this.shellRenderMode});
@@ -68,7 +68,7 @@ class _BotApiDocumentationPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-134 BotAPIDocumentationPage',
       child: Material(
-        color: _apiBg,
+        color: _apiBackground,
         child: Column(
           children: [
             VitHeader(
@@ -141,16 +141,16 @@ class _IntroCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
       decoration: BoxDecoration(
-        color: _apiBlue.withValues(alpha: .08),
-        border: Border.all(color: _apiBlue.withValues(alpha: .25)),
-        borderRadius: BorderRadius.circular(16),
+        color: _apiPrimary.withValues(alpha: .08),
+        border: Border.all(color: _apiPrimary.withValues(alpha: .25)),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
             padding: EdgeInsets.only(top: 2),
-            child: Icon(Icons.code_rounded, color: _apiBlue, size: 25),
+            child: Icon(Icons.code_rounded, color: _apiPrimary, size: 25),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -217,21 +217,21 @@ class _Tabs extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: active == tabs[i].id
-                    ? _apiBlue.withValues(alpha: .13)
-                    : _apiTabBg,
+                    ? _apiPrimary.withValues(alpha: .13)
+                    : _apiTabBackground,
                 border: Border.all(
                   color: active == tabs[i].id
-                      ? _apiBlue.withValues(alpha: .42)
+                      ? _apiPrimary.withValues(alpha: .42)
                       : Colors.transparent,
                 ),
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: AppRadii.cardRadius,
               ),
               child: Text(
                 tabs[i].label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
-                  color: active == tabs[i].id ? _apiBlue : AppColors.text3,
+                  color: active == tabs[i].id ? _apiPrimary : AppColors.text3,
                   fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
@@ -278,7 +278,7 @@ class _EndpointCard extends StatelessWidget {
       key: BotApiDocumentationPage.endpointKey(endpoint.method, endpoint.path),
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
       decoration: BoxDecoration(
-        color: _apiSurface,
+        color: _apiPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -367,7 +367,7 @@ class _ParameterRow extends StatelessWidget {
         Text(
           param.name,
           style: AppTextStyles.micro.copyWith(
-            color: _apiBlue,
+            color: _apiPrimary,
             fontSize: 11,
             fontWeight: FontWeight.w600,
             height: 1.2,
@@ -489,12 +489,16 @@ class _WebSocketView extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.bolt_rounded, color: _apiBlue, size: 17),
+                    const Icon(
+                      Icons.bolt_rounded,
+                      color: _apiPrimary,
+                      size: 17,
+                    ),
                     const SizedBox(width: 8),
                     Text(
                       event.event,
                       style: AppTextStyles.caption.copyWith(
-                        color: _apiBlue,
+                        color: _apiPrimary,
                         fontSize: 12,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
@@ -559,9 +563,9 @@ class _ExamplesView extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: selected.language == example.language
-                        ? _apiBlue
-                        : _apiSurface,
-                    borderRadius: BorderRadius.circular(14),
+                        ? _apiPrimary
+                        : _apiPanel,
+                    borderRadius: AppRadii.inputRadius,
                   ),
                   child: Text(
                     example.label,
@@ -591,7 +595,7 @@ class _ExamplesView extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.menu_book_outlined,
-                    color: _apiBlue,
+                    color: _apiPrimary,
                     size: 17,
                   ),
                   const SizedBox(width: 8),
@@ -615,8 +619,8 @@ class _ExamplesView extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: copied
                             ? _apiGreen.withValues(alpha: .12)
-                            : _apiSurface2,
-                        borderRadius: BorderRadius.circular(10),
+                            : _apiPanel2,
+                        borderRadius: AppRadii.smRadius,
                       ),
                       child: Row(
                         children: [
@@ -704,7 +708,7 @@ class _AuthCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
       decoration: BoxDecoration(
-        color: _apiSurface2,
+        color: _apiPanel2,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -712,7 +716,7 @@ class _AuthCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.key_rounded, color: _apiBlue, size: 18),
+              const Icon(Icons.key_rounded, color: _apiPrimary, size: 18),
               const SizedBox(width: 9),
               Text(
                 'Authentication',
@@ -753,7 +757,7 @@ class _InfoCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _apiSurface,
+        color: _apiPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -786,15 +790,15 @@ class _CodeBlock extends StatelessWidget {
         compact ? 11 : 13,
       ),
       decoration: BoxDecoration(
-        color: dark ? _apiSurface : _apiSurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: dark ? _apiPanel : _apiPanel2,
+        borderRadius: AppRadii.inputRadius,
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Text(
           text,
           style: AppTextStyles.micro.copyWith(
-            color: compact ? _apiBlue : AppColors.text2,
+            color: compact ? _apiPrimary : AppColors.text2,
             fontSize: example ? 11 : 10,
             height: example ? 1.7 : 1.58,
             fontFamily: 'Roboto',
@@ -846,7 +850,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _apiBlue,
+            color: _apiPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),
@@ -867,7 +871,7 @@ class _SectionLabel extends StatelessWidget {
 
 Color _methodColor(String method) => switch (method) {
   'GET' => _apiGreen,
-  'POST' => _apiBlue,
+  'POST' => _apiPrimary,
   'DELETE' => _apiRed,
   _ => AppColors.text2,
 };

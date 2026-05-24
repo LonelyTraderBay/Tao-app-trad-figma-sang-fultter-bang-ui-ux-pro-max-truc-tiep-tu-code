@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -11,11 +12,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _riskBg = Color(0xFF080C14);
-const _riskSurface = Color(0xFF151A23);
-const _riskSurface2 = Color(0xFF1E2535);
-const _riskBorder = Color(0xFF273142);
-const _riskBlue = Color(0xFF3B82F6);
+const _riskBackground = AppColors.bg;
+const _riskPanel = AppColors.surface;
+const _riskPanel2 = AppColors.surface2;
+const _riskBorder = AppColors.borderSolid;
+const _riskPrimary = AppColors.primary;
 const _riskGreen = Color(0xFF10B981);
 const _riskAmber = Color(0xFFF59E0B);
 const _riskRed = Color(0xFFEF4444);
@@ -46,7 +47,7 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-110 RiskIndicatorExplainerPage',
       child: Material(
-        color: _riskBg,
+        color: _riskBackground,
         child: Column(
           children: [
             VitHeader(
@@ -136,7 +137,7 @@ class _ProductSriCard extends StatelessWidget {
                     level: level.level,
                     color: level.level <= snapshot.productSri
                         ? _colorForTier(level.tier)
-                        : _riskSurface2,
+                        : _riskPanel2,
                     active: level.level <= snapshot.productSri,
                   ),
                 ),
@@ -217,7 +218,7 @@ class _SriWarning extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(13, 11, 13, 11),
       decoration: BoxDecoration(
         color: _riskAmber.withValues(alpha: .10),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -339,7 +340,7 @@ class _RiskLevelCard extends StatelessWidget {
               height: 40,
               decoration: BoxDecoration(
                 color: color.withValues(alpha: .11),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: AppRadii.lgRadius,
               ),
               alignment: Alignment.center,
               child: Text(
@@ -377,7 +378,7 @@ class _RiskLevelCard extends StatelessWidget {
                         Text(
                           'THIS PRODUCT',
                           style: AppTextStyles.micro.copyWith(
-                            color: _riskBlue,
+                            color: _riskPrimary,
                             fontSize: 9,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
@@ -505,7 +506,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _riskBlue,
+            color: _riskPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),
@@ -539,9 +540,9 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _riskSurface,
+        color: _riskPanel,
         border: Border.all(color: _riskBorder.withValues(alpha: .76)),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: child,
     );
@@ -551,7 +552,7 @@ class _Card extends StatelessWidget {
 Color _colorForTier(TradeRiskIndicatorTier tier) {
   return switch (tier) {
     TradeRiskIndicatorTier.low => _riskGreen,
-    TradeRiskIndicatorTier.medium => _riskBlue,
+    TradeRiskIndicatorTier.medium => _riskPrimary,
     TradeRiskIndicatorTier.elevated => _riskAmber,
     TradeRiskIndicatorTier.high => _riskRed,
   };

@@ -14,11 +14,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _equityBg = Color(0xFF080C14);
-const _equitySurface = Color(0xFF151A23);
-const _equitySurface2 = Color(0xFF1D2436);
+const _equityBackground = AppColors.bg;
+const _equityPanel = AppColors.surface;
+const _equityPanel2 = AppColors.surface2;
 const _equityGreen = Color(0xFF10B981);
-const _equityBlue = Color(0xFF3B82F6);
+const _equityPrimary = AppColors.primary;
 const _equityRed = Color(0xFFEF4444);
 const _equityAxis = Color(0xFF475569);
 
@@ -51,7 +51,7 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-130 BotEquityCurvePage',
       child: Material(
-        color: _equityBg,
+        color: _equityBackground,
         child: Column(
           children: [
             VitHeader(
@@ -195,12 +195,12 @@ class _Tabs extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: active == tabs[i].$1
-                      ? _equityBlue.withValues(alpha: .15)
-                      : _equitySurface2,
-                  borderRadius: BorderRadius.circular(18),
+                      ? _equityPrimary.withValues(alpha: .15)
+                      : _equityPanel2,
+                  borderRadius: AppRadii.cardRadius,
                   border: Border.all(
                     color: active == tabs[i].$1
-                        ? _equityBlue.withValues(alpha: .50)
+                        ? _equityPrimary.withValues(alpha: .50)
                         : Colors.transparent,
                   ),
                 ),
@@ -209,7 +209,9 @@ class _Tabs extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
-                    color: active == tabs[i].$1 ? _equityBlue : AppColors.text3,
+                    color: active == tabs[i].$1
+                        ? _equityPrimary
+                        : AppColors.text3,
                     fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
@@ -337,7 +339,7 @@ class _MiniStat extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
       decoration: BoxDecoration(
-        color: _equitySurface2,
+        color: _equityPanel2,
         borderRadius: BorderRadius.circular(9),
       ),
       child: Column(
@@ -474,8 +476,8 @@ class _PerformanceTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(13, 12, 12, 11),
       decoration: BoxDecoration(
-        color: _equitySurface2,
-        borderRadius: BorderRadius.circular(16),
+        color: _equityPanel2,
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         children: [
@@ -604,7 +606,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _equitySurface,
+        color: _equityPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -626,7 +628,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _equityBlue,
+            color: _equityPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),
@@ -734,7 +736,7 @@ class _SharpePainter extends CustomPainter {
     canvas.drawPath(
       path,
       Paint()
-        ..color = _equityBlue
+        ..color = _equityPrimary
         ..strokeWidth = 2.2
         ..style = PaintingStyle.stroke,
     );

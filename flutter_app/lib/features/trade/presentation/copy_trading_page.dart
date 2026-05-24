@@ -12,9 +12,9 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _copyBlue = Color(0xFF3B82F6);
-const _copyCardBg = Color(0xFF10141B);
-const _copyPanelBg = Color(0xFF171C24);
+const _copyPrimary = AppColors.primary;
+const _copyCardTone = AppColors.surface;
+const _copyPanelTone = AppColors.surface2;
 
 class CopyTradingPage extends ConsumerStatefulWidget {
   const CopyTradingPage({super.key, this.shellRenderMode});
@@ -129,7 +129,7 @@ class _CopyHeroCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: _copyPanelBg,
+              color: _copyPanelTone,
               border: Border.all(color: AppColors.cardBorder),
               borderRadius: AppRadii.inputRadius,
             ),
@@ -162,7 +162,7 @@ class _CopyHeroCard extends StatelessWidget {
                   icon: Icons.groups_rounded,
                   label: 'TRADERS',
                   value: '${snapshot.traders.length}',
-                  color: _copyBlue,
+                  color: _copyPrimary,
                 ),
               ),
               const SizedBox(width: 10),
@@ -209,7 +209,7 @@ class _HeroMetric extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: _copyPanelBg,
+        color: _copyPanelTone,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.inputRadius,
       ),
@@ -848,7 +848,7 @@ class _Panel extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _copyCardBg,
+        color: _copyCardTone,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.inputRadius,
       ),

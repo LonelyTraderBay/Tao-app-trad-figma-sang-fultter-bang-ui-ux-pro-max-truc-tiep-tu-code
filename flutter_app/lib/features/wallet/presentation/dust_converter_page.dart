@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -11,13 +13,13 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _dustBg = Color(0xFF080C14);
-const _dustSurface = Color(0xFF151A23);
-const _dustSurface2 = Color(0xFF202638);
-const _dustHero = Color(0xFF101936);
-const _dustHeroBorder = Color(0xFF1C2C59);
+const _dustBackground = AppColors.bg;
+const _dustPanel = AppColors.surface;
+const _dustPanel2 = AppColors.surface3;
+const _dustHero = AppColors.surface;
+const _dustHeroBorder = AppColors.primary20;
 const _dustBorder = Color(0x14FFFFFF);
-const _dustBlue = Color(0xFF3B82F6);
+const _dustPrimary = AppColors.primary;
 const _dustGreen = Color(0xFF10B981);
 const _dustAmber = Color(0xFFF59E0B);
 const _dustMuted = Color(0xFF667085);
@@ -66,7 +68,7 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-154 DustConverterPage',
       child: Material(
-        color: _dustBg,
+        color: _dustBackground,
         child: Column(
           children: [
             VitHeader(
@@ -199,7 +201,7 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
     showModalBottomSheet<void>(
       context: context,
       useRootNavigator: true,
-      backgroundColor: _dustSurface,
+      backgroundColor: _dustPanel,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
@@ -225,8 +227,8 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: _dustBg,
-                    borderRadius: BorderRadius.circular(16),
+                    color: _dustBackground,
+                    borderRadius: AppRadii.cardRadius,
                     border: Border.all(color: _dustBorder),
                   ),
                   child: Column(
@@ -296,7 +298,7 @@ class _DustHero extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
       decoration: BoxDecoration(
         color: _dustHero,
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: AppRadii.lgRadius,
         border: Border.all(color: _dustHeroBorder),
       ),
       child: Column(
@@ -308,7 +310,7 @@ class _DustHero extends StatelessWidget {
                 height: 48,
                 decoration: BoxDecoration(
                   color: _dustAmber.withValues(alpha: .14),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: AppRadii.cardRadius,
                   border: Border.all(color: _dustAmber.withValues(alpha: .5)),
                 ),
                 alignment: Alignment.center,
@@ -359,7 +361,7 @@ class _DustHero extends StatelessWidget {
               _HeroStat(
                 value: selectedCount.toString(),
                 label: '\u0110\u00E3 ch\u1ECDn',
-                color: _dustBlue,
+                color: _dustPrimary,
               ),
               const SizedBox(width: 8),
               _HeroStat(
@@ -393,8 +395,8 @@ class _HeroStat extends StatelessWidget {
         height: 52,
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 9),
         decoration: BoxDecoration(
-          color: const Color(0xFF303A58),
-          borderRadius: BorderRadius.circular(18),
+          color: AppColors.surface3,
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -479,11 +481,11 @@ class _TargetCard extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 60,
+        height: AppSpacing.buttonStandard + AppSpacing.x2,
         padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
         decoration: BoxDecoration(
-          color: selected ? color.withValues(alpha: .11) : _dustSurface2,
-          borderRadius: BorderRadius.circular(16),
+          color: selected ? color.withValues(alpha: .11) : _dustPanel2,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(
             color: selected ? color.withValues(alpha: .7) : _dustBorder,
           ),
@@ -559,8 +561,8 @@ class _SelectAllRow extends StatelessWidget {
         height: 34,
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-          color: _dustSurface2,
-          borderRadius: BorderRadius.circular(18),
+          color: _dustPanel2,
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           children: [
@@ -568,7 +570,7 @@ class _SelectAllRow extends StatelessWidget {
               selectedAll && totalCount > 0
                   ? Icons.check_box_rounded
                   : Icons.check_box_outline_blank_rounded,
-              color: selectedCount > 0 ? _dustBlue : _dustMuted,
+              color: selectedCount > 0 ? _dustPrimary : _dustMuted,
               size: 17,
             ),
             const SizedBox(width: 10),
@@ -610,8 +612,8 @@ class _DustAssetRow extends StatelessWidget {
         height: 59,
         padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
         decoration: BoxDecoration(
-          color: selected ? color.withValues(alpha: .07) : _dustSurface2,
-          borderRadius: BorderRadius.circular(16),
+          color: selected ? color.withValues(alpha: .07) : _dustPanel2,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(
             color: selected ? color.withValues(alpha: .45) : Colors.transparent,
           ),
@@ -622,7 +624,7 @@ class _DustAssetRow extends StatelessWidget {
               selected
                   ? Icons.check_box_rounded
                   : Icons.check_box_outline_blank_rounded,
-              color: selected ? _dustBlue : _dustMuted,
+              color: selected ? _dustPrimary : _dustMuted,
               size: 18,
             ),
             const SizedBox(width: 13),
@@ -752,15 +754,15 @@ class _PrimaryButton extends StatelessWidget {
         height: 52,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: enabled ? _dustBlue : const Color(0xFF151B2B),
-          borderRadius: BorderRadius.circular(15),
+          color: enabled ? _dustPrimary : AppColors.surface3,
+          borderRadius: AppRadii.inputRadius,
         ),
         child: Text(
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.baseMedium.copyWith(
-            color: enabled ? Colors.white : const Color(0xFF30384A),
+            color: enabled ? Colors.white : AppColors.text3,
             fontSize: 16,
             fontWeight: FontWeight.w900,
             height: 1,
@@ -825,7 +827,7 @@ class _ConvertedBanner extends StatelessWidget {
       padding: const EdgeInsets.all(13),
       decoration: BoxDecoration(
         color: _dustGreen.withValues(alpha: .1),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _dustGreen.withValues(alpha: .28)),
       ),
       child: Row(
@@ -861,7 +863,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _dustBlue,
+            color: _dustPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),

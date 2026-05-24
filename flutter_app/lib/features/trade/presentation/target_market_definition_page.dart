@@ -12,10 +12,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _targetBg = Color(0xFF080C14);
-const _targetSurface = Color(0xFF151A23);
-const _targetBorder = Color(0xFF273142);
-const _targetBlue = Color(0xFF3B82F6);
+const _targetBackground = AppColors.bg;
+const _targetPanel = AppColors.surface;
+const _targetBorder = AppColors.borderSolid;
+const _targetPrimary = AppColors.primary;
 const _targetGreen = Color(0xFF10B981);
 const _targetRed = Color(0xFFEF4444);
 
@@ -48,7 +48,7 @@ class TargetMarketDefinitionPage extends ConsumerWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-101 TargetMarketDefinitionPage',
       child: Material(
-        color: _targetBg,
+        color: _targetBackground,
         child: Column(
           children: [
             VitHeader(
@@ -101,12 +101,12 @@ class _SummaryCard extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: _targetBlue.withValues(alpha: .13),
-              borderRadius: BorderRadius.circular(16),
+              color: _targetPrimary.withValues(alpha: .13),
+              borderRadius: AppRadii.cardRadius,
             ),
             child: const Icon(
               Icons.gps_fixed_rounded,
-              color: _targetBlue,
+              color: _targetPrimary,
               size: 22,
             ),
           ),
@@ -255,7 +255,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 14,
           decoration: BoxDecoration(
-            color: _targetBlue,
+            color: _targetPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -285,7 +285,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _targetSurface,
+        color: _targetPanel,
         border: Border.all(color: _targetBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),

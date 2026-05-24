@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,12 +13,12 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _leaderBlue = Color(0xFF3B82F6);
-const _leaderCard = Color(0xFF121720);
-const _leaderPanel = Color(0xFF1C2231);
-const _leaderChip = Color(0xFF202638);
-const _leaderWarningBg = Color(0xFF1F1712);
-const _leaderWarningBorder = Color(0xFF5E420D);
+const _leaderPrimary = AppColors.primary;
+const _leaderCard = AppColors.surface;
+const _leaderPanel = AppColors.surface2;
+const _leaderChip = AppColors.surface3;
+const _leaderWarningBackground = AppColors.warningBg;
+const _leaderWarningBorder = AppColors.warningBorder;
 const _leaderWarningText = Color(0xFFF59E0B);
 
 class ProviderLeaderboardPage extends ConsumerStatefulWidget {
@@ -182,7 +183,7 @@ class _SurvivorshipWarning extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
       decoration: BoxDecoration(
-        color: _leaderWarningBg,
+        color: _leaderWarningBackground,
         borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _leaderWarningBorder),
       ),
@@ -241,11 +242,11 @@ class _SortTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 48,
+      height: AppSpacing.inputHeight,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: _leaderPanel,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: AppRadii.cardLargeRadius,
       ),
       child: Row(
         children: [
@@ -254,16 +255,16 @@ class _SortTabs extends StatelessWidget {
               child: InkWell(
                 key: ProviderLeaderboardPage.sortKey(option.id),
                 onTap: () => onChanged(option.id),
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: AppRadii.cardRadius,
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 120),
                   alignment: Alignment.center,
                   height: double.infinity,
                   decoration: BoxDecoration(
                     color: option.id == activeId
-                        ? _leaderBlue
+                        ? _leaderPrimary
                         : Colors.transparent,
-                    borderRadius: BorderRadius.circular(18),
+                    borderRadius: AppRadii.cardRadius,
                   ),
                   child: Text(
                     option.label,
@@ -343,16 +344,16 @@ class _RiskChip extends StatelessWidget {
     return InkWell(
       key: ProviderLeaderboardPage.riskKey(filter.id),
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         height: 30,
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 13),
         decoration: BoxDecoration(
-          color: selected ? _leaderBlue : _leaderChip,
-          borderRadius: BorderRadius.circular(16),
+          color: selected ? _leaderPrimary : _leaderChip,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(
-            color: selected ? _leaderBlue : AppColors.cardBorder,
+            color: selected ? _leaderPrimary : AppColors.cardBorder,
           ),
         ),
         child: Text(
@@ -398,7 +399,7 @@ class _VerifiedToggle extends StatelessWidget {
           children: [
             Icon(
               Icons.check_circle_outline_rounded,
-              color: checked ? _leaderBlue : AppColors.text3,
+              color: checked ? _leaderPrimary : AppColors.text3,
               size: 14,
             ),
             const SizedBox(width: 8),
@@ -434,8 +435,8 @@ class _TogglePill extends StatelessWidget {
       height: 24,
       padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
-        color: checked ? _leaderBlue : const Color(0xFF2B3344),
-        borderRadius: BorderRadius.circular(12),
+        color: checked ? _leaderPrimary : AppColors.borderSolid,
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Align(
         alignment: checked ? Alignment.centerRight : Alignment.centerLeft,
@@ -581,7 +582,7 @@ class _ProviderTitle extends StatelessWidget {
           const SizedBox(width: 7),
           const Icon(
             Icons.check_circle_outline_rounded,
-            color: _leaderBlue,
+            color: _leaderPrimary,
             size: 12,
           ),
         ],
@@ -731,7 +732,7 @@ class _RedFlagPill extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
         color: AppColors.sell10,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

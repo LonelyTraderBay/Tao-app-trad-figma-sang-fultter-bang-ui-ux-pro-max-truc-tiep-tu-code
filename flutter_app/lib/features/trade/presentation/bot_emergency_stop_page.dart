@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,13 +13,13 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _stopBg = Color(0xFF080C14);
-const _stopSurface = Color(0xFF151A23);
-const _stopSurface2 = Color(0xFF1D2436);
-const _stopBlue = Color(0xFF3B82F6);
+const _stopBackground = AppColors.bg;
+const _stopPanel = AppColors.surface;
+const _stopPanel2 = AppColors.surface2;
+const _stopPrimary = AppColors.primary;
 const _stopGreen = Color(0xFF10B981);
 const _stopRed = Color(0xFFEF4444);
-const _stopOptionBorder = Color(0xFF2A3863);
+const _stopOptionBorder = AppColors.borderSolid;
 
 class BotEmergencyStopPage extends ConsumerStatefulWidget {
   const BotEmergencyStopPage({super.key, this.shellRenderMode});
@@ -61,7 +62,7 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-121 BotEmergencyStopPage',
       child: Material(
-        color: _stopBg,
+        color: _stopBackground,
         child: Column(
           children: [
             VitHeader(
@@ -170,7 +171,7 @@ class _WarningBanner extends StatelessWidget {
       decoration: BoxDecoration(
         color: _stopRed.withValues(alpha: .14),
         border: Border.all(color: _stopRed.withValues(alpha: .62), width: 2),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,7 +231,7 @@ class _BotCard extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 70),
       padding: const EdgeInsets.fromLTRB(12, 14, 13, 13),
       decoration: BoxDecoration(
-        color: _stopSurface,
+        color: _stopPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -319,17 +320,17 @@ class _ReasonOption extends StatelessWidget {
     return InkWell(
       key: BotEmergencyStopPage.reasonKey(reason.id),
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
-        constraints: const BoxConstraints(minHeight: 56),
+        constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
         padding: const EdgeInsets.fromLTRB(14, 13, 14, 13),
         decoration: BoxDecoration(
-          color: selected ? _stopRed.withValues(alpha: .08) : _stopSurface,
+          color: selected ? _stopRed.withValues(alpha: .08) : _stopPanel,
           border: Border.all(
             color: selected ? _stopRed : _stopOptionBorder,
             width: 2,
           ),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           children: [
@@ -377,23 +378,23 @@ class _CheckActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final activeColor = danger ? _stopRed : _stopBlue;
+    final activeColor = danger ? _stopRed : _stopPrimary;
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         padding: const EdgeInsets.fromLTRB(15, 14, 14, 15),
         decoration: BoxDecoration(
           color: danger
               ? _stopRed.withValues(alpha: .08)
-              : _stopSurface2.withValues(alpha: .9),
+              : _stopPanel2.withValues(alpha: .9),
           border: Border.all(
             color: danger
                 ? _stopRed.withValues(alpha: .48)
                 : Colors.transparent,
             width: 2,
           ),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -442,8 +443,8 @@ class _SupportNotice extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
       decoration: BoxDecoration(
-        color: _stopSurface2,
-        borderRadius: BorderRadius.circular(18),
+        color: _stopPanel2,
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -501,7 +502,7 @@ class _StickyActions extends StatelessWidget {
     return Container(
       padding: EdgeInsets.fromLTRB(20, 14, 20, bottomPadding),
       decoration: BoxDecoration(
-        color: _stopBg.withValues(alpha: .94),
+        color: _stopBackground.withValues(alpha: .94),
         border: Border(
           top: BorderSide(color: AppColors.cardBorder.withValues(alpha: .7)),
         ),
@@ -515,9 +516,9 @@ class _StickyActions extends StatelessWidget {
                 key: BotEmergencyStopPage.cancelKey,
                 onPressed: onCancel,
                 style: FilledButton.styleFrom(
-                  backgroundColor: _stopSurface2,
+                  backgroundColor: _stopPanel2,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: AppRadii.inputRadius,
                   ),
                 ),
                 child: Text(
@@ -540,14 +541,14 @@ class _StickyActions extends StatelessWidget {
                 key: BotEmergencyStopPage.submitKey,
                 onPressed: canSubmit ? onSubmit : null,
                 style: FilledButton.styleFrom(
-                  backgroundColor: canSubmit ? _stopRed : _stopSurface,
-                  disabledBackgroundColor: _stopSurface,
+                  backgroundColor: canSubmit ? _stopRed : _stopPanel,
+                  disabledBackgroundColor: _stopPanel,
                   foregroundColor: Colors.white,
                   disabledForegroundColor: AppColors.text3.withValues(
                     alpha: .4,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: AppRadii.inputRadius,
                   ),
                 ),
                 icon: stopping
@@ -603,7 +604,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _stopBlue,
+            color: _stopPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),

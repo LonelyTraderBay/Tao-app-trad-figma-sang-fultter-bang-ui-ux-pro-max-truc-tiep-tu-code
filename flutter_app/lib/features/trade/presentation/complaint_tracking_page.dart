@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -11,11 +12,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _trackingBg = Color(0xFF080C14);
-const _trackingSurface = Color(0xFF151A23);
-const _trackingSurface2 = Color(0xFF20263A);
-const _trackingBorder = Color(0xFF273142);
-const _trackingBlue = Color(0xFF3B82F6);
+const _trackingBackground = AppColors.bg;
+const _trackingPanel = AppColors.surface;
+const _trackingPanel2 = AppColors.surface3;
+const _trackingBorder = AppColors.borderSolid;
+const _trackingPrimary = AppColors.primary;
 const _trackingGreen = Color(0xFF10B981);
 const _trackingAmber = Color(0xFFF59E0B);
 
@@ -48,7 +49,7 @@ class ComplaintTrackingPage extends ConsumerWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-113 ComplaintTrackingPage',
       child: Material(
-        color: _trackingBg,
+        color: _trackingBackground,
         child: Column(
           children: [
             VitHeader(
@@ -107,7 +108,7 @@ class _StatusCard extends StatelessWidget {
                 height: 48,
                 decoration: BoxDecoration(
                   color: _trackingAmber.withValues(alpha: .15),
-                  borderRadius: BorderRadius.circular(17),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 child: const Icon(
                   Icons.schedule_rounded,
@@ -182,8 +183,8 @@ class _StatusMetricBox extends StatelessWidget {
       height: 51,
       padding: const EdgeInsets.fromLTRB(11, 9, 11, 8),
       decoration: BoxDecoration(
-        color: _trackingSurface2,
-        borderRadius: BorderRadius.circular(15),
+        color: _trackingPanel2,
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,7 +225,7 @@ class _DeadlineNotice extends StatelessWidget {
       decoration: BoxDecoration(
         color: _trackingAmber.withValues(alpha: .11),
         border: Border.all(color: _trackingAmber.withValues(alpha: .45)),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -282,7 +283,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _trackingBlue,
+            color: _trackingPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),
@@ -449,7 +450,7 @@ class _TrackingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = switch (action.icon) {
-      TradeComplaintTrackingActionIcon.message => _trackingBlue,
+      TradeComplaintTrackingActionIcon.message => _trackingPrimary,
       TradeComplaintTrackingActionIcon.document => _trackingGreen,
       TradeComplaintTrackingActionIcon.warning => _trackingAmber,
     };
@@ -461,7 +462,7 @@ class _TrackingActionButton extends StatelessWidget {
 
     return InkWell(
       key: ComplaintTrackingPage.actionKey(action.id),
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       onTap: () {
         final routePath = action.routePath;
         if (routePath == null) return;
@@ -471,9 +472,9 @@ class _TrackingActionButton extends StatelessWidget {
         height: 43,
         padding: const EdgeInsets.symmetric(horizontal: 13),
         decoration: BoxDecoration(
-          color: _trackingSurface2,
+          color: _trackingPanel2,
           border: Border.all(color: _trackingBorder),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           children: [
@@ -513,9 +514,9 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _trackingSurface,
+        color: _trackingPanel,
         border: Border.all(color: _trackingBorder.withValues(alpha: .76)),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: child,
     );

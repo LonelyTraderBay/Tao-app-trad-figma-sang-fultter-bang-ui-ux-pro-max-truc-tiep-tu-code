@@ -12,11 +12,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _kidBg = Color(0xFF080C14);
-const _kidSurface = Color(0xFF151A23);
-const _kidSurface2 = Color(0xFF1E2535);
-const _kidBorder = Color(0xFF273142);
-const _kidBlue = Color(0xFF3B82F6);
+const _kidBackground = AppColors.bg;
+const _kidPanel = AppColors.surface;
+const _kidPanel2 = AppColors.surface2;
+const _kidBorder = AppColors.borderSolid;
+const _kidPrimary = AppColors.primary;
 const _kidGreen = Color(0xFF10B981);
 
 class KIDGeneratorPage extends ConsumerWidget {
@@ -44,7 +44,7 @@ class KIDGeneratorPage extends ConsumerWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-108 KIDGeneratorPage',
       child: Material(
-        color: _kidBg,
+        color: _kidBackground,
         child: Column(
           children: [
             VitHeader(
@@ -95,9 +95,9 @@ class _DownloadAction extends StatelessWidget {
       height: 36,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: _kidSurface2,
+          color: _kidPanel2,
           border: Border.all(color: _kidBorder.withValues(alpha: .72)),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: AppRadii.smRadius,
         ),
         child: IconButton(
           key: KIDGeneratorPage.downloadKey,
@@ -178,12 +178,12 @@ class _KidPreviewCard extends StatelessWidget {
                 width: 54,
                 height: 54,
                 decoration: BoxDecoration(
-                  color: _kidBlue.withValues(alpha: .11),
-                  borderRadius: BorderRadius.circular(16),
+                  color: _kidPrimary.withValues(alpha: .11),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 child: const Icon(
                   Icons.description_outlined,
-                  color: _kidBlue,
+                  color: _kidPrimary,
                   size: 28,
                 ),
               ),
@@ -251,8 +251,8 @@ class _DocumentMetric extends StatelessWidget {
       height: 54,
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 9),
       decoration: BoxDecoration(
-        color: _kidSurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: _kidPanel2,
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -298,7 +298,7 @@ class _KidSectionCard extends StatelessWidget {
             SizedBox(
               width: 40,
               height: 40,
-              child: Icon(_iconFor(section.icon), color: _kidBlue, size: 18),
+              child: Icon(_iconFor(section.icon), color: _kidPrimary, size: 18),
             ),
             const SizedBox(width: 8),
             Expanded(
@@ -382,10 +382,10 @@ class _ActionButton extends StatelessWidget {
       height: 44,
       child: FilledButton.icon(
         style: FilledButton.styleFrom(
-          backgroundColor: filled ? _kidBlue : _kidSurface2,
+          backgroundColor: filled ? _kidPrimary : _kidPanel2,
           foregroundColor: AppColors.text1,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: AppRadii.inputRadius,
             side: BorderSide(color: filled ? Colors.transparent : _kidBorder),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -420,7 +420,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 14,
           decoration: BoxDecoration(
-            color: _kidBlue,
+            color: _kidPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -450,7 +450,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _kidSurface,
+        color: _kidPanel,
         border: Border.all(color: _kidBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),

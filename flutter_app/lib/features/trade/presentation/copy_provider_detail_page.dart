@@ -12,10 +12,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _providerBlue = Color(0xFF3B82F6);
+const _providerPrimary = AppColors.primary;
 const _providerGreen = Color(0xFF10B981);
 const _providerRed = Color(0xFFEF4444);
-const _providerPanel = Color(0xFF1B2132);
+const _providerPanel = AppColors.surface2;
 
 class CopyProviderDetailPage extends ConsumerWidget {
   const CopyProviderDetailPage({
@@ -88,10 +88,10 @@ class CopyProviderDetailPage extends ConsumerWidget {
                         AppRoutePaths.tradeCopyProviderAssessment(providerId),
                       ),
                       style: FilledButton.styleFrom(
-                        backgroundColor: _providerBlue,
+                        backgroundColor: _providerPrimary,
                         minimumSize: const Size.fromHeight(48),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
+                          borderRadius: AppRadii.inputRadius,
                         ),
                       ),
                       icon: const Icon(Icons.chevron_right_rounded, size: 18),
@@ -183,7 +183,7 @@ class _RiskWarning extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFF231814),
+        color: AppColors.warningBg,
         border: Border.all(color: const Color(0xFF92400E)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -229,11 +229,11 @@ class _ProviderCard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 30,
-            backgroundColor: _providerBlue.withValues(alpha: .16),
+            backgroundColor: _providerPrimary.withValues(alpha: .16),
             child: Text(
               provider.avatar,
               style: AppTextStyles.sectionTitle.copyWith(
-                color: _providerBlue,
+                color: _providerPrimary,
                 fontSize: 20,
               ),
             ),
@@ -289,9 +289,13 @@ class _MetricGrid extends StatelessWidget {
     final metrics = [
       ('ROI', '+${provider.totalPnlPct.toStringAsFixed(1)}%', _providerGreen),
       ('Max DD', '${provider.maxDrawdown.toStringAsFixed(1)}%', _providerRed),
-      ('Sharpe', provider.sharpeRatio.toStringAsFixed(2), _providerBlue),
+      ('Sharpe', provider.sharpeRatio.toStringAsFixed(2), _providerPrimary),
       ('Win Rate', '${provider.winRate.toStringAsFixed(1)}%', _providerGreen),
-      ('Copiers', '${provider.copiers}/${provider.maxCopiers}', _providerBlue),
+      (
+        'Copiers',
+        '${provider.copiers}/${provider.maxCopiers}',
+        _providerPrimary,
+      ),
       (
         'AUM',
         '\$${(provider.aum / 1000000).toStringAsFixed(1)}M',
@@ -311,7 +315,7 @@ class _MetricGrid extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               color: _providerPanel,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: AppRadii.inputRadius,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

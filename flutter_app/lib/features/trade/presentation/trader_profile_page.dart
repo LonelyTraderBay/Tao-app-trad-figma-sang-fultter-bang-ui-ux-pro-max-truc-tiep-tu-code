@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -14,11 +15,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _profileBlue = Color(0xFF3B82F6);
+const _profilePrimary = AppColors.primary;
 const _profileGreen = Color(0xFF10B981);
 const _profileAmber = Color(0xFFF59E0B);
 const _profileRed = Color(0xFFEF4444);
-const _profileCard = Color(0xFF10141B);
+const _profileCard = AppColors.surface;
 
 class TraderProfilePage extends ConsumerStatefulWidget {
   const TraderProfilePage({
@@ -131,9 +132,9 @@ class _ProfileHero extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF0D1B3E), Color(0xFF1A2550)],
+          colors: [AppColors.surface, AppColors.surface2],
         ),
-        border: Border.all(color: _profileBlue.withValues(alpha: .25)),
+        border: Border.all(color: _profilePrimary.withValues(alpha: .25)),
         borderRadius: AppRadii.cardLargeRadius,
       ),
       child: Column(
@@ -147,17 +148,17 @@ class _ProfileHero extends StatelessWidget {
                 height: 64,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: _profileBlue.withValues(alpha: .13),
+                  color: _profilePrimary.withValues(alpha: .13),
                   border: Border.all(
-                    color: _profileBlue.withValues(alpha: .28),
+                    color: _profilePrimary.withValues(alpha: .28),
                     width: 2.5,
                   ),
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 child: Text(
                   trader.avatar,
                   style: AppTextStyles.sectionTitle.copyWith(
-                    color: _profileBlue,
+                    color: _profilePrimary,
                     fontSize: 22,
                     height: 1,
                   ),
@@ -265,7 +266,7 @@ class _ProfileHero extends StatelessWidget {
               minHeight: 8,
               value: (trader.copiers / trader.maxCopiers).clamp(0, 1),
               backgroundColor: Colors.white.withValues(alpha: .10),
-              valueColor: const AlwaysStoppedAnimation(_profileBlue),
+              valueColor: const AlwaysStoppedAnimation(_profilePrimary),
             ),
           ),
           const SizedBox(height: 15),
@@ -274,12 +275,12 @@ class _ProfileHero extends StatelessWidget {
             onTap: onToggleFollow,
             borderRadius: AppRadii.cardRadius,
             child: Container(
-              height: 48,
+              height: AppSpacing.inputHeight,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: isFollowing
                     ? _profileRed.withValues(alpha: .15)
-                    : _profileBlue,
+                    : _profilePrimary,
                 border: isFollowing
                     ? Border.all(color: _profileRed.withValues(alpha: .3))
                     : null,
@@ -437,7 +438,7 @@ class _SegmentTabs extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: activeId == tab.id
-                        ? _profileBlue
+                        ? _profilePrimary
                         : Colors.transparent,
                     borderRadius: AppRadii.mdRadius,
                   ),
@@ -719,7 +720,7 @@ class _TradeCard extends StatelessWidget {
               _MiniBadge(label: trade.side.toUpperCase(), color: sideColor),
               if (trade.status == 'open') ...[
                 const SizedBox(width: 6),
-                const _MiniBadge(label: 'OPEN', color: _profileBlue),
+                const _MiniBadge(label: 'OPEN', color: _profilePrimary),
               ],
               const Spacer(),
               Column(
@@ -847,11 +848,11 @@ class _StatsTab extends StatelessWidget {
       ),
       _StatRow('Avg Holding Time', trader.avgHoldingTime, Colors.white),
       _StatRow('Tổng lệnh', _formatInt(trader.totalTrades), Colors.white),
-      _StatRow('AUM', _compactUsd(trader.aum), _profileBlue),
+      _StatRow('AUM', _compactUsd(trader.aum), _profilePrimary),
       _StatRow(
         'Copiers',
         '${trader.copiers} / ${trader.maxCopiers}',
-        _profileBlue,
+        _profilePrimary,
       ),
     ];
 

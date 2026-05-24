@@ -14,10 +14,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _compareBg = Color(0xFF080C14);
-const _compareSurface = Color(0xFF151A23);
-const _compareSurface2 = Color(0xFF1D2436);
-const _compareBlue = Color(0xFF3B82F6);
+const _compareBackground = AppColors.bg;
+const _comparePanel = AppColors.surface;
+const _comparePanel2 = AppColors.surface2;
+const _comparePrimary = AppColors.primary;
 const _compareGreen = Color(0xFF10B981);
 const _compareAxis = Color(0xFF475569);
 
@@ -61,7 +61,7 @@ class _BotStrategyComparePageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-126 BotStrategyComparePage',
       child: Material(
-        color: _compareBg,
+        color: _compareBackground,
         child: Column(
           children: [
             VitHeader(
@@ -186,16 +186,16 @@ class _StrategyCard extends StatelessWidget {
     final color = Color(strategy.colorHex);
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         padding: const EdgeInsets.fromLTRB(13, 13, 13, 12),
         decoration: BoxDecoration(
-          color: selected ? color.withValues(alpha: .10) : _compareSurface,
+          color: selected ? color.withValues(alpha: .10) : _comparePanel,
           border: Border.all(
-            color: selected ? color : const Color(0xFF2A3863),
+            color: selected ? color : AppColors.borderSolid,
             width: selected ? 2 : 1.5,
           ),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,7 +209,7 @@ class _StrategyCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: selected ? color : const Color(0xFF2A3863),
+                      color: selected ? color : AppColors.borderSolid,
                       width: 2,
                     ),
                   ),
@@ -458,7 +458,7 @@ class _TableHeader extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(bottom: 10),
       decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Color(0xFF2A3863))),
+        border: Border(bottom: BorderSide(color: AppColors.borderSolid)),
       ),
       child: Row(
         children: [
@@ -522,7 +522,7 @@ class _TableMetricRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
         border: showDivider
-            ? const Border(bottom: BorderSide(color: Color(0xFF2A3863)))
+            ? const Border(bottom: BorderSide(color: AppColors.borderSolid))
             : null,
       ),
       child: Row(
@@ -650,7 +650,7 @@ class _RecommendationCard extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .12),
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: AppRadii.inputRadius,
             ),
             child: Icon(Icons.trending_up_rounded, color: color, size: 21),
           ),
@@ -705,7 +705,7 @@ class _AnalysisPeriodCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
       decoration: BoxDecoration(
-        color: _compareSurface2,
+        color: _comparePanel2,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -746,7 +746,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _compareSurface,
+        color: _comparePanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -768,7 +768,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _compareBlue,
+            color: _comparePrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),

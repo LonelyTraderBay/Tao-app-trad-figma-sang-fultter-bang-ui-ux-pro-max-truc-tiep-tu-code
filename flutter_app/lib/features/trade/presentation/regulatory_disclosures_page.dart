@@ -12,10 +12,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _legalBlue = Color(0xFF3B82F6);
-const _legalBg = Color(0xFF0B0E17);
-const _legalTabsBg = Color(0xFF141822);
-const _legalCard = Color(0xFF1C2235);
+const _legalPrimary = AppColors.primary;
+const _legalBackground = AppColors.bg;
+const _legalTabsBackground = AppColors.surface;
+const _legalCard = AppColors.surface2;
 const _legalGreen = Color(0xFF10B981);
 const _legalAmber = Color(0xFFF59E0B);
 
@@ -56,7 +56,7 @@ class _RegulatoryDisclosuresPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-084 RegulatoryDisclosuresPage',
       child: Material(
-        color: _legalBg,
+        color: _legalBackground,
         child: Stack(
           children: [
             Column(
@@ -115,9 +115,9 @@ class _LegalHero extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _legalBlue.withValues(alpha: .04),
+        color: _legalPrimary.withValues(alpha: .04),
         borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _legalBlue, width: 2),
+        border: Border.all(color: _legalPrimary, width: 2),
       ),
       child: Row(
         children: [
@@ -125,7 +125,7 @@ class _LegalHero extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: const BoxDecoration(
-              color: _legalBlue,
+              color: _legalPrimary,
               shape: BoxShape.circle,
             ),
             child: const Icon(
@@ -144,7 +144,7 @@ class _LegalHero extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
-                    color: _legalBlue,
+                    color: _legalPrimary,
                     fontSize: 15,
                     fontWeight: AppTextStyles.bold,
                     height: 1.08,
@@ -156,7 +156,7 @@ class _LegalHero extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
-                    color: _legalBlue,
+                    color: _legalPrimary,
                     fontSize: 10.5,
                     height: 1.2,
                   ),
@@ -185,7 +185,7 @@ class _LegalTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 53,
-      color: _legalTabsBg,
+      color: _legalTabsBackground,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -203,7 +203,7 @@ class _LegalTabs extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: tab.id == activeId
-                                ? _legalBlue
+                                ? _legalPrimary
                                 : AppColors.text3,
                             fontSize: 11,
                             fontWeight: AppTextStyles.bold,
@@ -215,7 +215,7 @@ class _LegalTabs extends StatelessWidget {
                     Container(
                       width: tab.id == activeId ? 65 : 0,
                       height: 2,
-                      color: _legalBlue,
+                      color: _legalPrimary,
                     ),
                   ],
                 ),
@@ -310,7 +310,7 @@ class _ProtectionTab extends StatelessWidget {
         _ActionTile(
           title: protection.contactLabel,
           icon: Icons.phone_outlined,
-          color: _legalBlue,
+          color: _legalPrimary,
           onTap: () => onNotice('ICS contact details would open here.'),
         ),
       ],
@@ -538,20 +538,24 @@ class _CommitmentCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
       decoration: BoxDecoration(
-        color: _legalBlue.withValues(alpha: .06),
+        color: _legalPrimary.withValues(alpha: .06),
         borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _legalBlue),
+        border: Border.all(color: _legalPrimary),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.info_outline_rounded, color: _legalBlue, size: 14),
+          const Icon(
+            Icons.info_outline_rounded,
+            color: _legalPrimary,
+            size: 14,
+          ),
           const SizedBox(width: 9),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
-                color: _legalBlue,
+                color: _legalPrimary,
                 fontSize: 10,
                 fontWeight: AppTextStyles.bold,
                 height: 1.42,
@@ -741,7 +745,7 @@ class _ContactTile extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(_contactIcon(contact.icon), color: _legalBlue, size: 20),
+            Icon(_contactIcon(contact.icon), color: _legalPrimary, size: 20),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -800,7 +804,7 @@ class _DocumentTile extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(_documentIcon(document.icon), color: _legalBlue, size: 16),
+            Icon(_documentIcon(document.icon), color: _legalPrimary, size: 16),
             const SizedBox(width: 9),
             Expanded(
               child: Text(
@@ -867,7 +871,7 @@ class _RegulatoryNoticePanel extends StatelessWidget {
                     height: 44,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: _legalBlue,
+                      color: _legalPrimary,
                       borderRadius: AppRadii.inputRadius,
                     ),
                     child: Text(

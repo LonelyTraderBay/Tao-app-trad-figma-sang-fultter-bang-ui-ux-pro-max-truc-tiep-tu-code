@@ -12,13 +12,13 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _auditBlue = Color(0xFF3B82F6);
+const _auditPrimary = AppColors.primary;
 const _auditAmber = Color(0xFFF59E0B);
 const _auditPurple = Color(0xFF8B5CF6);
 const _auditGreen = Color(0xFF10B981);
-const _auditCard = Color(0xFF131820);
-const _auditPanel = Color(0xFF1B2132);
-const _auditChip = Color(0xFF20263A);
+const _auditCard = AppColors.surface;
+const _auditPanel = AppColors.surface2;
+const _auditChip = AppColors.surface3;
 const _auditMuted = Color(0xFF667085);
 
 class CopyAuditLogPage extends ConsumerStatefulWidget {
@@ -243,13 +243,13 @@ class _ExportHeaderButton extends StatelessWidget {
     return InkWell(
       key: CopyAuditLogPage.exportActionKey,
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: AppRadii.mdRadius,
       child: Container(
         width: 38,
         height: 38,
         decoration: BoxDecoration(
           color: _auditChip,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: AppRadii.mdRadius,
           border: Border.all(color: AppColors.cardBorder),
         ),
         child: const Icon(
@@ -272,14 +272,14 @@ class _ComplianceNotice extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
       decoration: BoxDecoration(
-        color: _auditBlue.withValues(alpha: .08),
-        border: Border.all(color: _auditBlue),
-        borderRadius: BorderRadius.circular(18),
+        color: _auditPrimary.withValues(alpha: .08),
+        border: Border.all(color: _auditPrimary),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: _auditBlue, size: 15),
+          const Icon(Icons.shield_outlined, color: _auditPrimary, size: 15),
           const SizedBox(width: 9),
           Expanded(
             child: Column(
@@ -288,7 +288,7 @@ class _ComplianceNotice extends StatelessWidget {
                 Text(
                   snapshot.complianceTitle,
                   style: AppTextStyles.micro.copyWith(
-                    color: _auditBlue,
+                    color: _auditPrimary,
                     fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1.1,
@@ -300,7 +300,7 @@ class _ComplianceNotice extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
-                    color: _auditBlue,
+                    color: _auditPrimary,
                     fontSize: 9,
                     height: 1.35,
                   ),
@@ -327,7 +327,7 @@ class _AuditSearchField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         color: _auditChip,
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: AppRadii.lgRadius,
         border: Border.all(color: AppColors.borderSolid),
       ),
       child: Row(
@@ -339,7 +339,7 @@ class _AuditSearchField extends StatelessWidget {
               key: CopyAuditLogPage.searchFieldKey,
               controller: controller,
               onChanged: onChanged,
-              cursorColor: _auditBlue,
+              cursorColor: _auditPrimary,
               textInputAction: TextInputAction.search,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
@@ -408,22 +408,24 @@ class _AuditFilterPill extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(22),
+      borderRadius: AppRadii.lgRadius,
       child: Container(
         width: _tabWidth(tab.id),
         height: 35,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? _auditBlue.withValues(alpha: .14) : _auditChip,
-          borderRadius: BorderRadius.circular(22),
-          border: Border.all(color: active ? _auditBlue : Colors.transparent),
+          color: active ? _auditPrimary.withValues(alpha: .14) : _auditChip,
+          borderRadius: AppRadii.lgRadius,
+          border: Border.all(
+            color: active ? _auditPrimary : Colors.transparent,
+          ),
         ),
         child: Text(
           tab.label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.caption.copyWith(
-            color: active ? _auditBlue : _auditMuted,
+            color: active ? _auditPrimary : _auditMuted,
             fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
@@ -772,7 +774,7 @@ class _SummarySection extends StatelessWidget {
               child: _SummaryCard(
                 label: 'Trades',
                 value: '${_count(events, TradeCopyAuditEventType.trade)}',
-                color: _auditBlue,
+                color: _auditPrimary,
               ),
             ),
           ],
@@ -947,7 +949,7 @@ Color _eventColor(TradeCopyAuditEvent event) {
     return _auditAmber;
   }
   return switch (event.type) {
-    TradeCopyAuditEventType.trade => _auditBlue,
+    TradeCopyAuditEventType.trade => _auditPrimary,
     TradeCopyAuditEventType.config => _auditPurple,
     TradeCopyAuditEventType.risk => AppColors.sell,
     TradeCopyAuditEventType.system => _auditGreen,

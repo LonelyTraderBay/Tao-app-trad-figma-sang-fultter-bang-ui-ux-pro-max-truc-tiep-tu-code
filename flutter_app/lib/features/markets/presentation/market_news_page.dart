@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 class MarketNewsPage extends ConsumerStatefulWidget {
   const MarketNewsPage({super.key, this.shellRenderMode});
@@ -511,7 +511,7 @@ class _NewsCard extends StatelessWidget {
                   InkWell(
                     key: MarketNewsPage.saveKey(news.id),
                     onTap: onToggleSaved,
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: AppRadii.cardRadius,
                     child: Padding(
                       padding: const EdgeInsets.all(4),
                       child: Icon(
@@ -519,7 +519,7 @@ class _NewsCard extends StatelessWidget {
                             ? Icons.bookmark_rounded
                             : Icons.bookmark_border_rounded,
                         size: 18,
-                        color: saved ? _marketBlue : AppColors.text3,
+                        color: saved ? _marketPrimary : AppColors.text3,
                       ),
                     ),
                   ),
@@ -772,13 +772,13 @@ class _NewsEmptyState extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(
-                color: _marketBlue.withValues(alpha: .12),
+                color: _marketPrimary.withValues(alpha: .12),
                 borderRadius: AppRadii.cardRadius,
               ),
               child: Text(
                 'Xem tất cả',
                 style: AppTextStyles.caption.copyWith(
-                  color: _marketBlue,
+                  color: _marketPrimary,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),

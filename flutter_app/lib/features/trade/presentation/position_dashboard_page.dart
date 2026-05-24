@@ -12,9 +12,9 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _tradeBlue = Color(0xFF3B82F6);
-const _cardBg = Color(0xFF171C24);
-const _chipBg = Color(0xFF1D263B);
+const _tradePrimary = AppColors.primary;
+const _cardBackground = AppColors.surface2;
+const _chipBackground = AppColors.surface2;
 const _futuresColor = Color(0xFFF59E0B);
 const _marginColor = Color(0xFF8B5CF6);
 
@@ -129,7 +129,7 @@ class _SummaryCard extends StatelessWidget {
         height: 72,
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 12),
         decoration: BoxDecoration(
-          color: _cardBg,
+          color: _cardBackground,
           border: Border.all(color: AppColors.cardBorder),
           borderRadius: AppRadii.cardRadius,
         ),
@@ -318,8 +318,12 @@ class _PillButton extends StatelessWidget {
         height: 38,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? _tradeBlue.withValues(alpha: .16) : _chipBg,
-          border: Border.all(color: active ? _tradeBlue : Colors.transparent),
+          color: active
+              ? _tradePrimary.withValues(alpha: .16)
+              : _chipBackground,
+          border: Border.all(
+            color: active ? _tradePrimary : Colors.transparent,
+          ),
           borderRadius: AppRadii.lgRadius,
         ),
         child: Text(
@@ -327,7 +331,7 @@ class _PillButton extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.caption.copyWith(
-            color: active ? _tradeBlue : AppColors.text3,
+            color: active ? _tradePrimary : AppColors.text3,
             fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
             height: 1,
           ),
@@ -359,13 +363,15 @@ class _SortChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? _tradeBlue.withValues(alpha: .16) : _chipBg,
+          color: active
+              ? _tradePrimary.withValues(alpha: .16)
+              : _chipBackground,
           borderRadius: AppRadii.mdRadius,
         ),
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
-            color: active ? _tradeBlue : AppColors.text3,
+            color: active ? _tradePrimary : AppColors.text3,
             fontSize: 11,
             fontWeight: AppTextStyles.bold,
             height: 1,
@@ -390,7 +396,7 @@ class _PositionTile extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.fromLTRB(16, 15, 16, 19),
       decoration: BoxDecoration(
-        color: _cardBg,
+        color: _cardBackground,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -500,7 +506,7 @@ class _TypeBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = switch (type) {
-      TradePositionType.spot => _tradeBlue,
+      TradePositionType.spot => _tradePrimary,
       TradePositionType.futures => _futuresColor,
       TradePositionType.margin => _marginColor,
     };

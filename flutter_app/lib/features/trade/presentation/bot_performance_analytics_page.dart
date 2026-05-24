@@ -14,10 +14,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _analyticsBg = Color(0xFF080C14);
-const _analyticsSurface = Color(0xFF151A23);
-const _analyticsSurface2 = Color(0xFF1D2436);
-const _analyticsBlue = Color(0xFF3B82F6);
+const _analyticsBackground = AppColors.bg;
+const _analyticsPanel = AppColors.surface;
+const _analyticsPanel2 = AppColors.surface2;
+const _analyticsPrimary = AppColors.primary;
 const _analyticsGreen = Color(0xFF10B981);
 const _analyticsAmber = Color(0xFFF59E0B);
 const _analyticsRed = Color(0xFFEF4444);
@@ -60,7 +60,7 @@ class _BotPerformanceAnalyticsPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-124 BotPerformanceAnalyticsPage',
       child: Material(
-        color: _analyticsBg,
+        color: _analyticsBackground,
         child: Column(
           children: [
             VitHeader(
@@ -161,7 +161,7 @@ class _KeyMetricsCard extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
             decoration: BoxDecoration(
               color: _analyticsGreen.withValues(alpha: .08),
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: AppRadii.cardRadius,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -286,24 +286,24 @@ class _TimeframePill extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         height: 36,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
-              ? _analyticsBlue.withValues(alpha: .12)
-              : _analyticsSurface2,
+              ? _analyticsPrimary.withValues(alpha: .12)
+              : _analyticsPanel2,
           border: active
-              ? Border.all(color: _analyticsBlue.withValues(alpha: .55))
+              ? Border.all(color: _analyticsPrimary.withValues(alpha: .55))
               : null,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: active ? _analyticsBlue : AppColors.text3,
+            color: active ? _analyticsPrimary : AppColors.text3,
             fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
@@ -452,7 +452,7 @@ class _AdvancedMetricsGrid extends StatelessWidget {
         label: 'Profit Factor',
         value: metrics.profitFactor.toStringAsFixed(2),
         helper: 'Gross profit / Gross loss',
-        color: _analyticsBlue,
+        color: _analyticsPrimary,
       ),
       _AdvancedMetricData(
         icon: Icons.workspace_premium_outlined,
@@ -635,8 +635,8 @@ class _SummaryRow extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 48),
       padding: const EdgeInsets.fromLTRB(10, 9, 10, 9),
       decoration: BoxDecoration(
-        color: _analyticsSurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: _analyticsPanel2,
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         children: [
@@ -746,7 +746,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _analyticsSurface,
+        color: _analyticsPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -768,7 +768,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _analyticsBlue,
+            color: _analyticsPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),

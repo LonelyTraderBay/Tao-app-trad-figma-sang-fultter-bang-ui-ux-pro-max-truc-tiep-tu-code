@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 class MarketScreenerPage extends ConsumerStatefulWidget {
   const MarketScreenerPage({super.key, this.shellRenderMode});
@@ -268,11 +268,11 @@ class _PresetScroller extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 11),
               decoration: BoxDecoration(
                 color: active
-                    ? _marketBlue.withValues(alpha: .15)
+                    ? _marketPrimary.withValues(alpha: .15)
                     : AppColors.surface3,
                 border: Border.all(
                   color: active
-                      ? _marketBlue.withValues(alpha: .38)
+                      ? _marketPrimary.withValues(alpha: .38)
                       : Colors.transparent,
                 ),
                 borderRadius: AppRadii.lgRadius,
@@ -285,13 +285,13 @@ class _PresetScroller extends StatelessWidget {
                     Icon(
                       preset.icon,
                       size: 14,
-                      color: active ? _marketBlue : AppColors.text2,
+                      color: active ? _marketPrimary : AppColors.text2,
                     ),
                     const SizedBox(width: 8),
                     Text(
                       preset.name,
                       style: AppTextStyles.caption.copyWith(
-                        color: active ? _marketBlue : AppColors.text2,
+                        color: active ? _marketPrimary : AppColors.text2,
                         fontSize: 13,
                         fontWeight: AppTextStyles.medium,
                         height: 1,
@@ -359,7 +359,7 @@ class _AdvancedFiltersCard extends StatelessWidget {
                 icon: const Icon(Icons.refresh_rounded, size: 14),
                 label: const Text('Đặt lại'),
                 style: TextButton.styleFrom(
-                  foregroundColor: _marketBlue,
+                  foregroundColor: _marketPrimary,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   minimumSize: const Size(0, 32),
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -468,11 +468,11 @@ class _CategoryChip extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
-              ? _marketBlue.withValues(alpha: .14)
+              ? _marketPrimary.withValues(alpha: .14)
               : AppColors.surface2,
           border: Border.all(
             color: active
-                ? _marketBlue.withValues(alpha: .36)
+                ? _marketPrimary.withValues(alpha: .36)
                 : Colors.transparent,
           ),
           borderRadius: AppRadii.smRadius,
@@ -480,7 +480,7 @@ class _CategoryChip extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: active ? _marketBlue : AppColors.text3,
+            color: active ? _marketPrimary : AppColors.text3,
             fontSize: 12,
             fontWeight: AppTextStyles.medium,
             height: 1,
@@ -516,7 +516,7 @@ class _RangeInput extends StatelessWidget {
         }
         onChanged(double.tryParse(normalized), false);
       },
-      cursorColor: _marketBlue,
+      cursorColor: _marketPrimary,
       style: AppTextStyles.caption.copyWith(fontSize: 12),
       decoration: InputDecoration(
         labelText: label,
@@ -532,7 +532,7 @@ class _RangeInput extends StatelessWidget {
           borderRadius: AppRadii.smRadius,
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: _marketBlue),
+          borderSide: const BorderSide(color: _marketPrimary),
           borderRadius: AppRadii.smRadius,
         ),
       ),
@@ -634,7 +634,7 @@ class _SortChip extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
-              ? _marketBlue.withValues(alpha: .10)
+              ? _marketPrimary.withValues(alpha: .10)
               : Colors.transparent,
           borderRadius: AppRadii.lgRadius,
         ),
@@ -646,7 +646,7 @@ class _SortChip extends StatelessWidget {
               Text(
                 label,
                 style: AppTextStyles.caption.copyWith(
-                  color: active ? _marketBlue : AppColors.text3,
+                  color: active ? _marketPrimary : AppColors.text3,
                   fontSize: 12,
                   fontWeight: active
                       ? AppTextStyles.bold
@@ -656,7 +656,7 @@ class _SortChip extends StatelessWidget {
               ),
               if (active) ...[
                 const SizedBox(width: 2),
-                Icon(icon, color: _marketBlue, size: 15),
+                Icon(icon, color: _marketPrimary, size: 15),
               ],
             ],
           ),
@@ -881,7 +881,7 @@ class _ScreenerEmptyState extends StatelessWidget {
           const SizedBox(height: 12),
           TextButton(
             onPressed: onReset,
-            style: TextButton.styleFrom(foregroundColor: _marketBlue),
+            style: TextButton.styleFrom(foregroundColor: _marketPrimary),
             child: const Text('Đặt lại bộ lọc'),
           ),
         ],

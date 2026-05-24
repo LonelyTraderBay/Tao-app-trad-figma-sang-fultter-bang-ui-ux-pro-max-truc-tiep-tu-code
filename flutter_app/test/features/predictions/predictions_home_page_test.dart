@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/arena_home_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/market_list_page.dart';
 import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/prediction_event_detail_page.dart';
@@ -161,14 +162,13 @@ void main() {
 
       await tester.tap(find.byKey(PredictionsHomePage.myPredictionsKey));
       await tester.pumpAndSettle();
-      expect(find.text('My Predictions'), findsOneWidget);
+      expect(find.text('Prediction Portfolio'), findsOneWidget);
 
-      await tester.tap(find.byIcon(Icons.chevron_left_rounded));
-      await tester.pumpAndSettle();
+      await pumpPredictions(tester);
 
       await tester.tap(find.byKey(PredictionsHomePage.arenaBridgeKey));
       await tester.pumpAndSettle();
-      expect(find.text('Open Arena'), findsOneWidget);
+      expect(find.byType(ArenaHomePage), findsOneWidget);
     },
   );
 

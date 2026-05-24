@@ -12,12 +12,12 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _marginBg = Color(0xFF0B0E17);
-const _marginCard = Color(0xFF151A23);
-const _marginPanel = Color(0xFF1E2435);
-const _marginHero = Color(0xFF101B39);
-const _marginHeroBorder = Color(0xFF15305E);
-const _marginBlue = Color(0xFF3B82F6);
+const _marginBackground = AppColors.bg;
+const _marginCard = AppColors.surface;
+const _marginPanel = AppColors.surface2;
+const _marginHero = AppColors.surface;
+const _marginHeroBorder = AppColors.primary20;
+const _marginPrimary = AppColors.primary;
 const _marginGreen = Color(0xFF10B981);
 const _marginAmber = Color(0xFFF59E0B);
 const _marginRed = Color(0xFFEF4444);
@@ -86,7 +86,7 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
           ? 'SC-086 MarginTradingPage'
           : 'SC-085 MarginTradingPage',
       child: Material(
-        color: _marginBg,
+        color: _marginBackground,
         child: Stack(
           children: [
             Column(
@@ -109,7 +109,7 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                         _SegmentedTabs(
                           tabs: snapshot.modeTabs,
                           activeId: _mode,
-                          activeColor: _marginBlue,
+                          activeColor: _marginPrimary,
                           height: 50,
                           onChanged: (id) => setState(() => _mode = id),
                           keyBuilder: MarginTradingPage.modeKey,
@@ -131,7 +131,7 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                               ),
                           ],
                           activeId: _tab,
-                          activeColor: _marginBlue,
+                          activeColor: _marginPrimary,
                           height: 46,
                           onChanged: (id) => setState(() => _tab = id),
                           keyBuilder: MarginTradingPage.tabKey,
@@ -240,7 +240,7 @@ class _ClientCategoryCard extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: _marginAmber.withValues(alpha: .13),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: AppRadii.smRadius,
                       ),
                       child: Text(
                         category.badgeLabel,
@@ -310,7 +310,7 @@ class _SegmentedTabs extends StatelessWidget {
               child: InkWell(
                 key: keyBuilder(tab.id),
                 onTap: () => onChanged(tab.id),
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: AppRadii.inputRadius,
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 140),
                   alignment: Alignment.center,
@@ -318,7 +318,7 @@ class _SegmentedTabs extends StatelessWidget {
                     color: tab.id == activeId
                         ? activeColor
                         : Colors.transparent,
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: AppRadii.inputRadius,
                   ),
                   child: Text(
                     tab.label,
@@ -464,7 +464,7 @@ class _AccountHero extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: AppRadii.smRadius,
             child: LinearProgressIndicator(
               minHeight: 7,
               value: (account.marginLevel / 300).clamp(0, 1),
@@ -608,7 +608,7 @@ class _TradeTab extends StatelessWidget {
         _SegmentedTabs(
           tabs: snapshot.orderDraft.orderTypes,
           activeId: orderType,
-          activeColor: _marginBlue.withValues(alpha: .16),
+          activeColor: _marginPrimary.withValues(alpha: .16),
           height: 46,
           onChanged: onOrderTypeChanged,
           keyBuilder: MarginTradingPage.orderTypeKey,
@@ -657,14 +657,14 @@ class _PriceComparison extends StatelessWidget {
         children: [
           const _SectionHeader(
             icon: Icons.show_chart_rounded,
-            iconColor: _marginBlue,
+            iconColor: _marginPrimary,
             title: 'Giá tham chiếu',
           ),
           const SizedBox(height: 14),
           Container(
             padding: const EdgeInsets.fromLTRB(13, 12, 13, 13),
             decoration: BoxDecoration(
-              color: _marginBlue.withValues(alpha: .06),
+              color: _marginPrimary.withValues(alpha: .06),
               borderRadius: AppRadii.cardRadius,
             ),
             child: Row(
@@ -682,16 +682,16 @@ class _PriceComparison extends StatelessWidget {
                     vertical: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: _marginBlue.withValues(alpha: .12),
+                    color: _marginPrimary.withValues(alpha: .12),
                     border: Border.all(
-                      color: _marginBlue.withValues(alpha: .35),
+                      color: _marginPrimary.withValues(alpha: .35),
                     ),
-                    borderRadius: BorderRadius.circular(13),
+                    borderRadius: AppRadii.mdRadius,
                   ),
                   child: Text(
                     'Dùng cho thanh lý',
                     style: AppTextStyles.micro.copyWith(
-                      color: _marginBlue,
+                      color: _marginPrimary,
                       fontSize: 9,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
@@ -817,7 +817,7 @@ class _PairCard extends StatelessWidget {
               const SizedBox(width: 8),
               _MiniBadge(
                 label: snapshot.defaultMode.toUpperCase(),
-                color: _marginBlue,
+                color: _marginPrimary,
               ),
               const Spacer(),
               Container(
@@ -1061,7 +1061,7 @@ class _LeverageSheet extends StatelessWidget {
                 height: 42,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: selected == option ? _marginBlue : _marginCard,
+                  color: selected == option ? _marginPrimary : _marginCard,
                   borderRadius: AppRadii.mdRadius,
                   border: Border.all(color: AppColors.cardBorder),
                 ),
@@ -1119,20 +1119,20 @@ class _AmountInput extends StatelessWidget {
               InkWell(
                 key: MarginTradingPage.maxAmountKey,
                 onTap: onMaxAmount,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: AppRadii.smRadius,
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
                     vertical: 7,
                   ),
                   decoration: BoxDecoration(
-                    color: _marginBlue.withValues(alpha: .08),
-                    borderRadius: BorderRadius.circular(10),
+                    color: _marginPrimary.withValues(alpha: .08),
+                    borderRadius: AppRadii.smRadius,
                   ),
                   child: Text(
                     'Tối đa',
                     style: AppTextStyles.micro.copyWith(
-                      color: _marginBlue,
+                      color: _marginPrimary,
                       fontSize: 11,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
@@ -1298,7 +1298,7 @@ class _SubmitButton extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: disabled
-            ? _marginBlue.withValues(alpha: .06)
+            ? _marginPrimary.withValues(alpha: .06)
             : (side == 'long' ? _marginGreen : _marginRed),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -1447,12 +1447,12 @@ class _BestExecutionCard extends StatelessWidget {
             width: 42,
             height: 42,
             decoration: BoxDecoration(
-              color: _marginBlue.withValues(alpha: .13),
+              color: _marginPrimary.withValues(alpha: .13),
               borderRadius: AppRadii.cardRadius,
             ),
             child: const Icon(
               Icons.description_outlined,
-              color: _marginBlue,
+              color: _marginPrimary,
               size: 23,
             ),
           ),
@@ -1486,7 +1486,7 @@ class _BestExecutionCard extends StatelessWidget {
                     children: [
                       const Icon(
                         Icons.check_circle_outline_rounded,
-                        color: _marginBlue,
+                        color: _marginPrimary,
                         size: 13,
                       ),
                       const SizedBox(width: 6),
@@ -1506,20 +1506,20 @@ class _BestExecutionCard extends StatelessWidget {
                 const SizedBox(height: 12),
                 InkWell(
                   onTap: onTap,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: AppRadii.smRadius,
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: _marginBlue.withValues(alpha: .12),
-                      borderRadius: BorderRadius.circular(10),
+                      color: _marginPrimary.withValues(alpha: .12),
+                      borderRadius: AppRadii.smRadius,
                     ),
                     child: Text(
                       disclosure.actionLabel,
                       style: AppTextStyles.caption.copyWith(
-                        color: _marginBlue,
+                        color: _marginPrimary,
                         fontSize: 12,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
@@ -1692,20 +1692,24 @@ class _InfoBanner extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
       decoration: BoxDecoration(
-        color: _marginBlue.withValues(alpha: .07),
-        border: Border.all(color: _marginBlue.withValues(alpha: .28)),
+        color: _marginPrimary.withValues(alpha: .07),
+        border: Border.all(color: _marginPrimary.withValues(alpha: .28)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.info_outline_rounded, color: _marginBlue, size: 13),
+          const Icon(
+            Icons.info_outline_rounded,
+            color: _marginPrimary,
+            size: 13,
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
-                color: _marginBlue,
+                color: _marginPrimary,
                 fontSize: 10,
                 height: 1.45,
                 fontWeight: AppTextStyles.bold,
@@ -1892,7 +1896,7 @@ class _NoticeSheet extends StatelessWidget {
                     height: 44,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: _marginBlue,
+                      color: _marginPrimary,
                       borderRadius: AppRadii.inputRadius,
                     ),
                     child: Text(

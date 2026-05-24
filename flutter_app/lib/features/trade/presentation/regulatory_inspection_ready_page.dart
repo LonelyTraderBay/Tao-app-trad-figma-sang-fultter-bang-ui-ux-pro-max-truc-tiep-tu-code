@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,12 +13,12 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _inspectionBg = Color(0xFF080C14);
-const _inspectionSurface = Color(0xFF151A23);
-const _inspectionSurface2 = Color(0xFF1D2436);
-const _inspectionBorder = Color(0xFF273142);
+const _inspectionBackground = AppColors.bg;
+const _inspectionPanel = AppColors.surface;
+const _inspectionPanel2 = AppColors.surface2;
+const _inspectionBorder = AppColors.borderSolid;
 const _inspectionGreen = Color(0xFF10B981);
-const _inspectionBlue = Color(0xFF3B82F6);
+const _inspectionPrimary = AppColors.primary;
 const _inspectionAmber = Color(0xFFF59E0B);
 
 class RegulatoryInspectionReadyPage extends ConsumerWidget {
@@ -45,7 +46,7 @@ class RegulatoryInspectionReadyPage extends ConsumerWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-116 RegulatoryInspectionReadyPage',
       child: Material(
-        color: _inspectionBg,
+        color: _inspectionBackground,
         child: Column(
           children: [
             VitHeader(
@@ -108,9 +109,9 @@ class _HeaderDownloadButton extends StatelessWidget {
       height: 36,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: _inspectionSurface2,
+          color: _inspectionPanel2,
           border: Border.all(color: _inspectionBorder.withValues(alpha: .65)),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: AppRadii.smRadius,
         ),
         child: IconButton(
           onPressed: () {},
@@ -137,7 +138,7 @@ class _ComplianceScoreCard extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 203),
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
       decoration: BoxDecoration(
-        color: _inspectionSurface,
+        color: _inspectionPanel,
         border: Border.all(color: _inspectionBorder.withValues(alpha: .76)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -152,7 +153,7 @@ class _ComplianceScoreCard extends StatelessWidget {
                 height: 56,
                 decoration: BoxDecoration(
                   color: _inspectionGreen.withValues(alpha: .14),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 child: const Icon(
                   Icons.military_tech_outlined,
@@ -215,7 +216,7 @@ class _ComplianceScoreCard extends StatelessWidget {
                   child: Stack(
                     children: [
                       Positioned.fill(
-                        child: ColoredBox(color: _inspectionSurface2),
+                        child: ColoredBox(color: _inspectionPanel2),
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
@@ -302,9 +303,9 @@ class _QuickStatCard extends StatelessWidget {
       height: 80,
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 9),
       decoration: BoxDecoration(
-        color: _inspectionSurface,
+        color: _inspectionPanel,
         border: Border.all(color: _inspectionBorder.withValues(alpha: .76)),
-        borderRadius: BorderRadius.circular(13),
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -346,7 +347,7 @@ class _FrameworkCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
       decoration: BoxDecoration(
-        color: _inspectionSurface,
+        color: _inspectionPanel,
         border: Border.all(color: _inspectionBorder.withValues(alpha: .76)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -444,9 +445,9 @@ class _DocumentCard extends StatelessWidget {
       height: 56,
       padding: const EdgeInsets.fromLTRB(12, 9, 12, 9),
       decoration: BoxDecoration(
-        color: _inspectionSurface,
+        color: _inspectionPanel,
         border: Border.all(color: _inspectionBorder.withValues(alpha: .76)),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         children: [
@@ -455,7 +456,7 @@ class _DocumentCard extends StatelessWidget {
             height: 36,
             decoration: BoxDecoration(
               color: _inspectionGreen.withValues(alpha: .13),
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: AppRadii.cardRadius,
             ),
             child: const Icon(
               Icons.description_outlined,
@@ -499,7 +500,7 @@ class _DocumentCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
             decoration: BoxDecoration(
               color: _inspectionGreen.withValues(alpha: .13),
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: AppRadii.inputRadius,
             ),
             child: Text(
               document.status,
@@ -527,7 +528,7 @@ class _InspectorPortalCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
       decoration: BoxDecoration(
-        color: _inspectionSurface,
+        color: _inspectionPanel,
         border: Border.all(color: _inspectionBorder.withValues(alpha: .76)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -540,12 +541,12 @@ class _InspectorPortalCard extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: _inspectionBlue.withValues(alpha: .13),
-                  borderRadius: BorderRadius.circular(14),
+                  color: _inspectionPrimary.withValues(alpha: .13),
+                  borderRadius: AppRadii.inputRadius,
                 ),
                 child: const Icon(
                   Icons.shield_outlined,
-                  color: _inspectionBlue,
+                  color: _inspectionPrimary,
                   size: 24,
                 ),
               ),
@@ -595,14 +596,12 @@ class _InspectorPortalCard extends StatelessWidget {
                 ),
               ),
               style: OutlinedButton.styleFrom(
-                backgroundColor: _inspectionSurface2,
+                backgroundColor: _inspectionPanel2,
                 foregroundColor: AppColors.text1,
                 side: BorderSide(
                   color: _inspectionBorder.withValues(alpha: .82),
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
               ),
             ),
           ),
@@ -621,7 +620,7 @@ class _ReportButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       key: RegulatoryInspectionReadyPage.reportKey,
-      height: 48,
+      height: AppSpacing.inputHeight,
       child: FilledButton.icon(
         onPressed: () {},
         icon: const Icon(Icons.download_rounded, size: 18),
@@ -639,9 +638,7 @@ class _ReportButton extends StatelessWidget {
         style: FilledButton.styleFrom(
           backgroundColor: _inspectionGreen,
           foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
         ),
       ),
     );
@@ -661,7 +658,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _inspectionBlue,
+            color: _inspectionPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),
@@ -683,7 +680,7 @@ class _SectionLabel extends StatelessWidget {
 _StatStyle _styleForStat(TradeRegulatoryInspectionStatIcon icon) {
   return switch (icon) {
     TradeRegulatoryInspectionStatIcon.documents => const _StatStyle(
-      color: _inspectionBlue,
+      color: _inspectionPrimary,
       icon: Icons.description_outlined,
     ),
     TradeRegulatoryInspectionStatIcon.clients => const _StatStyle(
@@ -695,7 +692,7 @@ _StatStyle _styleForStat(TradeRegulatoryInspectionStatIcon icon) {
       icon: Icons.bar_chart_rounded,
     ),
     TradeRegulatoryInspectionStatIcon.retention => const _StatStyle(
-      color: _inspectionBlue,
+      color: _inspectionPrimary,
       icon: Icons.schedule_rounded,
     ),
   };

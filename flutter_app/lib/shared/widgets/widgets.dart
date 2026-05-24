@@ -4,6 +4,7 @@ export 'vit_empty_state.dart';
 export 'vit_error_state.dart';
 export 'vit_icon_button.dart';
 export 'vit_input.dart';
+export 'vit_module_components.dart';
 export 'vit_offline_banner.dart';
 export 'vit_search_bar.dart';
 export 'vit_skeleton.dart';

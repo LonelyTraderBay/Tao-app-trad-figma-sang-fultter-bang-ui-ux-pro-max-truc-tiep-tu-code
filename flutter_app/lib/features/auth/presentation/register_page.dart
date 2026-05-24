@@ -14,8 +14,8 @@ import '../../../shared/widgets/widgets.dart';
 import '../data/auth_repository.dart';
 import 'otp_page.dart';
 
-const _authPrimary = Color(0xFF3B82F6);
-const _authSegmentActive = Color(0xFF20345D);
+const _authPrimary = AppColors.primary;
+const _authSegmentActive = AppColors.primary20;
 
 enum _RegisterContactType { email, phone }
 

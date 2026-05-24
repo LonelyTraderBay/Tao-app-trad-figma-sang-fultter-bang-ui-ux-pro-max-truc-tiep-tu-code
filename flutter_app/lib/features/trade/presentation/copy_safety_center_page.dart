@@ -12,10 +12,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _safetyBlue = Color(0xFF3B82F6);
-const _safetyTabsBg = Color(0xFF121720);
-const _safetyCard = Color(0xFF121720);
-const _safetyWarningBg = Color(0xFF211712);
+const _safetyPrimary = AppColors.primary;
+const _safetyTabsBackground = AppColors.surface;
+const _safetyCard = AppColors.surface;
+const _safetyWarningBackground = AppColors.warningBg;
 const _safetyWarningBorder = Color(0x665A3A00);
 
 class CopySafetyCenterPage extends ConsumerStatefulWidget {
@@ -119,9 +119,9 @@ class _HeroBanner extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 95),
       padding: const EdgeInsets.fromLTRB(16, 15, 16, 14),
       decoration: BoxDecoration(
-        color: _safetyBlue.withValues(alpha: .11),
+        color: _safetyPrimary.withValues(alpha: .11),
         borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _safetyBlue, width: 2),
+        border: Border.all(color: _safetyPrimary, width: 2),
       ),
       child: Row(
         children: [
@@ -129,7 +129,7 @@ class _HeroBanner extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: const BoxDecoration(
-              color: _safetyBlue,
+              color: _safetyPrimary,
               shape: BoxShape.circle,
             ),
             child: const Icon(
@@ -147,7 +147,7 @@ class _HeroBanner extends StatelessWidget {
                 Text(
                   snapshot.heroTitle,
                   style: AppTextStyles.body.copyWith(
-                    color: _safetyBlue,
+                    color: _safetyPrimary,
                     fontSize: 15,
                     fontWeight: AppTextStyles.bold,
                     height: 1.05,
@@ -159,7 +159,7 @@ class _HeroBanner extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
-                    color: _safetyBlue,
+                    color: _safetyPrimary,
                     fontSize: 10.5,
                     height: 1.25,
                   ),
@@ -188,7 +188,7 @@ class _SafetyTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 53,
-      color: _safetyTabsBg,
+      color: _safetyTabsBackground,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -206,7 +206,7 @@ class _SafetyTabs extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: tab.id == activeId
-                                ? _safetyBlue
+                                ? _safetyPrimary
                                 : AppColors.text3,
                             fontSize: 11,
                             fontWeight: AppTextStyles.bold,
@@ -218,7 +218,7 @@ class _SafetyTabs extends StatelessWidget {
                     Container(
                       width: tab.id == activeId ? 65 : 0,
                       height: 2,
-                      color: _safetyBlue,
+                      color: _safetyPrimary,
                     ),
                   ],
                 ),
@@ -403,7 +403,7 @@ class _WarningCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       decoration: BoxDecoration(
-        color: _safetyWarningBg,
+        color: _safetyWarningBackground,
         borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _safetyWarningBorder),
       ),
@@ -552,7 +552,7 @@ class _MetricCard extends StatelessWidget {
                   _MetricInfo(
                     label: 'Why It Matters',
                     text: metric.whyMatters,
-                    color: _safetyBlue,
+                    color: _safetyPrimary,
                   ),
                 ],
               ),
@@ -614,7 +614,7 @@ class _GuidelinesTab extends StatelessWidget {
         const SizedBox(height: 18),
         _GuidelineList(
           title: 'Follower Responsibilities',
-          color: _safetyBlue,
+          color: _safetyPrimary,
           items: snapshot.followerResponsibilities,
           icon: Icons.check_circle_outline_rounded,
         ),
@@ -687,7 +687,7 @@ class _ToolsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return _SectionPanel(
       title: 'Safety Tools',
-      color: _safetyBlue,
+      color: _safetyPrimary,
       child: Column(
         children: [
           for (final tool in tools) ...[
@@ -796,7 +796,7 @@ class _EnforcementTab extends StatelessWidget {
           title: 'Transparent enforcement',
           body:
               'All actions are logged. If you believe an action was unfair, contact support.',
-          color: _safetyBlue,
+          color: _safetyPrimary,
         ),
       ],
     );
@@ -1019,7 +1019,7 @@ class _EmergencyPanel extends StatelessWidget {
                     height: 44,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: _safetyBlue,
+                      color: _safetyPrimary,
                       borderRadius: AppRadii.inputRadius,
                     ),
                     child: Text(

@@ -4,15 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/profile_repository.dart';
 
-const _profileBg = AppColors.bg;
-const _profileSurface = AppColors.surface;
-const _profileSurface2 = AppColors.surface2;
+const _profileBackground = AppColors.bg;
+const _profilePanel = AppColors.surface;
+const _profilePanel2 = AppColors.surface2;
 const _profileHero = AppColors.surface;
 const _profileBorder = AppColors.cardBorder;
 const _profileGreen = AppColors.buy;
@@ -55,7 +56,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-156 ProfilePage',
       child: Material(
-        color: _profileBg,
+        color: _profileBackground,
         child: SingleChildScrollView(
           key: ProfilePage.contentKey,
           padding: EdgeInsets.fromLTRB(20, 20, 20, bottomInset),
@@ -151,7 +152,7 @@ class _ProfileHero extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: _profileHero,
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: AppRadii.lgRadius,
         border: Border.all(color: AppColors.portfolioBorder),
         gradient: const RadialGradient(
           center: Alignment(.85, -.9),
@@ -167,7 +168,7 @@ class _ProfileHero extends StatelessWidget {
                 width: 58,
                 height: 58,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: AppRadii.cardRadius,
                   gradient: const LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -240,7 +241,7 @@ class _ProfileHero extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: .11),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: AppRadii.lgRadius,
                     border: Border.all(
                       color: Colors.white.withValues(alpha: .12),
                     ),
@@ -303,7 +304,7 @@ class _HeroPill extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .16),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: AppRadii.smRadius,
         border: Border.all(color: color.withValues(alpha: .28)),
       ),
       child: Text(
@@ -339,7 +340,7 @@ class _HeroInfoBox extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(14, 13, 14, 12),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: .08),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: Colors.white.withValues(alpha: .08)),
       ),
       child: Column(
@@ -391,8 +392,8 @@ class _VipCard extends StatelessWidget {
       height: 92,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _profileSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _profilePanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _profileBorder),
       ),
       child: Column(
@@ -426,7 +427,7 @@ class _VipCard extends StatelessWidget {
               minHeight: 8,
               value: vip.progress,
               color: AppColors.primary,
-              backgroundColor: _profileSurface2,
+              backgroundColor: _profilePanel2,
             ),
           ),
           const Spacer(),
@@ -463,8 +464,8 @@ class _PredictionCard extends StatelessWidget {
         height: 137,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: _profileSurface,
-          borderRadius: BorderRadius.circular(16),
+          color: _profilePanel,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(color: _profilePurple.withValues(alpha: .38)),
         ),
         child: Column(
@@ -578,8 +579,8 @@ class _ArenaCard extends StatelessWidget {
         height: 137,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: _profileSurface,
-          borderRadius: BorderRadius.circular(16),
+          color: _profilePanel,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(color: _profileAmber.withValues(alpha: .34)),
         ),
         child: Column(
@@ -751,12 +752,12 @@ class _MenuSection extends StatelessWidget {
     final accent = Color(section.accentHex);
     return Container(
       decoration: BoxDecoration(
-        color: _profileSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _profilePanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _profileBorder),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         child: Column(
           children: [
             for (final item in section.items) ...[
@@ -793,7 +794,7 @@ class _MenuRow extends StatelessWidget {
               height: 36,
               decoration: BoxDecoration(
                 color: accent.withValues(alpha: .12),
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: AppRadii.cardRadius,
               ),
               alignment: Alignment.center,
               child: Icon(_iconFor(item.iconKey), color: accent, size: 20),
@@ -858,8 +859,8 @@ class _ActivityButton extends StatelessWidget {
         height: 44,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _profileSurface,
-          borderRadius: BorderRadius.circular(16),
+          color: _profilePanel,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(color: _profileBorder),
         ),
         child: Text(
@@ -891,7 +892,7 @@ class _LogoutButton extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: _profileRed.withValues(alpha: .1),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(color: _profileRed.withValues(alpha: .28)),
         ),
         child: Row(

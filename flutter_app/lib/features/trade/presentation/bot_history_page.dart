@@ -12,10 +12,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _historyBg = Color(0xFF080C14);
-const _historySurface = Color(0xFF151A23);
-const _historySurface2 = Color(0xFF1D2436);
-const _historyBlue = Color(0xFF3B82F6);
+const _historyBackground = AppColors.bg;
+const _historyPanel = AppColors.surface;
+const _historyPanel2 = AppColors.surface2;
+const _historyPrimary = AppColors.primary;
 const _historyGreen = Color(0xFF10B981);
 const _historyRed = Color(0xFFEF4444);
 
@@ -62,7 +62,7 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-123 BotHistoryPage',
       child: Material(
-        color: _historyBg,
+        color: _historyBackground,
         child: Column(
           children: [
             VitHeader(
@@ -145,15 +145,15 @@ class _HeaderExportButton extends StatelessWidget {
     return InkWell(
       key: BotHistoryPage.exportHeaderKey,
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: AppRadii.mdRadius,
       child: Container(
         width: 36,
         height: 36,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _historySurface2,
+          color: _historyPanel2,
           border: Border.all(color: AppColors.cardBorder),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: AppRadii.mdRadius,
         ),
         child: const Icon(
           Icons.download_rounded,
@@ -256,9 +256,9 @@ class _SearchBox extends StatelessWidget {
       height: 46,
       padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-        color: _historySurface,
-        border: Border.all(color: const Color(0xFF2A3863)),
-        borderRadius: BorderRadius.circular(20),
+        color: _historyPanel,
+        border: Border.all(color: AppColors.borderSolid),
+        borderRadius: AppRadii.lgRadius,
       ),
       child: Row(
         children: [
@@ -337,24 +337,24 @@ class _FilterPill extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         height: 36,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
-              ? _historyBlue.withValues(alpha: .12)
-              : _historySurface2,
+              ? _historyPrimary.withValues(alpha: .12)
+              : _historyPanel2,
           border: active
-              ? Border.all(color: _historyBlue.withValues(alpha: .55))
+              ? Border.all(color: _historyPrimary.withValues(alpha: .55))
               : null,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: active ? _historyBlue : AppColors.text3,
+            color: active ? _historyPrimary : AppColors.text3,
             fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
@@ -534,8 +534,8 @@ class _DetailBox extends StatelessWidget {
       height: 48,
       padding: const EdgeInsets.fromLTRB(10, 8, 10, 7),
       decoration: BoxDecoration(
-        color: _historySurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: _historyPanel2,
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -577,7 +577,7 @@ class _ExportNote extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
       decoration: BoxDecoration(
-        color: _historySurface2,
+        color: _historyPanel2,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -608,7 +608,7 @@ class _ExportNote extends StatelessWidget {
               key: BotHistoryPage.exportAllKey,
               onPressed: onTap,
               style: FilledButton.styleFrom(
-                backgroundColor: _historyBlue,
+                backgroundColor: _historyPrimary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(999),
                 ),
@@ -666,7 +666,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _historySurface,
+        color: _historyPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -688,7 +688,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _historyBlue,
+            color: _historyPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),

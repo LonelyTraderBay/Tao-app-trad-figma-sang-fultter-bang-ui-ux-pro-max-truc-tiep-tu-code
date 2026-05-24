@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 class TokenUnlocksPage extends ConsumerStatefulWidget {
   const TokenUnlocksPage({super.key, this.shellRenderMode});
@@ -217,7 +217,7 @@ class _UnderlinedTab extends StatelessWidget {
                   label,
                   textAlign: TextAlign.center,
                   style: AppTextStyles.caption.copyWith(
-                    color: active ? _marketBlue : AppColors.text3,
+                    color: active ? _marketPrimary : AppColors.text3,
                     fontWeight: AppTextStyles.medium,
                   ),
                 ),
@@ -227,7 +227,7 @@ class _UnderlinedTab extends StatelessWidget {
               height: 2,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
-                child: const ColoredBox(color: _marketBlue),
+                child: const ColoredBox(color: _marketPrimary),
               ),
             ),
           ],
@@ -248,8 +248,8 @@ class _UnlockHero extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF0B1635),
-        border: Border.all(color: _marketBlue.withValues(alpha: .18)),
+        color: AppColors.surface,
+        border: Border.all(color: _marketPrimary.withValues(alpha: .18)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -317,7 +317,7 @@ class _UnlockFilters extends StatelessWidget {
           _FilterChipButton(
             label: 'Gần nhất',
             active: sortBy == MarketUnlockSort.nearest,
-            color: _marketBlue,
+            color: _marketPrimary,
             onTap: () => onSortSelected(MarketUnlockSort.nearest),
           ),
           const SizedBox(width: 4),
@@ -325,14 +325,14 @@ class _UnlockFilters extends StatelessWidget {
             key: TokenUnlocksPage.sortValueKey,
             label: 'Giá trị cao',
             active: sortBy == MarketUnlockSort.value,
-            color: _marketBlue,
+            color: _marketPrimary,
             onTap: () => onSortSelected(MarketUnlockSort.value),
           ),
           const SizedBox(width: 4),
           _FilterChipButton(
             label: 'Tác động',
             active: sortBy == MarketUnlockSort.impact,
-            color: _marketBlue,
+            color: _marketPrimary,
             onTap: () => onSortSelected(MarketUnlockSort.impact),
           ),
           const SizedBox(width: 4),

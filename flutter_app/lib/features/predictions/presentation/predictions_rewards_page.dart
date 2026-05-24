@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 
 class PredictionsRewardsPage extends ConsumerStatefulWidget {
   const PredictionsRewardsPage({super.key, this.shellRenderMode});
@@ -176,9 +176,9 @@ class _RewardsHero extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF101B3A), Color(0xFF17183E), Color(0xFF272019)],
+          colors: [AppColors.surface, AppColors.surface2, AppColors.warningBg],
         ),
-        border: Border.all(color: const Color(0xFF1C3265)),
+        border: Border.all(color: AppColors.accent20),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -267,8 +267,8 @@ class _HowItWorksNote extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
       decoration: BoxDecoration(
-        color: _predictionBlue.withValues(alpha: .07),
-        border: Border.all(color: _predictionBlue.withValues(alpha: .18)),
+        color: _predictionPrimary.withValues(alpha: .07),
+        border: Border.all(color: _predictionPrimary.withValues(alpha: .18)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
@@ -276,7 +276,7 @@ class _HowItWorksNote extends StatelessWidget {
         children: [
           const Icon(
             Icons.info_outline_rounded,
-            color: _predictionBlue,
+            color: _predictionPrimary,
             size: 15,
           ),
           const SizedBox(width: 9),
@@ -379,7 +379,7 @@ class _FilterChip extends StatelessWidget {
     required this.active,
     required this.onTap,
     this.icon,
-    this.activeColor = _predictionBlue,
+    this.activeColor = _predictionPrimary,
   });
 
   final String label;
@@ -557,7 +557,7 @@ class _RewardRow extends StatelessWidget {
             InkWell(
               key: PredictionsRewardsPage.favoriteKey(reward.id),
               onTap: onFavoriteToggle,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: AppRadii.mdRadius,
               child: SizedBox(
                 width: 20,
                 child: Icon(
@@ -589,8 +589,8 @@ class _RewardRow extends StatelessWidget {
                       Flexible(
                         child: _TinyBadge(
                           label: reward.category,
-                          color: _predictionBlue,
-                          background: _predictionBlue.withValues(alpha: .14),
+                          color: _predictionPrimary,
+                          background: _predictionPrimary.withValues(alpha: .14),
                         ),
                       ),
                       const SizedBox(width: 7),

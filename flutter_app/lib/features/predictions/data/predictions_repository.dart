@@ -180,6 +180,9 @@ final class PredictionEventDetailSnapshot {
 
 final class PredictionPortfolioSnapshot {
   const PredictionPortfolioSnapshot({
+    required this.endpoint,
+    required this.profileEndpoint,
+    required this.actionDraft,
     required this.events,
     required this.positions,
     required this.openOrders,
@@ -193,6 +196,9 @@ final class PredictionPortfolioSnapshot {
     required this.supportedStates,
   });
 
+  final String endpoint;
+  final String profileEndpoint;
+  final String actionDraft;
   final List<PredictionEventDraft> events;
   final List<PredictionPortfolioPositionDraft> positions;
   final List<PredictionPortfolioOrderDraft> openOrders;
@@ -1901,6 +1907,9 @@ final class MockPredictionsRepository implements PredictionsRepository {
     );
 
     return PredictionPortfolioSnapshot(
+      endpoint: '/api/mobile/predictions/markets-predictions-portfolio',
+      profileEndpoint: '/api/mobile/profile/profile-predictions',
+      actionDraft: 'POST /predictions/orders|claim|watchlist where applicable',
       events: _predictionEvents,
       positions: _predictionPortfolioPositions,
       openOrders: _predictionPortfolioOrders,

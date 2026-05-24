@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -11,9 +12,9 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _historyBg = Color(0xFF080C14);
-const _historySurface2 = Color(0xFF1D2436);
-const _historyBlue = Color(0xFF3B82F6);
+const _historyBackground = AppColors.bg;
+const _historyPanel2 = AppColors.surface2;
+const _historyPrimary = AppColors.primary;
 const _historyGreen = Color(0xFF10B981);
 const _historyRed = Color(0xFFEF4444);
 const _historyAmber = Color(0xFFF59E0B);
@@ -55,7 +56,7 @@ class _TransactionHistoryPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-136 TxHistoryPage',
       child: Material(
-        color: _historyBg,
+        color: _historyBackground,
         child: Column(
           children: [
             VitHeader(
@@ -158,8 +159,8 @@ class _HeaderExportButton extends StatelessWidget {
         width: 36,
         height: 36,
         decoration: BoxDecoration(
-          color: _historySurface2,
-          borderRadius: BorderRadius.circular(12),
+          color: _historyPanel2,
+          borderRadius: AppRadii.mdRadius,
           border: Border.all(color: Colors.white.withValues(alpha: .04)),
         ),
         child: const Icon(
@@ -200,22 +201,22 @@ class _ExportBar extends StatelessWidget {
             height: 30,
             padding: const EdgeInsets.symmetric(horizontal: 11),
             decoration: BoxDecoration(
-              color: _historyBlue.withValues(alpha: .14),
-              borderRadius: BorderRadius.circular(13),
+              color: _historyPrimary.withValues(alpha: .14),
+              borderRadius: AppRadii.mdRadius,
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(
                   Icons.cloud_download_outlined,
-                  color: _historyBlue,
+                  color: _historyPrimary,
                   size: 12,
                 ),
                 const SizedBox(width: 5),
                 Text(
                   'Xuất CSV',
                   style: AppTextStyles.micro.copyWith(
-                    color: _historyBlue,
+                    color: _historyPrimary,
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
                     height: 1,
@@ -285,19 +286,19 @@ class _FilterChip extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
-              ? _historyBlue.withValues(alpha: .18)
+              ? _historyPrimary.withValues(alpha: .18)
               : Colors.transparent,
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: AppRadii.inputRadius,
           border: Border.all(
             color: active
-                ? _historyBlue.withValues(alpha: .48)
+                ? _historyPrimary.withValues(alpha: .48)
                 : Colors.transparent,
           ),
         ),
         child: Text(
           filter.label,
           style: AppTextStyles.micro.copyWith(
-            color: active ? _historyBlue : AppColors.text2,
+            color: active ? _historyPrimary : AppColors.text2,
             fontSize: 12,
             fontWeight: FontWeight.w700,
             height: 1,
@@ -415,7 +416,7 @@ class _TransactionIcon extends StatelessWidget {
           width: 24,
           height: 24,
           decoration: BoxDecoration(
-            color: _historyBlue,
+            color: _historyPrimary,
             borderRadius: BorderRadius.circular(6),
           ),
           child: const Icon(
@@ -493,7 +494,7 @@ class _TransactionInfo extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
-              color: _historyBlue,
+              color: _historyPrimary,
               fontSize: 11,
               fontFamily: 'Roboto',
               height: 1,

@@ -14,13 +14,13 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _drawdownBg = Color(0xFF080C14);
-const _drawdownSurface = Color(0xFF151A23);
-const _drawdownSurface2 = Color(0xFF1D2436);
+const _drawdownBackground = AppColors.bg;
+const _drawdownPanel = AppColors.surface;
+const _drawdownPanel2 = AppColors.surface2;
 const _drawdownRed = Color(0xFFEF4444);
 const _drawdownAmber = Color(0xFFF59E0B);
 const _drawdownGreen = Color(0xFF10B981);
-const _drawdownBlue = Color(0xFF3B82F6);
+const _drawdownPrimary = AppColors.primary;
 const _drawdownAxis = Color(0xFF475569);
 
 class BotDrawdownAnalyzerPage extends ConsumerWidget {
@@ -46,7 +46,7 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-129 BotDrawdownAnalyzerPage',
       child: Material(
-        color: _drawdownBg,
+        color: _drawdownBackground,
         child: Column(
           children: [
             VitHeader(
@@ -128,7 +128,7 @@ class _MetricGrid extends StatelessWidget {
               child: _MetricCard(
                 height: 124,
                 icon: Icons.schedule_rounded,
-                iconColor: _drawdownBlue,
+                iconColor: _drawdownPrimary,
                 label: 'Drawdown Days',
                 value: summary.drawdownDays.toString(),
                 caption: 'of ${summary.totalDays} days',
@@ -394,8 +394,8 @@ class _EventStat extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 8, 10, 12),
       decoration: BoxDecoration(
-        color: _drawdownSurface2,
-        borderRadius: BorderRadius.circular(13),
+        color: _drawdownPanel2,
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -439,7 +439,7 @@ class _AnalysisCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 23),
       decoration: BoxDecoration(
-        color: _drawdownSurface2,
+        color: _drawdownPanel2,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -509,7 +509,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _drawdownSurface,
+        color: _drawdownPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -531,7 +531,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _drawdownBlue,
+            color: _drawdownPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),

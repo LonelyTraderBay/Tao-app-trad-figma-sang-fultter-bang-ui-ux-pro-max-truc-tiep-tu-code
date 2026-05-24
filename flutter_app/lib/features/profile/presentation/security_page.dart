@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,12 +14,12 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/profile_repository.dart';
 
-const _securityBg = AppColors.bg;
-const _securitySurface = AppColors.surface;
-const _securitySurface2 = AppColors.surface2;
+const _securityBackground = AppColors.bg;
+const _securityPanel = AppColors.surface;
+const _securityPanel2 = AppColors.surface2;
 const _securityBorder = AppColors.cardBorder;
 const _securityDivider = AppColors.divider;
-const _securityBlue = AppColors.primary;
+const _securityPrimary = AppColors.primary;
 const _securityGreen = AppColors.buy;
 const _securityAmber = AppColors.warn;
 const _securityRed = AppColors.sell;
@@ -64,7 +66,7 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-158 SecurityPage',
       child: Material(
-        color: _securityBg,
+        color: _securityBackground,
         child: Column(
           children: [
             VitHeader(
@@ -199,7 +201,7 @@ class _ScoreCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
             decoration: BoxDecoration(
               color: _securityAmber.withValues(alpha: .12),
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: AppRadii.cardRadius,
               border: Border.all(color: _securityAmber.withValues(alpha: .28)),
             ),
             child: Row(
@@ -243,7 +245,7 @@ class _SecurityList extends StatelessWidget {
     return Container(
       decoration: _cardDecoration(radius: 16),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         child: Column(
           children: [
             for (final item in items) ...[
@@ -266,7 +268,7 @@ class _SecurityRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accent = item.danger ? _securityRed : _securityBlue;
+    final accent = item.danger ? _securityRed : _securityPrimary;
 
     return GestureDetector(
       key: SecurityPage.itemKey(item.id),
@@ -282,7 +284,7 @@ class _SecurityRow extends StatelessWidget {
               height: 40,
               decoration: BoxDecoration(
                 color: accent.withValues(alpha: .13),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: AppRadii.lgRadius,
               ),
               alignment: Alignment.center,
               child: Icon(_iconFor(item.iconKey), color: accent, size: 21),
@@ -386,7 +388,7 @@ class _DeviceList extends StatelessWidget {
         Container(
           decoration: _cardDecoration(radius: 16),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: AppRadii.cardRadius,
             child: Column(
               children: [
                 for (final device in devices) ...[
@@ -512,7 +514,7 @@ class _AntiPhishingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 134,
+      height: AppSpacing.buttonHero + AppSpacing.inputHeight,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
       decoration: _cardDecoration(radius: 16),
       child: Column(
@@ -520,7 +522,11 @@ class _AntiPhishingCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.shield_outlined, color: _securityBlue, size: 18),
+              const Icon(
+                Icons.shield_outlined,
+                color: _securityPrimary,
+                size: 18,
+              ),
               const SizedBox(width: 8),
               Text(
                 'M\u00E3 ch\u1ED1ng l\u1EEBa \u0111\u1EA3o',
@@ -546,10 +552,10 @@ class _AntiPhishingCard extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           Container(
-            height: 48,
+            height: AppSpacing.inputHeight,
             decoration: BoxDecoration(
-              color: _securitySurface2,
-              borderRadius: BorderRadius.circular(24),
+              color: _securityPanel2,
+              borderRadius: AppRadii.cardLargeRadius,
               border: Border.all(color: AppColors.borderSolid),
             ),
             child: Row(
@@ -559,7 +565,7 @@ class _AntiPhishingCard extends StatelessWidget {
                     key: SecurityPage.antiPhishingFieldKey,
                     controller: controller,
                     maxLength: 8,
-                    cursorColor: _securityBlue,
+                    cursorColor: _securityPrimary,
                     style: AppTextStyles.baseMedium.copyWith(
                       color: AppColors.text1,
                       fontSize: 14,
@@ -589,8 +595,8 @@ class _AntiPhishingCard extends StatelessWidget {
                     height: 30,
                     margin: const EdgeInsets.only(right: 16),
                     decoration: BoxDecoration(
-                      color: _securityBlue,
-                      borderRadius: BorderRadius.circular(18),
+                      color: _securityPrimary,
+                      borderRadius: AppRadii.cardRadius,
                     ),
                     alignment: Alignment.center,
                     child: Text(
@@ -615,7 +621,7 @@ class _AntiPhishingCard extends StatelessWidget {
 
 BoxDecoration _cardDecoration({required double radius}) {
   return BoxDecoration(
-    color: _securitySurface,
+    color: _securityPanel,
     borderRadius: BorderRadius.circular(radius),
     border: Border.all(color: _securityBorder),
   );

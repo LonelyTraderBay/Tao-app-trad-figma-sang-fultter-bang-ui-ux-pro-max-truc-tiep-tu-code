@@ -12,12 +12,12 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _auditBg = Color(0xFF080C14);
-const _auditSurface = Color(0xFF151A23);
-const _auditSurface2 = Color(0xFF1D2436);
-const _auditTabsBg = Color(0xFF11161E);
-const _auditBorder = Color(0xFF273142);
-const _auditBlue = Color(0xFF3B82F6);
+const _auditBackground = AppColors.bg;
+const _auditPanel = AppColors.surface;
+const _auditPanel2 = AppColors.surface2;
+const _auditTabsBackground = AppColors.surface;
+const _auditBorder = AppColors.borderSolid;
+const _auditPrimary = AppColors.primary;
 const _auditGreen = Color(0xFF10B981);
 const _auditAmber = Color(0xFFF59E0B);
 
@@ -55,7 +55,7 @@ class _AuditTrailPageState extends ConsumerState<AuditTrailPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-115 AuditTrailPage',
       child: Material(
-        color: _auditBg,
+        color: _auditBackground,
         child: Column(
           children: [
             VitHeader(
@@ -133,9 +133,9 @@ class _HeaderDownloadButton extends StatelessWidget {
       height: 36,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: _auditSurface2,
+          color: _auditPanel2,
           border: Border.all(color: _auditBorder.withValues(alpha: .65)),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: AppRadii.smRadius,
         ),
         child: IconButton(
           onPressed: () {},
@@ -230,9 +230,9 @@ class _StatCard extends StatelessWidget {
       height: 75,
       padding: const EdgeInsets.fromLTRB(12, 15, 12, 11),
       decoration: BoxDecoration(
-        color: _auditSurface,
+        color: _auditPanel,
         border: Border.all(color: _auditBorder.withValues(alpha: .76)),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,7 +278,7 @@ class _SearchAndFilter extends StatelessWidget {
             child: TextField(
               key: AuditTrailPage.searchKey,
               onChanged: onChanged,
-              cursorColor: _auditBlue,
+              cursorColor: _auditPrimary,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontFamily: 'Roboto',
@@ -306,22 +306,22 @@ class _SearchAndFilter extends StatelessWidget {
                   height: 1.2,
                 ),
                 filled: true,
-                fillColor: _auditSurface2,
+                fillColor: _auditPanel2,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: AppRadii.lgRadius,
                   borderSide: BorderSide(
                     color: _auditBorder.withValues(alpha: .82),
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: AppRadii.lgRadius,
                   borderSide: BorderSide(
                     color: _auditBorder.withValues(alpha: .82),
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(color: _auditBlue),
+                  borderRadius: AppRadii.lgRadius,
+                  borderSide: const BorderSide(color: _auditPrimary),
                 ),
               ),
             ),
@@ -333,7 +333,7 @@ class _SearchAndFilter extends StatelessWidget {
           height: 39,
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: _auditSurface2,
+              color: _auditPanel2,
               border: Border.all(color: _auditBorder.withValues(alpha: .82)),
               shape: BoxShape.circle,
             ),
@@ -368,7 +368,7 @@ class _AuditTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 53,
-      color: _auditTabsBg,
+      color: _auditTabsBackground,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -387,7 +387,7 @@ class _AuditTabs extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: tab.id == activeId
-                                ? _auditBlue
+                                ? _auditPrimary
                                 : AppColors.text3,
                             fontSize: tab.id == 'client' ? 11 : 12,
                             fontWeight: AppTextStyles.bold,
@@ -400,7 +400,7 @@ class _AuditTabs extends StatelessWidget {
                       width: tab.id == activeId ? 70 : 0,
                       height: 2,
                       color: tab.id == activeId
-                          ? _auditBlue
+                          ? _auditPrimary
                           : Colors.transparent,
                     ),
                   ],
@@ -426,7 +426,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _auditBlue,
+            color: _auditPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),
@@ -457,7 +457,7 @@ class _AuditEntryCard extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 89),
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
       decoration: BoxDecoration(
-        color: _auditSurface,
+        color: _auditPanel,
         border: Border.all(color: _auditBorder.withValues(alpha: .76)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -469,7 +469,7 @@ class _AuditEntryCard extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: style.color.withValues(alpha: .14),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: AppRadii.lgRadius,
             ),
             child: Icon(style.icon, color: style.color, size: 19),
           ),
@@ -601,11 +601,11 @@ class _ExportActions extends StatelessWidget {
                   ),
                 ),
                 style: OutlinedButton.styleFrom(
-                  backgroundColor: _auditSurface2,
+                  backgroundColor: _auditPanel2,
                   foregroundColor: AppColors.text1,
                   side: BorderSide(color: _auditBorder.withValues(alpha: .82)),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: AppRadii.lgRadius,
                   ),
                 ),
               ),
@@ -625,7 +625,7 @@ _AuditCategoryStyle _styleForCategory(TradeAuditCategory category) {
       icon: Icons.trending_up_rounded,
     ),
     TradeAuditCategory.compliance => const _AuditCategoryStyle(
-      color: _auditBlue,
+      color: _auditPrimary,
       icon: Icons.description_outlined,
     ),
     TradeAuditCategory.clientAction => const _AuditCategoryStyle(

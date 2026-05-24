@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/discovery/presentation/unified_search_page.dart';
 import 'package:vit_trade_flutter/features/home/presentation/home_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
@@ -13,8 +15,10 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     await tester.pumpWidget(
-      VitTradeApp(
-        routerConfig: createAppRouter(initialLocation: AppRoutePaths.home),
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(initialLocation: AppRoutePaths.home),
+        ),
       ),
     );
     await tester.pumpAndSettle();
@@ -86,7 +90,8 @@ void main() {
       await tester.tap(find.byTooltip('Tìm kiếm toàn cục'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Search'), findsOneWidget);
+      expect(find.byType(UnifiedSearchPage), findsOneWidget);
+      expect(find.text('Tìm kiếm'), findsOneWidget);
 
       await tester.tap(find.byIcon(Icons.chevron_left_rounded));
       await tester.pumpAndSettle();

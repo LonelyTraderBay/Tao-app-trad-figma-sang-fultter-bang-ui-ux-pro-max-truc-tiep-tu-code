@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -13,10 +14,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _healthBg = Color(0xFF080C14);
-const _healthSurface = Color(0xFF151A23);
+const _healthBackground = AppColors.bg;
+const _healthPanel = AppColors.surface;
 const _healthBorder = Color(0x14FFFFFF);
-const _healthBlue = Color(0xFF3B82F6);
+const _healthPrimary = AppColors.primary;
 const _healthGreen = Color(0xFF10B981);
 const _healthAmber = Color(0xFFF59E0B);
 const _healthOrange = Color(0xFFF97316);
@@ -59,7 +60,7 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-151 WalletHealthScorePage',
       child: Material(
-        color: _healthBg,
+        color: _healthBackground,
         child: Column(
           children: [
             VitHeader(
@@ -99,7 +100,7 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
   void _showRecommendationSheet(WalletHealthRecommendation recommendation) {
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: _healthSurface,
+      backgroundColor: _healthPanel,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
@@ -133,8 +134,8 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
                     height: 46,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: _healthBlue,
-                      borderRadius: BorderRadius.circular(14),
+                      color: _healthPrimary,
+                      borderRadius: AppRadii.inputRadius,
                     ),
                     child: Text(
                       'Done',
@@ -166,7 +167,7 @@ class _HealthTabs extends StatelessWidget {
     return Container(
       height: 54,
       decoration: const BoxDecoration(
-        color: _healthSurface,
+        color: _healthPanel,
         border: Border(bottom: BorderSide(color: _healthBorder)),
       ),
       child: Row(
@@ -188,7 +189,7 @@ class _HealthTabs extends StatelessWidget {
                         tab,
                         style: AppTextStyles.caption.copyWith(
                           color: activeTab == tab
-                              ? _healthBlue
+                              ? _healthPrimary
                               : const Color(0xFF566175),
                           fontSize: 12,
                           fontWeight: FontWeight.w800,
@@ -205,7 +206,7 @@ class _HealthTabs extends StatelessWidget {
                         height: 2,
                         decoration: BoxDecoration(
                           color: activeTab == tab
-                              ? _healthBlue
+                              ? _healthPrimary
                               : Colors.transparent,
                           borderRadius: BorderRadius.circular(999),
                         ),
@@ -275,8 +276,8 @@ class _OverallScoreCard extends StatelessWidget {
       height: 292,
       padding: const EdgeInsets.fromLTRB(16, 22, 16, 20),
       decoration: BoxDecoration(
-        color: _healthSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _healthPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _healthBorder),
       ),
       child: Column(
@@ -367,8 +368,8 @@ class _RadarCard extends StatelessWidget {
       height: 325,
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
       decoration: BoxDecoration(
-        color: _healthSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _healthPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _healthBorder),
       ),
       child: Column(
@@ -408,8 +409,8 @@ class _MetricCard extends StatelessWidget {
       height: 60,
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
       decoration: BoxDecoration(
-        color: _healthSurface,
-        borderRadius: BorderRadius.circular(14),
+        color: _healthPanel,
+        borderRadius: AppRadii.inputRadius,
         border: Border.all(color: _healthBorder),
       ),
       child: Column(
@@ -448,7 +449,7 @@ class _MetricCard extends StatelessWidget {
               height: 6,
               child: LinearProgressIndicator(
                 value: metric.score / metric.maxScore,
-                backgroundColor: _healthBg,
+                backgroundColor: _healthBackground,
                 valueColor: AlwaysStoppedAnimation<Color>(color),
               ),
             ),
@@ -470,8 +471,8 @@ class _TrendCard extends StatelessWidget {
       height: 205,
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 14),
       decoration: BoxDecoration(
-        color: _healthSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _healthPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _healthBorder),
       ),
       child: Column(
@@ -514,8 +515,8 @@ class _RecommendationCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _healthSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _healthPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _healthBorder),
       ),
       child: Column(
@@ -561,8 +562,8 @@ class _RecommendationCard extends StatelessWidget {
               height: 34,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: _healthBlue,
-                borderRadius: BorderRadius.circular(17),
+                color: _healthPrimary,
+                borderRadius: AppRadii.cardRadius,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -605,7 +606,7 @@ class _SecurityTab extends StatelessWidget {
       children: [
         _ScoreSummaryCard(
           icon: Icons.shield_outlined,
-          iconColor: _healthBlue,
+          iconColor: _healthPrimary,
           title: 'Security Score',
           subtitle: 'Based on 8 security factors',
           score: metric.score,
@@ -694,8 +695,8 @@ class _ScoreSummaryCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _healthSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _healthPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _healthBorder),
       ),
       child: Row(
@@ -705,7 +706,7 @@ class _ScoreSummaryCard extends StatelessWidget {
             height: 48,
             decoration: BoxDecoration(
               color: iconColor.withValues(alpha: .08),
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: AppRadii.inputRadius,
             ),
             alignment: Alignment.center,
             child: Icon(icon, color: iconColor, size: 24),
@@ -767,8 +768,8 @@ class _ChecklistCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: _healthSurface,
-        borderRadius: BorderRadius.circular(12),
+        color: _healthPanel,
+        borderRadius: AppRadii.mdRadius,
         border: Border.all(color: _healthBorder),
       ),
       child: Row(
@@ -831,7 +832,7 @@ class _ActionRequiredCard extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: _healthRed.withValues(alpha: .06),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadii.mdRadius,
         border: Border.all(color: _healthRed.withValues(alpha: .15)),
       ),
       child: Row(
@@ -880,8 +881,8 @@ class _AssetDistributionCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _healthSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _healthPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _healthBorder),
       ),
       child: Column(
@@ -949,7 +950,7 @@ class _ConcentrationRiskCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: _healthAmber.withValues(alpha: .06),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _healthAmber.withValues(alpha: .15)),
       ),
       child: Column(
@@ -1055,8 +1056,8 @@ class _TipCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: _healthSurface,
-        borderRadius: BorderRadius.circular(12),
+        color: _healthPanel,
+        borderRadius: AppRadii.mdRadius,
         border: Border.all(color: _healthBorder),
       ),
       child: Row(
@@ -1089,14 +1090,18 @@ class _InfoCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: _healthBlue.withValues(alpha: .06),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: _healthBlue.withValues(alpha: .15)),
+        color: _healthPrimary.withValues(alpha: .06),
+        borderRadius: AppRadii.mdRadius,
+        border: Border.all(color: _healthPrimary.withValues(alpha: .15)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.info_outline_rounded, color: _healthBlue, size: 14),
+          const Icon(
+            Icons.info_outline_rounded,
+            color: _healthPrimary,
+            size: 14,
+          ),
           const SizedBox(width: 10),
           Expanded(
             child: Text(
@@ -1127,7 +1132,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 14,
           decoration: BoxDecoration(
-            color: _healthBlue,
+            color: _healthPrimary,
             borderRadius: BorderRadius.circular(999),
           ),
         ),
@@ -1186,7 +1191,7 @@ class _GaugePainter extends CustomPainter {
     final stroke = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 12;
-    canvas.drawCircle(center, radius, stroke..color = _healthBg);
+    canvas.drawCircle(center, radius, stroke..color = _healthBackground);
     canvas.drawArc(
       Rect.fromCircle(center: center, radius: radius),
       -math.pi / 2,
@@ -1469,7 +1474,7 @@ Color _scoreColor(int score) {
 Color _statusColor(String status) {
   return switch (status) {
     'excellent' => _healthGreen,
-    'good' => _healthBlue,
+    'good' => _healthPrimary,
     'warning' => _healthAmber,
     'critical' => _healthRed,
     _ => AppColors.text3,

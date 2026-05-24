@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/features/profile/presentation/edit_profile_pag
 import 'package:vit_trade_flutter/features/profile/presentation/kyc_page.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/profile_page.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/settings_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/my_arena_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -99,12 +100,13 @@ void main() {
     await pumpProfile(tester);
     await tester.tap(find.byKey(ProfilePage.predictionCardKey));
     await tester.pumpAndSettle();
-    expect(find.text('My Predictions'), findsOneWidget);
+    expect(find.text('Prediction Portfolio'), findsOneWidget);
 
     await pumpProfile(tester);
     await tester.tap(find.byKey(ProfilePage.arenaCardKey));
     await tester.pumpAndSettle();
-    expect(find.text('My Arena'), findsOneWidget);
+    expect(find.byType(MyArenaPage), findsOneWidget);
+    expect(find.text('S\u00E2n ch\u01A1i c\u1EE7a t\u00F4i'), findsOneWidget);
 
     await pumpProfile(tester);
     await tester.ensureVisible(find.byKey(ProfilePage.menuKey('kyc')));

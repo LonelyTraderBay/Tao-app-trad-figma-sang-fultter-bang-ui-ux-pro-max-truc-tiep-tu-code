@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 
 enum _CalendarTab { calendar, upcoming, notifications }
 
@@ -136,9 +136,9 @@ class _FilterButton extends StatelessWidget {
       height: 38,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: active ? _predictionBlue : const Color(0xFF1F2937),
+          color: active ? _predictionPrimary : AppColors.surface3,
           border: Border.all(color: AppColors.border),
-          borderRadius: BorderRadius.circular(11),
+          borderRadius: AppRadii.mdRadius,
         ),
         child: IconButton(
           key: PredictionEventCalendarPage.filterButtonKey,
@@ -207,7 +207,7 @@ class _EventCalendarTabBar extends StatelessWidget {
                             item.label,
                             style: AppTextStyles.caption.copyWith(
                               color: activeTab == item.tab
-                                  ? _predictionBlue
+                                  ? _predictionPrimary
                                   : AppColors.text3,
                               fontWeight: AppTextStyles.bold,
                               fontSize: 12,
@@ -220,7 +220,7 @@ class _EventCalendarTabBar extends StatelessWidget {
                         height: 2,
                         width: activeTab == item.tab ? 116 : 0,
                         decoration: BoxDecoration(
-                          color: _predictionBlue,
+                          color: _predictionPrimary,
                           borderRadius: BorderRadius.circular(1),
                         ),
                       ),
@@ -284,7 +284,7 @@ class _CategoryChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected ? _predictionBlue : AppColors.bg,
+      color: selected ? _predictionPrimary : AppColors.bg,
       borderRadius: AppRadii.mdRadius,
       child: InkWell(
         onTap: onTap,
@@ -332,7 +332,7 @@ class _StatsCard extends StatelessWidget {
             child: _StatCell(
               label: 'Watching',
               value: '${snapshot.watchingCount}',
-              color: _predictionBlue,
+              color: _predictionPrimary,
             ),
           ),
           Expanded(
@@ -357,7 +357,7 @@ class _MonthSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: month.label,
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         for (final event in month.events) _CalendarEventCard(event: event),
       ],
@@ -374,7 +374,7 @@ class _CalendarEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final statusColor = _statusColor(event.status);
-    final statusBg = _statusBg(event.status);
+    final statusBg = _statusBackground(event.status);
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -449,7 +449,7 @@ class _CalendarEventCard extends StatelessWidget {
                     child: _EventMetric(
                       label: 'Probability',
                       value: '${event.probability}%',
-                      valueColor: _predictionBlue,
+                      valueColor: _predictionPrimary,
                     ),
                   ),
                   Expanded(
@@ -519,7 +519,7 @@ class _UpcomingSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Su kien sap dien ra',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         for (final event in snapshot.upcomingEvents)
           _CalendarEventCard(event: event, urgent: _isUrgent(event)),
@@ -544,7 +544,7 @@ class _NotificationSettings extends StatelessWidget {
     ];
     return VitPageSection(
       label: 'Cai dat thong bao',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         VitCard(
           padding: const EdgeInsets.all(16),
@@ -573,7 +573,7 @@ class _WatchingSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Dang theo doi',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         for (final event in snapshot.watchingEvents)
           VitCard(
@@ -622,7 +622,7 @@ class _WatchingSection extends StatelessWidget {
                       child: _EventMetric(
                         label: 'Notify Before',
                         value: event.notifyBefore ?? 'Not set',
-                        valueColor: _predictionBlue,
+                        valueColor: _predictionPrimary,
                       ),
                     ),
                   ],
@@ -670,14 +670,14 @@ class _NotificationInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      borderColor: const Color(0x263B82F6),
+      borderColor: AppColors.primary15,
       padding: const EdgeInsets.all(12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
-            color: _predictionBlue,
+            color: _predictionPrimary,
             size: 15,
           ),
           const SizedBox(width: 8),
@@ -752,8 +752,8 @@ class _TogglePill extends StatelessWidget {
       width: 48,
       height: 28,
       decoration: BoxDecoration(
-        color: _predictionBlue,
-        borderRadius: BorderRadius.circular(14),
+        color: _predictionPrimary,
+        borderRadius: AppRadii.inputRadius,
       ),
       alignment: Alignment.centerRight,
       padding: const EdgeInsets.all(2),
@@ -854,16 +854,16 @@ Color _statusColor(PredictionCalendarEventStatus status) {
   return switch (status) {
     PredictionCalendarEventStatus.active => AppColors.buy,
     PredictionCalendarEventStatus.upcoming => AppColors.warn,
-    PredictionCalendarEventStatus.resolving => _predictionBlue,
+    PredictionCalendarEventStatus.resolving => _predictionPrimary,
     PredictionCalendarEventStatus.resolved => AppColors.text3,
   };
 }
 
-Color _statusBg(PredictionCalendarEventStatus status) {
+Color _statusBackground(PredictionCalendarEventStatus status) {
   return switch (status) {
     PredictionCalendarEventStatus.active => AppColors.buy10,
     PredictionCalendarEventStatus.upcoming => AppColors.warn10,
-    PredictionCalendarEventStatus.resolving => const Color(0x143B82F6),
+    PredictionCalendarEventStatus.resolving => AppColors.primary08,
     PredictionCalendarEventStatus.resolved => const Color(0x146B7280),
   };
 }

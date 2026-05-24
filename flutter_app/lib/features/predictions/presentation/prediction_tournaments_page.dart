@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 
 enum _TournamentTab { active, mine, ended }
 
@@ -175,7 +175,7 @@ class _TournamentTabBar extends StatelessWidget {
                             item.label,
                             style: AppTextStyles.caption.copyWith(
                               color: activeTab == item.tab
-                                  ? _predictionBlue
+                                  ? _predictionPrimary
                                   : AppColors.text3,
                               fontWeight: AppTextStyles.bold,
                               fontSize: 12,
@@ -188,7 +188,7 @@ class _TournamentTabBar extends StatelessWidget {
                         height: 2,
                         width: activeTab == item.tab ? 116 : 0,
                         decoration: BoxDecoration(
-                          color: _predictionBlue,
+                          color: _predictionPrimary,
                           borderRadius: BorderRadius.circular(1),
                         ),
                       ),
@@ -247,7 +247,7 @@ class _TournamentSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: label,
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         if (tournaments.isEmpty)
           empty ?? const SizedBox.shrink()
@@ -273,7 +273,7 @@ class _TournamentCard extends StatelessWidget {
       key: PredictionTournamentsPage.tournamentKey(tournament.id),
       padding: EdgeInsets.zero,
       borderColor: isFeatured
-          ? _predictionBlue.withValues(alpha: .32)
+          ? _predictionPrimary.withValues(alpha: .32)
           : AppColors.border,
       onTap: () =>
           context.go(AppRoutePaths.marketsPredictionTournament(tournament.id)),
@@ -538,14 +538,14 @@ class _TournamentInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      borderColor: _predictionBlue.withValues(alpha: .18),
+      borderColor: _predictionPrimary.withValues(alpha: .18),
       padding: const EdgeInsets.all(12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
-            color: _predictionBlue,
+            color: _predictionPrimary,
             size: 14,
           ),
           const SizedBox(width: 8),
@@ -710,7 +710,7 @@ class _FinalLeaderboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Final Leaderboard - Macro Economics Pro',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         for (final entry in entries) _LeaderboardEntryCard(entry: entry),
       ],

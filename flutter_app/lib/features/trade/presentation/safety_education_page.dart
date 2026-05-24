@@ -12,10 +12,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _safetyBlue = Color(0xFF3B82F6);
-const _safetyCard = Color(0xFF121720);
-const _safetyTabs = Color(0xFF121720);
-const _safetyHeroBg = Color(0x223B82F6);
+const _safetyPrimary = AppColors.primary;
+const _safetyCard = AppColors.surface;
+const _safetyTabs = AppColors.surface;
+const _safetyHeroBackground = AppColors.primary15;
 
 class SafetyEducationPage extends ConsumerStatefulWidget {
   const SafetyEducationPage({super.key, this.shellRenderMode});
@@ -123,9 +123,9 @@ class _HeroBanner extends StatelessWidget {
       height: 94,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _safetyHeroBg,
+        color: _safetyHeroBackground,
         borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _safetyBlue, width: 2),
+        border: Border.all(color: _safetyPrimary, width: 2),
       ),
       child: Row(
         children: [
@@ -133,7 +133,7 @@ class _HeroBanner extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: const BoxDecoration(
-              color: _safetyBlue,
+              color: _safetyPrimary,
               shape: BoxShape.circle,
             ),
             child: const Icon(
@@ -153,7 +153,7 @@ class _HeroBanner extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
-                    color: _safetyBlue,
+                    color: _safetyPrimary,
                     fontSize: 15,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
@@ -165,7 +165,7 @@ class _HeroBanner extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
-                    color: _safetyBlue,
+                    color: _safetyPrimary,
                     fontSize: 11,
                     height: 1.45,
                   ),
@@ -213,7 +213,7 @@ class _SafetyTabs extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: tab.id == activeId
-                                ? _safetyBlue
+                                ? _safetyPrimary
                                 : AppColors.text3,
                             fontSize: 12,
                             fontWeight: AppTextStyles.bold,
@@ -225,7 +225,7 @@ class _SafetyTabs extends StatelessWidget {
                     Container(
                       width: tab.id == activeId ? 70 : 0,
                       height: 2,
-                      color: _safetyBlue,
+                      color: _safetyPrimary,
                     ),
                   ],
                 ),
@@ -560,7 +560,7 @@ class _VerificationTab extends StatelessWidget {
         _InfoPanel(
           text:
               'Verification là cơ chế bảo vệ user. Provider verified đã qua kiểm tra KYC và performance audit.',
-          color: _safetyBlue,
+          color: _safetyPrimary,
         ),
         const SizedBox(height: 14),
         Text(
@@ -775,6 +775,6 @@ Color _severityColor(String severity) {
     case 'warning':
       return AppColors.warn;
     default:
-      return _safetyBlue;
+      return _safetyPrimary;
   }
 }

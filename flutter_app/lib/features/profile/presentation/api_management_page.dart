@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,11 +13,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/profile_repository.dart';
 
-const _apiBg = AppColors.bg;
-const _apiSurface = AppColors.surface;
-const _apiSurface2 = AppColors.surface2;
+const _apiBackground = AppColors.bg;
+const _apiPanel = AppColors.surface;
+const _apiPanel2 = AppColors.surface2;
 const _apiBorder = AppColors.cardBorder;
-const _apiBlue = AppColors.primary;
+const _apiPrimary = AppColors.primary;
 const _apiGreen = AppColors.buy;
 const _apiAmber = AppColors.warn;
 const _apiRed = AppColors.sell;
@@ -60,7 +61,7 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-163 ApiManagementPage',
       child: Material(
-        color: _apiBg,
+        color: _apiBackground,
         child: Column(
           children: [
             VitHeader(
@@ -144,7 +145,7 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: _apiSurface,
+          backgroundColor: _apiPanel,
           title: Text(
             'Xo\u00E1 API Key?',
             style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
@@ -194,12 +195,12 @@ class _CreateButton extends StatelessWidget {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: _apiBlue.withValues(alpha: .15),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: _apiBlue.withValues(alpha: .28)),
+          color: _apiPrimary.withValues(alpha: .15),
+          borderRadius: AppRadii.lgRadius,
+          border: Border.all(color: _apiPrimary.withValues(alpha: .28)),
         ),
         alignment: Alignment.center,
-        child: const Icon(Icons.add_rounded, color: _apiBlue, size: 24),
+        child: const Icon(Icons.add_rounded, color: _apiPrimary, size: 24),
       ),
     );
   }
@@ -233,8 +234,8 @@ class _ApiKeyCard extends StatelessWidget {
         key: ApiManagementPage.cardKey(apiKey.id),
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
         decoration: BoxDecoration(
-          color: _apiSurface,
-          borderRadius: BorderRadius.circular(16),
+          color: _apiPanel,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(
             color: active ? _apiBorder : _apiRed.withValues(alpha: .15),
           ),
@@ -328,19 +329,19 @@ class _ApiKeyHeader extends StatelessWidget {
           height: 40,
           decoration: BoxDecoration(
             color: active
-                ? _apiBlue.withValues(alpha: .15)
+                ? _apiPrimary.withValues(alpha: .15)
                 : _apiRed.withValues(alpha: .1),
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: AppRadii.cardRadius,
             border: Border.all(
               color: active
-                  ? _apiBlue.withValues(alpha: .22)
+                  ? _apiPrimary.withValues(alpha: .22)
                   : _apiRed.withValues(alpha: .22),
             ),
           ),
           alignment: Alignment.center,
           child: Icon(
             Icons.key_rounded,
-            color: active ? _apiBlue : _apiRed,
+            color: active ? _apiPrimary : _apiRed,
             size: 19,
           ),
         ),
@@ -471,8 +472,8 @@ class _SecretRow extends StatelessWidget {
       height: 32,
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: _apiSurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: _apiPanel2,
+        borderRadius: AppRadii.inputRadius,
         border: redBorder
             ? Border.all(color: _apiRed.withValues(alpha: .1))
             : null,
@@ -581,7 +582,7 @@ class _SmallBadge extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 9),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: AppRadii.smRadius,
         border: Border.all(color: color.withValues(alpha: .24)),
       ),
       child: Row(
@@ -655,20 +656,20 @@ class _RegenerateButton extends StatelessWidget {
       child: Container(
         height: 36,
         decoration: BoxDecoration(
-          color: _apiBlue.withValues(alpha: .1),
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: _apiBlue.withValues(alpha: .25)),
+          color: _apiPrimary.withValues(alpha: .1),
+          borderRadius: AppRadii.cardRadius,
+          border: Border.all(color: _apiPrimary.withValues(alpha: .25)),
         ),
         alignment: Alignment.center,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.sync_rounded, color: _apiBlue, size: 13),
+            const Icon(Icons.sync_rounded, color: _apiPrimary, size: 13),
             const SizedBox(width: 5),
             Text(
               'T\u1EA1o l\u1EA1i Secret',
               style: AppTextStyles.micro.copyWith(
-                color: _apiBlue,
+                color: _apiPrimary,
                 fontSize: 13,
                 fontWeight: FontWeight.w800,
                 height: 1,
@@ -698,7 +699,7 @@ class _DeleteButton extends StatelessWidget {
         height: 36,
         decoration: BoxDecoration(
           color: _apiRed.withValues(alpha: .1),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(color: _apiRed.withValues(alpha: .25)),
         ),
         alignment: Alignment.center,
@@ -721,8 +722,8 @@ class _ApiDocsCard extends StatelessWidget {
       height: 96,
       padding: const EdgeInsets.fromLTRB(16, 16, 14, 16),
       decoration: BoxDecoration(
-        color: _apiSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _apiPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _apiBorder),
       ),
       child: Row(
@@ -731,13 +732,13 @@ class _ApiDocsCard extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: _apiBlue.withValues(alpha: .1),
-              borderRadius: BorderRadius.circular(16),
+              color: _apiPrimary.withValues(alpha: .1),
+              borderRadius: AppRadii.cardRadius,
             ),
             alignment: Alignment.center,
             child: const Icon(
               Icons.info_outline_rounded,
-              color: _apiBlue,
+              color: _apiPrimary,
               size: 21,
             ),
           ),
@@ -793,7 +794,7 @@ Color _permissionColor(String id) {
   return switch (id) {
     'trade' => _apiAmber,
     'withdraw' => _apiRed,
-    _ => _apiBlue,
+    _ => _apiPrimary,
   };
 }
 

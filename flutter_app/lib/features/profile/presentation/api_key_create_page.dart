@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,11 +14,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/profile_repository.dart';
 
-const _apiBg = AppColors.bg;
-const _apiSurface = AppColors.surface;
-const _apiSurface2 = AppColors.surface2;
+const _apiBackground = AppColors.bg;
+const _apiPanel = AppColors.surface;
+const _apiPanel2 = AppColors.surface2;
 const _apiBorder = AppColors.borderSolid;
-const _apiBlue = AppColors.primary;
+const _apiPrimary = AppColors.primary;
 const _apiGreen = AppColors.buy;
 const _apiAmber = AppColors.warn;
 const _apiRed = AppColors.sell;
@@ -78,7 +80,7 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-162 ApiKeyCreatePage',
       child: Material(
-        color: _apiBg,
+        color: _apiBackground,
         child: Column(
           children: [
             VitHeader(
@@ -363,8 +365,8 @@ class _PermissionCard extends StatelessWidget {
         height: 73,
         padding: const EdgeInsets.fromLTRB(16, 13, 16, 13),
         decoration: BoxDecoration(
-          color: selected ? accent.withValues(alpha: .04) : _apiSurface2,
-          borderRadius: BorderRadius.circular(16),
+          color: selected ? accent.withValues(alpha: .04) : _apiPanel2,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(
             color: selected ? accent.withValues(alpha: .42) : _apiBorder,
           ),
@@ -375,8 +377,8 @@ class _PermissionCard extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: selected ? accent.withValues(alpha: .12) : _apiSurface,
-                borderRadius: BorderRadius.circular(20),
+                color: selected ? accent.withValues(alpha: .12) : _apiPanel,
+                borderRadius: AppRadii.lgRadius,
                 border: Border.all(
                   color: selected ? accent.withValues(alpha: .25) : _apiBorder,
                 ),
@@ -495,7 +497,7 @@ class _IpWhitelistSection extends StatelessWidget {
                   key: ApiKeyCreatePage.ipFieldKey,
                   controller: controller,
                   hint: 'VD: 192.168.1.100',
-                  height: 48,
+                  height: AppSpacing.inputHeight,
                   onSubmitted: (_) => onAdd(),
                 ),
               ),
@@ -505,10 +507,10 @@ class _IpWhitelistSection extends StatelessWidget {
                 behavior: HitTestBehavior.opaque,
                 child: Container(
                   width: 56,
-                  height: 48,
+                  height: AppSpacing.inputHeight,
                   decoration: BoxDecoration(
-                    color: _apiBlue,
-                    borderRadius: BorderRadius.circular(16),
+                    color: _apiPrimary,
+                    borderRadius: AppRadii.cardRadius,
                   ),
                   alignment: Alignment.center,
                   child: const Icon(
@@ -547,7 +549,7 @@ class _IpWhitelistSection extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: _apiGreen.withValues(alpha: .1),
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: AppRadii.mdRadius,
                         border: Border.all(
                           color: _apiGreen.withValues(alpha: .25),
                         ),
@@ -608,12 +610,12 @@ class _ExpirySection extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(13, 10, 13, 9),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? _apiBlue.withValues(alpha: .12)
-                    : _apiSurface2,
-                borderRadius: BorderRadius.circular(16),
+                    ? _apiPrimary.withValues(alpha: .12)
+                    : _apiPanel2,
+                borderRadius: AppRadii.cardRadius,
                 border: Border.all(
                   color: isSelected
-                      ? _apiBlue.withValues(alpha: .55)
+                      ? _apiPrimary.withValues(alpha: .55)
                       : _apiBorder,
                 ),
               ),
@@ -626,7 +628,7 @@ class _ExpirySection extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
-                      color: isSelected ? _apiBlue : AppColors.text2,
+                      color: isSelected ? _apiPrimary : AppColors.text2,
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
                       height: 1,
@@ -664,8 +666,8 @@ class _SecurityTips extends StatelessWidget {
       height: 160,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
       decoration: BoxDecoration(
-        color: _apiSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _apiPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _apiBorder),
       ),
       child: Column(
@@ -673,12 +675,12 @@ class _SecurityTips extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.shield_outlined, color: _apiBlue, size: 15),
+              const Icon(Icons.shield_outlined, color: _apiPrimary, size: 15),
               const SizedBox(width: 8),
               Text(
                 'M\u1EB9o b\u1EA3o m\u1EADt',
                 style: AppTextStyles.caption.copyWith(
-                  color: _apiBlue,
+                  color: _apiPrimary,
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
                   height: 1,
@@ -695,14 +697,14 @@ class _SecurityTips extends StatelessWidget {
                   width: 16,
                   height: 16,
                   decoration: BoxDecoration(
-                    color: _apiBlue.withValues(alpha: .14),
+                    color: _apiPrimary.withValues(alpha: .14),
                     shape: BoxShape.circle,
                   ),
                   alignment: Alignment.center,
                   child: Text(
                     '${i + 1}',
                     style: AppTextStyles.micro.copyWith(
-                      color: _apiBlue,
+                      color: _apiPrimary,
                       fontSize: 9,
                       fontWeight: FontWeight.w700,
                       height: 1,
@@ -810,7 +812,7 @@ class _TextInput extends StatelessWidget {
         maxLength: maxLength,
         onChanged: onChanged,
         onSubmitted: onSubmitted,
-        cursorColor: _apiBlue,
+        cursorColor: _apiPrimary,
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text1,
           fontSize: 14,
@@ -820,7 +822,7 @@ class _TextInput extends StatelessWidget {
         decoration: InputDecoration(
           counterText: '',
           filled: true,
-          fillColor: _apiSurface2,
+          fillColor: _apiPanel2,
           hintText: hint,
           hintStyle: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
@@ -831,7 +833,7 @@ class _TextInput extends StatelessWidget {
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
           border: _inputBorder(_apiBorder),
           enabledBorder: _inputBorder(_apiBorder),
-          focusedBorder: _inputBorder(_apiBlue, width: 1.5),
+          focusedBorder: _inputBorder(_apiPrimary, width: 1.5),
         ),
       ),
     );
@@ -856,10 +858,10 @@ class _PrimaryCta extends StatelessWidget {
       onTap: enabled ? onTap : null,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 50,
+        height: AppSpacing.inputHeight,
         decoration: BoxDecoration(
-          color: enabled ? _apiBlue : _apiSurface2,
-          borderRadius: BorderRadius.circular(16),
+          color: enabled ? _apiPrimary : _apiPanel2,
+          borderRadius: AppRadii.cardRadius,
         ),
         alignment: Alignment.center,
         child: Text(
@@ -898,7 +900,7 @@ class _SimpleStepScaffold extends StatelessWidget {
     return VitPageLayout(
       variant: VitPageVariant.flush,
       child: Material(
-        color: _apiBg,
+        color: _apiBackground,
         child: Column(
           children: [
             VitHeader(
@@ -943,7 +945,7 @@ class _SuccessIcon extends StatelessWidget {
           height: 80,
           decoration: BoxDecoration(
             color: _apiGreen.withValues(alpha: .1),
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: AppRadii.cardLargeRadius,
             border: Border.all(color: _apiGreen.withValues(alpha: .25)),
           ),
           alignment: Alignment.center,
@@ -974,8 +976,8 @@ class _SummaryCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _apiSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _apiPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _apiBorder),
       ),
       child: Column(
@@ -1027,7 +1029,7 @@ class _WarningCard extends StatelessWidget {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .08),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: color.withValues(alpha: .22)),
       ),
       child: Row(
@@ -1062,8 +1064,8 @@ class _KeyResultCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _apiSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _apiPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _apiBorder),
       ),
       child: Column(
@@ -1094,7 +1096,7 @@ class _KeyResultCard extends StatelessWidget {
 
 OutlineInputBorder _inputBorder(Color color, {double width = 1.5}) {
   return OutlineInputBorder(
-    borderRadius: BorderRadius.circular(16),
+    borderRadius: AppRadii.cardRadius,
     borderSide: BorderSide(color: color, width: width),
   );
 }

@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/trade_repository.dart';
 
-const _configurationBlue = Color(0xFF3B82F6);
+const _configurationPrimary = AppColors.primary;
 const _configurationGreen = Color(0xFF10B981);
 const _configurationRed = Color(0xFFEF4444);
 
@@ -208,11 +208,11 @@ class _ProviderCard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 24,
-            backgroundColor: _configurationBlue.withValues(alpha: .16),
+            backgroundColor: _configurationPrimary.withValues(alpha: .16),
             child: Text(
               provider.avatar,
               style: AppTextStyles.baseMedium.copyWith(
-                color: _configurationBlue,
+                color: _configurationPrimary,
                 fontWeight: FontWeight.w800,
               ),
             ),
@@ -274,11 +274,11 @@ class _CapitalSection extends StatelessWidget {
         ? _configurationRed
         : allocationPercent > 15
         ? AppColors.warn
-        : _configurationBlue;
+        : _configurationPrimary;
 
     return VitPageSection(
       label: 'Vốn copy',
-      accentColor: _configurationBlue,
+      accentColor: _configurationPrimary,
       children: [
         VitInput(
           fieldKey: CopyConfigurationPage.capitalFieldKey,
@@ -372,7 +372,7 @@ class _ModeSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Chế độ copy',
-      accentColor: _configurationBlue,
+      accentColor: _configurationPrimary,
       children: [
         for (final mode in TradeCopyConfigurationMode.values)
           _ModeTile(
@@ -402,7 +402,7 @@ class _ModeSection extends StatelessWidget {
                         max: 100,
                         divisions: 18,
                         value: copyRatio,
-                        activeColor: _configurationBlue,
+                        activeColor: _configurationPrimary,
                         onChanged: onRatioChanged,
                       ),
                     ),
@@ -590,7 +590,7 @@ class _ModeTile extends StatelessWidget {
     return VitCard(
       key: CopyConfigurationPage.modeKey(mode),
       variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
-      borderColor: selected ? _configurationBlue : null,
+      borderColor: selected ? _configurationPrimary : null,
       padding: const EdgeInsets.all(14),
       onTap: onTap,
       child: Row(
@@ -600,7 +600,7 @@ class _ModeTile extends StatelessWidget {
             selected
                 ? Icons.radio_button_checked_rounded
                 : Icons.radio_button_unchecked_rounded,
-            color: selected ? _configurationBlue : AppColors.text3,
+            color: selected ? _configurationPrimary : AppColors.text3,
             size: 20,
           ),
           const SizedBox(width: 10),
@@ -611,7 +611,7 @@ class _ModeTile extends StatelessWidget {
                 Text(
                   _modeLabel(mode),
                   style: AppTextStyles.caption.copyWith(
-                    color: selected ? _configurationBlue : AppColors.text1,
+                    color: selected ? _configurationPrimary : AppColors.text1,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -663,7 +663,7 @@ class _RiskToggle extends StatelessWidget {
           ),
           Switch(
             value: value,
-            activeThumbColor: _configurationBlue,
+            activeThumbColor: _configurationPrimary,
             onChanged: onChanged,
           ),
         ],
@@ -682,7 +682,7 @@ class _ValidationCard extends StatelessWidget {
     final color = switch (item.level) {
       TradeCopyConfigurationValidationLevel.error => _configurationRed,
       TradeCopyConfigurationValidationLevel.warning => AppColors.warn,
-      TradeCopyConfigurationValidationLevel.info => _configurationBlue,
+      TradeCopyConfigurationValidationLevel.info => _configurationPrimary,
     };
 
     return VitCard(

@@ -1,0 +1,516 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../app/router/app_router.dart';
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
+import '../../../app/theme/app_text_styles.dart';
+import '../../../app/theme/device_metrics.dart';
+import '../../../shared/layout/shell_render_mode.dart';
+import '../../../shared/layout/vit_header.dart';
+import '../../../shared/layout/vit_page_layout.dart';
+import '../../../shared/widgets/widgets.dart';
+import '../data/p2p_repository.dart';
+
+class P2PExpressConfirmPage extends ConsumerStatefulWidget {
+  const P2PExpressConfirmPage({
+    super.key,
+    this.shellRenderMode,
+    this.tradeType = P2PTradeType.buy,
+    this.asset = 'USDT',
+    this.fiatAmount = 0,
+    this.cryptoAmount = 0,
+    this.adId,
+    this.paymentMethod,
+  });
+
+  static const contentKey = Key('sc210_p2p_express_confirm_content');
+  static const confirmKey = Key('sc210_p2p_express_confirm_submit');
+  static const cancelKey = Key('sc210_p2p_express_confirm_cancel');
+
+  final ShellRenderMode? shellRenderMode;
+  final P2PTradeType tradeType;
+  final String asset;
+  final double fiatAmount;
+  final double cryptoAmount;
+  final String? adId;
+  final String? paymentMethod;
+
+  @override
+  ConsumerState<P2PExpressConfirmPage> createState() =>
+      _P2PExpressConfirmPageState();
+}
+
+class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
+  bool _processing = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final snapshot = ref
+        .watch(p2pRepositoryProvider)
+        .getExpressConfirm(
+          tradeType: widget.tradeType,
+          asset: widget.asset,
+          fiatAmount: widget.fiatAmount,
+          cryptoAmount: widget.cryptoAmount,
+          adId: widget.adId,
+          paymentMethod: widget.paymentMethod,
+        );
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final bottomInset =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x6
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+        MediaQuery.paddingOf(context).bottom;
+    final accent = snapshot.isBuy ? AppColors.buy : AppColors.sell;
+
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'SC-210 P2PExpressConfirmPage',
+      child: Material(
+        type: MaterialType.transparency,
+        child: Column(
+          children: [
+            VitHeader(
+              title: 'Xác nhận ${snapshot.isBuy ? 'mua' : 'bán'} nhanh',
+              subtitle: 'Express - P2P',
+              showBack: true,
+              onBack: () => _close(context),
+            ),
+            Expanded(
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(
+                  context,
+                ).copyWith(scrollbars: false),
+                child: SingleChildScrollView(
+                  key: P2PExpressConfirmPage.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x3,
+                    AppSpacing.contentPad,
+                    bottomInset,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _Hero(snapshot: snapshot, accent: accent),
+                      const SizedBox(height: AppSpacing.x4),
+                      _SummaryCard(snapshot: snapshot, accent: accent),
+                      const SizedBox(height: AppSpacing.x4),
+                      _MerchantCard(ad: snapshot.ad),
+                      const SizedBox(height: AppSpacing.x3),
+                      _NoticeCard(
+                        icon: Icons.lock_outline,
+                        text:
+                            '${_formatAmount(snapshot.cryptoAmount)} ${snapshot.asset} ${snapshot.escrowNote}',
+                        color: AppColors.buy,
+                      ),
+                      const SizedBox(height: AppSpacing.x3),
+                      _NoticeCard(
+                        icon: Icons.warning_amber_outlined,
+                        text: snapshot.warningNote,
+                        color: AppColors.warn,
+                      ),
+                      const SizedBox(height: AppSpacing.x5),
+                      _ActionRow(
+                        processing: _processing,
+                        isBuy: snapshot.isBuy,
+                        onCancel: () => _close(context),
+                        onConfirm: () => _confirm(context, snapshot),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _confirm(
+    BuildContext context,
+    P2PExpressConfirmSnapshot snapshot,
+  ) async {
+    if (_processing) return;
+    HapticFeedback.mediumImpact();
+    setState(() => _processing = true);
+    await Future<void>.delayed(const Duration(milliseconds: 350));
+    if (!context.mounted) return;
+    context.go(AppRoutePaths.p2pOrder(snapshot.order.id));
+  }
+
+  static void _close(BuildContext context) {
+    HapticFeedback.selectionClick();
+    if (context.canPop()) {
+      context.pop();
+      return;
+    }
+    context.go(AppRoutePaths.p2p);
+  }
+}
+
+class _Hero extends StatelessWidget {
+  const _Hero({required this.snapshot, required this.accent});
+
+  final P2PExpressConfirmSnapshot snapshot;
+  final Color accent;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: AppSpacing.ctaHeight,
+          height: AppSpacing.ctaHeight,
+          decoration: BoxDecoration(
+            color: accent,
+            borderRadius: AppRadii.lgRadius,
+          ),
+          child: const Icon(
+            Icons.bolt_outlined,
+            color: Colors.white,
+            size: AppSpacing.iconMd,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.x4),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Express ${snapshot.isBuy ? 'Mua' : 'Bán'}',
+                style: AppTextStyles.sectionTitle,
+              ),
+              const SizedBox(height: AppSpacing.x1),
+              Text(
+                'Kiểm tra kỹ trước khi xác nhận',
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SummaryCard extends StatelessWidget {
+  const _SummaryCard({required this.snapshot, required this.accent});
+
+  final P2PExpressConfirmSnapshot snapshot;
+  final Color accent;
+
+  @override
+  Widget build(BuildContext context) {
+    final rows = [
+      _SummaryRow(
+        label: 'Loại giao dịch',
+        value: snapshot.isBuy ? 'Mua' : 'Bán',
+        color: accent,
+      ),
+      _SummaryRow(label: 'Tài sản', value: snapshot.asset),
+      _SummaryRow(
+        label: 'Số lượng',
+        value: '${_formatAmount(snapshot.cryptoAmount)} ${snapshot.asset}',
+        strong: true,
+      ),
+      _SummaryRow(
+        label: 'Giá',
+        value: '${_formatVnd(snapshot.ad.price)} VND/${snapshot.asset}',
+      ),
+      _SummaryRow(
+        label: snapshot.isBuy ? 'Cần thanh toán' : 'Sẽ nhận được',
+        value: '${_formatVnd(snapshot.fiatAmount.round())} VND',
+        color: accent,
+        strong: true,
+      ),
+      _SummaryRow(label: 'Merchant', value: snapshot.ad.merchant),
+      _SummaryRow(label: 'Phương thức TT', value: snapshot.paymentMethod),
+      const _SummaryRow(
+        label: 'Phí giao dịch',
+        value: 'Miễn phí',
+        color: AppColors.buy,
+      ),
+    ];
+
+    return VitCard(
+      borderColor: accent.withValues(alpha: .30),
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+      child: Column(
+        children: [
+          for (var index = 0; index < rows.length; index++)
+            _SummaryLine(row: rows[index], last: index == rows.length - 1),
+        ],
+      ),
+    );
+  }
+}
+
+class _SummaryRow {
+  const _SummaryRow({
+    required this.label,
+    required this.value,
+    this.color,
+    this.strong = false,
+  });
+
+  final String label;
+  final String value;
+  final Color? color;
+  final bool strong;
+}
+
+class _SummaryLine extends StatelessWidget {
+  const _SummaryLine({required this.row, required this.last});
+
+  final _SummaryRow row;
+  final bool last;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        border: last
+            ? null
+            : const Border(bottom: BorderSide(color: AppColors.divider)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                row.label,
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+              ),
+            ),
+            const SizedBox(width: AppSpacing.x3),
+            Flexible(
+              child: Text(
+                row.value,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.end,
+                style: AppTextStyles.caption.copyWith(
+                  color: row.color ?? AppColors.text1,
+                  fontWeight: row.strong
+                      ? AppTextStyles.bold
+                      : AppTextStyles.medium,
+                  fontFeatures: row.strong
+                      ? AppTextStyles.tabularFigures
+                      : null,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MerchantCard extends StatelessWidget {
+  const _MerchantCard({required this.ad});
+
+  final P2PAdDraft ad;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: const EdgeInsets.all(AppSpacing.x3),
+      child: Row(
+        children: [
+          Container(
+            width: AppSpacing.x6,
+            height: AppSpacing.x6,
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
+              color: AppColors.accent,
+              shape: BoxShape.circle,
+            ),
+            child: Text(
+              ad.merchant.characters.first,
+              style: AppTextStyles.caption.copyWith(
+                color: Colors.white,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        ad.merchant,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ),
+                    if (ad.merchantVerified) ...[
+                      const SizedBox(width: AppSpacing.x1),
+                      const Icon(
+                        Icons.verified_outlined,
+                        color: AppColors.primary,
+                        size: AppSpacing.iconSm,
+                      ),
+                    ],
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Wrap(
+                  spacing: AppSpacing.x2,
+                  runSpacing: AppSpacing.x1,
+                  children: [
+                    Text(
+                      '${ad.completedOrders} đơn',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                    Text(
+                      '${ad.completionRate.toStringAsFixed(1)}%',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.buy,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          const VitStatusPill(
+            label: 'Escrow',
+            status: VitStatusPillStatus.success,
+            size: VitStatusPillSize.sm,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _NoticeCard extends StatelessWidget {
+  const _NoticeCard({
+    required this.icon,
+    required this.text,
+    required this.color,
+  });
+
+  final IconData icon;
+  final String text;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: .08),
+        border: Border.all(color: color.withValues(alpha: .22)),
+        borderRadius: AppRadii.cardRadius,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.x3),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon, color: color, size: AppSpacing.iconSm),
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Text(
+                text,
+                style: AppTextStyles.caption.copyWith(color: color),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ActionRow extends StatelessWidget {
+  const _ActionRow({
+    required this.processing,
+    required this.isBuy,
+    required this.onCancel,
+    required this.onConfirm,
+  });
+
+  final bool processing;
+  final bool isBuy;
+  final VoidCallback onCancel;
+  final VoidCallback onConfirm;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: VitCtaButton(
+            key: P2PExpressConfirmPage.cancelKey,
+            onPressed: processing ? null : onCancel,
+            variant: VitCtaButtonVariant.ghost,
+            child: const Text('Hủy bỏ'),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.x4),
+        Expanded(
+          child: VitCtaButton(
+            key: P2PExpressConfirmPage.confirmKey,
+            onPressed: processing ? null : onConfirm,
+            loading: processing,
+            variant: isBuy
+                ? VitCtaButtonVariant.success
+                : VitCtaButtonVariant.danger,
+            child: Text(processing ? 'Đang tạo đơn...' : 'Xác nhận'),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+P2PTradeType parseP2PTradeType(String? value) {
+  return value == 'sell' ? P2PTradeType.sell : P2PTradeType.buy;
+}
+
+double parseP2PAmount(String? value) {
+  if (value == null || value.isEmpty) return 0;
+  return double.tryParse(value) ?? 0;
+}
+
+String _formatVnd(int value) {
+  final raw = value.toString();
+  final buffer = StringBuffer();
+  for (var i = 0; i < raw.length; i++) {
+    final reverseIndex = raw.length - i;
+    buffer.write(raw[i]);
+    if (reverseIndex > 1 && reverseIndex % 3 == 1) {
+      buffer.write('.');
+    }
+  }
+  return buffer.toString();
+}
+
+String _formatAmount(double value) {
+  if (value == 0) return '0.00';
+  if (value == value.roundToDouble()) return value.toStringAsFixed(2);
+  return value.toStringAsFixed(6);
+}

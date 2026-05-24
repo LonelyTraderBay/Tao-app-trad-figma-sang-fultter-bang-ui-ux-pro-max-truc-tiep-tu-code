@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -16,7 +17,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 const _predictionPurple = Color(0xFF8B5CF6);
 
 class PredictionEventDetailPage extends ConsumerStatefulWidget {
@@ -230,7 +231,7 @@ class _HeaderIconButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.searchBg,
           border: Border.all(color: AppColors.border),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: AppRadii.smRadius,
         ),
         child: IconButton(
           onPressed: onTap,
@@ -265,8 +266,8 @@ class _EventHeader extends StatelessWidget {
           children: [
             _TinyBadge(
               label: event.category,
-              color: _predictionBlue,
-              background: _predictionBlue.withValues(alpha: .13),
+              color: _predictionPrimary,
+              background: _predictionPrimary.withValues(alpha: .13),
             ),
             for (final tag in event.tags)
               _TinyBadge(
@@ -544,7 +545,7 @@ class _StatsGrid extends StatelessWidget {
         icon: Icons.bar_chart_rounded,
         label: 'Volume 24h',
         value: _formatVolume(event.volume24h),
-        color: _predictionBlue,
+        color: _predictionPrimary,
       ),
       _StatItem(
         icon: Icons.group_outlined,
@@ -777,11 +778,11 @@ class _ChartPeriodTabs extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: tabs[index] == '30D'
-                    ? _predictionBlue.withValues(alpha: .14)
+                    ? _predictionPrimary.withValues(alpha: .14)
                     : Colors.transparent,
                 border: Border.all(
                   color: tabs[index] == '30D'
-                      ? _predictionBlue.withValues(alpha: .32)
+                      ? _predictionPrimary.withValues(alpha: .32)
                       : Colors.transparent,
                 ),
                 borderRadius: AppRadii.smRadius,
@@ -790,7 +791,7 @@ class _ChartPeriodTabs extends StatelessWidget {
                 tabs[index],
                 style: AppTextStyles.micro.copyWith(
                   color: tabs[index] == '30D'
-                      ? _predictionBlue
+                      ? _predictionPrimary
                       : AppColors.text3,
                   fontWeight: tabs[index] == '30D'
                       ? AppTextStyles.bold
@@ -826,7 +827,7 @@ class _VolumeBars extends StatelessWidget {
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 1.5),
                   decoration: BoxDecoration(
-                    color: _predictionBlue.withValues(alpha: .30),
+                    color: _predictionPrimary.withValues(alpha: .30),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -925,7 +926,7 @@ class _OrderBookSection extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.layers_rounded,
-                  color: _predictionBlue,
+                  color: _predictionPrimary,
                   size: 15,
                 ),
                 const SizedBox(width: 8),
@@ -1112,7 +1113,7 @@ class _TradeSection extends StatelessWidget {
     final price = outcome.chance / 100;
     return VitPageSection(
       label: 'Trade',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         VitCard(
           padding: const EdgeInsets.all(14),
@@ -1169,8 +1170,8 @@ class _TradeSection extends StatelessWidget {
                 leftLabel: 'Market',
                 rightLabel: 'Limit',
                 leftActive: isMarket,
-                leftColor: _predictionBlue,
-                rightColor: _predictionBlue,
+                leftColor: _predictionPrimary,
+                rightColor: _predictionPrimary,
                 onLeft: () => onOrderTypeChanged(true),
                 onRight: () => onOrderTypeChanged(false),
               ),
@@ -1191,7 +1192,7 @@ class _TradeSection extends StatelessWidget {
               ),
               const SizedBox(height: 7),
               Container(
-                height: 48,
+                height: AppSpacing.inputHeight,
                 padding: const EdgeInsets.symmetric(horizontal: 14),
                 decoration: BoxDecoration(
                   color: AppColors.surface2,
@@ -1419,11 +1420,11 @@ class _AmountChip extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
-              ? _predictionBlue.withValues(alpha: .14)
+              ? _predictionPrimary.withValues(alpha: .14)
               : AppColors.surface2,
           border: Border.all(
             color: active
-                ? _predictionBlue.withValues(alpha: .32)
+                ? _predictionPrimary.withValues(alpha: .32)
                 : Colors.transparent,
           ),
           borderRadius: AppRadii.smRadius,
@@ -1431,7 +1432,7 @@ class _AmountChip extends StatelessWidget {
         child: Text(
           '\$$amount',
           style: AppTextStyles.micro.copyWith(
-            color: active ? _predictionBlue : AppColors.text3,
+            color: active ? _predictionPrimary : AppColors.text3,
             fontWeight: AppTextStyles.bold,
           ),
         ),
@@ -1600,7 +1601,7 @@ class _RulesContent extends StatelessWidget {
           icon: Icons.verified_user_outlined,
           title: 'Resolution Source',
           text: 'CoinGecko & CoinMarketCap (average)',
-          color: _predictionBlue,
+          color: _predictionPrimary,
         ),
         const SizedBox(height: 10),
         _InfoBox(
@@ -1821,7 +1822,7 @@ class _CommentsContent extends StatelessWidget {
               Text(
                 'Post',
                 style: AppTextStyles.caption.copyWith(
-                  color: _predictionBlue,
+                  color: _predictionPrimary,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -2050,7 +2051,7 @@ class _ActivityContent extends StatelessWidget {
                   ),
                   child: const Icon(
                     Icons.flash_on_rounded,
-                    color: _predictionBlue,
+                    color: _predictionPrimary,
                     size: 14,
                   ),
                 ),
@@ -2150,8 +2151,8 @@ class _RelatedMarketCard extends StatelessWidget {
           children: [
             _TinyBadge(
               label: event.category,
-              color: _predictionBlue,
-              background: _predictionBlue.withValues(alpha: .13),
+              color: _predictionPrimary,
+              background: _predictionPrimary.withValues(alpha: .13),
             ),
             const SizedBox(height: 8),
             Text(

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -14,7 +15,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 
 enum _RiskTab { calculator, scenarios, guide }
 
@@ -227,7 +228,7 @@ class _RiskTabBar extends StatelessWidget {
                             item.label,
                             style: AppTextStyles.caption.copyWith(
                               color: activeTab == item.tab
-                                  ? _predictionBlue
+                                  ? _predictionPrimary
                                   : AppColors.text3,
                               fontWeight: AppTextStyles.bold,
                               fontSize: 12,
@@ -240,7 +241,7 @@ class _RiskTabBar extends StatelessWidget {
                         height: 2,
                         width: activeTab == item.tab ? 116 : 0,
                         decoration: BoxDecoration(
-                          color: _predictionBlue,
+                          color: _predictionPrimary,
                           borderRadius: BorderRadius.circular(1),
                         ),
                       ),
@@ -278,7 +279,7 @@ class _PositionInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Thong tin vi the',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         VitCard(
           padding: const EdgeInsets.all(16),
@@ -370,7 +371,7 @@ class _RiskInput extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.bg,
             border: Border.all(color: AppColors.border),
-            borderRadius: BorderRadius.circular(21),
+            borderRadius: AppRadii.lgRadius,
           ),
           alignment: Alignment.center,
           child: TextField(
@@ -382,7 +383,7 @@ class _RiskInput extends StatelessWidget {
             inputFormatters: numeric
                 ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))]
                 : null,
-            cursorColor: _predictionBlue,
+            cursorColor: _predictionPrimary,
             style: AppTextStyles.body.copyWith(
               fontSize: 14,
               fontWeight: AppTextStyles.medium,
@@ -462,10 +463,10 @@ class _OutcomeButton extends StatelessWidget {
       height: 42,
       child: Material(
         color: selected ? selectedColor : AppColors.bg,
-        borderRadius: BorderRadius.circular(21),
+        borderRadius: AppRadii.lgRadius,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(21),
+          borderRadius: AppRadii.lgRadius,
           child: Center(
             child: Text(
               label,
@@ -558,7 +559,7 @@ class _RiskAnalysis extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Risk Analysis',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         VitCard(
           padding: const EdgeInsets.all(16),
@@ -586,10 +587,10 @@ class _RiskAnalysis extends StatelessWidget {
               ),
               _RiskMetricRow(
                 icon: Icons.percent_rounded,
-                iconColor: _predictionBlue,
+                iconColor: _predictionPrimary,
                 label: 'Implied Probability',
                 value: '${metrics.probabilityOfProfit.toStringAsFixed(1)}%',
-                valueColor: _predictionBlue,
+                valueColor: _predictionPrimary,
               ),
               _RiskMetricRow(
                 icon: Icons.attach_money_rounded,
@@ -626,7 +627,7 @@ class _KellyRecommendation extends StatelessWidget {
     final pct = bankroll > 0 ? (metrics.kellyBetSize / bankroll) * 100 : 0;
 
     return VitCard(
-      borderColor: const Color(0x263B82F6),
+      borderColor: AppColors.primary15,
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -636,7 +637,7 @@ class _KellyRecommendation extends StatelessWidget {
             children: [
               const Icon(
                 Icons.shield_outlined,
-                color: _predictionBlue,
+                color: _predictionPrimary,
                 size: 17,
               ),
               const SizedBox(width: 8),
@@ -673,7 +674,7 @@ class _KellyRecommendation extends StatelessWidget {
               Text(
                 _formatMoney(metrics.kellyBetSize),
                 style: AppTextStyles.sectionTitle.copyWith(
-                  color: _predictionBlue,
+                  color: _predictionPrimary,
                   fontSize: 20,
                 ),
               ),
@@ -749,7 +750,7 @@ class _ScenariosTab extends StatelessWidget {
 
     return VitPageSection(
       label: 'Scenarios Analysis',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         for (final scenario in scenarios)
           VitCard(
@@ -829,7 +830,7 @@ class _GuideTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'How to Use',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: const [
         _GuideCard(
           title: '1. Input Position Details',

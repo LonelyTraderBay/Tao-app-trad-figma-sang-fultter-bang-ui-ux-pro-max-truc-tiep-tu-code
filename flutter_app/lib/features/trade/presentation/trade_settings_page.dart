@@ -12,9 +12,9 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _tradeBlue = Color(0xFF3B82F6);
-const _cardBg = Color(0xFF171C24);
-const _chipBg = Color(0xFF1D263B);
+const _tradePrimary = AppColors.primary;
+const _cardBackground = AppColors.surface2;
+const _chipBackground = AppColors.surface2;
 
 class TradeSettingsPage extends ConsumerStatefulWidget {
   const TradeSettingsPage({super.key, this.shellRenderMode});
@@ -150,7 +150,7 @@ class _SettingsSection extends StatelessWidget {
               width: 4,
               height: 14,
               decoration: BoxDecoration(
-                color: _tradeBlue,
+                color: _tradePrimary,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -184,7 +184,7 @@ class _SettingsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 17),
       decoration: BoxDecoration(
-        color: _cardBg,
+        color: _cardBackground,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -465,7 +465,7 @@ class _ChoiceBlock extends StatelessWidget {
               Text(
                 trailing!,
                 style: AppTextStyles.caption.copyWith(
-                  color: _tradeBlue,
+                  color: _tradePrimary,
                   fontFamily: 'monospace',
                   fontWeight: AppTextStyles.bold,
                   height: 1.2,
@@ -519,9 +519,11 @@ class _ChoiceChipButton extends StatelessWidget {
         height: height,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? _tradeBlue.withValues(alpha: .14) : _chipBg,
+          color: active
+              ? _tradePrimary.withValues(alpha: .14)
+              : _chipBackground,
           border: Border.all(
-            color: active ? _tradeBlue : const Color(0xFF33405F),
+            color: active ? _tradePrimary : AppColors.surface3,
           ),
           borderRadius: BorderRadius.circular(height / 2),
         ),
@@ -530,7 +532,7 @@ class _ChoiceChipButton extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.caption.copyWith(
-            color: active ? _tradeBlue : const Color(0xFF98A2B3),
+            color: active ? _tradePrimary : const Color(0xFF98A2B3),
             fontSize: height < 32 ? 11 : 12,
             fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
             height: 1,
@@ -610,8 +612,8 @@ class _VitToggle extends StatelessWidget {
           width: 44,
           height: 24,
           decoration: BoxDecoration(
-            color: on ? AppColors.buy : const Color(0xFF29344E),
-            borderRadius: BorderRadius.circular(12),
+            color: on ? AppColors.buy : AppColors.surface3,
+            borderRadius: AppRadii.mdRadius,
           ),
           child: AnimatedAlign(
             duration: const Duration(milliseconds: 120),
@@ -674,8 +676,8 @@ class _InfoNote extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
       decoration: BoxDecoration(
-        color: _tradeBlue.withValues(alpha: .06),
-        border: Border.all(color: _tradeBlue.withValues(alpha: .12)),
+        color: _tradePrimary.withValues(alpha: .06),
+        border: Border.all(color: _tradePrimary.withValues(alpha: .12)),
         borderRadius: AppRadii.mdRadius,
       ),
       child: Row(
@@ -685,7 +687,7 @@ class _InfoNote extends StatelessWidget {
             padding: EdgeInsets.only(top: 2),
             child: Icon(
               Icons.info_outline_rounded,
-              color: _tradeBlue,
+              color: _tradePrimary,
               size: 14,
             ),
           ),
@@ -695,7 +697,7 @@ class _InfoNote extends StatelessWidget {
               'Cài đặt được lưu cục bộ trên thiết bị và áp dụng ngay khi thay đổi. '
               'Đăng nhập trên thiết bị khác sẽ dùng cài đặt mặc định.',
               style: AppTextStyles.micro.copyWith(
-                color: _tradeBlue,
+                color: _tradePrimary,
                 fontSize: 11,
                 height: 1.45,
                 fontWeight: AppTextStyles.medium,

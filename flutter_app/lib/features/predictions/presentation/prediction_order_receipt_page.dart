@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -14,7 +15,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 
 class PredictionOrderReceiptPage extends ConsumerWidget {
   const PredictionOrderReceiptPage({
@@ -196,7 +197,7 @@ class _OrderSummary extends StatelessWidget {
 
     return VitPageSection(
       label: 'Tổng quan lệnh',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         VitCard(
           padding: const EdgeInsets.all(16),
@@ -323,8 +324,8 @@ class _ShareReceiptButton extends StatelessWidget {
         borderRadius: AppRadii.inputRadius,
         child: Ink(
           decoration: BoxDecoration(
-            color: const Color(0x1F3B82F6),
-            border: Border.all(color: const Color(0x263B82F6), width: 1.5),
+            color: AppColors.primary12,
+            border: Border.all(color: AppColors.primary15, width: 1.5),
             borderRadius: AppRadii.inputRadius,
           ),
           child: InkWell(
@@ -332,20 +333,20 @@ class _ShareReceiptButton extends StatelessWidget {
             onTap: () {},
             borderRadius: AppRadii.inputRadius,
             child: SizedBox(
-              height: 48,
+              height: AppSpacing.inputHeight,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(
                     Icons.ios_share_rounded,
-                    color: _predictionBlue,
+                    color: _predictionPrimary,
                     size: 17,
                   ),
                   const SizedBox(width: 10),
                   Text(
                     'Chia sẻ chi tiết lệnh',
                     style: AppTextStyles.body.copyWith(
-                      color: _predictionBlue,
+                      color: _predictionPrimary,
                       fontWeight: AppTextStyles.medium,
                     ),
                   ),
@@ -643,8 +644,8 @@ _ReceiptStatus _statusConfig(String status) {
     case 'accepted':
       return const _ReceiptStatus(
         label: 'Đã tiếp nhận',
-        color: _predictionBlue,
-        background: Color(0x1F3B82F6),
+        color: _predictionPrimary,
+        background: AppColors.primary12,
       );
     case 'partially_filled':
       return const _ReceiptStatus(

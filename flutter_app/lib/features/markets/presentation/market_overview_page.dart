@@ -16,10 +16,10 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 const _sectorPurple = Color(0xFF8B5CF6);
 const _btcOrange = Color(0xFFF7931A);
-const _ethBlue = Color(0xFF627EEA);
+const _ethPrimary = Color(0xFF627EEA);
 
 class MarketOverviewPage extends ConsumerWidget {
   const MarketOverviewPage({super.key, this.shellRenderMode});
@@ -111,14 +111,14 @@ class _MarketCapHero extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF111B3A), Color(0xFF101936), Color(0xFF0B1020)],
+          colors: [AppColors.surface2, AppColors.surface, AppColors.bg],
           stops: [0, 0.55, 1],
         ),
-        border: Border.all(color: _marketBlue.withValues(alpha: 0.24)),
+        border: Border.all(color: _marketPrimary.withValues(alpha: 0.24)),
         borderRadius: AppRadii.cardLargeRadius,
         boxShadow: [
           BoxShadow(
-            color: _marketBlue.withValues(alpha: 0.08),
+            color: _marketPrimary.withValues(alpha: 0.08),
             blurRadius: 18,
             offset: const Offset(0, 8),
           ),
@@ -129,7 +129,11 @@ class _MarketCapHero extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.language_rounded, color: _marketBlue, size: 16),
+              const Icon(
+                Icons.language_rounded,
+                color: _marketPrimary,
+                size: 16,
+              ),
               const SizedBox(width: 8),
               Text(
                 'Tổng vốn hóa thị trường',
@@ -175,7 +179,7 @@ class _MarketCapHero extends StatelessWidget {
                 child: _HeroMetric(
                   label: 'ETH Dominance',
                   value: '${stats.ethDominance.toStringAsFixed(1)}%',
-                  valueColor: _ethBlue,
+                  valueColor: _ethPrimary,
                 ),
               ),
               const SizedBox(width: 8),
@@ -265,7 +269,7 @@ class _StatsGrid extends StatelessWidget {
                 label: 'Stablecoin Vol',
                 value: _formatCompact(stats.stablecoinVolume24h, prefix: r'$'),
                 icon: Icons.monitor_heart_outlined,
-                color: _marketBlue,
+                color: _marketPrimary,
               ),
             ),
           ],
@@ -439,7 +443,7 @@ class _MarketBreadthCard extends StatelessWidget {
       children: [
         const _MiniHeader(
           icon: Icons.gps_fixed_rounded,
-          color: _marketBlue,
+          color: _marketPrimary,
           label: 'Biến động thị trường',
         ),
         const SizedBox(height: 16),
@@ -669,7 +673,7 @@ class _QuickNavigation extends StatelessWidget {
         buttonKey: MarketOverviewPage.quickHeatmapKey,
         label: 'Heatmap',
         icon: Icons.bar_chart_rounded,
-        color: _marketBlue,
+        color: _marketPrimary,
         route: '/markets/heatmap',
       ),
     ];
@@ -945,7 +949,7 @@ class _SectorPerformance extends StatelessWidget {
                       Text(
                         'Xem tất cả ngành',
                         style: AppTextStyles.caption.copyWith(
-                          color: _marketBlue,
+                          color: _marketPrimary,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
@@ -953,7 +957,7 @@ class _SectorPerformance extends StatelessWidget {
                       const SizedBox(width: 4),
                       const Icon(
                         Icons.chevron_right_rounded,
-                        color: _marketBlue,
+                        color: _marketPrimary,
                         size: 14,
                       ),
                     ],
@@ -1191,7 +1195,7 @@ class _MarketTools extends StatelessWidget {
 
     return VitPageSection(
       label: 'Công cụ thị trường',
-      accentColor: _marketBlue,
+      accentColor: _marketPrimary,
       children: [
         Column(
           children: [

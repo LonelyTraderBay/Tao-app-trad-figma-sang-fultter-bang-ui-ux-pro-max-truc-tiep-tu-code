@@ -12,14 +12,14 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _slipBg = Color(0xFF080C14);
-const _slipSurface = Color(0xFF151A23);
-const _slipSurface2 = Color(0xFF1E2535);
-const _slipBorder = Color(0xFF273142);
+const _slipBackground = AppColors.bg;
+const _slipPanel = AppColors.surface;
+const _slipPanel2 = AppColors.surface2;
+const _slipBorder = AppColors.borderSolid;
 const _slipGreen = Color(0xFF10B981);
 const _slipAmber = Color(0xFFF59E0B);
 const _slipRed = Color(0xFFEF4444);
-const _slipBlue = Color(0xFF3B82F6);
+const _slipPrimary = AppColors.primary;
 
 class SlippageMonitoringPage extends ConsumerStatefulWidget {
   const SlippageMonitoringPage({super.key, this.shellRenderMode});
@@ -54,7 +54,7 @@ class _SlippageMonitoringPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-098 SlippageMonitoringPage',
       child: Material(
-        color: _slipBg,
+        color: _slipBackground,
         child: Stack(
           children: [
             Column(
@@ -125,7 +125,7 @@ class _CriticalAlert extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       decoration: BoxDecoration(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,7 +178,7 @@ class _StatsGrid extends StatelessWidget {
     final cards = [
       (
         Icons.monitor_heart_outlined,
-        _slipBlue,
+        _slipPrimary,
         'Total\nEvents',
         summary.total.toString(),
         'Last 24h',
@@ -232,7 +232,7 @@ class _StatCard extends StatelessWidget {
       height: 140,
       padding: const EdgeInsets.fromLTRB(10, 13, 10, 11),
       decoration: BoxDecoration(
-        color: _slipSurface,
+        color: _slipPanel,
         border: Border.all(color: _slipBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -315,7 +315,7 @@ class _Tabs extends StatelessWidget {
     ];
     return Container(
       height: 53,
-      color: _slipSurface,
+      color: _slipPanel,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -333,7 +333,7 @@ class _Tabs extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: activeId == tab.$1
-                                ? _slipBlue
+                                ? _slipPrimary
                                 : AppColors.text3,
                             fontSize: 12,
                             fontWeight: AppTextStyles.bold,
@@ -345,7 +345,7 @@ class _Tabs extends StatelessWidget {
                     Container(
                       width: activeId == tab.$1 ? 72 : 0,
                       height: 2,
-                      color: _slipBlue,
+                      color: _slipPrimary,
                     ),
                   ],
                 ),
@@ -390,7 +390,7 @@ class _SlippageEventCard extends StatelessWidget {
       key: SlippageMonitoringPage.eventKey(event.id),
       padding: const EdgeInsets.all(13),
       decoration: BoxDecoration(
-        color: _slipSurface,
+        color: _slipPanel,
         border: Border.all(color: _slipBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -402,7 +402,7 @@ class _SlippageEventCard extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: style.color.withValues(alpha: .15),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: AppRadii.cardRadius,
             ),
             child: Icon(style.icon, color: style.color, size: 19),
           ),
@@ -484,8 +484,8 @@ class _SlippageEventCard extends StatelessWidget {
                   height: 30,
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
-                    color: _slipSurface2,
-                    borderRadius: BorderRadius.circular(12),
+                    color: _slipPanel2,
+                    borderRadius: AppRadii.mdRadius,
                   ),
                   child: Row(
                     children: [
@@ -523,7 +523,7 @@ class _EventMetric extends StatelessWidget {
     required this.label,
     required this.value,
     this.color = AppColors.text2,
-    this.background = _slipSurface2,
+    this.background = _slipPanel2,
   });
 
   final String label;
@@ -538,7 +538,7 @@ class _EventMetric extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 7),
       decoration: BoxDecoration(
         color: background,
-        borderRadius: BorderRadius.circular(13),
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -682,7 +682,7 @@ class _HistoryTab extends StatelessWidget {
                           height: 8,
                           child: Stack(
                             children: [
-                              const ColoredBox(color: _slipSurface2),
+                              const ColoredBox(color: _slipPanel2),
                               FractionallySizedBox(
                                 widthFactor: (point.max / 120)
                                     .clamp(0, 1)
@@ -801,8 +801,8 @@ class _AlertSetting extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: _slipSurface2,
-              borderRadius: BorderRadius.circular(12),
+              color: _slipPanel2,
+              borderRadius: AppRadii.mdRadius,
             ),
             child: Text(
               value,
@@ -856,7 +856,7 @@ class _SeverityPill extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
       decoration: BoxDecoration(
         color: style.color.withValues(alpha: .13),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Text(
         style.label,
@@ -882,7 +882,7 @@ class _SwitchVisual extends StatelessWidget {
       width: 48,
       height: 24,
       decoration: BoxDecoration(
-        color: enabled ? _slipBlue : _slipSurface2,
+        color: enabled ? _slipPrimary : _slipPanel2,
         borderRadius: BorderRadius.circular(999),
       ),
       alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
@@ -908,7 +908,7 @@ class _SectionLabel extends StatelessWidget {
           width: 3,
           height: 16,
           decoration: BoxDecoration(
-            color: _slipBlue,
+            color: _slipPrimary,
             borderRadius: BorderRadius.circular(999),
           ),
         ),
@@ -940,7 +940,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _slipSurface,
+        color: _slipPanel,
         border: Border.all(color: _slipBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -966,9 +966,9 @@ class _NoticePanel extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.fromLTRB(12, 9, 8, 9),
           decoration: BoxDecoration(
-            color: _slipSurface2,
+            color: _slipPanel2,
             border: Border.all(color: _slipBorder),
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: AppRadii.inputRadius,
           ),
           child: Row(
             children: [

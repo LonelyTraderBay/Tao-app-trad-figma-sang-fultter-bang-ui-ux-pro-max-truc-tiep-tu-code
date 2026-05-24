@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -13,10 +14,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _gasBg = Color(0xFF080C14);
-const _gasSurface = Color(0xFF151A23);
+const _gasBackground = AppColors.bg;
+const _gasPanel = AppColors.surface;
 const _gasBorder = Color(0x14FFFFFF);
-const _gasBlue = Color(0xFF3B82F6);
+const _gasPrimary = AppColors.primary;
 const _gasGreen = Color(0xFF10B981);
 const _gasAmber = Color(0xFFF59E0B);
 const _gasRed = Color(0xFFEF4444);
@@ -59,7 +60,7 @@ class _WalletGasOptimizerPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-149 WalletGasOptimizerPage',
       child: Material(
-        color: _gasBg,
+        color: _gasBackground,
         child: Column(
           children: [
             VitHeader(
@@ -106,7 +107,7 @@ class _GasTabs extends StatelessWidget {
     return Container(
       height: 54,
       decoration: const BoxDecoration(
-        color: _gasSurface,
+        color: _gasPanel,
         border: Border(bottom: BorderSide(color: _gasBorder)),
       ),
       child: Row(
@@ -124,7 +125,7 @@ class _GasTabs extends StatelessWidget {
                         tab,
                         style: AppTextStyles.caption.copyWith(
                           color: activeTab == tab
-                              ? _gasBlue
+                              ? _gasPrimary
                               : const Color(0xFF566175),
                           fontSize: 12,
                           fontWeight: FontWeight.w800,
@@ -139,7 +140,9 @@ class _GasTabs extends StatelessWidget {
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 150),
                         height: 2,
-                        color: activeTab == tab ? _gasBlue : Colors.transparent,
+                        color: activeTab == tab
+                            ? _gasPrimary
+                            : Colors.transparent,
                       ),
                     ),
                   ],
@@ -209,7 +212,7 @@ class _GasStatusCard extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 14),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .07),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: color.withValues(alpha: .22)),
       ),
       child: Column(
@@ -272,7 +275,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 14,
           decoration: BoxDecoration(
-            color: _gasBlue,
+            color: _gasPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -313,9 +316,9 @@ class _GasLevelCard extends StatelessWidget {
         height: 85,
         padding: const EdgeInsets.fromLTRB(16, 17, 16, 15),
         decoration: BoxDecoration(
-          color: selected ? _gasBlue.withValues(alpha: .045) : _gasSurface,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: selected ? _gasBlue : _gasBorder),
+          color: selected ? _gasPrimary.withValues(alpha: .045) : _gasPanel,
+          borderRadius: AppRadii.cardRadius,
+          border: Border.all(color: selected ? _gasPrimary : _gasBorder),
         ),
         child: Column(
           children: [
@@ -386,7 +389,7 @@ class _GasLevelCard extends StatelessWidget {
                 minHeight: 4,
                 value: level.gwei / 50,
                 color: color,
-                backgroundColor: _gasBg,
+                backgroundColor: _gasBackground,
               ),
             ),
           ],
@@ -433,8 +436,8 @@ class _ComparisonCard extends StatelessWidget {
       height: 233,
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 17),
       decoration: BoxDecoration(
-        color: _gasSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _gasPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _gasBorder),
       ),
       child: Column(
@@ -521,8 +524,8 @@ class _RefreshButton extends StatelessWidget {
         height: 41,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _gasBg,
-          borderRadius: BorderRadius.circular(14),
+          color: _gasBackground,
+          borderRadius: AppRadii.inputRadius,
           border: Border.all(color: _gasBorder),
         ),
         child: Row(
@@ -595,8 +598,8 @@ class _ChartCard extends StatelessWidget {
       height: height,
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
       decoration: BoxDecoration(
-        color: _gasSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _gasPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _gasBorder),
       ),
       child: Column(
@@ -627,7 +630,7 @@ class _BestTimeCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: _gasGreen.withValues(alpha: .07),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _gasGreen.withValues(alpha: .22)),
       ),
       child: Column(
@@ -762,8 +765,8 @@ class _TipCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _gasSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _gasPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _gasBorder),
       ),
       child: Row(
@@ -910,8 +913,8 @@ class _QuickActionsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _gasSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _gasPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _gasBorder),
       ),
       child: Column(
@@ -936,8 +939,8 @@ class _QuickActionsCard extends StatelessWidget {
                 height: 44,
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  color: _gasBg,
-                  borderRadius: BorderRadius.circular(12),
+                  color: _gasBackground,
+                  borderRadius: AppRadii.mdRadius,
                   border: Border.all(color: _gasBorder),
                 ),
                 child: Row(
@@ -1032,7 +1035,7 @@ class _NetworkBarChartPainter extends CustomPainter {
     final maxTx = points.map((point) => point.txCount).reduce(math.max);
     final barWidth = size.width / (points.length * 2.2);
     final gap = barWidth * 1.2;
-    final paint = Paint()..color = _gasBlue;
+    final paint = Paint()..color = _gasPrimary;
     for (var i = 0; i < points.length; i++) {
       final barHeight = (points[i].txCount / maxTx) * (size.height - 10);
       final left = i * (barWidth + gap) + 12;

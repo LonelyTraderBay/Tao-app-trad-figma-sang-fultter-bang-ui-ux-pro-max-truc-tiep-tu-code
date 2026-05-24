@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -13,11 +14,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _assetBg = Color(0xFF080C14);
-const _assetSurface = Color(0xFF151A23);
+const _assetBackground = AppColors.bg;
+const _assetPanel = AppColors.surface;
 const _assetGreen = Color(0xFF10B981);
 const _assetRed = Color(0xFFEF4444);
-const _assetBlue = Color(0xFF3B82F6);
+const _assetPrimary = AppColors.primary;
 
 class AssetDetailPage extends ConsumerStatefulWidget {
   const AssetDetailPage({
@@ -57,7 +58,7 @@ class _AssetDetailPageState extends ConsumerState<AssetDetailPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-147 AssetDetailPage',
       child: Material(
-        color: _assetBg,
+        color: _assetBackground,
         child: Column(
           children: [
             VitHeader(
@@ -120,7 +121,7 @@ class _AssetHero extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [color.withValues(alpha: .13), color.withValues(alpha: .045)],
         ),
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: AppRadii.cardLargeRadius,
         border: Border.all(color: color.withValues(alpha: .25)),
       ),
       child: Column(
@@ -202,7 +203,7 @@ class _AssetHero extends StatelessWidget {
                 child: _StatPill(
                   label: 'Trong lệnh',
                   value: _formatFixed(snapshot.inOrder, 6),
-                  valueColor: _assetBlue,
+                  valueColor: _assetPrimary,
                 ),
               ),
               const SizedBox(width: 8),
@@ -280,7 +281,7 @@ class _StatPill extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(10, 9, 8, 8),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: .05),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -364,8 +365,8 @@ class _ActionTile extends StatelessWidget {
         height: 90,
         padding: const EdgeInsets.symmetric(vertical: 13),
         decoration: BoxDecoration(
-          color: _assetSurface,
-          borderRadius: BorderRadius.circular(16),
+          color: _assetPanel,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(color: const Color(0x14FFFFFF)),
         ),
         child: Column(
@@ -375,7 +376,7 @@ class _ActionTile extends StatelessWidget {
               height: 40,
               decoration: BoxDecoration(
                 color: color.withValues(alpha: .15),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: AppRadii.lgRadius,
               ),
               alignment: Alignment.center,
               child: Icon(icon, color: color, size: 22),
@@ -414,8 +415,8 @@ class _PriceChartCard extends StatelessWidget {
       height: 209,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
       decoration: BoxDecoration(
-        color: _assetSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _assetPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: const Color(0x14FFFFFF)),
       ),
       child: Column(
@@ -443,15 +444,15 @@ class _PriceChartCard extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: activePeriod == period
-                          ? _assetBlue.withValues(alpha: .18)
+                          ? _assetPrimary.withValues(alpha: .18)
                           : Colors.transparent,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: AppRadii.smRadius,
                     ),
                     child: Text(
                       period,
                       style: AppTextStyles.micro.copyWith(
                         color: activePeriod == period
-                            ? _assetBlue
+                            ? _assetPrimary
                             : AppColors.text2,
                         fontSize: 12,
                         fontWeight: FontWeight.w800,
@@ -579,7 +580,7 @@ class _AssetTransactionRow extends StatelessWidget {
               height: 36,
               decoration: BoxDecoration(
                 color: color.withValues(alpha: .12),
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: AppRadii.cardRadius,
               ),
               alignment: Alignment.center,
               child: Icon(

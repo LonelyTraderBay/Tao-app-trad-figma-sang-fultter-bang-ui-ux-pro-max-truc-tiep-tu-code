@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,10 +14,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _transferBg = Color(0xFF080C14);
-const _transferSurface = Color(0xFF151A23);
-const _transferSurface2 = Color(0xFF1D2436);
-const _transferBlue = Color(0xFF3B82F6);
+const _transferBackground = AppColors.bg;
+const _transferPanel = AppColors.surface;
+const _transferPanel2 = AppColors.surface2;
+const _transferPrimary = AppColors.primary;
 const _transferGreen = Color(0xFF10B981);
 
 class TransferPage extends ConsumerStatefulWidget {
@@ -73,7 +75,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-146 TransferPage',
       child: Material(
-        color: _transferBg,
+        color: _transferBackground,
         child: Column(
           children: [
             VitHeader(
@@ -97,7 +99,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                       key: TransferPage.fromWalletKey,
                       label: 'Từ',
                       wallet: fromWallet,
-                      color: _transferBlue,
+                      color: _transferPrimary,
                       onTap: () => _showWalletPicker(
                         title: 'Chọn ví nguồn',
                         snapshot: snapshot,
@@ -210,7 +212,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
   }) {
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: _transferSurface,
+      backgroundColor: _transferPanel,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
@@ -249,7 +251,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
   void _showAssetPicker(WalletTransferSnapshot snapshot) {
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: _transferSurface,
+      backgroundColor: _transferPanel,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
@@ -296,7 +298,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
   }) {
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: _transferSurface,
+      backgroundColor: _transferPanel,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
@@ -322,8 +324,8 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: _transferSurface2,
-                    borderRadius: BorderRadius.circular(18),
+                    color: _transferPanel2,
+                    borderRadius: AppRadii.cardRadius,
                   ),
                   child: Column(
                     children: [
@@ -355,7 +357,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                     Expanded(
                       child: _SheetButton(
                         label: 'Huỷ',
-                        background: _transferSurface2,
+                        background: _transferPanel2,
                         color: AppColors.text2,
                         onTap: () => Navigator.of(context).pop(),
                       ),
@@ -365,7 +367,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                       child: _SheetButton(
                         buttonKey: TransferPage.confirmKey,
                         label: 'Xác nhận',
-                        background: _transferBlue,
+                        background: _transferPrimary,
                         color: Colors.white,
                         onTap: () {
                           Navigator.of(context).pop();
@@ -410,8 +412,8 @@ class _TransferWalletCard extends StatelessWidget {
         height: 99,
         padding: const EdgeInsets.fromLTRB(16, 14, 15, 14),
         decoration: BoxDecoration(
-          color: _transferSurface,
-          borderRadius: BorderRadius.circular(18),
+          color: _transferPanel,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(color: const Color(0x14FFFFFF)),
         ),
         child: Column(
@@ -487,7 +489,7 @@ class _WalletIcon extends StatelessWidget {
       height: 40,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .13),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppRadii.lgRadius,
       ),
       alignment: Alignment.center,
       child: Icon(icon, color: color, size: 20),
@@ -511,11 +513,11 @@ class _SwapButton extends StatelessWidget {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: _transferBlue,
+            color: _transferPrimary,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: _transferBlue.withValues(alpha: .38),
+                color: _transferPrimary.withValues(alpha: .38),
                 blurRadius: 14,
                 offset: const Offset(0, 4),
               ),
@@ -549,8 +551,8 @@ class _TransferAssetCard extends StatelessWidget {
         height: 99,
         padding: const EdgeInsets.fromLTRB(16, 14, 15, 14),
         decoration: BoxDecoration(
-          color: _transferSurface,
-          borderRadius: BorderRadius.circular(18),
+          color: _transferPanel,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(color: const Color(0x14FFFFFF)),
         ),
         child: Column(
@@ -658,8 +660,8 @@ class _AmountCard extends StatelessWidget {
       height: 90,
       padding: const EdgeInsets.fromLTRB(16, 15, 16, 14),
       decoration: BoxDecoration(
-        color: _transferSurface,
-        borderRadius: BorderRadius.circular(18),
+        color: _transferPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: const Color(0x14FFFFFF)),
       ),
       child: Column(
@@ -683,7 +685,7 @@ class _AmountCard extends StatelessWidget {
                 child: Text(
                   'Tối đa',
                   style: AppTextStyles.micro.copyWith(
-                    color: _transferBlue,
+                    color: _transferPrimary,
                     fontSize: 11,
                     fontWeight: FontWeight.w800,
                     height: 1,
@@ -750,8 +752,8 @@ class _InfoNotice extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 59),
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
       decoration: BoxDecoration(
-        color: const Color(0x143B82F6),
-        borderRadius: BorderRadius.circular(18),
+        color: AppColors.primary08,
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -760,7 +762,7 @@ class _InfoNotice extends StatelessWidget {
             padding: EdgeInsets.only(top: 2),
             child: Icon(
               Icons.info_outline_rounded,
-              color: _transferBlue,
+              color: _transferPrimary,
               size: 14,
             ),
           ),
@@ -797,8 +799,8 @@ class _TransferButton extends StatelessWidget {
         height: 52,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: enabled ? _transferBlue : const Color(0xFF121928),
-          borderRadius: BorderRadius.circular(16),
+          color: enabled ? _transferPrimary : const Color(0xFF121928),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Text(
           'Xác nhận chuyển',
@@ -862,13 +864,13 @@ class _RecentTransferRow extends StatelessWidget {
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: _transferBlue.withValues(alpha: .12),
-              borderRadius: BorderRadius.circular(18),
+              color: _transferPrimary.withValues(alpha: .12),
+              borderRadius: AppRadii.cardRadius,
             ),
             alignment: Alignment.center,
             child: const Icon(
               Icons.swap_vert_rounded,
-              color: _transferBlue,
+              color: _transferPrimary,
               size: 18,
             ),
           ),
@@ -953,7 +955,7 @@ class _WalletPickerRow extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             if (selected)
-              const Icon(Icons.check_circle_rounded, color: _transferBlue),
+              const Icon(Icons.check_circle_rounded, color: _transferPrimary),
           ],
         ),
       ),
@@ -1014,7 +1016,7 @@ class _AssetPickerRow extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             if (selected)
-              const Icon(Icons.check_circle_rounded, color: _transferBlue),
+              const Icon(Icons.check_circle_rounded, color: _transferPrimary),
           ],
         ),
       ),
@@ -1031,7 +1033,7 @@ class _SuccessBanner extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
         color: _transferGreen.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _transferGreen.withValues(alpha: .30)),
       ),
       child: Row(
@@ -1088,7 +1090,8 @@ class _ConfirmRow extends StatelessWidget {
             value,
             style: AppTextStyles.caption.copyWith(
               color:
-                  valueColor ?? (highlight ? _transferBlue : AppColors.text1),
+                  valueColor ??
+                  (highlight ? _transferPrimary : AppColors.text1),
               fontSize: 13,
               fontWeight: FontWeight.w800,
             ),
@@ -1107,8 +1110,8 @@ class _ConfirmNote extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: _transferBlue.withValues(alpha: .08),
-        borderRadius: BorderRadius.circular(14),
+        color: _transferPrimary.withValues(alpha: .08),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1117,7 +1120,7 @@ class _ConfirmNote extends StatelessWidget {
             padding: EdgeInsets.only(top: 2),
             child: Icon(
               Icons.info_outline_rounded,
-              color: _transferBlue,
+              color: _transferPrimary,
               size: 13,
             ),
           ),
@@ -1160,11 +1163,11 @@ class _SheetButton extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 48,
+        height: AppSpacing.inputHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: background,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: AppRadii.inputRadius,
         ),
         child: Text(
           label,

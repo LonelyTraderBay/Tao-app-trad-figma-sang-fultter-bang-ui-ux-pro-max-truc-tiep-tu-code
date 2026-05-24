@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,9 +13,9 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _copyBlue = Color(0xFF3B82F6);
-const _educationCard = Color(0xFF11161F);
-const _educationPanel = Color(0xFF1A2030);
+const _copyPrimary = AppColors.primary;
+const _educationCard = AppColors.surface;
+const _educationPanel = AppColors.surface2;
 
 class CopyEducationPage extends ConsumerStatefulWidget {
   const CopyEducationPage({super.key, this.shellRenderMode});
@@ -107,14 +108,14 @@ class _IntroBanner extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 96),
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
       decoration: BoxDecoration(
-        color: _copyBlue.withValues(alpha: .08),
-        border: Border.all(color: _copyBlue),
+        color: _copyPrimary.withValues(alpha: .08),
+        border: Border.all(color: _copyPrimary),
         borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.menu_book_outlined, color: _copyBlue, size: 25),
+          const Icon(Icons.menu_book_outlined, color: _copyPrimary, size: 25),
           const SizedBox(width: 13),
           Expanded(
             child: Column(
@@ -123,7 +124,7 @@ class _IntroBanner extends StatelessWidget {
                 Text(
                   snapshot.introTitle,
                   style: AppTextStyles.baseMedium.copyWith(
-                    color: _copyBlue,
+                    color: _copyPrimary,
                     fontSize: 16,
                     fontWeight: AppTextStyles.bold,
                     height: 1.2,
@@ -182,7 +183,9 @@ class _EducationTabs extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                         style: AppTextStyles.caption.copyWith(
-                          color: active == tab.id ? _copyBlue : AppColors.text3,
+                          color: active == tab.id
+                              ? _copyPrimary
+                              : AppColors.text3,
                           fontSize: 12,
                           fontWeight: active == tab.id
                               ? AppTextStyles.bold
@@ -199,7 +202,7 @@ class _EducationTabs extends StatelessWidget {
                         child: SizedBox(
                           height: 2,
                           child: DecoratedBox(
-                            decoration: BoxDecoration(color: _copyBlue),
+                            decoration: BoxDecoration(color: _copyPrimary),
                           ),
                         ),
                       ),
@@ -280,7 +283,7 @@ class _StepRow extends StatelessWidget {
               '${step.number}',
               textAlign: TextAlign.center,
               style: AppTextStyles.caption.copyWith(
-                color: _copyBlue,
+                color: _copyPrimary,
                 fontSize: 14,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
@@ -477,7 +480,7 @@ class _ConceptRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(_iconFor(concept.iconName), color: _copyBlue, size: 15),
+        Icon(_iconFor(concept.iconName), color: _copyPrimary, size: 15),
         const SizedBox(width: 8),
         Expanded(
           child: Column(
@@ -575,10 +578,10 @@ class _ProviderCta extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.inputRadius,
       child: Container(
-        height: 48,
+        height: AppSpacing.inputHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _copyBlue,
+          color: _copyPrimary,
           borderRadius: AppRadii.inputRadius,
         ),
         child: Row(

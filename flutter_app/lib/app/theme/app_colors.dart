@@ -24,7 +24,7 @@ final class AppColors {
 
   static const Color navInactive = Color(0xFF667085);
   static const Color navActive = primary;
-  static const Color navBg = Color(0xF207090D);
+  static const Color navBg = bg;
   static const Color navBorder = border;
   static const Color navCenterIcon = Color(0xFFFFFFFF);
 

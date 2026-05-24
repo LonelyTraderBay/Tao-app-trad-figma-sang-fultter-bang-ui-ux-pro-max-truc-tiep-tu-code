@@ -12,11 +12,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _cassBg = Color(0xFF080C14);
-const _cassSurface = Color(0xFF151A23);
-const _cassSurface2 = Color(0xFF1E2535);
-const _cassBorder = Color(0xFF273142);
-const _cassBlue = Color(0xFF3B82F6);
+const _cassBackground = AppColors.bg;
+const _cassPanel = AppColors.surface;
+const _cassPanel2 = AppColors.surface2;
+const _cassBorder = AppColors.borderSolid;
+const _cassPrimary = AppColors.primary;
 const _cassGreen = Color(0xFF10B981);
 const _cassAmber = Color(0xFFF59E0B);
 const _cassRed = Color(0xFFEF4444);
@@ -54,7 +54,7 @@ class _CassReconciliationPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-103 CASSReconciliationPage',
       child: Material(
-        color: _cassBg,
+        color: _cassBackground,
         child: Column(
           children: [
             VitHeader(
@@ -156,7 +156,7 @@ class _SummaryCard extends StatelessWidget {
       height: 89,
       padding: const EdgeInsets.fromLTRB(12, 16, 12, 13),
       decoration: BoxDecoration(
-        color: _cassSurface,
+        color: _cassPanel,
         border: Border.all(color: _cassBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -210,7 +210,7 @@ class _Tabs extends StatelessWidget {
     const tabs = [('recent', 'Recent (7 Days)'), ('history', 'History')];
     return Container(
       height: 53,
-      color: _cassSurface,
+      color: _cassPanel,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -228,7 +228,7 @@ class _Tabs extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: activeId == tab.$1
-                                ? _cassBlue
+                                ? _cassPrimary
                                 : AppColors.text3,
                             fontSize: 12,
                             fontWeight: AppTextStyles.bold,
@@ -240,7 +240,7 @@ class _Tabs extends StatelessWidget {
                     Container(
                       width: activeId == tab.$1 ? 161 : 0,
                       height: 2,
-                      color: _cassBlue,
+                      color: _cassPrimary,
                     ),
                   ],
                 ),
@@ -264,7 +264,7 @@ class _RecordCard extends StatelessWidget {
       key: CassReconciliationPage.recordKey(record.id),
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
       decoration: BoxDecoration(
-        color: _cassSurface,
+        color: _cassPanel,
         border: Border.all(color: _cassBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -278,7 +278,7 @@ class _RecordCard extends StatelessWidget {
                 height: 40,
                 decoration: BoxDecoration(
                   color: tone.color.withValues(alpha: .13),
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: AppRadii.inputRadius,
                 ),
                 child: Icon(tone.icon, color: tone.color, size: 20),
               ),
@@ -367,7 +367,7 @@ class _MetricBox extends StatelessWidget {
     required this.label,
     required this.value,
     this.valueColor = AppColors.text1,
-    this.background = _cassSurface2,
+    this.background = _cassPanel2,
   });
 
   final String label;
@@ -382,7 +382,7 @@ class _MetricBox extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(8, 9, 8, 8),
       decoration: BoxDecoration(
         color: background,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -454,10 +454,8 @@ class _ExportButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.text1,
           side: BorderSide(color: _cassBorder.withValues(alpha: .72)),
-          backgroundColor: _cassSurface2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-          ),
+          backgroundColor: _cassPanel2,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
         ),
         onPressed: () {},
         child: Row(
@@ -498,7 +496,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 14,
           decoration: BoxDecoration(
-            color: _cassBlue,
+            color: _cassPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),

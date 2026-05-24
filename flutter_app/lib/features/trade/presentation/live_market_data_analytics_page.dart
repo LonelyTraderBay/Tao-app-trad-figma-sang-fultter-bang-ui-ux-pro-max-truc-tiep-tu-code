@@ -14,12 +14,12 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _liveBg = Color(0xFF080C14);
-const _liveSurface = Color(0xFF151A23);
-const _liveSurface2 = Color(0xFF1E2535);
+const _liveBackground = AppColors.bg;
+const _livePanel = AppColors.surface;
+const _livePanel2 = AppColors.surface2;
 const _liveSurface3 = Color(0xFF111B2D);
-const _liveBorder = Color(0xFF273142);
-const _liveBlue = Color(0xFF3B82F6);
+const _liveBorder = AppColors.borderSolid;
+const _livePrimary = AppColors.primary;
 const _liveGreen = Color(0xFF10B981);
 const _liveRed = Color(0xFFEF4444);
 const _livePurple = Color(0xFF8B5CF6);
@@ -58,7 +58,7 @@ class _LiveMarketDataAnalyticsPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-091 LiveMarketDataAnalyticsPage',
       child: Material(
-        color: _liveBg,
+        color: _liveBackground,
         child: Column(
           children: [
             VitHeader(
@@ -112,7 +112,7 @@ class _LivePairCard extends StatelessWidget {
         gradient: LinearGradient(
           colors: [
             _liveGreen.withValues(alpha: .08),
-            _liveBlue.withValues(alpha: .08),
+            _livePrimary.withValues(alpha: .08),
           ],
         ),
         border: Border.all(
@@ -248,7 +248,7 @@ class _UnderlineTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 53,
-      color: _liveSurface,
+      color: _livePanel,
       child: Row(
         children: [
           for (final tab in _tabs)
@@ -263,7 +263,7 @@ class _UnderlineTabs extends StatelessWidget {
                     border: Border(
                       bottom: BorderSide(
                         color: activeId == tab.$1
-                            ? _liveBlue
+                            ? _livePrimary
                             : Colors.transparent,
                         width: 2,
                       ),
@@ -274,7 +274,9 @@ class _UnderlineTabs extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
-                      color: activeId == tab.$1 ? _liveBlue : AppColors.text3,
+                      color: activeId == tab.$1
+                          ? _livePrimary
+                          : AppColors.text3,
                       fontSize: 12,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
@@ -325,7 +327,7 @@ class _OpenInterestCard extends StatelessWidget {
         children: [
           _CardHeader(
             icon: Icons.show_chart_rounded,
-            color: _liveBlue,
+            color: _livePrimary,
             title: 'Open Interest',
             trailing: 'BTC/USDT >',
           ),
@@ -528,7 +530,7 @@ class _TopTradersCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
             decoration: BoxDecoration(
-              color: _liveSurface2,
+              color: _livePanel2,
               borderRadius: AppRadii.cardRadius,
             ),
             child: Row(
@@ -592,7 +594,7 @@ class _FundingCard extends StatelessWidget {
         children: [
           _CardHeader(
             icon: Icons.attach_money_rounded,
-            color: _liveBlue,
+            color: _livePrimary,
             title: 'Funding Rate',
             badge: '+${data.currentRatePct.toStringAsFixed(4)}%',
             badgeColor: _liveRed,
@@ -618,7 +620,7 @@ class _FundingCard extends StatelessWidget {
                 Text(
                   data.nextFundingLabel,
                   style: AppTextStyles.baseMedium.copyWith(
-                    color: _liveBlue,
+                    color: _livePrimary,
                     fontSize: 18,
                     fontWeight: AppTextStyles.bold,
                     fontFamily: 'monospace',
@@ -661,7 +663,7 @@ class _FundingCard extends StatelessWidget {
             height: 67,
             padding: const EdgeInsets.fromLTRB(0, 8, 0, 6),
             decoration: BoxDecoration(
-              color: _liveSurface2,
+              color: _livePanel2,
               borderRadius: AppRadii.cardRadius,
             ),
             child: CustomPaint(painter: _LinePainter(values: data.historyPct)),
@@ -709,7 +711,7 @@ class _LiquidationsTab extends StatelessWidget {
             children: [
               const _CardHeader(
                 icon: Icons.history_rounded,
-                color: _liveBlue,
+                color: _livePrimary,
                 title: 'Recent Liquidations',
                 badge: 'Real-time',
               ),
@@ -849,7 +851,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _liveSurface,
+        color: _livePanel,
         border: Border.all(color: _liveBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -863,7 +865,7 @@ class _MetricBox extends StatelessWidget {
     required this.label,
     required this.value,
     this.color = AppColors.text1,
-    this.bg = _liveSurface2,
+    this.bg = _livePanel2,
   });
 
   final String label;
@@ -949,7 +951,7 @@ class _MutedLabel extends StatelessWidget {
 }
 
 class _InfoStrip extends StatelessWidget {
-  const _InfoStrip({this.bg = _liveSurface3, this.color = _liveBlue});
+  const _InfoStrip({this.bg = _liveSurface3, this.color = _livePrimary});
 
   final Color bg;
   final Color color;
@@ -989,7 +991,7 @@ class _ToggleBar extends StatelessWidget {
       height: 42,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: _liveSurface2,
+        color: _livePanel2,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
@@ -998,8 +1000,8 @@ class _ToggleBar extends StatelessWidget {
             child: Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: _liveBlue,
-                borderRadius: BorderRadius.circular(14),
+                color: _livePrimary,
+                borderRadius: AppRadii.inputRadius,
               ),
               child: Text(
                 'By Accounts',
@@ -1105,7 +1107,7 @@ class _LiquidationRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(11),
       decoration: BoxDecoration(
-        color: _liveSurface2,
+        color: _livePanel2,
         borderRadius: AppRadii.mdRadius,
       ),
       child: Row(
@@ -1145,7 +1147,7 @@ class _SourceRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: _liveSurface2,
+        color: _livePanel2,
         borderRadius: AppRadii.mdRadius,
       ),
       child: Row(

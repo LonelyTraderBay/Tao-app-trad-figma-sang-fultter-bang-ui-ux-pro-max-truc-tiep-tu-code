@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 const _comparePurple = Color(0xFF8B5CF6);
 const _maxCompare = 4;
 
@@ -199,7 +199,7 @@ class _SelectedTokensStrip extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: _marketBlue.withValues(alpha: .38),
+                    color: _marketPrimary.withValues(alpha: .38),
                     style: BorderStyle.solid,
                   ),
                   borderRadius: AppRadii.cardRadius,
@@ -365,7 +365,7 @@ class _TokenPickerCard extends StatelessWidget {
                     controller: controller,
                     onChanged: (_) => onChanged(),
                     autofocus: true,
-                    cursorColor: _marketBlue,
+                    cursorColor: _marketPrimary,
                     style: AppTextStyles.caption.copyWith(fontSize: 12),
                     decoration: InputDecoration.collapsed(
                       hintText: 'Tìm BTC, ETH...',
@@ -652,7 +652,7 @@ class _MetricCard extends StatelessWidget {
                                     ? AppColors.buy
                                     : AppColors.sell)
                               : index == bestIndex
-                              ? _marketBlue
+                              ? _marketPrimary
                               : AppColors.text1,
                           fontSize: 15,
                           fontWeight: AppTextStyles.bold,
@@ -665,7 +665,7 @@ class _MetricCard extends StatelessWidget {
                         Text(
                           'TỐT NHẤT',
                           style: AppTextStyles.micro.copyWith(
-                            color: _marketBlue,
+                            color: _marketPrimary,
                             fontSize: 8,
                             fontWeight: AppTextStyles.bold,
                             height: 1,

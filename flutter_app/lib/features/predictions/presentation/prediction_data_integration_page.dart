@@ -15,7 +15,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 
 enum _DataIntegrationTab { sources, apiKeys, webhooks }
 
@@ -215,7 +215,7 @@ class _DataIntegrationTabBar extends StatelessWidget {
                             item.label,
                             style: AppTextStyles.caption.copyWith(
                               color: activeTab == item.tab
-                                  ? _predictionBlue
+                                  ? _predictionPrimary
                                   : AppColors.text3,
                               fontWeight: AppTextStyles.bold,
                               fontSize: 12,
@@ -228,7 +228,7 @@ class _DataIntegrationTabBar extends StatelessWidget {
                         height: 2,
                         width: activeTab == item.tab ? 116 : 0,
                         decoration: BoxDecoration(
-                          color: _predictionBlue,
+                          color: _predictionPrimary,
                           borderRadius: BorderRadius.circular(1),
                         ),
                       ),
@@ -374,7 +374,7 @@ class _SourceSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Configured Sources',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [for (final source in sources) _SourceCard(source: source)],
     );
   }
@@ -518,7 +518,7 @@ class _ApiKeysSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Your API Keys',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         for (final apiKey in apiKeys)
           _ApiKeyCard(
@@ -692,7 +692,7 @@ class _WebhookSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Webhook Endpoints',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         for (final webhook in webhooks) _WebhookCard(webhook: webhook),
       ],
@@ -970,7 +970,7 @@ class _PrimaryBlueButton extends StatelessWidget {
       width: double.infinity,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: _predictionBlue,
+          color: _predictionPrimary,
           borderRadius: AppRadii.inputRadius,
         ),
         child: Row(
@@ -1000,7 +1000,7 @@ class _InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _NoticeCard(icon: icon, color: _predictionBlue, message: message);
+    return _NoticeCard(icon: icon, color: _predictionPrimary, message: message);
   }
 }
 

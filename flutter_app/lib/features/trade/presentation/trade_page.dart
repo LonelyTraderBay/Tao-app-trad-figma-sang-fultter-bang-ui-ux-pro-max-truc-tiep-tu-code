@@ -14,8 +14,8 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/trade_repository.dart';
 
-const _tradeBlue = Color(0xFF3B82F6);
-const _fieldBg = Color(0xFF1D2435);
+const _tradePrimary = AppColors.primary;
+const _fieldBackground = AppColors.surface2;
 
 enum TradeChartVariant { defaultRoute, pairRoute }
 
@@ -298,7 +298,7 @@ class _QuickNavRow extends StatelessWidget {
             key: TradePage.quickNavKey('positions'),
             icon: Icons.work_outline_rounded,
             label: 'Vị thế',
-            color: _tradeBlue,
+            color: _tradePrimary,
             onTap: () => context.go('/trade/positions'),
           ),
           _QuickNavChip(
@@ -391,7 +391,7 @@ class _DataTabs extends StatelessWidget {
         height: 34,
         padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
-          color: _fieldBg,
+          color: _fieldBackground,
           borderRadius: AppRadii.lgRadius,
         ),
         child: Row(
@@ -443,7 +443,7 @@ class _ChartPanel extends StatelessWidget {
       height: 122,
       decoration: BoxDecoration(
         color: const Color(0xFF201926),
-        border: Border.all(color: _tradeBlue.withValues(alpha: .35)),
+        border: Border.all(color: _tradePrimary.withValues(alpha: .35)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Stack(
@@ -725,7 +725,7 @@ class _OrderTabs extends StatelessWidget {
       height: 44,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: _fieldBg,
+        color: _fieldBackground,
         borderRadius: AppRadii.lgRadius,
       ),
       child: Row(
@@ -736,7 +736,7 @@ class _OrderTabs extends StatelessWidget {
                 key: tab.$3,
                 label: tab.$2,
                 active: active == tab.$1,
-                activeColor: _tradeBlue,
+                activeColor: _tradePrimary,
                 onTap: () => onSelected(tab.$1),
               ),
             ),
@@ -882,7 +882,7 @@ class _SideSwitch extends StatelessWidget {
     return Container(
       height: 46,
       decoration: BoxDecoration(
-        color: _fieldBg,
+        color: _fieldBackground,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
@@ -980,7 +980,7 @@ class _OrderTypeRow extends StatelessWidget {
           width: 39,
           height: 39,
           decoration: BoxDecoration(
-            color: _fieldBg,
+            color: _fieldBackground,
             border: Border.all(color: AppColors.borderSolid),
             borderRadius: AppRadii.cardRadius,
           ),
@@ -1022,7 +1022,9 @@ class _OrderTypeChip extends StatelessWidget {
           height: 39,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: active ? AppColors.buy.withValues(alpha: .09) : _fieldBg,
+            color: active
+                ? AppColors.buy.withValues(alpha: .09)
+                : _fieldBackground,
             border: Border.all(
               color: active
                   ? AppColors.buy.withValues(alpha: .75)
@@ -1099,8 +1101,8 @@ class _TradeInput extends StatelessWidget {
         Container(
           height: 52,
           decoration: BoxDecoration(
-            color: _fieldBg,
-            border: Border.all(color: const Color(0xFF303956)),
+            color: _fieldBackground,
+            border: Border.all(color: AppColors.borderSolid),
             borderRadius: AppRadii.cardRadius,
           ),
           child: TextField(
@@ -1148,8 +1150,8 @@ class _PctButton extends StatelessWidget {
         height: 38,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _fieldBg,
-          border: Border.all(color: const Color(0xFF303956)),
+          color: _fieldBackground,
+          border: Border.all(color: AppColors.borderSolid),
           borderRadius: AppRadii.mdRadius,
         ),
         child: Text('$pct%', style: AppTextStyles.caption),
@@ -1170,8 +1172,8 @@ class _TpslSwitch extends StatelessWidget {
       height: 38,
       padding: const EdgeInsets.symmetric(horizontal: 14),
       decoration: BoxDecoration(
-        color: _fieldBg,
-        border: Border.all(color: const Color(0xFF303956)),
+        color: _fieldBackground,
+        border: Border.all(color: AppColors.borderSolid),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
@@ -1373,7 +1375,7 @@ class _PairRouteChartPainter extends CustomPainter {
     }
 
     final dash = Paint()
-      ..color = _tradeBlue.withValues(alpha: .35)
+      ..color = _tradePrimary.withValues(alpha: .35)
       ..strokeWidth = 1;
     for (var x = 0.0; x < size.width; x += 10) {
       canvas.drawLine(
@@ -1439,7 +1441,7 @@ class _CandlestickPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final grid = Paint()
-      ..color = _tradeBlue.withValues(alpha: .22)
+      ..color = _tradePrimary.withValues(alpha: .22)
       ..strokeWidth = 1;
     for (var x = 0.0; x < size.width; x += 10) {
       canvas.drawLine(

@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 
 class PredictionsSearchPage extends ConsumerStatefulWidget {
   const PredictionsSearchPage({super.key, this.shellRenderMode});
@@ -239,13 +239,13 @@ class _SearchControl extends StatelessWidget {
               height: 34,
               decoration: BoxDecoration(
                 color: showFilters
-                    ? _predictionBlue.withValues(alpha: .16)
+                    ? _predictionPrimary.withValues(alpha: .16)
                     : Colors.transparent,
                 borderRadius: AppRadii.smRadius,
               ),
               child: Icon(
                 Icons.tune_rounded,
-                color: showFilters ? _predictionBlue : AppColors.text3,
+                color: showFilters ? _predictionPrimary : AppColors.text3,
                 size: 17,
               ),
             ),
@@ -471,11 +471,11 @@ class _SortChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
           color: active
-              ? _predictionBlue.withValues(alpha: .14)
+              ? _predictionPrimary.withValues(alpha: .14)
               : AppColors.surface2,
           border: Border.all(
             color: active
-                ? _predictionBlue.withValues(alpha: .36)
+                ? _predictionPrimary.withValues(alpha: .36)
                 : AppColors.borderSolid,
           ),
           borderRadius: AppRadii.mdRadius,
@@ -486,13 +486,13 @@ class _SortChip extends StatelessWidget {
             Icon(
               icon,
               size: 12,
-              color: active ? _predictionBlue : AppColors.text3,
+              color: active ? _predictionPrimary : AppColors.text3,
             ),
             const SizedBox(width: 6),
             Text(
               label,
               style: AppTextStyles.micro.copyWith(
-                color: active ? _predictionBlue : AppColors.text2,
+                color: active ? _predictionPrimary : AppColors.text2,
                 fontSize: 11,
                 fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
               ),
@@ -526,11 +526,11 @@ class _StatusChip extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
-              ? _predictionBlue.withValues(alpha: .14)
+              ? _predictionPrimary.withValues(alpha: .14)
               : AppColors.surface2,
           border: Border.all(
             color: active
-                ? _predictionBlue.withValues(alpha: .36)
+                ? _predictionPrimary.withValues(alpha: .36)
                 : AppColors.borderSolid,
           ),
           borderRadius: AppRadii.mdRadius,
@@ -538,7 +538,7 @@ class _StatusChip extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: active ? _predictionBlue : AppColors.text2,
+            color: active ? _predictionPrimary : AppColors.text2,
             fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
           ),
         ),
@@ -568,11 +568,11 @@ class _CategoryChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           color: active
-              ? _predictionBlue.withValues(alpha: .12)
+              ? _predictionPrimary.withValues(alpha: .12)
               : AppColors.surface2,
           border: Border.all(
             color: active
-                ? _predictionBlue.withValues(alpha: .30)
+                ? _predictionPrimary.withValues(alpha: .30)
                 : AppColors.borderSolid,
           ),
           borderRadius: AppRadii.smRadius,
@@ -580,7 +580,7 @@ class _CategoryChip extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
-            color: active ? _predictionBlue : AppColors.text3,
+            color: active ? _predictionPrimary : AppColors.text3,
             fontWeight: AppTextStyles.bold,
           ),
         ),
@@ -689,13 +689,13 @@ class _TinyBadge extends StatelessWidget {
       decoration: BoxDecoration(
         color: muted
             ? AppColors.surface2
-            : _predictionBlue.withValues(alpha: .14),
+            : _predictionPrimary.withValues(alpha: .14),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
         label,
         style: AppTextStyles.micro.copyWith(
-          color: muted ? AppColors.text3 : _predictionBlue,
+          color: muted ? AppColors.text3 : _predictionPrimary,
           fontSize: 9,
           fontWeight: AppTextStyles.bold,
         ),

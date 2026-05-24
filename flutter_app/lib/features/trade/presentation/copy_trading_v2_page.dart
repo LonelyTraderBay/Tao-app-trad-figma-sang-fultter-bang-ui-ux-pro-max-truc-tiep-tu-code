@@ -12,10 +12,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _copyBlue = Color(0xFF3B82F6);
-const _copyPanel = Color(0xFF111723);
-const _copySurface = Color(0xFF1C2231);
-const _copyPurple = Color(0xFF6366F1);
+const _copyPrimary = AppColors.primary;
+const _copyPanel = AppColors.surface;
+const _copyPanelAlt = AppColors.surface2;
+const _copyPurple = AppColors.accent;
 
 class CopyTradingV2Page extends ConsumerStatefulWidget {
   const CopyTradingV2Page({super.key, this.shellRenderMode});
@@ -144,13 +144,13 @@ class _VariantSwitcher extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 56),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: _copySurface,
+        color: _copyPanelAlt,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         children: [
-          const Icon(Icons.palette_outlined, color: _copyBlue, size: 18),
+          const Icon(Icons.palette_outlined, color: _copyPrimary, size: 18),
           const SizedBox(width: 12),
           Expanded(
             child: Text(
@@ -193,16 +193,18 @@ class _VariantButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         height: 30,
         constraints: const BoxConstraints(minWidth: 52),
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-          color: active ? _copyBlue : Colors.transparent,
-          border: Border.all(color: active ? _copyBlue : AppColors.cardBorder),
-          borderRadius: BorderRadius.circular(16),
+          color: active ? _copyPrimary : Colors.transparent,
+          border: Border.all(
+            color: active ? _copyPrimary : AppColors.cardBorder,
+          ),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Text(
           label,
@@ -245,10 +247,10 @@ class _GlassHero extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0x191A1B4B), Color(0x262F2461)],
+          colors: [AppColors.surface3, AppColors.surface],
         ),
-        border: Border.all(color: Color(0x2A8B5CF6)),
-        borderRadius: BorderRadius.circular(21),
+        border: Border.all(color: AppColors.accent20),
+        borderRadius: AppRadii.lgRadius,
       ),
       child: Stack(
         children: [
@@ -261,7 +263,7 @@ class _GlassHero extends StatelessWidget {
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
-                  colors: [Color(0x338B5CF6), Color(0x00000000)],
+                  colors: [AppColors.accent20, Colors.transparent],
                 ),
               ),
             ),
@@ -340,9 +342,9 @@ class _BoldHero extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF6366F1), Color(0xFF8B5CF6), Color(0xFFEC4899)],
+          colors: [AppColors.primary, AppColors.accent, AppColors.primarySoft],
         ),
-        borderRadius: BorderRadius.circular(21),
+        borderRadius: AppRadii.lgRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -402,7 +404,7 @@ class _BoldHero extends StatelessWidget {
                 child: _BoldStatCard(
                   label: 'COPIERS',
                   value: _formatCompactNumber(snapshot.totalCopiers),
-                  color: _copyBlue,
+                  color: _copyPrimary,
                 ),
               ),
               const SizedBox(width: 12),
@@ -431,13 +433,11 @@ class _CopyIconBox extends StatelessWidget {
       height: 48,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0x338B5CF6), Color(0x338B5CF6)],
-        ),
+        color: AppColors.accent20,
         border: Border.all(color: const Color(0x26FFFFFF)),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
-      child: const Icon(Icons.copy_rounded, color: _copyBlue, size: 23),
+      child: const Icon(Icons.copy_rounded, color: _copyPrimary, size: 23),
     );
   }
 }
@@ -674,7 +674,7 @@ class _SortChip extends StatelessWidget {
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-          color: active ? _copyBlue : _copySurface,
+          color: active ? _copyPrimary : _copyPanelAlt,
           borderRadius: BorderRadius.circular(999),
         ),
         child: FittedBox(
@@ -795,17 +795,17 @@ class _AvatarBadge extends StatelessWidget {
             height: 48,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: _copyBlue.withValues(alpha: .13),
+              color: _copyPrimary.withValues(alpha: .13),
               shape: BoxShape.circle,
               border: Border.all(
-                color: _copyBlue.withValues(alpha: .27),
+                color: _copyPrimary.withValues(alpha: .27),
                 width: 2,
               ),
             ),
             child: Text(
               trader.avatar,
               style: AppTextStyles.baseMedium.copyWith(
-                color: _copyBlue,
+                color: _copyPrimary,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -889,8 +889,8 @@ class _DetailsButton extends StatelessWidget {
         height: 40,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _copySurface,
-          borderRadius: BorderRadius.circular(20),
+          color: _copyPanelAlt,
+          borderRadius: AppRadii.lgRadius,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

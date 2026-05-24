@@ -12,9 +12,9 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _toolsBlue = Color(0xFF3B82F6);
-const _cardBg = Color(0xFF171C24);
-const _chipBg = Color(0xFF1D263B);
+const _toolsPrimary = AppColors.primary;
+const _cardBackground = AppColors.surface2;
+const _chipBackground = AppColors.surface2;
 
 enum _ToolsTab { ladder, bulk, shortcuts }
 
@@ -260,11 +260,11 @@ class _IntroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Panel(
-      borderColor: _toolsBlue.withValues(alpha: .30),
+      borderColor: _toolsPrimary.withValues(alpha: .30),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _IconTile(icon: Icons.bolt_rounded, color: _toolsBlue, size: 40),
+          _IconTile(icon: Icons.bolt_rounded, color: _toolsPrimary, size: 40),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -465,7 +465,7 @@ class _BenefitItem extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: _toolsBlue, size: 18),
+        Icon(icon, color: _toolsPrimary, size: 18),
         const SizedBox(width: 10),
         Expanded(
           child: Column(
@@ -555,7 +555,7 @@ class _ToolsTabs extends StatelessWidget {
       height: 44,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: _chipBg,
+        color: _chipBackground,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
@@ -822,7 +822,7 @@ class _TabButton extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? _toolsBlue : Colors.transparent,
+          color: active ? _toolsPrimary : Colors.transparent,
           borderRadius: AppRadii.smRadius,
         ),
         child: Text(
@@ -917,7 +917,7 @@ class _IconTile extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Icon(icon, color: color, size: size * .5),
     );
@@ -940,7 +940,7 @@ class _Panel extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _cardBg,
+        color: _cardBackground,
         border: Border.all(color: borderColor),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -1057,7 +1057,7 @@ class _SuccessToast extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
-          color: const Color(0xFF052E2B),
+          color: AppColors.buy10,
           borderRadius: AppRadii.cardRadius,
           border: Border.all(color: AppColors.buy.withValues(alpha: .38)),
           boxShadow: [

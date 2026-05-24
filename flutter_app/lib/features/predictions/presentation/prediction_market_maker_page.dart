@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -15,7 +16,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 
 enum _MarketMakerTab { provide, positions, earnings }
 
@@ -190,7 +191,7 @@ class _MarketMakerTabBar extends StatelessWidget {
                             item.label,
                             style: AppTextStyles.caption.copyWith(
                               color: activeTab == item.tab
-                                  ? _predictionBlue
+                                  ? _predictionPrimary
                                   : AppColors.text3,
                               fontWeight: AppTextStyles.bold,
                               fontSize: 12,
@@ -203,7 +204,7 @@ class _MarketMakerTabBar extends StatelessWidget {
                         height: 2,
                         width: activeTab == item.tab ? 116 : 0,
                         decoration: BoxDecoration(
-                          color: _predictionBlue,
+                          color: _predictionPrimary,
                           borderRadius: BorderRadius.circular(1),
                         ),
                       ),
@@ -235,12 +236,12 @@ class _LiquidityOverview extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: const Color(0x143B82F6),
-                  borderRadius: BorderRadius.circular(14),
+                  color: AppColors.primary08,
+                  borderRadius: AppRadii.inputRadius,
                 ),
                 child: const Icon(
                   Icons.water_drop_outlined,
-                  color: _predictionBlue,
+                  color: _predictionPrimary,
                   size: 25,
                 ),
               ),
@@ -313,7 +314,7 @@ class _AddLiquidityForm extends StatelessWidget {
 
     return VitPageSection(
       label: 'Them thanh khoan',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         VitCard(
           padding: const EdgeInsets.all(16),
@@ -399,7 +400,7 @@ class _MarketInput extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.bg,
             border: Border.all(color: AppColors.border),
-            borderRadius: BorderRadius.circular(21),
+            borderRadius: AppRadii.lgRadius,
           ),
           child: Row(
             children: [
@@ -414,7 +415,7 @@ class _MarketInput extends StatelessWidget {
                   inputFormatters: numeric
                       ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))]
                       : null,
-                  cursorColor: _predictionBlue,
+                  cursorColor: _predictionPrimary,
                   style: AppTextStyles.body.copyWith(
                     fontSize: 14,
                     fontWeight: AppTextStyles.medium,
@@ -500,11 +501,11 @@ class _SpreadButton extends StatelessWidget {
     return SizedBox(
       height: 36,
       child: Material(
-        color: selected ? _predictionBlue : AppColors.bg,
-        borderRadius: BorderRadius.circular(18),
+        color: selected ? _predictionPrimary : AppColors.bg,
+        borderRadius: AppRadii.cardRadius,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
           child: Center(
             child: Text(
               '$value',
@@ -563,10 +564,10 @@ class _AddLiquidityButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 48,
+      height: AppSpacing.inputHeight,
       width: double.infinity,
       child: Material(
-        color: _predictionBlue.withValues(alpha: enabled ? 1 : .66),
+        color: _predictionPrimary.withValues(alpha: enabled ? 1 : .66),
         borderRadius: AppRadii.inputRadius,
         child: InkWell(
           key: PredictionMarketMakerPage.addLiquidityKey,
@@ -637,7 +638,7 @@ class _PositionsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Cac vi the',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         _PositionSummary(snapshot: snapshot),
         for (final position in snapshot.positions) _PositionCard(position),
@@ -770,7 +771,7 @@ class _EarningsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Phan tich thu nhap',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         VitCard(
           padding: const EdgeInsets.all(16),
@@ -844,7 +845,7 @@ class _FeeBar extends StatelessWidget {
         Container(
           height: height,
           decoration: const BoxDecoration(
-            color: _predictionBlue,
+            color: _predictionPrimary,
             borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
           ),
         ),

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,10 +13,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _bookBg = Color(0xFF080C14);
-const _bookSurface = Color(0xFF151A23);
-const _bookSurface2 = Color(0xFF1D2436);
-const _bookBlue = Color(0xFF3B82F6);
+const _bookBackground = AppColors.bg;
+const _bookPanel = AppColors.surface;
+const _bookPanel2 = AppColors.surface2;
+const _bookPrimary = AppColors.primary;
 const _bookGreen = Color(0xFF10B981);
 const _bookAmber = Color(0xFFF59E0B);
 const _bookRed = Color(0xFFEF4444);
@@ -76,7 +77,7 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-144 AddressBookPage',
       child: Material(
-        color: _bookBg,
+        color: _bookBackground,
         child: Column(
           children: [
             VitHeader(
@@ -201,7 +202,7 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: _bookSurface,
+          backgroundColor: _bookPanel,
           title: const Text('Xóa địa chỉ'),
           content: Text('Bạn có chắc muốn xóa địa chỉ "${address.label}"?'),
           actions: [
@@ -243,11 +244,11 @@ class _AddAddressButton extends StatelessWidget {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: const Color(0x263B82F6),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: const Color(0x333B82F6)),
+          color: AppColors.primary15,
+          borderRadius: AppRadii.lgRadius,
+          border: Border.all(color: AppColors.primary20),
         ),
-        child: const Icon(Icons.add_rounded, color: _bookBlue, size: 24),
+        child: const Icon(Icons.add_rounded, color: _bookPrimary, size: 24),
       ),
     );
   }
@@ -265,8 +266,8 @@ class _SearchBox extends StatelessWidget {
       height: 52,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: _bookSurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: _bookPanel2,
+        borderRadius: AppRadii.inputRadius,
         border: Border.all(color: AppColors.borderSolid, width: 1.35),
       ),
       child: Row(
@@ -313,8 +314,8 @@ class _WhitelistModeCard extends StatelessWidget {
         height: 74,
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
         decoration: BoxDecoration(
-          color: _bookSurface,
-          borderRadius: BorderRadius.circular(16),
+          color: _bookPanel,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(color: const Color(0x14FFFFFF)),
         ),
         child: Row(
@@ -323,8 +324,8 @@ class _WhitelistModeCard extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: enabled ? AppColors.buy10 : _bookSurface2,
-                borderRadius: BorderRadius.circular(20),
+                color: enabled ? AppColors.buy10 : _bookPanel2,
+                borderRadius: AppRadii.lgRadius,
               ),
               child: Icon(
                 Icons.lock_outline_rounded,
@@ -379,8 +380,8 @@ class _SwitchPill extends StatelessWidget {
       width: 48,
       height: 28,
       decoration: BoxDecoration(
-        color: enabled ? _bookGreen : _bookSurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: enabled ? _bookGreen : _bookPanel2,
+        borderRadius: AppRadii.inputRadius,
         border: Border.all(
           color: enabled ? _bookGreen : AppColors.borderSolid,
           width: 1.4,
@@ -433,18 +434,16 @@ class _NetworkFilterBar extends StatelessWidget {
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(horizontal: 13),
               decoration: BoxDecoration(
-                color: selected ? const Color(0x243B82F6) : Colors.transparent,
-                borderRadius: BorderRadius.circular(15),
+                color: selected ? AppColors.primary15 : Colors.transparent,
+                borderRadius: AppRadii.inputRadius,
                 border: Border.all(
-                  color: selected
-                      ? const Color(0x803B82F6)
-                      : Colors.transparent,
+                  color: selected ? AppColors.primary60 : Colors.transparent,
                 ),
               ),
               child: Text(
                 filter,
                 style: AppTextStyles.caption.copyWith(
-                  color: selected ? _bookBlue : AppColors.text2,
+                  color: selected ? _bookPrimary : AppColors.text2,
                   fontSize: 12,
                   fontWeight: FontWeight.w800,
                   height: 1,
@@ -468,7 +467,7 @@ class _AddressStats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stats = [
-      (addresses.length.toString(), 'Tổng địa chỉ', _bookBlue),
+      (addresses.length.toString(), 'Tổng địa chỉ', _bookPrimary),
       (
         addresses.where((address) => address.isFavorite).length.toString(),
         'Yêu thích',
@@ -488,8 +487,8 @@ class _AddressStats extends StatelessWidget {
             child: Container(
               height: 70,
               decoration: BoxDecoration(
-                color: _bookSurface,
-                borderRadius: BorderRadius.circular(13),
+                color: _bookPanel,
+                borderRadius: AppRadii.mdRadius,
                 border: Border.all(color: const Color(0x14FFFFFF)),
               ),
               child: Column(
@@ -572,8 +571,8 @@ class _AddressCard extends StatelessWidget {
       height: 162,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _bookSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _bookPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: const Color(0x14FFFFFF)),
       ),
       child: Column(
@@ -698,8 +697,8 @@ class _ShieldBadge extends StatelessWidget {
       width: 40,
       height: 40,
       decoration: BoxDecoration(
-        color: _bookSurface2,
-        borderRadius: BorderRadius.circular(16),
+        color: _bookPanel2,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: AppColors.borderSolid),
       ),
       child: Icon(
@@ -782,23 +781,23 @@ class _CopyButton extends StatelessWidget {
         height: 36,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: const Color(0x1A3B82F6),
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: const Color(0x333B82F6)),
+          color: AppColors.primary12,
+          borderRadius: AppRadii.cardRadius,
+          border: Border.all(color: AppColors.primary20),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               copied ? Icons.check_circle_outline_rounded : Icons.copy_rounded,
-              color: _bookBlue,
+              color: _bookPrimary,
               size: 14,
             ),
             const SizedBox(width: 7),
             Text(
               copied ? 'Đã copy' : 'Sao chép',
               style: AppTextStyles.caption.copyWith(
-                color: _bookBlue,
+                color: _bookPrimary,
                 fontSize: 12,
                 fontWeight: FontWeight.w800,
                 height: 1,
@@ -840,8 +839,8 @@ class _RoundActionButton extends StatelessWidget {
               ? const Color(0x14EF4444)
               : filled
               ? const Color(0x1AF59E0B)
-              : _bookSurface2,
-          borderRadius: BorderRadius.circular(18),
+              : _bookPanel2,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(
             color: danger
                 ? const Color(0x26EF4444)
@@ -871,8 +870,8 @@ class _EmptyAddressState extends StatelessWidget {
             width: 64,
             height: 64,
             decoration: BoxDecoration(
-              color: _bookSurface2,
-              borderRadius: BorderRadius.circular(22),
+              color: _bookPanel2,
+              borderRadius: AppRadii.lgRadius,
             ),
             child: const Icon(
               Icons.shield_outlined,
@@ -901,14 +900,14 @@ class _SecurityTip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
       decoration: BoxDecoration(
-        color: const Color(0x0F3B82F6),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0x263B82F6)),
+        color: AppColors.primary08,
+        borderRadius: AppRadii.cardRadius,
+        border: Border.all(color: AppColors.primary15),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: _bookBlue, size: 16),
+          const Icon(Icons.shield_outlined, color: _bookPrimary, size: 16),
           const SizedBox(width: 10),
           Expanded(
             child: Text.rich(
@@ -922,7 +921,7 @@ class _SecurityTip extends StatelessWidget {
                   TextSpan(
                     text: 'Bảo mật: ',
                     style: TextStyle(
-                      color: _bookBlue,
+                      color: _bookPrimary,
                       fontWeight: FontWeight.w800,
                     ),
                   ),

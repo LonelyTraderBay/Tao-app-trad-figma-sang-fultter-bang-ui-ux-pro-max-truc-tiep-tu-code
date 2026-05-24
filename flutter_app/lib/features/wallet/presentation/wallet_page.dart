@@ -12,11 +12,11 @@ import '../../../shared/layout/shell_render_mode.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _walletBg = Color(0xFF080C14);
-const _walletSurface = Color(0xFF151A23);
-const _walletSurface2 = Color(0xFF1D2436);
-const _walletHero = Color(0xFF111D3D);
-const _walletBlue = Color(0xFF3B82F6);
+const _walletBackground = AppColors.bg;
+const _walletPanel = AppColors.surface;
+const _walletPanel2 = AppColors.surface2;
+const _walletHero = AppColors.surface;
+const _walletPrimary = AppColors.primary;
 const _walletGreen = Color(0xFF10B981);
 const _walletRed = Color(0xFFEF4444);
 const _walletAmber = Color(0xFFF59E0B);
@@ -73,7 +73,7 @@ class _WalletPageState extends ConsumerState<WalletPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-135 WalletPage',
       child: Material(
-        color: _walletBg,
+        color: _walletBackground,
         child: SingleChildScrollView(
           key: WalletPage.contentKey,
           padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
@@ -168,8 +168,8 @@ class _BalanceHero extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 17),
       decoration: BoxDecoration(
         color: _walletHero,
-        border: Border.all(color: _walletBlue.withValues(alpha: .20)),
-        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: _walletPrimary.withValues(alpha: .20)),
+        borderRadius: AppRadii.lgRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -270,7 +270,7 @@ class _BreakdownRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: .10),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         children: [
@@ -337,7 +337,7 @@ class _ActionTile extends StatelessWidget {
         height: 68,
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: .10),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: AppRadii.mdRadius,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -379,7 +379,7 @@ class _DcaCard extends StatelessWidget {
       height: 249,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
       decoration: BoxDecoration(
-        color: _walletSurface2,
+        color: _walletPanel2,
         borderRadius: AppRadii.cardRadius,
         border: Border.all(color: Colors.white.withValues(alpha: .18)),
       ),
@@ -420,7 +420,7 @@ class _DcaCard extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: _walletGreen.withValues(alpha: .12),
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadii.mdRadius,
                           ),
                           child: Text(
                             dca.returnLabel,
@@ -469,7 +469,7 @@ class _DcaCard extends StatelessWidget {
               Expanded(
                 child: _DcaStatCard(
                   icon: Icons.trending_up_rounded,
-                  iconColor: _walletBlue,
+                  iconColor: _walletPrimary,
                   label: 'Đã đầu tư',
                   value: _formatVnd(dca.invested),
                 ),
@@ -481,9 +481,9 @@ class _DcaCard extends StatelessWidget {
             height: 62,
             padding: const EdgeInsets.fromLTRB(14, 9, 14, 9),
             decoration: BoxDecoration(
-              color: _walletSurface,
+              color: _walletPanel,
               border: Border.all(color: Colors.white.withValues(alpha: .24)),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: AppRadii.cardRadius,
             ),
             child: Row(
               children: [
@@ -546,9 +546,9 @@ class _DcaStatCard extends StatelessWidget {
       height: 68,
       padding: const EdgeInsets.fromLTRB(13, 9, 13, 9),
       decoration: BoxDecoration(
-        color: _walletHero.withValues(alpha: .38),
-        border: Border.all(color: Colors.white.withValues(alpha: .18)),
-        borderRadius: BorderRadius.circular(16),
+        color: AppColors.surface2,
+        border: Border.all(color: AppColors.borderSolid),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         children: [
@@ -664,9 +664,9 @@ class _ToolButton extends StatelessWidget {
         height: 38,
         padding: const EdgeInsets.symmetric(horizontal: 13),
         decoration: BoxDecoration(
-          color: _walletSurface2,
+          color: _walletPanel2,
           border: Border.all(color: AppColors.cardBorder),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: AppRadii.mdRadius,
         ),
         child: Row(
           children: [
@@ -705,8 +705,8 @@ class _SegmentedTabs extends StatelessWidget {
       height: 45,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: _walletSurface2,
-        borderRadius: BorderRadius.circular(19),
+        color: _walletPanel2,
+        borderRadius: AppRadii.lgRadius,
       ),
       child: Row(
         children: [
@@ -719,8 +719,10 @@ class _SegmentedTabs extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: active == tab.$1 ? _walletBlue : Colors.transparent,
-                    borderRadius: BorderRadius.circular(15),
+                    color: active == tab.$1
+                        ? _walletPrimary
+                        : Colors.transparent,
+                    borderRadius: AppRadii.inputRadius,
                   ),
                   child: Text(
                     tab.$2,
@@ -761,8 +763,8 @@ class _SearchAndFilter extends StatelessWidget {
           child: Container(
             height: 36,
             decoration: BoxDecoration(
-              color: _walletSurface2,
-              border: Border.all(color: const Color(0xFF263656)),
+              color: _walletPanel2,
+              border: Border.all(color: AppColors.borderSolid),
               borderRadius: BorderRadius.circular(5),
             ),
             child: Row(
@@ -779,7 +781,7 @@ class _SearchAndFilter extends StatelessWidget {
                     key: WalletPage.searchKey,
                     controller: controller,
                     onChanged: onChanged,
-                    cursorColor: _walletBlue,
+                    cursorColor: _walletPrimary,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text1,
                       fontSize: 12,
@@ -811,8 +813,8 @@ class _SearchAndFilter extends StatelessWidget {
             height: 36,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: filterActive ? _walletBlue : _walletSurface2,
-              border: Border.all(color: const Color(0xFF263656)),
+              color: filterActive ? _walletPrimary : _walletPanel2,
+              border: Border.all(color: AppColors.borderSolid),
               borderRadius: BorderRadius.circular(6),
             ),
             child: Icon(
@@ -850,14 +852,14 @@ class _AssetHeader extends StatelessWidget {
         _HeaderButton(
           label: 'Sổ địa chỉ',
           foreground: AppColors.text2,
-          background: _walletSurface2,
+          background: _walletPanel2,
           onTap: () => onNavigate('/wallet/address-book'),
         ),
         const SizedBox(width: 8),
         _HeaderButton(
           label: 'Phân tích',
-          foreground: _walletBlue,
-          background: _walletBlue.withValues(alpha: .12),
+          foreground: _walletPrimary,
+          background: _walletPrimary.withValues(alpha: .12),
           onTap: () => onNavigate('/wallet/portfolio-analytics'),
         ),
       ],
@@ -890,7 +892,7 @@ class _HeaderButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: background,
           border: Border.all(color: foreground.withValues(alpha: .22)),
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: AppRadii.inputRadius,
         ),
         child: Text(
           label,
@@ -924,7 +926,7 @@ class _AssetList extends StatelessWidget {
         height: 160,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _walletSurface,
+          color: _walletPanel,
           border: Border.all(color: AppColors.cardBorder),
           borderRadius: AppRadii.cardRadius,
         ),
@@ -937,7 +939,7 @@ class _AssetList extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: _walletSurface,
+        color: _walletPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -1100,7 +1102,7 @@ class _AllocationCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _walletSurface,
+        color: _walletPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -1175,7 +1177,7 @@ class _AllocationPainter extends CustomPainter {
       canvas.drawArc(rect.deflate(8), start, sweep, false, paint);
       start += sweep;
     }
-    final centerPaint = Paint()..color = _walletSurface;
+    final centerPaint = Paint()..color = _walletPanel;
     canvas.drawCircle(rect.center, 22, centerPaint);
   }
 

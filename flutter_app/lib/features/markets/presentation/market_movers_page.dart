@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 class MarketMoversPage extends ConsumerStatefulWidget {
   const MarketMoversPage({super.key, this.shellRenderMode});
@@ -539,26 +539,26 @@ class _FilterChipButton extends StatelessWidget {
       label: label,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: AppRadii.cardRadius,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 160),
           constraints: BoxConstraints(minHeight: minHeight),
           padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 8),
           decoration: BoxDecoration(
             color: active
-                ? _marketBlue.withValues(alpha: 0.18)
+                ? _marketPrimary.withValues(alpha: 0.18)
                 : AppColors.surface2,
             border: Border.all(
               color: active
-                  ? _marketBlue.withValues(alpha: 0.55)
+                  ? _marketPrimary.withValues(alpha: 0.55)
                   : AppColors.borderSolid,
             ),
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: AppRadii.cardRadius,
           ),
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
-              color: active ? _marketBlue : AppColors.text2,
+              color: active ? _marketPrimary : AppColors.text2,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -855,13 +855,13 @@ class _NewBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
       decoration: BoxDecoration(
-        color: _marketBlue.withValues(alpha: 0.15),
+        color: _marketPrimary.withValues(alpha: 0.15),
         borderRadius: AppRadii.xsRadius,
       ),
       child: Text(
         'MỚI',
         style: AppTextStyles.micro.copyWith(
-          color: _marketBlue,
+          color: _marketPrimary,
           fontSize: 8,
           fontWeight: AppTextStyles.bold,
           height: 1,

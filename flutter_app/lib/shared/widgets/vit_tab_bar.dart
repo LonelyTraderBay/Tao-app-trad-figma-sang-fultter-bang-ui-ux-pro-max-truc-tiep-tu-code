@@ -113,16 +113,12 @@ class _PillTab extends StatelessWidget {
             ),
             const SizedBox(width: AppSpacing.x2),
           ],
-          Text(
-            tab.label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? AppColors.primary : AppColors.text2,
-              fontWeight: active ? AppTextStyles.medium : AppTextStyles.normal,
-              height: 1,
-            ),
-          ),
+          if (fillParent)
+            Flexible(
+              child: _PillTabLabel(tab: tab, active: active),
+            )
+          else
+            _PillTabLabel(tab: tab, active: active),
         ],
       ),
     );
@@ -138,6 +134,27 @@ class _PillTab extends StatelessWidget {
 
     if (!fillParent) return button;
     return Expanded(child: button);
+  }
+}
+
+class _PillTabLabel extends StatelessWidget {
+  const _PillTabLabel({required this.tab, required this.active});
+
+  final VitTabItem tab;
+  final bool active;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      tab.label,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: AppTextStyles.caption.copyWith(
+        color: active ? AppColors.primary : AppColors.text2,
+        fontWeight: active ? AppTextStyles.medium : AppTextStyles.normal,
+        height: 1,
+      ),
+    );
   }
 }
 

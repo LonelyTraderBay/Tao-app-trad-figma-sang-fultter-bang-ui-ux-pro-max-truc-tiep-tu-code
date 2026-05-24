@@ -4,6 +4,8 @@ Use this file to define Flutter constants for the native app. The global native 
 
 `SC-007 HomePage` now defines the approved native Flutter brand treatment: a Bybit-inspired dark orange palette on a cleaner neutral dark background. This is a Flutter native runtime standard and does not overwrite the React screenshot baseline under `output/flutter-ui-reference/screenshots/`.
 
+For module-level identity rules, see `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md`. Module identity is an accent layer and must not override the Home foundation tokens below.
+
 ## Token Rules
 
 - Do not hardcode repeated colors, spacing, radii, typography, or device metrics inside screens.
@@ -48,6 +50,20 @@ The Flutter native runtime must use Home as the practical brand standard, not a 
 | `AppColors.searchBg` | Flutter native brand override | `0xFF171C24` |
 | `AppColors.searchBorder` | Flutter native brand override | `0xFF2D3440` |
 | `AppColors.statusBattery` | `--tr-status-bar-battery` | `0xFF34D399` |
+
+## AppModuleAccents
+
+Use `AppModuleAccents` when a module needs a restrained identity marker for icons, badges, chart markers, hero borders, or pills. Do not use these tokens for page backgrounds, ordinary card backgrounds, inputs, bottom navigation, or CTA sizing.
+
+| Flutter token | Intended use |
+| --- | --- |
+| `AppModuleAccents.home` | Home discovery, shortcut, and brand-forward accents |
+| `AppModuleAccents.markets` | Markets analytics, chart metadata, and discovery accents |
+| `AppModuleAccents.trade` | Trade action/focus accents that are not buy/sell |
+| `AppModuleAccents.wallet` | Wallet asset/security accents |
+| `AppModuleAccents.profile` | Profile/account neutral accents |
+| `AppModuleAccents.predictions` | Prediction Markets domain accents |
+| `AppModuleAccents.arena` | Arena Points-only domain accents |
 
 Alpha tokens should be implemented as named helpers, for example:
 

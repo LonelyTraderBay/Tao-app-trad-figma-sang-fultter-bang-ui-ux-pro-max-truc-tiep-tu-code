@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -11,10 +13,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _approvalBg = Color(0xFF080C14);
-const _approvalSurface = Color(0xFF151A23);
+const _approvalBackground = AppColors.bg;
+const _approvalPanel = AppColors.surface;
 const _approvalBorder = Color(0x14FFFFFF);
-const _approvalBlue = Color(0xFF3B82F6);
+const _approvalPrimary = AppColors.primary;
 const _approvalGreen = Color(0xFF10B981);
 const _approvalAmber = Color(0xFFF59E0B);
 const _approvalOrange = Color(0xFFF97316);
@@ -65,7 +67,7 @@ class _WalletTokenApprovalPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-150 WalletTokenApprovalPage',
       child: Material(
-        color: _approvalBg,
+        color: _approvalBackground,
         child: Column(
           children: [
             VitHeader(
@@ -114,7 +116,7 @@ class _WalletTokenApprovalPageState
         : 'Revoke ${approval.token} approval';
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: _approvalSurface,
+      backgroundColor: _approvalPanel,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
@@ -147,7 +149,7 @@ class _WalletTokenApprovalPageState
                       child: _SheetButton(
                         key: WalletTokenApprovalPage.revokeSheetCancelKey,
                         label: 'Cancel',
-                        background: const Color(0xFF202635),
+                        background: AppColors.surface3,
                         color: AppColors.text2,
                         onTap: () => Navigator.of(context).pop(),
                       ),
@@ -184,7 +186,7 @@ class _ApprovalTabs extends StatelessWidget {
     return Container(
       height: 54,
       decoration: const BoxDecoration(
-        color: _approvalSurface,
+        color: _approvalPanel,
         border: Border(bottom: BorderSide(color: _approvalBorder)),
       ),
       child: Row(
@@ -202,7 +204,7 @@ class _ApprovalTabs extends StatelessWidget {
                         tab,
                         style: AppTextStyles.caption.copyWith(
                           color: activeTab == tab
-                              ? _approvalBlue
+                              ? _approvalPrimary
                               : const Color(0xFF566175),
                           fontSize: 12,
                           fontWeight: FontWeight.w800,
@@ -218,7 +220,7 @@ class _ApprovalTabs extends StatelessWidget {
                         duration: const Duration(milliseconds: 150),
                         height: 2,
                         color: activeTab == tab
-                            ? _approvalBlue
+                            ? _approvalPrimary
                             : Colors.transparent,
                       ),
                     ),
@@ -279,8 +281,8 @@ class _SecurityOverview extends StatelessWidget {
       height: 203,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
       decoration: BoxDecoration(
-        color: _approvalSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _approvalPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _approvalBorder),
       ),
       child: Column(
@@ -293,7 +295,7 @@ class _SecurityOverview extends StatelessWidget {
                 height: 48,
                 decoration: BoxDecoration(
                   color: _approvalPurple.withValues(alpha: .14),
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: AppRadii.inputRadius,
                 ),
                 alignment: Alignment.center,
                 child: const Icon(
@@ -417,7 +419,7 @@ class _CriticalAlert extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
       decoration: BoxDecoration(
         color: _approvalRed.withValues(alpha: .07),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _approvalRed.withValues(alpha: .23)),
       ),
       child: Row(
@@ -475,7 +477,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 14,
           decoration: BoxDecoration(
-            color: _approvalBlue,
+            color: _approvalPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -511,8 +513,8 @@ class _ApprovalCard extends StatelessWidget {
       height: showUnusedWarning ? 240 : 200,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
       decoration: BoxDecoration(
-        color: _approvalSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _approvalPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: bordered ? riskColor : _approvalBorder),
       ),
       child: Column(
@@ -534,7 +536,7 @@ class _ApprovalCard extends StatelessWidget {
                   height: 32,
                   decoration: BoxDecoration(
                     color: _approvalRed.withValues(alpha: .10),
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: AppRadii.cardRadius,
                   ),
                   alignment: Alignment.center,
                   child: const Icon(
@@ -563,7 +565,7 @@ class _ApprovalCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
                 color: _approvalRed.withValues(alpha: .07),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadii.mdRadius,
               ),
               child: Row(
                 children: [
@@ -721,8 +723,8 @@ class _ApprovalAmount extends StatelessWidget {
       decoration: BoxDecoration(
         color: approval.unlimited
             ? _approvalRed.withValues(alpha: .08)
-            : const Color(0xFF0C111B),
-        borderRadius: BorderRadius.circular(12),
+            : AppColors.surface2,
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Row(
         children: [
@@ -802,11 +804,11 @@ class _RevokeAllButton extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 48,
+        height: AppSpacing.inputHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: _approvalRed.withValues(alpha: .10),
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: AppRadii.inputRadius,
           border: Border.all(color: _approvalRed.withValues(alpha: .26)),
         ),
         child: Row(
@@ -847,16 +849,16 @@ class _InfoNotice extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 58),
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
       decoration: BoxDecoration(
-        color: _approvalBlue.withValues(alpha: .08),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _approvalBlue.withValues(alpha: .20)),
+        color: _approvalPrimary.withValues(alpha: .08),
+        borderRadius: AppRadii.cardRadius,
+        border: Border.all(color: _approvalPrimary.withValues(alpha: .20)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
-            color: _approvalBlue,
+            color: _approvalPrimary,
             size: 14,
           ),
           const SizedBox(width: 10),
@@ -892,8 +894,8 @@ class _HistoryTab extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: _approvalSurface,
-              borderRadius: BorderRadius.circular(14),
+              color: _approvalPanel,
+              borderRadius: AppRadii.inputRadius,
               border: Border.all(color: _approvalBorder),
             ),
             child: Row(
@@ -944,8 +946,8 @@ class _HistoryTab extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: _approvalSurface,
-            borderRadius: BorderRadius.circular(16),
+            color: _approvalPanel,
+            borderRadius: AppRadii.cardRadius,
             border: Border.all(color: _approvalBorder),
           ),
           child: Row(
@@ -1042,8 +1044,8 @@ class _SettingsTab extends StatelessWidget {
           height: 48,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: _approvalBlue,
-            borderRadius: BorderRadius.circular(14),
+            color: _approvalPrimary,
+            borderRadius: AppRadii.inputRadius,
           ),
           child: Text(
             'Scan for Risky Approvals',
@@ -1079,8 +1081,8 @@ class _SettingsRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _approvalSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _approvalPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _approvalBorder),
       ),
       child: Row(
@@ -1118,8 +1120,8 @@ class _SettingsRow extends StatelessWidget {
               padding: const EdgeInsets.all(2),
               alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
               decoration: BoxDecoration(
-                color: enabled ? _approvalBlue : const Color(0xFF566175),
-                borderRadius: BorderRadius.circular(14),
+                color: enabled ? _approvalPrimary : AppColors.surface3,
+                borderRadius: AppRadii.inputRadius,
               ),
               child: Container(
                 width: 24,
@@ -1145,8 +1147,8 @@ class _BestPracticesCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _approvalSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _approvalPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _approvalBorder),
       ),
       child: Column(
@@ -1219,7 +1221,7 @@ class _SheetButton extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: background,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: AppRadii.inputRadius,
         ),
         child: Text(
           label,

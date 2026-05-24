@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,13 +13,13 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _copyBlue = Color(0xFF3B82F6);
-const _copySurface = Color(0xFF11151E);
-const _copySurface2 = Color(0xFF1A2032);
-const _copySegmentBg = Color(0xFF1E2536);
-const _lightBuyBg = Color(0xFFEFFDF5);
-const _lightSellBg = Color(0xFFFFF1F1);
-const _lightWarnBg = Color(0xFFFFF7E8);
+const _copyPrimary = AppColors.primary;
+const _copyPanel = AppColors.surface;
+const _copyPanel2 = AppColors.surface2;
+const _copySegmentBackground = AppColors.surface3;
+const _lightBuyBackground = Color(0xFFEFFDF5);
+const _lightSellBackground = Color(0xFFFFF1F1);
+const _lightWarnBackground = Color(0xFFFFF7E8);
 
 class ActiveCopiesPage extends ConsumerStatefulWidget {
   const ActiveCopiesPage({super.key, this.shellRenderMode});
@@ -220,14 +221,14 @@ class _HeaderAddButton extends StatelessWidget {
     return InkWell(
       key: ActiveCopiesPage.addCopyKey,
       onTap: onTap,
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: AppRadii.smRadius,
       child: Container(
         width: 36,
         height: 36,
         decoration: BoxDecoration(
-          color: _copySegmentBg,
+          color: _copySegmentBackground,
           border: Border.all(color: AppColors.cardBorder),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: AppRadii.smRadius,
         ),
         child: const Icon(Icons.add_rounded, color: AppColors.text1, size: 22),
       ),
@@ -244,16 +245,14 @@ class _PortfolioOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     final positive = snapshot.totalPnl >= 0;
     final color = positive ? AppColors.buy : AppColors.sell;
-    final bg = positive ? _lightBuyBg : _lightSellBg;
-    final labelColor = positive
-        ? const Color(0xFF166534)
-        : const Color(0xFF991B1B);
+    final bg = positive ? _lightBuyBackground : _lightSellBackground;
+    final labelColor = positive ? AppColors.buy20 : const Color(0xFF991B1B);
 
     return Container(
       height: 194,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _copySurface,
+        color: _copyPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -304,7 +303,7 @@ class _PortfolioOverview extends StatelessWidget {
             decoration: BoxDecoration(
               color: bg,
               border: Border.all(color: color),
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: AppRadii.cardRadius,
             ),
             child: Row(
               children: [
@@ -411,8 +410,8 @@ class _SegmentedTabs extends StatelessWidget {
       height: 48,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: _copySegmentBg,
-        borderRadius: BorderRadius.circular(24),
+        color: _copySegmentBackground,
+        borderRadius: AppRadii.cardLargeRadius,
       ),
       child: Row(
         children: [
@@ -446,12 +445,12 @@ class _SegmentedTabButton extends StatelessWidget {
     return InkWell(
       key: ActiveCopiesPage.tabKey(tab.id),
       onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: AppRadii.lgRadius,
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? _copyBlue : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
+          color: active ? _copyPrimary : Colors.transparent,
+          borderRadius: AppRadii.lgRadius,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 4),
         child: FittedBox(
@@ -494,12 +493,12 @@ class _ActiveCopyCard extends StatelessWidget {
     final status = _statusStyle(copy.status);
     final positive = copy.pnl >= 0;
     final pnlColor = positive ? AppColors.buy : AppColors.sell;
-    final pnlBg = positive ? _lightBuyBg : _lightSellBg;
+    final pnlBg = positive ? _lightBuyBackground : _lightSellBackground;
 
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _copySurface,
+        color: _copyPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -533,7 +532,7 @@ class _ActiveCopyCard extends StatelessWidget {
                           const SizedBox(width: 5),
                           const Icon(
                             Icons.check_circle_rounded,
-                            color: _copyBlue,
+                            color: _copyPrimary,
                             size: 12,
                           ),
                         ],
@@ -567,7 +566,7 @@ class _ActiveCopyCard extends StatelessWidget {
               InkWell(
                 key: ActiveCopiesPage.expandKey(copy.id),
                 onTap: onToggle,
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: AppRadii.cardRadius,
                 child: SizedBox(
                   width: 28,
                   height: 28,
@@ -638,14 +637,14 @@ class _ProviderAvatar extends StatelessWidget {
       height: 48,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: _copyBlue.withValues(alpha: .08),
+        color: _copyPrimary.withValues(alpha: .08),
         shape: BoxShape.circle,
-        border: Border.all(color: _copyBlue, width: 2),
+        border: Border.all(color: _copyPrimary, width: 2),
       ),
       child: Text(
         copy.providerAvatar,
         style: AppTextStyles.baseMedium.copyWith(
-          color: _copyBlue,
+          color: _copyPrimary,
           fontSize: 17,
           fontWeight: AppTextStyles.bold,
           height: 1,
@@ -686,7 +685,7 @@ class _MiniValueCard extends StatelessWidget {
     required this.label,
     required this.value,
     this.valueColor = AppColors.text1,
-    this.background = _copySurface2,
+    this.background = _copyPanel2,
   });
 
   final String label;
@@ -750,7 +749,7 @@ class _ReturnBar extends StatelessWidget {
       height: 41,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: _copySurface2,
+        color: _copyPanel2,
         borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
@@ -886,7 +885,7 @@ class _ExpandedCopyDetails extends StatelessWidget {
                     child: Text(
                       'Xem tất cả',
                       style: AppTextStyles.micro.copyWith(
-                        color: _copyBlue,
+                        color: _copyPrimary,
                         fontSize: 11,
                         fontWeight: AppTextStyles.bold,
                       ),
@@ -947,7 +946,7 @@ class _MiniPerformanceStrip extends StatelessWidget {
       height: 54,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: _copySurface2,
+        color: _copyPanel2,
         borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
@@ -1000,7 +999,7 @@ class _DetailStat extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: _copySurface2,
+        color: _copyPanel2,
         borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
@@ -1048,7 +1047,7 @@ class _RecentTradeRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(9),
       decoration: BoxDecoration(
-        color: _copySurface2,
+        color: _copyPanel2,
         borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
@@ -1122,7 +1121,7 @@ class _ActionButton extends StatelessWidget {
           height: 42,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: danger ? AppColors.sell10 : _copySurface2,
+            color: danger ? AppColors.sell10 : _copyPanel2,
             borderRadius: AppRadii.inputRadius,
           ),
           child: Row(
@@ -1158,7 +1157,7 @@ class _EmptyCopiesState extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 40),
       decoration: BoxDecoration(
-        color: _copySurface,
+        color: _copyPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -1200,7 +1199,7 @@ class _EmptyCopiesState extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 18),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: _copyBlue,
+                  color: _copyPrimary,
                   borderRadius: AppRadii.inputRadius,
                 ),
                 child: Text(
@@ -1436,7 +1435,7 @@ class _StopCopyModal extends StatelessWidget {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: AppRadii.inputRadius,
-                      borderSide: const BorderSide(color: _copyBlue),
+                      borderSide: const BorderSide(color: _copyPrimary),
                     ),
                   ),
                 ),
@@ -1486,7 +1485,7 @@ class _SheetButton extends StatelessWidget {
       child: Opacity(
         opacity: onTap == null ? .45 : 1,
         child: Container(
-          height: 48,
+          height: AppSpacing.inputHeight,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: danger ? AppColors.sell : AppColors.surface2,
@@ -1523,12 +1522,12 @@ _StatusStyle _statusStyle(TradeActiveCopyStatus status) {
     TradeActiveCopyStatus.active => const _StatusStyle(
       label: 'Đang chạy',
       color: AppColors.buy,
-      background: _lightBuyBg,
+      background: _lightBuyBackground,
     ),
     TradeActiveCopyStatus.coolingOff => const _StatusStyle(
       label: 'Chờ kích hoạt',
       color: Color(0xFFF59E0B),
-      background: _lightWarnBg,
+      background: _lightWarnBackground,
     ),
     TradeActiveCopyStatus.paused => const _StatusStyle(
       label: 'Tạm dừng',
@@ -1538,7 +1537,7 @@ _StatusStyle _statusStyle(TradeActiveCopyStatus status) {
     TradeActiveCopyStatus.stopped => const _StatusStyle(
       label: 'Đã dừng',
       color: AppColors.sell,
-      background: _lightSellBg,
+      background: _lightSellBackground,
     ),
   };
 }

@@ -16,8 +16,8 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
-const _heroBlue = Color(0xFF0E1D49);
+const _marketPrimary = AppColors.primary;
+const _heroPrimary = Color(0xFF0E1D49);
 
 class PortfolioTrackerPage extends ConsumerStatefulWidget {
   const PortfolioTrackerPage({super.key, this.shellRenderMode});
@@ -104,7 +104,7 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
                         _AllocationCard(holdings: overviewHoldings),
                         const _SectionHeader(
                           label: 'Tài sản chính',
-                          accentColor: _marketBlue,
+                          accentColor: _marketPrimary,
                         ),
                         _TopHoldings(
                           holdings: overviewHoldings.take(4).toList(),
@@ -237,7 +237,7 @@ class _UnderlinedTab extends StatelessWidget {
                 child: Text(
                   label,
                   style: AppTextStyles.caption.copyWith(
-                    color: active ? _marketBlue : AppColors.text3,
+                    color: active ? _marketPrimary : AppColors.text3,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -247,7 +247,7 @@ class _UnderlinedTab extends StatelessWidget {
               height: 2,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
-                child: const ColoredBox(color: _marketBlue),
+                child: const ColoredBox(color: _marketPrimary),
               ),
             ),
           ],
@@ -278,9 +278,9 @@ class _TotalValueHero extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [_heroBlue, Color(0xFF081432)],
+          colors: [_heroPrimary, AppColors.surface],
         ),
-        border: Border.all(color: _marketBlue.withValues(alpha: .22)),
+        border: Border.all(color: _marketPrimary.withValues(alpha: .22)),
         borderRadius: AppRadii.cardLargeRadius,
       ),
       child: Column(
@@ -300,7 +300,7 @@ class _TotalValueHero extends StatelessWidget {
               InkWell(
                 key: PortfolioTrackerPage.hideBalanceKey,
                 onTap: onToggleHidden,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: AppRadii.cardRadius,
                 child: Padding(
                   padding: const EdgeInsets.all(4),
                   child: Icon(
@@ -464,14 +464,14 @@ class _AllocationCard extends StatelessWidget {
                         Text(
                           '${holdings.length}',
                           style: AppTextStyles.caption.copyWith(
-                            color: _marketBlue,
+                            color: _marketPrimary,
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
                         Text(
                           'tài sản',
                           style: AppTextStyles.micro.copyWith(
-                            color: _marketBlue,
+                            color: _marketPrimary,
                             fontSize: 9,
                           ),
                         ),
@@ -844,11 +844,11 @@ class _ChipButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           color: active
-              ? _marketBlue.withValues(alpha: .15)
+              ? _marketPrimary.withValues(alpha: .15)
               : AppColors.surface2,
           border: Border.all(
             color: active
-                ? _marketBlue.withValues(alpha: .35)
+                ? _marketPrimary.withValues(alpha: .35)
                 : Colors.transparent,
           ),
           borderRadius: AppRadii.cardRadius,
@@ -856,7 +856,7 @@ class _ChipButton extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: active ? _marketBlue : AppColors.text3,
+            color: active ? _marketPrimary : AppColors.text3,
             fontWeight: AppTextStyles.medium,
           ),
         ),

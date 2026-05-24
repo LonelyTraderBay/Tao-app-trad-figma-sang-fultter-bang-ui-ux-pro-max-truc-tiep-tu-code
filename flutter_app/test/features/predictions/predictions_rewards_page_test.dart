@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/arena_home_page.dart';
 import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/prediction_event_detail_page.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/predictions_rewards_page.dart';
@@ -158,9 +159,7 @@ void main() {
     expect(find.text('Event Detail'), findsOneWidget);
   });
 
-  testWidgets('SC-032 Arena edge is wired to the scoped placeholder', (
-    tester,
-  ) async {
+  testWidgets('SC-032 Arena edge is wired to Arena Home', (tester) async {
     await pumpRewards(tester);
 
     await tester.ensureVisible(
@@ -169,6 +168,6 @@ void main() {
     await tester.tap(find.byKey(PredictionsRewardsPage.arenaBridgeKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Open Arena'), findsOneWidget);
+    expect(find.byType(ArenaHomePage), findsOneWidget);
   });
 }

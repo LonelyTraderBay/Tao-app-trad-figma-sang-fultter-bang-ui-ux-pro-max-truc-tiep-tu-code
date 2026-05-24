@@ -12,11 +12,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _assessmentBg = Color(0xFF080C14);
-const _assessmentSurface = Color(0xFF151A23);
-const _assessmentSurface2 = Color(0xFF1D2436);
-const _assessmentBlue = Color(0xFF3B82F6);
-const _assessmentOptionBorder = Color(0xFF2A3863);
+const _assessmentBackground = AppColors.bg;
+const _assessmentPanel = AppColors.surface;
+const _assessmentPanel2 = AppColors.surface2;
+const _assessmentPrimary = AppColors.primary;
+const _assessmentOptionBorder = AppColors.borderSolid;
 const _assessmentGreen = Color(0xFF10B981);
 const _assessmentAmber = Color(0xFFF59E0B);
 const _assessmentRed = Color(0xFFEF4444);
@@ -61,7 +61,7 @@ class _BotSuitabilityAssessmentPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-119 BotSuitabilityAssessmentPage',
       child: Material(
-        color: _assessmentBg,
+        color: _assessmentBackground,
         child: Column(
           children: [
             VitHeader(
@@ -226,8 +226,10 @@ class _ProgressBar extends StatelessWidget {
             child: LinearProgressIndicator(
               value: progress,
               minHeight: 8,
-              backgroundColor: _assessmentSurface2,
-              valueColor: const AlwaysStoppedAnimation<Color>(_assessmentBlue),
+              backgroundColor: _assessmentPanel2,
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                _assessmentPrimary,
+              ),
             ),
           ),
         ),
@@ -251,12 +253,12 @@ class _QuestionHeader extends StatelessWidget {
           height: 40,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: _assessmentBlue.withValues(alpha: .08),
-            borderRadius: BorderRadius.circular(12),
+            color: _assessmentPrimary.withValues(alpha: .08),
+            borderRadius: AppRadii.mdRadius,
           ),
           child: const Icon(
             Icons.assignment_turned_in_outlined,
-            color: _assessmentBlue,
+            color: _assessmentPrimary,
             size: 20,
           ),
         ),
@@ -309,20 +311,20 @@ class _OptionCard extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         key: BotSuitabilityAssessmentPage.optionKey(questionId, option.id),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: AppRadii.cardRadius,
         onTap: onTap,
         child: Container(
           constraints: const BoxConstraints(minHeight: 58),
           padding: const EdgeInsets.fromLTRB(16, 13, 16, 13),
           decoration: BoxDecoration(
             color: selected
-                ? _assessmentBlue.withValues(alpha: .12)
-                : _assessmentSurface,
+                ? _assessmentPrimary.withValues(alpha: .12)
+                : _assessmentPanel,
             border: Border.all(
-              color: selected ? _assessmentBlue : _assessmentOptionBorder,
+              color: selected ? _assessmentPrimary : _assessmentOptionBorder,
               width: 2,
             ),
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: AppRadii.cardRadius,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -333,7 +335,9 @@ class _OptionCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: selected ? _assessmentBlue : _assessmentOptionBorder,
+                    color: selected
+                        ? _assessmentPrimary
+                        : _assessmentOptionBorder,
                     width: 2,
                   ),
                 ),
@@ -343,7 +347,7 @@ class _OptionCard extends StatelessWidget {
                         width: 10,
                         height: 10,
                         decoration: const BoxDecoration(
-                          color: _assessmentBlue,
+                          color: _assessmentPrimary,
                           shape: BoxShape.circle,
                         ),
                       )
@@ -354,7 +358,7 @@ class _OptionCard extends StatelessWidget {
                 child: Text(
                   option.text,
                   style: AppTextStyles.caption.copyWith(
-                    color: selected ? _assessmentBlue : AppColors.text1,
+                    color: selected ? _assessmentPrimary : AppColors.text1,
                     fontSize: 13,
                     fontWeight: AppTextStyles.medium,
                     height: 1.5,
@@ -381,9 +385,9 @@ class _InfoCard extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 91),
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
       decoration: BoxDecoration(
-        color: _assessmentBlue.withValues(alpha: .08),
-        border: Border.all(color: _assessmentBlue.withValues(alpha: .22)),
-        borderRadius: BorderRadius.circular(16),
+        color: _assessmentPrimary.withValues(alpha: .08),
+        border: Border.all(color: _assessmentPrimary.withValues(alpha: .22)),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: RichText(
         text: TextSpan(
@@ -487,9 +491,7 @@ class _ResultView extends StatelessWidget {
             onPressed: () => onComplete(result),
             style: FilledButton.styleFrom(
               backgroundColor: color,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-              ),
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
             ),
             child: Text(
               result.ctaLabel,
@@ -560,7 +562,7 @@ class _ScoreCard extends StatelessWidget {
             child: LinearProgressIndicator(
               value: percent,
               minHeight: 12,
-              backgroundColor: _assessmentSurface2,
+              backgroundColor: _assessmentPanel2,
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
           ),
@@ -673,7 +675,7 @@ class _CategoryScoreCard extends StatelessWidget {
             child: LinearProgressIndicator(
               value: percent,
               minHeight: 6,
-              backgroundColor: _assessmentSurface2,
+              backgroundColor: _assessmentPanel2,
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
           ),
@@ -755,8 +757,8 @@ class _RegulatoryCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 15, 16, 16),
       decoration: BoxDecoration(
-        color: _assessmentSurface2,
-        borderRadius: BorderRadius.circular(16),
+        color: _assessmentPanel2,
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -818,7 +820,7 @@ class _ResultCard extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _assessmentSurface,
+        color: _assessmentPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),

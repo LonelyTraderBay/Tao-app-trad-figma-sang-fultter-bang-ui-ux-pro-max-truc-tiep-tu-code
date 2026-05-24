@@ -12,11 +12,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _compBg = Color(0xFF080C14);
-const _compSurface = Color(0xFF151A23);
-const _compSurface2 = Color(0xFF1E2535);
-const _compBorder = Color(0xFF273142);
-const _compBlue = Color(0xFF3B82F6);
+const _compBackground = AppColors.bg;
+const _compPanel = AppColors.surface;
+const _compPanel2 = AppColors.surface2;
+const _compBorder = AppColors.borderSolid;
+const _compPrimary = AppColors.primary;
 const _compGreen = Color(0xFF10B981);
 const _compAmber = Color(0xFFF59E0B);
 const _compRed = Color(0xFFEF4444);
@@ -55,7 +55,7 @@ class _InvestorCompensationPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-104 InvestorCompensationPage',
       child: Material(
-        color: _compBg,
+        color: _compBackground,
         child: Column(
           children: [
             VitHeader(
@@ -109,7 +109,7 @@ class _ProtectionCard extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 154),
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
       decoration: BoxDecoration(
-        color: _compSurface,
+        color: _compPanel,
         border: Border.all(color: _compBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -123,7 +123,7 @@ class _ProtectionCard extends StatelessWidget {
                 height: 56,
                 decoration: BoxDecoration(
                   color: _compGreen.withValues(alpha: .13),
-                  borderRadius: BorderRadius.circular(17),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 child: const Icon(
                   Icons.shield_outlined,
@@ -255,7 +255,7 @@ class _Tabs extends StatelessWidget {
     ];
     return Container(
       height: 53,
-      color: _compSurface,
+      color: _compPanel,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -273,7 +273,7 @@ class _Tabs extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: activeId == tab.$1
-                                ? _compBlue
+                                ? _compPrimary
                                 : AppColors.text3,
                             fontSize: 12,
                             fontWeight: AppTextStyles.bold,
@@ -285,7 +285,7 @@ class _Tabs extends StatelessWidget {
                     Container(
                       width: activeId == tab.$1 ? 100 : 0,
                       height: 2,
-                      color: _compBlue,
+                      color: _compPrimary,
                     ),
                   ],
                 ),
@@ -417,8 +417,8 @@ class _CoverageBox extends StatelessWidget {
       height: 68,
       padding: const EdgeInsets.fromLTRB(12, 14, 12, 11),
       decoration: BoxDecoration(
-        color: _compSurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: _compPanel2,
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
         children: [
@@ -473,7 +473,7 @@ class _WarningBox extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(12, 11, 12, 10),
       decoration: BoxDecoration(
         color: _compAmber.withValues(alpha: .13),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -589,14 +589,14 @@ class _ClaimStep extends StatelessWidget {
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: _compBlue.withValues(alpha: .13),
-              borderRadius: BorderRadius.circular(10),
+              color: _compPrimary.withValues(alpha: .13),
+              borderRadius: AppRadii.smRadius,
             ),
             alignment: Alignment.center,
             child: Text(
               '${step.step}',
               style: AppTextStyles.baseMedium.copyWith(
-                color: _compBlue,
+                color: _compPrimary,
                 fontSize: 14,
                 height: 1,
               ),
@@ -699,15 +699,17 @@ class _FaqButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.text1,
           side: BorderSide(color: _compBorder.withValues(alpha: .72)),
-          backgroundColor: _compSurface2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-          ),
+          backgroundColor: _compPanel2,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
         ),
         onPressed: () {},
         child: Row(
           children: [
-            const Icon(Icons.help_outline_rounded, color: _compBlue, size: 16),
+            const Icon(
+              Icons.help_outline_rounded,
+              color: _compPrimary,
+              size: 16,
+            ),
             const SizedBox(width: 9),
             Expanded(
               child: Text(
@@ -745,7 +747,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 14,
           decoration: BoxDecoration(
-            color: _compBlue,
+            color: _compPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -775,7 +777,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _compSurface,
+        color: _compPanel,
         border: Border.all(color: _compBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),

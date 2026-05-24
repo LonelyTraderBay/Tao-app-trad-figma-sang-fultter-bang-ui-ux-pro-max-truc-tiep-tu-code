@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -13,7 +14,7 @@ import '../../../shared/layout/vit_page_content.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/news_repository.dart';
 
-const _newsBlue = Color(0xFF3B82F6);
+const _newsPrimary = AppColors.primary;
 
 class NewsPage extends ConsumerStatefulWidget {
   const NewsPage({super.key, this.shellRenderMode});
@@ -88,7 +89,7 @@ class _NewsPageState extends ConsumerState<NewsPage> {
                           _SectionLabel(
                             icon: Icons.push_pin_rounded,
                             label: 'GHIM (${snapshot.pinnedArticles.length})',
-                            color: _newsBlue,
+                            color: _newsPrimary,
                           ),
                           for (final article in snapshot.pinnedArticles)
                             _NewsArticleCard(
@@ -161,7 +162,7 @@ class _NewsFilterBar extends StatelessWidget {
               key: NewsPage.filterAllKey,
               label: 'Tất cả',
               selected: activeType == null,
-              selectedColor: _newsBlue,
+              selectedColor: _newsPrimary,
               onTap: () => onSelected(null),
             ),
             const SizedBox(width: 8),
@@ -298,10 +299,12 @@ class _NewsArticleCard extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: pinned ? _newsBlue.withValues(alpha: .06) : AppColors.cardBg,
+            color: pinned
+                ? _newsPrimary.withValues(alpha: .06)
+                : AppColors.cardBg,
             border: Border.all(
               color: pinned
-                  ? _newsBlue.withValues(alpha: .28)
+                  ? _newsPrimary.withValues(alpha: .28)
                   : AppColors.cardBorder,
             ),
             borderRadius: AppRadii.cardRadius,
@@ -385,7 +388,7 @@ class _ArticleMeta extends StatelessWidget {
       spacing: 8,
       runSpacing: 4,
       children: [
-        if (pinned) Icon(Icons.push_pin_rounded, size: 13, color: _newsBlue),
+        if (pinned) Icon(Icons.push_pin_rounded, size: 13, color: _newsPrimary),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
           decoration: BoxDecoration(
@@ -590,9 +593,9 @@ class _ArticleSheet extends StatelessWidget {
                         width: double.infinity,
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: _newsBlue.withValues(alpha: .06),
+                          color: _newsPrimary.withValues(alpha: .06),
                           border: Border.all(
-                            color: _newsBlue.withValues(alpha: .12),
+                            color: _newsPrimary.withValues(alpha: .12),
                           ),
                           borderRadius: AppRadii.lgRadius,
                         ),
@@ -621,12 +624,12 @@ class _ArticleSheet extends StatelessWidget {
                       const SizedBox(height: 20),
                       SizedBox(
                         width: double.infinity,
-                        height: 48,
+                        height: AppSpacing.inputHeight,
                         child: FilledButton(
                           key: NewsPage.closeSheetKey,
                           onPressed: () => Navigator.of(context).pop(),
                           style: FilledButton.styleFrom(
-                            backgroundColor: _newsBlue,
+                            backgroundColor: _newsPrimary,
                             foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: AppRadii.lgRadius,

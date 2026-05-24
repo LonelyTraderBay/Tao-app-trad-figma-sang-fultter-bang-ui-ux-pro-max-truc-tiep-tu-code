@@ -12,13 +12,13 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _botRiskBg = Color(0xFF080C14);
-const _botRiskSurface = Color(0xFF151A23);
-const _botRiskSurface2 = Color(0xFF1D2436);
+const _botRiskBackground = AppColors.bg;
+const _botRiskPanel = AppColors.surface;
+const _botRiskPanel2 = AppColors.surface2;
 const _botRiskRed = Color(0xFFEF4444);
 const _botRiskAmber = Color(0xFFF59E0B);
 const _botRiskPurple = Color(0xFF8B5CF6);
-const _botRiskBlue = Color(0xFF3B82F6);
+const _botRiskPrimary = AppColors.primary;
 const _botRiskGreen = Color(0xFF10B981);
 
 class BotRiskDisclosurePage extends ConsumerStatefulWidget {
@@ -53,7 +53,7 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-118 BotRiskDisclosurePage',
       child: Material(
-        color: _botRiskBg,
+        color: _botRiskBackground,
         child: Column(
           children: [
             VitHeader(
@@ -130,7 +130,7 @@ class _HighRiskBanner extends StatelessWidget {
       decoration: BoxDecoration(
         color: _botRiskRed.withValues(alpha: .12),
         border: Border.all(color: _botRiskRed.withValues(alpha: .58), width: 2),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,7 +250,7 @@ class _RiskCategoryCard extends StatelessWidget {
                 height: 48,
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: .14),
-                  borderRadius: BorderRadius.circular(24),
+                  borderRadius: AppRadii.cardLargeRadius,
                 ),
                 child: Icon(
                   _iconForKind(category.kind),
@@ -306,8 +306,8 @@ class _RiskCategoryCard extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.fromLTRB(14, 12, 14, 13),
             decoration: BoxDecoration(
-              color: _botRiskSurface2,
-              borderRadius: BorderRadius.circular(16),
+              color: _botRiskPanel2,
+              borderRadius: AppRadii.cardRadius,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -468,13 +468,13 @@ class _AcknowledgmentCard extends StatelessWidget {
     return InkWell(
       key: BotRiskDisclosurePage.acknowledgmentKey,
       onTap: onTap,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: AppRadii.inputRadius,
       child: Container(
         constraints: const BoxConstraints(minHeight: 101),
         padding: const EdgeInsets.fromLTRB(12, 14, 12, 14),
         decoration: BoxDecoration(
-          color: _botRiskSurface2,
-          borderRadius: BorderRadius.circular(14),
+          color: _botRiskPanel2,
+          borderRadius: AppRadii.inputRadius,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -488,7 +488,7 @@ class _AcknowledgmentCard extends StatelessWidget {
                 border: Border.all(
                   color: acknowledged ? _botRiskRed : AppColors.borderSolid,
                 ),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadii.mdRadius,
               ),
               child: acknowledged
                   ? const Icon(
@@ -550,12 +550,10 @@ class _RiskCta extends StatelessWidget {
       child: FilledButton(
         onPressed: acknowledged ? onPressed : null,
         style: FilledButton.styleFrom(
-          backgroundColor: acknowledged ? _botRiskRed : _botRiskSurface2,
-          disabledBackgroundColor: _botRiskSurface2,
+          backgroundColor: acknowledged ? _botRiskRed : _botRiskPanel2,
+          disabledBackgroundColor: _botRiskPanel2,
           disabledForegroundColor: AppColors.text3,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
         ),
         child: Text(
           acknowledged ? snapshot.enabledCta : snapshot.disabledCta,
@@ -582,7 +580,7 @@ class _HelpCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 15),
       decoration: BoxDecoration(
-        color: _botRiskSurface2,
+        color: _botRiskPanel2,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -610,7 +608,7 @@ class _HelpCard extends StatelessWidget {
           Text(
             snapshot.helpCta,
             style: AppTextStyles.caption.copyWith(
-              color: _botRiskBlue,
+              color: _botRiskPrimary,
               fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
@@ -635,7 +633,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _botRiskBlue,
+            color: _botRiskPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),
@@ -700,7 +698,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _botRiskSurface,
+        color: _botRiskPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -715,7 +713,7 @@ Color _colorForKind(TradeBotRiskKind kind) {
     TradeBotRiskKind.leverage => _botRiskAmber,
     TradeBotRiskKind.liquidity => _botRiskPurple,
     TradeBotRiskKind.technical => _botRiskRed,
-    TradeBotRiskKind.timing => _botRiskBlue,
+    TradeBotRiskKind.timing => _botRiskPrimary,
     TradeBotRiskKind.regulatory => _botRiskGreen,
   };
 }

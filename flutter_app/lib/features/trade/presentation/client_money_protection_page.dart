@@ -12,11 +12,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _moneyBg = Color(0xFF080C14);
-const _moneySurface = Color(0xFF151A23);
-const _moneySurface2 = Color(0xFF1E2535);
-const _moneyBorder = Color(0xFF273142);
-const _moneyBlue = Color(0xFF3B82F6);
+const _moneyBackground = AppColors.bg;
+const _moneyPanel = AppColors.surface;
+const _moneyPanel2 = AppColors.surface2;
+const _moneyBorder = AppColors.borderSolid;
+const _moneyPrimary = AppColors.primary;
 const _moneyGreen = Color(0xFF10B981);
 
 class ClientMoneyProtectionPage extends ConsumerStatefulWidget {
@@ -53,7 +53,7 @@ class _ClientMoneyProtectionPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-102 ClientMoneyProtectionPage',
       child: Material(
-        color: _moneyBg,
+        color: _moneyBackground,
         child: Column(
           children: [
             VitHeader(
@@ -158,7 +158,7 @@ class _BalanceCard extends StatelessWidget {
                 height: 56,
                 decoration: BoxDecoration(
                   color: _moneyGreen.withValues(alpha: .13),
-                  borderRadius: BorderRadius.circular(17),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 child: const Icon(
                   Icons.lock_outline_rounded,
@@ -241,7 +241,7 @@ class _Tabs extends StatelessWidget {
     ];
     return Container(
       height: 53,
-      color: _moneySurface,
+      color: _moneyPanel,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -259,7 +259,7 @@ class _Tabs extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: activeId == tab.$1
-                                ? _moneyBlue
+                                ? _moneyPrimary
                                 : AppColors.text3,
                             fontSize: 12,
                             fontWeight: AppTextStyles.bold,
@@ -271,7 +271,7 @@ class _Tabs extends StatelessWidget {
                     Container(
                       width: activeId == tab.$1 ? 100 : 0,
                       height: 2,
-                      color: _moneyBlue,
+                      color: _moneyPrimary,
                     ),
                   ],
                 ),
@@ -471,10 +471,8 @@ class _Reconciliation extends StatelessWidget {
             style: OutlinedButton.styleFrom(
               foregroundColor: AppColors.text1,
               side: BorderSide(color: _moneyBorder.withValues(alpha: .72)),
-              backgroundColor: _moneySurface2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-              ),
+              backgroundColor: _moneyPanel2,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
             ),
             onPressed: () =>
                 context.go(AppRoutePaths.tradeCopyCassReconciliation),
@@ -513,7 +511,7 @@ class _Documents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const documents = [
-      ('Client Money Letter', 'Your segregation agreement', _moneyBlue),
+      ('Client Money Letter', 'Your segregation agreement', _moneyPrimary),
       ('CASS Compliance Report', 'Annual auditor report', _moneyGreen),
       (
         'Insolvency Protection Guide',
@@ -536,7 +534,7 @@ class _Documents extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     color: document.$3.withValues(alpha: .13),
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: AppRadii.inputRadius,
                   ),
                   child: Icon(
                     document.$1 == 'Insolvency Protection Guide'
@@ -599,8 +597,8 @@ class _MetricBox extends StatelessWidget {
       height: 53,
       padding: const EdgeInsets.fromLTRB(12, 10, 12, 9),
       decoration: BoxDecoration(
-        color: _moneySurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: _moneyPanel2,
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -648,8 +646,8 @@ class _ReconciliationRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 9),
       decoration: BoxDecoration(
-        color: success ? _moneyGreen.withValues(alpha: .13) : _moneySurface2,
-        borderRadius: BorderRadius.circular(10),
+        color: success ? _moneyGreen.withValues(alpha: .13) : _moneyPanel2,
+        borderRadius: AppRadii.smRadius,
       ),
       child: Row(
         children: [
@@ -716,7 +714,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 14,
           decoration: BoxDecoration(
-            color: _moneyBlue,
+            color: _moneyPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -746,7 +744,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _moneySurface,
+        color: _moneyPanel,
         border: Border.all(color: _moneyBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),

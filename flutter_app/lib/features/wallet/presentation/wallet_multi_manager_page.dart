@@ -7,6 +7,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -14,11 +16,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _managerBg = Color(0xFF080C14);
-const _managerSurface = Color(0xFF151A23);
-const _managerSurface2 = Color(0xFF101824);
+const _managerBackground = AppColors.bg;
+const _managerPanel = AppColors.surface;
+const _managerPanel2 = AppColors.surface2;
 const _managerBorder = Color(0x14FFFFFF);
-const _managerBlue = Color(0xFF3B82F6);
+const _managerPrimary = AppColors.primary;
 const _managerGreen = Color(0xFF10B981);
 const _managerRed = Color(0xFFEF4444);
 
@@ -65,7 +67,7 @@ class _WalletMultiManagerPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-148 WalletMultiManagerPage',
       child: Material(
-        color: _managerBg,
+        color: _managerBackground,
         child: Column(
           children: [
             VitHeader(
@@ -133,7 +135,7 @@ class _ManagerTabs extends StatelessWidget {
     return Container(
       height: 54,
       decoration: const BoxDecoration(
-        color: _managerSurface,
+        color: _managerPanel,
         border: Border(bottom: BorderSide(color: _managerBorder)),
       ),
       child: Row(
@@ -151,7 +153,7 @@ class _ManagerTabs extends StatelessWidget {
                         tab,
                         style: AppTextStyles.caption.copyWith(
                           color: activeTab == tab
-                              ? _managerBlue
+                              ? _managerPrimary
                               : const Color(0xFF566175),
                           fontSize: 12,
                           fontWeight: FontWeight.w800,
@@ -167,7 +169,7 @@ class _ManagerTabs extends StatelessWidget {
                         duration: const Duration(milliseconds: 150),
                         height: 2,
                         color: activeTab == tab
-                            ? _managerBlue
+                            ? _managerPrimary
                             : Colors.transparent,
                       ),
                     ),
@@ -244,8 +246,8 @@ class _PortfolioSummaryCard extends StatelessWidget {
       height: 148,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
       decoration: BoxDecoration(
-        color: _managerSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _managerPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _managerBorder),
       ),
       child: Column(
@@ -370,8 +372,8 @@ class _DistributionCard extends StatelessWidget {
       height: 245,
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
       decoration: BoxDecoration(
-        color: _managerSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _managerPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _managerBorder),
       ),
       child: Column(
@@ -411,7 +413,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 14,
           decoration: BoxDecoration(
-            color: _managerBlue,
+            color: _managerPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -462,8 +464,8 @@ class _WalletCard extends StatelessWidget {
         height: 200,
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
         decoration: BoxDecoration(
-          color: selected ? accent.withValues(alpha: .045) : _managerSurface,
-          borderRadius: BorderRadius.circular(16),
+          color: selected ? accent.withValues(alpha: .045) : _managerPanel,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(color: selected ? accent : _managerBorder),
         ),
         child: Column(
@@ -658,7 +660,7 @@ class _WalletTypeIcon extends StatelessWidget {
       height: 36,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .16),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: AppRadii.smRadius,
       ),
       alignment: Alignment.center,
       child: Icon(icon, color: color, size: 18),
@@ -787,11 +789,11 @@ class _AddWalletButton extends StatelessWidget {
       onTap: () {},
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 48,
+        height: AppSpacing.inputHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _managerBlue,
-          borderRadius: BorderRadius.circular(14),
+          color: _managerPrimary,
+          borderRadius: AppRadii.inputRadius,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -824,16 +826,20 @@ class _SecurityNotice extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 58),
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
       decoration: BoxDecoration(
-        color: _managerBlue.withValues(alpha: .08),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _managerBlue.withValues(alpha: .20)),
+        color: _managerPrimary.withValues(alpha: .08),
+        borderRadius: AppRadii.cardRadius,
+        border: Border.all(color: _managerPrimary.withValues(alpha: .20)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
             padding: EdgeInsets.only(top: 1),
-            child: Icon(Icons.shield_outlined, color: _managerBlue, size: 14),
+            child: Icon(
+              Icons.shield_outlined,
+              color: _managerPrimary,
+              size: 14,
+            ),
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -879,8 +885,8 @@ class _GroupsTab extends StatelessWidget {
           height: 46,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: _managerSurface2,
-            borderRadius: BorderRadius.circular(13),
+            color: _managerPanel2,
+            borderRadius: AppRadii.mdRadius,
             border: Border.all(color: _managerBorder),
           ),
           child: Row(
@@ -921,8 +927,8 @@ class _GroupCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _managerSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _managerPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _managerBorder),
       ),
       child: Column(
@@ -1007,8 +1013,8 @@ class _GroupWalletRow extends StatelessWidget {
       height: 48,
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: _managerBg,
-        borderRadius: BorderRadius.circular(12),
+        color: _managerBackground,
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Row(
         children: [
@@ -1090,8 +1096,8 @@ class _ActivityRow extends StatelessWidget {
       height: 62,
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: _managerSurface,
-        borderRadius: BorderRadius.circular(14),
+        color: _managerPanel,
+        borderRadius: AppRadii.inputRadius,
         border: Border.all(color: _managerBorder),
       ),
       child: Row(
@@ -1212,7 +1218,7 @@ class _DistributionPainter extends CustomPainter {
       start += sweep;
     }
 
-    final centerPaint = Paint()..color = _managerSurface;
+    final centerPaint = Paint()..color = _managerPanel;
     canvas.drawCircle(center, radius - strokeWidth / 2, centerPaint);
   }
 

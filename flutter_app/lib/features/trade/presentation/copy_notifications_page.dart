@@ -12,10 +12,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _notificationBlue = Color(0xFF3B82F6);
-const _notificationPanel = Color(0xFF1B2132);
-const _notificationCard = Color(0xFF131820);
-const _notificationChip = Color(0xFF20263A);
+const _notificationPrimary = AppColors.primary;
+const _notificationPanel = AppColors.surface2;
+const _notificationCard = AppColors.surface;
+const _notificationChip = AppColors.surface3;
 const _notificationMuted = Color(0xFF667085);
 
 class CopyNotificationsPage extends ConsumerStatefulWidget {
@@ -214,13 +214,13 @@ class _SettingsAction extends StatelessWidget {
     return InkWell(
       key: CopyNotificationsPage.settingsKey,
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: AppRadii.mdRadius,
       child: Container(
         width: 38,
         height: 38,
         decoration: BoxDecoration(
           color: _notificationChip,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: AppRadii.mdRadius,
           border: Border.all(color: AppColors.cardBorder),
         ),
         child: const Icon(
@@ -249,14 +249,14 @@ class _UnreadSummary extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14),
       decoration: BoxDecoration(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: _notificationBlue),
+        borderRadius: AppRadii.cardRadius,
+        border: Border.all(color: _notificationPrimary),
       ),
       child: Row(
         children: [
           const Icon(
             Icons.notifications_none_rounded,
-            color: _notificationBlue,
+            color: _notificationPrimary,
             size: 18,
           ),
           const SizedBox(width: 10),
@@ -264,7 +264,7 @@ class _UnreadSummary extends StatelessWidget {
             child: Text(
               '$unreadCount thông báo chưa đọc',
               style: AppTextStyles.caption.copyWith(
-                color: _notificationBlue,
+                color: _notificationPrimary,
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
               ),
@@ -281,9 +281,9 @@ class _UnreadSummary extends StatelessWidget {
             child: Text(
               'Đánh dấu tất cả đã đọc',
               style: AppTextStyles.caption.copyWith(
-                color: _notificationBlue,
+                color: _notificationPrimary,
                 decoration: TextDecoration.underline,
-                decorationColor: _notificationBlue,
+                decorationColor: _notificationPrimary,
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
               ),
@@ -345,25 +345,25 @@ class _FilterPill extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(24),
+      borderRadius: AppRadii.cardLargeRadius,
       child: Container(
         width: 53,
         height: 53,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
-              ? _notificationBlue.withValues(alpha: .16)
+              ? _notificationPrimary.withValues(alpha: .16)
               : _notificationChip,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: AppRadii.cardLargeRadius,
           border: Border.all(
-            color: active ? _notificationBlue : Colors.transparent,
+            color: active ? _notificationPrimary : Colors.transparent,
           ),
         ),
         child: Text(
           _tabLabel(tab.label),
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(
-            color: active ? _notificationBlue : _notificationMuted,
+            color: active ? _notificationPrimary : _notificationMuted,
             fontSize: 12,
             fontWeight: FontWeight.w700,
             height: 1.15,
@@ -454,7 +454,7 @@ class _NotificationCard extends StatelessWidget {
                             height: 8,
                             margin: const EdgeInsets.only(top: 3),
                             decoration: const BoxDecoration(
-                              color: _notificationBlue,
+                              color: _notificationPrimary,
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -626,7 +626,7 @@ Color _notificationColor(TradeCopyNotification notification) {
     return AppColors.warn;
   }
   return switch (notification.type) {
-    TradeCopyNotificationType.trade => _notificationBlue,
+    TradeCopyNotificationType.trade => _notificationPrimary,
     TradeCopyNotificationType.risk => AppColors.sell,
     TradeCopyNotificationType.update => const Color(0xFF8B5CF6),
     TradeCopyNotificationType.system => AppColors.text3,

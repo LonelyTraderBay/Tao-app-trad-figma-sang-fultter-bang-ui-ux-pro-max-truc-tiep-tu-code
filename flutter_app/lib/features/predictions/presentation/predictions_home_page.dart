@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 class PredictionsHomePage extends ConsumerStatefulWidget {
   const PredictionsHomePage({super.key, this.shellRenderMode});
@@ -82,7 +82,7 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                   decoration: BoxDecoration(
                     color: AppColors.searchBg,
                     border: Border.all(color: AppColors.border),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: AppRadii.smRadius,
                   ),
                   child: IconButton(
                     onPressed: () =>
@@ -328,11 +328,11 @@ class _FilterTabButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 13),
         decoration: BoxDecoration(
           color: active
-              ? _marketBlue.withValues(alpha: .12)
+              ? _marketPrimary.withValues(alpha: .12)
               : AppColors.surface2,
           border: Border.all(
             color: active
-                ? _marketBlue.withValues(alpha: .34)
+                ? _marketPrimary.withValues(alpha: .34)
                 : AppColors.borderSolid,
           ),
           borderRadius: AppRadii.mdRadius,
@@ -342,13 +342,13 @@ class _FilterTabButton extends StatelessWidget {
             Icon(
               meta.icon,
               size: 12,
-              color: active ? _marketBlue : AppColors.text3,
+              color: active ? _marketPrimary : AppColors.text3,
             ),
             const SizedBox(width: 6),
             Text(
               meta.label,
               style: AppTextStyles.caption.copyWith(
-                color: active ? _marketBlue : AppColors.text3,
+                color: active ? _marketPrimary : AppColors.text3,
                 fontSize: 12,
                 fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
               ),
@@ -426,11 +426,11 @@ class _CategoryChip extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
-              ? _marketBlue.withValues(alpha: .12)
+              ? _marketPrimary.withValues(alpha: .12)
               : AppColors.surface2,
           border: Border.all(
             color: active
-                ? _marketBlue.withValues(alpha: .30)
+                ? _marketPrimary.withValues(alpha: .30)
                 : AppColors.borderSolid,
           ),
           borderRadius: AppRadii.smRadius,
@@ -438,7 +438,7 @@ class _CategoryChip extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
-            color: active ? _marketBlue : AppColors.text3,
+            color: active ? _marketPrimary : AppColors.text3,
             fontWeight: AppTextStyles.bold,
           ),
         ),
@@ -692,8 +692,8 @@ class _PredictionEventCard extends StatelessWidget {
             children: [
               _SmallBadge(
                 label: event.category,
-                color: _marketBlue,
-                background: _marketBlue.withValues(alpha: .12),
+                color: _marketPrimary,
+                background: _marketPrimary.withValues(alpha: .12),
               ),
               for (final tag in event.tags)
                 _SmallBadge(

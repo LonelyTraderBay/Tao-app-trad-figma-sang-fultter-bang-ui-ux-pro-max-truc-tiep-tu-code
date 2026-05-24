@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -11,15 +13,15 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _limitsBg = Color(0xFF080C14);
-const _limitsSurface = Color(0xFF151A23);
-const _limitsHero = Color(0xFF101936);
-const _limitsHeroBorder = Color(0xFF1C2C59);
+const _limitsBackground = AppColors.bg;
+const _limitsPanel = AppColors.surface;
+const _limitsHero = AppColors.surface;
+const _limitsHeroBorder = AppColors.primary20;
 const _limitsBorder = Color(0x14FFFFFF);
-const _limitsBlue = Color(0xFF3B82F6);
+const _limitsPrimary = AppColors.primary;
 const _limitsGreen = Color(0xFF10B981);
 const _limitsAmber = Color(0xFFF59E0B);
-const _limitsMuted = Color(0xFF667085);
+const _limitsMuted = AppColors.text3;
 
 class WithdrawLimitsPage extends ConsumerWidget {
   const WithdrawLimitsPage({super.key, this.shellRenderMode});
@@ -44,7 +46,7 @@ class WithdrawLimitsPage extends ConsumerWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-153 WithdrawLimitsPage',
       child: Material(
-        color: _limitsBg,
+        color: _limitsBackground,
         child: Column(
           children: [
             VitHeader(
@@ -105,7 +107,7 @@ class _CurrentTierCard extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
       decoration: BoxDecoration(
         color: _limitsHero,
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: AppRadii.lgRadius,
         border: Border.all(color: _limitsHeroBorder),
       ),
       child: Column(
@@ -117,7 +119,7 @@ class _CurrentTierCard extends StatelessWidget {
                 height: 48,
                 decoration: BoxDecoration(
                   color: tierColor.withValues(alpha: .14),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: AppRadii.cardRadius,
                   border: Border.all(color: tierColor.withValues(alpha: .5)),
                 ),
                 alignment: Alignment.center,
@@ -235,7 +237,7 @@ class _LimitProgress extends StatelessWidget {
             minHeight: 8,
             value: (percent / 100).clamp(0, 1).toDouble(),
             color: _limitsGreen,
-            backgroundColor: const Color(0xFF273049),
+            backgroundColor: AppColors.surface3,
           ),
         ),
         const SizedBox(height: 9),
@@ -278,7 +280,7 @@ class _QuickStats extends StatelessWidget {
       (
         label: 'R\u00FAt/ng\u00E0y t\u1ED1i \u0111a',
         value: _formatUsd(tier.dailyLimit),
-        color: _limitsBlue,
+        color: _limitsPrimary,
       ),
       (
         label: 'Giao d\u1ECBch \u0111\u01A1n',
@@ -300,8 +302,8 @@ class _QuickStats extends StatelessWidget {
               height: 58,
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
               decoration: BoxDecoration(
-                color: _limitsSurface,
-                borderRadius: BorderRadius.circular(14),
+                color: _limitsPanel,
+                borderRadius: AppRadii.inputRadius,
                 border: Border.all(color: _limitsBorder),
               ),
               child: Column(
@@ -352,7 +354,7 @@ class _LimitWarning extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 13, 16, 13),
       decoration: BoxDecoration(
         color: _limitsAmber.withValues(alpha: .08),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _limitsAmber.withValues(alpha: .34)),
       ),
       child: Row(
@@ -411,7 +413,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _limitsBlue,
+            color: _limitsPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -448,11 +450,11 @@ class _KycTierCard extends StatelessWidget {
       onTap: isLocked ? () => context.go(AppRoutePaths.profileKyc) : () {},
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 72,
+        height: AppSpacing.buttonStandard + AppSpacing.x4,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
-          color: _limitsSurface,
-          borderRadius: BorderRadius.circular(16),
+          color: _limitsPanel,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(
             color: isCurrent ? tierColor.withValues(alpha: .45) : _limitsBorder,
           ),
@@ -556,8 +558,8 @@ class _FaqCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
       decoration: BoxDecoration(
-        color: _limitsSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _limitsPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _limitsBorder),
       ),
       child: Column(

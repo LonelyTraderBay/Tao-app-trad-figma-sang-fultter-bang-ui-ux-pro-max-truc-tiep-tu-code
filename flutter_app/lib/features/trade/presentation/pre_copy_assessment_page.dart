@@ -12,7 +12,7 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _assessmentBlue = Color(0xFF3B82F6);
+const _assessmentPrimary = AppColors.primary;
 const _assessmentGreen = Color(0xFF10B981);
 
 class PreCopyAssessmentPage extends ConsumerStatefulWidget {
@@ -122,11 +122,11 @@ class _WelcomeAssessment extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 24,
-                backgroundColor: _assessmentBlue.withValues(alpha: .16),
+                backgroundColor: _assessmentPrimary.withValues(alpha: .16),
                 child: Text(
                   provider.avatar,
                   style: AppTextStyles.baseMedium.copyWith(
-                    color: _assessmentBlue,
+                    color: _assessmentPrimary,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -175,11 +175,9 @@ class _WelcomeAssessment extends StatelessWidget {
           key: PreCopyAssessmentPage.startKey,
           onPressed: onStart,
           style: FilledButton.styleFrom(
-            backgroundColor: _assessmentBlue,
+            backgroundColor: _assessmentPrimary,
             minimumSize: const Size.fromHeight(48),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
-            ),
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
           ),
           icon: const Icon(Icons.chevron_right_rounded, size: 18),
           label: Text(
@@ -248,9 +246,7 @@ class _QuestionsSummary extends StatelessWidget {
           style: FilledButton.styleFrom(
             backgroundColor: _assessmentGreen,
             minimumSize: const Size.fromHeight(48),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
-            ),
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
           ),
           icon: const Icon(Icons.chevron_right_rounded, size: 18),
           label: Text(
@@ -282,14 +278,14 @@ class _NoticeCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _assessmentBlue.withValues(alpha: .12),
-        border: Border.all(color: _assessmentBlue.withValues(alpha: .55)),
+        color: _assessmentPrimary.withValues(alpha: .12),
+        border: Border.all(color: _assessmentPrimary.withValues(alpha: .55)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: _assessmentBlue, size: 24),
+          Icon(icon, color: _assessmentPrimary, size: 24),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -298,7 +294,7 @@ class _NoticeCard extends StatelessWidget {
                 Text(
                   title,
                   style: AppTextStyles.baseMedium.copyWith(
-                    color: _assessmentBlue,
+                    color: _assessmentPrimary,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -331,8 +327,8 @@ class _ProcessRow extends StatelessWidget {
       children: [
         const CircleAvatar(
           radius: 16,
-          backgroundColor: Color(0x223B82F6),
-          child: Icon(Icons.check_rounded, color: _assessmentBlue, size: 17),
+          backgroundColor: AppColors.primary15,
+          child: Icon(Icons.check_rounded, color: _assessmentPrimary, size: 17),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -372,7 +368,7 @@ class _OptionRow extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: AppColors.surface2,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Text(
         option.label,

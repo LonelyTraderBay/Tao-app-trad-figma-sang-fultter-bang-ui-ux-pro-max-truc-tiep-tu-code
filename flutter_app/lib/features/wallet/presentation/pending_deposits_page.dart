@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -11,11 +12,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _pendingBg = Color(0xFF080C14);
-const _pendingSurface = Color(0xFF151A23);
-const _pendingSurface2 = Color(0xFF202638);
+const _pendingBackground = AppColors.bg;
+const _pendingPanel = AppColors.surface;
+const _pendingPanel2 = AppColors.surface3;
 const _pendingBorder = Color(0x14FFFFFF);
-const _pendingBlue = Color(0xFF3B82F6);
+const _pendingPrimary = AppColors.primary;
 const _pendingGreen = Color(0xFF10B981);
 const _pendingAmber = Color(0xFFF59E0B);
 const _pendingRed = Color(0xFFEF4444);
@@ -58,7 +59,7 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-152 PendingDepositsPage',
       child: Material(
-        color: _pendingBg,
+        color: _pendingBackground,
         child: Column(
           children: [
             VitHeader(
@@ -147,8 +148,8 @@ class _SummaryBanner extends StatelessWidget {
       height: 78,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
       decoration: BoxDecoration(
-        color: _pendingSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _pendingPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _pendingBorder),
       ),
       child: Row(
@@ -158,7 +159,7 @@ class _SummaryBanner extends StatelessWidget {
             height: 44,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .12),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: AppRadii.cardRadius,
             ),
             alignment: Alignment.center,
             child: Icon(
@@ -213,8 +214,8 @@ class _SummaryBanner extends StatelessWidget {
               width: 34,
               height: 34,
               decoration: BoxDecoration(
-                color: const Color(0xFF222938),
-                borderRadius: BorderRadius.circular(17),
+                color: AppColors.surface3,
+                borderRadius: AppRadii.cardRadius,
               ),
               alignment: Alignment.center,
               child: const Icon(
@@ -261,19 +262,19 @@ class _FilterChips extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: active == item.$1
-                    ? _pendingBlue.withValues(alpha: .14)
+                    ? _pendingPrimary.withValues(alpha: .14)
                     : Colors.transparent,
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: AppRadii.inputRadius,
                 border: Border.all(
                   color: active == item.$1
-                      ? _pendingBlue.withValues(alpha: .45)
+                      ? _pendingPrimary.withValues(alpha: .45)
                       : Colors.transparent,
                 ),
               ),
               child: Text(
                 item.$2,
                 style: AppTextStyles.micro.copyWith(
-                  color: active == item.$1 ? _pendingBlue : AppColors.text2,
+                  color: active == item.$1 ? _pendingPrimary : AppColors.text2,
                   fontSize: 11,
                   fontWeight: FontWeight.w900,
                   height: 1,
@@ -306,8 +307,8 @@ class _DepositCard extends StatelessWidget {
       key: PendingDepositsPage.depositKey(deposit.id),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _pendingSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _pendingPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _pendingBorder),
       ),
       child: Column(
@@ -320,7 +321,7 @@ class _DepositCard extends StatelessWidget {
                 height: 40,
                 decoration: BoxDecoration(
                   color: config.color.withValues(alpha: .12),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 alignment: Alignment.center,
                 child: Icon(
@@ -477,7 +478,7 @@ class _ConfirmationProgress extends StatelessWidget {
             height: 6,
             child: LinearProgressIndicator(
               value: deposit.progress.clamp(.05, 1),
-              backgroundColor: const Color(0xFF1D2434),
+              backgroundColor: AppColors.surface3,
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
           ),
@@ -491,9 +492,7 @@ class _ConfirmationProgress extends StatelessWidget {
                 width: 6,
                 height: 6,
                 decoration: BoxDecoration(
-                  color: i < deposit.confirmations
-                      ? color
-                      : const Color(0xFF1D2434),
+                  color: i < deposit.confirmations ? color : AppColors.surface3,
                   borderRadius: BorderRadius.circular(3),
                 ),
               ),
@@ -522,7 +521,7 @@ class _StatusNotice extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(17),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         children: [
@@ -563,8 +562,8 @@ class _DepositDetails extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 11, 12, 10),
       decoration: BoxDecoration(
-        color: _pendingSurface2,
-        borderRadius: BorderRadius.circular(16),
+        color: _pendingPanel2,
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
         children: [
@@ -598,7 +597,7 @@ class _DepositDetails extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.right,
                   style: AppTextStyles.micro.copyWith(
-                    color: _pendingBlue,
+                    color: _pendingPrimary,
                     fontSize: 11,
                     fontFamily: 'Roboto',
                     height: 1,
@@ -695,8 +694,8 @@ class _EmptyDeposits extends StatelessWidget {
             width: 64,
             height: 64,
             decoration: BoxDecoration(
-              color: _pendingSurface,
-              borderRadius: BorderRadius.circular(18),
+              color: _pendingPanel,
+              borderRadius: AppRadii.cardRadius,
             ),
             alignment: Alignment.center,
             child: const Icon(
@@ -727,16 +726,16 @@ class _InfoNotice extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
       decoration: BoxDecoration(
-        color: _pendingBlue.withValues(alpha: .06),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _pendingBlue.withValues(alpha: .15)),
+        color: _pendingPrimary.withValues(alpha: .06),
+        borderRadius: AppRadii.cardRadius,
+        border: Border.all(color: _pendingPrimary.withValues(alpha: .15)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
-            color: _pendingBlue,
+            color: _pendingPrimary,
             size: 14,
           ),
           const SizedBox(width: 10),
@@ -775,7 +774,7 @@ _DepositStatusConfig _statusConfig(String status) {
     ),
     'processing' => const _DepositStatusConfig(
       label: '\u0110ang x\u1EED l\u00FD',
-      color: _pendingBlue,
+      color: _pendingPrimary,
     ),
     _ => const _DepositStatusConfig(
       label: '\u0110ang x\u00E1c nh\u1EADn',

@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 
 class PredictionsLeaderboardPage extends ConsumerStatefulWidget {
   const PredictionsLeaderboardPage({super.key, this.shellRenderMode});
@@ -149,7 +149,7 @@ class _TimeFilters extends StatelessWidget {
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: AppColors.surface2,
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: AppRadii.lgRadius,
       ),
       child: Row(
         children: [
@@ -184,12 +184,12 @@ class _TimeFilterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active ? AppColors.surface : Colors.transparent,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Text(
           label,
@@ -280,11 +280,11 @@ class _MetricTab extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
           color: active
-              ? _predictionBlue.withValues(alpha: .14)
+              ? _predictionPrimary.withValues(alpha: .14)
               : AppColors.surface2,
           border: Border.all(
             color: active
-                ? _predictionBlue.withValues(alpha: .38)
+                ? _predictionPrimary.withValues(alpha: .38)
                 : Colors.transparent,
           ),
           borderRadius: AppRadii.mdRadius,
@@ -294,14 +294,14 @@ class _MetricTab extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: active ? _predictionBlue : AppColors.text3,
+              color: active ? _predictionPrimary : AppColors.text3,
               size: 13,
             ),
             const SizedBox(width: 5),
             Text(
               label,
               style: AppTextStyles.caption.copyWith(
-                color: active ? _predictionBlue : AppColors.text3,
+                color: active ? _predictionPrimary : AppColors.text3,
                 fontSize: 12,
                 fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
               ),
@@ -752,7 +752,7 @@ class _BiggestWinCard extends StatelessWidget {
                         style: AppTextStyles.micro.copyWith(
                           color: event == null
                               ? AppColors.text3
-                              : _predictionBlue,
+                              : _predictionPrimary,
                           fontSize: 10,
                         ),
                       ),
@@ -761,7 +761,7 @@ class _BiggestWinCard extends StatelessWidget {
                       const SizedBox(width: 3),
                       const Icon(
                         Icons.arrow_outward_rounded,
-                        color: _predictionBlue,
+                        color: _predictionPrimary,
                         size: 10,
                       ),
                     ],

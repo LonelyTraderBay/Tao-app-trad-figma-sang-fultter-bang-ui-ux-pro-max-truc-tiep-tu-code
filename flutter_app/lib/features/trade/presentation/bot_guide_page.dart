@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,10 +13,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _guideBg = Color(0xFF080C14);
-const _guideSurface = Color(0xFF151A23);
-const _guideSurface2 = Color(0xFF1D2436);
-const _guideBlue = Color(0xFF3B82F6);
+const _guideBackground = AppColors.bg;
+const _guidePanel = AppColors.surface;
+const _guidePanel2 = AppColors.surface2;
+const _guidePrimary = AppColors.primary;
 const _guideGreen = Color(0xFF10B981);
 const _guideAmber = Color(0xFFF59E0B);
 const _guidePurple = Color(0xFF8B5CF6);
@@ -52,7 +53,7 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-131 BotGuidePage',
       child: Material(
-        color: _guideBg,
+        color: _guideBackground,
         child: Column(
           children: [
             VitHeader(
@@ -117,14 +118,17 @@ class _IntroBanner extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
       decoration: BoxDecoration(
-        color: _guideBlue.withValues(alpha: .08),
-        border: Border.all(color: _guideBlue.withValues(alpha: .35), width: 1),
-        borderRadius: BorderRadius.circular(16),
+        color: _guidePrimary.withValues(alpha: .08),
+        border: Border.all(
+          color: _guidePrimary.withValues(alpha: .35),
+          width: 1,
+        ),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.menu_book_outlined, color: _guideBlue, size: 25),
+          const Icon(Icons.menu_book_outlined, color: _guidePrimary, size: 25),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -185,21 +189,21 @@ class _Tabs extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: active == tabs[i].$1
-                    ? _guideBlue.withValues(alpha: .13)
-                    : _guideSurface2,
+                    ? _guidePrimary.withValues(alpha: .13)
+                    : _guidePanel2,
                 border: Border.all(
                   color: active == tabs[i].$1
-                      ? _guideBlue.withValues(alpha: .42)
+                      ? _guidePrimary.withValues(alpha: .42)
                       : Colors.transparent,
                 ),
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: AppRadii.cardRadius,
               ),
               child: Text(
                 tabs[i].$1,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
-                  color: active == tabs[i].$1 ? _guideBlue : AppColors.text3,
+                  color: active == tabs[i].$1 ? _guidePrimary : AppColors.text3,
                   fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
@@ -262,7 +266,7 @@ class _StrategyCard extends StatelessWidget {
     return Container(
       key: BotGuidePage.strategyKey(strategy.id),
       decoration: BoxDecoration(
-        color: _guideSurface,
+        color: _guidePanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -278,10 +282,10 @@ class _StrategyCard extends StatelessWidget {
                 children: [
                   Container(
                     width: 48,
-                    height: 48,
+                    height: AppSpacing.inputHeight,
                     decoration: BoxDecoration(
                       color: color.withValues(alpha: .12),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: AppRadii.cardRadius,
                     ),
                     child: Icon(_strategyIcon(strategy.iconKey), color: color),
                   ),
@@ -497,7 +501,7 @@ class _BulletsBlock extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: background,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -555,8 +559,8 @@ class _BestForBlock extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: _guideSurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: _guidePanel2,
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -602,7 +606,7 @@ class _ExampleBlock extends StatelessWidget {
       decoration: BoxDecoration(
         color: color.withValues(alpha: .08),
         border: Border.all(color: color.withValues(alpha: .30)),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -670,7 +674,7 @@ class _BestPracticesView extends StatelessWidget {
         for (final item in items) ...[
           _InfoCard(
             icon: _practiceIcon(item.iconKey),
-            iconColor: _guideBlue,
+            iconColor: _guidePrimary,
             title: item.title,
             description: item.description,
           ),
@@ -809,7 +813,7 @@ class _MistakeCard extends StatelessWidget {
                   padding: const EdgeInsets.all(9),
                   decoration: BoxDecoration(
                     color: _guideGreen.withValues(alpha: .08),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: AppRadii.smRadius,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -851,7 +855,7 @@ class _VideoTutorialsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 14),
       decoration: BoxDecoration(
-        color: _guideSurface2,
+        color: _guidePanel2,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -861,7 +865,7 @@ class _VideoTutorialsCard extends StatelessWidget {
             children: [
               const Icon(
                 Icons.play_arrow_outlined,
-                color: _guideBlue,
+                color: _guidePrimary,
                 size: 22,
               ),
               const SizedBox(width: 12),
@@ -890,8 +894,8 @@ class _VideoTutorialsCard extends StatelessWidget {
             height: 32,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: _guideBlue,
-              borderRadius: BorderRadius.circular(16),
+              color: _guidePrimary,
+              borderRadius: AppRadii.cardRadius,
             ),
             child: Text(
               'View All Tutorials',
@@ -922,7 +926,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _guideBlue,
+            color: _guidePrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),
@@ -952,7 +956,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _guideSurface,
+        color: _guidePanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),

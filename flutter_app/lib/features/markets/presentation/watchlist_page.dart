@@ -13,7 +13,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 class WatchlistPage extends ConsumerStatefulWidget {
   const WatchlistPage({super.key, this.shellRenderMode});
@@ -93,7 +93,7 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
             controller: controller,
             autofocus: true,
             style: AppTextStyles.body,
-            cursorColor: _marketBlue,
+            cursorColor: _marketPrimary,
             decoration: InputDecoration(
               hintText: 'Nhập ghi chú',
               hintStyle: AppTextStyles.body.copyWith(color: AppColors.text3),
@@ -102,7 +102,7 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
                 borderRadius: AppRadii.inputRadius,
               ),
               focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: _marketBlue),
+                borderSide: BorderSide(color: _marketPrimary),
                 borderRadius: AppRadii.inputRadius,
               ),
             ),
@@ -259,12 +259,12 @@ class _WatchlistToolbar extends StatelessWidget {
                 InkWell(
                   key: WatchlistPage.addPairKey,
                   onTap: onAddPair,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: AppRadii.lgRadius,
                   child: Container(
                     width: 40,
                     height: 40,
                     decoration: const BoxDecoration(
-                      color: _marketBlue,
+                      color: _marketPrimary,
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
@@ -320,7 +320,7 @@ class _ToolbarSearchField extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.searchBg,
         border: Border.all(color: AppColors.searchBorder),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppRadii.lgRadius,
       ),
       child: Row(
         children: [
@@ -330,7 +330,7 @@ class _ToolbarSearchField extends StatelessWidget {
             child: TextField(
               controller: controller,
               onChanged: onChanged,
-              cursorColor: _marketBlue,
+              cursorColor: _marketPrimary,
               textInputAction: TextInputAction.search,
               style: AppTextStyles.body.copyWith(fontSize: 14),
               decoration: InputDecoration.collapsed(
@@ -349,7 +349,7 @@ class _ToolbarSearchField extends StatelessWidget {
                 onChanged('');
                 onClear();
               },
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: AppRadii.inputRadius,
               child: const SizedBox(
                 width: 28,
                 height: 28,
@@ -398,7 +398,7 @@ class _WatchlistCard extends StatelessWidget {
               InkWell(
                 key: WatchlistPage.pairLinkKey(pair.id),
                 onTap: onPairTap,
-                borderRadius: BorderRadius.circular(22),
+                borderRadius: AppRadii.lgRadius,
                 child: _AssetAvatar(pair: pair),
               ),
               const SizedBox(width: 12),
@@ -513,7 +513,7 @@ class _WatchlistCard extends StatelessWidget {
                 child: _ActionButton(
                   key: WatchlistPage.tradeKey(pair.id),
                   label: 'Giao dịch',
-                  background: _marketBlue,
+                  background: _marketPrimary,
                   foreground: Colors.white,
                   onTap: onTradeTap,
                 ),
@@ -631,13 +631,13 @@ class _NotePill extends StatelessWidget {
       height: 36,
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: _marketBlue.withValues(alpha: 0.07),
-        border: Border.all(color: _marketBlue.withValues(alpha: 0.14)),
+        color: _marketPrimary.withValues(alpha: 0.07),
+        border: Border.all(color: _marketPrimary.withValues(alpha: 0.14)),
         borderRadius: AppRadii.mdRadius,
       ),
       child: Row(
         children: [
-          const Icon(Icons.edit_note_rounded, color: _marketBlue, size: 16),
+          const Icon(Icons.edit_note_rounded, color: _marketPrimary, size: 16),
           const SizedBox(width: 6),
           Expanded(
             child: Text(
@@ -645,7 +645,7 @@ class _NotePill extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
-                color: _marketBlue,
+                color: _marketPrimary,
                 height: 1,
               ),
             ),

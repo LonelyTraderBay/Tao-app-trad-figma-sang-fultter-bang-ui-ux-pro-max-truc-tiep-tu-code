@@ -48,9 +48,14 @@ class VitSearchBar extends StatefulWidget {
 
 class _VitSearchBarState extends State<VitSearchBar> {
   late final TextEditingController _internalController;
+  late final FocusNode _internalFocusNode;
 
   TextEditingController get _controller {
     return widget.controller ?? _internalController;
+  }
+
+  FocusNode get _focusNode {
+    return widget.focusNode ?? _internalFocusNode;
   }
 
   double get _height {
@@ -73,7 +78,9 @@ class _VitSearchBarState extends State<VitSearchBar> {
   void initState() {
     super.initState();
     _internalController = TextEditingController();
+    _internalFocusNode = FocusNode();
     _controller.addListener(_handleTextChanged);
+    _focusNode.addListener(_handleFocusChanged);
   }
 
   @override
@@ -85,16 +92,28 @@ class _VitSearchBarState extends State<VitSearchBar> {
       oldController.removeListener(_handleTextChanged);
       newController.addListener(_handleTextChanged);
     }
+    final oldFocusNode = oldWidget.focusNode ?? _internalFocusNode;
+    final newFocusNode = widget.focusNode ?? _internalFocusNode;
+    if (oldFocusNode != newFocusNode) {
+      oldFocusNode.removeListener(_handleFocusChanged);
+      newFocusNode.addListener(_handleFocusChanged);
+    }
   }
 
   @override
   void dispose() {
     _controller.removeListener(_handleTextChanged);
+    _focusNode.removeListener(_handleFocusChanged);
+    _internalFocusNode.dispose();
     _internalController.dispose();
     super.dispose();
   }
 
   void _handleTextChanged() {
+    if (mounted) setState(() {});
+  }
+
+  void _handleFocusChanged() {
     if (mounted) setState(() {});
   }
 
@@ -130,7 +149,12 @@ class _VitSearchBarState extends State<VitSearchBar> {
             padding: const EdgeInsets.only(left: 12, right: 8),
             decoration: BoxDecoration(
               color: AppColors.searchBg,
-              border: Border.all(color: AppColors.searchBorder),
+              border: Border.all(
+                color: _focusNode.hasFocus
+                    ? AppColors.primary
+                    : AppColors.searchBorder,
+                width: _focusNode.hasFocus ? 1.5 : 1,
+              ),
               borderRadius: _radius,
             ),
             child: Row(
@@ -144,7 +168,7 @@ class _VitSearchBarState extends State<VitSearchBar> {
                 Expanded(
                   child: TextField(
                     controller: _controller,
-                    focusNode: widget.focusNode,
+                    focusNode: _focusNode,
                     autofocus: widget.autofocus,
                     enabled: widget.enabled,
                     onChanged: widget.onChanged,

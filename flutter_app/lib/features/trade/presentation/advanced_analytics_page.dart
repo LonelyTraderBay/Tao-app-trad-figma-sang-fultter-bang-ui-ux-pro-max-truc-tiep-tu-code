@@ -12,11 +12,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _advancedBg = Color(0xFF080C14);
-const _advancedSurface = Color(0xFF151A23);
-const _advancedSurface2 = Color(0xFF1E2535);
-const _advancedBorder = Color(0xFF273142);
-const _advancedBlue = Color(0xFF3B82F6);
+const _advancedBackground = AppColors.bg;
+const _advancedPanel = AppColors.surface;
+const _advancedPanel2 = AppColors.surface2;
+const _advancedBorder = AppColors.borderSolid;
+const _advancedPrimary = AppColors.primary;
 const _advancedGreen = Color(0xFF10B981);
 const _advancedRed = Color(0xFFEF4444);
 const _advancedPurple = Color(0xFF8B5CF6);
@@ -54,7 +54,7 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-092 AdvancedAnalyticsPage',
       child: Material(
-        color: _advancedBg,
+        color: _advancedBackground,
         child: Column(
           children: [
             VitHeader(
@@ -115,7 +115,7 @@ class _HeroCard extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 25),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF111B38), Color(0xFF0D1733)],
+          colors: [AppColors.surface, AppColors.surface2],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -131,7 +131,7 @@ class _HeroCard extends StatelessWidget {
                 height: 64,
                 decoration: BoxDecoration(
                   color: Colors.white.withValues(alpha: .10),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 child: const Icon(
                   Icons.auto_awesome_rounded,
@@ -248,7 +248,7 @@ class _UnderlineTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 54,
-      color: _advancedSurface,
+      color: _advancedPanel,
       child: Row(
         children: [
           for (final tab in _tabs)
@@ -262,7 +262,7 @@ class _UnderlineTabs extends StatelessWidget {
                     border: Border(
                       bottom: BorderSide(
                         color: activeId == tab.$1
-                            ? _advancedBlue
+                            ? _advancedPrimary
                             : Colors.transparent,
                         width: 2,
                       ),
@@ -274,7 +274,7 @@ class _UnderlineTabs extends StatelessWidget {
                       Icon(
                         tab.$3,
                         color: activeId == tab.$1
-                            ? _advancedBlue
+                            ? _advancedPrimary
                             : AppColors.text3,
                         size: 15,
                       ),
@@ -285,7 +285,7 @@ class _UnderlineTabs extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: activeId == tab.$1
-                              ? _advancedBlue
+                              ? _advancedPrimary
                               : AppColors.text3,
                           fontSize: 10,
                           fontWeight: AppTextStyles.bold,
@@ -420,7 +420,7 @@ class _FilterChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected
               ? _advancedPurple.withValues(alpha: .18)
-              : _advancedSurface2,
+              : _advancedPanel2,
           border: Border.all(
             color: selected ? _advancedPurple : _advancedBorder,
           ),
@@ -454,14 +454,14 @@ class _SignalCard extends StatelessWidget {
         : Icons.trending_down_rounded;
     final confidenceColor = signal.confidence >= 80
         ? _advancedGreen
-        : _advancedBlue;
-    final rrColor = signal.riskReward >= 3 ? _advancedGreen : _advancedBlue;
+        : _advancedPrimary;
+    final rrColor = signal.riskReward >= 3 ? _advancedGreen : _advancedPrimary;
 
     return Container(
       constraints: const BoxConstraints(minHeight: 232),
       padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
       decoration: BoxDecoration(
-        color: _advancedSurface,
+        color: _advancedPanel,
         border: Border.all(color: tone.withValues(alpha: .28), width: 1.5),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -475,7 +475,7 @@ class _SignalCard extends StatelessWidget {
                 height: 40,
                 decoration: BoxDecoration(
                   color: tone.withValues(alpha: .12),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadii.mdRadius,
                 ),
                 child: Icon(icon, color: tone, size: 22),
               ),
@@ -642,7 +642,7 @@ class _ConfidenceBox extends StatelessWidget {
       height: 58,
       padding: const EdgeInsets.fromLTRB(10, 9, 10, 9),
       decoration: BoxDecoration(
-        color: _advancedSurface2,
+        color: _advancedPanel2,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -714,7 +714,7 @@ class _MetricBox extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 58),
       padding: const EdgeInsets.fromLTRB(10, 9, 10, 9),
       decoration: BoxDecoration(
-        color: _advancedSurface2,
+        color: _advancedPanel2,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -770,7 +770,7 @@ class _MiniStatBox extends StatelessWidget {
       height: 65,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 11),
       decoration: BoxDecoration(
-        color: _advancedSurface2,
+        color: _advancedPanel2,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -949,7 +949,7 @@ class _RiskAnalysisTab extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: _advancedSurface2,
+                  color: _advancedPanel2,
                   borderRadius: AppRadii.cardRadius,
                 ),
                 child: Row(
@@ -1032,7 +1032,7 @@ class _RiskAnalysisTab extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         const _InfoCard(
-          color: _advancedBlue,
+          color: _advancedPrimary,
           icon: Icons.shield_outlined,
           title: 'Enterprise Risk Management',
           body:
@@ -1180,7 +1180,7 @@ class _PositionSizingTab extends StatelessWidget {
               _MetricBox(
                 label: 'Suggested Position Size',
                 value: '${sizing.positionSize.toStringAsFixed(2)} BTC',
-                valueColor: _advancedBlue,
+                valueColor: _advancedPrimary,
                 alignLeft: true,
               ),
             ],
@@ -1249,7 +1249,7 @@ class _FeaturesCard extends StatelessWidget {
               return Container(
                 padding: const EdgeInsets.symmetric(horizontal: 9),
                 decoration: BoxDecoration(
-                  color: _advancedSurface2,
+                  color: _advancedPanel2,
                   borderRadius: AppRadii.cardRadius,
                 ),
                 child: Row(
@@ -1310,7 +1310,7 @@ class _SectionHeader extends StatelessWidget {
           height: 48,
           decoration: BoxDecoration(
             color: color.withValues(alpha: .12),
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: AppRadii.cardRadius,
           ),
           child: Icon(icon, color: color, size: iconSize),
         ),
@@ -1417,7 +1417,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _advancedSurface,
+        color: _advancedPanel,
         border: Border.all(color: _advancedBorder.withValues(alpha: .7)),
         borderRadius: AppRadii.cardRadius,
       ),

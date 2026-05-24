@@ -6,18 +6,19 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _tradeBlue = Color(0xFF3B82F6);
+const _tradePrimary = AppColors.primary;
 const _futuresRed = Color(0xFFEF4444);
 const _futuresGreen = Color(0xFF10B981);
-const _panelBg = Color(0xFF121721);
-const _chipBg = Color(0xFF1D263B);
-const _warningBg = Color(0x1AF59E0B);
+const _panelBackground = AppColors.surface;
+const _chipBackground = AppColors.surface2;
+const _warningBackground = Color(0x1AF59E0B);
 const _warningBorder = Color(0x33F59E0B);
 
 class FuturesPage extends ConsumerStatefulWidget {
@@ -179,19 +180,19 @@ class _FuturesHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 56,
+      height: AppSpacing.buttonStandard,
       child: Row(
         children: [
           InkWell(
             key: FuturesPage.closeKey,
             onTap: onClose,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: AppRadii.lgRadius,
             child: Container(
               width: 40,
               height: 40,
               decoration: BoxDecoration(
                 color: Colors.white.withValues(alpha: .05),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: AppRadii.lgRadius,
               ),
               child: const Icon(Icons.close_rounded, color: AppColors.text1),
             ),
@@ -244,13 +245,13 @@ class _FuturesHeader extends StatelessWidget {
           InkWell(
             key: FuturesPage.chartKey,
             onTap: onChart,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: AppRadii.lgRadius,
             child: Container(
               width: 40,
               height: 40,
               decoration: BoxDecoration(
                 color: Colors.white.withValues(alpha: .05),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: AppRadii.lgRadius,
               ),
               child: const Icon(
                 Icons.trending_up_rounded,
@@ -284,11 +285,11 @@ class _FuturesTabs extends StatelessWidget {
       ('orders', 'Lệnh', Icons.receipt_long_rounded),
     ];
     return Container(
-      height: 48,
+      height: AppSpacing.inputHeight,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: _chipBg,
-        borderRadius: BorderRadius.circular(18),
+        color: _chipBackground,
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         children: [
@@ -297,13 +298,15 @@ class _FuturesTabs extends StatelessWidget {
               child: InkWell(
                 key: FuturesPage.tabKey(tab.$1),
                 onTap: () => onChanged(tab.$1),
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: AppRadii.inputRadius,
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 160),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: active == tab.$1 ? _tradeBlue : Colors.transparent,
-                    borderRadius: BorderRadius.circular(15),
+                    color: active == tab.$1
+                        ? _tradePrimary
+                        : Colors.transparent,
+                    borderRadius: AppRadii.inputRadius,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -477,9 +480,9 @@ class _MarketStats extends StatelessWidget {
               height: 70,
               padding: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
-                color: _panelBg,
+                color: _panelBackground,
                 border: Border.all(color: Colors.white.withValues(alpha: .06)),
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: AppRadii.inputRadius,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -526,8 +529,8 @@ class _SideSwitch extends StatelessWidget {
       height: 56,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: _chipBg,
-        borderRadius: BorderRadius.circular(18),
+        color: _chipBackground,
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         children: [
@@ -574,13 +577,13 @@ class _SideButton extends StatelessWidget {
     return Expanded(
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 160),
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: active ? color : Colors.transparent,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: AppRadii.cardRadius,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -628,8 +631,8 @@ class _OrderTypeAndLeverage extends StatelessWidget {
             height: 44,
             padding: const EdgeInsets.all(4),
             decoration: BoxDecoration(
-              color: _chipBg,
-              borderRadius: BorderRadius.circular(16),
+              color: _chipBackground,
+              borderRadius: AppRadii.cardRadius,
             ),
             child: Row(
               children: [
@@ -653,32 +656,32 @@ class _OrderTypeAndLeverage extends StatelessWidget {
         InkWell(
           key: FuturesPage.leverageKey,
           onTap: onLeverage,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AppRadii.cardRadius,
           child: Container(
             width: 100,
             height: 44,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: _tradeBlue.withValues(alpha: .13),
-              border: Border.all(color: _tradeBlue.withValues(alpha: .35)),
-              borderRadius: BorderRadius.circular(16),
+              color: _tradePrimary.withValues(alpha: .13),
+              border: Border.all(color: _tradePrimary.withValues(alpha: .35)),
+              borderRadius: AppRadii.cardRadius,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.bolt_rounded, color: _tradeBlue, size: 17),
+                const Icon(Icons.bolt_rounded, color: _tradePrimary, size: 17),
                 const SizedBox(width: 6),
                 Text(
                   '${leverage}x',
                   style: AppTextStyles.caption.copyWith(
-                    color: _tradeBlue,
+                    color: _tradePrimary,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
                 const SizedBox(width: 4),
                 const Icon(
                   Icons.keyboard_arrow_down_rounded,
-                  color: _tradeBlue,
+                  color: _tradePrimary,
                   size: 16,
                 ),
               ],
@@ -707,19 +710,19 @@ class _OrderTypeButton extends StatelessWidget {
     return Expanded(
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(13),
+        borderRadius: AppRadii.mdRadius,
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: active
-                ? _tradeBlue.withValues(alpha: .18)
+                ? _tradePrimary.withValues(alpha: .18)
                 : Colors.transparent,
-            borderRadius: BorderRadius.circular(13),
+            borderRadius: AppRadii.mdRadius,
           ),
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
-              color: active ? _tradeBlue : AppColors.text2,
+              color: active ? _tradePrimary : AppColors.text2,
               fontSize: 13,
               fontWeight: AppTextStyles.bold,
             ),
@@ -742,9 +745,9 @@ class _MarginInput extends StatelessWidget {
       height: 64,
       padding: const EdgeInsets.fromLTRB(16, 8, 12, 8),
       decoration: BoxDecoration(
-        color: _panelBg,
-        border: Border.all(color: _tradeBlue.withValues(alpha: .26)),
-        borderRadius: BorderRadius.circular(16),
+        color: _panelBackground,
+        border: Border.all(color: _tradePrimary.withValues(alpha: .26)),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -772,7 +775,7 @@ class _MarginInput extends StatelessWidget {
                       ),
                     ],
                     onChanged: (_) => onChanged(),
-                    cursorColor: _tradeBlue,
+                    cursorColor: _tradePrimary,
                     style: AppTextStyles.base.copyWith(
                       color: AppColors.text1,
                       fontFamily: 'monospace',
@@ -815,14 +818,16 @@ class _PercentRow extends StatelessWidget {
             child: InkWell(
               key: FuturesPage.pctKey(pct),
               onTap: () => onPercent(pct),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: AppRadii.cardRadius,
               child: Container(
                 height: 36,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: _chipBg,
-                  border: Border.all(color: _tradeBlue.withValues(alpha: .18)),
-                  borderRadius: BorderRadius.circular(16),
+                  color: _chipBackground,
+                  border: Border.all(
+                    color: _tradePrimary.withValues(alpha: .18),
+                  ),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 child: Text(
                   '$pct%',
@@ -867,7 +872,7 @@ class _PreviewCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: _panelBg,
+        color: _panelBackground,
         border: Border.all(color: Colors.white.withValues(alpha: .06)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -917,18 +922,18 @@ class _ToggleChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         height: 36,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? activeColor.withValues(alpha: .12) : _chipBg,
+          color: active ? activeColor.withValues(alpha: .12) : _chipBackground,
           border: Border.all(
             color: active
                 ? activeColor.withValues(alpha: .35)
-                : _tradeBlue.withValues(alpha: .18),
+                : _tradePrimary.withValues(alpha: .18),
           ),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -976,18 +981,18 @@ class _SubmitButton extends StatelessWidget {
     return InkWell(
       key: FuturesPage.submitKey,
       onTap: enabled ? onTap : null,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: AppRadii.inputRadius,
       child: Container(
         height: 52,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: enabled ? color : const Color(0xFF101827),
+          color: enabled ? color : AppColors.surface3,
           gradient: enabled
               ? LinearGradient(
                   colors: [color, Color.lerp(color, Colors.black, .18)!],
                 )
               : null,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: AppRadii.inputRadius,
           boxShadow: enabled
               ? [
                   BoxShadow(
@@ -1020,9 +1025,9 @@ class _RiskWarning extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
       decoration: BoxDecoration(
-        color: _warningBg,
+        color: _warningBackground,
         border: Border.all(color: _warningBorder),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1081,7 +1086,7 @@ class _PositionCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: _panelBg,
+        color: _panelBackground,
         border: Border.all(color: color.withValues(alpha: .20)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -1098,7 +1103,7 @@ class _PositionCard extends StatelessWidget {
               const SizedBox(width: 8),
               Text(position.symbol, style: AppTextStyles.baseMedium),
               const SizedBox(width: 8),
-              _StatusPill(label: '${position.leverage}x', color: _tradeBlue),
+              _StatusPill(label: '${position.leverage}x', color: _tradePrimary),
               const Spacer(),
               Text(
                 '${position.pnl >= 0 ? '+' : '-'}\$${position.pnl.abs().toStringAsFixed(2)}',
@@ -1177,7 +1182,7 @@ class _FuturesAccountCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: _panelBg,
+        color: _panelBackground,
         border: Border.all(color: Colors.white.withValues(alpha: .06)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -1242,7 +1247,7 @@ class _OrdersTab extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 34),
       decoration: BoxDecoration(
-        color: _panelBg,
+        color: _panelBackground,
         border: Border.all(color: Colors.white.withValues(alpha: .06)),
         borderRadius: AppRadii.cardRadius,
       ),

@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 const _emailPurple = Color(0xFF8B5CF6);
 
 class PredictionsBreakingPage extends ConsumerStatefulWidget {
@@ -272,11 +272,11 @@ class _CategoryTabButton extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
-              ? _predictionBlue.withValues(alpha: .14)
+              ? _predictionPrimary.withValues(alpha: .14)
               : Colors.transparent,
           border: Border.all(
             color: active
-                ? _predictionBlue.withValues(alpha: .36)
+                ? _predictionPrimary.withValues(alpha: .36)
                 : Colors.transparent,
           ),
           borderRadius: AppRadii.mdRadius,
@@ -284,7 +284,7 @@ class _CategoryTabButton extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: active ? _predictionBlue : AppColors.text3,
+            color: active ? _predictionPrimary : AppColors.text3,
             fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
           ),
         ),
@@ -458,13 +458,13 @@ class _TinyBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
       decoration: BoxDecoration(
-        color: _predictionBlue.withValues(alpha: .14),
+        color: _predictionPrimary.withValues(alpha: .14),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
         label,
         style: AppTextStyles.micro.copyWith(
-          color: _predictionBlue,
+          color: _predictionPrimary,
           fontSize: 9,
           fontWeight: AppTextStyles.bold,
         ),

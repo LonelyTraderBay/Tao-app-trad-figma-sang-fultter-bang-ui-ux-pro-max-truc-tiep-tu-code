@@ -12,13 +12,13 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _venueBg = Color(0xFF080C14);
-const _venueSurface = Color(0xFF151A23);
-const _venueSurface2 = Color(0xFF1E2535);
-const _venueBorder = Color(0xFF273142);
+const _venueBackground = AppColors.bg;
+const _venuePanel = AppColors.surface;
+const _venuePanel2 = AppColors.surface2;
+const _venueBorder = AppColors.borderSolid;
 const _venueGreen = Color(0xFF10B981);
 const _venueAmber = Color(0xFFF59E0B);
-const _venueBlue = Color(0xFF3B82F6);
+const _venuePrimary = AppColors.primary;
 
 class ExecutionVenueAnalysisPage extends ConsumerStatefulWidget {
   const ExecutionVenueAnalysisPage({super.key, this.shellRenderMode});
@@ -58,7 +58,7 @@ class _ExecutionVenueAnalysisPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-097 ExecutionVenueAnalysisPage',
       child: Material(
-        color: _venueBg,
+        color: _venueBackground,
         child: Stack(
           children: [
             Column(
@@ -196,7 +196,7 @@ class _SummaryCard extends StatelessWidget {
       height: 90,
       padding: const EdgeInsets.fromLTRB(12, 13, 12, 12),
       decoration: BoxDecoration(
-        color: _venueSurface,
+        color: _venuePanel,
         border: Border.all(color: _venueBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -283,7 +283,7 @@ class _SortSelector extends StatelessWidget {
                 height: 44,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: activeId == option.$1 ? _venueBlue : _venueSurface2,
+                  color: activeId == option.$1 ? _venuePrimary : _venuePanel2,
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
@@ -324,7 +324,7 @@ class _Tabs extends StatelessWidget {
     ];
     return Container(
       height: 52,
-      color: _venueSurface,
+      color: _venuePanel,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -340,7 +340,7 @@ class _Tabs extends StatelessWidget {
                           tab.$2,
                           style: AppTextStyles.caption.copyWith(
                             color: activeId == tab.$1
-                                ? _venueBlue
+                                ? _venuePrimary
                                 : AppColors.text3,
                             fontSize: 12,
                             fontWeight: AppTextStyles.bold,
@@ -352,7 +352,7 @@ class _Tabs extends StatelessWidget {
                     Container(
                       width: activeId == tab.$1 ? 72 : 0,
                       height: 2,
-                      color: _venueBlue,
+                      color: _venuePrimary,
                     ),
                   ],
                 ),
@@ -398,7 +398,7 @@ class _VenueCard extends StatelessWidget {
       key: ExecutionVenueAnalysisPage.venueKey(venue.venue),
       padding: const EdgeInsets.all(13),
       decoration: BoxDecoration(
-        color: _venueSurface,
+        color: _venuePanel,
         border: Border.all(color: _venueBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -413,8 +413,8 @@ class _VenueCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: isWinner
                       ? _venueAmber.withValues(alpha: .15)
-                      : _venueSurface2,
-                  borderRadius: BorderRadius.circular(14),
+                      : _venuePanel2,
+                  borderRadius: AppRadii.inputRadius,
                 ),
                 child: Text(
                   '#$rank',
@@ -514,8 +514,8 @@ class _MetricBox extends StatelessWidget {
       height: 50,
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 7),
       decoration: BoxDecoration(
-        color: _venueSurface2,
-        borderRadius: BorderRadius.circular(13),
+        color: _venuePanel2,
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -596,7 +596,7 @@ class _CostCard extends StatelessWidget {
             label: 'Trading Fee',
             value: '${venue.avgFee.toStringAsFixed(2)}%',
             factor: venue.avgFee / .12,
-            color: _venueBlue,
+            color: _venuePrimary,
           ),
           const SizedBox(height: 10),
           _ProgressMetric(
@@ -630,7 +630,7 @@ class _CostCard extends StatelessWidget {
               Text(
                 '${venue.totalCost.toStringAsFixed(2)} bps',
                 style: AppTextStyles.caption.copyWith(
-                  color: _venueBlue,
+                  color: _venuePrimary,
                   fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                 ),
@@ -771,7 +771,7 @@ class _TrendsTab extends StatelessWidget {
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: _venueGreen.withValues(alpha: .12),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadii.mdRadius,
                 ),
                 child: Text(
                   'Overall costs trending down 5% over last 3 months',
@@ -804,7 +804,7 @@ class _TrendBar extends StatelessWidget {
         height: 8,
         child: Stack(
           children: [
-            const ColoredBox(color: _venueSurface2),
+            const ColoredBox(color: _venuePanel2),
             FractionallySizedBox(
               widthFactor: (value / 5).clamp(0, 1).toDouble(),
               child: ColoredBox(color: color),
@@ -861,7 +861,7 @@ class _ProgressMetric extends StatelessWidget {
             height: 6,
             child: Stack(
               children: [
-                const ColoredBox(color: _venueSurface2),
+                const ColoredBox(color: _venuePanel2),
                 FractionallySizedBox(
                   widthFactor: factor.clamp(0, 1).toDouble(),
                   child: ColoredBox(color: color),
@@ -888,7 +888,7 @@ class _SectionLabel extends StatelessWidget {
           width: 3,
           height: 16,
           decoration: BoxDecoration(
-            color: _venueBlue,
+            color: _venuePrimary,
             borderRadius: BorderRadius.circular(999),
           ),
         ),
@@ -920,7 +920,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _venueSurface,
+        color: _venuePanel,
         border: Border.all(color: _venueBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -946,9 +946,9 @@ class _NoticePanel extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.fromLTRB(12, 9, 8, 9),
           decoration: BoxDecoration(
-            color: _venueSurface2,
+            color: _venuePanel2,
             border: Border.all(color: _venueBorder),
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: AppRadii.inputRadius,
           ),
           child: Row(
             children: [

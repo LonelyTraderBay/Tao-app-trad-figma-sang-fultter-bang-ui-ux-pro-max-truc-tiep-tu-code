@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -11,11 +12,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _networkBg = Color(0xFF080C14);
-const _networkSurface = Color(0xFF151A23);
-const _networkSurface2 = Color(0xFF1D2436);
+const _networkBackground = AppColors.bg;
+const _networkPanel = AppColors.surface;
+const _networkPanel2 = AppColors.surface2;
 const _networkBorder = Color(0x14FFFFFF);
-const _networkBlue = Color(0xFF3B82F6);
+const _networkPrimary = AppColors.primary;
 const _networkGreen = Color(0xFF10B981);
 const _networkAmber = Color(0xFFF59E0B);
 const _networkOrange = Color(0xFFF97316);
@@ -45,7 +46,7 @@ class NetworkStatusPage extends ConsumerWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-155 NetworkStatusPage',
       child: Material(
-        color: _networkBg,
+        color: _networkBackground,
         child: Column(
           children: [
             VitHeader(
@@ -104,8 +105,8 @@ class _SummaryCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 21, 20, 20),
       decoration: BoxDecoration(
-        color: _networkSurface,
-        borderRadius: BorderRadius.circular(22),
+        color: _networkPanel,
+        borderRadius: AppRadii.lgRadius,
         border: Border.all(color: Colors.white.withValues(alpha: .3)),
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -113,7 +114,7 @@ class _SummaryCard extends StatelessWidget {
           colors: [
             Colors.white.withValues(alpha: .05),
             summaryColor.withValues(alpha: .04),
-            _networkSurface2,
+            _networkPanel2,
           ],
         ),
       ),
@@ -126,7 +127,7 @@ class _SummaryCard extends StatelessWidget {
                 height: 44,
                 decoration: BoxDecoration(
                   color: summaryColor.withValues(alpha: .08),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: AppRadii.cardRadius,
                   border: Border.all(
                     color: summaryColor.withValues(alpha: .42),
                   ),
@@ -173,8 +174,8 @@ class _SummaryCard extends StatelessWidget {
                   width: 34,
                   height: 34,
                   decoration: BoxDecoration(
-                    color: _networkSurface,
-                    borderRadius: BorderRadius.circular(17),
+                    color: _networkPanel,
+                    borderRadius: AppRadii.cardRadius,
                     border: Border.all(color: _networkBorder),
                   ),
                   alignment: Alignment.center,
@@ -233,8 +234,8 @@ class _SummaryStat extends StatelessWidget {
         height: 59,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _networkSurface.withValues(alpha: .75),
-          borderRadius: BorderRadius.circular(16),
+          color: _networkPanel.withValues(alpha: .75),
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(color: color.withValues(alpha: .32)),
         ),
         child: Column(
@@ -279,8 +280,8 @@ class _NetworkCard extends StatelessWidget {
       key: NetworkStatusPage.networkKey(network.id),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _networkSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _networkPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _networkBorder),
       ),
       child: Column(
@@ -332,7 +333,7 @@ class _NetworkCard extends StatelessWidget {
                 height: 32,
                 decoration: BoxDecoration(
                   color: healthColor.withValues(alpha: .08),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 alignment: Alignment.center,
                 child: Icon(
@@ -461,8 +462,8 @@ class _StatTile extends StatelessWidget {
       height: 48,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: _networkSurface2,
-        borderRadius: BorderRadius.circular(16),
+        color: _networkPanel2,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: AppColors.divider),
       ),
       child: Row(
@@ -540,7 +541,7 @@ class _AvailabilityChip extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .05),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -577,7 +578,7 @@ class _NetworkNote extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
       decoration: BoxDecoration(
         color: _networkAmber.withValues(alpha: .06),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -618,8 +619,8 @@ class _LegendCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _networkSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _networkPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _networkBorder),
       ),
       child: Column(
@@ -704,16 +705,16 @@ class _DisclaimerCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
       decoration: BoxDecoration(
-        color: _networkBlue.withValues(alpha: .08),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _networkBlue.withValues(alpha: .25)),
+        color: _networkPrimary.withValues(alpha: .08),
+        borderRadius: AppRadii.cardRadius,
+        border: Border.all(color: _networkPrimary.withValues(alpha: .25)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
-            color: _networkBlue,
+            color: _networkPrimary,
             size: 14,
           ),
           const SizedBox(width: 10),
@@ -746,7 +747,7 @@ class _TokenLogo extends StatelessWidget {
       height: 40,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .1),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       alignment: Alignment.center,
       child: Text(

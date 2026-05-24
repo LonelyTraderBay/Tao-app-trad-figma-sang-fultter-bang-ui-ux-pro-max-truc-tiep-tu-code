@@ -8,6 +8,49 @@ import '../../features/auth/presentation/otp_page.dart';
 import '../../features/auth/presentation/register_page.dart';
 import '../../features/auth/presentation/reset_password_page.dart';
 import '../../features/auth/presentation/two_fa_setup_page.dart';
+import '../../features/admin/presentation/admin_home.dart';
+import '../../features/admin/presentation/ab_test_dashboard.dart';
+import '../../features/admin/presentation/analytics_dashboard.dart';
+import '../../features/admin/presentation/funnel_dashboard.dart';
+import '../../features/arena/presentation/arena_home_page.dart';
+import '../../features/arena/presentation/arena_governance_gate_page.dart';
+import '../../features/arena/presentation/arena_guide_page.dart';
+import '../../features/arena/presentation/arena_blocked_users_page.dart';
+import '../../features/arena/presentation/arena_challenge_detail_page.dart';
+import '../../features/arena/presentation/arena_creator_page.dart';
+import '../../features/arena/presentation/arena_flow_map_page.dart';
+import '../../features/arena/presentation/arena_leaderboard_page.dart';
+import '../../features/arena/presentation/arena_points_page.dart';
+import '../../features/arena/presentation/arena_safety_center_page.dart';
+import '../../features/arena/presentation/arena_join_page.dart';
+import '../../features/arena/presentation/arena_smart_rule_builder_page.dart';
+import '../../features/arena/presentation/arena_studio_page.dart';
+import '../../features/arena/presentation/arena_trust_breakdown_page.dart';
+import '../../features/arena/presentation/arena_universal_preset_library_page.dart';
+import '../../features/arena/presentation/arena_mode_detail_page.dart';
+import '../../features/arena/presentation/arena_points_entry_detail_page.dart';
+import '../../features/arena/presentation/arena_points_ledger_page.dart';
+import '../../features/arena/presentation/arena_prediction_bridge_foundation_page.dart';
+import '../../features/arena/presentation/arena_production_ready_page.dart';
+import '../../features/arena/presentation/arena_report_case_page.dart';
+import '../../features/arena/presentation/arena_resolution_center_page.dart';
+import '../../features/arena/presentation/connected_ecosystem_production_page.dart';
+import '../../features/arena/presentation/my_arena_page.dart';
+import '../../features/arena/presentation/my_arena_reports_page.dart';
+import '../../features/arena/presentation/verified_challenges_page.dart';
+import '../../features/dca/presentation/dca_page.dart';
+import '../../features/dca/presentation/dca_rebalance_dashboard_page.dart';
+import '../../features/dca/presentation/dca_rebalance_config_page.dart';
+import '../../features/dca/presentation/dca_backtester_page.dart';
+import '../../features/dca/presentation/dca_dynamic_amount_page.dart';
+import '../../features/dca/presentation/dca_multi_asset_page.dart';
+import '../../features/dca/presentation/dca_performance_compare_page.dart';
+import '../../features/dca/presentation/dca_portfolio_optimizer_page.dart';
+import '../../features/dca/presentation/dca_schedule_analytics_page.dart';
+import '../../features/dca/presentation/dca_schedule_config_page.dart';
+import '../../features/dca/presentation/dca_smart_rules_page.dart';
+import '../../features/discovery/presentation/unified_search_page.dart';
+import '../../features/discovery/presentation/topic_hub_page.dart';
 import '../../features/home/data/home_mock_data.dart';
 import '../../features/markets/presentation/advanced_charts_page.dart';
 import '../../features/home/presentation/home_page.dart';
@@ -32,6 +75,7 @@ import '../../features/markets/presentation/token_info_page.dart';
 import '../../features/markets/presentation/token_unlocks_page.dart';
 import '../../features/markets/presentation/watchlist_page.dart';
 import '../../features/news/presentation/news_page.dart';
+import '../../features/notifications/presentation/notifications_page.dart';
 import '../../features/predictions/presentation/prediction_advanced_chart_page.dart';
 import '../../features/predictions/presentation/prediction_data_integration_page.dart';
 import '../../features/predictions/presentation/predictions_breaking_page.dart';
@@ -49,14 +93,102 @@ import '../../features/predictions/presentation/predictions_leaderboard_page.dar
 import '../../features/predictions/presentation/predictions_portfolio_page.dart';
 import '../../features/predictions/presentation/predictions_rewards_page.dart';
 import '../../features/predictions/presentation/predictions_search_page.dart';
+import '../../features/p2p/presentation/p2p_express_page.dart';
+import '../../features/p2p/presentation/p2p_home_page.dart';
+import '../../features/p2p/presentation/p2p_escrow_balance_page.dart';
+import '../../features/p2p/presentation/p2p_escrow_detail_page.dart';
+import '../../features/p2p/presentation/p2p_address_proof_page.dart';
+import '../../features/p2p/presentation/p2p_identity_verification_page.dart';
+import '../../features/p2p/presentation/p2p_kyc_requirements_page.dart';
+import '../../features/p2p/presentation/p2p_kyc_status_page.dart';
+import '../../features/p2p/presentation/p2p_selfie_verification_page.dart';
+import '../../features/p2p/presentation/p2p_video_verification_page.dart';
+import '../../features/p2p/presentation/p2p_security_center_page.dart';
+import '../../features/p2p/presentation/p2p_2fa_settings_page.dart';
+import '../../features/p2p/presentation/p2p_device_management_page.dart';
+import '../../features/p2p/presentation/p2p_anti_phishing_code_page.dart';
+import '../../features/p2p/presentation/p2p_login_history_page.dart';
+import '../../features/p2p/presentation/p2p_suspicious_activity_page.dart';
+import '../../features/p2p/presentation/p2p_e2e_info_page.dart';
+import '../../features/p2p/presentation/p2p_fraud_prevention_page.dart';
+import '../../features/p2p/presentation/p2p_fund_lock_history_page.dart';
+import '../../features/p2p/presentation/p2p_aml_screening_page.dart';
+import '../../features/p2p/presentation/p2p_limit_tracker_page.dart';
+import '../../features/p2p/presentation/p2p_compliance_overview_page.dart';
+import '../../features/p2p/presentation/p2p_large_transaction_justification_page.dart';
+import '../../features/p2p/presentation/p2p_risk_assessment_page.dart';
+import '../../features/p2p/presentation/p2p_order_book_page.dart';
+import '../../features/p2p/presentation/p2p_dashboard_page.dart';
+import '../../features/p2p/presentation/p2p_achievements_page.dart';
+import '../../features/p2p/presentation/p2p_blacklist_add_page.dart';
+import '../../features/p2p/presentation/p2p_blacklist_page.dart';
+import '../../features/p2p/presentation/p2p_guide_page.dart';
+import '../../features/p2p/presentation/p2p_notifications_settings_page.dart';
+import '../../features/p2p/presentation/p2p_settings_page.dart';
+import '../../features/p2p/presentation/p2p_source_of_funds_page.dart';
+import '../../features/p2p/presentation/p2p_tax_reporting_page.dart';
+import '../../features/p2p/presentation/p2p_transaction_limits_page.dart';
+import '../../features/p2p/presentation/p2p_wallet_page.dart';
+import '../../features/p2p/presentation/p2p_wallet_transfer_page.dart';
+import '../../features/p2p/presentation/p2p_insurance_fund_page.dart';
+import '../../features/p2p/presentation/p2p_insurance_certificate_page.dart';
+import '../../features/p2p/presentation/p2p_contribution_history_page.dart';
+import '../../features/p2p/presentation/p2p_claim_detail_page.dart';
+import '../../features/p2p/presentation/p2p_insurance_policy_page.dart';
+import '../../features/p2p/presentation/p2p_insurance_score_page.dart';
+import '../../features/p2p/presentation/p2p_express_confirm_page.dart';
+import '../../features/p2p/presentation/p2p_order_timeline_page.dart';
+import '../../features/p2p/presentation/p2p_order_rate_page.dart';
+import '../../features/p2p/presentation/p2p_order_cancel_page.dart';
+import '../../features/p2p/presentation/p2p_order_proof_page.dart';
+import '../../features/p2p/presentation/p2p_order_page.dart';
+import '../../features/p2p/presentation/p2p_chat_page.dart';
+import '../../features/p2p/presentation/p2p_dispute_page.dart';
+import '../../features/p2p/presentation/p2p_dispute_detail_page.dart';
+import '../../features/p2p/presentation/p2p_dispute_evidence_page.dart';
+import '../../features/p2p/presentation/p2p_dispute_resolution_page.dart';
+import '../../features/p2p/presentation/p2p_disputes_page.dart';
+import '../../features/p2p/presentation/p2p_ad_analytics_page.dart';
+import '../../features/p2p/presentation/p2p_ad_detail_page.dart';
+import '../../features/p2p/presentation/p2p_my_ads_page.dart';
+import '../../features/p2p/presentation/p2p_create_ad_page.dart';
+import '../../features/p2p/presentation/p2p_merchant_apply_page.dart';
+import '../../features/p2p/presentation/p2p_merchant_profile_page.dart';
+import '../../features/p2p/presentation/p2p_my_orders_page.dart';
+import '../../features/p2p/presentation/p2p_payment_method_cooling_period_page.dart';
+import '../../features/p2p/presentation/p2p_payment_method_history_page.dart';
+import '../../features/p2p/presentation/p2p_payment_method_add_page.dart';
+import '../../features/p2p/presentation/p2p_payment_methods_page.dart';
+import '../../features/p2p/presentation/p2p_payment_method_ownership_page.dart';
+import '../../features/p2p/presentation/p2p_payment_method_verification_page.dart';
+import '../../features/p2p/presentation/p2p_report_merchant_page.dart';
+import '../../features/p2p/presentation/p2p_reviews_page.dart';
+import '../../features/p2p/presentation/p2p_trading_level_page.dart';
 import '../../features/profile/presentation/edit_profile_page.dart';
 import '../../features/profile/presentation/activity_log_page.dart';
 import '../../features/profile/presentation/api_management_page.dart';
 import '../../features/profile/presentation/api_key_create_page.dart';
+import '../../features/profile/presentation/device_management_page.dart';
 import '../../features/profile/presentation/kyc_page.dart';
 import '../../features/profile/presentation/profile_page.dart';
 import '../../features/profile/presentation/security_page.dart';
 import '../../features/profile/presentation/settings_page.dart';
+import '../../features/profile/presentation/sub_account_page.dart';
+import '../../features/profile/presentation/vip_page.dart';
+import '../../features/referral/presentation/referral_friend_detail_page.dart';
+import '../../features/referral/presentation/referral_history_page.dart';
+import '../../features/referral/presentation/referral_home_page.dart';
+import '../../features/referral/presentation/referral_rules_page.dart';
+import '../../features/referral/presentation/referral_rewards_page.dart';
+import '../../features/launchpad/presentation/launchpad_contract_page.dart';
+import '../../features/launchpad/presentation/launchpad_page.dart';
+import '../../features/launchpad/presentation/launchpad_ido_bridge_page.dart';
+import '../../features/launchpad/presentation/launchpad_performance_page.dart';
+import '../../features/launchpad/presentation/launchpad_portfolio_page.dart';
+import '../../features/launchpad/presentation/launchpad_staking_page.dart';
+import '../../features/support/presentation/announcements_page.dart';
+import '../../features/support/presentation/help_center_page.dart';
+import '../../features/support/presentation/support_page.dart';
 import '../../features/trade/presentation/trade_page.dart';
 import '../../features/trade/presentation/orders_history_page.dart';
 import '../../features/trade/presentation/order_receipt_page.dart';
@@ -354,6 +486,154 @@ final class AppRouteNames {
   static const String sc161ActivityLog = 'sc161ActivityLog';
   static const String sc162ApiKeyCreate = 'sc162ApiKeyCreate';
   static const String sc163ApiManagement = 'sc163ApiManagement';
+  static const String sc164Vip = 'sc164Vip';
+  static const String sc165DeviceManagement = 'sc165DeviceManagement';
+  static const String sc166SubAccount = 'sc166SubAccount';
+  static const String sc167ProfilePredictions = 'sc167ProfilePredictions';
+  static const String sc168MyArena = 'sc168MyArena';
+  static const String sc169Dca = 'sc169Dca';
+  static const String sc170DcaRebalanceConfig = 'sc170DcaRebalanceConfig';
+  static const String sc171DcaRebalanceDashboard = 'sc171DcaRebalanceDashboard';
+  static const String sc172DcaScheduleConfig = 'sc172DcaScheduleConfig';
+  static const String sc173DcaScheduleAnalytics = 'sc173DcaScheduleAnalytics';
+  static const String sc174DcaPortfolioOptimizer = 'sc174DcaPortfolioOptimizer';
+  static const String sc175DcaDynamicAmount = 'sc175DcaDynamicAmount';
+  static const String sc176DcaBacktester = 'sc176DcaBacktester';
+  static const String sc177DcaMultiAsset = 'sc177DcaMultiAsset';
+  static const String sc178DcaPerformanceCompare = 'sc178DcaPerformanceCompare';
+  static const String sc179DcaSmartRules = 'sc179DcaSmartRules';
+  static const String sc180AdminHome = 'sc180AdminHome';
+  static const String sc181AnalyticsDashboard = 'sc181AnalyticsDashboard';
+  static const String sc182AbTestDashboard = 'sc182AbTestDashboard';
+  static const String sc183FunnelDashboard = 'sc183FunnelDashboard';
+  static const String sc184ArenaHome = 'sc184ArenaHome';
+  static const String sc185ArenaStudio = 'sc185ArenaStudio';
+  static const String sc186ArenaSmartRules = 'sc186ArenaSmartRules';
+  static const String sc187ArenaPresetLibrary = 'sc187ArenaPresetLibrary';
+  static const String sc188ArenaGovernanceGate = 'sc188ArenaGovernanceGate';
+  static const String sc189ArenaModeDetail = 'sc189ArenaModeDetail';
+  static const String sc190ArenaChallengeDetail = 'sc190ArenaChallengeDetail';
+  static const String sc191ArenaJoin = 'sc191ArenaJoin';
+  static const String sc192ArenaResolutionCenter = 'sc192ArenaResolutionCenter';
+  static const String sc193ArenaCreator = 'sc193ArenaCreator';
+  static const String sc194ArenaLeaderboard = 'sc194ArenaLeaderboard';
+  static const String sc195VerifiedChallenges = 'sc195VerifiedChallenges';
+  static const String sc196ArenaPoints = 'sc196ArenaPoints';
+  static const String sc197ArenaFlowMap = 'sc197ArenaFlowMap';
+  static const String sc198ArenaSafetyCenter = 'sc198ArenaSafetyCenter';
+  static const String sc199ArenaTrustBreakdown = 'sc199ArenaTrustBreakdown';
+  static const String sc200ArenaPointsEntryDetail =
+      'sc200ArenaPointsEntryDetail';
+  static const String sc201ArenaPointsLedger = 'sc201ArenaPointsLedger';
+  static const String sc202ArenaReportCase = 'sc202ArenaReportCase';
+  static const String sc203ArenaBlockedUsers = 'sc203ArenaBlockedUsers';
+  static const String sc204MyArenaReports = 'sc204MyArenaReports';
+  static const String sc205MyArena = 'sc205MyArena';
+  static const String sc206ArenaProductionReady = 'sc206ArenaProductionReady';
+  static const String sc207ArenaPredictionBridgeFoundation =
+      'sc207ArenaPredictionBridgeFoundation';
+  static const String sc208ConnectedEcosystemProduction =
+      'sc208ConnectedEcosystemProduction';
+  static const String sc209ArenaGuide = 'sc209ArenaGuide';
+  static const String sc210P2PExpressConfirm = 'sc210P2PExpressConfirm';
+  static const String sc211P2PExpress = 'sc211P2PExpress';
+  static const String sc212P2POrderTimeline = 'sc212P2POrderTimeline';
+  static const String sc213P2POrderRate = 'sc213P2POrderRate';
+  static const String sc214P2POrderCancel = 'sc214P2POrderCancel';
+  static const String sc215P2POrderProof = 'sc215P2POrderProof';
+  static const String sc216P2POrder = 'sc216P2POrder';
+  static const String sc217P2PChat = 'sc217P2PChat';
+  static const String sc218P2PDisputeDetail = 'sc218P2PDisputeDetail';
+  static const String sc219P2PDisputeEvidence = 'sc219P2PDisputeEvidence';
+  static const String sc220P2PDisputeResolution = 'sc220P2PDisputeResolution';
+  static const String sc221P2PDispute = 'sc221P2PDispute';
+  static const String sc222P2PDisputes = 'sc222P2PDisputes';
+  static const String sc223P2PAdAnalytics = 'sc223P2PAdAnalytics';
+  static const String sc224P2PAdDetail = 'sc224P2PAdDetail';
+  static const String sc225P2PMyAds = 'sc225P2PMyAds';
+  static const String sc226P2PCreateAd = 'sc226P2PCreateAd';
+  static const String sc227P2PMerchantApply = 'sc227P2PMerchantApply';
+  static const String sc228P2PMerchantProfile = 'sc228P2PMerchantProfile';
+  static const String sc229P2PReportMerchant = 'sc229P2PReportMerchant';
+  static const String sc230P2PTradingLevel = 'sc230P2PTradingLevel';
+  static const String sc231P2PReviews = 'sc231P2PReviews';
+  static const String sc232P2PPaymentMethodAdd = 'sc232P2PPaymentMethodAdd';
+  static const String sc233P2PPaymentMethodVerification =
+      'sc233P2PPaymentMethodVerification';
+  static const String sc234P2PPaymentMethodOwnership =
+      'sc234P2PPaymentMethodOwnership';
+  static const String sc235P2PPaymentMethodCoolingPeriod =
+      'sc235P2PPaymentMethodCoolingPeriod';
+  static const String sc236P2PPaymentMethodHistory =
+      'sc236P2PPaymentMethodHistory';
+  static const String sc237P2PPaymentMethods = 'sc237P2PPaymentMethods';
+  static const String sc238P2PInsuranceFund = 'sc238P2PInsuranceFund';
+  static const String sc239P2PInsuranceCertificate =
+      'sc239P2PInsuranceCertificate';
+  static const String sc240P2PInsuranceScore = 'sc240P2PInsuranceScore';
+  static const String sc241P2PInsurancePolicy = 'sc241P2PInsurancePolicy';
+  static const String sc242P2PContributionHistory =
+      'sc242P2PContributionHistory';
+  static const String sc243P2PClaimDetail = 'sc243P2PClaimDetail';
+  static const String sc244P2PInsuranceFundAlias = 'sc244P2PInsuranceFundAlias';
+  static const String sc245P2PEscrowBalance = 'sc245P2PEscrowBalance';
+  static const String sc246P2PEscrowDetail = 'sc246P2PEscrowDetail';
+  static const String sc247P2PKycRequirements = 'sc247P2PKycRequirements';
+  static const String sc248P2PKycStatus = 'sc248P2PKycStatus';
+  static const String sc249P2PIdentityVerification =
+      'sc249P2PIdentityVerification';
+  static const String sc250P2PAddressProof = 'sc250P2PAddressProof';
+  static const String sc251P2PSelfieVerification = 'sc251P2PSelfieVerification';
+  static const String sc252P2PVideoVerification = 'sc252P2PVideoVerification';
+  static const String sc253P2PSecurityCenter = 'sc253P2PSecurityCenter';
+  static const String sc254P2P2FASettings = 'sc254P2P2FASettings';
+  static const String sc255P2PDeviceManagement = 'sc255P2PDeviceManagement';
+  static const String sc256P2PAntiPhishingCode = 'sc256P2PAntiPhishingCode';
+  static const String sc257P2PLoginHistory = 'sc257P2PLoginHistory';
+  static const String sc258P2PSuspiciousActivity = 'sc258P2PSuspiciousActivity';
+  static const String sc259P2PE2EInfo = 'sc259P2PE2EInfo';
+  static const String sc260P2PFraudPrevention = 'sc260P2PFraudPrevention';
+  static const String sc261P2PWalletTransfer = 'sc261P2PWalletTransfer';
+  static const String sc262P2PFundLockHistory = 'sc262P2PFundLockHistory';
+  static const String sc263P2PWalletHistoryAlias = 'sc263P2PWalletHistoryAlias';
+  static const String sc264P2PWallet = 'sc264P2PWallet';
+  static const String sc265P2PLimitTracker = 'sc265P2PLimitTracker';
+  static const String sc266P2PTransactionLimits = 'sc266P2PTransactionLimits';
+  static const String sc267P2PComplianceOverview = 'sc267P2PComplianceOverview';
+  static const String sc268P2PAmlScreening = 'sc268P2PAmlScreening';
+  static const String sc269P2PSourceOfFunds = 'sc269P2PSourceOfFunds';
+  static const String sc270P2PLargeTransaction = 'sc270P2PLargeTransaction';
+  static const String sc271P2PRiskAssessment = 'sc271P2PRiskAssessment';
+  static const String sc272P2PTaxReporting = 'sc272P2PTaxReporting';
+  static const String sc273P2POrderBook = 'sc273P2POrderBook';
+  static const String sc274P2PDashboard = 'sc274P2PDashboard';
+  static const String sc275P2PAchievements = 'sc275P2PAchievements';
+  static const String sc276P2PBlacklistAdd = 'sc276P2PBlacklistAdd';
+  static const String sc277P2PBlacklist = 'sc277P2PBlacklist';
+  static const String sc278P2PNotificationsSettings =
+      'sc278P2PNotificationsSettings';
+  static const String sc279P2PSettings = 'sc279P2PSettings';
+  static const String sc280P2PGuide = 'sc280P2PGuide';
+  static const String sc281P2PMyOrders = 'sc281P2PMyOrders';
+  static const String sc282P2PHome = 'sc282P2PHome';
+  static const String sc283UnifiedSearch = 'sc283UnifiedSearch';
+  static const String sc284TopicHub = 'sc284TopicHub';
+  static const String sc285TopicCrypto = 'sc285TopicCrypto';
+  static const String sc286ReferralHistory = 'sc286ReferralHistory';
+  static const String sc287ReferralRewards = 'sc287ReferralRewards';
+  static const String sc288ReferralRules = 'sc288ReferralRules';
+  static const String sc289ReferralFriendDetail = 'sc289ReferralFriendDetail';
+  static const String sc290ReferralHome = 'sc290ReferralHome';
+  static const String sc291Notifications = 'sc291Notifications';
+  static const String sc292HelpCenter = 'sc292HelpCenter';
+  static const String sc293Announcements = 'sc293Announcements';
+  static const String sc294Support = 'sc294Support';
+  static const String sc295Launchpad = 'sc295Launchpad';
+  static const String sc296LaunchpadPortfolio = 'sc296LaunchpadPortfolio';
+  static const String sc297LaunchpadPerformance = 'sc297LaunchpadPerformance';
+  static const String sc298LaunchpadStaking = 'sc298LaunchpadStaking';
+  static const String sc299LaunchpadIdoBridge = 'sc299LaunchpadIdoBridge';
+  static const String sc300LaunchpadContract = 'sc300LaunchpadContract';
 }
 
 final class AppRoutePaths {
@@ -367,6 +647,43 @@ final class AppRoutePaths {
   static const String authForgotPassword = '/auth/forgot-password';
   static const String authResetPassword = '/auth/reset-password';
   static const String home = '/home';
+  static const String search = '/search';
+  static const String topics = '/topics';
+  static const String topicCrypto = '/topic/crypto';
+  static const String referral = '/referral';
+  static const String referralHistory = '/referral/history';
+  static const String referralRewards = '/referral/rewards';
+  static const String referralRules = '/referral/rules';
+  static String referralFriend(String friendId) => '/referral/friend/$friendId';
+  static const String notifications = '/notifications';
+  static const String support = '/support';
+  static const String supportAnnouncements = '/support/announcements';
+  static const String launchpad = '/launchpad';
+  static const String launchpadPortfolio = '/launchpad/portfolio';
+  static const String launchpadPerformance = '/launchpad/performance';
+  static const String launchpadStaking = '/launchpad/staking';
+  static const String launchpadBatchClaim = '/launchpad/batch-claim';
+  static const String launchpadClaimReceiptPos001 =
+      '/launchpad/claim-receipt/pos001';
+  static const String launchpadIdoBridgeSample = '/launchpad/idobridge/sample';
+  static const String launchpadBridgeCompare = '/launchpad/bridge-compare';
+  static const String launchpadBridgeOrderTx001 =
+      '/launchpad/bridge-order/tx001';
+  static const String launchpadContractSample = '/launchpad/contract/sample';
+  static const String launchpadReceiptSub001 = '/launchpad/receipt/sub001';
+  static const String launchpadSample = '/launchpad/sample';
+  static const String launchpadNotifSound = '/launchpad/notif-sound';
+  static const String launchpadEventLog = '/launchpad/event-log';
+  static const String launchpadAbiDiff = '/launchpad/abi-diff/contract001';
+  static const String launchpadAddressBook = '/launchpad/address-book';
+  static const String launchpadWebhooks = '/launchpad/webhooks';
+  static const String launchpadGasTracker = '/launchpad/gas-tracker';
+  static const String launchpadRebalance = '/launchpad/rebalance';
+  static const String launchpadMultisig = '/launchpad/multisig';
+  static const String launchpadSwapAggregator = '/launchpad/swap-aggregator';
+  static const String launchpadLimitOrders = '/launchpad/limit-orders';
+  static const String launchpadDcaBuilder = '/launchpad/dca-builder';
+  static const String launchpadRiskAnalytics = '/launchpad/risk-analytics';
   static const String news = '/news';
   static const String markets = '/markets';
   static const String marketsOverview = '/markets/overview';
@@ -582,9 +899,152 @@ final class AppRoutePaths {
   static String tradeTrader(String traderId) => '/trade/trader/$traderId';
 
   static const String dca = '/dca';
+  static const String dcaPortfolioOptimizer = '/dca/portfolio-optimizer';
+  static const String dcaDynamicAmount = '/dca/dynamic-amount';
+  static const String dcaRebalanceConfig = '/dca/rebalance/config';
+  static const String dcaRebalanceDashboard = '/dca/rebalance/config001';
+  static String dcaRebalanceEdit(String configId) =>
+      '/dca/rebalance/$configId/edit';
+  static String dcaRebalanceHistory(String configId) =>
+      '/dca/rebalance/$configId/history';
+  static const String dcaScheduleConfig = '/dca/schedule/config';
+  static const String dcaScheduleAnalytics = '/dca/schedule/config001';
+  static const String dcaBacktester = '/dca/backtester';
+  static const String dcaMultiAsset = '/dca/multi-asset';
+  static const String dcaPerformanceCompare = '/dca/performance-compare';
+  static const String dcaSmartRules = '/dca/smart-rules';
+  static const String admin = '/admin';
+  static const String adminAnalytics = '/admin/analytics';
+  static const String adminAbtests = '/admin/abtests';
+  static const String adminFunnels = '/admin/funnels';
+  static const String adminSettings = '/admin/settings';
   static const String profilePredictions = '/profile/predictions';
+  static const String rewards = '/rewards';
+  static const String p2p = '/p2p';
+  static const String p2pExpress = '/p2p/express';
+  static const String p2pExpressConfirm = '/p2p/express/confirm';
+  static String p2pOrder(String orderId) => '/p2p/order/$orderId';
+  static String p2pOrderTimeline(String orderId) =>
+      '/p2p/order/timeline/$orderId';
+  static String p2pOrderRate(String orderId) => '/p2p/order/rate/$orderId';
+  static String p2pOrderCancel(String orderId) => '/p2p/order/cancel/$orderId';
+  static String p2pOrderProof(String orderId) => '/p2p/order/proof/$orderId';
+  static String p2pChat(String orderId) => '/p2p/chat/$orderId';
+  static String p2pDispute(String orderId) => '/p2p/dispute/$orderId';
+  static String p2pDisputeDetail(String disputeId) =>
+      '/p2p/dispute/detail/$disputeId';
+  static String p2pDisputeEvidence(String disputeId) =>
+      '/p2p/dispute/evidence/$disputeId';
+  static String p2pDisputeResolution(String disputeId) =>
+      '/p2p/dispute/resolution/$disputeId';
+  static const String p2pDisputes = '/p2p/disputes';
+  static String p2pAdAnalytics(String adId) => '/p2p/ad-analytics/$adId';
+  static String p2pAd(String adId) => '/p2p/ad/$adId';
+  static const String p2pMyAds = '/p2p/my-ads';
+  static const String p2pCreate = '/p2p/create';
+  static const String p2pMerchantApply = '/p2p/merchant-apply';
+  static const String p2pTradingLevel = '/p2p/trading-level';
+  static const String p2pReviews = '/p2p/reviews';
+  static const String p2pPaymentMethodAdd = '/p2p/payment-method/add';
+  static const String p2pPaymentMethods = '/p2p/payment-methods';
+  static String p2pPaymentMethodVerification(String methodId) =>
+      '/p2p/payment-method/verification/$methodId';
+  static String p2pPaymentMethodOwnership(String methodId) =>
+      '/p2p/payment-method/ownership/$methodId';
+  static const String p2pPaymentMethodCoolingPeriod =
+      '/p2p/payment-method/cooling-period';
+  static const String p2pPaymentMethodHistory = '/p2p/payment-method/history';
+  static const String p2pInsurance = '/p2p/insurance';
+  static const String p2pInsuranceFundAlias = '/p2p/insurance-fund';
+  static const String p2pInsuranceCertificate = '/p2p/insurance/certificate';
+  static const String p2pInsuranceScore = '/p2p/insurance/score';
+  static const String p2pInsurancePolicy = '/p2p/insurance/policy';
+  static const String p2pContributionHistory =
+      '/p2p/insurance/contribution-history';
+  static String p2pClaim(String claimId) => '/p2p/insurance/claim/$claimId';
+  static const String p2pEscrowBalance = '/p2p/escrow/balance';
+  static String p2pEscrow(String orderId) => '/p2p/escrow/$orderId';
+  static const String p2pKycRequirements = '/p2p/kyc/requirements';
+  static const String p2pKycVerify = '/p2p/kyc/verify';
+  static const String p2pKycStatus = '/p2p/kyc/status';
+  static const String p2pKycIdentity = '/p2p/kyc/identity';
+  static const String p2pKycAddress = '/p2p/kyc/address';
+  static const String p2pKycSelfie = '/p2p/kyc/selfie';
+  static const String p2pKycVideo = '/p2p/kyc/video';
+  static const String p2pKycFaceMatch = '/p2p/kyc/face-match';
+  static const String p2pSecurityCenter = '/p2p/security/center';
+  static const String p2pSecurity2fa = '/p2p/security/2fa';
+  static const String p2pSecurityDevices = '/p2p/security/devices';
+  static const String p2pSecurityAntiPhishing = '/p2p/security/anti-phishing';
+  static const String p2pSecurityLoginHistory = '/p2p/security/login-history';
+  static const String p2pSecuritySuspiciousActivity =
+      '/p2p/security/suspicious-activity';
+  static const String p2pSecurityWhitelist = '/p2p/security/whitelist';
+  static const String settingsSecurityBiometric =
+      '/settings/security/biometric';
+  static const String settingsSecurityChangePassword =
+      '/settings/security/change-password';
+  static String p2pMerchant(String merchantId) => '/p2p/merchant/$merchantId';
+  static String p2pReport(String merchantId) => '/p2p/report/$merchantId';
+  static const String p2pBlacklist = '/p2p/blacklist';
+  static const String p2pBlacklistAdd = '/p2p/blacklist/add';
+  static const String p2pGuide = '/p2p/guide';
+  static const String p2pSettings = '/p2p/settings';
+  static const String p2pSettingsNotifications = '/p2p/settings/notifications';
+  static const String p2pE2EInfo = '/p2p/e2e-info';
+  static const String p2pFraudPrevention = '/p2p/fraud-prevention';
+  static const String p2pWallet = '/p2p/wallet';
+  static const String p2pWalletTransfer = '/p2p/wallet/transfer';
+  static const String p2pWalletFundLockHistory =
+      '/p2p/wallet/fund-lock-history';
+  static const String p2pWalletHistory = '/p2p/wallet/history';
+  static const String p2pLimits = '/p2p/limits';
+  static const String p2pLimitsTracker = '/p2p/limits/tracker';
+  static const String p2pComplianceOverview = '/p2p/compliance/overview';
+  static const String p2pComplianceAmlScreening =
+      '/p2p/compliance/aml-screening';
+  static const String p2pComplianceSourceOfFunds =
+      '/p2p/compliance/source-of-funds';
+  static const String p2pComplianceLargeTransaction =
+      '/p2p/compliance/large-transaction';
+  static const String p2pComplianceRiskAssessment =
+      '/p2p/compliance/risk-assessment';
+  static const String p2pTaxReporting = '/p2p/tax-reporting';
+  static String p2pTaxReportDetailed(String year) =>
+      '/p2p/tax-report/detailed/$year';
+  static const String p2pOrderBook = '/p2p/order-book';
+  static const String p2pDashboard = '/p2p/dashboard';
+  static const String p2pAchievements = '/p2p/achievements';
+  static const String p2pMyOrders = '/p2p/my-orders';
+  static const String supportHelp = '/support/help';
   static const String arena = '/arena';
+  static const String arenaGuide = '/arena/guide';
   static const String arenaStudio = '/arena/studio';
+  static const String arenaStudioSmartRules = '/arena/studio/smart-rules';
+  static const String arenaStudioPresets = '/arena/studio/presets';
+  static const String arenaStudioGovernance = '/arena/studio/governance';
+  static const String arenaLeaderboard = '/arena/leaderboard';
+  static const String arenaVerified = '/arena/verified';
+  static const String arenaPoints = '/arena/points';
+  static const String arenaFlowMap = '/arena/flow-map';
+  static const String arenaSafety = '/arena/safety';
+  static const String arenaBlocked = '/arena/blocked';
+  static const String arenaMyReports = '/arena/my-reports';
+  static const String arenaMy = '/arena/my';
+  static const String arenaProduction = '/arena/production';
+  static const String arenaBridge = '/arena/bridge';
+  static const String arenaEcosystem = '/arena/ecosystem';
+  static String arenaReportCase(String caseId) => '/arena/report/$caseId';
+  static String arenaChallenge(String challengeId) =>
+      '/arena/challenge/$challengeId';
+  static String arenaJoin(String challengeId) => '/arena/join/$challengeId';
+  static const String arenaResolution = '/arena/resolution';
+  static const String arenaLedger = '/arena/ledger';
+  static String arenaLedgerEntry(String entryId) =>
+      '/arena/ledger/entry/$entryId';
+  static String arenaMode(String modeId) => '/arena/mode/$modeId';
+  static String arenaCreator(String creatorId) => '/arena/creator/$creatorId';
+  static String arenaTrust(String userId) => '/arena/trust/$userId';
   static const String trade = '/trade';
   static const String wallet = '/wallet';
   static const String walletHistory = '/wallet/history';
@@ -1565,6 +2025,861 @@ GoRouter createAppRouter({
             ),
           ),
           GoRoute(
+            path: AppRoutePaths.admin,
+            name: AppRouteNames.sc180AdminHome,
+            builder: (_, _) => AdminHome(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.adminAnalytics,
+            name: AppRouteNames.sc181AnalyticsDashboard,
+            builder: (_, _) =>
+                AnalyticsDashboard(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.adminAbtests,
+            name: AppRouteNames.sc182AbTestDashboard,
+            builder: (_, _) =>
+                ABTestDashboard(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.adminFunnels,
+            name: AppRouteNames.sc183FunnelDashboard,
+            builder: (_, _) =>
+                FunnelDashboard(shellRenderMode: shellRenderMode),
+          ),
+          ..._adminOutgoingPlaceholders,
+          GoRoute(
+            path: AppRoutePaths.p2pExpress,
+            name: AppRouteNames.sc211P2PExpress,
+            builder: (_, _) => P2PExpressPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pExpressConfirm,
+            name: AppRouteNames.sc210P2PExpressConfirm,
+            builder: (_, state) => P2PExpressConfirmPage(
+              shellRenderMode: shellRenderMode,
+              tradeType: parseP2PTradeType(state.uri.queryParameters['type']),
+              asset: state.uri.queryParameters['asset'] ?? 'USDT',
+              fiatAmount: parseP2PAmount(state.uri.queryParameters['fiat']),
+              cryptoAmount: parseP2PAmount(state.uri.queryParameters['crypto']),
+              adId: state.uri.queryParameters['adId'],
+              paymentMethod: state.uri.queryParameters['payment'],
+            ),
+          ),
+          GoRoute(
+            path: '/p2p/order/timeline/:orderId',
+            name: AppRouteNames.sc212P2POrderTimeline,
+            builder: (_, state) => P2POrderTimelinePage(
+              orderId: state.pathParameters['orderId'] ?? 'p2p001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/p2p/order/rate/:orderId',
+            name: AppRouteNames.sc213P2POrderRate,
+            builder: (_, state) => P2POrderRatePage(
+              orderId: state.pathParameters['orderId'] ?? 'p2p001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/p2p/order/cancel/:orderId',
+            name: AppRouteNames.sc214P2POrderCancel,
+            builder: (_, state) => P2POrderCancelPage(
+              orderId: state.pathParameters['orderId'] ?? 'p2p001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/p2p/order/proof/:orderId',
+            name: AppRouteNames.sc215P2POrderProof,
+            builder: (_, state) => P2POrderProofPage(
+              orderId: state.pathParameters['orderId'] ?? 'p2p001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/p2p/order/:orderId',
+            name: AppRouteNames.sc216P2POrder,
+            builder: (_, state) => P2POrderPage(
+              orderId: state.pathParameters['orderId'] ?? 'p2p001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/p2p/chat/:orderId',
+            name: AppRouteNames.sc217P2PChat,
+            builder: (_, state) => P2PChatPage(
+              orderId: state.pathParameters['orderId'] ?? 'p2p001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/p2p/dispute/detail/:disputeId',
+            name: AppRouteNames.sc218P2PDisputeDetail,
+            builder: (_, state) => P2PDisputeDetailPage(
+              disputeId: state.pathParameters['disputeId'] ?? 'sample',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/p2p/dispute/evidence/:disputeId',
+            name: AppRouteNames.sc219P2PDisputeEvidence,
+            builder: (_, state) => P2PDisputeEvidencePage(
+              disputeId: state.pathParameters['disputeId'] ?? 'sample',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/p2p/dispute/resolution/:disputeId',
+            name: AppRouteNames.sc220P2PDisputeResolution,
+            builder: (_, state) => P2PDisputeResolutionPage(
+              disputeId: state.pathParameters['disputeId'] ?? 'sample',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/p2p/dispute/:orderId',
+            name: AppRouteNames.sc221P2PDispute,
+            builder: (_, state) => P2PDisputePage(
+              orderId: state.pathParameters['orderId'] ?? 'p2p001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pDisputes,
+            name: AppRouteNames.sc222P2PDisputes,
+            builder: (_, _) =>
+                P2PDisputesPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: '/p2p/ad-analytics/:adId',
+            name: AppRouteNames.sc223P2PAdAnalytics,
+            builder: (_, state) => P2PAdAnalyticsPage(
+              adId: state.pathParameters['adId'] ?? 'sample',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/p2p/ad/:adId',
+            name: AppRouteNames.sc224P2PAdDetail,
+            builder: (_, state) => P2PAdDetailPage(
+              adId: state.pathParameters['adId'] ?? 'sample',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pMyAds,
+            name: AppRouteNames.sc225P2PMyAds,
+            builder: (_, _) => P2PMyAdsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pCreate,
+            name: AppRouteNames.sc226P2PCreateAd,
+            builder: (_, _) =>
+                P2PCreateAdPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pMerchantApply,
+            name: AppRouteNames.sc227P2PMerchantApply,
+            builder: (_, _) =>
+                P2PMerchantApplyPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: '/p2p/merchant/:merchantId',
+            name: AppRouteNames.sc228P2PMerchantProfile,
+            builder: (_, state) => P2PMerchantProfilePage(
+              merchantId: state.pathParameters['merchantId'] ?? 'mc001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pEscrowBalance,
+            name: AppRouteNames.sc245P2PEscrowBalance,
+            builder: (_, state) => P2PEscrowBalancePage(
+              initialAsset: state.uri.queryParameters['asset'] ?? 'USDT',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/p2p/escrow/:orderId',
+            name: AppRouteNames.sc246P2PEscrowDetail,
+            builder: (_, state) => P2PEscrowDetailPage(
+              orderId: state.pathParameters['orderId'] ?? 'p2p001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pKycRequirements,
+            name: AppRouteNames.sc247P2PKycRequirements,
+            builder: (_, _) =>
+                P2PKycRequirementsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pKycStatus,
+            name: AppRouteNames.sc248P2PKycStatus,
+            builder: (_, _) =>
+                P2PKycStatusPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pKycIdentity,
+            name: AppRouteNames.sc249P2PIdentityVerification,
+            builder: (_, _) =>
+                P2PIdentityVerificationPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pKycAddress,
+            name: AppRouteNames.sc250P2PAddressProof,
+            builder: (_, _) =>
+                P2PAddressProofPage(shellRenderMode: shellRenderMode),
+          ),
+          _placeholderRoute(
+            AppRoutePaths.p2pKycVerify,
+            'P2P KYC Verify',
+            backPath: AppRoutePaths.p2pKycRequirements,
+          ),
+          _placeholderRoute(
+            AppRoutePaths.p2pKycFaceMatch,
+            'P2P KYC Face Match',
+            backPath: AppRoutePaths.p2pKycIdentity,
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pKycSelfie,
+            name: AppRouteNames.sc251P2PSelfieVerification,
+            builder: (_, _) =>
+                P2PSelfieVerificationPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pKycVideo,
+            name: AppRouteNames.sc252P2PVideoVerification,
+            builder: (_, _) =>
+                P2PVideoVerificationPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pSecurityCenter,
+            name: AppRouteNames.sc253P2PSecurityCenter,
+            builder: (_, _) =>
+                P2PSecurityCenterPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pSecurity2fa,
+            name: AppRouteNames.sc254P2P2FASettings,
+            builder: (_, _) =>
+                P2P2FASettingsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pSecurityDevices,
+            name: AppRouteNames.sc255P2PDeviceManagement,
+            builder: (_, _) =>
+                P2PDeviceManagementPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pSecurityAntiPhishing,
+            name: AppRouteNames.sc256P2PAntiPhishingCode,
+            builder: (_, _) =>
+                P2PAntiPhishingCodePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pSecurityLoginHistory,
+            name: AppRouteNames.sc257P2PLoginHistory,
+            builder: (_, _) =>
+                P2PLoginHistoryPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pSecuritySuspiciousActivity,
+            name: AppRouteNames.sc258P2PSuspiciousActivity,
+            builder: (_, _) =>
+                P2PSuspiciousActivityPage(shellRenderMode: shellRenderMode),
+          ),
+          _placeholderRoute(
+            AppRoutePaths.p2pSecurityWhitelist,
+            'P2P Whitelist Mode',
+            backPath: AppRoutePaths.p2pSecurityCenter,
+          ),
+          _placeholderRoute(
+            AppRoutePaths.settingsSecurityBiometric,
+            'Biometric Lock',
+            backPath: AppRoutePaths.p2pSecurityCenter,
+          ),
+          _placeholderRoute(
+            AppRoutePaths.settingsSecurityChangePassword,
+            'Change Password',
+            backPath: AppRoutePaths.p2pSecurityCenter,
+          ),
+          GoRoute(
+            path: '/p2p/report/:merchantId',
+            name: AppRouteNames.sc229P2PReportMerchant,
+            builder: (_, state) => P2PReportMerchantPage(
+              merchantId: state.pathParameters['merchantId'] ?? 'mc001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pTradingLevel,
+            name: AppRouteNames.sc230P2PTradingLevel,
+            builder: (_, _) =>
+                P2PTradingLevelPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pReviews,
+            name: AppRouteNames.sc231P2PReviews,
+            builder: (_, _) => P2PReviewsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pPaymentMethodAdd,
+            name: AppRouteNames.sc232P2PPaymentMethodAdd,
+            builder: (_, state) => P2PPaymentMethodAddPage(
+              initialType: state.uri.queryParameters['type'] == 'ewallet'
+                  ? P2PPaymentAddType.ewallet
+                  : P2PPaymentAddType.bank,
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/p2p/payment-method/verification/:methodId',
+            name: AppRouteNames.sc233P2PPaymentMethodVerification,
+            builder: (_, state) => P2PPaymentMethodVerificationPage(
+              methodId: state.pathParameters['methodId'] ?? 'sample',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/p2p/payment-method/ownership/:methodId',
+            name: AppRouteNames.sc234P2PPaymentMethodOwnership,
+            builder: (_, state) => P2PPaymentMethodOwnershipPage(
+              methodId: state.pathParameters['methodId'] ?? 'sample',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pPaymentMethodCoolingPeriod,
+            name: AppRouteNames.sc235P2PPaymentMethodCoolingPeriod,
+            builder: (_, _) => P2PPaymentMethodCoolingPeriodPage(
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pPaymentMethodHistory,
+            name: AppRouteNames.sc236P2PPaymentMethodHistory,
+            builder: (_, _) =>
+                P2PPaymentMethodHistoryPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pPaymentMethods,
+            name: AppRouteNames.sc237P2PPaymentMethods,
+            builder: (_, _) =>
+                P2PPaymentMethodsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pInsurance,
+            name: AppRouteNames.sc238P2PInsuranceFund,
+            builder: (_, _) =>
+                P2PInsuranceFundPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pInsuranceFundAlias,
+            name: AppRouteNames.sc244P2PInsuranceFundAlias,
+            builder: (_, _) =>
+                P2PInsuranceFundPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pInsuranceCertificate,
+            name: AppRouteNames.sc239P2PInsuranceCertificate,
+            builder: (_, _) =>
+                P2PInsuranceCertificatePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pInsuranceScore,
+            name: AppRouteNames.sc240P2PInsuranceScore,
+            builder: (_, _) =>
+                P2PInsuranceScorePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pInsurancePolicy,
+            name: AppRouteNames.sc241P2PInsurancePolicy,
+            builder: (_, _) =>
+                P2PInsurancePolicyPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pContributionHistory,
+            name: AppRouteNames.sc242P2PContributionHistory,
+            builder: (_, _) =>
+                P2PContributionHistoryPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: '/p2p/insurance/claim/:claimId',
+            name: AppRouteNames.sc243P2PClaimDetail,
+            builder: (_, state) => P2PClaimDetailPage(
+              claimId: state.pathParameters['claimId'] ?? 'sample',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pBlacklistAdd,
+            name: AppRouteNames.sc276P2PBlacklistAdd,
+            builder: (_, _) =>
+                P2PBlacklistAddPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pBlacklist,
+            name: AppRouteNames.sc277P2PBlacklist,
+            builder: (_, _) =>
+                P2PBlacklistPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pGuide,
+            name: AppRouteNames.sc280P2PGuide,
+            builder: (_, _) => P2PGuidePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pSettings,
+            name: AppRouteNames.sc279P2PSettings,
+            builder: (_, _) =>
+                P2PSettingsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pSettingsNotifications,
+            name: AppRouteNames.sc278P2PNotificationsSettings,
+            builder: (_, _) =>
+                P2PNotificationsSettingsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pE2EInfo,
+            name: AppRouteNames.sc259P2PE2EInfo,
+            builder: (_, _) => P2PE2EInfoPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pFraudPrevention,
+            name: AppRouteNames.sc260P2PFraudPrevention,
+            builder: (_, _) =>
+                P2PFraudPreventionPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pWallet,
+            name: AppRouteNames.sc264P2PWallet,
+            builder: (_, _) => P2PWalletPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pWalletTransfer,
+            name: AppRouteNames.sc261P2PWalletTransfer,
+            builder: (_, state) {
+              final query = state.uri.queryParameters;
+              final direction = query['direction'];
+              final inferredType = direction == 'to-main'
+                  ? 'withdraw'
+                  : direction == 'from-main'
+                  ? 'deposit'
+                  : query['type'];
+              return P2PWalletTransferPage(
+                initialAsset: query['asset'],
+                initialType: inferredType,
+                shellRenderMode: shellRenderMode,
+              );
+            },
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pWalletFundLockHistory,
+            name: AppRouteNames.sc262P2PFundLockHistory,
+            builder: (_, _) =>
+                P2PFundLockHistoryPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pWalletHistory,
+            name: AppRouteNames.sc263P2PWalletHistoryAlias,
+            builder: (_, _) => P2PFundLockHistoryPage(
+              walletHistoryAlias: true,
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pLimits,
+            name: AppRouteNames.sc266P2PTransactionLimits,
+            builder: (_, _) =>
+                P2PTransactionLimitsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pLimitsTracker,
+            name: AppRouteNames.sc265P2PLimitTracker,
+            builder: (_, _) =>
+                P2PLimitTrackerPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pComplianceOverview,
+            name: AppRouteNames.sc267P2PComplianceOverview,
+            builder: (_, _) =>
+                P2PComplianceOverviewPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pComplianceAmlScreening,
+            name: AppRouteNames.sc268P2PAmlScreening,
+            builder: (_, _) =>
+                P2PAmlScreeningPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pComplianceSourceOfFunds,
+            name: AppRouteNames.sc269P2PSourceOfFunds,
+            builder: (_, _) =>
+                P2PSourceOfFundsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pComplianceLargeTransaction,
+            name: AppRouteNames.sc270P2PLargeTransaction,
+            builder: (_, state) {
+              final amount = double.tryParse(
+                state.uri.queryParameters['amount'] ?? '',
+              );
+              return P2PLargeTransactionJustificationPage(
+                amount: amount ?? 100000000,
+                shellRenderMode: shellRenderMode,
+              );
+            },
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pComplianceRiskAssessment,
+            name: AppRouteNames.sc271P2PRiskAssessment,
+            builder: (_, _) =>
+                P2PRiskAssessmentPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pTaxReporting,
+            name: AppRouteNames.sc272P2PTaxReporting,
+            builder: (_, _) =>
+                P2PTaxReportingPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pOrderBook,
+            name: AppRouteNames.sc273P2POrderBook,
+            builder: (_, _) =>
+                P2POrderBookPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pDashboard,
+            name: AppRouteNames.sc274P2PDashboard,
+            builder: (_, _) =>
+                P2PDashboardPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pAchievements,
+            name: AppRouteNames.sc275P2PAchievements,
+            builder: (_, _) =>
+                P2PAchievementsPage(shellRenderMode: shellRenderMode),
+          ),
+          _placeholderRoute(
+            '/p2p/tax-report/detailed/:year',
+            'P2P Tax Report Detail',
+            backPath: AppRoutePaths.p2pTaxReporting,
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2p,
+            name: AppRouteNames.sc282P2PHome,
+            builder: (_, _) => P2PHomePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.p2pMyOrders,
+            name: AppRouteNames.sc281P2PMyOrders,
+            builder: (_, _) =>
+                P2PMyOrdersPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.support,
+            name: AppRouteNames.sc294Support,
+            builder: (_, _) => SupportPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.supportHelp,
+            name: AppRouteNames.sc292HelpCenter,
+            builder: (_, _) => HelpCenterPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.supportAnnouncements,
+            name: AppRouteNames.sc293Announcements,
+            builder: (_, _) =>
+                AnnouncementsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpad,
+            name: AppRouteNames.sc295Launchpad,
+            builder: (_, _) => LaunchpadPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadPortfolio,
+            name: AppRouteNames.sc296LaunchpadPortfolio,
+            builder: (_, _) =>
+                LaunchpadPortfolioPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadPerformance,
+            name: AppRouteNames.sc297LaunchpadPerformance,
+            builder: (_, _) =>
+                LaunchpadPerformancePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadStaking,
+            name: AppRouteNames.sc298LaunchpadStaking,
+            builder: (_, _) =>
+                LaunchpadStakingPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadIdoBridgeSample,
+            name: AppRouteNames.sc299LaunchpadIdoBridge,
+            builder: (_, _) =>
+                LaunchpadIdoBridgePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadContractSample,
+            name: AppRouteNames.sc300LaunchpadContract,
+            builder: (_, _) =>
+                LaunchpadContractPage(shellRenderMode: shellRenderMode),
+          ),
+          ..._launchpadOutgoingPlaceholders,
+          GoRoute(
+            path: AppRoutePaths.arena,
+            name: AppRouteNames.sc184ArenaHome,
+            builder: (_, _) => ArenaHomePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaGuide,
+            name: AppRouteNames.sc209ArenaGuide,
+            builder: (_, _) => ArenaGuidePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaStudio,
+            name: AppRouteNames.sc185ArenaStudio,
+            builder: (_, _) =>
+                ArenaStudioPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaStudioSmartRules,
+            name: AppRouteNames.sc186ArenaSmartRules,
+            builder: (_, _) =>
+                ArenaSmartRuleBuilderPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaStudioPresets,
+            name: AppRouteNames.sc187ArenaPresetLibrary,
+            builder: (_, _) => ArenaUniversalPresetLibraryPage(
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaStudioGovernance,
+            name: AppRouteNames.sc188ArenaGovernanceGate,
+            builder: (_, _) =>
+                ArenaGovernanceGatePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: '/arena/mode/:modeId',
+            name: AppRouteNames.sc189ArenaModeDetail,
+            builder: (_, state) => ArenaModeDetailPage(
+              modeId: state.pathParameters['modeId'] ?? 'mode001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/arena/challenge/:challengeId',
+            name: AppRouteNames.sc190ArenaChallengeDetail,
+            builder: (_, state) => ArenaChallengeDetailPage(
+              challengeId: state.pathParameters['challengeId'] ?? 'ch003',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/arena/join/:challengeId',
+            name: AppRouteNames.sc191ArenaJoin,
+            builder: (_, state) => ArenaJoinPage(
+              challengeId: state.pathParameters['challengeId'] ?? 'ch003',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaResolution,
+            name: AppRouteNames.sc192ArenaResolutionCenter,
+            builder: (_, _) =>
+                ArenaResolutionCenterPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: '/arena/creator/:creatorId',
+            name: AppRouteNames.sc193ArenaCreator,
+            builder: (_, state) => ArenaCreatorPage(
+              creatorId: state.pathParameters['creatorId'] ?? 'cr001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaLeaderboard,
+            name: AppRouteNames.sc194ArenaLeaderboard,
+            builder: (_, _) =>
+                ArenaLeaderboardPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaVerified,
+            name: AppRouteNames.sc195VerifiedChallenges,
+            builder: (_, _) =>
+                VerifiedChallengesPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaPoints,
+            redirect: (_, _) => '${AppRoutePaths.rewards}?tab=arena',
+          ),
+          GoRoute(
+            path: AppRoutePaths.rewards,
+            name: AppRouteNames.sc196ArenaPoints,
+            builder: (_, _) =>
+                ArenaPointsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaFlowMap,
+            name: AppRouteNames.sc197ArenaFlowMap,
+            builder: (_, _) =>
+                ArenaFlowMapPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaSafety,
+            name: AppRouteNames.sc198ArenaSafetyCenter,
+            builder: (_, _) =>
+                ArenaSafetyCenterPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaBlocked,
+            name: AppRouteNames.sc203ArenaBlockedUsers,
+            builder: (_, _) =>
+                ArenaBlockedUsersPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaMyReports,
+            name: AppRouteNames.sc204MyArenaReports,
+            builder: (_, _) =>
+                MyArenaReportsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaMy,
+            name: AppRouteNames.sc205MyArena,
+            builder: (_, _) => MyArenaPage(
+              contractScope: MyArenaContractScope.arena,
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaProduction,
+            name: AppRouteNames.sc206ArenaProductionReady,
+            builder: (_, _) =>
+                ArenaProductionReadyPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaBridge,
+            name: AppRouteNames.sc207ArenaPredictionBridgeFoundation,
+            builder: (_, _) => ArenaPredictionBridgeFoundationPage(
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaEcosystem,
+            name: AppRouteNames.sc208ConnectedEcosystemProduction,
+            builder: (_, _) => ConnectedEcosystemProductionPage(
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/arena/trust/:userId',
+            name: AppRouteNames.sc199ArenaTrustBreakdown,
+            builder: (_, state) => ArenaTrustBreakdownPage(
+              entityId: state.pathParameters['userId'] ?? 'user001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: '/arena/ledger/entry/:entryId',
+            name: AppRouteNames.sc200ArenaPointsEntryDetail,
+            builder: (_, state) => ArenaPointsEntryDetailPage(
+              entryId: state.pathParameters['entryId'] ?? 'entry001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.arenaLedger,
+            name: AppRouteNames.sc201ArenaPointsLedger,
+            builder: (_, _) =>
+                ArenaPointsLedgerPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: '/arena/report/:caseId',
+            name: AppRouteNames.sc202ArenaReportCase,
+            builder: (_, state) => ArenaReportCasePage(
+              caseId: state.pathParameters['caseId'] ?? 'case001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.dca,
+            name: AppRouteNames.sc169Dca,
+            builder: (_, _) => DCAPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.dcaPortfolioOptimizer,
+            name: AppRouteNames.sc174DcaPortfolioOptimizer,
+            builder: (_, _) =>
+                DCAPortfolioOptimizer(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.dcaDynamicAmount,
+            name: AppRouteNames.sc175DcaDynamicAmount,
+            builder: (_, _) =>
+                DCADynamicAmount(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.dcaBacktester,
+            name: AppRouteNames.sc176DcaBacktester,
+            builder: (_, _) =>
+                DCABacktesterPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.dcaMultiAsset,
+            name: AppRouteNames.sc177DcaMultiAsset,
+            builder: (_, _) =>
+                DCAMultiAssetPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.dcaPerformanceCompare,
+            name: AppRouteNames.sc178DcaPerformanceCompare,
+            builder: (_, _) =>
+                DCAPerformanceComparePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.dcaSmartRules,
+            name: AppRouteNames.sc179DcaSmartRules,
+            builder: (_, _) =>
+                DCASmartRulesPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.dcaRebalanceConfig,
+            name: AppRouteNames.sc170DcaRebalanceConfig,
+            builder: (_, _) =>
+                DCARebalanceConfig(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.dcaRebalanceDashboard,
+            name: AppRouteNames.sc171DcaRebalanceDashboard,
+            builder: (_, _) => DCARebalanceDashboard(
+              configId: 'config001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.dcaScheduleConfig,
+            name: AppRouteNames.sc172DcaScheduleConfig,
+            builder: (_, _) =>
+                DCAScheduleConfig(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.dcaScheduleAnalytics,
+            name: AppRouteNames.sc173DcaScheduleAnalytics,
+            builder: (_, _) => DCAScheduleAnalytics(
+              configId: 'config001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          ..._dcaOutgoingPlaceholders,
+          GoRoute(
             path: AppRoutePaths.wallet,
             name: AppRouteNames.sc135Wallet,
             builder: (_, _) => WalletPage(shellRenderMode: shellRenderMode),
@@ -1739,7 +3054,94 @@ GoRouter createAppRouter({
             builder: (_, _) =>
                 ApiKeyCreatePage(shellRenderMode: shellRenderMode),
           ),
+          GoRoute(
+            path: AppRoutePaths.profileVip,
+            name: AppRouteNames.sc164Vip,
+            builder: (_, _) => VIPPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.profileDevices,
+            name: AppRouteNames.sc165DeviceManagement,
+            builder: (_, _) =>
+                DeviceManagementPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.profileSubAccounts,
+            name: AppRouteNames.sc166SubAccount,
+            builder: (_, _) => SubAccountPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.profilePredictions,
+            name: AppRouteNames.sc167ProfilePredictions,
+            builder: (_, _) => PredictionsPortfolioPage(
+              shellRenderMode: shellRenderMode,
+              backPath: AppRoutePaths.profile,
+              semanticLabel: 'SC-167 PredictionsPortfolioPage',
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.profileArena,
+            name: AppRouteNames.sc168MyArena,
+            builder: (_, _) => MyArenaPage(shellRenderMode: shellRenderMode),
+          ),
           ..._profileOutgoingPlaceholders,
+          GoRoute(
+            path: AppRoutePaths.search,
+            name: AppRouteNames.sc283UnifiedSearch,
+            builder: (_, _) =>
+                UnifiedSearchPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.notifications,
+            name: AppRouteNames.sc291Notifications,
+            builder: (_, _) =>
+                NotificationsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.topics,
+            name: AppRouteNames.sc284TopicHub,
+            builder: (_, _) => TopicHubPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.topicCrypto,
+            name: AppRouteNames.sc285TopicCrypto,
+            builder: (_, _) => TopicHubPage(
+              initialTopicId: 'crypto',
+              useDetailEndpoint: true,
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.referral,
+            name: AppRouteNames.sc290ReferralHome,
+            builder: (_, _) =>
+                ReferralHomePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.referralHistory,
+            name: AppRouteNames.sc286ReferralHistory,
+            builder: (_, _) =>
+                ReferralHistoryPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.referralRewards,
+            name: AppRouteNames.sc287ReferralRewards,
+            builder: (_, _) =>
+                ReferralRewardsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.referralRules,
+            name: AppRouteNames.sc288ReferralRules,
+            builder: (_, _) =>
+                ReferralRulesPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: '/referral/friend/:friendId',
+            name: AppRouteNames.sc289ReferralFriendDetail,
+            builder: (_, state) => ReferralFriendDetailPage(
+              friendId: state.pathParameters['friendId'] ?? 'friend001',
+            ),
+          ),
           ..._homeOutgoingPlaceholders,
           ..._marketOutgoingPlaceholders,
         ],
@@ -1811,10 +3213,37 @@ VitBottomNavDestination _activeDestinationForPath(String path) {
   if (path == AppRoutePaths.news) {
     return VitBottomNavDestination.trade;
   }
+  if (path == AppRoutePaths.search ||
+      path == AppRoutePaths.notifications ||
+      path == AppRoutePaths.topics ||
+      path.startsWith('/topic/') ||
+      path == AppRoutePaths.referral ||
+      path.startsWith('/referral/') ||
+      path == AppRoutePaths.support ||
+      path.startsWith('/support/') ||
+      path == AppRoutePaths.launchpad ||
+      path.startsWith('/launchpad/')) {
+    return VitBottomNavDestination.trade;
+  }
   if (path.startsWith(AppRoutePaths.markets)) {
     return VitBottomNavDestination.markets;
   }
   if (path.startsWith(AppRoutePaths.trade)) {
+    return VitBottomNavDestination.trade;
+  }
+  if (path == AppRoutePaths.dca || path.startsWith('/dca/')) {
+    return VitBottomNavDestination.trade;
+  }
+  if (path == AppRoutePaths.admin || path.startsWith('/admin/')) {
+    return VitBottomNavDestination.trade;
+  }
+  if (path == AppRoutePaths.rewards) {
+    return VitBottomNavDestination.trade;
+  }
+  if (path == AppRoutePaths.p2p || path.startsWith('/p2p/')) {
+    return VitBottomNavDestination.trade;
+  }
+  if (path == AppRoutePaths.arena || path.startsWith('/arena/')) {
     return VitBottomNavDestination.trade;
   }
   if (path.startsWith('/pair/')) {
@@ -1830,6 +3259,23 @@ VitBottomNavDestination _activeDestinationForPath(String path) {
 }
 
 String _visualQaStatusBarTimeForPath(String path) {
+  if (path == AppRoutePaths.rewards ||
+      path == AppRoutePaths.arenaPoints ||
+      path == AppRoutePaths.arenaFlowMap ||
+      path == AppRoutePaths.arenaSafety ||
+      path == AppRoutePaths.arenaBlocked ||
+      path == AppRoutePaths.arenaMyReports ||
+      path == AppRoutePaths.arenaMy ||
+      path == AppRoutePaths.arenaProduction ||
+      path == AppRoutePaths.arenaBridge ||
+      path == AppRoutePaths.arenaEcosystem ||
+      path == AppRoutePaths.arenaGuide ||
+      path == AppRoutePaths.arenaLedger ||
+      path.startsWith('/arena/report/') ||
+      path.startsWith('/arena/trust/') ||
+      path.startsWith('/arena/ledger/entry/')) {
+    return '23:34';
+  }
   if (path == AppRoutePaths.marketsSocialSentiment) return '23:28';
   if (path == AppRoutePaths.marketsPortfolioTracker) return '23:28';
   if (path == AppRoutePaths.marketsNews) return '23:28';
@@ -1906,6 +3352,100 @@ String _visualQaStatusBarTimeForPath(String path) {
   if (path.startsWith('/trade/copy-provider/')) return '23:30';
   if (path.startsWith('/trade/copy-performance/')) return '23:30';
   if (path.startsWith('/trade/')) return '23:29';
+  if (path.startsWith('/p2p/order/proof/')) return '23:35';
+  if (path.startsWith('/p2p/order/') && path.split('/').length == 4) {
+    return '23:35';
+  }
+  if (path.startsWith('/p2p/chat/')) return '23:35';
+  if (path.startsWith('/p2p/dispute/detail/')) return '23:35';
+  if (path.startsWith('/p2p/dispute/evidence/')) return '23:35';
+  if (path.startsWith('/p2p/dispute/resolution/')) return '23:35';
+  if (path.startsWith('/p2p/dispute/')) return '23:35';
+  if (path == AppRoutePaths.p2pDisputes) return '23:35';
+  if (path.startsWith('/p2p/ad-analytics/')) return '23:35';
+  if (path.startsWith('/p2p/ad/')) return '23:35';
+  if (path == AppRoutePaths.p2pMyAds) return '23:35';
+  if (path == AppRoutePaths.p2pCreate) return '23:35';
+  if (path == AppRoutePaths.p2pMerchantApply) return '23:35';
+  if (path.startsWith('/p2p/merchant/')) return '23:35';
+  if (path.startsWith('/p2p/report/')) return '23:35';
+  if (path == AppRoutePaths.p2p) return '23:37';
+  if (path == AppRoutePaths.p2pTradingLevel) return '23:35';
+  if (path == AppRoutePaths.p2pReviews) return '23:35';
+  if (path == AppRoutePaths.p2pBlacklist) return '23:37';
+  if (path == AppRoutePaths.p2pBlacklistAdd) return '23:37';
+  if (path == AppRoutePaths.p2pGuide) return '23:37';
+  if (path == AppRoutePaths.p2pMyOrders) return '23:37';
+  if (path == AppRoutePaths.p2pSettings) return '23:37';
+  if (path == AppRoutePaths.p2pSettingsNotifications) return '23:37';
+  if (path == AppRoutePaths.p2pPaymentMethodAdd) return '23:35';
+  if (path.startsWith('/p2p/payment-method/verification/')) return '23:35';
+  if (path.startsWith('/p2p/payment-method/ownership/')) return '23:35';
+  if (path == AppRoutePaths.p2pPaymentMethodCoolingPeriod) return '23:35';
+  if (path == AppRoutePaths.p2pPaymentMethodHistory) return '23:35';
+  if (path == AppRoutePaths.p2pPaymentMethods) return '23:35';
+  if (path == AppRoutePaths.p2pEscrowBalance) return '23:36';
+  if (path.startsWith('/p2p/escrow/')) return '23:36';
+  if (path == AppRoutePaths.p2pKycRequirements) return '23:36';
+  if (path == AppRoutePaths.p2pKycStatus) return '23:36';
+  if (path == AppRoutePaths.p2pKycIdentity) return '23:36';
+  if (path == AppRoutePaths.p2pKycAddress) return '23:36';
+  if (path == AppRoutePaths.p2pKycSelfie) return '23:36';
+  if (path == AppRoutePaths.p2pKycVideo) return '23:36';
+  if (path == AppRoutePaths.p2pSecurityCenter) return '23:36';
+  if (path == AppRoutePaths.p2pSecurity2fa) return '23:36';
+  if (path == AppRoutePaths.p2pSecurityDevices) return '23:36';
+  if (path == AppRoutePaths.p2pSecurityAntiPhishing) return '23:36';
+  if (path == AppRoutePaths.p2pSecurityLoginHistory) return '23:36';
+  if (path == AppRoutePaths.p2pSecuritySuspiciousActivity) return '23:36';
+  if (path == AppRoutePaths.p2pE2EInfo) return '23:36';
+  if (path == AppRoutePaths.p2pFraudPrevention) return '23:36';
+  if (path == AppRoutePaths.p2pWallet ||
+      path == AppRoutePaths.p2pWalletTransfer ||
+      path == AppRoutePaths.p2pWalletFundLockHistory ||
+      path == AppRoutePaths.p2pWalletHistory ||
+      path == AppRoutePaths.p2pLimits ||
+      path == AppRoutePaths.p2pLimitsTracker ||
+      path == AppRoutePaths.p2pComplianceOverview ||
+      path == AppRoutePaths.p2pComplianceAmlScreening ||
+      path == AppRoutePaths.p2pComplianceSourceOfFunds ||
+      path == AppRoutePaths.p2pComplianceLargeTransaction ||
+      path == AppRoutePaths.p2pComplianceRiskAssessment ||
+      path == AppRoutePaths.p2pTaxReporting ||
+      path == AppRoutePaths.p2pOrderBook ||
+      path == AppRoutePaths.p2pDashboard ||
+      path == AppRoutePaths.p2pAchievements ||
+      path.startsWith('/p2p/tax-report/detailed/') ||
+      path == AppRoutePaths.p2pMyOrders) {
+    return path == AppRoutePaths.p2pAchievements ? '23:37' : '23:36';
+  }
+  if (path == AppRoutePaths.p2pInsurance ||
+      path == AppRoutePaths.p2pInsuranceFundAlias ||
+      path == AppRoutePaths.p2pInsuranceCertificate ||
+      path == AppRoutePaths.p2pInsuranceScore ||
+      path == AppRoutePaths.p2pInsurancePolicy ||
+      path == AppRoutePaths.p2pContributionHistory ||
+      path.startsWith('/p2p/insurance/claim/')) {
+    return '23:35';
+  }
+  if (path == AppRoutePaths.p2p || path.startsWith('/p2p/')) return '23:34';
+  if (path == AppRoutePaths.search) return '23:37';
+  if (path == AppRoutePaths.notifications) return '23:37';
+  if (path == AppRoutePaths.topics || path.startsWith('/topic/')) {
+    return '23:37';
+  }
+  if (path == AppRoutePaths.referral || path.startsWith('/referral/')) {
+    return '23:37';
+  }
+  if (path == AppRoutePaths.support || path.startsWith('/support/')) {
+    return '23:37';
+  }
+  if (path == AppRoutePaths.launchpad || path.startsWith('/launchpad/')) {
+    return '23:37';
+  }
+  if (path == AppRoutePaths.dca || path.startsWith('/dca/')) return '23:33';
+  if (path == AppRoutePaths.admin || path.startsWith('/admin/')) return '23:33';
+  if (path == AppRoutePaths.arena || path.startsWith('/arena/')) return '23:33';
   if (path.startsWith(AppRoutePaths.wallet)) return '23:32';
   if (path.startsWith(AppRoutePaths.profile)) return '23:33';
   if (path == AppRoutePaths.marketsDepth) return '23:28';
@@ -1920,60 +3460,130 @@ String _visualQaStatusBarTimeForPath(String path) {
 }
 
 final List<GoRoute> _homeOutgoingPlaceholders = [
-  _placeholderRoute('/search', 'Search'),
-  _placeholderRoute('/notifications', 'Notifications'),
-  _placeholderRoute(
-    '/support',
-    'Support',
-    backPath: AppRoutePaths.walletHistory,
-  ),
-  _placeholderRoute('/topics', 'Topics'),
-  _placeholderRoute('/p2p', 'P2P'),
-  _placeholderRoute('/launchpad', 'Launchpad'),
+  _placeholderRoute(AppRoutePaths.p2p, 'P2P'),
   _placeholderRoute('/earn/staking', 'Staking'),
   _placeholderRoute('/earn/savings', 'Savings'),
-  _placeholderRoute('/dca', 'DCA'),
-  _placeholderRoute('/rewards', 'Rewards'),
-  _placeholderRoute('/referral', 'Referral'),
-  _placeholderRoute(AppRoutePaths.arena, 'Open Arena'),
+];
+
+final List<GoRoute> _launchpadOutgoingPlaceholders = [
   _placeholderRoute(
-    AppRoutePaths.arenaStudio,
-    'Arena Studio',
-    backPath: AppRoutePaths.marketsPredictions,
+    AppRoutePaths.launchpadBatchClaim,
+    'Batch Claim',
+    backPath: AppRoutePaths.launchpadStaking,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadClaimReceiptPos001,
+    'Claim Receipt',
+    backPath: AppRoutePaths.launchpadStaking,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadBridgeCompare,
+    'Bridge Compare',
+    backPath: AppRoutePaths.launchpadIdoBridgeSample,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadBridgeOrderTx001,
+    'Bridge Order',
+    backPath: AppRoutePaths.launchpadIdoBridgeSample,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadReceiptSub001,
+    'Launchpad Receipt',
+    backPath: AppRoutePaths.launchpadPortfolio,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadSample,
+    'Launchpad Detail',
+    backPath: AppRoutePaths.launchpad,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadNotifSound,
+    'Notification Sound',
+    backPath: AppRoutePaths.launchpad,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadEventLog,
+    'Event Log',
+    backPath: AppRoutePaths.launchpad,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadAbiDiff,
+    'ABI Diff',
+    backPath: AppRoutePaths.launchpad,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadAddressBook,
+    'Address Book',
+    backPath: AppRoutePaths.launchpad,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadWebhooks,
+    'Webhooks',
+    backPath: AppRoutePaths.launchpad,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadGasTracker,
+    'Gas Tracker',
+    backPath: AppRoutePaths.launchpad,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadRebalance,
+    'Rebalance',
+    backPath: AppRoutePaths.launchpad,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadMultisig,
+    'Multi-sig',
+    backPath: AppRoutePaths.launchpad,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadSwapAggregator,
+    'Swap Aggregator',
+    backPath: AppRoutePaths.launchpad,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadLimitOrders,
+    'Limit Orders',
+    backPath: AppRoutePaths.launchpad,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadDcaBuilder,
+    'DCA Builder',
+    backPath: AppRoutePaths.launchpad,
+  ),
+  _placeholderRoute(
+    AppRoutePaths.launchpadRiskAnalytics,
+    'Risk Analytics',
+    backPath: AppRoutePaths.launchpad,
   ),
 ];
 
-final List<GoRoute> _marketOutgoingPlaceholders = [
-  _placeholderRoute(
-    AppRoutePaths.profilePredictions,
-    'My Predictions',
-    backPath: AppRoutePaths.marketsPredictions,
-  ),
-];
+final List<GoRoute> _marketOutgoingPlaceholders = [];
 
 final List<GoRoute> _walletOutgoingPlaceholders = [];
 
+final List<GoRoute> _dcaOutgoingPlaceholders = [
+  _placeholderRoute(
+    '/dca/rebalance/:configId/edit',
+    'Rebalance Settings',
+    backPath: AppRoutePaths.dcaRebalanceDashboard,
+  ),
+  _placeholderRoute(
+    '/dca/rebalance/:configId/history',
+    'Rebalance History',
+    backPath: AppRoutePaths.dcaRebalanceDashboard,
+  ),
+];
+
+final List<GoRoute> _adminOutgoingPlaceholders = [
+  _placeholderRoute(
+    AppRoutePaths.adminSettings,
+    'Admin Settings',
+    backPath: AppRoutePaths.admin,
+  ),
+];
+
 final List<GoRoute> _profileOutgoingPlaceholders = [
-  _placeholderRoute(
-    AppRoutePaths.profileVip,
-    'VIP Program',
-    backPath: AppRoutePaths.profile,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.profileDevices,
-    'Device Management',
-    backPath: AppRoutePaths.profile,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.profileSubAccounts,
-    'Sub Accounts',
-    backPath: AppRoutePaths.profile,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.profileArena,
-    'My Arena',
-    backPath: AppRoutePaths.profile,
-  ),
   _placeholderRoute(
     AppRoutePaths.onboarding,
     'Onboarding',

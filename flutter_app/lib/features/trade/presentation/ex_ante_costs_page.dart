@@ -12,11 +12,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _costBg = Color(0xFF080C14);
-const _costSurface = Color(0xFF151A23);
-const _costSurface2 = Color(0xFF1E2535);
-const _costBorder = Color(0xFF273142);
-const _costBlue = Color(0xFF3B82F6);
+const _costBackground = AppColors.bg;
+const _costPanel = AppColors.surface;
+const _costPanel2 = AppColors.surface2;
+const _costBorder = AppColors.borderSolid;
+const _costPrimary = AppColors.primary;
 const _costGreen = Color(0xFF10B981);
 const _costAmber = Color(0xFFF59E0B);
 const _costRed = Color(0xFFEF4444);
@@ -54,7 +54,7 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-105 ExAnteCostsPage',
       child: Material(
-        color: _costBg,
+        color: _costBackground,
         child: Column(
           children: [
             VitHeader(
@@ -112,9 +112,9 @@ class _DownloadAction extends StatelessWidget {
       width: 36,
       height: 36,
       decoration: BoxDecoration(
-        color: _costSurface2,
+        color: _costPanel2,
         border: Border.all(color: _costBorder.withValues(alpha: .72)),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: AppRadii.smRadius,
       ),
       child: const Icon(
         Icons.download_rounded,
@@ -188,12 +188,12 @@ class _InvestmentCard extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: _costBlue.withValues(alpha: .13),
-                  borderRadius: BorderRadius.circular(14),
+                  color: _costPrimary.withValues(alpha: .13),
+                  borderRadius: AppRadii.inputRadius,
                 ),
                 child: const Icon(
                   Icons.attach_money_rounded,
-                  color: _costBlue,
+                  color: _costPrimary,
                   size: 24,
                 ),
               ),
@@ -273,7 +273,7 @@ class _Tabs extends StatelessWidget {
     ];
     return Container(
       height: 53,
-      color: _costSurface,
+      color: _costPanel,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -289,7 +289,7 @@ class _Tabs extends StatelessWidget {
                           tab.$2,
                           style: AppTextStyles.caption.copyWith(
                             color: activeId == tab.$1
-                                ? _costBlue
+                                ? _costPrimary
                                 : AppColors.text3,
                             fontSize: 12,
                             fontWeight: AppTextStyles.bold,
@@ -301,7 +301,7 @@ class _Tabs extends StatelessWidget {
                     Container(
                       width: activeId == tab.$1 ? 100 : 0,
                       height: 2,
-                      color: _costBlue,
+                      color: _costPrimary,
                     ),
                   ],
                 ),
@@ -325,7 +325,7 @@ class _Summary extends StatelessWidget {
         TradeExAnteCostCategory.oneOff,
         'One-off Costs',
         'Costs paid once when entering or exiting the investment',
-        _costBlue,
+        _costPrimary,
         _formatEur(snapshot.oneOffCosts),
       ),
       (
@@ -462,7 +462,7 @@ class _RiyCard extends StatelessWidget {
                 height: 48,
                 decoration: BoxDecoration(
                   color: _costRed.withValues(alpha: .13),
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: AppRadii.inputRadius,
                 ),
                 child: const Icon(Icons.trending_down_rounded, color: _costRed),
               ),
@@ -656,7 +656,7 @@ class _Scenarios extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: _costRed.withValues(alpha: .13),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: AppRadii.smRadius,
                 ),
                 child: Row(
                   children: [
@@ -700,7 +700,7 @@ class _QuickLinks extends StatelessWidget {
             key: ExAnteCostsPage.exPostKey,
             icon: Icons.description_outlined,
             label: 'Ex-Post Report',
-            color: _costBlue,
+            color: _costPrimary,
             onPressed: () =>
                 context.go(AppRoutePaths.tradeCopyExPostCostsReport),
           ),
@@ -742,10 +742,8 @@ class _QuickLinkButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.text1,
           side: BorderSide(color: _costBorder.withValues(alpha: .72)),
-          backgroundColor: _costSurface2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-          ),
+          backgroundColor: _costPanel2,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
           padding: const EdgeInsets.symmetric(horizontal: 12),
         ),
         onPressed: onPressed,
@@ -797,10 +795,8 @@ class _FullWidthButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.text1,
           side: BorderSide(color: _costBorder.withValues(alpha: .72)),
-          backgroundColor: _costSurface2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-          ),
+          backgroundColor: _costPanel2,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
         ),
         onPressed: onPressed,
         icon: Icon(icon, size: 16),
@@ -834,8 +830,8 @@ class _MetricBox extends StatelessWidget {
       height: 56,
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 9),
       decoration: BoxDecoration(
-        color: _costSurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: _costPanel2,
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -875,7 +871,7 @@ class _WarningBox extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(12, 11, 12, 10),
       decoration: BoxDecoration(
         color: _costAmber.withValues(alpha: .13),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -916,7 +912,7 @@ class _PeriodButton extends StatelessWidget {
       height: 36,
       child: FilledButton(
         style: FilledButton.styleFrom(
-          backgroundColor: selected ? _costBlue : _costSurface2,
+          backgroundColor: selected ? _costPrimary : _costPanel2,
           foregroundColor: selected ? Colors.white : AppColors.text2,
           shape: const StadiumBorder(),
         ),
@@ -939,8 +935,8 @@ class _ScenarioRow extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: _costSurface2,
-        borderRadius: BorderRadius.circular(10),
+        color: _costPanel2,
+        borderRadius: AppRadii.smRadius,
       ),
       child: Row(
         children: [
@@ -980,7 +976,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 14,
           decoration: BoxDecoration(
-            color: _costBlue,
+            color: _costPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -1010,7 +1006,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _costSurface,
+        color: _costPanel,
         border: Border.all(color: _costBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),

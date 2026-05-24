@@ -14,7 +14,7 @@ import '../data/trade_repository.dart';
 
 const _advancedGreen = Color(0xFF10B981);
 const _advancedRed = Color(0xFFEF4444);
-const _advancedBlue = Color(0xFF3B82F6);
+const _advancedPrimary = AppColors.primary;
 
 class AdvancedTradingDemoPage extends ConsumerStatefulWidget {
   const AdvancedTradingDemoPage({super.key, this.shellRenderMode});
@@ -715,7 +715,7 @@ Color _toneColor(TradeAdvancedMetricTone tone) {
     TradeAdvancedMetricTone.positive => _advancedGreen,
     TradeAdvancedMetricTone.negative => _advancedRed,
     TradeAdvancedMetricTone.warning => AppColors.warn,
-    TradeAdvancedMetricTone.accent => _advancedBlue,
+    TradeAdvancedMetricTone.accent => _advancedPrimary,
     TradeAdvancedMetricTone.neutral => AppColors.text1,
   };
 }

@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 
 class PredictionsGlobalActivityPage extends ConsumerStatefulWidget {
   const PredictionsGlobalActivityPage({super.key, this.shellRenderMode});
@@ -311,11 +311,11 @@ class _AmountChip extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
-              ? _predictionBlue.withValues(alpha: .14)
+              ? _predictionPrimary.withValues(alpha: .14)
               : AppColors.surface2,
           border: Border.all(
             color: active
-                ? _predictionBlue.withValues(alpha: .4)
+                ? _predictionPrimary.withValues(alpha: .4)
                 : Colors.transparent,
           ),
           borderRadius: AppRadii.mdRadius,
@@ -323,7 +323,7 @@ class _AmountChip extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
-            color: active ? _predictionBlue : AppColors.text3,
+            color: active ? _predictionPrimary : AppColors.text3,
             fontSize: 11,
             fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
           ),

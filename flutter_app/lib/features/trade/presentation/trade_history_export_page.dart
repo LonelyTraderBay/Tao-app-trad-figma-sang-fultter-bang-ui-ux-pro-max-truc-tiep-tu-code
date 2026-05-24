@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,11 +13,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _tradeBlue = Color(0xFF3B82F6);
-const _tradeBlueDark = Color(0xFF2563EB);
-const _cardBg = Color(0xFF171C24);
-const _chipBg = Color(0xFF1D263B);
-const _inactiveFormatBg = Color(0xFF202536);
+const _tradePrimary = AppColors.primary;
+const _tradePrimaryDark = AppColors.primaryDark;
+const _cardBackground = AppColors.surface2;
+const _chipBackground = AppColors.surface2;
+const _inactiveFormatBackground = AppColors.surface3;
 
 class TradeHistoryExportPage extends ConsumerStatefulWidget {
   const TradeHistoryExportPage({super.key, this.shellRenderMode});
@@ -197,7 +198,7 @@ class _SummaryCard extends StatelessWidget {
       height: 120,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
       decoration: BoxDecoration(
-        color: _cardBg,
+        color: _cardBackground,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -313,7 +314,7 @@ class _Section extends StatelessWidget {
               width: 4,
               height: 14,
               decoration: BoxDecoration(
-                color: _tradeBlue,
+                color: _tradePrimary,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -381,24 +382,28 @@ class _FormatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = active ? _tradeBlue : const Color(0xFFAEB7CC);
+    final color = active ? _tradePrimary : const Color(0xFFAEB7CC);
     final icon = format.id == 'csv'
         ? Icons.table_chart_outlined
         : Icons.description_outlined;
 
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         height: 110,
         padding: const EdgeInsets.fromLTRB(12, 16, 12, 14),
         decoration: BoxDecoration(
-          color: active ? _tradeBlue.withValues(alpha: .12) : _inactiveFormatBg,
+          color: active
+              ? _tradePrimary.withValues(alpha: .12)
+              : _inactiveFormatBackground,
           border: Border.all(
-            color: active ? _tradeBlue.withValues(alpha: .7) : Colors.white12,
+            color: active
+                ? _tradePrimary.withValues(alpha: .7)
+                : Colors.white12,
             width: active ? 1.2 : 1,
           ),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -408,7 +413,7 @@ class _FormatCard extends StatelessWidget {
             Text(
               format.label,
               style: AppTextStyles.body.copyWith(
-                color: active ? _tradeBlue : AppColors.text1,
+                color: active ? _tradePrimary : AppColors.text1,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
@@ -478,11 +483,15 @@ class _PeriodChip extends StatelessWidget {
       onTap: onTap,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: active ? _tradeBlue.withValues(alpha: .14) : _chipBg,
+          color: active
+              ? _tradePrimary.withValues(alpha: .14)
+              : _chipBackground,
           border: Border.all(
-            color: active ? _tradeBlue.withValues(alpha: .8) : Colors.white12,
+            color: active
+                ? _tradePrimary.withValues(alpha: .8)
+                : Colors.white12,
           ),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 17),
@@ -493,7 +502,7 @@ class _PeriodChip extends StatelessWidget {
               child: Text(
                 period.label,
                 style: AppTextStyles.caption.copyWith(
-                  color: active ? _tradeBlue : AppColors.text2,
+                  color: active ? _tradePrimary : AppColors.text2,
                   fontWeight: active
                       ? AppTextStyles.bold
                       : AppTextStyles.medium,
@@ -519,7 +528,7 @@ class _IncludeList extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: _cardBg,
+        color: _cardBackground,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -599,7 +608,7 @@ class _CheckBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: checked ? AppColors.buy : Colors.transparent,
         border: Border.all(
-          color: checked ? AppColors.buy : const Color(0xFF34446A),
+          color: checked ? AppColors.buy : AppColors.borderSolid,
           width: 2,
         ),
         borderRadius: BorderRadius.circular(4),
@@ -623,16 +632,16 @@ class _TaxNote extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
       decoration: BoxDecoration(
-        color: _tradeBlue.withValues(alpha: .06),
-        border: Border.all(color: _tradeBlue.withValues(alpha: .18)),
-        borderRadius: BorderRadius.circular(16),
+        color: _tradePrimary.withValues(alpha: .06),
+        border: Border.all(color: _tradePrimary.withValues(alpha: .18)),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
             padding: EdgeInsets.only(top: 1),
-            child: Icon(Icons.info_outline, color: _tradeBlue, size: 14),
+            child: Icon(Icons.info_outline, color: _tradePrimary, size: 14),
           ),
           const SizedBox(width: 9),
           Expanded(
@@ -640,7 +649,7 @@ class _TaxNote extends StatelessWidget {
               'File xuất phục vụ mục đích lưu trữ và khai thuế. Không phải tài liệu '
               'chính thức về thuế. Tham khảo ý kiến chuyên gia thuế cho trường hợp cụ thể.',
               style: AppTextStyles.micro.copyWith(
-                color: _tradeBlue,
+                color: _tradePrimary,
                 fontSize: 11,
                 height: 1.45,
               ),
@@ -689,7 +698,7 @@ class _ExportFooter extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: AppColors.buy.withValues(alpha: .08),
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: AppRadii.inputRadius,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -754,7 +763,7 @@ class _ExportFooter extends StatelessWidget {
                 gradient: isExporting
                     ? null
                     : const LinearGradient(
-                        colors: [_tradeBlue, _tradeBlueDark],
+                        colors: [_tradePrimary, _tradePrimaryDark],
                       ),
                 background: isExporting ? AppColors.surface3 : null,
                 onTap: isExporting ? null : onExport,
@@ -788,15 +797,15 @@ class _FooterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
-        height: 48,
+        height: AppSpacing.inputHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: gradient == null ? background : null,
           gradient: gradient,
           border: borderColor == null ? null : Border.all(color: borderColor!),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

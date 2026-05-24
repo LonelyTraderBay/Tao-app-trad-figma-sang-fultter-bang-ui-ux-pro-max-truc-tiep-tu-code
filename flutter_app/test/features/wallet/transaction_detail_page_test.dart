@@ -80,6 +80,6 @@ void main() {
     await tester.tap(find.byKey(TransactionDetailPage.supportKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Support'), findsOneWidget);
+    expect(find.text('Liên hệ · Hỗ trợ'), findsOneWidget);
   });
 }

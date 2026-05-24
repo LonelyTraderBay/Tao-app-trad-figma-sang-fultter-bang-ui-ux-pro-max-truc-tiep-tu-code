@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -13,11 +14,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _providerBlue = Color(0xFF3B82F6);
+const _providerPrimary = AppColors.primary;
 const _providerGreen = Color(0xFF10B981);
 const _providerWarning = Color(0xFFF59E0B);
-const _providerPanel = Color(0xFF1B2132);
-const _providerField = Color(0xFF22283A);
+const _providerPanel = AppColors.surface2;
+const _providerField = AppColors.surface3;
 
 class ProviderApplicationPage extends ConsumerStatefulWidget {
   const ProviderApplicationPage({super.key, this.shellRenderMode});
@@ -204,7 +205,7 @@ class _ProgressBars extends StatelessWidget {
               height: 4,
               decoration: BoxDecoration(
                 color: activeIndex >= index
-                    ? _providerBlue
+                    ? _providerPrimary
                     : AppColors.surface3,
                 borderRadius: BorderRadius.circular(999),
               ),
@@ -227,7 +228,7 @@ class _IntroStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Icon(Icons.groups_2_outlined, color: _providerBlue, size: 44),
+        const Icon(Icons.groups_2_outlined, color: _providerPrimary, size: 44),
         const SizedBox(height: 38),
         Text(
           'Trở thành Copy Trading Provider',
@@ -281,7 +282,7 @@ class _BenefitCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         color: _providerPanel,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         children: [
@@ -335,7 +336,7 @@ class _ResponsibilitiesCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF211712),
+        color: AppColors.warningBg,
         border: Border.all(color: _providerWarning.withValues(alpha: .55)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -394,7 +395,7 @@ class _RequirementPreview extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         color: _providerPanel,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         children: [
@@ -593,18 +594,16 @@ class _FooterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final submit = step == TradeProviderApplicationStep.review;
     return SizedBox(
-      height: 48,
+      height: AppSpacing.inputHeight,
       child: FilledButton.icon(
         key: submit
             ? ProviderApplicationPage.submitKey
             : ProviderApplicationPage.nextKey,
         onPressed: enabled ? onPressed : null,
         style: FilledButton.styleFrom(
-          backgroundColor: submit ? _providerGreen : _providerBlue,
-          disabledBackgroundColor: _providerBlue.withValues(alpha: .42),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
+          backgroundColor: submit ? _providerGreen : _providerPrimary,
+          disabledBackgroundColor: _providerPrimary.withValues(alpha: .42),
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
         ),
         icon: Icon(
           submit ? Icons.workspace_premium_outlined : Icons.chevron_right,
@@ -711,9 +710,9 @@ class _TogglePanel extends StatelessWidget {
               child: FilledButton(
                 onPressed: onTap,
                 style: FilledButton.styleFrom(
-                  backgroundColor: active ? _providerGreen : _providerBlue,
+                  backgroundColor: active ? _providerGreen : _providerPrimary,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: AppRadii.inputRadius,
                   ),
                 ),
                 child: Text(active ? activeLabel : inactiveLabel),
@@ -797,10 +796,10 @@ class _ConsentTile extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: checked
-              ? _providerBlue.withValues(alpha: .14)
+              ? _providerPrimary.withValues(alpha: .14)
               : _providerPanel,
           border: Border.all(
-            color: checked ? _providerBlue : AppColors.cardBorder,
+            color: checked ? _providerPrimary : AppColors.cardBorder,
             width: 1.5,
           ),
           borderRadius: AppRadii.cardRadius,
@@ -812,7 +811,7 @@ class _ConsentTile extends StatelessWidget {
               checked
                   ? Icons.check_circle_rounded
                   : Icons.radio_button_unchecked_rounded,
-              color: checked ? _providerBlue : AppColors.text3,
+              color: checked ? _providerPrimary : AppColors.text3,
               size: 22,
             ),
             const SizedBox(width: 12),
@@ -888,7 +887,7 @@ class _PanelHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: _providerBlue, size: 18),
+        Icon(icon, color: _providerPrimary, size: 18),
         const SizedBox(width: 8),
         Text(
           title,
@@ -917,7 +916,7 @@ InputDecoration _inputDecoration(String hint) {
     contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
     border: OutlineInputBorder(
       borderSide: BorderSide.none,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: AppRadii.inputRadius,
     ),
   );
 }

@@ -13,6 +13,9 @@ abstract interface class ProfileRepository {
   ProfileActivitySnapshot getActivity();
   ProfileApiKeyCreateSnapshot getApiKeyCreate();
   ProfileApiManagementSnapshot getApiManagement();
+  ProfileVipSnapshot getVip();
+  ProfileDeviceManagementSnapshot getDeviceManagement();
+  ProfileSubAccountsSnapshot getSubAccounts();
 }
 
 enum ProfileScreenState { loading, empty, error, offline, submitting, success }
@@ -268,6 +271,208 @@ final class ProfileApiManagementSnapshot {
   final String endpoint;
   final String actionDraft;
   final List<ProfileScreenState> supportedStates;
+}
+
+final class ProfileVipSnapshot {
+  const ProfileVipSnapshot({
+    required this.currentLevel,
+    required this.monthlyVolume,
+    required this.assetHold,
+    required this.memberSince,
+    required this.tiers,
+    required this.history,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final int currentLevel;
+  final double monthlyVolume;
+  final double assetHold;
+  final String memberSince;
+  final List<ProfileVipTier> tiers;
+  final List<ProfileVipHistoryRow> history;
+  final String endpoint;
+  final String actionDraft;
+  final List<ProfileScreenState> supportedStates;
+
+  ProfileVipTier get currentTier =>
+      tiers.firstWhere((tier) => tier.level == currentLevel);
+
+  ProfileVipTier? get nextTier {
+    for (final tier in tiers) {
+      if (tier.level == currentLevel + 1) return tier;
+    }
+    return null;
+  }
+}
+
+final class ProfileDeviceManagementSnapshot {
+  const ProfileDeviceManagementSnapshot({
+    required this.devices,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final List<ProfileManagedDevice> devices;
+  final String endpoint;
+  final String actionDraft;
+  final List<ProfileScreenState> supportedStates;
+
+  ProfileManagedDevice? get currentDevice {
+    for (final device in devices) {
+      if (device.isCurrent) return device;
+    }
+    return null;
+  }
+
+  List<ProfileManagedDevice> get otherDevices =>
+      devices.where((device) => !device.isCurrent).toList(growable: false);
+
+  int get trustedCount => devices.where((device) => device.isTrusted).length;
+  int get untrustedCount => devices.where((device) => !device.isTrusted).length;
+  int get activeCount =>
+      devices.where((device) => device.lastActive == 'Dang hoat dong').length;
+}
+
+final class ProfileManagedDevice {
+  const ProfileManagedDevice({
+    required this.id,
+    required this.name,
+    required this.type,
+    required this.browser,
+    required this.os,
+    required this.ip,
+    required this.location,
+    required this.lastActive,
+    required this.loginAt,
+    required this.isCurrent,
+    required this.isTrusted,
+  });
+
+  final String id;
+  final String name;
+  final String type;
+  final String browser;
+  final String os;
+  final String ip;
+  final String location;
+  final String lastActive;
+  final String loginAt;
+  final bool isCurrent;
+  final bool isTrusted;
+
+  ProfileManagedDevice copyWith({bool? isTrusted}) {
+    return ProfileManagedDevice(
+      id: id,
+      name: name,
+      type: type,
+      browser: browser,
+      os: os,
+      ip: ip,
+      location: location,
+      lastActive: lastActive,
+      loginAt: loginAt,
+      isCurrent: isCurrent,
+      isTrusted: isTrusted ?? this.isTrusted,
+    );
+  }
+}
+
+final class ProfileSubAccountsSnapshot {
+  const ProfileSubAccountsSnapshot({
+    required this.accounts,
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+  });
+
+  final List<ProfileSubAccount> accounts;
+  final String endpoint;
+  final String actionDraft;
+  final List<ProfileScreenState> supportedStates;
+
+  double get totalBalance =>
+      accounts.fold(0, (sum, account) => sum + account.balance);
+  double get totalPnl30d =>
+      accounts.fold(0, (sum, account) => sum + account.pnl30d);
+  int get activeCount =>
+      accounts.where((account) => account.status == 'active').length;
+  int get apiKeyCount =>
+      accounts.fold(0, (sum, account) => sum + account.apiKeyCount);
+}
+
+final class ProfileSubAccount {
+  const ProfileSubAccount({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.type,
+    required this.status,
+    required this.balance,
+    required this.pnl30d,
+    required this.permissions,
+    required this.createdAt,
+    required this.lastActive,
+    required this.apiKeyCount,
+    required this.tradingVolume30d,
+  });
+
+  final String id;
+  final String name;
+  final String email;
+  final String type;
+  final String status;
+  final double balance;
+  final double pnl30d;
+  final List<String> permissions;
+  final String createdAt;
+  final String lastActive;
+  final int apiKeyCount;
+  final double tradingVolume30d;
+}
+
+final class ProfileVipTier {
+  const ProfileVipTier({
+    required this.level,
+    required this.name,
+    required this.badge,
+    required this.iconKey,
+    required this.monthlyVolume,
+    required this.assetHold,
+    required this.makerFee,
+    required this.takerFee,
+    required this.withdrawLimit,
+    required this.features,
+  });
+
+  final int level;
+  final String name;
+  final String badge;
+  final String iconKey;
+  final double monthlyVolume;
+  final double assetHold;
+  final double makerFee;
+  final double takerFee;
+  final double withdrawLimit;
+  final List<String> features;
+}
+
+final class ProfileVipHistoryRow {
+  const ProfileVipHistoryRow({
+    required this.date,
+    required this.volume,
+    required this.level,
+    required this.fee,
+    required this.saved,
+  });
+
+  final String date;
+  final String volume;
+  final String level;
+  final String fee;
+  final String saved;
 }
 
 final class ProfileApiKey {
@@ -611,6 +816,56 @@ final class MockProfileRepository implements ProfileRepository {
       ],
     );
   }
+
+  @override
+  ProfileVipSnapshot getVip() {
+    return const ProfileVipSnapshot(
+      currentLevel: 1,
+      monthlyVolume: 12450,
+      assetHold: 54276,
+      memberSince: '15/08/2023',
+      tiers: _vipTiers,
+      history: _vipHistory,
+      endpoint: '/api/mobile/profile/profile-vip',
+      actionDraft: 'read-only or local navigation action',
+      supportedStates: [
+        ProfileScreenState.loading,
+        ProfileScreenState.empty,
+        ProfileScreenState.error,
+        ProfileScreenState.offline,
+      ],
+    );
+  }
+
+  @override
+  ProfileDeviceManagementSnapshot getDeviceManagement() {
+    return const ProfileDeviceManagementSnapshot(
+      devices: _managedDevices,
+      endpoint: '/api/mobile/profile/profile-devices',
+      actionDraft: 'read-only or local navigation action',
+      supportedStates: [
+        ProfileScreenState.loading,
+        ProfileScreenState.empty,
+        ProfileScreenState.error,
+        ProfileScreenState.offline,
+      ],
+    );
+  }
+
+  @override
+  ProfileSubAccountsSnapshot getSubAccounts() {
+    return const ProfileSubAccountsSnapshot(
+      accounts: _subAccounts,
+      endpoint: '/api/mobile/profile/profile-sub-accounts',
+      actionDraft: 'read-only or local navigation action',
+      supportedStates: [
+        ProfileScreenState.loading,
+        ProfileScreenState.empty,
+        ProfileScreenState.error,
+        ProfileScreenState.offline,
+      ],
+    );
+  }
 }
 
 const ProfileUser _profileUser = ProfileUser(
@@ -924,6 +1179,141 @@ const List<ProfileDevice> _securityDevices = [
   ),
 ];
 
+const List<ProfileManagedDevice> _managedDevices = [
+  ProfileManagedDevice(
+    id: 'dev001',
+    name: 'Chrome Desktop',
+    type: 'desktop',
+    browser: 'Chrome 121',
+    os: 'Windows 11',
+    ip: '113.161.88.123',
+    location: 'Ho Chi Minh, VN',
+    lastActive: 'Dang hoat dong',
+    loginAt: '2024-02-23 09:30',
+    isCurrent: true,
+    isTrusted: true,
+  ),
+  ProfileManagedDevice(
+    id: 'dev002',
+    name: 'iPhone 15 Pro',
+    type: 'mobile',
+    browser: 'Safari 17',
+    os: 'iOS 17.3',
+    ip: '113.161.88.123',
+    location: 'Ho Chi Minh, VN',
+    lastActive: '2 gio truoc',
+    loginAt: '2024-02-22 14:20',
+    isCurrent: false,
+    isTrusted: true,
+  ),
+  ProfileManagedDevice(
+    id: 'dev003',
+    name: 'MacBook Air',
+    type: 'desktop',
+    browser: 'Safari 17',
+    os: 'macOS Sonoma',
+    ip: '42.118.23.67',
+    location: 'Ha Noi, VN',
+    lastActive: '3 ngay truoc',
+    loginAt: '2024-02-20 08:15',
+    isCurrent: false,
+    isTrusted: true,
+  ),
+  ProfileManagedDevice(
+    id: 'dev004',
+    name: 'Unknown Device',
+    type: 'mobile',
+    browser: 'Chrome Mobile',
+    os: 'Android 14',
+    ip: '171.224.180.55',
+    location: 'Singapore',
+    lastActive: '5 ngay truoc',
+    loginAt: '2024-02-18 03:22',
+    isCurrent: false,
+    isTrusted: false,
+  ),
+];
+
+const List<ProfileSubAccount> _subAccounts = [
+  ProfileSubAccount(
+    id: 'sub001',
+    name: 'Bot Trading #1',
+    email: 'bot1@vittrade.vn',
+    type: 'spot',
+    status: 'active',
+    balance: 8450.20,
+    pnl30d: 1234.50,
+    permissions: ['spot_trade', 'read'],
+    createdAt: '2024-01-15',
+    lastActive: '2 phut truoc',
+    apiKeyCount: 2,
+    tradingVolume30d: 125000,
+  ),
+  ProfileSubAccount(
+    id: 'sub002',
+    name: 'Margin Account',
+    email: 'margin@vittrade.vn',
+    type: 'margin',
+    status: 'active',
+    balance: 15200,
+    pnl30d: 3421.80,
+    permissions: ['margin_trade', 'transfer', 'read'],
+    createdAt: '2024-01-20',
+    lastActive: '1 gio truoc',
+    apiKeyCount: 1,
+    tradingVolume30d: 450000,
+  ),
+  ProfileSubAccount(
+    id: 'sub003',
+    name: 'Futures #1',
+    email: 'futures1@vittrade.vn',
+    type: 'futures',
+    status: 'active',
+    balance: 5600,
+    pnl30d: -890.30,
+    permissions: ['futures_trade', 'read'],
+    createdAt: '2024-02-01',
+    lastActive: '5 phut truoc',
+    apiKeyCount: 1,
+    tradingVolume30d: 890000,
+  ),
+  ProfileSubAccount(
+    id: 'sub004',
+    name: 'DCA Strategy',
+    email: 'dca@vittrade.vn',
+    type: 'spot',
+    status: 'frozen',
+    balance: 2100.50,
+    pnl30d: 567.20,
+    permissions: ['spot_trade', 'read'],
+    createdAt: '2024-02-10',
+    lastActive: '3 ngay truoc',
+    apiKeyCount: 0,
+    tradingVolume30d: 15000,
+  ),
+  ProfileSubAccount(
+    id: 'sub005',
+    name: 'Team Member - Linh',
+    email: 'linh@company.vn',
+    type: 'all',
+    status: 'active',
+    balance: 32500,
+    pnl30d: 8920,
+    permissions: [
+      'spot_trade',
+      'margin_trade',
+      'futures_trade',
+      'transfer',
+      'withdraw',
+      'read',
+    ],
+    createdAt: '2023-12-01',
+    lastActive: 'Vua xong',
+    apiKeyCount: 3,
+    tradingVolume30d: 1250000,
+  ),
+];
+
 const List<ProfileLanguageOption> _settingsLanguages = [
   ProfileLanguageOption(id: 'vi', label: 'Ti\u1EBFng Vi\u1EC7t'),
   ProfileLanguageOption(id: 'en', label: 'English'),
@@ -1185,5 +1575,143 @@ const List<ProfileApiKey> _apiManagementKeys = [
     lastUsed: '30/11/2025 22:00',
     isActive: false,
     requestCount: 892,
+  ),
+];
+
+const List<ProfileVipTier> _vipTiers = [
+  ProfileVipTier(
+    level: 0,
+    name: 'Standard',
+    badge: 'STANDARD',
+    iconKey: 'person',
+    monthlyVolume: 0,
+    assetHold: 0,
+    makerFee: .10,
+    takerFee: .10,
+    withdrawLimit: 100000,
+    features: ['Spot trading', 'P2P trading', 'Staking c\u01A1 b\u1EA3n'],
+  ),
+  ProfileVipTier(
+    level: 1,
+    name: 'VIP 1',
+    badge: 'VIP 1',
+    iconKey: 'star',
+    monthlyVolume: 50000,
+    assetHold: 1000,
+    makerFee: .09,
+    takerFee: .09,
+    withdrawLimit: 500000,
+    features: [
+      'T\u1EA5t c\u1EA3 Standard',
+      'Ph\u00ED th\u1EA5p h\u01A1n 10%',
+      'H\u1ED7 tr\u1EE3 \u01B0u ti\u00EAn',
+    ],
+  ),
+  ProfileVipTier(
+    level: 2,
+    name: 'VIP 2',
+    badge: 'VIP 2',
+    iconKey: 'medal',
+    monthlyVolume: 500000,
+    assetHold: 5000,
+    makerFee: .08,
+    takerFee: .08,
+    withdrawLimit: 1000000,
+    features: [
+      'T\u1EA5t c\u1EA3 VIP 1',
+      'API n\u00E2ng cao',
+      'Launchpad \u01B0u ti\u00EAn',
+      'Staking APY +1%',
+    ],
+  ),
+  ProfileVipTier(
+    level: 3,
+    name: 'VIP 3',
+    badge: 'VIP 3',
+    iconKey: 'workspace',
+    monthlyVolume: 2000000,
+    assetHold: 20000,
+    makerFee: .06,
+    takerFee: .07,
+    withdrawLimit: 5000000,
+    features: [
+      'T\u1EA5t c\u1EA3 VIP 2',
+      'Maker fee gi\u1EA3m 40%',
+      'Dedicated account manager',
+      'Launchpad allocation \u01B0u ti\u00EAn',
+    ],
+  ),
+  ProfileVipTier(
+    level: 4,
+    name: 'VIP 4',
+    badge: 'VIP 4',
+    iconKey: 'diamond',
+    monthlyVolume: 10000000,
+    assetHold: 100000,
+    makerFee: .04,
+    takerFee: .06,
+    withdrawLimit: 20000000,
+    features: [
+      'T\u1EA5t c\u1EA3 VIP 3',
+      'Maker 0.04% - t\u1ED1t nh\u1EA5t th\u1ECB tr\u01B0\u1EDDng',
+      'OTC desk ri\u00EAng',
+      'Sub-accounts kh\u00F4ng gi\u1EDBi h\u1EA1n',
+    ],
+  ),
+  ProfileVipTier(
+    level: 5,
+    name: 'Market Maker',
+    badge: 'MM',
+    iconKey: 'rocket',
+    monthlyVolume: 50000000,
+    assetHold: 500000,
+    makerFee: 0,
+    takerFee: .04,
+    withdrawLimit: 100000000,
+    features: [
+      'T\u1EA5t c\u1EA3 VIP 4',
+      'Maker fee = 0%',
+      'Colocation API',
+      'Custom fee negotiation',
+      'H\u1ED7 tr\u1EE3 24/7 ri\u00EAng',
+    ],
+  ),
+];
+
+const List<ProfileVipHistoryRow> _vipHistory = [
+  ProfileVipHistoryRow(
+    date: '2026-02-23',
+    volume: '\$12,450',
+    level: 'VIP 1',
+    fee: '\$11.21',
+    saved: '\$1.24',
+  ),
+  ProfileVipHistoryRow(
+    date: '2026-01-23',
+    volume: '\$28,340',
+    level: 'VIP 1',
+    fee: '\$25.51',
+    saved: '\$2.83',
+  ),
+  ProfileVipHistoryRow(
+    date: '2025-12-23',
+    volume: '\$45,120',
+    level: 'VIP 1',
+    fee: '\$40.61',
+    saved: '\$4.51',
+  ),
+  ProfileVipHistoryRow(
+    date: '2025-11-23',
+    volume: '\$8,900',
+    level: 'Standard',
+    fee: '\$8.90',
+    saved: '\$0',
+  ),
+  ProfileVipHistoryRow(
+    date: '2025-10-23',
+    volume: '\$5,600',
+    level: 'Standard',
+    fee: '\$5.60',
+    saved: '\$0',
   ),
 ];

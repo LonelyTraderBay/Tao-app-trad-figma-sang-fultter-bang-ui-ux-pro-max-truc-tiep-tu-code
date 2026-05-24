@@ -13,7 +13,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/trade_repository.dart';
 
-const _performanceBlue = Color(0xFF3B82F6);
+const _performancePrimary = AppColors.primary;
 const _performancePurple = Color(0xFF8B5CF6);
 const _performanceGreen = Color(0xFF10B981);
 const _performanceRed = Color(0xFFEF4444);
@@ -127,8 +127,8 @@ class _PerformanceSummary extends StatelessWidget {
                   range:
                       '\$${snapshot.initialCapital.toStringAsFixed(0)} → \$${snapshot.yourCurrentValue.toStringAsFixed(0)}',
                   background: const Color(0xFFEFF6FF),
-                  border: _performanceBlue,
-                  foreground: _performanceBlue,
+                  border: _performancePrimary,
+                  foreground: _performancePrimary,
                   textColor: const Color(0xFF1E3A8A),
                 ),
               ),
@@ -168,10 +168,7 @@ class _PerformanceSummary extends StatelessWidget {
                     const Expanded(
                       child: Text(
                         'Chênh lệch hiệu suất',
-                        style: TextStyle(
-                          color: Color(0xFF166534),
-                          fontSize: 12,
-                        ),
+                        style: TextStyle(color: AppColors.buy20, fontSize: 12),
                       ),
                     ),
                     Text(
@@ -189,7 +186,7 @@ class _PerformanceSummary extends StatelessWidget {
                   child: Text(
                     'Nguyên nhân chính: slippage (${snapshot.avgSlippagePct.toStringAsFixed(2)}%) và chi phí (\$${snapshot.totalCosts.toStringAsFixed(0)})',
                     style: AppTextStyles.micro.copyWith(
-                      color: const Color(0xFF166534),
+                      color: AppColors.buy20,
                       fontSize: 10,
                     ),
                   ),
@@ -230,7 +227,7 @@ class _ReturnCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: background,
         border: Border.all(color: border),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -295,7 +292,7 @@ class _PerformanceTabs extends StatelessWidget {
                           tab.$2,
                           style: AppTextStyles.caption.copyWith(
                             color: activeTab == tab.$1
-                                ? _performanceBlue
+                                ? _performancePrimary
                                 : AppColors.text3,
                             fontWeight: activeTab == tab.$1
                                 ? FontWeight.w800
@@ -309,7 +306,7 @@ class _PerformanceTabs extends StatelessWidget {
                       duration: const Duration(milliseconds: 150),
                       width: activeTab == tab.$1 ? 70 : 0,
                       height: 2,
-                      color: _performanceBlue,
+                      color: _performancePrimary,
                     ),
                   ],
                 ),
@@ -453,7 +450,7 @@ class _TradesTab extends StatelessWidget {
                     Expanded(
                       child: _TradeColumn(
                         title: 'Bạn',
-                        color: _performanceBlue,
+                        color: _performancePrimary,
                         entry: trade.yourEntry,
                         exit: trade.yourExit,
                         pnl: trade.yourPnl,
@@ -759,7 +756,7 @@ class _LineChartPainter extends CustomPainter {
     _drawLine(
       canvas,
       [for (final point in points) project(point, point.you)],
-      _performanceBlue,
+      _performancePrimary,
       dashed: false,
     );
     _drawLine(
@@ -774,7 +771,7 @@ class _LineChartPainter extends CustomPainter {
       canvas,
       Offset(chart.left + 48, legendY),
       'Bạn',
-      _performanceBlue,
+      _performancePrimary,
     );
     _drawLegend(
       canvas,
@@ -838,7 +835,7 @@ class _BarChartPainter extends CustomPainter {
           barWidth,
           youHeight,
         ),
-        Paint()..color = _performanceBlue,
+        Paint()..color = _performancePrimary,
       );
       canvas.drawRect(
         Rect.fromLTWH(
@@ -860,7 +857,7 @@ class _BarChartPainter extends CustomPainter {
       canvas,
       Offset(chart.left + 78, size.height - 16),
       'Bạn',
-      _performanceBlue,
+      _performancePrimary,
     );
     _drawLegend(
       canvas,

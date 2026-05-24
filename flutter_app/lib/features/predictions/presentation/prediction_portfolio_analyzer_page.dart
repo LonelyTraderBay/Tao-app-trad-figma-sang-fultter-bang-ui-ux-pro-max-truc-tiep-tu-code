@@ -15,7 +15,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 const _purple = Color(0xFF8B5CF6);
 
 enum _AnalyzerTab { overview, performance, risk }
@@ -158,7 +158,7 @@ class _AnalyzerTabBar extends StatelessWidget {
                             item.label,
                             style: AppTextStyles.caption.copyWith(
                               color: activeTab == item.tab
-                                  ? _predictionBlue
+                                  ? _predictionPrimary
                                   : AppColors.text3,
                               fontWeight: AppTextStyles.bold,
                               fontSize: 12,
@@ -171,7 +171,7 @@ class _AnalyzerTabBar extends StatelessWidget {
                         height: 2,
                         width: activeTab == item.tab ? 116 : 0,
                         decoration: BoxDecoration(
-                          color: _predictionBlue,
+                          color: _predictionPrimary,
                           borderRadius: BorderRadius.circular(1),
                         ),
                       ),
@@ -309,7 +309,7 @@ class _StatsGrid extends StatelessWidget {
         icon: Icons.show_chart_rounded,
         label: 'Open Positions',
         value: '${snapshot.openPositions.length}',
-        color: _predictionBlue,
+        color: _predictionPrimary,
       ),
       (
         icon: Icons.adjust_rounded,
@@ -473,7 +473,7 @@ class _TradeStatsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Trade Statistics',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         VitCard(
           padding: const EdgeInsets.all(16),
@@ -545,7 +545,7 @@ class _AttributionSection extends StatelessWidget {
       ..sort((a, b) => b.pnl.compareTo(a.pnl));
     return VitPageSection(
       label: 'Performance Attribution',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         for (final position in closed)
           VitCard(
@@ -611,7 +611,7 @@ class _RiskMetricsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Risk Exposure',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         VitCard(
           padding: const EdgeInsets.all(16),
@@ -923,7 +923,7 @@ class _CategoryRiskBar extends StatelessWidget {
           Container(
             height: height.toDouble(),
             decoration: BoxDecoration(
-              color: _predictionBlue,
+              color: _predictionPrimary,
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(8),
               ),
@@ -1048,7 +1048,7 @@ class _PnlLinePainter extends CustomPainter {
 
 Color _categoryColor(int index) {
   return const [
-    _predictionBlue,
+    _predictionPrimary,
     AppColors.buy,
     AppColors.warn,
     _purple,

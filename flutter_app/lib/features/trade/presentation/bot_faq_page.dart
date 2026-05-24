@@ -12,10 +12,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _faqBg = Color(0xFF080C14);
-const _faqSurface = Color(0xFF151A23);
-const _faqSurface2 = Color(0xFF1D2436);
-const _faqBlue = Color(0xFF3B82F6);
+const _faqBackground = AppColors.bg;
+const _faqPanel = AppColors.surface;
+const _faqPanel2 = AppColors.surface2;
+const _faqPrimary = AppColors.primary;
 
 class BotFaqPage extends ConsumerStatefulWidget {
   const BotFaqPage({super.key, this.shellRenderMode});
@@ -78,7 +78,7 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-132 BotFAQPage',
       child: Material(
-        color: _faqBg,
+        color: _faqBackground,
         child: Column(
           children: [
             VitHeader(
@@ -157,9 +157,9 @@ class _SearchField extends StatelessWidget {
     return Container(
       height: 46,
       decoration: BoxDecoration(
-        color: _faqSurface,
-        border: Border.all(color: const Color(0xFF263656)),
-        borderRadius: BorderRadius.circular(16),
+        color: _faqPanel,
+        border: Border.all(color: AppColors.borderSolid),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         children: [
@@ -171,7 +171,7 @@ class _SearchField extends StatelessWidget {
               key: BotFaqPage.searchKey,
               controller: controller,
               onChanged: onChanged,
-              cursorColor: _faqBlue,
+              cursorColor: _faqPrimary,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontSize: 14,
@@ -234,14 +234,14 @@ class _CategoryTabs extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: activeId == categories[i].id
-                        ? _faqBlue.withValues(alpha: .13)
-                        : _faqSurface2,
+                        ? _faqPrimary.withValues(alpha: .13)
+                        : _faqPanel2,
                     border: Border.all(
                       color: activeId == categories[i].id
-                          ? _faqBlue.withValues(alpha: .42)
+                          ? _faqPrimary.withValues(alpha: .42)
                           : Colors.transparent,
                     ),
-                    borderRadius: BorderRadius.circular(18),
+                    borderRadius: AppRadii.cardRadius,
                   ),
                   child: Text(
                     categories[i].id,
@@ -249,7 +249,7 @@ class _CategoryTabs extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: activeId == categories[i].id
-                          ? _faqBlue
+                          ? _faqPrimary
                           : AppColors.text3,
                       fontSize: 12,
                       fontWeight: AppTextStyles.bold,
@@ -287,7 +287,7 @@ class _FaqCard extends StatelessWidget {
     return Container(
       key: BotFaqPage.questionKey(categoryId, index),
       decoration: BoxDecoration(
-        color: _faqSurface,
+        color: _faqPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -305,7 +305,7 @@ class _FaqCard extends StatelessWidget {
                     padding: EdgeInsets.only(top: 1),
                     child: Icon(
                       Icons.help_outline_rounded,
-                      color: _faqBlue,
+                      color: _faqPrimary,
                       size: 20,
                     ),
                   ),
@@ -341,8 +341,8 @@ class _FaqCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: _faqSurface2,
-                  borderRadius: BorderRadius.circular(14),
+                  color: _faqPanel2,
+                  borderRadius: AppRadii.inputRadius,
                 ),
                 child: Text(
                   item.answer,
@@ -394,7 +394,7 @@ class _StatCard extends StatelessWidget {
       height: 86,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: _faqSurface,
+        color: _faqPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -434,8 +434,8 @@ class _HelpCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
       decoration: BoxDecoration(
-        color: _faqBlue.withValues(alpha: .08),
-        border: Border.all(color: _faqBlue.withValues(alpha: .25)),
+        color: _faqPrimary.withValues(alpha: .08),
+        border: Border.all(color: _faqPrimary.withValues(alpha: .25)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -465,7 +465,7 @@ class _HelpCard extends StatelessWidget {
               Expanded(
                 child: _HelpButton(
                   label: 'Live Chat',
-                  background: _faqSurface2,
+                  background: _faqPanel2,
                   foreground: AppColors.text1,
                 ),
               ),
@@ -473,7 +473,7 @@ class _HelpCard extends StatelessWidget {
               const Expanded(
                 child: _HelpButton(
                   label: 'Contact Support',
-                  background: _faqBlue,
+                  background: _faqPrimary,
                   foreground: Colors.white,
                 ),
               ),
@@ -503,7 +503,7 @@ class _HelpButton extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: background,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Text(
         label,
@@ -556,7 +556,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _faqBlue,
+            color: _faqPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),

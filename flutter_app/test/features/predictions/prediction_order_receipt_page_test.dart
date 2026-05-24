@@ -115,6 +115,6 @@ void main() {
     );
     await tester.tap(find.byKey(PredictionOrderReceiptPage.viewPortfolioKey));
     await tester.pumpAndSettle();
-    expect(find.text('My Predictions'), findsOneWidget);
+    expect(find.text('Prediction Portfolio'), findsOneWidget);
   });
 }

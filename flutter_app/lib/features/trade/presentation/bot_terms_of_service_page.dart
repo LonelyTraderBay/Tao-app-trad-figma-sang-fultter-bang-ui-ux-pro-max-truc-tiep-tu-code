@@ -12,10 +12,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _termsBg = Color(0xFF080C14);
-const _termsSurface = Color(0xFF151A23);
-const _termsSurface2 = Color(0xFF1D2436);
-const _termsBlue = Color(0xFF3B82F6);
+const _termsBackground = AppColors.bg;
+const _termsPanel = AppColors.surface;
+const _termsPanel2 = AppColors.surface2;
+const _termsPrimary = AppColors.primary;
 const _termsAmber = Color(0xFFF59E0B);
 const _termsRed = Color(0xFFEF4444);
 
@@ -67,7 +67,7 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-117 BotTermsOfServicePage',
       child: Material(
-        color: _termsBg,
+        color: _termsBackground,
         child: Column(
           children: [
             VitHeader(
@@ -150,12 +150,12 @@ class _InfoBanner extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 96),
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
       decoration: BoxDecoration(
-        color: _termsBlue.withValues(alpha: .08),
+        color: _termsPrimary.withValues(alpha: .08),
         border: Border.all(
-          color: _termsBlue.withValues(alpha: .24),
+          color: _termsPrimary.withValues(alpha: .24),
           width: 1.5,
         ),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,7 +164,7 @@ class _InfoBanner extends StatelessWidget {
             padding: EdgeInsets.only(top: 3),
             child: Icon(
               Icons.description_outlined,
-              color: _termsBlue,
+              color: _termsPrimary,
               size: 20,
             ),
           ),
@@ -211,7 +211,7 @@ class _TermsCard extends StatelessWidget {
     return Container(
       height: 575,
       decoration: BoxDecoration(
-        color: _termsSurface,
+        color: _termsPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -331,7 +331,7 @@ class _CriticalWarning extends StatelessWidget {
       decoration: BoxDecoration(
         color: _termsRed.withValues(alpha: .10),
         border: Border.all(color: _termsRed.withValues(alpha: .35)),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -383,7 +383,7 @@ class _ScrollWarning extends StatelessWidget {
       decoration: BoxDecoration(
         color: _termsAmber.withValues(alpha: .08),
         border: Border.all(color: _termsAmber.withValues(alpha: .32)),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         children: [
@@ -425,13 +425,13 @@ class _AgreementCard extends StatelessWidget {
       child: InkWell(
         key: BotTermsOfServicePage.agreementKey,
         onTap: enabled ? onTap : null,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: AppRadii.inputRadius,
         child: Container(
           constraints: const BoxConstraints(minHeight: 122),
           padding: const EdgeInsets.fromLTRB(12, 14, 12, 14),
           decoration: BoxDecoration(
-            color: enabled ? _termsSurface2 : _termsSurface,
-            borderRadius: BorderRadius.circular(14),
+            color: enabled ? _termsPanel2 : _termsPanel,
+            borderRadius: AppRadii.inputRadius,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -445,7 +445,7 @@ class _AgreementCard extends StatelessWidget {
                   border: Border.all(
                     color: agreed ? AppColors.primary : AppColors.borderSolid,
                   ),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadii.mdRadius,
                 ),
                 child: agreed
                     ? const Icon(
@@ -508,12 +508,10 @@ class _TermsCta extends StatelessWidget {
       child: FilledButton(
         onPressed: agreed ? onPressed : null,
         style: FilledButton.styleFrom(
-          backgroundColor: agreed ? AppColors.primary : _termsSurface2,
-          disabledBackgroundColor: _termsSurface2,
+          backgroundColor: agreed ? AppColors.primary : _termsPanel2,
+          disabledBackgroundColor: _termsPanel2,
           disabledForegroundColor: AppColors.text3,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
         ),
         child: Text(
           agreed ? snapshot.enabledCta : snapshot.disabledCta,
@@ -541,7 +539,7 @@ class _ComplianceNote extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 112),
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
       decoration: BoxDecoration(
-        color: _termsSurface2,
+        color: _termsPanel2,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
@@ -600,7 +598,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _termsBlue,
+            color: _termsPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),

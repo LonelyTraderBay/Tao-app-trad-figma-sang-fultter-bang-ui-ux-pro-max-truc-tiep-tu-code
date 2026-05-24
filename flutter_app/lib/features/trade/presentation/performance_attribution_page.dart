@@ -15,7 +15,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/trade_repository.dart';
 
-const _attributionBlue = Color(0xFF3B82F6);
+const _attributionPrimary = AppColors.primary;
 const _attributionPurple = Color(0xFF8B5CF6);
 const _attributionGreen = Color(0xFF10B981);
 const _attributionRed = Color(0xFFEF4444);
@@ -218,7 +218,7 @@ class _AttributionTabs extends StatelessWidget {
 
     return Container(
       height: 54,
-      color: const Color(0xFF111823),
+      color: AppColors.surface,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -237,7 +237,7 @@ class _AttributionTabs extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: activeTab == tab.$1
-                                ? _attributionBlue
+                                ? _attributionPrimary
                                 : AppColors.text3,
                             fontWeight: FontWeight.w800,
                             fontSize: 12,
@@ -249,7 +249,7 @@ class _AttributionTabs extends StatelessWidget {
                       duration: const Duration(milliseconds: 140),
                       height: 2,
                       width: activeTab == tab.$1 ? 70 : 0,
-                      color: _attributionBlue,
+                      color: _attributionPrimary,
                     ),
                   ],
                 ),
@@ -373,7 +373,7 @@ class _ProjectionTab extends StatelessWidget {
         _SectionLabel(label: 'Monte Carlo Simulation (30 ngày)'),
         const SizedBox(height: 12),
         _NoticePanel(
-          color: _attributionBlue,
+          color: _attributionPrimary,
           text:
               '50 kịch bản ngẫu nhiên dựa trên volatility lịch sử. Vùng tím thể hiện khoảng xác suất tham khảo.',
         ),
@@ -456,7 +456,7 @@ class _CorrelationTab extends StatelessWidget {
         ),
         const SizedBox(height: 14),
         _NoticePanel(
-          color: _attributionBlue,
+          color: _attributionPrimary,
           text:
               'R² cho biết bao nhiêu biến động của bạn được giải thích bởi thị trường; phần còn lại đến từ strategy riêng.',
         ),
@@ -493,8 +493,8 @@ class _InfoPanel extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(13),
       decoration: BoxDecoration(
-        color: _attributionBlue.withValues(alpha: .10),
-        border: Border.all(color: _attributionBlue),
+        color: _attributionPrimary.withValues(alpha: .10),
+        border: Border.all(color: _attributionPrimary),
         borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
@@ -502,7 +502,7 @@ class _InfoPanel extends StatelessWidget {
         children: [
           const Icon(
             Icons.info_outline_rounded,
-            color: _attributionBlue,
+            color: _attributionPrimary,
             size: 15,
           ),
           const SizedBox(width: 8),
@@ -510,7 +510,7 @@ class _InfoPanel extends StatelessWidget {
             child: RichText(
               text: TextSpan(
                 style: AppTextStyles.micro.copyWith(
-                  color: _attributionBlue,
+                  color: _attributionPrimary,
                   height: 1.45,
                   fontSize: 10,
                 ),
@@ -585,7 +585,7 @@ class _ContributionBar extends StatelessWidget {
               value: ratio.clamp(0, 1),
               minHeight: 8,
               color: color,
-              backgroundColor: const Color(0xFF2A3346),
+              backgroundColor: AppColors.surface3,
             ),
           ),
         ],
@@ -901,7 +901,7 @@ class _CorrelationPainter extends CustomPainter {
     final plot = Rect.fromLTWH(54, 8, size.width - 64, size.height - 38);
     _drawGrid(canvas, plot, yLabels: const ['2', '1', '0', '-1', '-2']);
     final axisPaint = Paint()
-      ..color = const Color(0xFF2A3346)
+      ..color = AppColors.surface3
       ..strokeWidth = 1;
     canvas.drawLine(
       Offset(plot.left + plot.width / 2, plot.top),
@@ -913,7 +913,7 @@ class _CorrelationPainter extends CustomPainter {
       Offset(plot.right, plot.top + plot.height / 2),
       axisPaint,
     );
-    final dotPaint = Paint()..color = _attributionBlue;
+    final dotPaint = Paint()..color = _attributionPrimary;
     for (final point in points) {
       final x = plot.left + ((point.marketReturn + 2.5) / 5) * plot.width;
       final y = plot.bottom - ((point.yourReturn + 2.5) / 5) * plot.height;

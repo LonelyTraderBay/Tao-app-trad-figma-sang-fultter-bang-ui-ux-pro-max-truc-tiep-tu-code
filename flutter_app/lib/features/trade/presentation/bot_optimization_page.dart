@@ -14,10 +14,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _optimizationBg = Color(0xFF080C14);
-const _optimizationSurface = Color(0xFF151A23);
-const _optimizationSurface2 = Color(0xFF1D2436);
-const _optimizationBlue = Color(0xFF3B82F6);
+const _optimizationBackground = AppColors.bg;
+const _optimizationPanel = AppColors.surface;
+const _optimizationPanel2 = AppColors.surface2;
+const _optimizationPrimary = AppColors.primary;
 
 class BotOptimizationPage extends ConsumerStatefulWidget {
   const BotOptimizationPage({super.key, this.shellRenderMode});
@@ -50,7 +50,7 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-127 BotOptimizationPage',
       child: Material(
-        color: _optimizationBg,
+        color: _optimizationBackground,
         child: Column(
           children: [
             VitHeader(
@@ -157,14 +157,18 @@ class _IntroCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
       decoration: BoxDecoration(
-        color: _optimizationBlue.withValues(alpha: .08),
-        border: Border.all(color: _optimizationBlue.withValues(alpha: .22)),
+        color: _optimizationPrimary.withValues(alpha: .08),
+        border: Border.all(color: _optimizationPrimary.withValues(alpha: .22)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.bolt_outlined, color: _optimizationBlue, size: 21),
+          const Icon(
+            Icons.bolt_outlined,
+            color: _optimizationPrimary,
+            size: 21,
+          ),
           const SizedBox(width: 13),
           Expanded(
             child: Column(
@@ -244,19 +248,19 @@ class _TargetTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(17),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         height: 64,
         padding: const EdgeInsets.symmetric(horizontal: 14),
         decoration: BoxDecoration(
           color: selected
-              ? _optimizationBlue.withValues(alpha: .05)
-              : _optimizationSurface2,
+              ? _optimizationPrimary.withValues(alpha: .05)
+              : _optimizationPanel2,
           border: Border.all(
-            color: selected ? _optimizationBlue : const Color(0xFF2A3863),
+            color: selected ? _optimizationPrimary : AppColors.borderSolid,
             width: selected ? 1.3 : 1,
           ),
-          borderRadius: BorderRadius.circular(17),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           children: [
@@ -267,7 +271,9 @@ class _TargetTile extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: selected ? _optimizationBlue : const Color(0xFF2A3863),
+                  color: selected
+                      ? _optimizationPrimary
+                      : AppColors.borderSolid,
                   width: 2,
                 ),
               ),
@@ -276,7 +282,7 @@ class _TargetTile extends StatelessWidget {
                       width: 8,
                       height: 8,
                       decoration: const BoxDecoration(
-                        color: _optimizationBlue,
+                        color: _optimizationPrimary,
                         shape: BoxShape.circle,
                       ),
                     )
@@ -291,7 +297,7 @@ class _TargetTile extends StatelessWidget {
                   Text(
                     target.label,
                     style: AppTextStyles.caption.copyWith(
-                      color: selected ? _optimizationBlue : AppColors.text1,
+                      color: selected ? _optimizationPrimary : AppColors.text1,
                       fontSize: 13,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
@@ -404,10 +410,10 @@ class _RangeSliderRow extends StatelessWidget {
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
             trackHeight: 7,
-            activeTrackColor: _optimizationBlue,
+            activeTrackColor: _optimizationPrimary,
             inactiveTrackColor: Colors.white,
-            thumbColor: _optimizationBlue,
-            overlayColor: _optimizationBlue.withValues(alpha: .12),
+            thumbColor: _optimizationPrimary,
+            overlayColor: _optimizationPrimary.withValues(alpha: .12),
             thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 7),
             overlayShape: SliderComponentShape.noOverlay,
           ),
@@ -436,7 +442,7 @@ class _HowItWorksCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
       decoration: BoxDecoration(
-        color: _optimizationSurface2,
+        color: _optimizationPanel2,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -496,9 +502,9 @@ class _QueuedCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
       decoration: BoxDecoration(
-        color: _optimizationBlue.withValues(alpha: .08),
-        border: Border.all(color: _optimizationBlue.withValues(alpha: .24)),
-        borderRadius: BorderRadius.circular(14),
+        color: _optimizationPrimary.withValues(alpha: .08),
+        border: Border.all(color: _optimizationPrimary.withValues(alpha: .24)),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Text(
         'Optimization queued (${result.jobId}) - about ${result.estimatedMinutes} min',
@@ -521,7 +527,7 @@ class _StartFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 17, 20, 18),
-      color: _optimizationBg.withValues(alpha: .96),
+      color: _optimizationBackground.withValues(alpha: .96),
       child: SizedBox(
         height: 44,
         child: ElevatedButton.icon(
@@ -537,12 +543,10 @@ class _StartFooter extends StatelessWidget {
             ),
           ),
           style: ElevatedButton.styleFrom(
-            backgroundColor: _optimizationBlue,
+            backgroundColor: _optimizationPrimary,
             foregroundColor: Colors.white,
             elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
-            ),
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
           ),
         ),
       ),
@@ -561,7 +565,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _optimizationSurface,
+        color: _optimizationPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -583,7 +587,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _optimizationBlue,
+            color: _optimizationPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),

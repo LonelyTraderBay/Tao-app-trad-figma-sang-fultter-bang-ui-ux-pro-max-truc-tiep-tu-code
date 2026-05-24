@@ -13,10 +13,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _backtestBg = Color(0xFF080C14);
-const _backtestSurface = Color(0xFF151A23);
-const _backtestSurface2 = Color(0xFF1D2436);
-const _backtestBlue = Color(0xFF3B82F6);
+const _backtestBackground = AppColors.bg;
+const _backtestPanel = AppColors.surface;
+const _backtestPanel2 = AppColors.surface2;
+const _backtestPrimary = AppColors.primary;
 
 class BotBacktestingPage extends ConsumerStatefulWidget {
   const BotBacktestingPage({super.key, this.shellRenderMode});
@@ -73,7 +73,7 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-125 BotBacktestingPage',
       child: Material(
-        color: _backtestBg,
+        color: _backtestBackground,
         child: Column(
           children: [
             VitHeader(
@@ -212,16 +212,16 @@ class _StrategyButton extends StatelessWidget {
     final color = Color(strategy.colorHex);
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14),
         decoration: BoxDecoration(
-          color: selected ? color.withValues(alpha: .10) : _backtestSurface,
+          color: selected ? color.withValues(alpha: .10) : _backtestPanel,
           border: Border.all(
-            color: selected ? color : const Color(0xFF2A3863),
+            color: selected ? color : AppColors.borderSolid,
             width: selected ? 2 : 1.5,
           ),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           children: [
@@ -330,17 +330,17 @@ class _ChoicePill extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         width: width,
         height: 34,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: selected ? _backtestBlue : _backtestSurface,
+          color: selected ? _backtestPrimary : _backtestPanel,
           border: Border.all(
-            color: selected ? _backtestBlue : const Color(0xFF2A3863),
+            color: selected ? _backtestPrimary : AppColors.borderSolid,
           ),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Text(
           label,
@@ -367,9 +367,9 @@ class _CapitalInput extends StatelessWidget {
       height: 52,
       padding: const EdgeInsets.fromLTRB(16, 0, 12, 0),
       decoration: BoxDecoration(
-        color: _backtestSurface2,
-        border: Border.all(color: const Color(0xFF2A3863)),
-        borderRadius: BorderRadius.circular(14),
+        color: _backtestPanel2,
+        border: Border.all(color: AppColors.borderSolid),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         children: [
@@ -426,8 +426,8 @@ class _BacktestPeriodCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
       decoration: BoxDecoration(
-        color: _backtestBlue.withValues(alpha: .08),
-        border: Border.all(color: _backtestBlue.withValues(alpha: .22)),
+        color: _backtestPrimary.withValues(alpha: .08),
+        border: Border.all(color: _backtestPrimary.withValues(alpha: .22)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
@@ -435,7 +435,7 @@ class _BacktestPeriodCard extends StatelessWidget {
         children: [
           const Icon(
             Icons.calendar_today_outlined,
-            color: _backtestBlue,
+            color: _backtestPrimary,
             size: 18,
           ),
           const SizedBox(width: 12),
@@ -480,17 +480,15 @@ class _RunFooter extends StatelessWidget {
     return Container(
       height: 80,
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
-      color: _backtestSurface,
+      color: _backtestPanel,
       child: SizedBox(
         height: 44,
         child: FilledButton.icon(
           key: BotBacktestingPage.runKey,
           onPressed: onRun,
           style: FilledButton.styleFrom(
-            backgroundColor: _backtestBlue,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
-            ),
+            backgroundColor: _backtestPrimary,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
           ),
           icon: const Icon(Icons.play_arrow_outlined, size: 19),
           label: Text(
@@ -521,7 +519,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _backtestBlue,
+            color: _backtestPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),

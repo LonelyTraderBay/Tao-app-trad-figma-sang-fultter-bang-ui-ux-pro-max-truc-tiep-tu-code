@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 class AdvancedChartsPage extends ConsumerStatefulWidget {
   const AdvancedChartsPage({super.key, this.shellRenderMode});
@@ -253,7 +253,7 @@ class _UnderlinedTab extends StatelessWidget {
                   label,
                   textAlign: TextAlign.center,
                   style: AppTextStyles.caption.copyWith(
-                    color: active ? _marketBlue : AppColors.text3,
+                    color: active ? _marketPrimary : AppColors.text3,
                     fontWeight: AppTextStyles.medium,
                   ),
                 ),
@@ -263,7 +263,7 @@ class _UnderlinedTab extends StatelessWidget {
               height: 2,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
-                child: const ColoredBox(color: _marketBlue),
+                child: const ColoredBox(color: _marketPrimary),
               ),
             ),
           ],
@@ -388,7 +388,7 @@ class _IndicatorCategoryFilter extends StatelessWidget {
             key: AdvancedChartsPage.categoryAllKey,
             label: 'Tất cả',
             active: activeCategory == 'all',
-            color: _marketBlue,
+            color: _marketPrimary,
             onTap: () => onSelected('all'),
           ),
           const SizedBox(width: 8),
@@ -431,7 +431,7 @@ class _DrawingCategoryFilter extends StatelessWidget {
           _FilterChipButton(
             label: 'Tất cả',
             active: activeCategory == 'all',
-            color: _marketBlue,
+            color: _marketPrimary,
             onTap: () => onSelected('all'),
           ),
           const SizedBox(width: 8),
@@ -442,7 +442,7 @@ class _DrawingCategoryFilter extends StatelessWidget {
                   : null,
               label: category.label,
               active: activeCategory == category.id,
-              color: _marketBlue,
+              color: _marketPrimary,
               onTap: () => onSelected(category.id),
             ),
             if (category != categories.last) const SizedBox(width: 8),
@@ -763,12 +763,12 @@ class _DrawingInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      borderColor: _marketBlue.withValues(alpha: .15),
+      borderColor: _marketPrimary.withValues(alpha: .15),
       padding: const EdgeInsets.all(16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.edit_rounded, size: 17, color: _marketBlue),
+          const Icon(Icons.edit_rounded, size: 17, color: _marketPrimary),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -1207,7 +1207,7 @@ class _PivotPointCell extends StatelessWidget {
     final isPivot = point.label == 'Pivot';
     final isSupport = point.label.startsWith('S');
     final color = isPivot
-        ? _marketBlue
+        ? _marketPrimary
         : isSupport
         ? AppColors.buy
         : AppColors.sell;

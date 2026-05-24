@@ -12,10 +12,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _securityBg = Color(0xFF080C14);
-const _securitySurface = Color(0xFF151A23);
-const _securitySurface2 = Color(0xFF1D2436);
-const _securityBlue = Color(0xFF3B82F6);
+const _securityBackground = AppColors.bg;
+const _securityPanel = AppColors.surface;
+const _securityPanel2 = AppColors.surface2;
+const _securityPrimary = AppColors.primary;
 const _securityGreen = Color(0xFF10B981);
 const _securityAmber = Color(0xFFF59E0B);
 const _securityRed = Color(0xFFEF4444);
@@ -66,7 +66,7 @@ class _BotSecuritySettingsPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-122 BotSecuritySettingsPage',
       child: Material(
-        color: _securityBg,
+        color: _securityBackground,
         child: Column(
           children: [
             VitHeader(
@@ -148,7 +148,7 @@ class _BotSecuritySettingsPageState
   ) {
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: _securitySurface,
+      backgroundColor: _securityPanel,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -159,7 +159,7 @@ class _BotSecuritySettingsPageState
   void _showIpSheet(BuildContext context) {
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: _securitySurface,
+      backgroundColor: _securityPanel,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -256,13 +256,13 @@ class _ApiKeyCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.fromLTRB(9, 5, 9, 5),
                       decoration: BoxDecoration(
-                        color: _securityBlue.withValues(alpha: .14),
+                        color: _securityPrimary.withValues(alpha: .14),
                         borderRadius: BorderRadius.circular(9),
                       ),
                       child: Text(
                         apiKey.permissions,
                         style: AppTextStyles.micro.copyWith(
-                          color: _securityBlue,
+                          color: _securityPrimary,
                           fontSize: 12,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
@@ -434,7 +434,7 @@ class _SecurityTipsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
       decoration: BoxDecoration(
-        color: _securitySurface2,
+        color: _securityPanel2,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -499,22 +499,22 @@ class _DashedActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: CustomPaint(
         painter: _DashedBorderPainter(),
         child: Container(
           height: 46,
           alignment: Alignment.center,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
+          decoration: BoxDecoration(borderRadius: AppRadii.cardRadius),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, color: _securityBlue, size: 18),
+              Icon(icon, color: _securityPrimary, size: 18),
               const SizedBox(width: 9),
               Text(
                 label,
                 style: AppTextStyles.caption.copyWith(
-                  color: _securityBlue,
+                  color: _securityPrimary,
                   fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
@@ -545,7 +545,7 @@ class _Switch extends StatelessWidget {
         height: 24,
         padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
-          color: enabled ? _securityGreen : _securitySurface2,
+          color: enabled ? _securityGreen : _securityPanel2,
           borderRadius: BorderRadius.circular(999),
         ),
         child: Align(
@@ -577,7 +577,7 @@ class _Card extends StatelessWidget {
       constraints: constraints,
       padding: padding,
       decoration: BoxDecoration(
-        color: _securitySurface,
+        color: _securityPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -599,7 +599,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _securityBlue,
+            color: _securityPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),
@@ -622,7 +622,7 @@ class _DashedBorderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = _securityBlue
+      ..color = _securityPrimary
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
     final radius = Radius.circular(18);
@@ -704,7 +704,7 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
               decoration: BoxDecoration(
                 color: _securityGreen.withValues(alpha: .08),
                 border: Border.all(color: _securityGreen.withValues(alpha: .2)),
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: AppRadii.inputRadius,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -721,8 +721,8 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: _securitySurface,
-                      borderRadius: BorderRadius.circular(10),
+                      color: _securityPanel,
+                      borderRadius: AppRadii.smRadius,
                     ),
                     child: Row(
                       children: [
@@ -773,9 +773,9 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
               child: FilledButton(
                 onPressed: () => setState(() => _generated = true),
                 style: FilledButton.styleFrom(
-                  backgroundColor: _securityBlue,
+                  backgroundColor: _securityPrimary,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: AppRadii.inputRadius,
                   ),
                 ),
                 child: const Text('Generate API Key'),
@@ -823,9 +823,9 @@ class _IpSheet extends StatelessWidget {
             child: FilledButton(
               onPressed: () => Navigator.of(context).pop(),
               style: FilledButton.styleFrom(
-                backgroundColor: _securityBlue,
+                backgroundColor: _securityPrimary,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: AppRadii.inputRadius,
                 ),
               ),
               child: const Text('Add IP Address'),
@@ -861,9 +861,9 @@ class _SheetInput extends StatelessWidget {
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.symmetric(horizontal: 12),
           decoration: BoxDecoration(
-            color: _securitySurface2,
+            color: _securityPanel2,
             border: Border.all(color: AppColors.borderSolid),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: AppRadii.mdRadius,
           ),
           child: Text(
             hint,
@@ -889,9 +889,9 @@ class _PermissionChip extends StatelessWidget {
       height: 42,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: _securitySurface2,
+        color: _securityPanel2,
         border: Border.all(color: AppColors.borderSolid),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Text(
         label,

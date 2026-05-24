@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,13 +13,13 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/profile_repository.dart';
 
-const _settingsBg = AppColors.bg;
-const _settingsSurface = AppColors.surface;
-const _settingsSurface2 = AppColors.surface2;
+const _settingsBackground = AppColors.bg;
+const _settingsPanel = AppColors.surface;
+const _settingsPanel2 = AppColors.surface2;
 const _settingsSelected = AppColors.surface2;
 const _settingsBorder = AppColors.cardBorder;
 const _settingsDivider = AppColors.divider;
-const _settingsBlue = AppColors.primary;
+const _settingsPrimary = AppColors.primary;
 const _settingsGreen = AppColors.buy;
 const _settingsMuted = AppColors.text3;
 
@@ -60,7 +61,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-160 SettingsPage',
       child: Material(
-        color: _settingsBg,
+        color: _settingsBackground,
         child: Column(
           children: [
             VitHeader(
@@ -195,7 +196,7 @@ class _CurrencyCard extends StatelessWidget {
       decoration: _cardDecoration(radius: 16),
       child: Row(
         children: [
-          const Icon(Icons.language_rounded, color: _settingsBlue, size: 21),
+          const Icon(Icons.language_rounded, color: _settingsPrimary, size: 21),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -254,8 +255,8 @@ class _CurrencyChip extends StatelessWidget {
         constraints: const BoxConstraints(minWidth: 48),
         padding: const EdgeInsets.symmetric(horizontal: 13),
         decoration: BoxDecoration(
-          color: selected ? _settingsBlue : _settingsSurface2,
-          borderRadius: BorderRadius.circular(13),
+          color: selected ? _settingsPrimary : _settingsPanel2,
+          borderRadius: AppRadii.mdRadius,
         ),
         alignment: Alignment.center,
         child: Text(
@@ -288,7 +289,7 @@ class _LanguageCard extends StatelessWidget {
     return Container(
       decoration: _cardDecoration(radius: 16),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         child: Column(
           children: [
             for (final language in languages) ...[
@@ -346,7 +347,7 @@ class _LanguageRow extends StatelessWidget {
                 width: 10,
                 height: 10,
                 decoration: const BoxDecoration(
-                  color: _settingsBlue,
+                  color: _settingsPrimary,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -375,7 +376,7 @@ class _SettingsListCard extends StatelessWidget {
     return Container(
       decoration: _cardDecoration(radius: 16),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         child: Column(
           children: [
             for (final row in rows) ...[
@@ -418,7 +419,7 @@ class _SettingsRow extends StatelessWidget {
       child: Row(
         children: [
           if (hasIcon) ...[
-            Icon(_iconFor(row.iconKey), color: _settingsBlue, size: 20),
+            Icon(_iconFor(row.iconKey), color: _settingsPrimary, size: 20),
             const SizedBox(width: 16),
           ],
           Expanded(
@@ -588,7 +589,7 @@ class _AppInfoCard extends StatelessWidget {
 
 BoxDecoration _cardDecoration({required double radius}) {
   return BoxDecoration(
-    color: _settingsSurface,
+    color: _settingsPanel,
     borderRadius: BorderRadius.circular(radius),
     border: Border.all(color: _settingsBorder),
   );

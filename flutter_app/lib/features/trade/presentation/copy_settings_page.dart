@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -14,9 +15,9 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _settingsBlue = Color(0xFF3B82F6);
-const _settingsPanel = Color(0xFF1B2132);
-const _settingsInput = Color(0xFF22283A);
+const _settingsPrimary = AppColors.primary;
+const _settingsPanel = AppColors.surface2;
+const _settingsInput = AppColors.surface3;
 const _sliderInactive = Color(0xFFE5E7EB);
 
 class CopySettingsPage extends ConsumerStatefulWidget {
@@ -86,7 +87,7 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
                   children: [
                     _SettingsSection(
                       label: 'Cài đặt mặc định',
-                      accent: _settingsBlue,
+                      accent: _settingsPrimary,
                       showAccent: false,
                       children: [
                         _ModeCard(
@@ -107,7 +108,7 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
                             min: 10,
                             max: 100,
                             divisions: 18,
-                            color: _settingsBlue,
+                            color: _settingsPrimary,
                             onChanged: (value) => _update(
                               settings.copyWith(defaultCopyRatio: value),
                             ),
@@ -154,7 +155,7 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
                           min: 5,
                           max: 50,
                           divisions: 9,
-                          color: _settingsBlue,
+                          color: _settingsPrimary,
                           onChanged: (value) => _update(
                             settings.copyWith(maxPortfolioAllocation: value),
                           ),
@@ -168,7 +169,7 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
                           min: 1,
                           max: 10,
                           divisions: 9,
-                          color: _settingsBlue,
+                          color: _settingsPrimary,
                           onChanged: (value) => _update(
                             settings.copyWith(maxCopiesActive: value.round()),
                           ),
@@ -190,7 +191,7 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
                     ),
                     _SettingsSection(
                       label: 'Thông báo',
-                      accent: _settingsBlue,
+                      accent: _settingsPrimary,
                       children: [
                         _NotificationRow(
                           id: 'newTrades',
@@ -433,13 +434,15 @@ class _ModeButton extends StatelessWidget {
     return InkWell(
       key: CopySettingsPage.modeKey(mode),
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         height: 34,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? _settingsBlue : AppColors.bg.withValues(alpha: .56),
-          borderRadius: BorderRadius.circular(18),
+          color: active
+              ? _settingsPrimary
+              : AppColors.bg.withValues(alpha: .56),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Text(
           _modeLabel(mode),
@@ -576,7 +579,7 @@ class _CircuitBreakerCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.bolt_rounded, color: _settingsBlue, size: 16),
+              const Icon(Icons.bolt_rounded, color: _settingsPrimary, size: 16),
               const SizedBox(width: 7),
               Expanded(
                 child: Text('Circuit Breaker', style: _cardTitleStyle()),
@@ -756,7 +759,7 @@ class _ToggleSwitch extends StatelessWidget {
         height: 26,
         padding: const EdgeInsets.all(3),
         decoration: BoxDecoration(
-          color: value ? _settingsBlue : AppColors.surface3,
+          color: value ? _settingsPrimary : AppColors.surface3,
           borderRadius: BorderRadius.circular(999),
         ),
         child: Align(
@@ -808,10 +811,10 @@ class _ChannelButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
           color: active
-              ? _settingsBlue.withValues(alpha: .08)
+              ? _settingsPrimary.withValues(alpha: .08)
               : Colors.transparent,
           border: Border.all(
-            color: active ? _settingsBlue : AppColors.cardBorder,
+            color: active ? _settingsPrimary : AppColors.cardBorder,
           ),
           borderRadius: AppRadii.inputRadius,
         ),
@@ -819,14 +822,14 @@ class _ChannelButton extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: active ? _settingsBlue : AppColors.text3,
+              color: active ? _settingsPrimary : AppColors.text3,
               size: 15,
             ),
             const SizedBox(width: 8),
             Text(
               label,
               style: AppTextStyles.caption.copyWith(
-                color: active ? _settingsBlue : AppColors.text2,
+                color: active ? _settingsPrimary : AppColors.text2,
                 fontSize: 12,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
@@ -968,7 +971,7 @@ class _SettingsTextField extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: AppRadii.inputRadius,
-              borderSide: const BorderSide(color: _settingsBlue),
+              borderSide: const BorderSide(color: _settingsPrimary),
             ),
           ),
         ),
@@ -991,7 +994,7 @@ class _PrivacyCard extends StatelessWidget {
         children: [
           Icon(
             active ? Icons.visibility_rounded : Icons.visibility_off_rounded,
-            color: active ? _settingsBlue : AppColors.text3,
+            color: active ? _settingsPrimary : AppColors.text3,
             size: 15,
           ),
           const SizedBox(width: 8),
@@ -1036,10 +1039,10 @@ class _SaveButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
       child: Container(
-        height: 48,
+        height: AppSpacing.inputHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: saved ? AppColors.buy : _settingsBlue,
+          color: saved ? AppColors.buy : _settingsPrimary,
           borderRadius: AppRadii.cardRadius,
         ),
         child: Row(

@@ -12,12 +12,12 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _clientBg = Color(0xFF080C14);
-const _clientSurface = Color(0xFF151A23);
-const _clientSurface2 = Color(0xFF1E2535);
-const _clientBorder = Color(0xFF273142);
+const _clientBackground = AppColors.bg;
+const _clientPanel = AppColors.surface;
+const _clientPanel2 = AppColors.surface2;
+const _clientBorder = AppColors.borderSolid;
 const _clientGreen = Color(0xFF10B981);
-const _clientBlue = Color(0xFF3B82F6);
+const _clientPrimary = AppColors.primary;
 const _clientAmber = Color(0xFFF59E0B);
 
 class ClientCategorizationPage extends ConsumerStatefulWidget {
@@ -61,7 +61,7 @@ class _ClientCategorizationPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-099 ClientCategorizationPage',
       child: Material(
-        color: _clientBg,
+        color: _clientBackground,
         child: Column(
           children: [
             VitHeader(
@@ -175,7 +175,7 @@ class _CurrentCategoryCard extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(12, 11, 12, 10),
             decoration: BoxDecoration(
               color: Colors.transparent,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: AppRadii.mdRadius,
             ),
             child: Row(
               children: [
@@ -280,7 +280,7 @@ class _Tabs extends StatelessWidget {
     ];
     return Container(
       height: 53,
-      color: _clientSurface,
+      color: _clientPanel,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -298,7 +298,7 @@ class _Tabs extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: activeId == tab.$1
-                                ? _clientBlue
+                                ? _clientPrimary
                                 : AppColors.text3,
                             fontSize: 12,
                             fontWeight: AppTextStyles.bold,
@@ -310,7 +310,7 @@ class _Tabs extends StatelessWidget {
                     Container(
                       width: activeId == tab.$1 ? 70 : 0,
                       height: 2,
-                      color: _clientBlue,
+                      color: _clientPrimary,
                     ),
                   ],
                 ),
@@ -456,7 +456,7 @@ class _OptUpCard extends StatelessWidget {
             children: [
               _CategoryIcon(
                 style: const _CategoryStyle(
-                  color: _clientBlue,
+                  color: _clientPrimary,
                   icon: Icons.trending_up_rounded,
                 ),
                 size: 48,
@@ -496,7 +496,7 @@ class _OptUpCard extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
             decoration: BoxDecoration(
               color: _clientAmber.withValues(alpha: .14),
-              borderRadius: BorderRadius.circular(13),
+              borderRadius: AppRadii.mdRadius,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -538,10 +538,10 @@ class _OptUpCard extends StatelessWidget {
             child: FilledButton(
               key: ClientCategorizationPage.optUpKey,
               style: FilledButton.styleFrom(
-                backgroundColor: _clientBlue,
+                backgroundColor: _clientPrimary,
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: AppRadii.inputRadius,
                 ),
               ),
               onPressed: () =>
@@ -720,7 +720,7 @@ class _HistoryTab extends StatelessWidget {
               children: [
                 _CategoryIcon(
                   style: const _CategoryStyle(
-                    color: _clientBlue,
+                    color: _clientPrimary,
                     icon: Icons.schedule_rounded,
                   ),
                   size: 40,
@@ -793,7 +793,7 @@ class _QuickLinks extends StatelessWidget {
           child: _QuickLinkButton(
             key: ClientCategorizationPage.disclosuresKey,
             icon: Icons.description_outlined,
-            iconColor: _clientBlue,
+            iconColor: _clientPrimary,
             label: 'Disclosures',
             onTap: () =>
                 context.go(AppRoutePaths.tradeCopyRegulatoryDisclosures),
@@ -832,14 +832,14 @@ class _QuickLinkButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         height: 45,
         padding: const EdgeInsets.symmetric(horizontal: 14),
         decoration: BoxDecoration(
-          color: _clientSurface2,
+          color: _clientPanel2,
           border: Border.all(color: _clientBorder.withValues(alpha: .72)),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           children: [
@@ -882,8 +882,8 @@ class _MetricBox extends StatelessWidget {
       height: 49,
       padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
       decoration: BoxDecoration(
-        color: _clientSurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: _clientPanel2,
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -927,7 +927,7 @@ class _SectionLabel extends StatelessWidget {
           width: 3,
           height: 16,
           decoration: BoxDecoration(
-            color: _clientBlue,
+            color: _clientPrimary,
             borderRadius: BorderRadius.circular(999),
           ),
         ),
@@ -957,7 +957,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _clientSurface,
+        color: _clientPanel,
         border: Border.all(color: _clientBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -1027,7 +1027,7 @@ class _CategoryStyle {
 _CategoryStyle _categoryStyle(String id) {
   return switch (id) {
     'professional' => const _CategoryStyle(
-      color: _clientBlue,
+      color: _clientPrimary,
       icon: Icons.workspace_premium_outlined,
     ),
     'ecp' => const _CategoryStyle(

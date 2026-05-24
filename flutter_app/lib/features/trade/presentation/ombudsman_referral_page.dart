@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -11,11 +12,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _ombudsmanBg = Color(0xFF080C14);
-const _ombudsmanSurface = Color(0xFF151A23);
-const _ombudsmanSurface2 = Color(0xFF20263A);
-const _ombudsmanBorder = Color(0xFF273142);
-const _ombudsmanBlue = Color(0xFF3B82F6);
+const _ombudsmanBackground = AppColors.bg;
+const _ombudsmanPanel = AppColors.surface;
+const _ombudsmanPanel2 = AppColors.surface3;
+const _ombudsmanBorder = AppColors.borderSolid;
+const _ombudsmanPrimary = AppColors.primary;
 const _ombudsmanGreen = Color(0xFF10B981);
 const _ombudsmanAmber = Color(0xFFF59E0B);
 
@@ -41,7 +42,7 @@ class OmbudsmanReferralPage extends ConsumerWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-114 OmbudsmanReferralPage',
       child: Material(
-        color: _ombudsmanBg,
+        color: _ombudsmanBackground,
         child: Column(
           children: [
             VitHeader(
@@ -105,7 +106,7 @@ class _IntroCard extends StatelessWidget {
             height: 56,
             decoration: BoxDecoration(
               color: _ombudsmanGreen.withValues(alpha: .14),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: AppRadii.cardRadius,
             ),
             child: const Icon(
               Icons.shield_outlined,
@@ -247,7 +248,7 @@ class _ContactRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = switch (contact.icon) {
-      TradeOmbudsmanContactIcon.phone => _ombudsmanBlue,
+      TradeOmbudsmanContactIcon.phone => _ombudsmanPrimary,
       TradeOmbudsmanContactIcon.website => _ombudsmanGreen,
       TradeOmbudsmanContactIcon.address => _ombudsmanAmber,
     };
@@ -265,7 +266,7 @@ class _ContactRow extends StatelessWidget {
           height: 40,
           decoration: BoxDecoration(
             color: color.withValues(alpha: .14),
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: AppRadii.inputRadius,
           ),
           child: Icon(icon, color: color, size: 19),
         ),
@@ -334,13 +335,13 @@ class _ProcessStepCard extends StatelessWidget {
             height: 32,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: _ombudsmanSurface2,
-              borderRadius: BorderRadius.circular(12),
+              color: _ombudsmanPanel2,
+              borderRadius: AppRadii.mdRadius,
             ),
             child: Text(
               '${step.step}',
               style: AppTextStyles.caption.copyWith(
-                color: _ombudsmanBlue,
+                color: _ombudsmanPrimary,
                 fontSize: 14,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
@@ -405,14 +406,14 @@ class _VisitButton extends StatelessWidget {
       ),
       style: FilledButton.styleFrom(
         fixedSize: const Size.fromHeight(48),
-        backgroundColor: _ombudsmanBlue,
+        backgroundColor: _ombudsmanPrimary,
         foregroundColor: Colors.white,
         textStyle: AppTextStyles.body.copyWith(
           fontSize: 14,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
     );
   }
@@ -431,7 +432,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _ombudsmanBlue,
+            color: _ombudsmanPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),
@@ -461,9 +462,9 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _ombudsmanSurface,
+        color: _ombudsmanPanel,
         border: Border.all(color: _ombudsmanBorder.withValues(alpha: .76)),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: child,
     );

@@ -12,13 +12,13 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _bestBg = Color(0xFF080C14);
-const _bestSurface = Color(0xFF151A23);
-const _bestSurface2 = Color(0xFF1E2535);
-const _bestBorder = Color(0xFF273142);
+const _bestBackground = AppColors.bg;
+const _bestPanel = AppColors.surface;
+const _bestPanel2 = AppColors.surface2;
+const _bestBorder = AppColors.borderSolid;
 const _bestGreen = Color(0xFF10B981);
 const _bestAmber = Color(0xFFF59E0B);
-const _bestBlue = Color(0xFF3B82F6);
+const _bestPrimary = AppColors.primary;
 
 class BestExecutionReportsPage extends ConsumerStatefulWidget {
   const BestExecutionReportsPage({super.key, this.shellRenderMode});
@@ -58,7 +58,7 @@ class _BestExecutionReportsPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-096 BestExecutionReportsPage',
       child: Material(
-        color: _bestBg,
+        color: _bestBackground,
         child: Stack(
           children: [
             Column(
@@ -134,7 +134,7 @@ class _ComplianceNotice extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       decoration: BoxDecoration(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,7 +185,7 @@ class _SummaryGrid extends StatelessWidget {
         Expanded(
           child: _SummaryCard(
             icon: Icons.bar_chart_rounded,
-            iconColor: _bestBlue,
+            iconColor: _bestPrimary,
             label: 'Total Orders',
             value: _formatInt(summary.totalOrders),
             subtitle: 'Q1 2026 (YTD)',
@@ -237,7 +237,7 @@ class _SummaryCard extends StatelessWidget {
       height: 95,
       padding: const EdgeInsets.fromLTRB(12, 13, 12, 12),
       decoration: BoxDecoration(
-        color: _bestSurface,
+        color: _bestPanel,
         border: Border.all(color: _bestBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -303,7 +303,7 @@ class _Tabs extends StatelessWidget {
     const tabs = [('current', 'Q1 2026 (Current)'), ('archive', 'Archive')];
     return Container(
       height: 52,
-      color: _bestSurface,
+      color: _bestPanel,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -319,7 +319,7 @@ class _Tabs extends StatelessWidget {
                           tab.$2,
                           style: AppTextStyles.caption.copyWith(
                             color: activeId == tab.$1
-                                ? _bestBlue
+                                ? _bestPrimary
                                 : AppColors.text3,
                             fontSize: 12,
                             fontWeight: AppTextStyles.bold,
@@ -331,7 +331,7 @@ class _Tabs extends StatelessWidget {
                     Container(
                       width: activeId == tab.$1 ? 160 : 0,
                       height: 2,
-                      color: _bestBlue,
+                      color: _bestPrimary,
                     ),
                   ],
                 ),
@@ -390,7 +390,7 @@ class _VenueCard extends StatelessWidget {
       key: BestExecutionReportsPage.venueKey(venue.rank),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _bestSurface,
+        color: _bestPanel,
         border: Border.all(color: _bestBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -405,11 +405,11 @@ class _VenueCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: isWinner
                       ? _bestAmber.withValues(alpha: .15)
-                      : _bestSurface2,
+                      : _bestPanel2,
                   border: isWinner
                       ? Border.all(color: _bestAmber, width: 2)
                       : null,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 alignment: Alignment.center,
                 child: Text(
@@ -558,7 +558,7 @@ class _VenueCard extends StatelessWidget {
               height: 6,
               child: Stack(
                 children: [
-                  const ColoredBox(color: _bestSurface2),
+                  const ColoredBox(color: _bestPanel2),
                   FractionallySizedBox(
                     widthFactor: (venue.score / 100).clamp(0, 1).toDouble(),
                     child: const ColoredBox(color: _bestGreen),
@@ -585,8 +585,8 @@ class _VenueMetric extends StatelessWidget {
       height: 48,
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 7),
       decoration: BoxDecoration(
-        color: _bestSurface2,
-        borderRadius: BorderRadius.circular(13),
+        color: _bestPanel2,
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -635,7 +635,7 @@ class _AnalysisButton extends StatelessWidget {
       child: Container(
         height: 44,
         decoration: BoxDecoration(
-          color: _bestSurface2,
+          color: _bestPanel2,
           border: Border.all(color: _bestBorder),
           borderRadius: AppRadii.cardRadius,
         ),
@@ -690,13 +690,13 @@ class _ReportActions extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: _bestBlue.withValues(alpha: .14),
-                  borderRadius: BorderRadius.circular(16),
+                  color: _bestPrimary.withValues(alpha: .14),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 alignment: Alignment.center,
                 child: const Icon(
                   Icons.description_outlined,
-                  color: _bestBlue,
+                  color: _bestPrimary,
                   size: 23,
                 ),
               ),
@@ -736,7 +736,7 @@ class _ReportActions extends StatelessWidget {
                   key: BestExecutionReportsPage.exportKey,
                   label: 'Export PDF',
                   icon: Icons.download_rounded,
-                  background: _bestSurface2,
+                  background: _bestPanel2,
                   foreground: AppColors.text1,
                   bordered: true,
                   onTap: onExport,
@@ -748,7 +748,7 @@ class _ReportActions extends StatelessWidget {
                   key: BestExecutionReportsPage.publishKey,
                   label: 'Publish Report',
                   icon: Icons.open_in_new_rounded,
-                  background: _bestBlue,
+                  background: _bestPrimary,
                   foreground: Colors.white,
                   onTap: onPublish,
                 ),
@@ -783,12 +783,12 @@ class _ArchiveReport extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: _bestBlue.withValues(alpha: .14),
-                    borderRadius: BorderRadius.circular(14),
+                    color: _bestPrimary.withValues(alpha: .14),
+                    borderRadius: AppRadii.inputRadius,
                   ),
                   child: const Icon(
                     Icons.calendar_today_outlined,
-                    color: _bestBlue,
+                    color: _bestPrimary,
                     size: 18,
                   ),
                 ),
@@ -845,8 +845,8 @@ class _ReportStatus extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
       decoration: BoxDecoration(
-        color: published ? _bestGreen.withValues(alpha: .14) : _bestSurface2,
-        borderRadius: BorderRadius.circular(10),
+        color: published ? _bestGreen.withValues(alpha: .14) : _bestPanel2,
+        borderRadius: AppRadii.smRadius,
       ),
       child: Text(
         published ? 'Published' : 'Draft',
@@ -883,13 +883,13 @@ class _ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(13),
+      borderRadius: AppRadii.mdRadius,
       child: Container(
         height: 40,
         decoration: BoxDecoration(
           color: background,
           border: bordered ? Border.all(color: _bestBorder) : null,
-          borderRadius: BorderRadius.circular(13),
+          borderRadius: AppRadii.mdRadius,
         ),
         alignment: Alignment.center,
         child: Row(
@@ -930,7 +930,7 @@ class _SectionLabel extends StatelessWidget {
           width: 3,
           height: 16,
           decoration: BoxDecoration(
-            color: _bestBlue,
+            color: _bestPrimary,
             borderRadius: BorderRadius.circular(999),
           ),
         ),
@@ -962,7 +962,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _bestSurface,
+        color: _bestPanel,
         border: Border.all(color: _bestBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -988,9 +988,9 @@ class _NoticePanel extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.fromLTRB(12, 9, 8, 9),
           decoration: BoxDecoration(
-            color: _bestSurface2,
+            color: _bestPanel2,
             border: Border.all(color: _bestBorder),
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: AppRadii.inputRadius,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: .25),

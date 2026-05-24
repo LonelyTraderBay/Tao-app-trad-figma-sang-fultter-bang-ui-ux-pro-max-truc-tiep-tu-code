@@ -8,18 +8,19 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _tradeBlue = Color(0xFF3B82F6);
-const _tradeBlueDark = Color(0xFF2563EB);
-const _panelBg = Color(0xFF121721);
-const _chipBg = Color(0xFF1D263B);
-const _rateBg = Color(0xFF0E1830);
-const _disabledBlue = Color(0xFF202940);
+const _tradePrimary = AppColors.primary;
+const _tradePrimaryDark = AppColors.primaryDark;
+const _panelBackground = AppColors.surface;
+const _chipBackground = AppColors.surface2;
+const _rateBackground = AppColors.surface;
+const _disabledPrimary = AppColors.surface3;
 
 enum _ConvertMode { market, limit, schedule }
 
@@ -265,7 +266,7 @@ class _ConvertHeader extends StatelessWidget {
           InkWell(
             key: ConvertPage.backKey,
             onTap: onBack,
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: AppRadii.cardRadius,
             child: const SizedBox(
               width: 36,
               height: 36,
@@ -287,7 +288,7 @@ class _ConvertHeader extends StatelessWidget {
             width: 38,
             height: 38,
             decoration: BoxDecoration(
-              color: _chipBg,
+              color: _chipBackground,
               border: Border.all(color: Colors.white.withValues(alpha: .06)),
               borderRadius: AppRadii.mdRadius,
             ),
@@ -315,9 +316,9 @@ class _ModeTabs extends StatelessWidget {
       height: 50,
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: _chipBg,
-        border: Border.all(color: _tradeBlue.withValues(alpha: .18)),
-        borderRadius: BorderRadius.circular(17),
+        color: _chipBackground,
+        border: Border.all(color: _tradePrimary.withValues(alpha: .18)),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         children: [
@@ -367,14 +368,14 @@ class _ModeTab extends StatelessWidget {
     return Expanded(
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: AppRadii.inputRadius,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 160),
           decoration: BoxDecoration(
             color: active
                 ? AppColors.bg.withValues(alpha: .52)
                 : Colors.transparent,
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: AppRadii.inputRadius,
           ),
           alignment: Alignment.center,
           child: Row(
@@ -461,23 +462,23 @@ class _FavoritePairs extends StatelessWidget {
           return InkWell(
             key: ConvertPage.favoriteKey(pair.label),
             onTap: () => onSelected(pair),
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: AppRadii.cardRadius,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 14),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: active ? Colors.transparent : _chipBg,
+                color: active ? Colors.transparent : _chipBackground,
                 border: Border.all(
                   color: active
-                      ? _tradeBlue
-                      : _tradeBlue.withValues(alpha: .20),
+                      ? _tradePrimary
+                      : _tradePrimary.withValues(alpha: .20),
                 ),
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: AppRadii.cardRadius,
               ),
               child: Text(
                 pair.label,
                 style: AppTextStyles.micro.copyWith(
-                  color: active ? _tradeBlue : AppColors.text1,
+                  color: active ? _tradePrimary : AppColors.text1,
                   fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                 ),
@@ -502,13 +503,13 @@ class _RateBar extends StatelessWidget {
       height: 44,
       padding: const EdgeInsets.symmetric(horizontal: 14),
       decoration: BoxDecoration(
-        color: _rateBg,
-        border: Border.all(color: _tradeBlue.withValues(alpha: .22)),
-        borderRadius: BorderRadius.circular(15),
+        color: _rateBackground,
+        border: Border.all(color: _tradePrimary.withValues(alpha: .22)),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         children: [
-          const Icon(Icons.sync_rounded, color: _tradeBlue, size: 16),
+          const Icon(Icons.sync_rounded, color: _tradePrimary, size: 16),
           const SizedBox(width: 8),
           const Icon(Icons.swap_vert_rounded, color: AppColors.text3, size: 16),
           const SizedBox(width: 7),
@@ -528,12 +529,12 @@ class _RateBar extends StatelessWidget {
           Text(
             countdown,
             style: AppTextStyles.micro.copyWith(
-              color: _tradeBlue,
+              color: _tradePrimary,
               fontWeight: AppTextStyles.bold,
             ),
           ),
           const SizedBox(width: 8),
-          const Icon(Icons.refresh_rounded, color: _tradeBlue, size: 15),
+          const Icon(Icons.refresh_rounded, color: _tradePrimary, size: 15),
         ],
       ),
     );
@@ -570,9 +571,9 @@ class _AmountCard extends StatelessWidget {
       height: height,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
       decoration: BoxDecoration(
-        color: _panelBg,
+        color: _panelBackground,
         border: Border.all(color: Colors.white.withValues(alpha: .07)),
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: AppRadii.lgRadius,
       ),
       child: Column(
         children: [
@@ -625,7 +626,7 @@ class _AmountCard extends StatelessWidget {
                           fontFamily: 'monospace',
                           fontWeight: AppTextStyles.bold,
                         ),
-                        cursorColor: _tradeBlue,
+                        cursorColor: _tradePrimary,
                         decoration: InputDecoration(
                           isDense: true,
                           border: InputBorder.none,
@@ -697,14 +698,14 @@ class _AssetButton extends StatelessWidget {
     final color = Color(asset.colorHex);
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         height: 40,
         padding: const EdgeInsets.fromLTRB(12, 0, 10, 0),
         decoration: BoxDecoration(
-          color: _chipBg,
-          border: Border.all(color: _tradeBlue.withValues(alpha: .22)),
-          borderRadius: BorderRadius.circular(18),
+          color: _chipBackground,
+          border: Border.all(color: _tradePrimary.withValues(alpha: .22)),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -758,15 +759,15 @@ class _PercentChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(17),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         width: 50,
         height: 34,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _chipBg,
-          border: Border.all(color: _tradeBlue.withValues(alpha: .16)),
-          borderRadius: BorderRadius.circular(17),
+          color: _chipBackground,
+          border: Border.all(color: _tradePrimary.withValues(alpha: .16)),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Text(
           label,
@@ -791,15 +792,15 @@ class _SwapButton extends StatelessWidget {
     return InkWell(
       key: ConvertPage.swapKey,
       onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: AppRadii.lgRadius,
       child: Container(
         width: 44,
         height: 44,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: const Color(0xFF101C36),
-          border: Border.all(color: _tradeBlue.withValues(alpha: .45)),
-          borderRadius: BorderRadius.circular(18),
+          color: AppColors.surface,
+          border: Border.all(color: _tradePrimary.withValues(alpha: .45)),
+          borderRadius: AppRadii.cardRadius,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: .30),
@@ -808,7 +809,11 @@ class _SwapButton extends StatelessWidget {
             ),
           ],
         ),
-        child: const Icon(Icons.swap_vert_rounded, color: _tradeBlue, size: 25),
+        child: const Icon(
+          Icons.swap_vert_rounded,
+          color: _tradePrimary,
+          size: 25,
+        ),
       ),
     );
   }
@@ -881,7 +886,7 @@ class _ToolChip extends StatelessWidget {
     return InkWell(
       key: ConvertPage.toolKey(id),
       onTap: () {},
-      borderRadius: BorderRadius.circular(19),
+      borderRadius: AppRadii.lgRadius,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -889,9 +894,9 @@ class _ToolChip extends StatelessWidget {
             height: 38,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: _disabledBlue,
-              border: Border.all(color: _tradeBlue.withValues(alpha: .14)),
-              borderRadius: BorderRadius.circular(19),
+              color: _disabledPrimary,
+              border: Border.all(color: _tradePrimary.withValues(alpha: .14)),
+              borderRadius: AppRadii.lgRadius,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -950,14 +955,14 @@ class _SettingsChip extends StatelessWidget {
     return InkWell(
       key: ConvertPage.toolKey('settings'),
       onTap: () {},
-      borderRadius: BorderRadius.circular(19),
+      borderRadius: AppRadii.lgRadius,
       child: Container(
         width: 38,
         height: 38,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _disabledBlue,
-          border: Border.all(color: _tradeBlue.withValues(alpha: .14)),
+          color: _disabledPrimary,
+          border: Border.all(color: _tradePrimary.withValues(alpha: .14)),
           shape: BoxShape.circle,
         ),
         child: const Icon(
@@ -982,9 +987,9 @@ class _PairMiniCard extends StatelessWidget {
       height: 54,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: _panelBg,
+        color: _panelBackground,
         border: Border.all(color: Colors.white.withValues(alpha: .06)),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         children: [
@@ -1062,9 +1067,9 @@ class _SlippageCard extends StatelessWidget {
       height: 108,
       padding: const EdgeInsets.fromLTRB(16, 15, 16, 16),
       decoration: BoxDecoration(
-        color: _panelBg,
+        color: _panelBackground,
         border: Border.all(color: Colors.white.withValues(alpha: .06)),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppRadii.lgRadius,
       ),
       child: Column(
         children: [
@@ -1087,7 +1092,7 @@ class _SlippageCard extends StatelessWidget {
               Text(
                 'Tùy chỉnh',
                 style: AppTextStyles.micro.copyWith(
-                  color: _tradeBlue,
+                  color: _tradePrimary,
                   fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                 ),
@@ -1130,24 +1135,26 @@ class _SlippageChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(17),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         height: 36,
         padding: const EdgeInsets.symmetric(horizontal: 15),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? _tradeBlue : _chipBg,
+          color: active ? _tradePrimary : _chipBackground,
           gradient: active
-              ? const LinearGradient(colors: [_tradeBlue, _tradeBlueDark])
+              ? const LinearGradient(colors: [_tradePrimary, _tradePrimaryDark])
               : null,
           border: Border.all(
-            color: active ? _tradeBlue : _tradeBlue.withValues(alpha: .16),
+            color: active
+                ? _tradePrimary
+                : _tradePrimary.withValues(alpha: .16),
           ),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
           boxShadow: active
               ? [
                   BoxShadow(
-                    color: _tradeBlue.withValues(alpha: .35),
+                    color: _tradePrimary.withValues(alpha: .35),
                     blurRadius: 18,
                     offset: const Offset(0, 8),
                   ),
@@ -1186,13 +1193,13 @@ class _SubmitButton extends StatelessWidget {
     return InkWell(
       key: ConvertPage.submitKey,
       onTap: enabled ? onPressed : null,
-      borderRadius: BorderRadius.circular(13),
+      borderRadius: AppRadii.mdRadius,
       child: Container(
-        height: 48,
+        height: AppSpacing.inputHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: enabled ? _tradeBlue : const Color(0xFF101827),
-          borderRadius: BorderRadius.circular(13),
+          color: enabled ? _tradePrimary : AppColors.surface3,
+          borderRadius: AppRadii.mdRadius,
         ),
         child: Text(
           label,
@@ -1237,12 +1244,12 @@ class _HistoryHeader extends StatelessWidget {
         Text(
           'Xem tất cả',
           style: AppTextStyles.micro.copyWith(
-            color: _tradeBlue,
+            color: _tradePrimary,
             fontWeight: AppTextStyles.bold,
           ),
         ),
         const SizedBox(width: 2),
-        const Icon(Icons.chevron_right_rounded, color: _tradeBlue, size: 16),
+        const Icon(Icons.chevron_right_rounded, color: _tradePrimary, size: 16),
       ],
     );
   }
@@ -1257,9 +1264,9 @@ class _HistoryList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: _panelBg,
+        color: _panelBackground,
         border: Border.all(color: Colors.white.withValues(alpha: .07)),
-        borderRadius: BorderRadius.circular(17),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
         children: [
@@ -1353,7 +1360,7 @@ class _HistoryRow extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
             decoration: BoxDecoration(
               color: AppColors.buy.withValues(alpha: .12),
-              borderRadius: BorderRadius.circular(13),
+              borderRadius: AppRadii.mdRadius,
             ),
             child: Text(
               record.status,
@@ -1462,7 +1469,7 @@ class _AssetSheet extends StatelessWidget {
                     trailing: selected
                         ? const Icon(
                             Icons.check_circle_rounded,
-                            color: _tradeBlue,
+                            color: _tradePrimary,
                           )
                         : Text(
                             _formatBalance(asset.balance, asset.symbol),

@@ -13,11 +13,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _reportBg = Color(0xFF080C14);
-const _reportSurface = Color(0xFF151A23);
-const _reportSurface2 = Color(0xFF1E2535);
-const _reportBorder = Color(0xFF273142);
-const _reportBlue = Color(0xFF3B82F6);
+const _reportBackground = AppColors.bg;
+const _reportPanel = AppColors.surface;
+const _reportPanel2 = AppColors.surface2;
+const _reportBorder = AppColors.borderSolid;
+const _reportPrimary = AppColors.primary;
 const _reportGreen = Color(0xFF10B981);
 const _reportRed = Color(0xFFEF4444);
 const _reportAmber = Color(0xFFF59E0B);
@@ -61,7 +61,7 @@ class _TransactionReportingPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-093 TransactionReportingPage',
       child: Material(
-        color: _reportBg,
+        color: _reportBackground,
         child: Stack(
           children: [
             Column(
@@ -163,14 +163,14 @@ class _ComplianceNotice extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       decoration: BoxDecoration(
-        color: _reportBlue.withValues(alpha: .10),
-        border: Border.all(color: _reportBlue.withValues(alpha: .35)),
+        color: _reportPrimary.withValues(alpha: .10),
+        border: Border.all(color: _reportPrimary.withValues(alpha: .35)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: _reportBlue, size: 17),
+          const Icon(Icons.shield_outlined, color: _reportPrimary, size: 17),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
@@ -179,7 +179,7 @@ class _ComplianceNotice extends StatelessWidget {
                 Text(
                   'MiFID II Article 26 Compliance',
                   style: AppTextStyles.caption.copyWith(
-                    color: _reportBlue,
+                    color: _reportPrimary,
                     fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
@@ -189,7 +189,7 @@ class _ComplianceNotice extends StatelessWidget {
                 Text(
                   'All transactions must be reported to ARM within T+1. Reports include 65+ RTS 22 fields. Auto-submission enabled.',
                   style: AppTextStyles.micro.copyWith(
-                    color: _reportBlue,
+                    color: _reportPrimary,
                     fontSize: 10,
                     height: 1.4,
                   ),
@@ -267,7 +267,7 @@ class _StatCard extends StatelessWidget {
       height: 94,
       padding: const EdgeInsets.fromLTRB(12, 12, 10, 11),
       decoration: BoxDecoration(
-        color: _reportSurface,
+        color: _reportPanel,
         border: Border.all(color: _reportBorder.withValues(alpha: .65)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -318,7 +318,7 @@ class _StatCard extends StatelessWidget {
             height: 34,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .12),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: AppRadii.smRadius,
             ),
             child: Icon(icon, color: color, size: 17),
           ),
@@ -360,7 +360,7 @@ class _SearchField extends StatelessWidget {
             size: 18,
           ),
           filled: true,
-          fillColor: _reportSurface2,
+          fillColor: _reportPanel2,
           contentPadding: EdgeInsets.zero,
           border: OutlineInputBorder(
             borderRadius: AppRadii.cardRadius,
@@ -402,7 +402,7 @@ class _Tabs extends StatelessWidget {
 
     return Container(
       height: 54,
-      color: _reportSurface,
+      color: _reportPanel,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -513,7 +513,7 @@ class _ReportCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       decoration: BoxDecoration(
-        color: _reportSurface,
+        color: _reportPanel,
         border: Border.all(color: _reportBorder.withValues(alpha: .7)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -646,7 +646,7 @@ class _ReportCard extends StatelessWidget {
                       border: Border.all(
                         color: _reportRed.withValues(alpha: .28),
                       ),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: AppRadii.smRadius,
                     ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -840,7 +840,7 @@ class _StatsTab extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: _reportSurface,
+            color: _reportPanel,
             border: Border.all(color: _reportBorder.withValues(alpha: .7)),
             borderRadius: AppRadii.cardRadius,
           ),
@@ -954,7 +954,7 @@ class _EmptyReports extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 42, horizontal: 16),
       decoration: BoxDecoration(
-        color: _reportSurface,
+        color: _reportPanel,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -1044,7 +1044,7 @@ class _QuickActionCard extends StatelessWidget {
         height: 88,
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: _reportSurface2,
+          color: _reportPanel2,
           border: Border.all(color: _reportBorder),
           borderRadius: AppRadii.cardRadius,
         ),
@@ -1097,7 +1097,7 @@ class _NoticePanel extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
           decoration: BoxDecoration(
-            color: _reportSurface,
+            color: _reportPanel,
             border: Border.all(color: AppColors.primary.withValues(alpha: .4)),
             borderRadius: AppRadii.cardRadius,
             boxShadow: const [
@@ -1147,7 +1147,7 @@ class _NoticePanel extends StatelessWidget {
       icon: Icons.schedule_rounded,
     ),
     'submitting' => (
-      color: _reportBlue,
+      color: _reportPrimary,
       label: 'Submitting',
       icon: Icons.send_rounded,
     ),

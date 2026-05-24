@@ -13,7 +13,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/trade_repository.dart';
 
-const _confirmationBlue = Color(0xFF3B82F6);
+const _confirmationPrimary = AppColors.primary;
 const _confirmationGreen = Color(0xFF10B981);
 const _confirmationRed = Color(0xFFEF4444);
 
@@ -247,11 +247,11 @@ class _ProviderSummary extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 26,
-            backgroundColor: _confirmationBlue.withValues(alpha: .16),
+            backgroundColor: _confirmationPrimary.withValues(alpha: .16),
             child: Text(
               provider.avatar,
               style: AppTextStyles.baseMedium.copyWith(
-                color: _confirmationBlue,
+                color: _confirmationPrimary,
                 fontWeight: FontWeight.w800,
               ),
             ),
@@ -299,7 +299,7 @@ class _ConfigurationSummary extends StatelessWidget {
     final config = snapshot.configuration;
     return VitPageSection(
       label: 'Cấu hình',
-      accentColor: _confirmationBlue,
+      accentColor: _confirmationPrimary,
       children: [
         VitCard(
           variant: VitCardVariant.inner,
@@ -515,7 +515,7 @@ class _ConsentTile extends StatelessWidget {
     return VitCard(
       key: CopyConfirmationPage.consentKey(item.id),
       variant: checked ? VitCardVariant.standard : VitCardVariant.inner,
-      borderColor: checked ? _confirmationBlue : null,
+      borderColor: checked ? _confirmationPrimary : null,
       padding: const EdgeInsets.all(12),
       onTap: onTap,
       child: Row(
@@ -525,7 +525,7 @@ class _ConsentTile extends StatelessWidget {
             checked
                 ? Icons.check_box_rounded
                 : Icons.check_box_outline_blank_rounded,
-            color: checked ? _confirmationBlue : AppColors.text3,
+            color: checked ? _confirmationPrimary : AppColors.text3,
             size: 22,
           ),
           const SizedBox(width: 10),
@@ -554,14 +554,14 @@ class _CoolingOffCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      borderColor: _confirmationBlue,
+      borderColor: _confirmationPrimary,
       padding: const EdgeInsets.all(14),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.schedule_rounded,
-            color: _confirmationBlue,
+            color: _confirmationPrimary,
             size: 18,
           ),
           const SizedBox(width: 10),
@@ -569,7 +569,7 @@ class _CoolingOffCard extends StatelessWidget {
             child: Text(
               'Sau khi xác nhận, bạn có $hours giờ cooling-off để review lại quyết định trước khi copy chính thức kích hoạt.',
               style: AppTextStyles.caption.copyWith(
-                color: _confirmationBlue,
+                color: _confirmationPrimary,
                 fontSize: 11,
                 height: 1.45,
               ),
@@ -612,11 +612,11 @@ class _NextStepsCard extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 13,
-                  backgroundColor: _confirmationBlue.withValues(alpha: .16),
+                  backgroundColor: _confirmationPrimary.withValues(alpha: .16),
                   child: Text(
                     '${index + 1}',
                     style: AppTextStyles.micro.copyWith(
-                      color: _confirmationBlue,
+                      color: _confirmationPrimary,
                       fontWeight: FontWeight.w800,
                     ),
                   ),

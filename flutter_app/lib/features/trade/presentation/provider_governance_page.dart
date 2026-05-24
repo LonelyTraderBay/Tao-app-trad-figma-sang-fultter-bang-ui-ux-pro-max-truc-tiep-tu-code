@@ -12,14 +12,14 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _governanceBlue = Color(0xFF3B82F6);
-const _governanceCard = Color(0xFF121720);
-const _governanceTabs = Color(0xFF121720);
-const _governanceHeroBg = Color(0x223B82F6);
-const _governanceWarningBg = Color(0xFF211712);
+const _governancePrimary = AppColors.primary;
+const _governanceCard = AppColors.surface;
+const _governanceTabs = AppColors.surface;
+const _governanceHeroBackground = AppColors.primary15;
+const _governanceWarningBackground = AppColors.warningBg;
 const _governanceWarningBorder = Color(0x665A3A00);
 const _governanceWarning = Color(0xFFF59E0B);
-const _governancePill = Color(0xFF0F3B37);
+const _governancePill = AppColors.buy20;
 
 class ProviderGovernancePage extends ConsumerStatefulWidget {
   const ProviderGovernancePage({super.key, this.shellRenderMode});
@@ -131,9 +131,9 @@ class _ProviderDashboard extends StatelessWidget {
       height: 136,
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 12),
       decoration: BoxDecoration(
-        color: _governanceHeroBg,
+        color: _governanceHeroBackground,
         borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _governanceBlue, width: 2),
+        border: Border.all(color: _governancePrimary, width: 2),
       ),
       child: Column(
         children: [
@@ -143,7 +143,7 @@ class _ProviderDashboard extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: const BoxDecoration(
-                  color: _governanceBlue,
+                  color: _governancePrimary,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -160,7 +160,7 @@ class _ProviderDashboard extends StatelessWidget {
                     Text(
                       'Provider Dashboard',
                       style: AppTextStyles.body.copyWith(
-                        color: _governanceBlue,
+                        color: _governancePrimary,
                         fontSize: 15,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
@@ -170,7 +170,7 @@ class _ProviderDashboard extends StatelessWidget {
                     Text(
                       'Managing ${stats.followers} followers',
                       style: AppTextStyles.caption.copyWith(
-                        color: _governanceBlue,
+                        color: _governancePrimary,
                         fontSize: 11,
                         height: 1,
                       ),
@@ -219,7 +219,7 @@ class _DashboardStat extends StatelessWidget {
         Text(
           label,
           style: AppTextStyles.micro.copyWith(
-            color: _governanceBlue,
+            color: _governancePrimary,
             fontSize: 10,
             height: 1,
           ),
@@ -228,7 +228,7 @@ class _DashboardStat extends StatelessWidget {
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
-            color: _governanceBlue,
+            color: _governancePrimary,
             fontSize: 14,
             fontWeight: AppTextStyles.bold,
             height: 1,
@@ -273,7 +273,7 @@ class _GovernanceTabs extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: tab.id == activeId
-                                ? _governanceBlue
+                                ? _governancePrimary
                                 : AppColors.text3,
                             fontSize: 12,
                             fontWeight: AppTextStyles.bold,
@@ -285,7 +285,7 @@ class _GovernanceTabs extends StatelessWidget {
                     Container(
                       width: tab.id == activeId ? 67 : 0,
                       height: 2,
-                      color: _governanceBlue,
+                      color: _governancePrimary,
                     ),
                   ],
                 ),
@@ -346,7 +346,7 @@ class _Notice extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 52),
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
       decoration: BoxDecoration(
-        color: _governanceWarningBg,
+        color: _governanceWarningBackground,
         borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _governanceWarningBorder),
       ),
@@ -508,7 +508,7 @@ class _ModificationCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
               color: _governancePill,
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: AppRadii.inputRadius,
             ),
             child: Text(
               '✓ Notification sent 24h before implementation',
@@ -540,7 +540,7 @@ class _RequestButton extends StatelessWidget {
         height: 46,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _governanceBlue,
+          color: _governancePrimary,
           borderRadius: AppRadii.inputRadius,
         ),
         child: Row(

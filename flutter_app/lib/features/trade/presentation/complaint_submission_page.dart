@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -13,11 +14,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _submissionBg = Color(0xFF080C14);
-const _submissionSurface = Color(0xFF151A23);
-const _submissionSurface2 = Color(0xFF20263A);
-const _submissionBorder = Color(0xFF273142);
-const _submissionBlue = Color(0xFF3B82F6);
+const _submissionBackground = AppColors.bg;
+const _submissionPanel = AppColors.surface;
+const _submissionPanel2 = AppColors.surface3;
+const _submissionBorder = AppColors.borderSolid;
+const _submissionPrimary = AppColors.primary;
 
 class ComplaintSubmissionPage extends ConsumerStatefulWidget {
   const ComplaintSubmissionPage({super.key, this.shellRenderMode});
@@ -67,7 +68,7 @@ class _ComplaintSubmissionPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-112 ComplaintSubmissionPage',
       child: Material(
-        color: _submissionBg,
+        color: _submissionBackground,
         child: Column(
           children: [
             VitHeader(
@@ -229,14 +230,12 @@ class _CategoryField extends StatelessWidget {
         const _FieldLabel('Category *'),
         const SizedBox(height: 9),
         PopupMenuButton<String>(
-          color: _submissionSurface,
+          color: _submissionPanel,
           elevation: 8,
           onSelected: onChanged,
           padding: EdgeInsets.zero,
           position: PopupMenuPosition.under,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
           itemBuilder: (_) => [
             for (final category in categories)
               PopupMenuItem(
@@ -255,11 +254,11 @@ class _CategoryField extends StatelessWidget {
             height: 48,
             padding: const EdgeInsets.symmetric(horizontal: 14),
             decoration: BoxDecoration(
-              color: _submissionSurface2,
+              color: _submissionPanel2,
               border: Border.all(
                 color: _submissionBorder.withValues(alpha: .76),
               ),
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: AppRadii.cardRadius,
             ),
             child: Row(
               children: [
@@ -345,7 +344,7 @@ class _TextInputBlock extends StatelessWidget {
                 height: multiline ? 1.4 : 1,
               ),
               filled: true,
-              fillColor: _submissionSurface2,
+              fillColor: _submissionPanel2,
               contentPadding: multiline
                   ? const EdgeInsets.fromLTRB(12, 15, 12, 12)
                   : const EdgeInsets.symmetric(horizontal: 12),
@@ -384,8 +383,8 @@ class _EvidenceUploadCard extends StatelessWidget {
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: _submissionSurface2,
-                borderRadius: BorderRadius.circular(15),
+                color: _submissionPanel2,
+                borderRadius: AppRadii.inputRadius,
               ),
               child: const Icon(
                 Icons.upload_rounded,
@@ -418,8 +417,8 @@ class _EvidenceUploadCard extends StatelessWidget {
               height: 30,
               padding: const EdgeInsets.symmetric(horizontal: 17),
               decoration: BoxDecoration(
-                color: _submissionSurface2,
-                borderRadius: BorderRadius.circular(16),
+                color: _submissionPanel2,
+                borderRadius: AppRadii.cardRadius,
               ),
               alignment: Alignment.center,
               child: Text(
@@ -469,7 +468,7 @@ class _TermsCard extends StatelessWidget {
                 onChanged: (value) => onChanged(value ?? false),
                 visualDensity: VisualDensity.compact,
                 side: const BorderSide(color: AppColors.text3),
-                activeColor: _submissionBlue,
+                activeColor: _submissionPrimary,
               ),
             ),
             const SizedBox(width: 12),
@@ -517,23 +516,21 @@ class _SubmissionFooter extends StatelessWidget {
       height: 67,
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 3),
       decoration: BoxDecoration(
-        color: _submissionBg.withValues(alpha: .94),
+        color: _submissionBackground.withValues(alpha: .94),
         border: Border(
           top: BorderSide(color: _submissionBorder.withValues(alpha: .35)),
         ),
       ),
       child: SizedBox(
-        height: 48,
+        height: AppSpacing.inputHeight,
         child: FilledButton(
           key: ComplaintSubmissionPage.submitKey,
           style: FilledButton.styleFrom(
-            backgroundColor: enabled ? _submissionBlue : _submissionSurface2,
+            backgroundColor: enabled ? _submissionPrimary : _submissionPanel2,
             foregroundColor: enabled ? Colors.white : AppColors.text3,
-            disabledBackgroundColor: _submissionSurface2,
+            disabledBackgroundColor: _submissionPanel2,
             disabledForegroundColor: AppColors.text3,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
-            ),
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
           ),
           onPressed: enabled ? onSubmit : null,
           child: Opacity(
@@ -592,7 +589,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _submissionBlue,
+            color: _submissionPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),
@@ -622,7 +619,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _submissionSurface,
+        color: _submissionPanel,
         border: Border.all(color: _submissionBorder.withValues(alpha: .76)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -632,6 +629,6 @@ class _Card extends StatelessWidget {
 }
 
 final OutlineInputBorder _inputBorder = OutlineInputBorder(
-  borderRadius: BorderRadius.circular(18),
+  borderRadius: AppRadii.cardRadius,
   borderSide: BorderSide(color: _submissionBorder.withValues(alpha: .76)),
 );

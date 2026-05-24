@@ -17,7 +17,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 
 enum _SocialTab { comments, analysis, share }
 
@@ -194,7 +194,7 @@ class _SocialTabBar extends StatelessWidget {
                             item.label,
                             style: AppTextStyles.caption.copyWith(
                               color: activeTab == item.tab
-                                  ? _predictionBlue
+                                  ? _predictionPrimary
                                   : AppColors.text3,
                               fontWeight: AppTextStyles.bold,
                               fontSize: 12,
@@ -207,7 +207,7 @@ class _SocialTabBar extends StatelessWidget {
                         height: 2,
                         width: activeTab == item.tab ? 116 : 0,
                         decoration: BoxDecoration(
-                          color: _predictionBlue,
+                          color: _predictionPrimary,
                           borderRadius: BorderRadius.circular(1),
                         ),
                       ),
@@ -321,13 +321,13 @@ class _NewCommentCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 7),
             decoration: BoxDecoration(
               color: AppColors.bg,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: AppRadii.lgRadius,
             ),
             child: TextField(
               key: PredictionSocialPage.commentFieldKey,
               controller: controller,
               maxLines: 3,
-              cursorColor: _predictionBlue,
+              cursorColor: _predictionPrimary,
               style: AppTextStyles.body.copyWith(fontSize: 13),
               decoration: InputDecoration.collapsed(
                 hintText: 'Chia se y kien cua ban...',
@@ -344,8 +344,10 @@ class _NewCommentCard extends StatelessWidget {
             width: double.infinity,
             child: DecoratedBox(
               decoration: BoxDecoration(
-                color: _predictionBlue.withValues(alpha: hasComment ? 1 : .65),
-                borderRadius: BorderRadius.circular(20),
+                color: _predictionPrimary.withValues(
+                  alpha: hasComment ? 1 : .65,
+                ),
+                borderRadius: AppRadii.lgRadius,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -393,10 +395,10 @@ class _StanceButton extends StatelessWidget {
       height: 29,
       child: Material(
         color: selected ? color : AppColors.bg,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: AppRadii.inputRadius,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: AppRadii.inputRadius,
           child: Center(
             child: Text(
               _stanceLabel(stance).toUpperCase(),
@@ -422,7 +424,7 @@ class _CommentsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: '${snapshot.totalComments} binh luan',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         for (final comment in snapshot.comments) _CommentCard(comment: comment),
       ],
@@ -441,9 +443,7 @@ class _CommentCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(left: reply ? 48 : 0),
       child: VitCard(
-        borderColor: comment.isPinned
-            ? const Color(0x263B82F6)
-            : AppColors.border,
+        borderColor: comment.isPinned ? AppColors.primary15 : AppColors.border,
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -511,7 +511,7 @@ class _CommentUser extends StatelessWidget {
               color: _tierColor(comment.userTier),
             ),
             if (comment.isPinned)
-              const _SmallBadge(label: 'PINNED', color: _predictionBlue),
+              const _SmallBadge(label: 'PINNED', color: _predictionPrimary),
           ],
         ),
         const SizedBox(height: 4),
@@ -649,7 +649,7 @@ class _ActionPill extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
       decoration: BoxDecoration(
         color: flat ? Colors.transparent : AppColors.bg,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: AppRadii.smRadius,
       ),
       child: Row(
         children: [
@@ -674,14 +674,14 @@ class _CommentDisclaimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      borderColor: const Color(0x263B82F6),
+      borderColor: AppColors.primary15,
       padding: const EdgeInsets.all(12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
-            color: _predictionBlue,
+            color: _predictionPrimary,
             size: 15,
           ),
           const SizedBox(width: 8),
@@ -746,7 +746,7 @@ class _ContributorsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Nguoi dong gop hang dau',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         for (var i = 0; i < snapshot.contributors.length; i += 1)
           _ContributorCard(rank: i, contributor: snapshot.contributors[i]),
@@ -764,7 +764,7 @@ class _SocialShareButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Chia se qua mang xa hoi',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         Row(
           children: const [
@@ -838,7 +838,9 @@ class _CopyLinkCard extends StatelessWidget {
                   ),
                   label: Text(copied ? 'Copied' : 'Copy'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: copied ? AppColors.buy : _predictionBlue,
+                    backgroundColor: copied
+                        ? AppColors.buy
+                        : _predictionPrimary,
                     foregroundColor: Colors.white,
                     textStyle: AppTextStyles.micro.copyWith(
                       fontWeight: AppTextStyles.bold,
@@ -891,7 +893,7 @@ class _SharePreviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Preview',
-      accentColor: _predictionBlue,
+      accentColor: _predictionPrimary,
       children: [
         VitCard(
           padding: const EdgeInsets.all(16),
@@ -903,7 +905,7 @@ class _SharePreviewCard extends StatelessWidget {
                 height: 60,
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [_predictionBlue, Color(0xFF8B5CF6)],
+                    colors: [_predictionPrimary, AppColors.accent],
                   ),
                   borderRadius: AppRadii.mdRadius,
                 ),

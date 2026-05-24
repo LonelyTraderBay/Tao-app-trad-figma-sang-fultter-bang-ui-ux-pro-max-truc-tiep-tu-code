@@ -12,7 +12,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 const _predictionPurple = Color(0xFF8B5CF6);
 const _arenaOrange = Color(0xFFF59E0B);
 
@@ -333,7 +333,7 @@ class _CategoryTabs extends StatelessWidget {
             key: Key('sc008_category_$category'),
             label: category,
             active: category == activeCategory,
-            activeColor: _marketBlue,
+            activeColor: _marketPrimary,
             minHeight: 36,
             onTap: () => onSelected(category),
           );
@@ -349,7 +349,7 @@ class _FilterChipButton extends StatelessWidget {
     required this.label,
     required this.active,
     required this.onTap,
-    this.activeColor = _marketBlue,
+    this.activeColor = _marketPrimary,
     this.minHeight = 34,
   });
 
@@ -367,7 +367,7 @@ class _FilterChipButton extends StatelessWidget {
       label: label,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: AppRadii.cardRadius,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 160),
           constraints: BoxConstraints(minHeight: minHeight),
@@ -381,7 +381,7 @@ class _FilterChipButton extends StatelessWidget {
                   ? activeColor.withValues(alpha: 0.42)
                   : Colors.transparent,
             ),
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: AppRadii.cardRadius,
           ),
           child: Text(
             label,
@@ -513,7 +513,7 @@ class _MarketTools extends StatelessWidget {
       icon: Icons.filter_alt_outlined,
       label: 'Bộ lọc',
       route: 'screener',
-      color: _marketBlue,
+      color: _marketPrimary,
     ),
     _MarketTool(
       icon: Icons.balance_outlined,
@@ -622,14 +622,14 @@ class _ToolChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         height: 34,
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
           color: tool.color.withValues(alpha: 0.08),
           border: Border.all(color: tool.color.withValues(alpha: 0.22)),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           children: [

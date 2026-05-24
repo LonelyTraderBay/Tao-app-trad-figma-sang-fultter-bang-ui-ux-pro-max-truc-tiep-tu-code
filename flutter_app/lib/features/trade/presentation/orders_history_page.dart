@@ -12,8 +12,8 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _tradeBlue = Color(0xFF3B82F6);
-const _fieldBg = Color(0xFF1D2435);
+const _tradePrimary = AppColors.primary;
+const _fieldBackground = AppColors.surface2;
 
 class OrdersHistoryPage extends ConsumerStatefulWidget {
   const OrdersHistoryPage({super.key, this.shellRenderMode});
@@ -198,7 +198,7 @@ class _TopTabButton extends StatelessWidget {
         height: 40,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? _tradeBlue : _fieldBg,
+          color: active ? _tradePrimary : _fieldBackground,
           borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
@@ -245,7 +245,7 @@ class _FilterRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final filters = const [
-      ('all', 'Tất cả', _tradeBlue),
+      ('all', 'Tất cả', _tradePrimary),
       ('buy', 'Mua', AppColors.buy),
       ('sell', 'Bán', AppColors.sell),
     ];
@@ -447,7 +447,7 @@ class _OrderHistoryTile extends StatelessWidget {
                   value: fillPercent,
                   minHeight: 5,
                   color: AppColors.buy,
-                  backgroundColor: const Color(0xFF33405F),
+                  backgroundColor: AppColors.surface3,
                 ),
               ),
             ],
@@ -616,7 +616,7 @@ class _EmptyState extends StatelessWidget {
   return switch (status) {
     TradeOrderStatus.open => (
       label: 'Đang mở',
-      color: _tradeBlue,
+      color: _tradePrimary,
       icon: Icons.access_time_rounded,
     ),
     TradeOrderStatus.partial => (

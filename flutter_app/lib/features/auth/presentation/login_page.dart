@@ -11,9 +11,9 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/auth_repository.dart';
 
-const _authPrimary = Color(0xFF3B82F6);
-const _authPrimaryDark = Color(0xFF1D4ED8);
-const _authPrimaryGlow = Color(0x663B82F6);
+const _authPrimary = AppColors.primary;
+const _authPrimaryDark = AppColors.primaryDark;
+const _authPrimaryGlow = AppColors.primary40;
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});

@@ -7,6 +7,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -14,10 +16,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _depositBg = Color(0xFF080C14);
-const _depositSurface = Color(0xFF151A23);
-const _depositSurface2 = Color(0xFF1D2436);
-const _depositBlue = Color(0xFF3B82F6);
+const _depositBackground = AppColors.bg;
+const _depositPanel = AppColors.surface;
+const _depositPanel2 = AppColors.surface2;
+const _depositPrimary = AppColors.primary;
 const _depositGreen = Color(0xFF10B981);
 const _depositRed = Color(0xFFEF4444);
 
@@ -66,7 +68,7 @@ class _DepositPageState extends ConsumerState<DepositPage> {
           ? 'SC-138 DepositPage Asset'
           : 'SC-137 DepositPage',
       child: Material(
-        color: _depositBg,
+        color: _depositBackground,
         child: Column(
           children: [
             VitHeader(
@@ -129,7 +131,7 @@ class _DepositPageState extends ConsumerState<DepositPage> {
   void _openNetworkPicker(List<WalletDepositNetwork> networks) {
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: _depositSurface,
+      backgroundColor: _depositPanel,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
@@ -201,9 +203,9 @@ class _NetworkSelector extends StatelessWidget {
             height: 52,
             padding: const EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
-              color: _depositSurface2,
-              border: Border.all(color: _depositBlue, width: 1.5),
-              borderRadius: BorderRadius.circular(14),
+              color: _depositPanel2,
+              border: Border.all(color: _depositPrimary, width: 1.5),
+              borderRadius: AppRadii.inputRadius,
             ),
             child: Row(
               children: [
@@ -297,7 +299,7 @@ class _WarningCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: _depositRed.withValues(alpha: .08),
         border: Border.all(color: _depositRed.withValues(alpha: .38)),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -357,9 +359,9 @@ class _QrAddressCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
       decoration: BoxDecoration(
-        color: _depositSurface,
+        color: _depositPanel,
         border: Border.all(color: AppColors.cardBorder),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
         children: [
@@ -398,22 +400,22 @@ class _QrAddressCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: copied
                     ? _depositGreen.withValues(alpha: .15)
-                    : _depositBlue.withValues(alpha: .18),
-                borderRadius: BorderRadius.circular(16),
+                    : _depositPrimary.withValues(alpha: .18),
+                borderRadius: AppRadii.cardRadius,
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
                     copied ? Icons.check_circle_outline : Icons.copy_rounded,
-                    color: copied ? _depositGreen : _depositBlue,
+                    color: copied ? _depositGreen : _depositPrimary,
                     size: 15,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     copied ? 'Đã sao chép địa chỉ!' : 'Sao chép địa chỉ',
                     style: AppTextStyles.caption.copyWith(
-                      color: copied ? _depositGreen : _depositBlue,
+                      color: copied ? _depositGreen : _depositPrimary,
                       fontSize: 14,
                       fontWeight: FontWeight.w800,
                       height: 1,
@@ -442,7 +444,7 @@ class _QrCode extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: AppRadii.lgRadius,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: .32),
@@ -527,9 +529,9 @@ class _DepositInfoCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
       decoration: BoxDecoration(
-        color: _depositSurface,
+        color: _depositPanel,
         border: Border.all(color: AppColors.cardBorder),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -607,11 +609,11 @@ class _RefreshButton extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 48,
+        height: AppSpacing.inputHeight,
         decoration: BoxDecoration(
-          color: _depositSurface2,
-          border: Border.all(color: _depositBlue.withValues(alpha: .26)),
-          borderRadius: BorderRadius.circular(13),
+          color: _depositPanel2,
+          border: Border.all(color: _depositPrimary.withValues(alpha: .26)),
+          borderRadius: AppRadii.mdRadius,
         ),
         alignment: Alignment.center,
         child: Row(
@@ -657,9 +659,9 @@ class _NetworkOption extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 6),
         decoration: BoxDecoration(
           color: selected
-              ? _depositBlue.withValues(alpha: .10)
+              ? _depositPrimary.withValues(alpha: .10)
               : Colors.transparent,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: AppRadii.inputRadius,
         ),
         child: Row(
           children: [
@@ -690,7 +692,7 @@ class _NetworkOption extends StatelessWidget {
             if (selected)
               const Icon(
                 Icons.check_circle_rounded,
-                color: _depositBlue,
+                color: _depositPrimary,
                 size: 18,
               ),
           ],

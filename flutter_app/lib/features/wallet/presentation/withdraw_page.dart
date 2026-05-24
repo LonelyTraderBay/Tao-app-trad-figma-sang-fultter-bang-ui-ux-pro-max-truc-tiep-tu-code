@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,10 +13,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _withdrawBg = Color(0xFF080C14);
-const _withdrawSurface = Color(0xFF151A23);
-const _withdrawSurface2 = Color(0xFF1D2436);
-const _withdrawBlue = Color(0xFF3B82F6);
+const _withdrawBackground = AppColors.bg;
+const _withdrawPanel = AppColors.surface;
+const _withdrawPanel2 = AppColors.surface2;
+const _withdrawPrimary = AppColors.primary;
 const _withdrawGreen = Color(0xFF10B981);
 const _withdrawAmber = Color(0xFFF59E0B);
 
@@ -83,7 +84,7 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
           ? 'SC-140 WithdrawPage Asset'
           : 'SC-139 WithdrawPage',
       child: Material(
-        color: _withdrawBg,
+        color: _withdrawBackground,
         child: Column(
           children: [
             VitHeader(
@@ -163,7 +164,7 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
   void _openNetworkPicker(List<WalletWithdrawNetwork> networks) {
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: _withdrawSurface,
+      backgroundColor: _withdrawPanel,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
@@ -208,7 +209,7 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
 
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: _withdrawSurface,
+      backgroundColor: _withdrawPanel,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
@@ -239,7 +240,7 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
                     border: Border.all(
                       color: _withdrawAmber.withValues(alpha: .24),
                     ),
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: AppRadii.inputRadius,
                   ),
                   child: Text(
                     'High-risk action: preview + confirm + audit trail required.',
@@ -270,9 +271,9 @@ class _BalanceCard extends StatelessWidget {
       height: 51,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: _withdrawSurface,
+        color: _withdrawPanel,
         border: Border.all(color: AppColors.cardBorder),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         children: [
@@ -327,9 +328,11 @@ class _NetworkSelector extends StatelessWidget {
             height: 52,
             padding: const EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
-              color: _withdrawSurface2,
-              border: Border.all(color: _withdrawBlue.withValues(alpha: .34)),
-              borderRadius: BorderRadius.circular(14),
+              color: _withdrawPanel2,
+              border: Border.all(
+                color: _withdrawPrimary.withValues(alpha: .34),
+              ),
+              borderRadius: AppRadii.inputRadius,
             ),
             child: Row(
               children: [
@@ -422,21 +425,21 @@ class _AddressInput extends StatelessWidget {
                 height: 24,
                 padding: const EdgeInsets.symmetric(horizontal: 9),
                 decoration: BoxDecoration(
-                  color: _withdrawBlue.withValues(alpha: .14),
-                  borderRadius: BorderRadius.circular(12),
+                  color: _withdrawPrimary.withValues(alpha: .14),
+                  borderRadius: AppRadii.mdRadius,
                 ),
                 child: Row(
                   children: [
                     const Icon(
                       Icons.qr_code_scanner_rounded,
-                      color: _withdrawBlue,
+                      color: _withdrawPrimary,
                       size: 13,
                     ),
                     const SizedBox(width: 5),
                     Text(
                       'Quét QR',
                       style: AppTextStyles.micro.copyWith(
-                        color: _withdrawBlue,
+                        color: _withdrawPrimary,
                         fontSize: 11,
                         fontWeight: FontWeight.w800,
                         height: 1,
@@ -453,9 +456,9 @@ class _AddressInput extends StatelessWidget {
           height: 47,
           padding: const EdgeInsets.symmetric(horizontal: 15),
           decoration: BoxDecoration(
-            color: _withdrawSurface2,
-            border: Border.all(color: _withdrawBlue.withValues(alpha: .25)),
-            borderRadius: BorderRadius.circular(14),
+            color: _withdrawPanel2,
+            border: Border.all(color: _withdrawPrimary.withValues(alpha: .25)),
+            borderRadius: AppRadii.inputRadius,
           ),
           alignment: Alignment.center,
           child: TextField(
@@ -519,8 +522,8 @@ class _RecentAddresses extends StatelessWidget {
               height: 51,
               padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 9),
               decoration: BoxDecoration(
-                color: _withdrawSurface2,
-                borderRadius: BorderRadius.circular(15),
+                color: _withdrawPanel2,
+                borderRadius: AppRadii.inputRadius,
                 border: Border.all(color: AppColors.divider),
               ),
               child: Row(
@@ -601,7 +604,7 @@ class _AmountInput extends StatelessWidget {
               child: Text(
                 'Tất cả',
                 style: AppTextStyles.micro.copyWith(
-                  color: _withdrawBlue,
+                  color: _withdrawPrimary,
                   fontSize: 12,
                   fontWeight: FontWeight.w800,
                   height: 1,
@@ -615,9 +618,9 @@ class _AmountInput extends StatelessWidget {
           height: 52,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-            color: _withdrawSurface2,
-            border: Border.all(color: _withdrawBlue.withValues(alpha: .25)),
-            borderRadius: BorderRadius.circular(14),
+            color: _withdrawPanel2,
+            border: Border.all(color: _withdrawPrimary.withValues(alpha: .25)),
+            borderRadius: AppRadii.inputRadius,
           ),
           child: Row(
             children: [
@@ -676,7 +679,7 @@ class _WithdrawWarning extends StatelessWidget {
       decoration: BoxDecoration(
         color: _withdrawAmber.withValues(alpha: .10),
         border: Border.all(color: _withdrawAmber.withValues(alpha: .28)),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -722,12 +725,12 @@ class _NextButton extends StatelessWidget {
           gradient: const LinearGradient(
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
-            colors: [Color(0xFF3B82F6), Color(0xFF2455E6)],
+            colors: [AppColors.primary, AppColors.primaryDark],
           ),
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: AppRadii.inputRadius,
           boxShadow: [
             BoxShadow(
-              color: _withdrawBlue.withValues(alpha: .28),
+              color: _withdrawPrimary.withValues(alpha: .28),
               blurRadius: 24,
               offset: const Offset(0, 10),
             ),
@@ -768,9 +771,9 @@ class _NetworkOption extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 6),
         decoration: BoxDecoration(
           color: selected
-              ? _withdrawBlue.withValues(alpha: .10)
+              ? _withdrawPrimary.withValues(alpha: .10)
               : Colors.transparent,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: AppRadii.inputRadius,
         ),
         child: Row(
           children: [
@@ -801,7 +804,7 @@ class _NetworkOption extends StatelessWidget {
             if (selected)
               const Icon(
                 Icons.check_circle_rounded,
-                color: _withdrawBlue,
+                color: _withdrawPrimary,
                 size: 18,
               ),
           ],

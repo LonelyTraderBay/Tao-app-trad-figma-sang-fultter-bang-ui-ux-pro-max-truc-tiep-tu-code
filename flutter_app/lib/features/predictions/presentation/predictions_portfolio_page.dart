@@ -14,10 +14,15 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/predictions_repository.dart';
 
-const _predictionBlue = Color(0xFF3B82F6);
+const _predictionPrimary = AppColors.primary;
 
 class PredictionsPortfolioPage extends ConsumerStatefulWidget {
-  const PredictionsPortfolioPage({super.key, this.shellRenderMode});
+  const PredictionsPortfolioPage({
+    super.key,
+    this.shellRenderMode,
+    this.backPath = AppRoutePaths.marketsPredictions,
+    this.semanticLabel = 'SC-031 PredictionsPortfolioPage',
+  });
 
   static const contentKey = Key('sc031_predictions_portfolio_content');
   static const visibilityToggleKey = Key('sc031_visibility_toggle');
@@ -32,6 +37,8 @@ class PredictionsPortfolioPage extends ConsumerStatefulWidget {
   static Key receiptKey(String id) => Key('sc031_receipt_$id');
 
   final ShellRenderMode? shellRenderMode;
+  final String backPath;
+  final String semanticLabel;
 
   @override
   ConsumerState<PredictionsPortfolioPage> createState() =>
@@ -63,7 +70,7 @@ class _PredictionsPortfolioPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-031 PredictionsPortfolioPage',
+      semanticLabel: widget.semanticLabel,
       child: Material(
         type: MaterialType.transparency,
         child: Column(
@@ -72,7 +79,7 @@ class _PredictionsPortfolioPageState
               title: 'Prediction Portfolio',
               subtitle: 'Danh mục · Prediction',
               showBack: true,
-              onBack: () => context.go(AppRoutePaths.marketsPredictions),
+              onBack: () => context.go(widget.backPath),
             ),
             Expanded(
               child: ScrollConfiguration(
@@ -164,13 +171,13 @@ class _SummaryCard extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF101B3A), Color(0xFF17183E)],
+          colors: [AppColors.surface, AppColors.surface2],
         ),
-        border: Border.all(color: const Color(0xFF1C3265)),
+        border: Border.all(color: AppColors.accent20),
         borderRadius: AppRadii.cardRadius,
         boxShadow: [
           BoxShadow(
-            color: _predictionBlue.withValues(alpha: .12),
+            color: _predictionPrimary.withValues(alpha: .12),
             blurRadius: 18,
             spreadRadius: -8,
             offset: const Offset(0, 8),
@@ -314,7 +321,7 @@ class _SummaryStat extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 9),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: .10),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -355,8 +362,8 @@ class _SharesNote extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
       decoration: BoxDecoration(
-        color: _predictionBlue.withValues(alpha: .07),
-        border: Border.all(color: _predictionBlue.withValues(alpha: .18)),
+        color: _predictionPrimary.withValues(alpha: .07),
+        border: Border.all(color: _predictionPrimary.withValues(alpha: .18)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
@@ -364,7 +371,7 @@ class _SharesNote extends StatelessWidget {
         children: [
           const Icon(
             Icons.info_outline_rounded,
-            color: _predictionBlue,
+            color: _predictionPrimary,
             size: 15,
           ),
           const SizedBox(width: 9),
@@ -437,7 +444,7 @@ class _PortfolioTabs extends StatelessWidget {
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: AppColors.surface3,
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: AppRadii.lgRadius,
       ),
       child: Row(
         children: [
@@ -480,13 +487,13 @@ class _PortfolioTabButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 160),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active ? AppColors.surface : Colors.transparent,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -520,14 +527,14 @@ class _CountBadge extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
       decoration: BoxDecoration(
         color: active
-            ? _predictionBlue.withValues(alpha: .18)
+            ? _predictionPrimary.withValues(alpha: .18)
             : AppColors.surface2,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
         '$count',
         style: AppTextStyles.micro.copyWith(
-          color: active ? _predictionBlue : AppColors.text3,
+          color: active ? _predictionPrimary : AppColors.text3,
           height: 1.1,
           fontSize: 9,
           fontWeight: AppTextStyles.bold,

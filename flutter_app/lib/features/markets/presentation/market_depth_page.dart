@@ -16,7 +16,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 class MarketDepthPage extends ConsumerStatefulWidget {
   const MarketDepthPage({
@@ -217,7 +217,7 @@ class _UnderlinedTab extends StatelessWidget {
                 child: Text(
                   label,
                   style: AppTextStyles.caption.copyWith(
-                    color: active ? _marketBlue : AppColors.text3,
+                    color: active ? _marketPrimary : AppColors.text3,
                     fontWeight: AppTextStyles.medium,
                   ),
                 ),
@@ -227,7 +227,7 @@ class _UnderlinedTab extends StatelessWidget {
               height: 2,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
-                child: const ColoredBox(color: _marketBlue),
+                child: const ColoredBox(color: _marketPrimary),
               ),
             ),
           ],
@@ -481,14 +481,14 @@ class _LevelChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
         decoration: BoxDecoration(
           color: active
-              ? _marketBlue.withValues(alpha: .16)
+              ? _marketPrimary.withValues(alpha: .16)
               : Colors.transparent,
           borderRadius: AppRadii.smRadius,
         ),
         child: Text(
           '${level}L',
           style: AppTextStyles.micro.copyWith(
-            color: active ? _marketBlue : AppColors.text3,
+            color: active ? _marketPrimary : AppColors.text3,
             fontWeight: AppTextStyles.medium,
             height: 1,
           ),

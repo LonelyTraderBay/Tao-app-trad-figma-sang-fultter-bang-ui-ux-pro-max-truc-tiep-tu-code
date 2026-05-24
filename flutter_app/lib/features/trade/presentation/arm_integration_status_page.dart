@@ -14,14 +14,14 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _armBg = Color(0xFF080C14);
-const _armSurface = Color(0xFF151A23);
-const _armSurface2 = Color(0xFF1E2535);
-const _armBorder = Color(0xFF273142);
+const _armBackground = AppColors.bg;
+const _armPanel = AppColors.surface;
+const _armPanel2 = AppColors.surface2;
+const _armBorder = AppColors.borderSolid;
 const _armGreen = Color(0xFF10B981);
 const _armAmber = Color(0xFFF59E0B);
 const _armRed = Color(0xFFEF4444);
-const _armBlue = Color(0xFF3B82F6);
+const _armPrimary = AppColors.primary;
 
 class ArmIntegrationStatusPage extends ConsumerStatefulWidget {
   const ArmIntegrationStatusPage({super.key, this.shellRenderMode});
@@ -67,7 +67,7 @@ class _ArmIntegrationStatusPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-095 ARMIntegrationStatusPage',
       child: Material(
-        color: _armBg,
+        color: _armBackground,
         child: Column(
           children: [
             VitHeader(
@@ -134,7 +134,7 @@ class _OperationalAlert extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       decoration: BoxDecoration(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,7 +195,7 @@ class _ArmProviderCard extends StatelessWidget {
       key: ArmIntegrationStatusPage.connectionKey(connection.id),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _armSurface,
+        color: _armPanel,
         border: Border.all(color: _armBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -209,7 +209,7 @@ class _ArmProviderCard extends StatelessWidget {
                 height: 48,
                 decoration: BoxDecoration(
                   color: style.color.withValues(alpha: .15),
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: AppRadii.cardRadius,
                 ),
                 alignment: Alignment.center,
                 child: Icon(style.icon, color: style.color, size: 24),
@@ -242,13 +242,13 @@ class _ArmProviderCard extends StatelessWidget {
                               vertical: 3,
                             ),
                             decoration: BoxDecoration(
-                              color: _armBlue.withValues(alpha: .15),
+                              color: _armPrimary.withValues(alpha: .15),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
                               'PRIMARY',
                               style: AppTextStyles.micro.copyWith(
-                                color: _armBlue,
+                                color: _armPrimary,
                                 fontSize: 9,
                                 fontWeight: AppTextStyles.bold,
                                 height: 1,
@@ -280,7 +280,7 @@ class _ArmProviderCard extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: style.color.withValues(alpha: .13),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadii.mdRadius,
                 ),
                 child: Text(
                   style.label,
@@ -362,8 +362,8 @@ class _MetricBox extends StatelessWidget {
       height: 55,
       padding: const EdgeInsets.fromLTRB(9, 9, 9, 8),
       decoration: BoxDecoration(
-        color: _armSurface2,
-        borderRadius: BorderRadius.circular(13),
+        color: _armPanel2,
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -408,8 +408,8 @@ class _ConnectionDetails extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 9, 10, 9),
       decoration: BoxDecoration(
-        color: _armSurface2,
-        borderRadius: BorderRadius.circular(13),
+        color: _armPanel2,
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Column(
         children: [
@@ -487,27 +487,27 @@ class _TestButton extends StatelessWidget {
     return InkWell(
       key: ArmIntegrationStatusPage.testKey(connectionId),
       onTap: isTesting ? null : onTap,
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: AppRadii.smRadius,
       child: Container(
         height: 34,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: (isTesting ? _armSurface2 : _armBlue.withValues(alpha: .14)),
-          borderRadius: BorderRadius.circular(10),
+          color: (isTesting ? _armPanel2 : _armPrimary.withValues(alpha: .14)),
+          borderRadius: AppRadii.smRadius,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               isTesting ? Icons.sync_rounded : Icons.bolt_rounded,
-              color: isTesting ? AppColors.text3 : _armBlue,
+              color: isTesting ? AppColors.text3 : _armPrimary,
               size: 15,
             ),
             const SizedBox(width: 8),
             Text(
               isTesting ? 'Testing...' : 'Test Connection',
               style: AppTextStyles.caption.copyWith(
-                color: isTesting ? AppColors.text3 : _armBlue,
+                color: isTesting ? AppColors.text3 : _armPrimary,
                 fontSize: 11,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
@@ -529,8 +529,8 @@ class _LogsButton extends StatelessWidget {
       height: 34,
       padding: const EdgeInsets.symmetric(horizontal: 13),
       decoration: BoxDecoration(
-        color: _armSurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: _armPanel2,
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Row(
         children: [
@@ -581,7 +581,7 @@ class _LatencyCard extends StatelessWidget {
             children: [
               _LegendDot(label: 'REGIS-TR', color: _armGreen),
               SizedBox(width: 18),
-              _LegendDot(label: 'UnaVista', color: _armBlue),
+              _LegendDot(label: 'UnaVista', color: _armPrimary),
               SizedBox(width: 18),
               _LegendDot(label: 'Bloomberg', color: _armAmber),
             ],
@@ -672,7 +672,7 @@ class _ProgressRow extends StatelessWidget {
             height: 8,
             child: Stack(
               children: [
-                const ColoredBox(color: _armSurface2),
+                const ColoredBox(color: _armPanel2),
                 FractionallySizedBox(
                   widthFactor: factor.clamp(0, 1).toDouble(),
                   child: const ColoredBox(color: _armGreen),
@@ -701,7 +701,7 @@ class _QuickActions extends StatelessWidget {
             key: ArmIntegrationStatusPage.actionKey('queue'),
             label: 'Live Queue',
             icon: Icons.monitor_heart_outlined,
-            color: _armBlue,
+            color: _armPrimary,
             onTap: onQueue,
           ),
         ),
@@ -743,7 +743,7 @@ class _QuickAction extends StatelessWidget {
         height: 44,
         padding: const EdgeInsets.symmetric(horizontal: 13),
         decoration: BoxDecoration(
-          color: _armSurface2,
+          color: _armPanel2,
           border: Border.all(color: _armBorder),
           borderRadius: AppRadii.cardRadius,
         ),
@@ -789,7 +789,7 @@ class _SectionLabel extends StatelessWidget {
           width: 3,
           height: 16,
           decoration: BoxDecoration(
-            color: _armBlue,
+            color: _armPrimary,
             borderRadius: BorderRadius.circular(999),
           ),
         ),
@@ -852,7 +852,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _armSurface,
+        color: _armPanel,
         border: Border.all(color: _armBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -955,7 +955,7 @@ class _LatencyPainter extends CustomPainter {
       canvas,
       chartRect,
       points.map((item) => item.unavista.toDouble()).toList(),
-      _armBlue,
+      _armPrimary,
       maxValue,
     );
     _drawLine(

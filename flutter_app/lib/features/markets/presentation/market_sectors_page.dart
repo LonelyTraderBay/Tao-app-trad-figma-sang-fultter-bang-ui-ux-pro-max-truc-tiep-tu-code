@@ -16,7 +16,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 const _sectorPurple = Color(0xFF8B5CF6);
 
 class MarketSectorsPage extends ConsumerStatefulWidget {
@@ -404,11 +404,11 @@ class _ChipButton extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
-              ? _marketBlue.withValues(alpha: 0.16)
+              ? _marketPrimary.withValues(alpha: 0.16)
               : AppColors.surface2,
           border: Border.all(
             color: active
-                ? _marketBlue.withValues(alpha: 0.38)
+                ? _marketPrimary.withValues(alpha: 0.38)
                 : AppColors.borderSolid,
           ),
           borderRadius: BorderRadius.circular(999),
@@ -418,7 +418,7 @@ class _ChipButton extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
-            color: active ? _marketBlue : AppColors.text2,
+            color: active ? _marketPrimary : AppColors.text2,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -707,7 +707,7 @@ class _SectorComparisonTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'So sánh nhanh',
-      accentColor: _marketBlue,
+      accentColor: _marketPrimary,
       children: [
         VitCard(
           padding: const EdgeInsets.all(14),

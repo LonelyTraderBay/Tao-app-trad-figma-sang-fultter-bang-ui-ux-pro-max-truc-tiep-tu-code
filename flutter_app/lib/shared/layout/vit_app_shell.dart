@@ -150,14 +150,9 @@ class _VitAppShellState extends State<VitAppShell> {
       onDestinationSelected: widget.onDestinationSelected,
       homeBadgeCount: widget.homeBadgeCount,
       renderMode: widget.renderMode,
-      accentColor: _bottomNavAccentForPath(widget.currentPath),
     );
 
     if (widget.renderMode.usesVisualQaFrame) return nav;
     return SafeArea(top: false, child: nav);
   }
-}
-
-Color? _bottomNavAccentForPath(String? path) {
-  return null;
 }

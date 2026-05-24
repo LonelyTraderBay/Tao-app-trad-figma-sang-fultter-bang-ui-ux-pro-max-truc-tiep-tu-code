@@ -7,14 +7,15 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../shared/layout/shell_render_mode.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _tradeBlue = Color(0xFF3B82F6);
+const _tradePrimary = AppColors.primary;
 const _chartBlack = Color(0xFF000000);
-const _toolbarBg = Color(0xFF202940);
+const _toolbarBackground = AppColors.surface3;
 
 class AdvancedChartPage extends ConsumerStatefulWidget {
   const AdvancedChartPage({
@@ -142,7 +143,7 @@ class _AdvancedHeader extends StatelessWidget {
         children: [
           InkWell(
             onTap: () => context.go(AppRoutePaths.tradePair(pair.id)),
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: AppRadii.cardRadius,
             child: Container(
               width: 36,
               height: 36,
@@ -406,16 +407,16 @@ class _ChartToolbar extends StatelessWidget {
               child: InkWell(
                 key: AdvancedChartPage.indicatorButtonKey,
                 onTap: onIndicators,
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: AppRadii.inputRadius,
                 child: Container(
                   height: 40,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
-                    color: _toolbarBg,
+                    color: _toolbarBackground,
                     border: Border.all(
-                      color: _tradeBlue.withValues(alpha: .45),
+                      color: _tradePrimary.withValues(alpha: .45),
                     ),
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: AppRadii.inputRadius,
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -423,7 +424,7 @@ class _ChartToolbar extends StatelessWidget {
                       const Icon(
                         Icons.layers_outlined,
                         size: 13,
-                        color: _tradeBlue,
+                        color: _tradePrimary,
                       ),
                       const SizedBox(width: 4),
                       Flexible(
@@ -431,7 +432,7 @@ class _ChartToolbar extends StatelessWidget {
                           '$activeIndicatorCount chỉ\nbáo',
                           textAlign: TextAlign.center,
                           style: AppTextStyles.micro.copyWith(
-                            color: _tradeBlue,
+                            color: _tradePrimary,
                             fontSize: 11,
                             fontWeight: AppTextStyles.medium,
                             height: 1.1,
@@ -466,14 +467,14 @@ class _TimeframeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: AppRadii.inputRadius,
       child: Container(
         width: 39,
         height: 32,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? _tradeBlue : Colors.transparent,
-          borderRadius: BorderRadius.circular(14),
+          color: active ? _tradePrimary : Colors.transparent,
+          borderRadius: AppRadii.inputRadius,
         ),
         child: Text(
           label,
@@ -507,14 +508,14 @@ class _ChartTypeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => onTap(id),
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: AppRadii.smRadius,
       child: Container(
         width: 28,
         height: 32,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active ? AppColors.borderSolid : Colors.transparent,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: AppRadii.smRadius,
         ),
         child: Icon(
           icon,
@@ -642,15 +643,15 @@ class _ActionBar extends StatelessWidget {
           InkWell(
             key: AdvancedChartPage.alertKey,
             onTap: () => context.go(AppRoutePaths.marketsAlerts),
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: AppRadii.cardRadius,
             child: Container(
               width: 44,
               height: 44,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: _toolbarBg,
+                color: _toolbarBackground,
                 border: Border.all(color: Colors.white12),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: AppRadii.cardRadius,
               ),
               child: const Icon(
                 Icons.error_outline_rounded,
@@ -681,14 +682,14 @@ class _TradeActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
         height: 44,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: color.withValues(alpha: .15),
           border: Border.all(color: color.withValues(alpha: .34)),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Text(
           label,
@@ -805,9 +806,9 @@ class _IndicatorOption extends StatelessWidget {
 
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: AppRadii.cardRadius,
       child: Container(
-        height: 48,
+        height: AppSpacing.inputHeight,
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
           color: indicator.enabled ? AppColors.surface2 : AppColors.surface,
@@ -816,7 +817,7 @@ class _IndicatorOption extends StatelessWidget {
                 ? color.withValues(alpha: .34)
                 : AppColors.borderSolid,
           ),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           children: [
@@ -981,12 +982,15 @@ class _AdvancedTradeChartPainter extends CustomPainter {
         ..lineTo(xFor(source.length - 1), chartBottom)
         ..lineTo(xFor(0), chartBottom)
         ..close();
-      canvas.drawPath(area, Paint()..color = _tradeBlue.withValues(alpha: .18));
+      canvas.drawPath(
+        area,
+        Paint()..color = _tradePrimary.withValues(alpha: .18),
+      );
     }
     canvas.drawPath(
       path,
       Paint()
-        ..color = _tradeBlue
+        ..color = _tradePrimary
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1.8,
     );

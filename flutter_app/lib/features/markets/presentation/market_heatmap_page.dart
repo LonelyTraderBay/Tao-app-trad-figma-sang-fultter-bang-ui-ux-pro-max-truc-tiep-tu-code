@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 class MarketHeatmapPage extends ConsumerStatefulWidget {
   const MarketHeatmapPage({super.key, this.shellRenderMode});
@@ -190,7 +190,7 @@ class _SummaryStrip extends StatelessWidget {
           child: _SummaryCard(
             label: 'Số coin',
             value: '$count',
-            valueColor: _marketBlue,
+            valueColor: _marketPrimary,
           ),
         ),
       ],
@@ -333,7 +333,7 @@ class _FilterChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 140),
         height: 34,
@@ -341,13 +341,13 @@ class _FilterChip extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
-              ? _marketBlue.withValues(alpha: 0.18)
+              ? _marketPrimary.withValues(alpha: 0.18)
               : Colors.transparent,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
           border: outlined
               ? Border.all(
                   color: active
-                      ? _marketBlue.withValues(alpha: 0.48)
+                      ? _marketPrimary.withValues(alpha: 0.48)
                       : Colors.transparent,
                 )
               : null,
@@ -357,7 +357,7 @@ class _FilterChip extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.caption.copyWith(
-            color: active ? _marketBlue : AppColors.text2,
+            color: active ? _marketPrimary : AppColors.text2,
             fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
@@ -700,7 +700,7 @@ class _SelectedCoinCard extends StatelessWidget {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(horizontal: 13),
                   decoration: BoxDecoration(
-                    color: _marketBlue,
+                    color: _marketPrimary,
                     borderRadius: AppRadii.mdRadius,
                   ),
                   child: Text(

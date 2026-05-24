@@ -12,11 +12,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _reportBg = Color(0xFF080C14);
-const _reportSurface = Color(0xFF151A23);
-const _reportSurface2 = Color(0xFF1E2535);
-const _reportBorder = Color(0xFF273142);
-const _reportBlue = Color(0xFF3B82F6);
+const _reportBackground = AppColors.bg;
+const _reportPanel = AppColors.surface;
+const _reportPanel2 = AppColors.surface2;
+const _reportBorder = AppColors.borderSolid;
+const _reportPrimary = AppColors.primary;
 const _reportGreen = Color(0xFF10B981);
 const _reportAmber = Color(0xFFF59E0B);
 const _reportRed = Color(0xFFEF4444);
@@ -54,7 +54,7 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-107 ExPostCostsReportPage',
       child: Material(
-        color: _reportBg,
+        color: _reportBackground,
         child: Column(
           children: [
             VitHeader(
@@ -156,9 +156,9 @@ class _DownloadAction extends StatelessWidget {
       height: 36,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: _reportSurface2,
+          color: _reportPanel2,
           border: Border.all(color: _reportBorder.withValues(alpha: .72)),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: AppRadii.smRadius,
         ),
         child: IconButton(
           key: ExPostCostsReportPage.downloadKey,
@@ -285,7 +285,7 @@ class _YearTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 53,
-      color: _reportSurface,
+      color: _reportPanel,
       child: Row(
         children: [
           for (final report in reports)
@@ -301,7 +301,7 @@ class _YearTabs extends StatelessWidget {
                           '${report.year}',
                           style: AppTextStyles.caption.copyWith(
                             color: activeYear == report.year
-                                ? _reportBlue
+                                ? _reportPrimary
                                 : AppColors.text3,
                             fontSize: 12,
                             fontWeight: AppTextStyles.bold,
@@ -313,7 +313,7 @@ class _YearTabs extends StatelessWidget {
                     Container(
                       width: activeYear == report.year ? 100 : 0,
                       height: 2,
-                      color: _reportBlue,
+                      color: _reportPrimary,
                     ),
                   ],
                 ),
@@ -431,10 +431,7 @@ class _VarianceNoteView extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(isHigher ? 10 : 8, 8, 10, 8),
-      decoration: BoxDecoration(
-        color: bg,
-        borderRadius: BorderRadius.circular(14),
-      ),
+      decoration: BoxDecoration(color: bg, borderRadius: AppRadii.inputRadius),
       child: Row(
         children: [
           Icon(
@@ -514,8 +511,8 @@ class _VarianceCard extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.fromLTRB(12, 13, 12, 12),
             decoration: BoxDecoration(
-              color: _reportSurface2,
-              borderRadius: BorderRadius.circular(14),
+              color: _reportPanel2,
+              borderRadius: AppRadii.inputRadius,
             ),
             child: Text(
               text,
@@ -545,7 +542,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 14,
           decoration: BoxDecoration(
-            color: _reportBlue,
+            color: _reportPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -575,7 +572,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _reportSurface,
+        color: _reportPanel,
         border: Border.all(color: _reportBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),

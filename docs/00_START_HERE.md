@@ -10,15 +10,17 @@ This repository has many historical guidance files. This file is the required re
 4. Read `docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md`.
 5. Read `docs/02_FLUTTER_MIGRATION/Flutter-Migration-Execution-Runbook.md`.
 6. Read `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md`.
-7. Read `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`.
-8. Read the Flutter foundation docs in `docs/02_FLUTTER_MIGRATION/`.
-9. Read `docs/03_DESIGN_SYSTEM/Guidelines.md`.
-10. Read screen-specific references only when working on that screen.
+7. Read `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md`.
+8. Read `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`.
+9. Read the Flutter foundation docs in `docs/02_FLUTTER_MIGRATION/`.
+10. Read `docs/03_DESIGN_SYSTEM/Guidelines.md`.
+11. Read screen-specific references only when working on that screen.
 
 ## Source Of Truth
 
 - Migration coverage: `output/flutter-ui-reference/manifest.json` and `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`.
 - Flutter native color/size/chrome standard: `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md` and `docs/04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md`.
+- Module identity standard: `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md`.
 - Visual parity: `output/flutter-ui-reference/screenshots/` for `ShellRenderMode.visualQa` structure/content comparison.
 - Product and design rules: `docs/03_DESIGN_SYSTEM/Guidelines.md`.
 - Coding constraints for this React repo: root `AGENTS.md`.
@@ -69,6 +71,7 @@ This repository has many historical guidance files. This file is the required re
 | `docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md` | Conflict resolution when docs disagree. |
 | `docs/02_FLUTTER_MIGRATION/Flutter-Migration-Execution-Runbook.md` | Single execution order for Flutter migration stages. |
 | `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md` | Global Flutter native standard based on `SC-007 HomePage` colors, sizes, chrome, and shared component treatment. |
+| `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md` | Controlled module identity layer: what may differ by module and what must stay globally consistent. |
 | `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md` | Screen-by-screen migration tracker and BE draft. |
 | `docs/02_FLUTTER_MIGRATION/Flutter-UI-Reference.md` | Screenshot capture pipeline and visual baseline notes. |
 | `docs/02_FLUTTER_MIGRATION/Flutter-App-Foundation.md` | Flutter project location, stack defaults, and app foundation rules. |

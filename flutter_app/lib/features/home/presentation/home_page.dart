@@ -515,31 +515,11 @@ class _QuickActionsGrid extends StatelessWidget {
       itemCount: HomeMockData.quickActions.length,
       itemBuilder: (context, index) {
         final action = HomeMockData.quickActions[index];
-        return VitCard(
-          radius: VitCardRadius.sm,
+        return VitServiceTile(
+          icon: action.icon,
+          label: action.label,
+          accentColor: action.accentColor,
           onTap: () => onNavigate(action.routePath),
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                action.icon,
-                style: const TextStyle(fontSize: 18, height: 1),
-              ),
-              const SizedBox(height: AppSpacing.x3),
-              Text(
-                action.label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
-              ),
-            ],
-          ),
         );
       },
     );
@@ -585,7 +565,7 @@ class _HomeDiscoverySection extends StatelessWidget {
           background: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppColors.warn15, Color(0x1AEA580C)],
+            colors: [AppColors.warn15, AppColors.warn10],
           ),
           onTap: () => onNavigate('/arena'),
         ),

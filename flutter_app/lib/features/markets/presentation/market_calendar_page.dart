@@ -15,7 +15,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 class MarketCalendarPage extends ConsumerStatefulWidget {
   const MarketCalendarPage({super.key, this.shellRenderMode});
@@ -210,7 +210,7 @@ class _UnderlineViewTab extends StatelessWidget {
                 child: Text(
                   label,
                   style: AppTextStyles.caption.copyWith(
-                    color: active ? _marketBlue : AppColors.text3,
+                    color: active ? _marketPrimary : AppColors.text3,
                     fontWeight: AppTextStyles.medium,
                   ),
                 ),
@@ -221,7 +221,7 @@ class _UnderlineViewTab extends StatelessWidget {
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
                 alignment: Alignment.center,
-                child: const ColoredBox(color: _marketBlue),
+                child: const ColoredBox(color: _marketPrimary),
               ),
             ),
           ],
@@ -244,7 +244,7 @@ class _StatsSummary extends StatelessWidget {
           child: _MiniStat(
             label: 'Sắp diễn ra',
             value: stats.upcoming.toString(),
-            color: _marketBlue,
+            color: _marketPrimary,
           ),
         ),
         const SizedBox(width: 8),
@@ -329,7 +329,7 @@ class _TypeFilters extends StatelessWidget {
               key: MarketCalendarPage.typeFilterKey(filter.label),
               label: filter.label,
               active: filter.label == active.label,
-              activeColor: _marketBlue,
+              activeColor: _marketPrimary,
               onTap: () => onSelected(filter),
             ),
             const SizedBox(width: 8),
@@ -816,13 +816,13 @@ class _CalendarDay extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: isToday
-              ? _marketBlue.withValues(alpha: .12)
+              ? _marketPrimary.withValues(alpha: .12)
               : hasEvents
               ? AppColors.surface2
               : Colors.transparent,
           border: Border.all(
             color: isToday
-                ? _marketBlue.withValues(alpha: .35)
+                ? _marketPrimary.withValues(alpha: .35)
                 : Colors.transparent,
             width: 1.5,
           ),
@@ -834,7 +834,7 @@ class _CalendarDay extends StatelessWidget {
             Text(
               day.toString(),
               style: AppTextStyles.caption.copyWith(
-                color: isToday ? _marketBlue : AppColors.text1,
+                color: isToday ? _marketPrimary : AppColors.text1,
                 fontWeight: isToday ? AppTextStyles.bold : AppTextStyles.medium,
               ),
             ),
@@ -1001,7 +1001,7 @@ _EventTypeConfig _eventTypeConfig(MarketCalendarEventType type) {
     ),
     MarketCalendarEventType.upgrade => const _EventTypeConfig(
       label: 'Nâng cấp',
-      color: _marketBlue,
+      color: _marketPrimary,
       icon: Icons.arrow_upward_rounded,
     ),
     MarketCalendarEventType.halving => const _EventTypeConfig(

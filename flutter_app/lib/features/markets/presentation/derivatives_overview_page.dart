@@ -17,7 +17,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 class DerivativesOverviewPage extends ConsumerStatefulWidget {
   const DerivativesOverviewPage({super.key, this.shellRenderMode});
@@ -97,7 +97,7 @@ class _DerivativesOverviewPageState
                         ),
                         _SectionHeader(
                           label: 'Top Open Interest',
-                          accentColor: _marketBlue,
+                          accentColor: _marketPrimary,
                         ),
                         _TopOpenInterestList(
                           pairs: snapshot.pairs.take(5).toList(),
@@ -210,7 +210,7 @@ class _UnderlinedTab extends StatelessWidget {
                 child: Text(
                   label,
                   style: AppTextStyles.caption.copyWith(
-                    color: active ? _marketBlue : AppColors.text3,
+                    color: active ? _marketPrimary : AppColors.text3,
                     fontWeight: AppTextStyles.medium,
                   ),
                 ),
@@ -220,7 +220,7 @@ class _UnderlinedTab extends StatelessWidget {
               height: 2,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
-                child: const ColoredBox(color: _marketBlue),
+                child: const ColoredBox(color: _marketPrimary),
               ),
             ),
           ],
@@ -242,9 +242,9 @@ class _OpenInterestHero extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF13224A), Color(0xFF101A35)],
+          colors: [AppColors.surface, AppColors.surface2],
         ),
-        border: Border.all(color: _marketBlue.withValues(alpha: .2)),
+        border: Border.all(color: _marketPrimary.withValues(alpha: .2)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -301,7 +301,7 @@ class _OverviewStatGrid extends StatelessWidget {
       children: [
         _StatCard(
           icon: Icons.bar_chart_rounded,
-          iconColor: _marketBlue,
+          iconColor: _marketPrimary,
           label: 'KL giao dịch 24h',
           value: _formatCompact(stats.totalVolume24h, prefix: r'$'),
           change: _formatSignedPercent(stats.volumeChange24h),
@@ -703,11 +703,11 @@ class _SortChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 8),
         decoration: BoxDecoration(
           color: active
-              ? _marketBlue.withValues(alpha: .18)
+              ? _marketPrimary.withValues(alpha: .18)
               : AppColors.surface2,
           border: Border.all(
             color: active
-                ? _marketBlue.withValues(alpha: .55)
+                ? _marketPrimary.withValues(alpha: .55)
                 : Colors.transparent,
           ),
           borderRadius: AppRadii.cardRadius,
@@ -715,7 +715,7 @@ class _SortChip extends StatelessWidget {
         child: Text(
           _sortLabel(sort),
           style: AppTextStyles.caption.copyWith(
-            color: active ? _marketBlue : AppColors.text3,
+            color: active ? _marketPrimary : AppColors.text3,
             fontWeight: AppTextStyles.medium,
           ),
         ),
@@ -837,7 +837,7 @@ class _LiquidationSummary extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF231421), Color(0xFF15101C)],
+          colors: [AppColors.surface, AppColors.sell10],
         ),
         border: Border.all(color: AppColors.sell20),
         borderRadius: AppRadii.cardRadius,

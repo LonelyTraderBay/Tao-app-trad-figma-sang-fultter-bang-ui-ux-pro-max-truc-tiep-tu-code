@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -13,9 +14,9 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _tradeBlue = Color(0xFF3B82F6);
-const _cardBg = Color(0xFF171C24);
-const _footerBg = Color(0xFF111620);
+const _tradePrimary = AppColors.primary;
+const _cardBackground = AppColors.surface2;
+const _footerBackground = AppColors.surface;
 
 class OrderReceiptPage extends ConsumerStatefulWidget {
   const OrderReceiptPage({super.key, this.shellRenderMode});
@@ -154,7 +155,7 @@ class _ReceiptCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 40),
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 17),
       decoration: BoxDecoration(
-        color: _cardBg,
+        color: _cardBackground,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -301,18 +302,18 @@ class _StatusBadge extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         decoration: BoxDecoration(
-          color: _tradeBlue.withValues(alpha: .08),
+          color: _tradePrimary.withValues(alpha: .08),
           borderRadius: AppRadii.smRadius,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.schedule_rounded, color: _tradeBlue, size: 12),
+            const Icon(Icons.schedule_rounded, color: _tradePrimary, size: 12),
             const SizedBox(width: 4),
             Text(
               label,
               style: AppTextStyles.micro.copyWith(
-                color: _tradeBlue,
+                color: _tradePrimary,
                 fontSize: 11,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
@@ -520,7 +521,7 @@ class _ReceiptFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: const BoxDecoration(
-        color: _footerBg,
+        color: _footerBackground,
         border: Border(top: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
@@ -543,8 +544,8 @@ class _ReceiptFooter extends StatelessWidget {
                   label: Text(sharePressed ? 'Đã chia sẻ' : 'Chia sẻ'),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: const Color(0xFF98A2B3),
-                    side: const BorderSide(color: Color(0xFF2E3958)),
-                    backgroundColor: const Color(0xFF1B2237),
+                    side: const BorderSide(color: AppColors.borderSolid),
+                    backgroundColor: AppColors.surface2,
                     shape: RoundedRectangleBorder(
                       borderRadius: AppRadii.mdRadius,
                     ),
@@ -559,7 +560,7 @@ class _ReceiptFooter extends StatelessWidget {
             Expanded(
               flex: 2,
               child: SizedBox(
-                height: 48,
+                height: AppSpacing.inputHeight,
                 child: ElevatedButton(
                   key: OrderReceiptPage.continueTradingKey,
                   onPressed: onContinue,

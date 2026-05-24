@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,12 +13,12 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/profile_repository.dart';
 
-const _activityBg = AppColors.bg;
-const _activitySurface = AppColors.surface;
-const _activitySurface2 = AppColors.surface2;
+const _activityBackground = AppColors.bg;
+const _activityPanel = AppColors.surface;
+const _activityPanel2 = AppColors.surface2;
 const _activityBorder = AppColors.cardBorder;
 const _activityDivider = AppColors.divider;
-const _activityBlue = AppColors.primary;
+const _activityPrimary = AppColors.primary;
 const _activityGreen = AppColors.buy;
 const _activityRed = AppColors.sell;
 const _activityAmber = AppColors.warn;
@@ -60,7 +61,7 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-161 ActivityLogPage',
       child: Material(
-        color: _activityBg,
+        color: _activityBackground,
         child: Column(
           children: [
             VitHeader(
@@ -155,7 +156,7 @@ class _FilterPanel extends StatelessWidget {
       height: 146,
       padding: const EdgeInsets.fromLTRB(20, 25, 20, 13),
       decoration: const BoxDecoration(
-        color: _activitySurface,
+        color: _activityPanel,
         border: Border(bottom: BorderSide(color: _activityDivider)),
       ),
       child: Column(
@@ -200,7 +201,7 @@ class _SuspiciousBanner extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
       decoration: BoxDecoration(
         color: _activityAmber.withValues(alpha: .1),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _activityAmber.withValues(alpha: .34)),
       ),
       child: Row(
@@ -269,12 +270,12 @@ class _FilterChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 13),
         decoration: BoxDecoration(
           color: selected
-              ? _activityBlue.withValues(alpha: .2)
+              ? _activityPrimary.withValues(alpha: .2)
               : Colors.white.withValues(alpha: .04),
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: AppRadii.inputRadius,
           border: Border.all(
             color: selected
-                ? _activityBlue.withValues(alpha: .6)
+                ? _activityPrimary.withValues(alpha: .6)
                 : Colors.white.withValues(alpha: .08),
           ),
         ),
@@ -282,7 +283,7 @@ class _FilterChip extends StatelessWidget {
         child: Text(
           filter.label,
           style: AppTextStyles.micro.copyWith(
-            color: selected ? _activityBlue : AppColors.text2,
+            color: selected ? _activityPrimary : AppColors.text2,
             fontSize: 12,
             fontWeight: FontWeight.w700,
             height: 1,
@@ -311,8 +312,8 @@ class _ActivityCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: suspicious
             ? _activityAmber.withValues(alpha: .05)
-            : _activitySurface,
-        borderRadius: BorderRadius.circular(16),
+            : _activityPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(
           color: suspicious
               ? _activityAmber.withValues(alpha: .32)
@@ -405,7 +406,7 @@ class _ActivityIcon extends StatelessWidget {
       height: 40,
       decoration: BoxDecoration(
         color: config.color.withValues(alpha: .16),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppRadii.lgRadius,
       ),
       alignment: Alignment.center,
       child: Icon(config.icon, color: config.color, size: 19),
@@ -452,8 +453,8 @@ class _ActivityDetails extends StatelessWidget {
       height: 108,
       padding: const EdgeInsets.fromLTRB(13, 12, 13, 12),
       decoration: BoxDecoration(
-        color: _activitySurface2.withValues(alpha: .72),
-        borderRadius: BorderRadius.circular(16),
+        color: _activityPanel2.withValues(alpha: .72),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -572,13 +573,13 @@ class _ActivityFooter extends StatelessWidget {
       height: 64,
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
       decoration: const BoxDecoration(
-        color: _activitySurface,
+        color: _activityPanel,
         border: Border(top: BorderSide(color: _activityDivider)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: _activityBlue, size: 14),
+          const Icon(Icons.shield_outlined, color: _activityPrimary, size: 14),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
@@ -628,7 +629,7 @@ _ActivityTypeConfig _typeConfig(String type) {
     'password_change' => const _ActivityTypeConfig(
       label: '\u0110\u1ED5i m\u1EADt kh\u1EA9u',
       icon: Icons.shield_outlined,
-      color: _activityBlue,
+      color: _activityPrimary,
     ),
     '2fa_enable' => const _ActivityTypeConfig(
       label: 'B\u1EADt 2FA',
@@ -643,7 +644,7 @@ _ActivityTypeConfig _typeConfig(String type) {
     'kyc_submit' => const _ActivityTypeConfig(
       label: 'N\u1ED9p KYC',
       icon: Icons.check_circle_outline_rounded,
-      color: _activityBlue,
+      color: _activityPrimary,
     ),
     'api_create' => const _ActivityTypeConfig(
       label: 'T\u1EA1o API Key',

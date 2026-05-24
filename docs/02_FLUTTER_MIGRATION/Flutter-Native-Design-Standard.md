@@ -8,6 +8,7 @@ This is the global Flutter native design contract for VitTrade phone screens.
 
 - Native runtime source of truth: `SC-007 HomePage` plus `docs/04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md`.
 - Token source of truth: `flutter_app/lib/app/theme/` and `docs/02_FLUTTER_MIGRATION/Flutter-Design-Tokens.md`.
+- Module identity source of truth: `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md`.
 - React screenshots remain the source of truth for `ShellRenderMode.visualQa` structure, content, and scroll parity.
 - React screenshots do not override the Flutter native Home standard for global brand color, neutral dark surfaces, native chrome size, card treatment, CTA styling, or shared component sizing.
 
@@ -88,6 +89,7 @@ Financial values should use tabular figures where possible.
 - High-value balance/account/portfolio cards use `VitCardVariant.hero` or the documented Home hero treatment.
 - Hero-card shadow must stay subtle: `AppColors.primary08`, restrained blur, no strong right/bottom glow.
 - Semantic colors stay semantic: buy/success is green, sell/destructive is red, warning is amber, Prediction/Open Arena separation can use `AppColors.accent` or `AppColors.warn` as domain markers.
+- Module identity must stay in the accent layer only. Use `AppModuleAccents` and shared module widgets for icon, badge, chart marker, pill, and hero-border accents; do not use module-specific page, card, input, or bottom-nav colors.
 
 ## React Conversion Rule
 

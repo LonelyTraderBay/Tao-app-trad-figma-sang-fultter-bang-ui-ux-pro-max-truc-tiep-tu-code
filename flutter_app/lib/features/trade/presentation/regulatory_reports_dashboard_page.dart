@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -14,14 +15,14 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _dashBg = Color(0xFF080C14);
-const _dashSurface = Color(0xFF151A23);
-const _dashSurface2 = Color(0xFF1E2535);
-const _dashBorder = Color(0xFF273142);
+const _dashBackground = AppColors.bg;
+const _dashPanel = AppColors.surface;
+const _dashPanel2 = AppColors.surface2;
+const _dashBorder = AppColors.borderSolid;
 const _dashGreen = Color(0xFF10B981);
 const _dashRed = Color(0xFFEF4444);
 const _dashAmber = Color(0xFFF59E0B);
-const _dashBlue = Color(0xFF3B82F6);
+const _dashPrimary = AppColors.primary;
 
 class RegulatoryReportsDashboardPage extends ConsumerStatefulWidget {
   const RegulatoryReportsDashboardPage({super.key, this.shellRenderMode});
@@ -60,7 +61,7 @@ class _RegulatoryReportsDashboardPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-094 RegulatoryReportsDashboardPage',
       child: Material(
-        color: _dashBg,
+        color: _dashBackground,
         child: Stack(
           children: [
             Column(
@@ -147,7 +148,7 @@ class _ComplianceAlert extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       decoration: BoxDecoration(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,7 +202,7 @@ class _KpiGrid extends StatelessWidget {
         'Total Reports',
         _formatInt(totals.total),
         '+12% vs last week',
-        _dashBlue,
+        _dashPrimary,
         Icons.description_outlined,
       ),
       (
@@ -249,7 +250,7 @@ class _KpiCard extends StatelessWidget {
       height: 124,
       padding: const EdgeInsets.fromLTRB(9, 11, 9, 10),
       decoration: BoxDecoration(
-        color: _dashSurface,
+        color: _dashPanel,
         border: Border.all(color: _dashBorder.withValues(alpha: .68)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -329,7 +330,7 @@ class _RangeSelector extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: activeId == range ? _dashBlue : _dashSurface2,
+                color: activeId == range ? _dashPrimary : _dashPanel2,
                 borderRadius: BorderRadius.circular(999),
               ),
               child: Text(
@@ -369,7 +370,7 @@ class _Tabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 54,
-      color: _dashSurface,
+      color: _dashPanel,
       child: Row(
         children: [
           for (final tab in _tabs)
@@ -387,7 +388,7 @@ class _Tabs extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: activeId == tab.$1
-                                ? _dashBlue
+                                ? _dashPrimary
                                 : AppColors.text3,
                             fontSize: 11,
                             fontWeight: AppTextStyles.bold,
@@ -399,7 +400,7 @@ class _Tabs extends StatelessWidget {
                     Container(
                       height: 2,
                       width: activeId == tab.$1 ? 58 : 0,
-                      color: _dashBlue,
+                      color: _dashPrimary,
                     ),
                   ],
                 ),
@@ -486,8 +487,8 @@ class _DistributionLegend extends StatelessWidget {
             height: 38,
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-              color: _dashSurface2,
-              borderRadius: BorderRadius.circular(10),
+              color: _dashPanel2,
+              borderRadius: AppRadii.smRadius,
             ),
             child: Row(
               children: [
@@ -649,7 +650,7 @@ class _QueueTab extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.calendar_today_outlined,
-                  color: _dashBlue,
+                  color: _dashPrimary,
                   size: 18,
                 ),
                 const SizedBox(width: 10),
@@ -771,7 +772,7 @@ class _ExportsTab extends StatelessWidget {
           title: 'ISO 20022 XML Export',
           subtitle: 'Standard regulatory format',
           icon: Icons.description_outlined,
-          color: _dashBlue,
+          color: _dashPrimary,
           onTap: () => onNotice('XML export queued'),
         ),
         const SizedBox(height: 10),
@@ -908,7 +909,7 @@ class _ProgressMetric extends StatelessWidget {
             height: 8,
             child: Stack(
               children: [
-                const ColoredBox(color: _dashSurface2),
+                const ColoredBox(color: _dashPanel2),
                 FractionallySizedBox(
                   widthFactor: math.min(pct / 100, 1),
                   child: ColoredBox(color: color),
@@ -937,7 +938,7 @@ class _QuickActions extends StatelessWidget {
             key: RegulatoryReportsDashboardPage.actionKey('queue'),
             label: 'Live Queue',
             icon: Icons.waves_rounded,
-            color: _dashBlue,
+            color: _dashPrimary,
             onTap: onQueue,
           ),
         ),
@@ -976,10 +977,10 @@ class _QuickAction extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
       child: Container(
-        height: 48,
+        height: AppSpacing.inputHeight,
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-          color: _dashSurface2,
+          color: _dashPanel2,
           border: Border.all(color: _dashBorder),
           borderRadius: AppRadii.cardRadius,
         ),
@@ -1092,7 +1093,7 @@ class _SectionLabel extends StatelessWidget {
           width: 3,
           height: 16,
           decoration: BoxDecoration(
-            color: _dashBlue,
+            color: _dashPrimary,
             borderRadius: BorderRadius.circular(999),
           ),
         ),
@@ -1126,7 +1127,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _dashSurface,
+        color: _dashPanel,
         border: Border.all(color: _dashBorder.withValues(alpha: .7)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -1152,7 +1153,7 @@ class _NoticePanel extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
           decoration: BoxDecoration(
-            color: _dashSurface,
+            color: _dashPanel,
             border: Border.all(color: _dashGreen.withValues(alpha: .35)),
             borderRadius: AppRadii.cardRadius,
             boxShadow: const [
@@ -1250,7 +1251,7 @@ class _TrendPainter extends CustomPainter {
       canvas,
       chartRect,
       stats.map((item) => item.total.toDouble()).toList(),
-      _dashBlue,
+      _dashPrimary,
       maxValue,
     );
     _drawLine(

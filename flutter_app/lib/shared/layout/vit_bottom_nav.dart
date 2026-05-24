@@ -34,14 +34,12 @@ class VitBottomNav extends StatelessWidget {
     this.onDestinationSelected,
     this.homeBadgeCount = 0,
     this.renderMode = ShellRenderMode.native,
-    this.accentColor,
   });
 
   final VitBottomNavDestination activeDestination;
   final ValueChanged<VitBottomNavDestination>? onDestinationSelected;
   final int homeBadgeCount;
   final ShellRenderMode renderMode;
-  final Color? accentColor;
 
   static const List<_VitBottomNavItem> _items = [
     _VitBottomNavItem(
@@ -126,7 +124,6 @@ class VitBottomNav extends StatelessWidget {
                             item: item,
                             active: item.destination == activeDestination,
                             renderMode: renderMode,
-                            accentColor: accentColor,
                             badgeCount:
                                 item.destination == VitBottomNavDestination.home
                                 ? homeBadgeCount
@@ -167,7 +164,6 @@ class _VitBottomNavButton extends StatelessWidget {
     required this.active,
     required this.onTap,
     required this.renderMode,
-    required this.accentColor,
     this.badgeCount = 0,
   });
 
@@ -175,16 +171,12 @@ class _VitBottomNavButton extends StatelessWidget {
   final bool active;
   final VoidCallback? onTap;
   final ShellRenderMode renderMode;
-  final Color? accentColor;
   final int badgeCount;
 
   @override
   Widget build(BuildContext context) {
-    final activeColor = accentColor ?? AppColors.navActive;
-    final activeDark = accentColor == null
-        ? AppColors.primaryDark
-        : Color.lerp(accentColor, Colors.black, .18)!;
-    final activeShadow = accentColor ?? AppColors.primary;
+    const activeColor = AppColors.navActive;
+    const activeShadow = AppColors.primary;
 
     if (item.isCenter) {
       return Semantics(
@@ -208,13 +200,7 @@ class _VitBottomNavButton extends StatelessWidget {
                     width: renderMode.usesVisualQaFrame ? 52 : 48,
                     height: renderMode.usesVisualQaFrame ? 52 : 48,
                     decoration: BoxDecoration(
-                      gradient: accentColor == null
-                          ? AppGradients.navCenter
-                          : LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [activeColor, activeDark],
-                            ),
+                      gradient: AppGradients.navCenter,
                       borderRadius: AppRadii.cardRadius,
                       boxShadow: [
                         BoxShadow(

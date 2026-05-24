@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -11,11 +13,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _complaintsBg = Color(0xFF080C14);
-const _complaintsSurface = Color(0xFF151A23);
-const _complaintsSurface2 = Color(0xFF1E2535);
-const _complaintsBorder = Color(0xFF273142);
-const _complaintsBlue = Color(0xFF3B82F6);
+const _complaintsBackground = AppColors.bg;
+const _complaintsPanel = AppColors.surface;
+const _complaintsPanel2 = AppColors.surface2;
+const _complaintsBorder = AppColors.borderSolid;
+const _complaintsPrimary = AppColors.primary;
 const _complaintsGreen = Color(0xFF10B981);
 const _complaintsAmber = Color(0xFFF59E0B);
 const _complaintsRed = Color(0xFFEF4444);
@@ -55,7 +57,7 @@ class _ComplaintsHandlingPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-111 ComplaintsHandlingPage',
       child: Material(
-        color: _complaintsBg,
+        color: _complaintsBackground,
         child: Column(
           children: [
             VitHeader(
@@ -227,11 +229,11 @@ class _SubmitComplaintButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: _complaintsBlue,
-      borderRadius: BorderRadius.circular(15),
+      color: _complaintsPrimary,
+      borderRadius: AppRadii.inputRadius,
       child: InkWell(
         key: ComplaintsHandlingPage.submitKey,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: AppRadii.inputRadius,
         onTap: () => context.go(AppRoutePaths.tradeCopyComplaintSubmission),
         child: SizedBox(
           height: 78,
@@ -241,10 +243,10 @@ class _SubmitComplaintButton extends StatelessWidget {
               children: [
                 Container(
                   width: 48,
-                  height: 48,
+                  height: AppSpacing.inputHeight,
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: .20),
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: AppRadii.cardRadius,
                   ),
                   child: const Icon(
                     Icons.chat_bubble_outline_rounded,
@@ -304,7 +306,7 @@ class _Tabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 52,
-      color: _complaintsSurface,
+      color: _complaintsPanel,
       child: Row(
         children: [
           _TabButton(
@@ -358,7 +360,7 @@ class _TabButton extends StatelessWidget {
                 child: Text(
                   label,
                   style: AppTextStyles.caption.copyWith(
-                    color: isActive ? _complaintsBlue : AppColors.text3,
+                    color: isActive ? _complaintsPrimary : AppColors.text3,
                     fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
@@ -369,7 +371,7 @@ class _TabButton extends StatelessWidget {
             Container(
               width: 100,
               height: 2,
-              color: isActive ? _complaintsBlue : Colors.transparent,
+              color: isActive ? _complaintsPrimary : Colors.transparent,
             ),
           ],
         ),
@@ -422,7 +424,7 @@ class _CategoryGrid extends StatelessWidget {
                 children: [
                   Icon(
                     _iconForCategory(category.icon),
-                    color: _complaintsBlue,
+                    color: _complaintsPrimary,
                     size: 17,
                   ),
                   const Spacer(),
@@ -464,14 +466,14 @@ class _TimelineCard extends StatelessWidget {
                   width: 32,
                   height: 32,
                   decoration: BoxDecoration(
-                    color: _complaintsSurface2,
-                    borderRadius: BorderRadius.circular(16),
+                    color: _complaintsPanel2,
+                    borderRadius: AppRadii.cardRadius,
                   ),
                   alignment: Alignment.center,
                   child: Text(
                     '${item.step}',
                     style: AppTextStyles.caption.copyWith(
-                      color: _complaintsBlue,
+                      color: _complaintsPrimary,
                       fontSize: 13,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
@@ -545,7 +547,7 @@ class _ComplaintCard extends StatelessWidget {
     final status = _statusPresentation(complaint.status);
     return InkWell(
       key: ComplaintsHandlingPage.complaintKey(complaint.id),
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: AppRadii.cardRadius,
       onTap: () =>
           context.go(AppRoutePaths.tradeCopyComplaintTracking(complaint.id)),
       child: _Card(
@@ -558,7 +560,7 @@ class _ComplaintCard extends StatelessWidget {
               height: 40,
               decoration: BoxDecoration(
                 color: status.color.withValues(alpha: .11),
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: AppRadii.inputRadius,
               ),
               child: Icon(
                 Icons.chat_bubble_outline_rounded,
@@ -731,8 +733,8 @@ class _OmbudsmanCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: _complaintsSurface2,
-              borderRadius: BorderRadius.circular(12),
+              color: _complaintsPanel2,
+              borderRadius: AppRadii.mdRadius,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -776,9 +778,7 @@ class _OmbudsmanCard extends StatelessWidget {
               minimumSize: const Size.fromHeight(40),
               foregroundColor: AppColors.text1,
               side: BorderSide(color: _complaintsBorder.withValues(alpha: .76)),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
               textStyle: AppTextStyles.caption.copyWith(
                 fontSize: 12,
                 fontWeight: AppTextStyles.bold,
@@ -804,7 +804,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _complaintsBlue,
+            color: _complaintsPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),
@@ -834,9 +834,9 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _complaintsSurface,
+        color: _complaintsPanel,
         border: Border.all(color: _complaintsBorder.withValues(alpha: .76)),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: child,
     );
@@ -858,7 +858,7 @@ IconData _iconForCategory(TradeComplaintCategoryIcon icon) {
   return switch (status) {
     TradeComplaintStatus.submitted => (
       label: 'Submitted',
-      color: _complaintsBlue,
+      color: _complaintsPrimary,
     ),
     TradeComplaintStatus.underReview => (
       label: 'Under Review',

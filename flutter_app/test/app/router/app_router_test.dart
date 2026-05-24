@@ -316,6 +316,111 @@ void main() {
     expect(AppRouteNames.sc161ActivityLog, 'sc161ActivityLog');
     expect(AppRouteNames.sc162ApiKeyCreate, 'sc162ApiKeyCreate');
     expect(AppRouteNames.sc163ApiManagement, 'sc163ApiManagement');
+    expect(AppRouteNames.sc164Vip, 'sc164Vip');
+    expect(AppRouteNames.sc165DeviceManagement, 'sc165DeviceManagement');
+    expect(AppRouteNames.sc166SubAccount, 'sc166SubAccount');
+    expect(AppRouteNames.sc167ProfilePredictions, 'sc167ProfilePredictions');
+    expect(AppRouteNames.sc168MyArena, 'sc168MyArena');
+    expect(AppRouteNames.sc169Dca, 'sc169Dca');
+    expect(AppRouteNames.sc170DcaRebalanceConfig, 'sc170DcaRebalanceConfig');
+    expect(
+      AppRouteNames.sc171DcaRebalanceDashboard,
+      'sc171DcaRebalanceDashboard',
+    );
+    expect(AppRouteNames.sc172DcaScheduleConfig, 'sc172DcaScheduleConfig');
+    expect(
+      AppRouteNames.sc173DcaScheduleAnalytics,
+      'sc173DcaScheduleAnalytics',
+    );
+    expect(
+      AppRouteNames.sc174DcaPortfolioOptimizer,
+      'sc174DcaPortfolioOptimizer',
+    );
+    expect(AppRouteNames.sc175DcaDynamicAmount, 'sc175DcaDynamicAmount');
+    expect(AppRouteNames.sc176DcaBacktester, 'sc176DcaBacktester');
+    expect(AppRouteNames.sc177DcaMultiAsset, 'sc177DcaMultiAsset');
+    expect(
+      AppRouteNames.sc178DcaPerformanceCompare,
+      'sc178DcaPerformanceCompare',
+    );
+    expect(AppRouteNames.sc179DcaSmartRules, 'sc179DcaSmartRules');
+    expect(AppRouteNames.sc180AdminHome, 'sc180AdminHome');
+    expect(AppRouteNames.sc181AnalyticsDashboard, 'sc181AnalyticsDashboard');
+    expect(AppRouteNames.sc182AbTestDashboard, 'sc182AbTestDashboard');
+    expect(AppRouteNames.sc183FunnelDashboard, 'sc183FunnelDashboard');
+    expect(AppRouteNames.sc184ArenaHome, 'sc184ArenaHome');
+    expect(AppRouteNames.sc185ArenaStudio, 'sc185ArenaStudio');
+    expect(AppRouteNames.sc186ArenaSmartRules, 'sc186ArenaSmartRules');
+    expect(AppRouteNames.sc187ArenaPresetLibrary, 'sc187ArenaPresetLibrary');
+    expect(AppRouteNames.sc188ArenaGovernanceGate, 'sc188ArenaGovernanceGate');
+    expect(AppRouteNames.sc201ArenaPointsLedger, 'sc201ArenaPointsLedger');
+    expect(AppRouteNames.sc202ArenaReportCase, 'sc202ArenaReportCase');
+    expect(AppRouteNames.sc203ArenaBlockedUsers, 'sc203ArenaBlockedUsers');
+    expect(AppRouteNames.sc204MyArenaReports, 'sc204MyArenaReports');
+    expect(AppRouteNames.sc205MyArena, 'sc205MyArena');
+    expect(
+      AppRouteNames.sc206ArenaProductionReady,
+      'sc206ArenaProductionReady',
+    );
+    expect(
+      AppRouteNames.sc207ArenaPredictionBridgeFoundation,
+      'sc207ArenaPredictionBridgeFoundation',
+    );
+    expect(
+      AppRouteNames.sc208ConnectedEcosystemProduction,
+      'sc208ConnectedEcosystemProduction',
+    );
+    expect(AppRouteNames.sc209ArenaGuide, 'sc209ArenaGuide');
+    expect(AppRouteNames.sc210P2PExpressConfirm, 'sc210P2PExpressConfirm');
+    expect(AppRouteNames.sc211P2PExpress, 'sc211P2PExpress');
+    expect(AppRouteNames.sc212P2POrderTimeline, 'sc212P2POrderTimeline');
+    expect(AppRouteNames.sc213P2POrderRate, 'sc213P2POrderRate');
+    expect(AppRouteNames.sc214P2POrderCancel, 'sc214P2POrderCancel');
+    expect(AppRouteNames.sc215P2POrderProof, 'sc215P2POrderProof');
+    expect(AppRouteNames.sc216P2POrder, 'sc216P2POrder');
+    expect(AppRouteNames.sc217P2PChat, 'sc217P2PChat');
+    expect(AppRouteNames.sc218P2PDisputeDetail, 'sc218P2PDisputeDetail');
+    expect(AppRouteNames.sc219P2PDisputeEvidence, 'sc219P2PDisputeEvidence');
+    expect(
+      AppRouteNames.sc220P2PDisputeResolution,
+      'sc220P2PDisputeResolution',
+    );
+    expect(AppRouteNames.sc221P2PDispute, 'sc221P2PDispute');
+    expect(AppRouteNames.sc222P2PDisputes, 'sc222P2PDisputes');
+    expect(AppRouteNames.sc223P2PAdAnalytics, 'sc223P2PAdAnalytics');
+    expect(AppRouteNames.sc224P2PAdDetail, 'sc224P2PAdDetail');
+    expect(AppRouteNames.sc225P2PMyAds, 'sc225P2PMyAds');
+    expect(AppRouteNames.sc226P2PCreateAd, 'sc226P2PCreateAd');
+    expect(AppRouteNames.sc227P2PMerchantApply, 'sc227P2PMerchantApply');
+    expect(AppRouteNames.sc228P2PMerchantProfile, 'sc228P2PMerchantProfile');
+    expect(AppRouteNames.sc229P2PReportMerchant, 'sc229P2PReportMerchant');
+    expect(AppRouteNames.sc230P2PTradingLevel, 'sc230P2PTradingLevel');
+    expect(AppRouteNames.sc250P2PAddressProof, 'sc250P2PAddressProof');
+    expect(
+      AppRouteNames.sc251P2PSelfieVerification,
+      'sc251P2PSelfieVerification',
+    );
+    expect(
+      AppRouteNames.sc252P2PVideoVerification,
+      'sc252P2PVideoVerification',
+    );
+    expect(AppRouteNames.sc253P2PSecurityCenter, 'sc253P2PSecurityCenter');
+    expect(AppRouteNames.sc254P2P2FASettings, 'sc254P2P2FASettings');
+    expect(AppRouteNames.sc255P2PDeviceManagement, 'sc255P2PDeviceManagement');
+    expect(AppRouteNames.sc256P2PAntiPhishingCode, 'sc256P2PAntiPhishingCode');
+    expect(AppRouteNames.sc257P2PLoginHistory, 'sc257P2PLoginHistory');
+    expect(
+      AppRouteNames.sc258P2PSuspiciousActivity,
+      'sc258P2PSuspiciousActivity',
+    );
+    expect(AppRouteNames.sc259P2PE2EInfo, 'sc259P2PE2EInfo');
+    expect(AppRouteNames.sc260P2PFraudPrevention, 'sc260P2PFraudPrevention');
+    expect(AppRouteNames.sc261P2PWalletTransfer, 'sc261P2PWalletTransfer');
+    expect(AppRouteNames.sc262P2PFundLockHistory, 'sc262P2PFundLockHistory');
+    expect(
+      AppRouteNames.sc263P2PWalletHistoryAlias,
+      'sc263P2PWalletHistoryAlias',
+    );
     expect(AppRoutePaths.authLogin, '/auth/login');
     expect(AppRoutePaths.authRegister, '/auth/register');
     expect(AppRoutePaths.authOtp, '/auth/otp');
@@ -721,9 +826,137 @@ void main() {
     expect(AppRoutePaths.profileArena, '/profile/arena');
     expect(AppRoutePaths.onboarding, '/onboarding');
     expect(AppRoutePaths.dca, '/dca');
+    expect(AppRoutePaths.dcaPortfolioOptimizer, '/dca/portfolio-optimizer');
+    expect(AppRoutePaths.dcaDynamicAmount, '/dca/dynamic-amount');
+    expect(AppRoutePaths.dcaRebalanceConfig, '/dca/rebalance/config');
+    expect(AppRoutePaths.dcaRebalanceDashboard, '/dca/rebalance/config001');
+    expect(
+      AppRoutePaths.dcaRebalanceEdit('config001'),
+      '/dca/rebalance/config001/edit',
+    );
+    expect(
+      AppRoutePaths.dcaRebalanceHistory('config001'),
+      '/dca/rebalance/config001/history',
+    );
+    expect(AppRoutePaths.dcaScheduleConfig, '/dca/schedule/config');
+    expect(AppRoutePaths.dcaScheduleAnalytics, '/dca/schedule/config001');
+    expect(AppRoutePaths.dcaBacktester, '/dca/backtester');
+    expect(AppRoutePaths.dcaMultiAsset, '/dca/multi-asset');
+    expect(AppRoutePaths.dcaPerformanceCompare, '/dca/performance-compare');
+    expect(AppRoutePaths.dcaSmartRules, '/dca/smart-rules');
+    expect(AppRoutePaths.admin, '/admin');
+    expect(AppRoutePaths.adminAnalytics, '/admin/analytics');
+    expect(AppRoutePaths.adminAbtests, '/admin/abtests');
+    expect(AppRoutePaths.adminFunnels, '/admin/funnels');
+    expect(AppRoutePaths.adminSettings, '/admin/settings');
     expect(AppRoutePaths.profilePredictions, '/profile/predictions');
+    expect(AppRoutePaths.p2p, '/p2p');
+    expect(AppRoutePaths.p2pExpress, '/p2p/express');
+    expect(AppRoutePaths.p2pExpressConfirm, '/p2p/express/confirm');
+    expect(AppRoutePaths.p2pOrder('p2p001'), '/p2p/order/p2p001');
+    expect(
+      AppRoutePaths.p2pOrderTimeline('p2p001'),
+      '/p2p/order/timeline/p2p001',
+    );
+    expect(AppRoutePaths.p2pOrderRate('p2p001'), '/p2p/order/rate/p2p001');
+    expect(AppRoutePaths.p2pOrderCancel('p2p001'), '/p2p/order/cancel/p2p001');
+    expect(AppRoutePaths.p2pOrderProof('p2p001'), '/p2p/order/proof/p2p001');
+    expect(AppRoutePaths.p2pChat('p2p001'), '/p2p/chat/p2p001');
+    expect(AppRoutePaths.p2pDispute('p2p001'), '/p2p/dispute/p2p001');
+    expect(
+      AppRoutePaths.p2pDisputeDetail('sample'),
+      '/p2p/dispute/detail/sample',
+    );
+    expect(
+      AppRoutePaths.p2pDisputeEvidence('disp001'),
+      '/p2p/dispute/evidence/disp001',
+    );
+    expect(
+      AppRoutePaths.p2pDisputeResolution('disp001'),
+      '/p2p/dispute/resolution/disp001',
+    );
+    expect(AppRoutePaths.p2pDisputes, '/p2p/disputes');
+    expect(AppRoutePaths.p2pAdAnalytics('sample'), '/p2p/ad-analytics/sample');
+    expect(AppRoutePaths.p2pAd('sample'), '/p2p/ad/sample');
+    expect(AppRoutePaths.p2pMyAds, '/p2p/my-ads');
+    expect(AppRoutePaths.p2pCreate, '/p2p/create');
+    expect(AppRoutePaths.p2pMerchantApply, '/p2p/merchant-apply');
+    expect(AppRoutePaths.p2pEscrow('p2p001'), '/p2p/escrow/p2p001');
+    expect(AppRoutePaths.p2pKycRequirements, '/p2p/kyc/requirements');
+    expect(AppRoutePaths.p2pKycVerify, '/p2p/kyc/verify');
+    expect(AppRoutePaths.p2pKycStatus, '/p2p/kyc/status');
+    expect(AppRoutePaths.p2pKycIdentity, '/p2p/kyc/identity');
+    expect(AppRoutePaths.p2pKycAddress, '/p2p/kyc/address');
+    expect(AppRoutePaths.p2pKycSelfie, '/p2p/kyc/selfie');
+    expect(AppRoutePaths.p2pKycVideo, '/p2p/kyc/video');
+    expect(AppRoutePaths.p2pKycFaceMatch, '/p2p/kyc/face-match');
+    expect(AppRoutePaths.p2pSecurityCenter, '/p2p/security/center');
+    expect(AppRoutePaths.p2pSecurity2fa, '/p2p/security/2fa');
+    expect(AppRoutePaths.p2pSecurityDevices, '/p2p/security/devices');
+    expect(
+      AppRoutePaths.p2pSecurityAntiPhishing,
+      '/p2p/security/anti-phishing',
+    );
+    expect(
+      AppRoutePaths.p2pSecurityLoginHistory,
+      '/p2p/security/login-history',
+    );
+    expect(
+      AppRoutePaths.p2pSecuritySuspiciousActivity,
+      '/p2p/security/suspicious-activity',
+    );
+    expect(AppRoutePaths.p2pSecurityWhitelist, '/p2p/security/whitelist');
+    expect(
+      AppRoutePaths.settingsSecurityBiometric,
+      '/settings/security/biometric',
+    );
+    expect(
+      AppRoutePaths.settingsSecurityChangePassword,
+      '/settings/security/change-password',
+    );
+    expect(AppRoutePaths.p2pMerchant('mc001'), '/p2p/merchant/mc001');
+    expect(AppRoutePaths.p2pReport('mc001'), '/p2p/report/mc001');
+    expect(AppRoutePaths.p2pTradingLevel, '/p2p/trading-level');
+    expect(AppRoutePaths.p2pBlacklist, '/p2p/blacklist');
+    expect(AppRoutePaths.p2pBlacklistAdd, '/p2p/blacklist/add');
+    expect(AppRoutePaths.p2pGuide, '/p2p/guide');
+    expect(AppRoutePaths.p2pSettings, '/p2p/settings');
+    expect(AppRoutePaths.p2pE2EInfo, '/p2p/e2e-info');
+    expect(AppRoutePaths.p2pFraudPrevention, '/p2p/fraud-prevention');
+    expect(AppRoutePaths.p2pWallet, '/p2p/wallet');
+    expect(AppRoutePaths.p2pWalletTransfer, '/p2p/wallet/transfer');
+    expect(
+      AppRoutePaths.p2pWalletFundLockHistory,
+      '/p2p/wallet/fund-lock-history',
+    );
+    expect(AppRoutePaths.p2pWalletHistory, '/p2p/wallet/history');
+    expect(AppRoutePaths.p2pLimits, '/p2p/limits');
+    expect(AppRoutePaths.p2pLimitsTracker, '/p2p/limits/tracker');
+    expect(AppRoutePaths.supportHelp, '/support/help');
     expect(AppRoutePaths.arena, '/arena');
+    expect(AppRoutePaths.arenaGuide, '/arena/guide');
     expect(AppRoutePaths.arenaStudio, '/arena/studio');
+    expect(AppRoutePaths.arenaStudioSmartRules, '/arena/studio/smart-rules');
+    expect(AppRoutePaths.arenaStudioPresets, '/arena/studio/presets');
+    expect(AppRoutePaths.arenaStudioGovernance, '/arena/studio/governance');
+    expect(AppRoutePaths.arenaLeaderboard, '/arena/leaderboard');
+    expect(AppRoutePaths.arenaPoints, '/arena/points');
+    expect(AppRoutePaths.arenaSafety, '/arena/safety');
+    expect(AppRoutePaths.arenaBlocked, '/arena/blocked');
+    expect(AppRoutePaths.arenaMyReports, '/arena/my-reports');
+    expect(AppRoutePaths.arenaMy, '/arena/my');
+    expect(AppRoutePaths.arenaProduction, '/arena/production');
+    expect(AppRoutePaths.arenaBridge, '/arena/bridge');
+    expect(AppRoutePaths.arenaEcosystem, '/arena/ecosystem');
+    expect(AppRoutePaths.arenaReportCase('rpt001'), '/arena/report/rpt001');
+    expect(AppRoutePaths.arenaLedger, '/arena/ledger');
+    expect(
+      AppRoutePaths.arenaLedgerEntry('le001'),
+      '/arena/ledger/entry/le001',
+    );
+    expect(AppRoutePaths.arenaChallenge('ch003'), '/arena/challenge/ch003');
+    expect(AppRoutePaths.arenaMode('mode001'), '/arena/mode/mode001');
+    expect(AppRoutePaths.arenaCreator('cr001'), '/arena/creator/cr001');
     expect(VitBottomNavDestination.home.routePath, AppRoutePaths.home);
   });
 }

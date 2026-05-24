@@ -14,9 +14,9 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _portfolioBg = Color(0xFF080C14);
-const _portfolioSurface = Color(0xFF151A23);
-const _portfolioBlue = Color(0xFF3B82F6);
+const _portfolioBackground = AppColors.bg;
+const _portfolioPanel = AppColors.surface;
+const _portfolioPrimary = AppColors.primary;
 const _portfolioGreen = Color(0xFF10B981);
 const _portfolioAmber = Color(0xFFF59E0B);
 const _portfolioRed = Color(0xFFEF4444);
@@ -45,7 +45,7 @@ class BotPortfolioDashboardPage extends ConsumerWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-128 BotPortfolioDashboardPage',
       child: Material(
-        color: _portfolioBg,
+        color: _portfolioBackground,
         child: Column(
           children: [
             VitHeader(
@@ -96,7 +96,7 @@ class _SummaryGrid extends StatelessWidget {
     final cards = [
       _SummaryCardData(
         icon: Icons.account_balance_wallet_outlined,
-        iconColor: _portfolioBlue,
+        iconColor: _portfolioPrimary,
         label: 'Total Equity',
         value: _formatUsd(summary.totalEquity),
       ),
@@ -111,7 +111,7 @@ class _SummaryGrid extends StatelessWidget {
       ),
       _SummaryCardData(
         icon: Icons.show_chart_rounded,
-        iconColor: _portfolioBlue,
+        iconColor: _portfolioPrimary,
         label: 'Portfolio Sharpe',
         value: summary.portfolioSharpe.toStringAsFixed(2),
         caption: 'Excellent',
@@ -544,7 +544,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _portfolioSurface,
+        color: _portfolioPanel,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -566,7 +566,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _portfolioBlue,
+            color: _portfolioPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),

@@ -11,10 +11,10 @@ import '../../../shared/layout/shell_render_mode.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _tradeBlue = Color(0xFF3B82F6);
-const _tradeBlueDark = Color(0xFF1D4ED8);
-const _panelBg = Color(0xFF121721);
-const _chipBg = Color(0xFF1D263B);
+const _tradePrimary = AppColors.primary;
+const _tradePrimaryDark = AppColors.primaryDark;
+const _panelBackground = AppColors.surface;
+const _chipBackground = AppColors.surface2;
 
 class LeveragePage extends ConsumerStatefulWidget {
   const LeveragePage({super.key, required this.pairId, this.shellRenderMode});
@@ -163,7 +163,7 @@ class _LeverageHeader extends StatelessWidget {
           InkWell(
             key: LeveragePage.backKey,
             onTap: onBack,
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: AppRadii.cardRadius,
             child: const SizedBox(
               width: 36,
               height: 36,
@@ -318,7 +318,7 @@ class _RiskMeter extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: level <= preview.riskLevel
                         ? _segmentColor(level)
-                        : _chipBg,
+                        : _chipBackground,
                     borderRadius: AppRadii.xsRadius,
                   ),
                 ),
@@ -424,10 +424,10 @@ class _StopButton extends StatelessWidget {
         height: 36,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? _tradeBlue : _chipBg,
+          color: active ? _tradePrimary : _chipBackground,
           borderRadius: AppRadii.xlRadius,
           border: Border.all(
-            color: active ? _tradeBlue : AppColors.borderSolid,
+            color: active ? _tradePrimary : AppColors.borderSolid,
           ),
         ),
         child: Text(
@@ -513,10 +513,10 @@ class _PresetButton extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? null : _chipBg,
+          color: active ? null : _chipBackground,
           gradient: active
               ? const LinearGradient(
-                  colors: [_tradeBlue, _tradeBlueDark],
+                  colors: [_tradePrimary, _tradePrimaryDark],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 )
@@ -528,7 +528,7 @@ class _PresetButton extends StatelessWidget {
           boxShadow: active
               ? [
                   BoxShadow(
-                    color: _tradeBlue.withValues(alpha: .26),
+                    color: _tradePrimary.withValues(alpha: .26),
                     blurRadius: 14,
                     offset: const Offset(0, 4),
                   ),
@@ -588,7 +588,7 @@ class _ImpactCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 15, 16, 13),
       decoration: BoxDecoration(
-        color: _panelBg,
+        color: _panelBackground,
         borderRadius: AppRadii.cardRadius,
         border: Border.all(color: AppColors.cardBorder),
       ),
@@ -599,7 +599,7 @@ class _ImpactCard extends StatelessWidget {
             children: [
               const Icon(
                 Icons.info_outline_rounded,
-                color: _tradeBlue,
+                color: _tradePrimary,
                 size: 16,
               ),
               const SizedBox(width: 8),
@@ -728,7 +728,7 @@ class _RiskTipsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _panelBg,
+        color: _panelBackground,
         borderRadius: AppRadii.cardRadius,
         border: Border.all(color: AppColors.sell.withValues(alpha: .22)),
       ),
@@ -804,14 +804,14 @@ class _ConfirmButton extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           gradient: const LinearGradient(
-            colors: [_tradeBlue, _tradeBlueDark],
+            colors: [_tradePrimary, _tradePrimaryDark],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           borderRadius: AppRadii.cardRadius,
           boxShadow: [
             BoxShadow(
-              color: _tradeBlue.withValues(alpha: .25),
+              color: _tradePrimary.withValues(alpha: .25),
               blurRadius: 18,
               offset: const Offset(0, 8),
             ),

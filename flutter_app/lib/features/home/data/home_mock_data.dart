@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/theme/app_module_accents.dart';
+
 class HomeAnnouncement {
   const HomeAnnouncement({required this.text});
 
@@ -11,11 +13,13 @@ class HomeQuickAction {
     required this.icon,
     required this.label,
     required this.routePath,
+    required this.accentColor,
   });
 
-  final String icon;
+  final IconData icon;
   final String label;
   final String routePath;
+  final Color accentColor;
 }
 
 class HomeCryptoPair {
@@ -60,23 +64,84 @@ class HomeMockData {
   ];
 
   static const quickActions = [
-    HomeQuickAction(icon: '🔍', label: 'Khám phá', routePath: '/topics'),
-    HomeQuickAction(icon: '⚡', label: 'Mua nhanh', routePath: '/trade/btcusdt'),
-    HomeQuickAction(icon: '🔄', label: 'Convert', routePath: '/trade/convert'),
-    HomeQuickAction(icon: '📊', label: 'P2P', routePath: '/p2p'),
-    HomeQuickAction(icon: '🚀', label: 'Launchpad', routePath: '/launchpad'),
-    HomeQuickAction(icon: '🏦', label: 'Staking', routePath: '/earn/staking'),
-    HomeQuickAction(icon: '🧮', label: 'Mua định kỳ', routePath: '/dca'),
-    HomeQuickAction(icon: '🤖', label: 'Bot', routePath: '/trade/bots'),
     HomeQuickAction(
-      icon: '📋',
+      icon: Icons.explore_rounded,
+      label: 'Kh\u00E1m ph\u00E1',
+      routePath: '/topics',
+      accentColor: AppModuleAccents.markets,
+    ),
+    HomeQuickAction(
+      icon: Icons.bolt_rounded,
+      label: 'Mua nhanh',
+      routePath: '/trade/btcusdt',
+      accentColor: AppModuleAccents.trade,
+    ),
+    HomeQuickAction(
+      icon: Icons.swap_horiz_rounded,
+      label: 'Convert',
+      routePath: '/trade/convert',
+      accentColor: AppModuleAccents.trade,
+    ),
+    HomeQuickAction(
+      icon: Icons.groups_rounded,
+      label: 'P2P',
+      routePath: '/p2p',
+      accentColor: AppModuleAccents.wallet,
+    ),
+    HomeQuickAction(
+      icon: Icons.rocket_launch_rounded,
+      label: 'Launchpad',
+      routePath: '/launchpad',
+      accentColor: AppModuleAccents.home,
+    ),
+    HomeQuickAction(
+      icon: Icons.account_balance_rounded,
+      label: 'Staking',
+      routePath: '/earn/staking',
+      accentColor: AppModuleAccents.wallet,
+    ),
+    HomeQuickAction(
+      icon: Icons.calculate_rounded,
+      label: 'Mua \u0111\u1ECBnh k\u1EF3',
+      routePath: '/dca',
+      accentColor: AppModuleAccents.trade,
+    ),
+    HomeQuickAction(
+      icon: Icons.smart_toy_rounded,
+      label: 'Bot',
+      routePath: '/trade/bots',
+      accentColor: AppModuleAccents.trade,
+    ),
+    HomeQuickAction(
+      icon: Icons.content_copy_rounded,
       label: 'Copy Trade',
       routePath: '/trade/copy-trading',
+      accentColor: AppModuleAccents.trade,
     ),
-    HomeQuickAction(icon: '💰', label: 'Tiết kiệm', routePath: '/earn/savings'),
-    HomeQuickAction(icon: '🎁', label: 'Phần thưởng', routePath: '/rewards'),
-    HomeQuickAction(icon: '📈', label: 'Margin', routePath: '/trade/margin'),
-    HomeQuickAction(icon: '🎉', label: 'Giới thiệu', routePath: '/referral'),
+    HomeQuickAction(
+      icon: Icons.savings_rounded,
+      label: 'Ti\u1EBFt ki\u1EC7m',
+      routePath: '/earn/savings',
+      accentColor: AppModuleAccents.wallet,
+    ),
+    HomeQuickAction(
+      icon: Icons.card_giftcard_rounded,
+      label: 'Ph\u1EA7n th\u01B0\u1EDFng',
+      routePath: '/rewards',
+      accentColor: AppModuleAccents.home,
+    ),
+    HomeQuickAction(
+      icon: Icons.show_chart_rounded,
+      label: 'Margin',
+      routePath: '/trade/margin',
+      accentColor: AppModuleAccents.trade,
+    ),
+    HomeQuickAction(
+      icon: Icons.campaign_rounded,
+      label: 'Gi\u1EDBi thi\u1EC7u',
+      routePath: '/referral',
+      accentColor: AppModuleAccents.home,
+    ),
   ];
 
   static const pairs = [

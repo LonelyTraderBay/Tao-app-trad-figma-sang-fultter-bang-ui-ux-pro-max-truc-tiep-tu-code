@@ -16,7 +16,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 class SocialSentimentPage extends ConsumerStatefulWidget {
   const SocialSentimentPage({super.key, this.shellRenderMode});
@@ -88,7 +88,7 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
                         _SocialDominanceCard(global: snapshot.global),
                         _SectionHeader(
                           label: 'Diễn biến 7 ngày',
-                          accentColor: _marketBlue,
+                          accentColor: _marketPrimary,
                         ),
                         _TimelineCard(points: snapshot.timeline),
                         _SectionHeader(
@@ -205,7 +205,7 @@ class _UnderlinedTab extends StatelessWidget {
                 child: Text(
                   label,
                   style: AppTextStyles.caption.copyWith(
-                    color: active ? _marketBlue : AppColors.text3,
+                    color: active ? _marketPrimary : AppColors.text3,
                     fontWeight: AppTextStyles.medium,
                   ),
                 ),
@@ -215,7 +215,7 @@ class _UnderlinedTab extends StatelessWidget {
               height: 2,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
-                child: const ColoredBox(color: _marketBlue),
+                child: const ColoredBox(color: _marketPrimary),
               ),
             ),
           ],
@@ -239,9 +239,9 @@ class _SentimentHero extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF13224A), Color(0xFF101A35)],
+          colors: [AppColors.surface, AppColors.surface2],
         ),
-        border: Border.all(color: _marketBlue.withValues(alpha: .2)),
+        border: Border.all(color: _marketPrimary.withValues(alpha: .2)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -360,7 +360,7 @@ class _SentimentStats extends StatelessWidget {
         Expanded(
           child: _StatCard(
             icon: Icons.mode_comment_outlined,
-            iconColor: _marketBlue,
+            iconColor: _marketPrimary,
             label: 'Lượt đề cập 24h',
             value: _formatCompact(global.totalMentions24h),
             sub: '+${global.mentionsChange.toStringAsFixed(2)}%',
@@ -471,7 +471,7 @@ class _SocialDominanceCard extends StatelessWidget {
                   ),
                   Expanded(
                     flex: (global.socialDominanceOther * 10).round(),
-                    child: Container(color: const Color(0xFF1B2440)),
+                    child: Container(color: AppColors.surface3),
                   ),
                 ],
               ),
@@ -1208,7 +1208,7 @@ class _MentionVelocity extends StatelessWidget {
 
 Color _sentimentColor(int score) {
   if (score >= 60) return AppColors.buy;
-  if (score >= 30) return _marketBlue;
+  if (score >= 30) return _marketPrimary;
   if (score >= -10) return AppColors.text3;
   if (score >= -40) return AppColors.warn;
   return AppColors.sell;

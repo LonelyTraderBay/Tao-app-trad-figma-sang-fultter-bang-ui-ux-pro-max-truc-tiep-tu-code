@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -15,11 +16,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _riyBg = Color(0xFF080C14);
-const _riySurface = Color(0xFF151A23);
-const _riySurface2 = Color(0xFF1E2535);
-const _riyBorder = Color(0xFF273142);
-const _riyBlue = Color(0xFF3B82F6);
+const _riyBackground = AppColors.bg;
+const _riyPanel = AppColors.surface;
+const _riyPanel2 = AppColors.surface2;
+const _riyBorder = AppColors.borderSolid;
+const _riyPrimary = AppColors.primary;
 const _riyGreen = Color(0xFF10B981);
 const _riyRed = Color(0xFFEF4444);
 const _riyGrid = Color(0x1FFFFFFF);
@@ -80,7 +81,7 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-106 RIYCalculatorPage',
       child: Material(
-        color: _riyBg,
+        color: _riyBackground,
         child: Column(
           children: [
             VitHeader(
@@ -258,7 +259,7 @@ class _NumberField extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         SizedBox(
-          height: 48,
+          height: AppSpacing.inputHeight,
           child: TextFormField(
             initialValue: initialValue,
             keyboardType: TextInputType.numberWithOptions(decimal: decimals),
@@ -268,7 +269,7 @@ class _NumberField extends StatelessWidget {
               ),
             ],
             onChanged: onChanged,
-            cursorColor: _riyBlue,
+            cursorColor: _riyPrimary,
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,
               fontSize: 16,
@@ -276,11 +277,11 @@ class _NumberField extends StatelessWidget {
             ),
             decoration: InputDecoration(
               filled: true,
-              fillColor: _riySurface2,
+              fillColor: _riyPanel2,
               contentPadding: const EdgeInsets.fromLTRB(13, 14, 13, 12),
               border: _fieldBorder(_riyBorder),
               enabledBorder: _fieldBorder(_riyBorder),
-              focusedBorder: _fieldBorder(_riyBlue),
+              focusedBorder: _fieldBorder(_riyPrimary),
             ),
           ),
         ),
@@ -380,8 +381,8 @@ class _CostImpactCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.fromLTRB(12, 10, 12, 9),
               decoration: BoxDecoration(
-                color: _riyBlue.withValues(alpha: .04),
-                borderRadius: BorderRadius.circular(10),
+                color: _riyPrimary.withValues(alpha: .04),
+                borderRadius: AppRadii.smRadius,
               ),
               child: Text(
                 'Over $years years, costs reduce your investment by '
@@ -566,7 +567,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 14,
           decoration: BoxDecoration(
-            color: _riyBlue,
+            color: _riyPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -596,7 +597,7 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _riySurface,
+        color: _riyPanel,
         border: Border.all(color: _riyBorder.withValues(alpha: .72)),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -607,7 +608,7 @@ class _Card extends StatelessWidget {
 
 OutlineInputBorder _fieldBorder(Color color) {
   return OutlineInputBorder(
-    borderRadius: BorderRadius.circular(18),
+    borderRadius: AppRadii.cardRadius,
     borderSide: BorderSide(color: color.withValues(alpha: .72)),
   );
 }

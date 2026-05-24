@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -13,11 +14,11 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/vit_cta_button.dart';
 import '../data/profile_repository.dart';
 
-const _editBg = AppColors.bg;
-const _editSurface = AppColors.surface;
-const _editSurface2 = AppColors.surface2;
+const _editBackground = AppColors.bg;
+const _editPanel = AppColors.surface;
+const _editPanel2 = AppColors.surface2;
 const _editBorder = AppColors.borderSolid;
-const _editBlue = AppColors.primary;
+const _editPrimary = AppColors.primary;
 const _editPurple = AppColors.primaryDark;
 const _editMuted = AppColors.text3;
 
@@ -74,7 +75,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-157 EditProfilePage',
       child: Material(
-        color: _editBg,
+        color: _editBackground,
         child: Column(
           children: [
             VitHeader(
@@ -191,11 +192,11 @@ class _AvatarEditor extends StatelessWidget {
               height: 96,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: AppRadii.cardLargeRadius,
                 gradient: const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [_editBlue, _editPurple],
+                  colors: [_editPrimary, _editPurple],
                 ),
               ),
               child: Text(
@@ -219,9 +220,9 @@ class _AvatarEditor extends StatelessWidget {
                   width: 31,
                   height: 31,
                   decoration: BoxDecoration(
-                    color: selected ? AppColors.buy : _editBlue,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: _editBg, width: 2),
+                    color: selected ? AppColors.buy : _editPrimary,
+                    borderRadius: AppRadii.mdRadius,
+                    border: Border.all(color: _editBackground, width: 2),
                   ),
                   alignment: Alignment.center,
                   child: Icon(
@@ -290,8 +291,8 @@ class _EditProfileField extends StatelessWidget {
         Container(
           height: 52,
           decoration: BoxDecoration(
-            color: muted ? _editSurface : _editSurface2,
-            borderRadius: BorderRadius.circular(16),
+            color: muted ? _editPanel : _editPanel2,
+            borderRadius: AppRadii.cardRadius,
             border: Border.all(color: _editBorder, width: 1.2),
           ),
           alignment: Alignment.center,
@@ -301,7 +302,7 @@ class _EditProfileField extends StatelessWidget {
             readOnly: readOnly,
             keyboardType: keyboardType,
             onChanged: onChanged,
-            cursorColor: _editBlue,
+            cursorColor: _editPrimary,
             style: AppTextStyles.baseMedium.copyWith(
               color: muted ? _editMuted : AppColors.text1,
               fontSize: 15,

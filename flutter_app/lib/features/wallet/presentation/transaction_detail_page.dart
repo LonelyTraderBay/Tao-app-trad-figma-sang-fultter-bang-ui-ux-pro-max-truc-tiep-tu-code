@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,10 +14,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _detailBg = Color(0xFF080C14);
-const _detailSurface = Color(0xFF151A23);
-const _detailSurface2 = Color(0xFF1D2436);
-const _detailBlue = Color(0xFF3B82F6);
+const _detailBackground = AppColors.bg;
+const _detailPanel = AppColors.surface;
+const _detailPanel2 = AppColors.surface2;
+const _detailPrimary = AppColors.primary;
 const _detailGreen = Color(0xFF10B981);
 const _detailRed = Color(0xFFEF4444);
 const _detailAmber = Color(0xFFF59E0B);
@@ -51,7 +53,7 @@ class TransactionDetailPage extends ConsumerWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-141 TransactionDetailPage',
       child: Material(
-        color: _detailBg,
+        color: _detailBackground,
         child: Column(
           children: [
             VitHeader(
@@ -151,7 +153,7 @@ class _SummaryCard extends StatelessWidget {
             height: 56,
             decoration: BoxDecoration(
               color: type.color.withValues(alpha: .13),
-              borderRadius: BorderRadius.circular(17),
+              borderRadius: AppRadii.cardRadius,
             ),
             alignment: Alignment.center,
             child: Icon(type.icon, color: AppColors.text1, size: 29),
@@ -184,7 +186,7 @@ class _SummaryCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 13),
             decoration: BoxDecoration(
               color: status.color.withValues(alpha: .12),
-              borderRadius: BorderRadius.circular(17),
+              borderRadius: AppRadii.cardRadius,
               border: Border.all(color: status.color.withValues(alpha: .28)),
             ),
             child: Row(
@@ -438,19 +440,23 @@ class _ExplorerButton extends StatelessWidget {
       height: 48,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: _detailSurface2,
-        border: Border.all(color: _detailBlue.withValues(alpha: .28)),
-        borderRadius: BorderRadius.circular(17),
+        color: _detailPanel2,
+        border: Border.all(color: _detailPrimary.withValues(alpha: .28)),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.open_in_new_rounded, color: _detailBlue, size: 16),
+          const Icon(
+            Icons.open_in_new_rounded,
+            color: _detailPrimary,
+            size: 16,
+          ),
           const SizedBox(width: 8),
           Text(
             'Xem trên Explorer',
             style: AppTextStyles.caption.copyWith(
-              color: _detailBlue,
+              color: _detailPrimary,
               fontSize: 14,
               fontWeight: FontWeight.w800,
               height: 1,
@@ -474,12 +480,12 @@ class _SupportButton extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 48,
+        height: AppSpacing.inputHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: _detailAmber.withValues(alpha: .08),
           border: Border.all(color: _detailAmber.withValues(alpha: .24)),
-          borderRadius: BorderRadius.circular(17),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -520,8 +526,8 @@ class _MissingTransaction extends StatelessWidget {
           width: 64,
           height: 64,
           decoration: BoxDecoration(
-            color: _detailSurface2,
-            borderRadius: BorderRadius.circular(18),
+            color: _detailPanel2,
+            borderRadius: AppRadii.cardRadius,
           ),
           child: const Icon(Icons.error_outline_rounded, color: _detailRed),
         ),
@@ -541,8 +547,8 @@ class _MissingTransaction extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: _detailBlue,
-              borderRadius: BorderRadius.circular(13),
+              color: _detailPrimary,
+              borderRadius: AppRadii.mdRadius,
             ),
             child: Text(
               'Quay lại lịch sử',
@@ -569,9 +575,9 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _detailSurface,
+        color: _detailPanel,
         border: Border.all(color: AppColors.cardBorder),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: child,
     );

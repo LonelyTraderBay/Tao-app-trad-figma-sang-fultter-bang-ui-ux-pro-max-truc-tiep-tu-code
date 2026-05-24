@@ -13,9 +13,9 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/auth_repository.dart';
 
-const _authPrimary = Color(0xFF3B82F6);
-const _authPrimary10 = Color(0x1A3B82F6);
-const _authPrimary30 = Color(0x4D3B82F6);
+const _authPrimary = AppColors.primary;
+const _authPrimary10 = AppColors.primary12;
+const _authPrimary30 = AppColors.primary30;
 
 final class PasswordRule {
   const PasswordRule({required this.label, required this.test});

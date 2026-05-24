@@ -20,6 +20,10 @@ Use this file before implementing any Flutter screen. It maps React primitives t
 | `IconButton` | `VitIconButton` | Fixed touch target, token background, icon-only action. |
 | `BottomSheetV2` | `VitBottomSheet` | Modal/bottom sheet with token radius and safe bottom. |
 | `StatusPill` | `VitStatusPill` | Semantic status colors, no ad hoc pill styling. |
+| Service/action tile grids | `VitServiceTile` | Primary service/action grids use typed icons plus controlled accent tokens; do not use emoji strings as UI icons. |
+| Module hero panels | `VitModuleHeroCard` | Module-specific hero treatment must keep global surface/card rules and use accent only for border/glow/icon treatment. |
+| Metric/stat cards | `VitMetricCard` | Repeated metric panels use shared surface, radius, spacing, typography, and optional semantic/accent icon treatment. |
+| Section headers with module action | `VitModuleSectionHeader` | Repeated module section headers use shared text scale and optional controlled accent/action treatment. |
 | `SearchBar` | `VitSearchBar` | Shared search field with 52px height and search tokens. |
 | `InputField` / `TrInput` | `VitInput` | 52px height, 14px radius, validation/error state. |
 | `EmptyState` | `VitEmptyState` | Shared empty state. |
@@ -58,6 +62,7 @@ The current native UX standard is `SC-007 HomePage`: Home header hides on downwa
 - Use `VitCardVariant.hero` for portfolio, balance, account-summary, or high-value CTA panels that need the approved dark gradient treatment.
 - Keep hero-card shadow subtle in native runtime: use the documented `AppColors.primary08` shadow and avoid strong right/bottom glow.
 - Use semantic `buy`, `sell`, `warn`, and `accent` colors for domain meaning; do not recolor gain/loss states with the brand orange.
+- Module identity belongs in the accent layer only: icon color, pill/badge, chart marker, hero border/glow, or empty-state illustration. It must not become a page background, ordinary card background, input background, bottom-nav active color, or new radius/spacing scale.
 
 ## Layout Variants
 

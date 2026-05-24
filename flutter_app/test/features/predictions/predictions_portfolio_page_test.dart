@@ -3,16 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/arena_home_page.dart';
 import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/prediction_event_detail_page.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/prediction_order_receipt_page.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/predictions_portfolio_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/profile_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
 void main() {
-  Future<void> pumpPortfolio(WidgetTester tester) async {
+  Future<void> pumpPortfolio(
+    WidgetTester tester, {
+    String initialLocation = AppRoutePaths.marketsPredictionsPortfolio,
+  }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
@@ -21,9 +26,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         child: VitTradeApp(
-          routerConfig: createAppRouter(
-            initialLocation: AppRoutePaths.marketsPredictionsPortfolio,
-          ),
+          routerConfig: createAppRouter(initialLocation: initialLocation),
         ),
       ),
     );
@@ -34,6 +37,15 @@ void main() {
     final repo = const MockPredictionsRepository();
     final snapshot = repo.getPortfolio();
 
+    expect(
+      snapshot.endpoint,
+      '/api/mobile/predictions/markets-predictions-portfolio',
+    );
+    expect(snapshot.profileEndpoint, '/api/mobile/profile/profile-predictions');
+    expect(
+      snapshot.actionDraft,
+      'POST /predictions/orders|claim|watchlist where applicable',
+    );
     expect(snapshot.positions, hasLength(7));
     expect(snapshot.activeCount, 5);
     expect(snapshot.closedCount, 2);
@@ -54,6 +66,33 @@ void main() {
         PredictionScreenState.realtimeRefresh,
       ]),
     );
+  });
+
+  testWidgets('SC-167 renders the profile prediction portfolio route', (
+    tester,
+  ) async {
+    await pumpPortfolio(
+      tester,
+      initialLocation: AppRoutePaths.profilePredictions,
+    );
+
+    expect(find.byType(PredictionsPortfolioPage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(
+      find.byKey(const Key('vit_bottom_nav_active_profile')),
+      findsOneWidget,
+    );
+    expect(find.text('Prediction Portfolio'), findsOneWidget);
+    expect(find.text('Portfolio Value'), findsOneWidget);
+    expect(
+      find.byKey(PredictionsPortfolioPage.positionKey('pos-1')),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ProfilePage), findsOneWidget);
   });
 
   testWidgets('SC-031 renders portfolio inside the Markets shell', (
@@ -160,6 +199,6 @@ void main() {
     );
     await tester.tap(find.byKey(PredictionsPortfolioPage.arenaBridgeKey));
     await tester.pumpAndSettle();
-    expect(find.text('Open Arena'), findsOneWidget);
+    expect(find.byType(ArenaHomePage), findsOneWidget);
   });
 }

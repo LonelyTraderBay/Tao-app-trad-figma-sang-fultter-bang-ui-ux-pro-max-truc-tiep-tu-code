@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -13,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 enum _AlertFilter { all, active, triggered }
 
@@ -44,6 +45,7 @@ class PriceAlertsPage extends ConsumerStatefulWidget {
 class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
   _AlertFilter _filter = _AlertFilter.all;
   late List<MarketPriceAlert> _alerts;
+  bool _showAddNotice = false;
 
   @override
   void initState() {
@@ -96,15 +98,7 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
   }
 
   void _showAddPlaceholder() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('Tạo cảnh báo mới sẽ được bổ sung sau'),
-        backgroundColor: AppColors.surface3,
-        behavior: SnackBarBehavior.floating,
-        duration: const Duration(milliseconds: 900),
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-      ),
-    );
+    setState(() => _showAddNotice = true);
   }
 
   @override
@@ -126,64 +120,83 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-014 PriceAlertsPage',
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Material(
-          type: MaterialType.transparency,
-          child: Column(
-            children: [
-              VitHeader(
-                title: 'Cảnh báo giá',
-                subtitle: 'Cảnh báo · Markets',
-                showBack: true,
-                onBack: () => context.go(AppRoutePaths.markets),
-              ),
-              _FilterTabs(
-                activeFilter: _filter,
-                onFilterSelected: (value) => setState(() => _filter = value),
-              ),
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: PriceAlertsPage.contentKey,
-                    padding: EdgeInsets.fromLTRB(20, 16, 20, bottomInset),
-                    child: Column(
-                      children: [
-                        _StatsSummary(
-                          total: _alerts.length,
-                          active: activeCount,
-                          triggered: triggeredCount,
-                        ),
-                        const SizedBox(height: 13),
-                        if (_filteredAlerts.isEmpty)
-                          const _EmptyAlertsCard()
-                        else
-                          for (final alert in _filteredAlerts) ...[
-                            _AlertCard(
-                              alert: alert,
-                              pair: _findPair(
-                                snapshot.marketPairs,
-                                alert.pairId,
-                              ),
-                              onToggle: () => _toggleAlert(alert.id),
-                              onDelete: () => _deleteAlert(alert.id),
-                            ),
-                            if (alert != _filteredAlerts.last)
-                              const SizedBox(height: 12),
-                          ],
-                        const SizedBox(height: 28),
-                        _AddAlertButton(onTap: _showAddPlaceholder),
+      child: Material(
+        type: MaterialType.transparency,
+        child: Column(
+          children: [
+            VitHeader(
+              title: 'Cảnh báo giá',
+              subtitle: 'Cảnh báo · Markets',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.markets),
+            ),
+            _FilterTabs(
+              activeFilter: _filter,
+              onFilterSelected: (value) => setState(() => _filter = value),
+            ),
+            Expanded(
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(
+                  context,
+                ).copyWith(scrollbars: false),
+                child: SingleChildScrollView(
+                  key: PriceAlertsPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 16, 20, bottomInset),
+                  child: Column(
+                    children: [
+                      _StatsSummary(
+                        total: _alerts.length,
+                        active: activeCount,
+                        triggered: triggeredCount,
+                      ),
+                      const SizedBox(height: 13),
+                      if (_filteredAlerts.isEmpty)
+                        const _EmptyAlertsCard()
+                      else
+                        for (final alert in _filteredAlerts) ...[
+                          _AlertCard(
+                            alert: alert,
+                            pair: _findPair(snapshot.marketPairs, alert.pairId),
+                            onToggle: () => _toggleAlert(alert.id),
+                            onDelete: () => _deleteAlert(alert.id),
+                          ),
+                          if (alert != _filteredAlerts.last)
+                            const SizedBox(height: 12),
+                        ],
+                      const SizedBox(height: 28),
+                      _AddAlertButton(onTap: _showAddPlaceholder),
+                      if (_showAddNotice) ...[
+                        const SizedBox(height: 10),
+                        const _AddAlertNotice(),
                       ],
-                    ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class _AddAlertNotice extends StatelessWidget {
+  const _AddAlertNotice();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppColors.surface3,
+        borderRadius: AppRadii.mdRadius,
+        border: Border.all(color: AppColors.cardBorder),
+      ),
+      child: Text(
+        'T\u1EA1o c\u1EA3nh b\u00E1o m\u1EDBi s\u1EBD \u0111\u01B0\u1EE3c b\u1ED5 sung sau',
+        style: AppTextStyles.caption.copyWith(color: AppColors.text1),
       ),
     );
   }
@@ -261,7 +274,7 @@ class _FilterTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadii.cardRadius,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 140),
         height: 36,
@@ -269,19 +282,19 @@ class _FilterTab extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
-              ? _marketBlue.withValues(alpha: .16)
+              ? _marketPrimary.withValues(alpha: .16)
               : AppColors.surface,
           border: Border.all(
             color: active
-                ? _marketBlue.withValues(alpha: .48)
+                ? _marketPrimary.withValues(alpha: .48)
                 : Colors.transparent,
           ),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadii.cardRadius,
         ),
         child: Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: active ? _marketBlue : AppColors.text2,
+            color: active ? _marketPrimary : AppColors.text2,
             fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
@@ -328,7 +341,7 @@ class _StatsSummary extends StatelessWidget {
           child: _StatBox(
             label: 'Đã kích hoạt',
             value: '$triggered',
-            valueColor: _marketBlue,
+            valueColor: _marketPrimary,
             valueKey: PriceAlertsPage.triggeredCountKey,
           ),
         ),
@@ -356,7 +369,7 @@ class _StatBox extends StatelessWidget {
       height: 72,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: const Color(0xFF1C2335),
+        color: AppColors.surface3,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -476,7 +489,7 @@ class _AlertCard extends StatelessWidget {
                   InkWell(
                     key: PriceAlertsPage.toggleKey(alert.id),
                     onTap: onToggle,
-                    borderRadius: BorderRadius.circular(18),
+                    borderRadius: AppRadii.cardRadius,
                     child: Icon(
                       alert.isActive
                           ? Icons.toggle_on_rounded
@@ -629,7 +642,7 @@ class _AssetAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = pair?.logoColor ?? _marketBlue;
+    final color = pair?.logoColor ?? _marketPrimary;
     final symbol = alert.symbol.split('/').first;
     return Container(
       width: 36,
@@ -715,22 +728,22 @@ class _AddAlertButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
       child: Container(
-        height: 56,
+        height: AppSpacing.buttonStandard,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _marketBlue.withValues(alpha: .13),
-          border: Border.all(color: _marketBlue.withValues(alpha: .30)),
+          color: _marketPrimary.withValues(alpha: .13),
+          border: Border.all(color: _marketPrimary.withValues(alpha: .30)),
           borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.add_rounded, color: _marketBlue, size: 18),
+            const Icon(Icons.add_rounded, color: _marketPrimary, size: 18),
             const SizedBox(width: 8),
             Text(
               'Tạo cảnh báo mới',
               style: AppTextStyles.body.copyWith(
-                color: _marketBlue,
+                color: _marketPrimary,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
@@ -751,7 +764,7 @@ MarketPair? _findPair(List<MarketPair> pairs, String id) {
 
 Color _progressColor(MarketPriceAlert alert, double progress) {
   if (alert.condition == MarketAlertCondition.above) {
-    return progress >= 1 ? AppColors.buy : _marketBlue;
+    return progress >= 1 ? AppColors.buy : _marketPrimary;
   }
   return AppColors.sell;
 }

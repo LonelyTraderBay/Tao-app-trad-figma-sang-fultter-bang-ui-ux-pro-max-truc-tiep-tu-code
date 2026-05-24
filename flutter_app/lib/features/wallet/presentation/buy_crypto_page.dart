@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,10 +13,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _buyBg = Color(0xFF080C14);
-const _buySurface = Color(0xFF151A23);
-const _buySurface2 = Color(0xFF1D2436);
-const _buyBlue = Color(0xFF3B82F6);
+const _buyBackground = AppColors.bg;
+const _buyPanel = AppColors.surface;
+const _buyPanel2 = AppColors.surface2;
+const _buyPrimary = AppColors.primary;
 const _buyGreen = Color(0xFF10B981);
 
 class BuyCryptoPage extends ConsumerStatefulWidget {
@@ -84,7 +85,7 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-145 BuyCryptoPage',
       child: Material(
-        color: _buyBg,
+        color: _buyBackground,
         child: Column(
           children: [
             VitHeader(
@@ -156,7 +157,7 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
   void _showCryptoPicker(WalletBuyCryptoSnapshot snapshot) {
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: _buySurface,
+      backgroundColor: _buyPanel,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
@@ -292,7 +293,7 @@ class _ZeroFeeBanner extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: const Color(0x1410B981),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: const Color(0x3310B981)),
       ),
       child: Row(
@@ -353,8 +354,8 @@ class _AmountCard extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 252),
       padding: const EdgeInsets.fromLTRB(20, 22, 20, 20),
       decoration: BoxDecoration(
-        color: _buySurface,
-        borderRadius: BorderRadius.circular(22),
+        color: _buyPanel,
+        borderRadius: AppRadii.lgRadius,
         border: Border.all(color: const Color(0x14FFFFFF)),
       ),
       child: Column(
@@ -471,10 +472,10 @@ class _PresetChip extends StatelessWidget {
         height: 30,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: selected ? _buyBlue : _buySurface2,
-          borderRadius: BorderRadius.circular(15),
+          color: selected ? _buyPrimary : _buyPanel2,
+          borderRadius: AppRadii.inputRadius,
           border: Border.all(
-            color: selected ? _buyBlue : AppColors.borderSolid,
+            color: selected ? _buyPrimary : AppColors.borderSolid,
           ),
         ),
         child: Text(
@@ -508,8 +509,8 @@ class _ReceivePanel extends StatelessWidget {
       height: 66,
       padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
       decoration: BoxDecoration(
-        color: _buySurface2,
-        borderRadius: BorderRadius.circular(16),
+        color: _buyPanel2,
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         children: [
@@ -547,8 +548,8 @@ class _ReceivePanel extends StatelessWidget {
               height: 42,
               padding: const EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(
-                color: _buySurface,
-                borderRadius: BorderRadius.circular(16),
+                color: _buyPanel,
+                borderRadius: AppRadii.cardRadius,
                 border: Border.all(color: AppColors.borderSolid),
               ),
               child: Row(
@@ -648,10 +649,10 @@ class _PaymentMethodCard extends StatelessWidget {
         height: 64,
         padding: const EdgeInsets.fromLTRB(12, 10, 13, 10),
         decoration: BoxDecoration(
-          color: selected ? const Color(0x143B82F6) : _buySurface,
-          borderRadius: BorderRadius.circular(15),
+          color: selected ? AppColors.primary08 : _buyPanel,
+          borderRadius: AppRadii.inputRadius,
           border: Border.all(
-            color: selected ? _buyBlue : AppColors.borderSolid,
+            color: selected ? _buyPrimary : AppColors.borderSolid,
             width: 1.35,
           ),
         ),
@@ -662,7 +663,7 @@ class _PaymentMethodCard extends StatelessWidget {
               height: 40,
               decoration: BoxDecoration(
                 color: Color(method.logoColorHex).withValues(alpha: .18),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: AppRadii.lgRadius,
               ),
               alignment: Alignment.center,
               child: Text(
@@ -769,7 +770,7 @@ class _RadioMark extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: selected ? _buyBlue : const Color(0xFF344266),
+          color: selected ? _buyPrimary : AppColors.borderSolid,
           width: 2,
         ),
       ),
@@ -779,7 +780,7 @@ class _RadioMark extends StatelessWidget {
               width: 10,
               height: 10,
               decoration: const BoxDecoration(
-                color: _buyBlue,
+                color: _buyPrimary,
                 shape: BoxShape.circle,
               ),
             )
@@ -799,8 +800,8 @@ class _RateInfoCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 15, 16, 15),
       decoration: BoxDecoration(
-        color: _buySurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _buyPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: const Color(0x14FFFFFF)),
       ),
       child: Column(
@@ -882,13 +883,13 @@ class _BuyButton extends StatelessWidget {
         height: 52,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: enabled ? _buyGreen : const Color(0xFF151C2C),
-          borderRadius: BorderRadius.circular(14),
+          color: enabled ? _buyGreen : AppColors.surface3,
+          borderRadius: AppRadii.inputRadius,
         ),
         child: Text(
           enabled ? 'Mua $symbol' : 'Nhập số tiền mua',
           style: AppTextStyles.baseMedium.copyWith(
-            color: enabled ? Colors.white : const Color(0xFF323B4C),
+            color: enabled ? Colors.white : AppColors.text3,
             fontSize: 15,
             fontWeight: FontWeight.w800,
             height: 1,
@@ -924,9 +925,9 @@ class _ConfirmContent extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: const Color(0xFF121B33),
-            borderRadius: BorderRadius.circular(22),
-            border: Border.all(color: const Color(0x403B82F6)),
+            color: AppColors.surface,
+            borderRadius: AppRadii.lgRadius,
+            border: Border.all(color: AppColors.primary40),
           ),
           child: Column(
             children: [
@@ -985,7 +986,7 @@ class _BuySuccessState extends StatelessWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-145 BuyCryptoPage Success',
       child: Material(
-        color: _buyBg,
+        color: _buyBackground,
         child: Column(
           children: [
             const VitHeader(
@@ -1056,8 +1057,8 @@ class _ActionButton extends StatelessWidget {
         height: 52,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _buyBlue,
-          borderRadius: BorderRadius.circular(14),
+          color: _buyPrimary,
+          borderRadius: AppRadii.inputRadius,
         ),
         child: Text(
           label,
@@ -1086,8 +1087,8 @@ class _GhostButton extends StatelessWidget {
         height: 52,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _buySurface2,
-          borderRadius: BorderRadius.circular(14),
+          color: _buyPanel2,
+          borderRadius: AppRadii.inputRadius,
           border: Border.all(color: AppColors.borderSolid),
         ),
         child: Text(
@@ -1122,10 +1123,10 @@ class _CryptoOptionRow extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 10),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: selected ? const Color(0x143B82F6) : _buySurface2,
-          borderRadius: BorderRadius.circular(16),
+          color: selected ? AppColors.primary08 : _buyPanel2,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(
-            color: selected ? _buyBlue : AppColors.borderSolid,
+            color: selected ? _buyPrimary : AppColors.borderSolid,
           ),
         ),
         child: Row(
@@ -1139,7 +1140,11 @@ class _CryptoOptionRow extends StatelessWidget {
               ),
             ),
             if (selected)
-              const Icon(Icons.check_circle_rounded, color: _buyBlue, size: 18),
+              const Icon(
+                Icons.check_circle_rounded,
+                color: _buyPrimary,
+                size: 18,
+              ),
           ],
         ),
       ),

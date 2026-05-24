@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 class MarketCorrelationsPage extends ConsumerStatefulWidget {
   const MarketCorrelationsPage({super.key, this.shellRenderMode});
@@ -227,7 +227,7 @@ class _UnderlinedTab extends StatelessWidget {
                   label,
                   textAlign: TextAlign.center,
                   style: AppTextStyles.caption.copyWith(
-                    color: active ? _marketBlue : AppColors.text3,
+                    color: active ? _marketPrimary : AppColors.text3,
                     fontWeight: AppTextStyles.medium,
                   ),
                 ),
@@ -237,7 +237,7 @@ class _UnderlinedTab extends StatelessWidget {
               height: 2,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
-                child: const ColoredBox(color: _marketBlue),
+                child: const ColoredBox(color: _marketPrimary),
               ),
             ),
           ],
@@ -305,11 +305,11 @@ class _TimeframeChip extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
-              ? _marketBlue.withValues(alpha: .12)
+              ? _marketPrimary.withValues(alpha: .12)
               : AppColors.surface2,
           border: Border.all(
             color: active
-                ? _marketBlue.withValues(alpha: .34)
+                ? _marketPrimary.withValues(alpha: .34)
                 : Colors.transparent,
           ),
           borderRadius: AppRadii.mdRadius,
@@ -317,7 +317,7 @@ class _TimeframeChip extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: active ? _marketBlue : AppColors.text3,
+            color: active ? _marketPrimary : AppColors.text3,
             fontWeight: AppTextStyles.medium,
           ),
         ),
@@ -540,12 +540,16 @@ class _MatrixInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      borderColor: _marketBlue.withValues(alpha: .20),
+      borderColor: _marketPrimary.withValues(alpha: .20),
       padding: const EdgeInsets.all(16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.info_outline_rounded, size: 14, color: _marketBlue),
+          const Icon(
+            Icons.info_outline_rounded,
+            size: 14,
+            color: _marketPrimary,
+          ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -657,12 +661,12 @@ class _RecommendationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      borderColor: _marketBlue.withValues(alpha: .20),
+      borderColor: _marketPrimary.withValues(alpha: .20),
       padding: const EdgeInsets.all(16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, size: 16, color: _marketBlue),
+          const Icon(Icons.shield_outlined, size: 16, color: _marketPrimary),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -1213,7 +1217,7 @@ Color _correlationColor(double value) {
   if (value >= .50) return AppColors.warn;
   if (value >= .30) return AppColors.buy;
   if (value >= .0) return const Color(0xFF06B6D4);
-  return _marketBlue;
+  return _marketPrimary;
 }
 
 String _correlationLabel(double value) {

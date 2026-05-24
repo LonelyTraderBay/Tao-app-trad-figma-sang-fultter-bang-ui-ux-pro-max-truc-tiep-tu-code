@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,10 +14,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/profile_repository.dart';
 
-const _kycBg = AppColors.bg;
-const _kycSurface = AppColors.surface;
+const _kycBackground = AppColors.bg;
+const _kycPanel = AppColors.surface;
 const _kycGreen = AppColors.buy;
-const _kycBlue = AppColors.primary;
+const _kycPrimary = AppColors.primary;
 const _kycMuted = AppColors.text3;
 
 class KYCPage extends ConsumerStatefulWidget {
@@ -51,7 +53,7 @@ class _KYCPageState extends ConsumerState<KYCPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-159 KYCPage',
       child: Material(
-        color: _kycBg,
+        color: _kycBackground,
         child: Column(
           children: [
             VitHeader(
@@ -131,7 +133,7 @@ class _KycStatusCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: AppColors.buy10,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _kycGreen.withValues(alpha: .45)),
       ),
       child: Row(
@@ -141,7 +143,7 @@ class _KycStatusCard extends StatelessWidget {
             height: 48,
             decoration: BoxDecoration(
               color: _kycGreen.withValues(alpha: .2),
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: AppRadii.cardLargeRadius,
             ),
             alignment: Alignment.center,
             child: const Icon(
@@ -224,12 +226,12 @@ class _KycLevelCard extends StatelessWidget {
       duration: const Duration(milliseconds: 180),
       curve: Curves.easeOutCubic,
       decoration: BoxDecoration(
-        color: _kycSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _kycPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: border),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         child: Column(
           children: [
             GestureDetector(
@@ -344,7 +346,7 @@ class _LevelIcon extends StatelessWidget {
       height: 40,
       decoration: BoxDecoration(
         color: done ? accent.withValues(alpha: .13) : Colors.transparent,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppRadii.lgRadius,
         border: Border.all(
           color: done ? accent : AppColors.borderSolid,
           width: 2,
@@ -406,9 +408,9 @@ class _ExpandedLevelDetails extends StatelessWidget {
             onTap: submitting ? null : onStart,
             behavior: HitTestBehavior.opaque,
             child: Container(
-              height: 48,
+              height: AppSpacing.inputHeight,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: AppRadii.cardRadius,
                 gradient: LinearGradient(
                   colors: [accent, accent.withValues(alpha: .8)],
                 ),
@@ -507,13 +509,13 @@ class _PrivacyCard extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 15, 16, 14),
       decoration: BoxDecoration(
         color: AppColors.primary08,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _kycBlue.withValues(alpha: .24)),
+        borderRadius: AppRadii.cardRadius,
+        border: Border.all(color: _kycPrimary.withValues(alpha: .24)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.warning_amber_rounded, color: _kycBlue, size: 15),
+          const Icon(Icons.warning_amber_rounded, color: _kycPrimary, size: 15),
           const SizedBox(width: 8),
           Expanded(
             child: Column(
@@ -522,7 +524,7 @@ class _PrivacyCard extends StatelessWidget {
                 Text(
                   'B\u1EA3o m\u1EADt th\u00F4ng tin c\u00E1 nh\u00E2n',
                   style: AppTextStyles.caption.copyWith(
-                    color: _kycBlue,
+                    color: _kycPrimary,
                     fontSize: 13,
                     fontWeight: FontWeight.w900,
                     height: 1,

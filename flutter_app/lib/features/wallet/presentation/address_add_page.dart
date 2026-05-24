@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -12,10 +14,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _addressBg = Color(0xFF080C14);
-const _addressSurface = Color(0xFF151A23);
-const _addressSurface2 = Color(0xFF1D2436);
-const _addressBlue = Color(0xFF3B82F6);
+const _addressBackground = AppColors.bg;
+const _addressPanel = AppColors.surface;
+const _addressPanel2 = AppColors.surface2;
+const _addressPrimary = AppColors.primary;
 const _addressGreen = Color(0xFF10B981);
 const _addressAmber = Color(0xFFF59E0B);
 const _addressRed = Color(0xFFEF4444);
@@ -88,7 +90,7 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-143 AddressAddPage',
       child: Material(
-        color: _addressBg,
+        color: _addressBackground,
         child: LayoutBuilder(
           builder: (context, constraints) {
             final footerTop = _footerTop(context, constraints, mode);
@@ -190,7 +192,7 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
     final network = _selectedNetwork(snapshot);
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: _addressSurface,
+      backgroundColor: _addressPanel,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
@@ -497,10 +499,10 @@ class _TextInput extends StatelessWidget {
     return Container(
       height: height,
       decoration: BoxDecoration(
-        color: _addressSurface2,
-        borderRadius: BorderRadius.circular(16),
+        color: _addressPanel2,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(
-          color: hasValue ? _addressBlue : AppColors.borderSolid,
+          color: hasValue ? _addressPrimary : AppColors.borderSolid,
           width: 1.35,
         ),
       ),
@@ -545,10 +547,10 @@ class _AddressInput extends StatelessWidget {
       height: 52,
       padding: const EdgeInsets.only(left: 16, right: 9),
       decoration: BoxDecoration(
-        color: _addressSurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: _addressPanel2,
+        borderRadius: AppRadii.inputRadius,
         border: Border.all(
-          color: hasValue ? _addressBlue : AppColors.borderSolid,
+          color: hasValue ? _addressPrimary : AppColors.borderSolid,
           width: 1.35,
         ),
       ),
@@ -612,7 +614,7 @@ class _IconCircleButton extends StatelessWidget {
         height: 32,
         decoration: BoxDecoration(
           color: const Color(0x14FFFFFF),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: AppRadii.mdRadius,
         ),
         child: Icon(icon, color: AppColors.text2, size: 16),
       ),
@@ -665,10 +667,10 @@ class _NetworkChip extends StatelessWidget {
       height: 40,
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: selected ? const Color(0x243B82F6) : _addressSurface2,
-        borderRadius: BorderRadius.circular(20),
+        color: selected ? AppColors.primary15 : _addressPanel2,
+        borderRadius: AppRadii.lgRadius,
         border: Border.all(
-          color: selected ? const Color(0x803B82F6) : AppColors.borderSolid,
+          color: selected ? AppColors.primary60 : AppColors.borderSolid,
           width: 1,
         ),
       ),
@@ -689,7 +691,7 @@ class _NetworkChip extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
-                color: selected ? _addressBlue : AppColors.text2,
+                color: selected ? _addressPrimary : AppColors.text2,
                 fontSize: 12,
                 fontWeight: FontWeight.w800,
                 height: 1,
@@ -730,12 +732,12 @@ class _AssetSelector extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: asset == selectedAsset
-                    ? const Color(0x243B82F6)
+                    ? AppColors.primary15
                     : Colors.transparent,
-                borderRadius: BorderRadius.circular(17),
+                borderRadius: AppRadii.cardRadius,
                 border: Border.all(
                   color: asset == selectedAsset
-                      ? const Color(0x803B82F6)
+                      ? AppColors.primary60
                       : Colors.transparent,
                 ),
               ),
@@ -743,7 +745,7 @@ class _AssetSelector extends StatelessWidget {
                 asset,
                 style: AppTextStyles.caption.copyWith(
                   color: asset == selectedAsset
-                      ? _addressBlue
+                      ? _addressPrimary
                       : AppColors.text2,
                   fontSize: 13,
                   fontWeight: FontWeight.w800,
@@ -773,8 +775,8 @@ class _WhitelistCard extends StatelessWidget {
         height: 73,
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
         decoration: BoxDecoration(
-          color: _addressSurface,
-          borderRadius: BorderRadius.circular(16),
+          color: _addressPanel,
+          borderRadius: AppRadii.cardRadius,
           border: Border.all(color: const Color(0x14FFFFFF)),
         ),
         child: Row(
@@ -783,8 +785,8 @@ class _WhitelistCard extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: enabled ? AppColors.buy10 : _addressSurface2,
-                borderRadius: BorderRadius.circular(16),
+                color: enabled ? AppColors.buy10 : _addressPanel2,
+                borderRadius: AppRadii.cardRadius,
                 border: Border.all(
                   color: enabled
                       ? const Color(0x4D10B981)
@@ -844,8 +846,8 @@ class _SwitchPill extends StatelessWidget {
       width: 44,
       height: 24,
       decoration: BoxDecoration(
-        color: enabled ? _addressGreen : _addressSurface2,
-        borderRadius: BorderRadius.circular(12),
+        color: enabled ? _addressGreen : _addressPanel2,
+        borderRadius: AppRadii.mdRadius,
         border: Border.all(
           color: enabled ? _addressGreen : AppColors.borderSolid,
           width: 1.5,
@@ -877,7 +879,7 @@ class _WarningCard extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
       decoration: BoxDecoration(
         color: const Color(0x0FF59E0B),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: const Color(0x26F59E0B)),
       ),
       child: Row(
@@ -946,7 +948,7 @@ class _AgreementRow extends StatelessWidget {
               color: agreed ? _addressGreen : Colors.transparent,
               borderRadius: BorderRadius.circular(9),
               border: Border.all(
-                color: agreed ? _addressGreen : const Color(0xFF44507A),
+                color: agreed ? _addressGreen : AppColors.borderSolid,
                 width: 2,
               ),
             ),
@@ -982,8 +984,8 @@ class _PreviewPanel extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _addressSurface,
-        borderRadius: BorderRadius.circular(16),
+        color: _addressPanel,
+        borderRadius: AppRadii.cardRadius,
         border: Border.all(color: const Color(0x14FFFFFF)),
       ),
       child: Column(
@@ -1047,7 +1049,7 @@ class _AddressSaveFooter extends StatelessWidget {
       height: 72,
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
       decoration: const BoxDecoration(
-        color: Color(0xF2141A26),
+        color: AppColors.navBg,
         border: Border(top: BorderSide(color: AppColors.divider)),
       ),
       child: _PrimaryActionButton(
@@ -1078,15 +1080,15 @@ class _PrimaryActionButton extends StatelessWidget {
       onTap: enabled ? onTap : null,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 48,
+        height: AppSpacing.inputHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: enabled ? _addressBlue : const Color(0xFF182030),
-          borderRadius: BorderRadius.circular(14),
+          color: enabled ? _addressPrimary : AppColors.surface3,
+          borderRadius: AppRadii.inputRadius,
           boxShadow: enabled
               ? [
                   BoxShadow(
-                    color: _addressBlue.withValues(alpha: .22),
+                    color: _addressPrimary.withValues(alpha: .22),
                     blurRadius: 18,
                     offset: const Offset(0, 8),
                   ),
@@ -1096,7 +1098,7 @@ class _PrimaryActionButton extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.baseMedium.copyWith(
-            color: enabled ? Colors.white : const Color(0xFF303949),
+            color: enabled ? Colors.white : AppColors.text3,
             fontSize: 15,
             fontWeight: FontWeight.w800,
             height: 1,
@@ -1123,7 +1125,7 @@ class _AddressSavedState extends StatelessWidget {
     return VitPageLayout(
       semanticLabel: 'SC-143 AddressAddPage Success',
       child: Material(
-        color: _addressBg,
+        color: _addressBackground,
         child: Column(
           children: [
             VitHeader(
@@ -1143,7 +1145,7 @@ class _AddressSavedState extends StatelessWidget {
                       height: 80,
                       decoration: BoxDecoration(
                         color: AppColors.buy10,
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius: AppRadii.cardLargeRadius,
                         border: Border.all(color: AppColors.buy20, width: 1.5),
                       ),
                       child: const Icon(
@@ -1175,7 +1177,7 @@ class _AddressSavedState extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: AppColors.buy10,
-                        borderRadius: BorderRadius.circular(18),
+                        borderRadius: AppRadii.cardRadius,
                         border: Border.all(color: AppColors.buy15),
                       ),
                       child: Row(

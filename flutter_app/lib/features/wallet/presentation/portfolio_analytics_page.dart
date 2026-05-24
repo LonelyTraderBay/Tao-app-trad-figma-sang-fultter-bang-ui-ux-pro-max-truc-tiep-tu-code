@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -13,10 +14,10 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/wallet_repository.dart';
 
-const _analyticsBg = Color(0xFF080C14);
-const _analyticsSurface = Color(0xFF151A23);
-const _analyticsSurface2 = Color(0xFF1D2436);
-const _analyticsBlue = Color(0xFF3B82F6);
+const _analyticsBackground = AppColors.bg;
+const _analyticsPanel = AppColors.surface;
+const _analyticsPanel2 = AppColors.surface2;
+const _analyticsPrimary = AppColors.primary;
 const _analyticsGreen = Color(0xFF10B981);
 const _analyticsRed = Color(0xFFEF4444);
 
@@ -61,7 +62,7 @@ class _PortfolioAnalyticsPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-142 PortfolioAnalyticsPage',
       child: Material(
-        color: _analyticsBg,
+        color: _analyticsBackground,
         child: Column(
           children: [
             VitHeader(
@@ -118,10 +119,10 @@ class _ValueSummary extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF0D1B3E), Color(0xFF1A2550)],
+          colors: [AppColors.surface, AppColors.surface2],
         ),
-        border: Border.all(color: _analyticsBlue.withValues(alpha: .32)),
-        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: _analyticsPrimary.withValues(alpha: .32)),
+        borderRadius: AppRadii.cardLargeRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,7 +157,7 @@ class _ValueSummary extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
                     color: _analyticsGreen.withValues(alpha: .16),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadii.mdRadius,
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -223,7 +224,7 @@ class _ValueSummary extends StatelessWidget {
                   label: 'Tài sản',
                   value: '${snapshot.assets.length}',
                   sub: 'loại coin',
-                  color: _analyticsBlue,
+                  color: _analyticsPrimary,
                 ),
               ),
             ],
@@ -254,7 +255,7 @@ class _QuickStat extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 7),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: .055),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -313,8 +314,8 @@ class _ViewSwitcher extends StatelessWidget {
       height: 46,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: _analyticsSurface2,
-        borderRadius: BorderRadius.circular(20),
+        color: _analyticsPanel2,
+        borderRadius: AppRadii.lgRadius,
       ),
       child: Row(
         children: [
@@ -328,9 +329,9 @@ class _ViewSwitcher extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: active == item.id
-                        ? _analyticsBlue.withValues(alpha: .18)
+                        ? _analyticsPrimary.withValues(alpha: .18)
                         : Colors.transparent,
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: AppRadii.cardRadius,
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -338,7 +339,7 @@ class _ViewSwitcher extends StatelessWidget {
                       Icon(
                         item.icon,
                         color: active == item.id
-                            ? _analyticsBlue
+                            ? _analyticsPrimary
                             : AppColors.text2,
                         size: 14,
                       ),
@@ -347,7 +348,7 @@ class _ViewSwitcher extends StatelessWidget {
                         item.label,
                         style: AppTextStyles.micro.copyWith(
                           color: active == item.id
-                              ? _analyticsBlue
+                              ? _analyticsPrimary
                               : AppColors.text2,
                           fontSize: 12,
                           fontWeight: FontWeight.w800,
@@ -423,14 +424,16 @@ class _PeriodSelector extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: active == period
-                      ? _analyticsBlue.withValues(alpha: .20)
+                      ? _analyticsPrimary.withValues(alpha: .20)
                       : Colors.transparent,
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: AppRadii.inputRadius,
                 ),
                 child: Text(
                   period,
                   style: AppTextStyles.caption.copyWith(
-                    color: active == period ? _analyticsBlue : AppColors.text2,
+                    color: active == period
+                        ? _analyticsPrimary
+                        : AppColors.text2,
                     fontSize: 13,
                     fontWeight: FontWeight.w800,
                     height: 1,
@@ -739,7 +742,7 @@ class _AssetRow extends StatelessWidget {
                         child: LinearProgressIndicator(
                           value: math.min(1, pct / 100),
                           minHeight: 4,
-                          backgroundColor: const Color(0xFF3A4265),
+                          backgroundColor: AppColors.surface3,
                           valueColor: AlwaysStoppedAnimation<Color>(color),
                         ),
                       ),
@@ -835,9 +838,9 @@ class _Card extends StatelessWidget {
       height: height,
       padding: padding,
       decoration: BoxDecoration(
-        color: _analyticsSurface,
+        color: _analyticsPanel,
         border: Border.all(color: AppColors.cardBorder),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: child,
     );

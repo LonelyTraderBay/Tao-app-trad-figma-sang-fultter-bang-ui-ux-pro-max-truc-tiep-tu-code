@@ -12,11 +12,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _disputeBlue = Color(0xFF3B82F6);
-const _disputeField = Color(0xFF1D2332);
-const _disputeFieldBorder = Color(0xFF30394D);
-const _disputeFooter = Color(0xFF121720);
-const _disputeDangerBg = Color(0x221F2937);
+const _disputePrimary = AppColors.primary;
+const _disputeField = AppColors.surface2;
+const _disputeFieldBorder = AppColors.borderSolid;
+const _disputeFooter = AppColors.surface;
+const _disputeDangerBackground = Color(0x221F2937);
 
 class DisputeResolutionPage extends ConsumerStatefulWidget {
   const DisputeResolutionPage({super.key, this.shellRenderMode});
@@ -276,14 +276,18 @@ class _NoticeCard extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 74),
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
       decoration: BoxDecoration(
-        color: _disputeBlue.withValues(alpha: .08),
+        color: _disputePrimary.withValues(alpha: .08),
         borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _disputeBlue, width: 1.5),
+        border: Border.all(color: _disputePrimary, width: 1.5),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.info_outline_rounded, color: _disputeBlue, size: 14),
+          const Icon(
+            Icons.info_outline_rounded,
+            color: _disputePrimary,
+            size: 14,
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Column(
@@ -292,7 +296,7 @@ class _NoticeCard extends StatelessWidget {
                 Text(
                   title,
                   style: AppTextStyles.micro.copyWith(
-                    color: _disputeBlue,
+                    color: _disputePrimary,
                     fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1.2,
@@ -302,7 +306,7 @@ class _NoticeCard extends StatelessWidget {
                 Text(
                   body,
                   style: AppTextStyles.micro.copyWith(
-                    color: _disputeBlue,
+                    color: _disputePrimary,
                     fontSize: 10.5,
                     height: 1.4,
                   ),
@@ -337,10 +341,12 @@ class _ComplaintTypeCard extends StatelessWidget {
         height: 62,
         padding: const EdgeInsets.fromLTRB(14, 11, 14, 9),
         decoration: BoxDecoration(
-          color: selected ? _disputeBlue.withValues(alpha: .13) : _disputeField,
+          color: selected
+              ? _disputePrimary.withValues(alpha: .13)
+              : _disputeField,
           borderRadius: AppRadii.cardRadius,
           border: Border.all(
-            color: selected ? _disputeBlue : _disputeFieldBorder,
+            color: selected ? _disputePrimary : _disputeFieldBorder,
             width: selected ? 2 : 1.5,
           ),
         ),
@@ -353,7 +359,7 @@ class _ComplaintTypeCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
-                color: selected ? _disputeBlue : AppColors.text1,
+                color: selected ? _disputePrimary : AppColors.text1,
                 fontSize: 12,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
@@ -365,7 +371,7 @@ class _ComplaintTypeCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(
-                color: selected ? _disputeBlue : AppColors.text3,
+                color: selected ? _disputePrimary : AppColors.text3,
                 fontSize: 10,
                 height: 1,
               ),
@@ -457,7 +463,7 @@ class _TextFieldShell extends StatelessWidget {
       controller: controller,
       minLines: minLines,
       maxLines: maxLines,
-      cursorColor: _disputeBlue,
+      cursorColor: _disputePrimary,
       style: AppTextStyles.caption.copyWith(
         color: AppColors.text1,
         fontSize: 13,
@@ -484,7 +490,7 @@ class _TextFieldShell extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: AppRadii.cardRadius,
-          borderSide: const BorderSide(color: _disputeBlue, width: 1.5),
+          borderSide: const BorderSide(color: _disputePrimary, width: 1.5),
         ),
       ),
     );
@@ -560,7 +566,7 @@ class _SubmitButton extends StatelessWidget {
         height: 44,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: enabled ? _disputeBlue : const Color(0xFF1A1F2A),
+          color: enabled ? _disputePrimary : AppColors.surface3,
           borderRadius: AppRadii.inputRadius,
         ),
         child: Row(
@@ -626,7 +632,7 @@ class _DisputeTabs extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTextStyles.caption.copyWith(
                                   color: tab.id == activeId
-                                      ? _disputeBlue
+                                      ? _disputePrimary
                                       : AppColors.text3,
                                   fontSize: 12,
                                   fontWeight: AppTextStyles.bold,
@@ -645,7 +651,7 @@ class _DisputeTabs extends StatelessWidget {
                     Container(
                       width: tab.id == activeId ? 70 : 0,
                       height: 2,
-                      color: _disputeBlue,
+                      color: _disputePrimary,
                     ),
                   ],
                 ),
@@ -669,7 +675,7 @@ class _TabBadge extends StatelessWidget {
       height: 18,
       alignment: Alignment.center,
       decoration: const BoxDecoration(
-        color: _disputeBlue,
+        color: _disputePrimary,
         shape: BoxShape.circle,
       ),
       child: Text(
@@ -835,7 +841,7 @@ class _DisputeCaseCard extends StatelessWidget {
               height: 36,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: _disputeDangerBg,
+                color: _disputeDangerBackground,
                 borderRadius: AppRadii.smRadius,
               ),
               child: Text(
@@ -1068,7 +1074,7 @@ class _FieldLabel extends StatelessWidget {
 Color _statusColor(String status) {
   switch (status) {
     case 'under_review':
-      return _disputeBlue;
+      return _disputePrimary;
     case 'provider_response':
       return AppColors.warn;
     case 'resolved':

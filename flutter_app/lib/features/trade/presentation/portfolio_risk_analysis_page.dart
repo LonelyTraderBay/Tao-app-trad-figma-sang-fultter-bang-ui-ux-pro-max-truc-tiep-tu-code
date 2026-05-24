@@ -14,11 +14,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _riskBlue = Color(0xFF3B82F6);
-const _riskPanel = Color(0xFF1B2132);
-const _riskTabBg = Color(0xFF121821);
-const _riskCard = Color(0xFF131820);
-const _riskWarningBg = Color(0xFF211712);
+const _riskPrimary = AppColors.primary;
+const _riskPanel = AppColors.surface2;
+const _riskTabBackground = AppColors.surface;
+const _riskCard = AppColors.surface;
+const _riskWarningBackground = AppColors.warningBg;
 const _riskWarningBorder = Color(0x665A3A00);
 const _riskWarningText = Color(0xFFF59E0B);
 
@@ -231,7 +231,7 @@ class _RiskWarningPanel extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 13, 12, 13),
       decoration: BoxDecoration(
-        color: _riskWarningBg,
+        color: _riskWarningBackground,
         borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _riskWarningBorder),
       ),
@@ -294,7 +294,7 @@ class _RiskTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 53,
-      color: _riskTabBg,
+      color: _riskTabBackground,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -310,7 +310,7 @@ class _RiskTabs extends StatelessWidget {
                           tab.label,
                           style: AppTextStyles.caption.copyWith(
                             color: tab.id == activeId
-                                ? _riskBlue
+                                ? _riskPrimary
                                 : AppColors.text3,
                             fontSize: 12,
                             fontWeight: AppTextStyles.bold,
@@ -322,7 +322,7 @@ class _RiskTabs extends StatelessWidget {
                     Container(
                       width: tab.id == activeId ? 64 : 0,
                       height: 2,
-                      color: _riskBlue,
+                      color: _riskPrimary,
                     ),
                   ],
                 ),
@@ -453,20 +453,20 @@ class _DiversificationNote extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 13, 12, 13),
       decoration: BoxDecoration(
-        color: _riskBlue.withValues(alpha: .08),
+        color: _riskPrimary.withValues(alpha: .08),
         borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _riskBlue),
+        border: Border.all(color: _riskPrimary),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.info_outline_rounded, color: _riskBlue, size: 15),
+          const Icon(Icons.info_outline_rounded, color: _riskPrimary, size: 15),
           const SizedBox(width: 9),
           Expanded(
             child: Text(
               'Diversification score $score/100. Khuyến nghị không để asset nào chiếm >30% portfolio.',
               style: AppTextStyles.micro.copyWith(
-                color: _riskBlue,
+                color: _riskPrimary,
                 fontSize: 10,
                 height: 1.5,
               ),

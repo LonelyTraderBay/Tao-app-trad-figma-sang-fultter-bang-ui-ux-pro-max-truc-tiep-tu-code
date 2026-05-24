@@ -14,11 +14,11 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/auth_repository.dart';
 
-const _authPrimary = Color(0xFF3B82F6);
-const _authPrimary10 = Color(0x1A3B82F6);
-const _authPrimary20 = Color(0x333B82F6);
-const _authPrimary30 = Color(0x4D3B82F6);
-const _authStepInactive = Color(0xFF1A2233);
+const _authPrimary = AppColors.primary;
+const _authPrimary10 = AppColors.primary12;
+const _authPrimary20 = AppColors.primary20;
+const _authPrimary30 = AppColors.primary30;
+const _authStepInactive = AppColors.surface3;
 const _secretKey = 'JBSWY3DPEHPK3PXP';
 const _backupCodes = [
   '84923-13721',
@@ -563,7 +563,7 @@ class _SecretKeyCard extends StatelessWidget {
                   minimumSize: const Size(0, 36),
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18),
+                    borderRadius: AppRadii.cardRadius,
                   ),
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),

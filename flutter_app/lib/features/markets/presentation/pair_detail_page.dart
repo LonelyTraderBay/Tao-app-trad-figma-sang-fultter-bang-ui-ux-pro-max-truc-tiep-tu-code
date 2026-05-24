@@ -14,7 +14,7 @@ import '../../../shared/layout/vit_page_layout.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../data/market_repository.dart';
 
-const _marketBlue = Color(0xFF3B82F6);
+const _marketPrimary = AppColors.primary;
 
 enum _PairView { chart, orderBook, trades }
 
@@ -133,7 +133,7 @@ class _PairDetailPageState extends ConsumerState<PairDetailPage> {
                       _LinkCard(
                         key: PairDetailPage.infoButtonKey,
                         icon: Icons.info_outline_rounded,
-                        iconColor: _marketBlue,
+                        iconColor: _marketPrimary,
                         title: 'Thong tin ${pair.baseAsset}',
                         subtitle: 'Tokenomics - On-chain - Du an',
                         onTap: () =>
@@ -500,7 +500,9 @@ class _ViewTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected ? _marketBlue.withValues(alpha: .2) : Colors.transparent,
+      color: selected
+          ? _marketPrimary.withValues(alpha: .2)
+          : Colors.transparent,
       borderRadius: AppRadii.cardRadius,
       child: InkWell(
         onTap: onTap,
@@ -512,7 +514,7 @@ class _ViewTab extends StatelessWidget {
             borderRadius: AppRadii.cardRadius,
             border: Border.all(
               color: selected
-                  ? _marketBlue.withValues(alpha: .45)
+                  ? _marketPrimary.withValues(alpha: .45)
                   : Colors.transparent,
             ),
           ),
@@ -521,7 +523,7 @@ class _ViewTab extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: selected ? _marketBlue : AppColors.text3,
+                color: selected ? _marketPrimary : AppColors.text3,
                 size: 15,
               ),
               const SizedBox(width: 6),
@@ -531,7 +533,7 @@ class _ViewTab extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
-                    color: selected ? _marketBlue : AppColors.text3,
+                    color: selected ? _marketPrimary : AppColors.text3,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -567,14 +569,14 @@ class _TimeframeRow extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: active == item
-                        ? _marketBlue.withValues(alpha: .2)
+                        ? _marketPrimary.withValues(alpha: .2)
                         : Colors.transparent,
                     shape: BoxShape.circle,
                   ),
                   child: Text(
                     item,
                     style: AppTextStyles.micro.copyWith(
-                      color: active == item ? _marketBlue : AppColors.text3,
+                      color: active == item ? _marketPrimary : AppColors.text3,
                       fontSize: 11,
                       fontWeight: AppTextStyles.bold,
                     ),
@@ -637,7 +639,9 @@ class _IndicatorChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected ? _marketBlue.withValues(alpha: .2) : AppColors.surface2,
+      color: selected
+          ? _marketPrimary.withValues(alpha: .2)
+          : AppColors.surface2,
       borderRadius: AppRadii.cardRadius,
       child: InkWell(
         onTap: onTap,
@@ -649,7 +653,7 @@ class _IndicatorChip extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(
               color: selected
-                  ? _marketBlue.withValues(alpha: .5)
+                  ? _marketPrimary.withValues(alpha: .5)
                   : AppColors.borderSolid,
             ),
             borderRadius: AppRadii.cardRadius,
@@ -657,7 +661,7 @@ class _IndicatorChip extends StatelessWidget {
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
-              color: selected ? _marketBlue : AppColors.text3,
+              color: selected ? _marketPrimary : AppColors.text3,
               fontWeight: AppTextStyles.bold,
               fontSize: 12,
             ),

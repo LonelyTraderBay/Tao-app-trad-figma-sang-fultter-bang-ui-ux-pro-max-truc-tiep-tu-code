@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
 import '../../../app/theme/app_text_styles.dart';
 import '../../../app/theme/device_metrics.dart';
 import '../../../shared/layout/shell_render_mode.dart';
@@ -11,11 +12,11 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _scenarioBg = Color(0xFF080C14);
-const _scenarioSurface = Color(0xFF151A23);
-const _scenarioSurface2 = Color(0xFF1E2535);
-const _scenarioBorder = Color(0xFF273142);
-const _scenarioBlue = Color(0xFF3B82F6);
+const _scenarioBackground = AppColors.bg;
+const _scenarioPanel = AppColors.surface;
+const _scenarioPanel2 = AppColors.surface2;
+const _scenarioBorder = AppColors.borderSolid;
+const _scenarioPrimary = AppColors.primary;
 const _scenarioRed = Color(0xFFEF4444);
 const _scenarioAmber = Color(0xFFF59E0B);
 const _scenarioGreen = Color(0xFF10B981);
@@ -56,7 +57,7 @@ class _PerformanceScenariosPageState
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-109 PerformanceScenariosPage',
       child: Material(
-        color: _scenarioBg,
+        color: _scenarioBackground,
         child: Column(
           children: [
             VitHeader(
@@ -118,7 +119,7 @@ class _WarningNotice extends StatelessWidget {
       decoration: BoxDecoration(
         color: _scenarioAmber.withValues(alpha: .09),
         border: Border.all(color: _scenarioAmber.withValues(alpha: .38)),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,8 +227,8 @@ class _HoldingPeriodSelector extends StatelessWidget {
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.zero,
                   backgroundColor: selectedPeriod == period
-                      ? _scenarioBlue
-                      : _scenarioSurface2,
+                      ? _scenarioPrimary
+                      : _scenarioPanel2,
                   foregroundColor: selectedPeriod == period
                       ? Colors.white
                       : AppColors.text2,
@@ -269,7 +270,7 @@ class _SectionLabel extends StatelessWidget {
           width: 4,
           height: 15,
           decoration: BoxDecoration(
-            color: _scenarioBlue,
+            color: _scenarioPrimary,
             borderRadius: BorderRadius.circular(3),
           ),
         ),
@@ -316,7 +317,7 @@ class _ScenarioCard extends StatelessWidget {
             height: 48,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .11),
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: AppRadii.cardLargeRadius,
             ),
             child: Icon(_iconForType(scenario.type), color: color, size: 23),
           ),
@@ -397,8 +398,8 @@ class _MetricBox extends StatelessWidget {
       height: 50,
       padding: const EdgeInsets.fromLTRB(8, 7, 8, 7),
       decoration: BoxDecoration(
-        color: _scenarioSurface2,
-        borderRadius: BorderRadius.circular(14),
+        color: _scenarioPanel2,
+        borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -481,9 +482,9 @@ class _Card extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: _scenarioSurface,
+        color: _scenarioPanel,
         border: Border.all(color: _scenarioBorder.withValues(alpha: .76)),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadii.cardRadius,
       ),
       child: child,
     );
@@ -503,7 +504,7 @@ Color _colorForType(TradePerformanceScenarioType type) {
   return switch (type) {
     TradePerformanceScenarioType.stress => _scenarioRed,
     TradePerformanceScenarioType.unfavorable => _scenarioAmber,
-    TradePerformanceScenarioType.moderate => _scenarioBlue,
+    TradePerformanceScenarioType.moderate => _scenarioPrimary,
     TradePerformanceScenarioType.favorable => _scenarioGreen,
   };
 }

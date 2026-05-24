@@ -12,9 +12,9 @@ import '../../../shared/layout/vit_header.dart';
 import '../../../shared/layout/vit_page_layout.dart';
 import '../data/trade_repository.dart';
 
-const _riskBlue = Color(0xFF3B82F6);
-const _cardBg = Color(0xFF171C24);
-const _chipBg = Color(0xFF1D263B);
+const _riskPrimary = AppColors.primary;
+const _cardBackground = AppColors.surface2;
+const _chipBackground = AppColors.surface2;
 
 enum _RiskTab { oco, positions, calculator }
 
@@ -192,14 +192,14 @@ class _IntroCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _cardBg,
-        border: Border.all(color: _riskBlue.withValues(alpha: .30)),
+        color: _cardBackground,
+        border: Border.all(color: _riskPrimary.withValues(alpha: .30)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _IconTile(icon: Icons.shield_rounded, color: _riskBlue, size: 40),
+          _IconTile(icon: Icons.shield_rounded, color: _riskPrimary, size: 40),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -245,7 +245,7 @@ class _FeatureCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: _cardBg,
+          color: _cardBackground,
           border: Border.all(color: AppColors.cardBorder),
           borderRadius: AppRadii.cardRadius,
         ),
@@ -328,7 +328,7 @@ class _BenefitsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _cardBg,
+        color: _cardBackground,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -373,7 +373,7 @@ class _BenefitItem extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: _riskBlue, size: 18),
+        Icon(icon, color: _riskPrimary, size: 18),
         const SizedBox(width: 10),
         Expanded(
           child: Column(
@@ -414,7 +414,7 @@ class _StatusCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _cardBg,
+        color: _cardBackground,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -496,7 +496,7 @@ class _RiskTabs extends StatelessWidget {
       height: 44,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: _chipBg,
+        color: _chipBackground,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
@@ -538,7 +538,7 @@ class _TabButton extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? _riskBlue : Colors.transparent,
+          color: active ? _riskPrimary : Colors.transparent,
           borderRadius: AppRadii.smRadius,
         ),
         child: Text(
@@ -630,7 +630,7 @@ class _PositionsTab extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            color: _cardBg,
+            color: _cardBackground,
             border: Border.all(color: AppColors.cardBorder),
             borderRadius: AppRadii.cardRadius,
           ),
@@ -712,7 +712,7 @@ class _PositionTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: _cardBg,
+        color: _cardBackground,
         border: Border.all(color: AppColors.cardBorder),
         borderRadius: AppRadii.cardRadius,
       ),
@@ -845,7 +845,7 @@ class _IconTile extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Icon(icon, color: color, size: size * .5),
     );
@@ -1022,7 +1022,7 @@ class _SuccessToast extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
-          color: const Color(0xFF052E2B),
+          color: AppColors.buy10,
           borderRadius: AppRadii.cardRadius,
           border: Border.all(color: AppColors.buy.withValues(alpha: .38)),
           boxShadow: [
