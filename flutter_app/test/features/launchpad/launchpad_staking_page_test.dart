@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/launchpad_claim_receipt_page.dart';
 import 'package:vit_trade_flutter/features/launchpad/presentation/launchpad_page.dart';
 import 'package:vit_trade_flutter/features/launchpad/presentation/launchpad_staking_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
@@ -101,7 +102,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(LaunchpadStakingPage.claimKey('sp1')));
     await tester.pumpAndSettle();
-    expect(find.text('Claim Receipt'), findsOneWidget);
+    expect(find.byType(LaunchpadClaimReceiptPage), findsOneWidget);
+    expect(find.text('Phần thưởng'), findsOneWidget);
   });
 
   testWidgets('SC-298 calculator tab renders reward estimator state', (

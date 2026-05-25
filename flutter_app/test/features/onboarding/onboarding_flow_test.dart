@@ -1,0 +1,134 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/home/presentation/home_page.dart';
+import 'package:vit_trade_flutter/features/onboarding/data/onboarding_repository.dart';
+import 'package:vit_trade_flutter/features/onboarding/presentation/onboarding_flow.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/trade_page.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+
+void main() {
+  Future<void> pumpOnboarding(WidgetTester tester) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(
+            initialLocation: AppRoutePaths.onboarding,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  test('SC-397 mock repository exposes onboarding BE draft', () {
+    final snapshot = const MockOnboardingRepository().getFlow();
+
+    expect(snapshot.endpoint, '/api/mobile/onboarding/onboarding');
+    expect(snapshot.actionDraft, contains('local navigation actions'));
+    expect(snapshot.contractNotes, contains('Match screenshot first'));
+    expect(snapshot.steps, hasLength(6));
+    expect(snapshot.welcome.title, 'Chào mừng đến với\nTrading App');
+    expect(snapshot.welcome.features, hasLength(3));
+    expect(snapshot.modules, hasLength(5));
+    expect(snapshot.boundaries.last.title, 'Open Arena');
+    expect(snapshot.goals, hasLength(6));
+    expect(
+      snapshot.supportedStates,
+      containsAll([
+        OnboardingScreenState.loading,
+        OnboardingScreenState.empty,
+        OnboardingScreenState.error,
+        OnboardingScreenState.offline,
+        OnboardingScreenState.ready,
+      ]),
+    );
+  });
+
+  testWidgets('SC-397 renders welcome baseline as standalone onboarding', (
+    tester,
+  ) async {
+    await pumpOnboarding(tester);
+
+    expect(find.byType(OnboardingFlow), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsNothing);
+    expect(find.byKey(OnboardingFlow.welcomeKey), findsOneWidget);
+    expect(find.text('Bỏ qua'), findsOneWidget);
+    expect(find.text('Chào mừng đến với\nTrading App'), findsOneWidget);
+    expect(find.text('Giao dịch đa dạng'), findsOneWidget);
+    expect(find.text('An toàn & Minh bạch'), findsOneWidget);
+    expect(find.text('Tính năng thông minh'), findsOneWidget);
+    expect(find.byKey(OnboardingFlow.startButtonKey), findsOneWidget);
+  });
+
+  testWidgets('SC-397 advances module carousel state', (tester) async {
+    await pumpOnboarding(tester);
+
+    await tester.tap(find.byKey(OnboardingFlow.startButtonKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(OnboardingFlow.modulesKey), findsOneWidget);
+    expect(find.text('Khám phá 5 modules'), findsOneWidget);
+    expect(find.text('Trading'), findsOneWidget);
+
+    await tester.tap(find.byKey(OnboardingFlow.nextButtonKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Wallet'), findsOneWidget);
+    expect(find.text('Quản lý tài sản'), findsOneWidget);
+  });
+
+  testWidgets('SC-397 skip navigates to Home', (tester) async {
+    await pumpOnboarding(tester);
+
+    await tester.tap(find.byKey(OnboardingFlow.skipButtonKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(HomePage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+  });
+
+  testWidgets('SC-397 selected trade goal navigates to trade pair route', (
+    tester,
+  ) async {
+    await pumpOnboarding(tester);
+
+    await tester.tap(find.byKey(OnboardingFlow.startButtonKey));
+    await tester.pumpAndSettle();
+
+    for (var i = 0; i < 5; i++) {
+      await tester.tap(find.byKey(OnboardingFlow.nextButtonKey));
+      await tester.pumpAndSettle();
+    }
+
+    expect(find.byKey(OnboardingFlow.boundariesKey), findsOneWidget);
+    await tester.tap(find.byKey(OnboardingFlow.nextButtonKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(OnboardingFlow.trustKey), findsOneWidget);
+    await tester.tap(find.byKey(OnboardingFlow.nextButtonKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(OnboardingFlow.goalsKey), findsOneWidget);
+    await tester.tap(
+      find.byKey(OnboardingFlow.goalKey(OnboardingUserGoalDraft.tradeCrypto)),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(OnboardingFlow.nextButtonKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(OnboardingFlow.completeKey), findsOneWidget);
+    await tester.tap(find.byKey(OnboardingFlow.nextButtonKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TradePage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+  });
+}

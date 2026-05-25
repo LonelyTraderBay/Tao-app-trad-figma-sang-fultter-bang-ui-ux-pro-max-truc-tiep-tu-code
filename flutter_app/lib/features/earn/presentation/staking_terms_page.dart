@@ -1,0 +1,485 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radii.dart';
+import '../../../app/theme/app_spacing.dart';
+import '../../../app/theme/app_text_styles.dart';
+import '../../../app/theme/device_metrics.dart';
+import '../../../shared/layout/shell_render_mode.dart';
+import '../../../shared/layout/vit_header.dart';
+import '../../../shared/layout/vit_page_content.dart';
+import '../../../shared/layout/vit_page_layout.dart';
+import '../../../shared/widgets/widgets.dart';
+import '../data/earn_repository.dart';
+
+class StakingTermsPage extends ConsumerStatefulWidget {
+  const StakingTermsPage({super.key, this.shellRenderMode});
+
+  static const heroKey = Key('sc353_terms_hero');
+  static const printKey = Key('sc353_terms_print');
+  static const downloadKey = Key('sc353_terms_download');
+  static const acceptanceKey = Key('sc353_terms_acceptance');
+  static const footerKey = Key('sc353_terms_footer');
+
+  static Key sectionKey(String id) => Key('sc353_terms_section_$id');
+
+  final ShellRenderMode? shellRenderMode;
+
+  @override
+  ConsumerState<StakingTermsPage> createState() => _StakingTermsPageState();
+}
+
+class _StakingTermsPageState extends ConsumerState<StakingTermsPage> {
+  final Set<String> _expandedSections = {'definitions'};
+  bool _accepted = false;
+  String? _actionMessage;
+
+  @override
+  Widget build(BuildContext context) {
+    final snapshot = ref.watch(stakingTermsRepositoryProvider).getTerms();
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final bottomInset =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+        MediaQuery.paddingOf(context).bottom;
+
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'SC-353 StakingTermsPage',
+      child: Material(
+        color: AppColors.bg,
+        child: Column(
+          children: [
+            VitHeader(
+              title: snapshot.title,
+              showBack: true,
+              onBack: () => context.go(snapshot.backRoute),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.only(bottom: bottomInset),
+                child: VitPageContent(
+                  padding: VitContentPadding.compact,
+                  gap: VitContentGap.defaultGap,
+                  children: [
+                    _TermsHero(
+                      snapshot: snapshot,
+                      actionMessage: _actionMessage,
+                      onPrint: () =>
+                          _setAction('Đang chuẩn bị bản in trang điều khoản.'),
+                      onDownload: () => _setAction(
+                        'Tải PDF sẽ sớm ra mắt. Bạn có thể dùng In trang để lưu PDF.',
+                      ),
+                    ),
+                    for (final section in snapshot.sections) ...[
+                      _TermsSectionCard(
+                        section: section,
+                        expanded: _expandedSections.contains(section.id),
+                        onTap: () => _toggleSection(section.id),
+                      ),
+                    ],
+                    _AcceptanceCard(
+                      accepted: _accepted,
+                      snapshot: snapshot,
+                      onTap: () {
+                        HapticFeedback.selectionClick();
+                        setState(() => _accepted = !_accepted);
+                      },
+                    ),
+                    _FooterCard(text: snapshot.footer),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _toggleSection(String id) {
+    HapticFeedback.selectionClick();
+    setState(() {
+      if (_expandedSections.contains(id)) {
+        _expandedSections.remove(id);
+      } else {
+        _expandedSections.add(id);
+      }
+    });
+  }
+
+  void _setAction(String message) {
+    HapticFeedback.mediumImpact();
+    setState(() => _actionMessage = message);
+  }
+}
+
+class _TermsHero extends StatelessWidget {
+  const _TermsHero({
+    required this.snapshot,
+    required this.actionMessage,
+    required this.onPrint,
+    required this.onDownload,
+  });
+
+  final StakingTermsSnapshot snapshot;
+  final String? actionMessage;
+  final VoidCallback onPrint;
+  final VoidCallback onDownload;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: StakingTermsPage.heroKey,
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: AppColors.primary12,
+                  borderRadius: AppRadii.lgRadius,
+                  border: Border.all(color: AppColors.primary30, width: 1.5),
+                ),
+                child: const Icon(
+                  Icons.description_outlined,
+                  color: AppColors.primary,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      snapshot.documentTitle,
+                      style: AppTextStyles.baseMedium.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Wrap(
+                      spacing: AppSpacing.x3,
+                      runSpacing: AppSpacing.x1,
+                      children: [
+                        _MetaChip(
+                          icon: Icons.schedule_outlined,
+                          text: 'Cập nhật: ${snapshot.lastUpdated}',
+                        ),
+                        _MetaChip(text: 'Phiên bản ${snapshot.version}'),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x4),
+          _WarningCallout(text: snapshot.warning),
+          if (actionMessage != null) ...[
+            const SizedBox(height: AppSpacing.x3),
+            _ActionStatus(text: actionMessage!),
+          ],
+          const SizedBox(height: AppSpacing.x4),
+          Row(
+            children: [
+              Expanded(
+                child: VitCtaButton(
+                  key: StakingTermsPage.printKey,
+                  variant: VitCtaButtonVariant.secondary,
+                  height: 44,
+                  onPressed: onPrint,
+                  leading: const Icon(Icons.print_outlined),
+                  child: const Text('In trang'),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: VitCtaButton(
+                  key: StakingTermsPage.downloadKey,
+                  height: 44,
+                  onPressed: onDownload,
+                  leading: const Icon(Icons.download_rounded),
+                  child: const Text('Tải PDF'),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MetaChip extends StatelessWidget {
+  const _MetaChip({required this.text, this.icon});
+
+  final String text;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (icon != null) ...[
+          Icon(icon, color: AppColors.text3, size: 13),
+          const SizedBox(width: AppSpacing.x1),
+        ],
+        Text(text, style: AppTextStyles.micro.copyWith(color: AppColors.text3)),
+      ],
+    );
+  }
+}
+
+class _WarningCallout extends StatelessWidget {
+  const _WarningCallout({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x3),
+      borderColor: AppColors.warn15,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.info_outline_rounded,
+            color: AppColors.warn,
+            size: 17,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text2,
+                fontSize: 12,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ActionStatus extends StatelessWidget {
+  const _ActionStatus({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: AppTextStyles.caption.copyWith(
+        color: AppColors.primary,
+        fontSize: 12,
+      ),
+    );
+  }
+}
+
+class _TermsSectionCard extends StatelessWidget {
+  const _TermsSectionCard({
+    required this.section,
+    required this.expanded,
+    required this.onTap,
+  });
+
+  final StakingTermsSectionDraft section;
+  final bool expanded;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: StakingTermsPage.sectionKey(section.id),
+      radius: VitCardRadius.lg,
+      clip: true,
+      child: Column(
+        children: [
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: onTap,
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.x4),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        section.title,
+                        style: AppTextStyles.baseMedium.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ),
+                    AnimatedRotation(
+                      turns: expanded ? .5 : 0,
+                      duration: const Duration(milliseconds: 180),
+                      child: const Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: AppColors.text3,
+                        size: 22,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          AnimatedCrossFade(
+            firstChild: const SizedBox(width: double.infinity),
+            secondChild: _SectionContent(section: section),
+            crossFadeState: expanded
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
+            duration: const Duration(milliseconds: 180),
+            sizeCurve: Curves.easeOut,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SectionContent extends StatelessWidget {
+  const _SectionContent({required this.section});
+
+  final StakingTermsSectionDraft section;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        border: Border(top: BorderSide(color: AppColors.divider)),
+      ),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.x4,
+        AppSpacing.x4,
+        AppSpacing.x4,
+        AppSpacing.x3,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (final paragraph in section.content) ...[
+            Text(
+              paragraph,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text2,
+                height: 1.7,
+              ),
+            ),
+            if (paragraph != section.content.last)
+              const SizedBox(height: AppSpacing.x3),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _AcceptanceCard extends StatelessWidget {
+  const _AcceptanceCard({
+    required this.accepted,
+    required this.snapshot,
+    required this.onTap,
+  });
+
+  final bool accepted;
+  final StakingTermsSnapshot snapshot;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      onTap: onTap,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            key: StakingTermsPage.acceptanceKey,
+            width: 22,
+            height: 22,
+            margin: const EdgeInsets.only(top: 2),
+            decoration: BoxDecoration(
+              color: accepted ? AppColors.buy : Colors.transparent,
+              borderRadius: AppRadii.smRadius,
+              border: Border.all(
+                color: accepted ? AppColors.buy : AppColors.borderSolid,
+              ),
+            ),
+            child: accepted
+                ? const Icon(Icons.check_rounded, color: Colors.white, size: 15)
+                : null,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  snapshot.acceptanceText,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    fontSize: 12,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  snapshot.acceptanceFootnote,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _FooterCard extends StatelessWidget {
+  const _FooterCard({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: StakingTermsPage.footerKey,
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+      ),
+    );
+  }
+}

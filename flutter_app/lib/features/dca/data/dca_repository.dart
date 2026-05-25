@@ -1329,11 +1329,277 @@ class DcaRepository {
       backtests: [],
     );
   }
+
+  DcaOverviewDemoSnapshot getOverviewDemo() {
+    const profitSparkline = <double>[
+      30.0,
+      32,
+      31,
+      35,
+      34,
+      36,
+      38,
+      37,
+      40,
+      39,
+      41,
+      43,
+      42,
+      45,
+      44,
+      46,
+      48,
+      47,
+      50,
+      52,
+      51,
+      54,
+      53,
+      56,
+      55,
+      58,
+      57,
+      60,
+      62,
+    ];
+    const lossSparkline = <double>[
+      60.0,
+      58,
+      57,
+      55,
+      56,
+      53,
+      52,
+      50,
+      48,
+      46,
+      44,
+      43,
+      41,
+      40,
+      38,
+      37,
+      35,
+      34,
+      32,
+      31,
+      30,
+      28,
+      29,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+    ];
+
+    const profitable = DcaOverviewDemoData(
+      currentValueVnd: 42350000,
+      totalInvestedVnd: 35500000,
+      profitLossVnd: 6850000,
+      profitLossPercent: 19.3,
+      activePlans: 3,
+      pausedPlans: 0,
+      errorPlans: 0,
+      nextRelativeTime: '2 ngày',
+      nextAmountVnd: 500000,
+    );
+
+    return const DcaOverviewDemoSnapshot(
+      endpoint: '/api/mobile/dev/dev-dca-overview',
+      actionDraft: 'POST /dca/plans|rebalance|schedule',
+      supportedStates: [
+        DcaScreenState.loading,
+        DcaScreenState.empty,
+        DcaScreenState.error,
+        DcaScreenState.offline,
+      ],
+      title: 'DCA Overview Card Demo',
+      subtitle: 'Demo · DCA',
+      backRoute: '/home',
+      componentName: 'DCAOverviewCard',
+      componentLocation: '/src/app/components/dca/DCAOverviewCard.tsx',
+      contractNotes:
+          'Reference/admin surface gated behind internal role or dev flag. Demo data mirrors DCA overview states; plan create, pause, rebalance and schedule actions remain mock-local until API wiring.',
+      scenarios: [
+        DcaOverviewDemoScenario(
+          id: 'profitable',
+          title: 'Scenario 1: Lãi (Profitable) + Sparkline + Actions',
+          description:
+              'Portfolio đang có lãi +19.3%, sparkline animated, action buttons đầy đủ.',
+          data: profitable,
+          sparkline: profitSparkline,
+          showActions: true,
+        ),
+        DcaOverviewDemoScenario(
+          id: 'loss',
+          title: 'Scenario 2: Lỗ (Loss) + Sparkline',
+          description: 'Portfolio đang lỗ -18.6%, có 1 kế hoạch bị pause.',
+          data: DcaOverviewDemoData(
+            currentValueVnd: 28900000,
+            totalInvestedVnd: 35500000,
+            profitLossVnd: -6600000,
+            profitLossPercent: -18.6,
+            activePlans: 2,
+            pausedPlans: 1,
+            errorPlans: 0,
+            nextRelativeTime: '5 giờ',
+            nextAmountVnd: 250000,
+          ),
+          sparkline: lossSparkline,
+          showActions: true,
+        ),
+        DcaOverviewDemoScenario(
+          id: 'errors',
+          title: 'Scenario 3: Có Lỗi (With Errors)',
+          description: 'Portfolio lỗ -15.6%, có 2 kế hoạch bị lỗi cần xử lý.',
+          data: DcaOverviewDemoData(
+            currentValueVnd: 15200000,
+            totalInvestedVnd: 18000000,
+            profitLossVnd: -2800000,
+            profitLossPercent: -15.6,
+            activePlans: 1,
+            pausedPlans: 1,
+            errorPlans: 2,
+            nextRelativeTime: '15/03/2026',
+            nextAmountVnd: 1000000,
+          ),
+          sparkline: [],
+          showActions: true,
+        ),
+        DcaOverviewDemoScenario(
+          id: 'no-next',
+          title: 'Scenario 4: Không Có Lịch Mua (No Next Execution)',
+          description:
+              'Tất cả 5 kế hoạch đều bị pause, không có lần mua tiếp theo.',
+          data: DcaOverviewDemoData(
+            currentValueVnd: 95800000,
+            totalInvestedVnd: 80000000,
+            profitLossVnd: 15800000,
+            profitLossPercent: 19.75,
+            activePlans: 0,
+            pausedPlans: 5,
+            errorPlans: 0,
+            nextRelativeTime: null,
+            nextAmountVnd: null,
+          ),
+          sparkline: [],
+          showActions: true,
+        ),
+        DcaOverviewDemoScenario(
+          id: 'large',
+          title: 'Scenario 5: Portfolio Lớn (Large Portfolio)',
+          description: 'Portfolio giá trị >1 tỷ VND, nhiều kế hoạch đang chạy.',
+          data: DcaOverviewDemoData(
+            currentValueVnd: 1450000000,
+            totalInvestedVnd: 1200000000,
+            profitLossVnd: 250000000,
+            profitLossPercent: 20.8,
+            activePlans: 8,
+            pausedPlans: 2,
+            errorPlans: 1,
+            nextRelativeTime: '1 ngày',
+            nextAmountVnd: 5000000,
+          ),
+          sparkline: profitSparkline,
+          showActions: true,
+        ),
+      ],
+      mobilePreview: DcaOverviewDemoScenario(
+        id: 'mobile-preview',
+        title: 'Mobile Preview (360px width)',
+        description: 'Xem preview trên màn hình nhỏ (responsive).',
+        data: profitable,
+        sparkline: profitSparkline,
+        showActions: true,
+      ),
+    );
+  }
 }
 
 final dcaRepositoryProvider = Provider<DcaRepository>((ref) {
   return const DcaRepository();
 });
+
+class DcaOverviewDemoSnapshot {
+  const DcaOverviewDemoSnapshot({
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+    required this.title,
+    required this.subtitle,
+    required this.backRoute,
+    required this.componentName,
+    required this.componentLocation,
+    required this.contractNotes,
+    required this.scenarios,
+    required this.mobilePreview,
+  });
+
+  final String endpoint;
+  final String actionDraft;
+  final List<DcaScreenState> supportedStates;
+  final String title;
+  final String subtitle;
+  final String backRoute;
+  final String componentName;
+  final String componentLocation;
+  final String contractNotes;
+  final List<DcaOverviewDemoScenario> scenarios;
+  final DcaOverviewDemoScenario mobilePreview;
+}
+
+class DcaOverviewDemoScenario {
+  const DcaOverviewDemoScenario({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.data,
+    required this.sparkline,
+    required this.showActions,
+  });
+
+  final String id;
+  final String title;
+  final String description;
+  final DcaOverviewDemoData data;
+  final List<double> sparkline;
+  final bool showActions;
+}
+
+class DcaOverviewDemoData {
+  const DcaOverviewDemoData({
+    required this.currentValueVnd,
+    required this.totalInvestedVnd,
+    required this.profitLossVnd,
+    required this.profitLossPercent,
+    required this.activePlans,
+    required this.pausedPlans,
+    required this.errorPlans,
+    required this.nextRelativeTime,
+    required this.nextAmountVnd,
+  });
+
+  final int currentValueVnd;
+  final int totalInvestedVnd;
+  final int profitLossVnd;
+  final double profitLossPercent;
+  final int activePlans;
+  final int pausedPlans;
+  final int errorPlans;
+  final String? nextRelativeTime;
+  final int? nextAmountVnd;
+
+  int get totalPlans => activePlans + pausedPlans + errorPlans;
+
+  int get averagePerPlanVnd {
+    if (totalPlans == 0) return 0;
+    return (totalInvestedVnd / totalPlans).round();
+  }
+
+  bool get isProfit => profitLossVnd >= 0;
+}
 
 class DcaDashboardSnapshot {
   const DcaDashboardSnapshot({

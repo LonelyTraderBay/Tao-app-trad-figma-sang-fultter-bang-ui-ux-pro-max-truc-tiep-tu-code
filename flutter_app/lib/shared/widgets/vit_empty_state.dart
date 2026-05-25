@@ -13,6 +13,7 @@ class VitEmptyState extends StatelessWidget {
     this.message,
     this.icon = Icons.inbox_outlined,
     this.actionLabel,
+    this.actionKey,
     this.onAction,
   });
 
@@ -20,6 +21,7 @@ class VitEmptyState extends StatelessWidget {
   final String? message;
   final IconData icon;
   final String? actionLabel;
+  final Key? actionKey;
   final VoidCallback? onAction;
 
   @override
@@ -59,6 +61,7 @@ class VitEmptyState extends StatelessWidget {
           if (actionLabel != null && onAction != null) ...[
             const SizedBox(height: AppSpacing.x4),
             VitCtaButton(
+              key: actionKey,
               onPressed: onAction,
               fullWidth: false,
               height: 44,

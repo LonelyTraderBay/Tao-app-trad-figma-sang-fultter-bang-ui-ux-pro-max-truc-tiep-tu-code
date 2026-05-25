@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-05-24T15:42:23.282Z",
+  "generatedAt": "2026-05-25T15:16:32.824Z",
   "source": {
     "masterPlan": "docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md",
     "standard": "docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md",
     "homeReference": "docs/04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md"
   },
   "scope": {
-    "migratedRows": 300,
-    "uniquePresentationFiles": 290,
+    "migratedRows": 401,
+    "uniquePresentationFiles": 389,
     "unmappedRows": 0,
     "firstSc": "SC-001",
-    "lastSc": "SC-300"
+    "lastSc": "SC-401"
   },
   "rules": [
     {
@@ -84,16 +84,42 @@
       "needsIdentityReview": 0
     },
     {
+      "module": "cross_module",
+      "screens": 4,
+      "pass": 4,
+      "blocked": 0,
+      "failBrand": 0,
+      "failSurface": 0,
+      "reviewSize": 0,
+      "reviewLayout": 0,
+      "foundationPass": 0,
+      "moduleAccentPass": 4,
+      "needsIdentityReview": 0
+    },
+    {
       "module": "dca",
-      "screens": 11,
-      "pass": 11,
+      "screens": 12,
+      "pass": 12,
       "blocked": 0,
       "failBrand": 0,
       "failSurface": 0,
       "reviewSize": 0,
       "reviewLayout": 0,
       "foundationPass": 9,
-      "moduleAccentPass": 2,
+      "moduleAccentPass": 3,
+      "needsIdentityReview": 0
+    },
+    {
+      "module": "dev",
+      "screens": 4,
+      "pass": 4,
+      "blocked": 0,
+      "failBrand": 0,
+      "failSurface": 0,
+      "reviewSize": 0,
+      "reviewLayout": 0,
+      "foundationPass": 4,
+      "moduleAccentPass": 0,
       "needsIdentityReview": 0
     },
     {
@@ -107,6 +133,32 @@
       "reviewLayout": 0,
       "foundationPass": 0,
       "moduleAccentPass": 3,
+      "needsIdentityReview": 0
+    },
+    {
+      "module": "earn",
+      "screens": 70,
+      "pass": 70,
+      "blocked": 0,
+      "failBrand": 0,
+      "failSurface": 0,
+      "reviewSize": 0,
+      "reviewLayout": 0,
+      "foundationPass": 70,
+      "moduleAccentPass": 0,
+      "needsIdentityReview": 0
+    },
+    {
+      "module": "enterprise_states",
+      "screens": 1,
+      "pass": 1,
+      "blocked": 0,
+      "failBrand": 0,
+      "failSurface": 0,
+      "reviewSize": 0,
+      "reviewLayout": 0,
+      "foundationPass": 1,
+      "moduleAccentPass": 0,
       "needsIdentityReview": 0
     },
     {
@@ -124,15 +176,15 @@
     },
     {
       "module": "launchpad",
-      "screens": 6,
-      "pass": 6,
+      "screens": 24,
+      "pass": 24,
       "blocked": 0,
       "failBrand": 0,
       "failSurface": 0,
       "reviewSize": 0,
       "reviewLayout": 0,
-      "foundationPass": 2,
-      "moduleAccentPass": 4,
+      "foundationPass": 13,
+      "moduleAccentPass": 11,
       "needsIdentityReview": 0
     },
     {
@@ -172,6 +224,19 @@
       "reviewLayout": 0,
       "foundationPass": 1,
       "moduleAccentPass": 0,
+      "needsIdentityReview": 0
+    },
+    {
+      "module": "onboarding",
+      "screens": 1,
+      "pass": 1,
+      "blocked": 0,
+      "failBrand": 0,
+      "failSurface": 0,
+      "reviewSize": 0,
+      "reviewLayout": 0,
+      "foundationPass": 0,
+      "moduleAccentPass": 1,
       "needsIdentityReview": 0
     },
     {
@@ -227,6 +292,19 @@
       "needsIdentityReview": 0
     },
     {
+      "module": "rewards",
+      "screens": 1,
+      "pass": 1,
+      "blocked": 0,
+      "failBrand": 0,
+      "failSurface": 0,
+      "reviewSize": 0,
+      "reviewLayout": 0,
+      "foundationPass": 1,
+      "moduleAccentPass": 0,
+      "needsIdentityReview": 0
+    },
+    {
       "module": "support",
       "screens": 3,
       "pass": 3,
@@ -241,14 +319,14 @@
     },
     {
       "module": "trade",
-      "screens": 87,
-      "pass": 87,
+      "screens": 88,
+      "pass": 88,
       "blocked": 0,
       "failBrand": 0,
       "failSurface": 0,
       "reviewSize": 0,
       "reviewLayout": 0,
-      "foundationPass": 87,
+      "foundationPass": 88,
       "moduleAccentPass": 0,
       "needsIdentityReview": 0
     },
@@ -269,17 +347,17 @@
   "riskSummary": [
     {
       "riskGrade": "PASS",
-      "screens": 300
+      "screens": 401
     }
   ],
   "identitySummary": [
     {
       "identityStatus": "FOUNDATION_PASS",
-      "screens": 207
+      "screens": 295
     },
     {
       "identityStatus": "MODULE_ACCENT_PASS",
-      "screens": 93
+      "screens": 106
     }
   ],
   "identityGates": {
@@ -15249,6 +15327,5056 @@
       "qaStatus": "[x] QA passed",
       "module": "launchpad",
       "file": "flutter_app/lib/features/launchpad/presentation/launchpad_contract_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-301",
+      "order": 301,
+      "page": "LaunchpadReceiptPage",
+      "route": "/launchpad/receipt/sub001",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_receipt_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "MODULE_ACCENT_PASS",
+      "identityFlags": [
+        "MODULE_ACCENT_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-302",
+      "order": 302,
+      "page": "LaunchpadClaimReceiptPage",
+      "route": "/launchpad/claim-receipt/pos001",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_claim_receipt_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-303",
+      "order": 303,
+      "page": "LaunchpadBridgeOrderPage",
+      "route": "/launchpad/bridge-order/tx001",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_bridge_order_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-304",
+      "order": 304,
+      "page": "LaunchpadBatchClaimPage",
+      "route": "/launchpad/batch-claim",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_batch_claim_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-305",
+      "order": 305,
+      "page": "LaunchpadBridgeComparePage",
+      "route": "/launchpad/bridge-compare",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_bridge_compare_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "MODULE_ACCENT_PASS",
+      "identityFlags": [
+        "MODULE_ACCENT_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-306",
+      "order": 306,
+      "page": "LaunchpadNotifSoundPage",
+      "route": "/launchpad/notif-sound",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_notif_sound_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "MODULE_ACCENT_PASS",
+      "identityFlags": [
+        "MODULE_ACCENT_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-307",
+      "order": 307,
+      "page": "LaunchpadEventLogPage",
+      "route": "/launchpad/event-log",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_event_log_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "MODULE_ACCENT_PASS",
+      "identityFlags": [
+        "MODULE_ACCENT_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-308",
+      "order": 308,
+      "page": "LaunchpadABIDiffPage",
+      "route": "/launchpad/abi-diff/contract001",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_abi_diff_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "MODULE_ACCENT_PASS",
+      "identityFlags": [
+        "MODULE_ACCENT_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-309",
+      "order": 309,
+      "page": "LaunchpadAddressBookPage",
+      "route": "/launchpad/address-book",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_address_book_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "MODULE_ACCENT_PASS",
+      "identityFlags": [
+        "MODULE_ACCENT_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-310",
+      "order": 310,
+      "page": "LaunchpadWebhooksPage",
+      "route": "/launchpad/webhooks",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_webhooks_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "MODULE_ACCENT_PASS",
+      "identityFlags": [
+        "MODULE_ACCENT_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-311",
+      "order": 311,
+      "page": "LaunchpadGasTrackerPage",
+      "route": "/launchpad/gas-tracker",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_gas_tracker_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-312",
+      "order": 312,
+      "page": "LaunchpadRebalancePage",
+      "route": "/launchpad/rebalance",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_rebalance_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-313",
+      "order": 313,
+      "page": "LaunchpadMultisigPage",
+      "route": "/launchpad/multisig",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_multisig_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-314",
+      "order": 314,
+      "page": "LaunchpadSwapAggregatorPage",
+      "route": "/launchpad/swap-aggregator",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_swap_aggregator_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-315",
+      "order": 315,
+      "page": "LaunchpadLimitOrdersPage",
+      "route": "/launchpad/limit-orders",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_limit_orders_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-316",
+      "order": 316,
+      "page": "LaunchpadDCABuilderPage",
+      "route": "/launchpad/dca-builder",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_dca_builder_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-317",
+      "order": 317,
+      "page": "LaunchpadRiskAnalyticsPage",
+      "route": "/launchpad/risk-analytics",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_risk_analytics_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-318",
+      "order": 318,
+      "page": "LaunchpadDetailPage",
+      "route": "/launchpad/sample",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "launchpad",
+      "file": "flutter_app/lib/features/launchpad/presentation/launchpad_detail_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-319",
+      "order": 319,
+      "page": "RewardsHubPage",
+      "route": "/rewards",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "rewards",
+      "file": "flutter_app/lib/features/rewards/presentation/rewards_hub_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": false,
+        "usesSharedSizing": false,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": false
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-320",
+      "order": 320,
+      "page": "EnterpriseStatesPage",
+      "route": "/enterprise-states",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "enterprise_states",
+      "file": "flutter_app/lib/features/enterprise_states/presentation/enterprise_states_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-321",
+      "order": 321,
+      "page": "UnifiedPortfolioDashboard",
+      "route": "/unified-portfolio",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "cross_module",
+      "file": "flutter_app/lib/features/cross_module/presentation/unified_portfolio_dashboard.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "MODULE_ACCENT_PASS",
+      "identityFlags": [
+        "MODULE_ACCENT_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-322",
+      "order": 322,
+      "page": "CrossModuleAnalytics",
+      "route": "/cross-module-analytics",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "cross_module",
+      "file": "flutter_app/lib/features/cross_module/presentation/cross_module_analytics.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "MODULE_ACCENT_PASS",
+      "identityFlags": [
+        "MODULE_ACCENT_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-323",
+      "order": 323,
+      "page": "SmartAlertCenter",
+      "route": "/smart-alerts",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "cross_module",
+      "file": "flutter_app/lib/features/cross_module/presentation/smart_alert_center.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "MODULE_ACCENT_PASS",
+      "identityFlags": [
+        "MODULE_ACCENT_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-324",
+      "order": 324,
+      "page": "TaxReportCenter",
+      "route": "/tax-reports",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "cross_module",
+      "file": "flutter_app/lib/features/cross_module/presentation/tax_report_center.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "MODULE_ACCENT_PASS",
+      "identityFlags": [
+        "MODULE_ACCENT_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-325",
+      "order": 325,
+      "page": "RouteChecker",
+      "route": "/dev/route-checker",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "dev",
+      "file": "flutter_app/lib/features/dev/presentation/route_checker_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-326",
+      "order": 326,
+      "page": "PerformanceMonitor",
+      "route": "/dev/performance-monitor",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "dev",
+      "file": "flutter_app/lib/features/dev/presentation/performance_monitor.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-398",
+      "order": 398,
+      "page": "MissingScreensShowcasePage",
+      "route": "/dev/showcase",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 21:43",
+      "module": "dev",
+      "file": "flutter_app/lib/features/dev/presentation/missing_screens_showcase_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-399",
+      "order": 399,
+      "page": "DesignSystemPage",
+      "route": "/dev/design-system",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 21:44",
+      "module": "dev",
+      "file": "flutter_app/lib/features/dev/presentation/design_system_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-400",
+      "order": 400,
+      "page": "DCAOverviewDemo",
+      "route": "/dev/dca-overview",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 21:53",
+      "module": "dca",
+      "file": "flutter_app/lib/features/dca/presentation/dca_overview_demo.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "MODULE_ACCENT_PASS",
+      "identityFlags": [
+        "MODULE_ACCENT_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-327",
+      "order": 327,
+      "page": "StakingEarnPage",
+      "route": "/earn",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_earn_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-328",
+      "order": 328,
+      "page": "StakingEarnPage",
+      "route": "/earn/staking",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_earn_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-329",
+      "order": 329,
+      "page": "SavingsPage",
+      "route": "/earn/savings",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-330",
+      "order": 330,
+      "page": "SavingsProductDetailPage",
+      "route": "/earn/savings/product/sample",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_product_detail_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": false,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": false
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-331",
+      "order": 331,
+      "page": "SavingsRedeemPage",
+      "route": "/earn/savings/redeem/pos001",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_redeem_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": false,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": false
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-332",
+      "order": 332,
+      "page": "SavingsReceiptPage",
+      "route": "/earn/savings/receipt",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_receipt_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": false,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": false
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-333",
+      "order": 333,
+      "page": "SavingsPortfolioPage",
+      "route": "/earn/savings/portfolio",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_portfolio_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-334",
+      "order": 334,
+      "page": "SavingsHistoryPage",
+      "route": "/earn/savings/history",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_history_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-335",
+      "order": 335,
+      "page": "SavingsGuidePage",
+      "route": "/earn/savings/guide",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_guide_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-336",
+      "order": 336,
+      "page": "SavingsFAQPage",
+      "route": "/earn/savings/faq",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_faq_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-337",
+      "order": 337,
+      "page": "SavingsNotificationsPage",
+      "route": "/earn/savings/notifications",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_notifications_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-338",
+      "order": 338,
+      "page": "SavingsRecommendationsPage",
+      "route": "/earn/savings/recommendations",
+      "uiStatus": "[x] Flutter UI implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA checked",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_recommendations_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-339",
+      "order": 339,
+      "page": "SavingsRiskAssessmentPage",
+      "route": "/earn/savings/risk-assessment",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_risk_assessment_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-340",
+      "order": 340,
+      "page": "SavingsComparisonPage",
+      "route": "/earn/savings/comparison",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_comparison_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-341",
+      "order": 341,
+      "page": "AutoCompoundSettingsPage",
+      "route": "/earn/savings/auto-compound",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/auto_compound_settings_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-342",
+      "order": 342,
+      "page": "SavingsGoalPage",
+      "route": "/earn/savings/goals",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_goal_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-343",
+      "order": 343,
+      "page": "SavingsAnalyticsPage",
+      "route": "/earn/savings/analytics",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_analytics_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-344",
+      "order": 344,
+      "page": "SavingsAutoRebalancePage",
+      "route": "/earn/savings/rebalance",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_auto_rebalance_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-345",
+      "order": 345,
+      "page": "SavingsNotificationPreferencesPage",
+      "route": "/earn/savings/notification-preferences",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_notification_preferences_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-346",
+      "order": 346,
+      "page": "SavingsDCAPage",
+      "route": "/earn/savings/dca",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_dca_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-347",
+      "order": 347,
+      "page": "SavingsSmartSuggestionsPage",
+      "route": "/earn/savings/smart-suggestions",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_smart_suggestions_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-348",
+      "order": 348,
+      "page": "SavingsExportPage",
+      "route": "/earn/savings/export",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_export_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-349",
+      "order": 349,
+      "page": "SavingsBacktestPage",
+      "route": "/earn/savings/backtest",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_backtest_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-350",
+      "order": 350,
+      "page": "SavingsAutoPilotPage",
+      "route": "/earn/savings/autopilot",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_autopilot_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-351",
+      "order": 351,
+      "page": "SavingsLadderPage",
+      "route": "/earn/savings/ladder",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_ladder_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-352",
+      "order": 352,
+      "page": "SavingsWhatIfPage",
+      "route": "/earn/savings/whatif",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/savings_what_if_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-353",
+      "order": 353,
+      "page": "StakingTermsPage",
+      "route": "/earn/staking/terms",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_terms_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-354",
+      "order": 354,
+      "page": "StakingRiskDisclosurePage",
+      "route": "/earn/staking/risk-disclosure",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_risk_disclosure_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-355",
+      "order": 355,
+      "page": "StakingWithdrawalPolicyPage",
+      "route": "/earn/staking/withdrawal-policy",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_withdrawal_policy_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-356",
+      "order": 356,
+      "page": "StakingTaxGuidePage",
+      "route": "/earn/staking/tax-guide",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_tax_guide_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-357",
+      "order": 357,
+      "page": "StakingRiskAssessmentPage",
+      "route": "/earn/staking/risk-assessment",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_risk_assessment_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-358",
+      "order": 358,
+      "page": "StakingDashboardPage",
+      "route": "/earn/dashboard",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_dashboard_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-359",
+      "order": 359,
+      "page": "StakingAnalyticsPage",
+      "route": "/earn/analytics",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_analytics_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-360",
+      "order": 360,
+      "page": "StakingHistoryPage",
+      "route": "/earn/history",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_history_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-361",
+      "order": 361,
+      "page": "StakingEarningsCalendarPage",
+      "route": "/earn/calendar",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_earnings_calendar_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-362",
+      "order": 362,
+      "page": "StakingValidatorSelectionPage",
+      "route": "/earn/validator-selection",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_validator_selection_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-363",
+      "order": 363,
+      "page": "StakingAutoCompoundPage",
+      "route": "/earn/auto-compound",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_auto_compound_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-364",
+      "order": 364,
+      "page": "StakingLiquidStakingPage",
+      "route": "/earn/liquid-staking",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_liquid_staking_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-365",
+      "order": 365,
+      "page": "StakingInsurancePage",
+      "route": "/earn/insurance",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_insurance_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-366",
+      "order": 366,
+      "page": "StakingAdvancedOrdersPage",
+      "route": "/earn/advanced-orders",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_advanced_orders_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-367",
+      "order": 367,
+      "page": "StakingMultiChainPage",
+      "route": "/earn/multi-chain",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_multi_chain_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-368",
+      "order": 368,
+      "page": "StakingInstitutionalPage",
+      "route": "/earn/institutional",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_institutional_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-369",
+      "order": 369,
+      "page": "StakingGuidePage",
+      "route": "/earn/guide",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_guide_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-370",
+      "order": 370,
+      "page": "StakingFAQPage",
+      "route": "/earn/faq",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA pass",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_faq_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-371",
+      "order": 371,
+      "page": "StakingNotificationsPage",
+      "route": "/earn/notifications",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_notifications_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-372",
+      "order": 372,
+      "page": "StakingRecommendationsPage",
+      "route": "/earn/recommendations",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_recommendations_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-373",
+      "order": 373,
+      "page": "StakingRegulatoryFrameworkPage",
+      "route": "/earn/regulatory-framework",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_regulatory_framework_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-374",
+      "order": 374,
+      "page": "StakingAuditReportsPage",
+      "route": "/earn/audit-reports",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_audit_reports_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-375",
+      "order": 375,
+      "page": "StakingCustodyPage",
+      "route": "/earn/custody",
+      "uiStatus": "[x] Flutter implemented",
+      "contractStatus": "[x] contract draft",
+      "qaStatus": "[x] QA passed",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_custody_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-376",
+      "order": 376,
+      "page": "StakingSuitabilityAssessmentPage",
+      "route": "/earn/suitability-assessment",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 18:18",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_suitability_assessment_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-377",
+      "order": 377,
+      "page": "StakingInsuranceFundTransparencyPage",
+      "route": "/earn/insurance-fund-transparency",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 18:29",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_insurance_fund_transparency_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-378",
+      "order": 378,
+      "page": "StakingTransactionReportingPage",
+      "route": "/earn/transaction-reporting",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 18:37",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_transaction_reporting_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-379",
+      "order": 379,
+      "page": "StakingAPIDocumentationPage",
+      "route": "/earn/api-documentation",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 18:47",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_api_documentation_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-380",
+      "order": 380,
+      "page": "StakingProofOfReservesPage",
+      "route": "/earn/proof-of-reserves",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 18:58",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_proof_of_reserves_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-381",
+      "order": 381,
+      "page": "StakingRiskDashboardPage",
+      "route": "/earn/risk-dashboard",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 19:08",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_risk_dashboard_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-382",
+      "order": 382,
+      "page": "StakingSlashingHistoryPage",
+      "route": "/earn/slashing-history",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 19:17",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_slashing_history_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-383",
+      "order": 383,
+      "page": "StakingValidatorHealthMonitorPage",
+      "route": "/earn/validator-health-monitor",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 19:25",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_validator_health_monitor_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-384",
+      "order": 384,
+      "page": "StakingRiskScoreCalculatorPage",
+      "route": "/earn/risk-score-calculator",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 19:37",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_risk_score_calculator_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-385",
+      "order": 385,
+      "page": "StakingEmergencyActionsPage",
+      "route": "/earn/emergency-actions",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 19:51",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_emergency_actions_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-386",
+      "order": 386,
+      "page": "StakingContingencyPlanPage",
+      "route": "/earn/contingency-plan",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 19:58",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_contingency_plan_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-387",
+      "order": 387,
+      "page": "StakingSocialFeedPage",
+      "route": "/earn/social-feed",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 20:05",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_social_feed_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-388",
+      "order": 388,
+      "page": "StakingCommunityGovernancePage",
+      "route": "/earn/community-governance",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 20:12",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_community_governance_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-389",
+      "order": 389,
+      "page": "StakingProposalsPage",
+      "route": "/earn/proposals",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 20:20",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_proposals_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-390",
+      "order": 390,
+      "page": "StakingVotingPage",
+      "route": "/earn/voting/prop001",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 20:29",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_voting_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-391",
+      "order": 391,
+      "page": "StakingVotingPage",
+      "route": "/earn/voting",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 20:43",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_voting_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-392",
+      "order": 392,
+      "page": "StakingForumPage",
+      "route": "/earn/forum",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 20:47",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_forum_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-393",
+      "order": 393,
+      "page": "StakingWebhooksPage",
+      "route": "/earn/webhooks",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 20:55",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_webhooks_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-394",
+      "order": 394,
+      "page": "StakingDataExportPage",
+      "route": "/earn/data-export",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 21:04",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_data_export_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-395",
+      "order": 395,
+      "page": "StakingThirdPartyIntegrationsPage",
+      "route": "/earn/third-party-integrations",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 21:12",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_third_party_integrations_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-396",
+      "order": 396,
+      "page": "StakingDeveloperConsolePage",
+      "route": "/earn/developer-console",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 21:17",
+      "module": "earn",
+      "file": "flutter_app/lib/features/earn/presentation/staking_developer_console_page.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "FOUNDATION_PASS",
+      "identityFlags": [
+        "FOUNDATION_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-397",
+      "order": 397,
+      "page": "OnboardingFlow",
+      "route": "/onboarding",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 21:37",
+      "module": "onboarding",
+      "file": "flutter_app/lib/features/onboarding/presentation/onboarding_flow.dart",
+      "riskGrade": "PASS",
+      "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
+      "flags": [
+        "PASS"
+      ],
+      "identityStatus": "MODULE_ACCENT_PASS",
+      "identityFlags": [
+        "MODULE_ACCENT_PASS"
+      ],
+      "counts": {
+        "legacyBlue": 0,
+        "legacySurface": 0,
+        "localDarkSurfacePalette": 0,
+        "hardcodedControlHeight": 0,
+        "directRadius": 0,
+        "layout": 0,
+        "primaryActionEmojiIcons": 0,
+        "bottomNavModuleAccent": 0,
+        "moduleLocalGradient": 0
+      },
+      "layoutFlags": [],
+      "layoutInfo": {
+        "usesVitPageLayout": true,
+        "usesVitPageContent": true,
+        "usesCustomScrollLayout": true,
+        "usesSharedSizing": true,
+        "usesCustomScaffold": false,
+        "hasAcceptedCustomScrollLayout": true
+      },
+      "samples": {
+        "legacyBlue": [],
+        "legacySurface": [],
+        "localDarkSurfacePalette": [],
+        "hardcodedControlHeight": [],
+        "directRadius": [],
+        "primaryActionEmojiIcons": [],
+        "bottomNavModuleAccent": [],
+        "moduleLocalGradient": []
+      }
+    },
+    {
+      "sc": "SC-401",
+      "order": 401,
+      "page": "CopyTradingCardDemo",
+      "route": "/demo/copy-card",
+      "uiStatus": "[x] migrated",
+      "contractStatus": "[x] contract drafted",
+      "qaStatus": "[x] visual QA passed - 2026-05-25 22:04",
+      "module": "trade",
+      "file": "flutter_app/lib/features/trade/presentation/copy_trading_card_demo.dart",
       "riskGrade": "PASS",
       "visualCaptureStatus": "READY_FOR_VISUAL_AUDIT",
       "flags": [

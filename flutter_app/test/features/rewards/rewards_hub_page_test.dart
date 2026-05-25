@@ -1,0 +1,111 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/arena_leaderboard_page.dart';
+import 'package:vit_trade_flutter/features/rewards/data/rewards_repository.dart';
+import 'package:vit_trade_flutter/features/rewards/presentation/rewards_hub_page.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+
+void main() {
+  Future<void> pumpRewards(WidgetTester tester) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(initialLocation: AppRoutePaths.rewards),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  test('SC-319 mock repository exposes rewards hub BE draft', () {
+    final snapshot = const MockRewardsRepository().getHub();
+
+    expect(snapshot.endpoint, '/api/mobile/rewards/rewards');
+    expect(snapshot.actionDraft, 'read-only or local navigation action');
+    expect(snapshot.title, 'Trung tâm Phần thưởng');
+    expect(snapshot.subtitle, 'Phần thưởng · Rewards');
+    expect(snapshot.backRoute, AppRoutePaths.home);
+    expect(snapshot.referralRoute, AppRoutePaths.referral);
+    expect(snapshot.leaderboardRoute, AppRoutePaths.arenaLeaderboard);
+    expect(snapshot.summary.currentPoints, 2220);
+    expect(snapshot.summary.lockedPoints, 450);
+    expect(snapshot.summary.pendingCount, 3);
+    expect(
+      snapshot.categories.map((category) => category.id),
+      contains('arena'),
+    );
+    expect(snapshot.tasks.map((task) => task.id), contains('task-thang3'));
+    expect(snapshot.leaderboard.first.name, 'CryptoWhale');
+    expect(snapshot.contractNotes, contains('Rewards Hub is read-only'));
+    expect(
+      snapshot.supportedStates,
+      containsAll([
+        RewardsScreenState.loading,
+        RewardsScreenState.empty,
+        RewardsScreenState.error,
+        RewardsScreenState.offline,
+      ]),
+    );
+  });
+
+  testWidgets('SC-319 renders rewards hub baseline structure', (tester) async {
+    await pumpRewards(tester);
+
+    expect(find.byType(RewardsHubPage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
+    expect(find.text('Trung tâm Phần thưởng'), findsOneWidget);
+    expect(find.text('Phần thưởng · Rewards'), findsOneWidget);
+    expect(find.text('USDT đã nhận'), findsOneWidget);
+    expect(find.text('Arena Points'), findsOneWidget);
+    expect(find.text('3 phần thưởng chờ nhận'), findsOneWidget);
+    expect(find.text('Check-in hằng ngày'), findsOneWidget);
+    expect(find.text('Nhiệm vụ'), findsOneWidget);
+  });
+
+  testWidgets('SC-319 filters reward tasks and supports claim-all state', (
+    tester,
+  ) async {
+    await pumpRewards(tester);
+
+    await tester.tap(find.byKey(RewardsHubPage.claimAllKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Đã nhận hết phần thưởng chờ'), findsOneWidget);
+
+    await tester.drag(
+      find.byKey(RewardsHubPage.contentKey),
+      const Offset(0, -280),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(RewardsHubPage.filterKey('Flash')));
+    await tester.pumpAndSettle();
+    expect(find.text('Flash: Mua BTC hôm nay'), findsOneWidget);
+    expect(find.text('Flash 3 lệnh P2P liên tiếp'), findsOneWidget);
+    expect(find.text('Volume tuần \$10K'), findsNothing);
+  });
+
+  testWidgets('SC-319 referral and leaderboard links use resolved routes', (
+    tester,
+  ) async {
+    await pumpRewards(tester);
+
+    await tester.ensureVisible(find.byKey(RewardsHubPage.referralKey));
+    await tester.tap(find.byKey(RewardsHubPage.referralKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Giới thiệu bạn bè'), findsOneWidget);
+
+    await pumpRewards(tester);
+    await tester.ensureVisible(find.byKey(RewardsHubPage.leaderboardKey));
+    await tester.tap(find.byKey(RewardsHubPage.leaderboardKey));
+    await tester.pumpAndSettle();
+    expect(find.byType(ArenaLeaderboardPage), findsOneWidget);
+  });
+}

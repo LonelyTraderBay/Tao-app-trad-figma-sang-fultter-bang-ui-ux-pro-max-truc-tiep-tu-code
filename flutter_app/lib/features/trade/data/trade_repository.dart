@@ -23,6 +23,7 @@ abstract interface class TradeRepository {
   TradeAdvancedToolsSnapshot getAdvancedTools();
   TradeCopyTradingSnapshot getCopyTrading();
   TradeCopyTradingV2Snapshot getCopyTradingV2();
+  TradeCopyCardDemoSnapshot getCopyCardDemo();
   TradeCopyEducationSnapshot getCopyEducation();
   TradeActiveCopiesSnapshot getActiveCopies();
   TradeCopySettingsSnapshot getCopySettings();
@@ -1588,6 +1589,99 @@ final class TradeCopyTradingV2Snapshot {
   final String defaultHeroVariant;
   final List<TradeScreenState> supportedStates;
   final String lastUpdatedLabel;
+}
+
+enum TradeCopyCardCompliance { pass, warn, fail }
+
+final class TradeCopyCardDemoSnapshot {
+  const TradeCopyCardDemoSnapshot({
+    required this.endpoint,
+    required this.actionDraft,
+    required this.supportedStates,
+    required this.title,
+    required this.backRoute,
+    required this.metrics,
+    required this.improvements,
+    required this.variants,
+    required this.issues,
+    required this.originalIssues,
+    required this.recommendation,
+    required this.recommendationReasons,
+    required this.guidelines,
+    required this.contractNotes,
+  });
+
+  final String endpoint;
+  final String actionDraft;
+  final List<TradeScreenState> supportedStates;
+  final String title;
+  final String backRoute;
+  final TradeCopyCardMetrics metrics;
+  final List<String> improvements;
+  final List<TradeCopyCardVariantDraft> variants;
+  final List<TradeCopyCardIssue> issues;
+  final List<TradeCopyCardTextBlock> originalIssues;
+  final String recommendation;
+  final List<String> recommendationReasons;
+  final List<TradeCopyCardTextBlock> guidelines;
+  final String contractNotes;
+}
+
+final class TradeCopyCardMetrics {
+  const TradeCopyCardMetrics({
+    required this.traders,
+    required this.copiers,
+    required this.aumUsd,
+    required this.aumTrendPercent,
+    required this.lastUpdated,
+  });
+
+  final int traders;
+  final int copiers;
+  final int aumUsd;
+  final double aumTrendPercent;
+  final String lastUpdated;
+}
+
+final class TradeCopyCardVariantDraft {
+  const TradeCopyCardVariantDraft({
+    required this.id,
+    required this.title,
+    required this.badge,
+    required this.notesTitle,
+    required this.notes,
+  });
+
+  final String id;
+  final String title;
+  final String? badge;
+  final String notesTitle;
+  final List<String> notes;
+}
+
+final class TradeCopyCardIssue {
+  const TradeCopyCardIssue({
+    required this.category,
+    required this.description,
+    required this.original,
+    required this.variantA,
+    required this.variantB,
+    required this.variantC,
+  });
+
+  final String category;
+  final String description;
+  final TradeCopyCardCompliance original;
+  final TradeCopyCardCompliance variantA;
+  final TradeCopyCardCompliance variantB;
+  final TradeCopyCardCompliance variantC;
+}
+
+final class TradeCopyCardTextBlock {
+  const TradeCopyCardTextBlock({required this.title, required this.body});
+
+  final String title;
+  final String body;
 }
 
 final class TradeCopyEducationSnapshot {
@@ -7631,6 +7725,192 @@ final class MockTradeRepository implements TradeRepository {
         TradeScreenState.offline,
         TradeScreenState.realtimeRefresh,
       ],
+    );
+  }
+
+  @override
+  TradeCopyCardDemoSnapshot getCopyCardDemo() {
+    return const TradeCopyCardDemoSnapshot(
+      endpoint: '/api/mobile/demo/demo-copy-card',
+      actionDraft: 'POST /copy-trading/follow|configure|stop where applicable',
+      supportedStates: [
+        TradeScreenState.loading,
+        TradeScreenState.empty,
+        TradeScreenState.error,
+        TradeScreenState.offline,
+      ],
+      title: 'Copy Trading Card Analysis',
+      backRoute: '/home',
+      metrics: TradeCopyCardMetrics(
+        traders: 5,
+        copiers: 11000,
+        aumUsd: 19250000,
+        aumTrendPercent: 12.3,
+        lastUpdated: '2 mins ago',
+      ),
+      improvements: [
+        'AUM gets featured treatment (centered, 28px bold)',
+        'Trend appears below value with direction and context',
+        'Removed color semantics confusion with neutral metrics',
+        'Added timestamp transparency',
+        'Typography hierarchy follows information priority',
+        'Number formatting optimized (11K not 11.0K)',
+      ],
+      variants: [
+        TradeCopyCardVariantDraft(
+          id: 'hero',
+          title: 'Variant A: Hero Metric Pattern',
+          badge: 'RECOMMENDED',
+          notesTitle: 'Why better:',
+          notes: [
+            'AUM (primary metric) gets largest visual weight',
+            'Trend indicator adds context and transparency',
+            'Icons replace color coding for accessibility',
+            'Clear 3-tier hierarchy: hero, secondary, metadata',
+            'Timestamp provides transparency',
+          ],
+        ),
+        TradeCopyCardVariantDraft(
+          id: 'tabular',
+          title: 'Variant B: Financial Dashboard Pattern',
+          badge: null,
+          notesTitle: 'Why better:',
+          notes: [
+            'Scannable tabular layout',
+            'Right-aligned numbers support comparison',
+            'Neutral professional metrics',
+            'Explicit timestamp and info access',
+            'Follows clarity over density principle',
+          ],
+        ),
+        TradeCopyCardVariantDraft(
+          id: 'compact',
+          title: 'Variant C: Compact (Original Structure Refined)',
+          badge: null,
+          notesTitle: 'Changes from original:',
+          notes: [
+            'Removed colored values from non-profit metrics',
+            'AUM gets subtle highlight to show priority',
+            'Number format: 11K instead of 11.0K',
+            'Tabular numbers for alignment',
+            'Equal spacing follows the 8pt grid',
+          ],
+        ),
+      ],
+      issues: [
+        TradeCopyCardIssue(
+          category: 'Visual Hierarchy',
+          description: 'AUM prominence and metric priority',
+          original: TradeCopyCardCompliance.fail,
+          variantA: TradeCopyCardCompliance.pass,
+          variantB: TradeCopyCardCompliance.warn,
+          variantC: TradeCopyCardCompliance.warn,
+        ),
+        TradeCopyCardIssue(
+          category: 'Color Semantics',
+          description: 'No misleading green/orange for metrics',
+          original: TradeCopyCardCompliance.fail,
+          variantA: TradeCopyCardCompliance.pass,
+          variantB: TradeCopyCardCompliance.pass,
+          variantC: TradeCopyCardCompliance.pass,
+        ),
+        TradeCopyCardIssue(
+          category: 'Trust Transparency',
+          description: 'Timestamp and trend indicators',
+          original: TradeCopyCardCompliance.fail,
+          variantA: TradeCopyCardCompliance.pass,
+          variantB: TradeCopyCardCompliance.pass,
+          variantC: TradeCopyCardCompliance.fail,
+        ),
+        TradeCopyCardIssue(
+          category: 'Number Format',
+          description: '11K not 11.0K, tabular-nums',
+          original: TradeCopyCardCompliance.warn,
+          variantA: TradeCopyCardCompliance.pass,
+          variantB: TradeCopyCardCompliance.pass,
+          variantC: TradeCopyCardCompliance.pass,
+        ),
+        TradeCopyCardIssue(
+          category: 'Beginner-First',
+          description: 'Icons, context, explanatory features',
+          original: TradeCopyCardCompliance.fail,
+          variantA: TradeCopyCardCompliance.pass,
+          variantB: TradeCopyCardCompliance.pass,
+          variantC: TradeCopyCardCompliance.warn,
+        ),
+        TradeCopyCardIssue(
+          category: 'Accessibility',
+          description: 'Not color-dependent, contrast OK',
+          original: TradeCopyCardCompliance.fail,
+          variantA: TradeCopyCardCompliance.pass,
+          variantB: TradeCopyCardCompliance.pass,
+          variantC: TradeCopyCardCompliance.warn,
+        ),
+        TradeCopyCardIssue(
+          category: 'Scanability',
+          description: 'Quick focal point identification',
+          original: TradeCopyCardCompliance.fail,
+          variantA: TradeCopyCardCompliance.pass,
+          variantB: TradeCopyCardCompliance.pass,
+          variantC: TradeCopyCardCompliance.warn,
+        ),
+      ],
+      originalIssues: [
+        TradeCopyCardTextBlock(
+          title: '1. Visual Hierarchy',
+          body:
+              'AUM is the most critical metric but had equal weight with others.',
+        ),
+        TradeCopyCardTextBlock(
+          title: '2. Color Semantics',
+          body:
+              'Green and orange metric colors could imply profit or warning states.',
+        ),
+        TradeCopyCardTextBlock(
+          title: '3. Number Formatting',
+          body:
+              '11.0K has unnecessary precision and dynamic values need tabular figures.',
+        ),
+        TradeCopyCardTextBlock(
+          title: '4. Trust & Transparency',
+          body:
+              'Timestamp, trend direction and metric definitions were missing.',
+        ),
+        TradeCopyCardTextBlock(
+          title: '5. Typography Hierarchy',
+          body: 'All values used similar scale, so priority was unclear.',
+        ),
+      ],
+      recommendation:
+          'Use Variant A (Hero Metric Pattern) for production deployment.',
+      recommendationReasons: [
+        'Aligns with fintech best practices',
+        'Follows trust-first and no dark patterns guidance',
+        'Clear hierarchy guides user attention correctly',
+        'Transparency features build trust',
+        'Accessible icon and text pairing',
+        'Responsive to future tooltips and modals',
+      ],
+      guidelines: [
+        TradeCopyCardTextBlock(
+          title: 'Trust-first',
+          body: 'Added timestamp, trend and info access.',
+        ),
+        TradeCopyCardTextBlock(
+          title: 'Clarity over density',
+          body: 'Hierarchy prioritizes scanability.',
+        ),
+        TradeCopyCardTextBlock(
+          title: 'Readability',
+          body: 'Icon is not color-only and contrast is normalized.',
+        ),
+        TradeCopyCardTextBlock(
+          title: 'Number clarity',
+          body: 'Tabular numbers and compact formatting.',
+        ),
+      ],
+      contractNotes:
+          'Reference/admin surface gated behind internal role or dev flag. Follow/configure/stop actions are mock-local and map to the copy trading action contract.',
     );
   }
 

@@ -17,16 +17,30 @@ import '../../../shared/widgets/widgets.dart';
 import '../data/arena_repository.dart';
 
 class ArenaPointsPage extends ConsumerStatefulWidget {
-  const ArenaPointsPage({super.key, this.shellRenderMode});
+  const ArenaPointsPage({
+    super.key,
+    this.shellRenderMode,
+    this.snapshotOverride,
+    this.semanticLabel = 'SC-196 ArenaPointsPage',
+    this.backRoute = AppRoutePaths.arena,
+    this.referralRoute = AppRoutePaths.referral,
+    this.leaderboardRoute = AppRoutePaths.arenaLeaderboard,
+  });
 
   static const contentKey = Key('sc196_arena_points_content');
   static const claimAllKey = Key('sc196_claim_all');
   static const referralKey = Key('sc196_referral');
+  static const leaderboardKey = Key('sc196_leaderboard_all');
 
   static Key filterKey(String label) => Key('sc196_filter_$label');
   static Key taskKey(String id) => Key('sc196_task_$id');
 
   final ShellRenderMode? shellRenderMode;
+  final ArenaPointsSnapshot? snapshotOverride;
+  final String semanticLabel;
+  final String backRoute;
+  final String referralRoute;
+  final String leaderboardRoute;
 
   @override
   ConsumerState<ArenaPointsPage> createState() => _ArenaPointsPageState();
@@ -38,7 +52,9 @@ class _ArenaPointsPageState extends ConsumerState<ArenaPointsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(arenaRepositoryProvider).getArenaPoints();
+    final snapshot =
+        widget.snapshotOverride ??
+        ref.watch(arenaRepositoryProvider).getArenaPoints();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -53,7 +69,7 @@ class _ArenaPointsPageState extends ConsumerState<ArenaPointsPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-196 ArenaPointsPage',
+      semanticLabel: widget.semanticLabel,
       child: Material(
         type: MaterialType.transparency,
         child: Column(
@@ -89,7 +105,7 @@ class _ArenaPointsPageState extends ConsumerState<ArenaPointsPage> {
                       _ReferralBanner(
                         onTap: () {
                           HapticFeedback.selectionClick();
-                          context.go('/referral');
+                          context.go(widget.referralRoute);
                         },
                       ),
                       _TaskSection(
@@ -105,6 +121,10 @@ class _ArenaPointsPageState extends ConsumerState<ArenaPointsPage> {
                       _ProgressSection(
                         summary: snapshot.summary,
                         leaderboard: snapshot.leaderboard,
+                        onLeaderboardTap: () {
+                          HapticFeedback.selectionClick();
+                          context.go(widget.leaderboardRoute);
+                        },
                       ),
                       _RewardsDisclaimer(text: snapshot.disclaimer),
                     ],
@@ -124,7 +144,7 @@ class _ArenaPointsPageState extends ConsumerState<ArenaPointsPage> {
       context.pop();
       return;
     }
-    context.go(AppRoutePaths.arena);
+    context.go(widget.backRoute);
   }
 }
 
@@ -834,6 +854,9 @@ class _TaskCard extends StatelessWidget {
 
     return VitCard(
       key: ArenaPointsPage.taskKey(task.id),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.buttonHero + AppSpacing.x7 + AppSpacing.x5,
+      ),
       padding: const EdgeInsets.all(AppSpacing.x4),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -864,13 +887,13 @@ class _TaskCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   task.subtitle,
-                  maxLines: 2,
+                  maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.x5),
                 _ProgressBar(value: task.progress, color: color),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.x3),
                 Row(
                   children: [
                     Expanded(
@@ -988,10 +1011,15 @@ class _BonusRow extends StatelessWidget {
 }
 
 class _ProgressSection extends StatelessWidget {
-  const _ProgressSection({required this.summary, required this.leaderboard});
+  const _ProgressSection({
+    required this.summary,
+    required this.leaderboard,
+    required this.onLeaderboardTap,
+  });
 
   final ArenaPointsSummaryDraft summary;
   final List<ArenaPointsLeaderboardDraft> leaderboard;
+  final VoidCallback onLeaderboardTap;
 
   @override
   Widget build(BuildContext context) {
@@ -1053,6 +1081,17 @@ class _ProgressSection extends StatelessWidget {
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: VitStatusPill(
+                  key: ArenaPointsPage.leaderboardKey,
+                  label: 'Tất cả',
+                  icon: Icons.chevron_right_rounded,
+                  status: VitStatusPillStatus.purple,
+                  size: VitStatusPillSize.sm,
+                  onTap: onLeaderboardTap,
                 ),
               ),
               const SizedBox(height: AppSpacing.x2),

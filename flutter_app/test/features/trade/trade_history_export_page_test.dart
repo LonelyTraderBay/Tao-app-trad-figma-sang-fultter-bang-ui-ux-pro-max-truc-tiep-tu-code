@@ -229,6 +229,11 @@ class _CapturingTradeRepository implements TradeRepository {
   }
 
   @override
+  TradeCopyCardDemoSnapshot getCopyCardDemo() {
+    return _delegate.getCopyCardDemo();
+  }
+
+  @override
   TradeCopyEducationSnapshot getCopyEducation() {
     return _delegate.getCopyEducation();
   }

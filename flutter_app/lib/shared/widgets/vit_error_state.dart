@@ -12,6 +12,14 @@ class VitErrorState extends StatelessWidget {
     this.title = 'Something went wrong',
     this.message = 'Please try again or check your connection.',
     this.icon = Icons.warning_amber_rounded,
+    this.iconContainerSize = 80,
+    this.iconSize = 36,
+    this.iconShape = BoxShape.rectangle,
+    this.iconBorderRadius,
+    this.verticalPadding = 64,
+    this.horizontalPadding = AppSpacing.x6,
+    this.titleStyle,
+    this.messageStyle,
     this.actionLabel = 'Retry',
     this.onAction,
     this.secondaryLabel,
@@ -21,6 +29,14 @@ class VitErrorState extends StatelessWidget {
   final String title;
   final String message;
   final IconData icon;
+  final double iconContainerSize;
+  final double iconSize;
+  final BoxShape iconShape;
+  final BorderRadius? iconBorderRadius;
+  final double verticalPadding;
+  final double horizontalPadding;
+  final TextStyle? titleStyle;
+  final TextStyle? messageStyle;
   final String actionLabel;
   final VoidCallback? onAction;
   final String? secondaryLabel;
@@ -29,34 +45,37 @@ class VitErrorState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x6,
-        vertical: 64,
+      padding: EdgeInsets.symmetric(
+        horizontal: horizontalPadding,
+        vertical: verticalPadding,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 80,
-            height: 80,
+            width: iconContainerSize,
+            height: iconContainerSize,
             decoration: BoxDecoration(
               color: AppColors.sell10,
               border: Border.all(color: AppColors.sell20),
-              borderRadius: AppRadii.cardLargeRadius,
+              shape: iconShape,
+              borderRadius: iconShape == BoxShape.circle
+                  ? null
+                  : iconBorderRadius ?? AppRadii.cardLargeRadius,
             ),
-            child: Icon(icon, color: AppColors.sell, size: 36),
+            child: Icon(icon, color: AppColors.sell, size: iconSize),
           ),
           const SizedBox(height: AppSpacing.x4),
           Text(
             title,
             textAlign: TextAlign.center,
-            style: AppTextStyles.baseMedium,
+            style: titleStyle ?? AppTextStyles.baseMedium,
           ),
           const SizedBox(height: AppSpacing.x2),
           Text(
             message,
             textAlign: TextAlign.center,
-            style: AppTextStyles.caption,
+            style: messageStyle ?? AppTextStyles.caption,
           ),
           if (onAction != null) ...[
             const SizedBox(height: AppSpacing.x4),

@@ -20,7 +20,6 @@ import '../../features/arena/presentation/arena_challenge_detail_page.dart';
 import '../../features/arena/presentation/arena_creator_page.dart';
 import '../../features/arena/presentation/arena_flow_map_page.dart';
 import '../../features/arena/presentation/arena_leaderboard_page.dart';
-import '../../features/arena/presentation/arena_points_page.dart';
 import '../../features/arena/presentation/arena_safety_center_page.dart';
 import '../../features/arena/presentation/arena_join_page.dart';
 import '../../features/arena/presentation/arena_smart_rule_builder_page.dart';
@@ -38,19 +37,98 @@ import '../../features/arena/presentation/connected_ecosystem_production_page.da
 import '../../features/arena/presentation/my_arena_page.dart';
 import '../../features/arena/presentation/my_arena_reports_page.dart';
 import '../../features/arena/presentation/verified_challenges_page.dart';
+import '../../features/cross_module/presentation/cross_module_analytics.dart';
+import '../../features/cross_module/presentation/smart_alert_center.dart';
+import '../../features/cross_module/presentation/tax_report_center.dart';
+import '../../features/cross_module/presentation/unified_portfolio_dashboard.dart';
 import '../../features/dca/presentation/dca_page.dart';
 import '../../features/dca/presentation/dca_rebalance_dashboard_page.dart';
 import '../../features/dca/presentation/dca_rebalance_config_page.dart';
 import '../../features/dca/presentation/dca_backtester_page.dart';
 import '../../features/dca/presentation/dca_dynamic_amount_page.dart';
 import '../../features/dca/presentation/dca_multi_asset_page.dart';
+import '../../features/dca/presentation/dca_overview_demo.dart';
 import '../../features/dca/presentation/dca_performance_compare_page.dart';
 import '../../features/dca/presentation/dca_portfolio_optimizer_page.dart';
 import '../../features/dca/presentation/dca_schedule_analytics_page.dart';
 import '../../features/dca/presentation/dca_schedule_config_page.dart';
 import '../../features/dca/presentation/dca_smart_rules_page.dart';
+import '../../features/dev/presentation/performance_monitor.dart';
+import '../../features/dev/presentation/missing_screens_showcase_page.dart';
+import '../../features/dev/presentation/design_system_page.dart';
+import '../../features/dev/presentation/route_checker_page.dart';
+import '../../features/earn/data/earn_repository.dart';
+import '../../features/earn/presentation/auto_compound_settings_page.dart';
+import '../../features/earn/presentation/savings_analytics_page.dart';
+import '../../features/earn/presentation/savings_auto_rebalance_page.dart';
+import '../../features/earn/presentation/savings_autopilot_page.dart';
+import '../../features/earn/presentation/savings_backtest_page.dart';
+import '../../features/earn/presentation/savings_comparison_page.dart';
+import '../../features/earn/presentation/savings_dca_page.dart';
+import '../../features/earn/presentation/savings_export_page.dart';
+import '../../features/earn/presentation/savings_history_page.dart';
+import '../../features/earn/presentation/savings_faq_page.dart';
+import '../../features/earn/presentation/savings_goal_page.dart';
+import '../../features/earn/presentation/savings_ladder_page.dart';
+import '../../features/earn/presentation/savings_notification_preferences_page.dart';
+import '../../features/earn/presentation/savings_what_if_page.dart';
+import '../../features/earn/presentation/savings_guide_page.dart';
+import '../../features/earn/presentation/savings_notifications_page.dart';
+import '../../features/earn/presentation/savings_portfolio_page.dart';
+import '../../features/earn/presentation/savings_product_detail_page.dart';
+import '../../features/earn/presentation/savings_recommendations_page.dart';
+import '../../features/earn/presentation/savings_page.dart';
+import '../../features/earn/presentation/savings_receipt_page.dart';
+import '../../features/earn/presentation/savings_redeem_page.dart';
+import '../../features/earn/presentation/savings_risk_assessment_page.dart';
+import '../../features/earn/presentation/savings_smart_suggestions_page.dart';
+import '../../features/earn/presentation/staking_community_governance_page.dart';
+import '../../features/earn/presentation/staking_contingency_plan_page.dart';
+import '../../features/earn/presentation/staking_emergency_actions_page.dart';
+import '../../features/earn/presentation/staking_earn_page.dart';
+import '../../features/earn/presentation/staking_dashboard_page.dart';
+import '../../features/earn/presentation/staking_forum_page.dart';
+import '../../features/earn/presentation/staking_analytics_page.dart';
+import '../../features/earn/presentation/staking_advanced_orders_page.dart';
+import '../../features/earn/presentation/staking_auto_compound_page.dart';
+import '../../features/earn/presentation/staking_earnings_calendar_page.dart';
+import '../../features/earn/presentation/staking_history_page.dart';
+import '../../features/earn/presentation/staking_insurance_page.dart';
+import '../../features/earn/presentation/staking_institutional_page.dart';
+import '../../features/earn/presentation/staking_guide_page.dart';
+import '../../features/earn/presentation/staking_faq_page.dart';
+import '../../features/earn/presentation/staking_notifications_page.dart';
+import '../../features/earn/presentation/staking_recommendations_page.dart';
+import '../../features/earn/presentation/staking_regulatory_framework_page.dart';
+import '../../features/earn/presentation/staking_audit_reports_page.dart';
+import '../../features/earn/presentation/staking_custody_page.dart';
+import '../../features/earn/presentation/staking_data_export_page.dart';
+import '../../features/earn/presentation/staking_developer_console_page.dart';
+import '../../features/earn/presentation/staking_api_documentation_page.dart';
+import '../../features/earn/presentation/staking_insurance_fund_transparency_page.dart';
+import '../../features/earn/presentation/staking_proof_of_reserves_page.dart';
+import '../../features/earn/presentation/staking_proposals_page.dart';
+import '../../features/earn/presentation/staking_risk_dashboard_page.dart';
+import '../../features/earn/presentation/staking_risk_score_calculator_page.dart';
+import '../../features/earn/presentation/staking_slashing_history_page.dart';
+import '../../features/earn/presentation/staking_social_feed_page.dart';
+import '../../features/earn/presentation/staking_suitability_assessment_page.dart';
+import '../../features/earn/presentation/staking_transaction_reporting_page.dart';
+import '../../features/earn/presentation/staking_third_party_integrations_page.dart';
+import '../../features/earn/presentation/staking_voting_page.dart';
+import '../../features/earn/presentation/staking_webhooks_page.dart';
+import '../../features/earn/presentation/staking_liquid_staking_page.dart';
+import '../../features/earn/presentation/staking_multi_chain_page.dart';
+import '../../features/earn/presentation/staking_risk_disclosure_page.dart';
+import '../../features/earn/presentation/staking_risk_assessment_page.dart';
+import '../../features/earn/presentation/staking_tax_guide_page.dart';
+import '../../features/earn/presentation/staking_terms_page.dart';
+import '../../features/earn/presentation/staking_validator_health_monitor_page.dart';
+import '../../features/earn/presentation/staking_validator_selection_page.dart';
+import '../../features/earn/presentation/staking_withdrawal_policy_page.dart';
 import '../../features/discovery/presentation/unified_search_page.dart';
 import '../../features/discovery/presentation/topic_hub_page.dart';
+import '../../features/enterprise_states/presentation/enterprise_states_page.dart';
 import '../../features/home/data/home_mock_data.dart';
 import '../../features/markets/presentation/advanced_charts_page.dart';
 import '../../features/home/presentation/home_page.dart';
@@ -76,6 +154,7 @@ import '../../features/markets/presentation/token_unlocks_page.dart';
 import '../../features/markets/presentation/watchlist_page.dart';
 import '../../features/news/presentation/news_page.dart';
 import '../../features/notifications/presentation/notifications_page.dart';
+import '../../features/onboarding/presentation/onboarding_flow.dart';
 import '../../features/predictions/presentation/prediction_advanced_chart_page.dart';
 import '../../features/predictions/presentation/prediction_data_integration_page.dart';
 import '../../features/predictions/presentation/predictions_breaking_page.dart';
@@ -180,12 +259,31 @@ import '../../features/referral/presentation/referral_history_page.dart';
 import '../../features/referral/presentation/referral_home_page.dart';
 import '../../features/referral/presentation/referral_rules_page.dart';
 import '../../features/referral/presentation/referral_rewards_page.dart';
+import '../../features/rewards/presentation/rewards_hub_page.dart';
+import '../../features/launchpad/presentation/launchpad_batch_claim_page.dart';
+import '../../features/launchpad/presentation/launchpad_abi_diff_page.dart';
+import '../../features/launchpad/presentation/launchpad_address_book_page.dart';
+import '../../features/launchpad/presentation/launchpad_bridge_compare_page.dart';
+import '../../features/launchpad/presentation/launchpad_bridge_order_page.dart';
 import '../../features/launchpad/presentation/launchpad_contract_page.dart';
+import '../../features/launchpad/presentation/launchpad_claim_receipt_page.dart';
+import '../../features/launchpad/presentation/launchpad_dca_builder_page.dart';
+import '../../features/launchpad/presentation/launchpad_detail_page.dart';
+import '../../features/launchpad/presentation/launchpad_event_log_page.dart';
+import '../../features/launchpad/presentation/launchpad_gas_tracker_page.dart';
 import '../../features/launchpad/presentation/launchpad_page.dart';
 import '../../features/launchpad/presentation/launchpad_ido_bridge_page.dart';
+import '../../features/launchpad/presentation/launchpad_limit_orders_page.dart';
+import '../../features/launchpad/presentation/launchpad_multisig_page.dart';
+import '../../features/launchpad/presentation/launchpad_notif_sound_page.dart';
 import '../../features/launchpad/presentation/launchpad_performance_page.dart';
 import '../../features/launchpad/presentation/launchpad_portfolio_page.dart';
+import '../../features/launchpad/presentation/launchpad_rebalance_page.dart';
+import '../../features/launchpad/presentation/launchpad_receipt_page.dart';
+import '../../features/launchpad/presentation/launchpad_risk_analytics_page.dart';
 import '../../features/launchpad/presentation/launchpad_staking_page.dart';
+import '../../features/launchpad/presentation/launchpad_swap_aggregator_page.dart';
+import '../../features/launchpad/presentation/launchpad_webhooks_page.dart';
 import '../../features/support/presentation/announcements_page.dart';
 import '../../features/support/presentation/help_center_page.dart';
 import '../../features/support/presentation/support_page.dart';
@@ -238,6 +336,7 @@ import '../../features/trade/presentation/copy_performance_page.dart';
 import '../../features/trade/presentation/copy_provider_detail_page.dart';
 import '../../features/trade/presentation/copy_safety_center_page.dart';
 import '../../features/trade/presentation/copy_settings_page.dart';
+import '../../features/trade/presentation/copy_trading_card_demo.dart';
 import '../../features/trade/presentation/copy_trading_page.dart';
 import '../../features/trade/presentation/copy_trading_v2_page.dart';
 import '../../features/trade/presentation/convert_page.dart';
@@ -634,6 +733,132 @@ final class AppRouteNames {
   static const String sc298LaunchpadStaking = 'sc298LaunchpadStaking';
   static const String sc299LaunchpadIdoBridge = 'sc299LaunchpadIdoBridge';
   static const String sc300LaunchpadContract = 'sc300LaunchpadContract';
+  static const String sc301LaunchpadReceipt = 'sc301LaunchpadReceipt';
+  static const String sc302LaunchpadClaimReceipt = 'sc302LaunchpadClaimReceipt';
+  static const String sc303LaunchpadBridgeOrder = 'sc303LaunchpadBridgeOrder';
+  static const String sc304LaunchpadBatchClaim = 'sc304LaunchpadBatchClaim';
+  static const String sc305LaunchpadBridgeCompare =
+      'sc305LaunchpadBridgeCompare';
+  static const String sc306LaunchpadNotifSound = 'sc306LaunchpadNotifSound';
+  static const String sc307LaunchpadEventLog = 'sc307LaunchpadEventLog';
+  static const String sc308LaunchpadAbiDiff = 'sc308LaunchpadAbiDiff';
+  static const String sc309LaunchpadAddressBook = 'sc309LaunchpadAddressBook';
+  static const String sc310LaunchpadWebhooks = 'sc310LaunchpadWebhooks';
+  static const String sc311LaunchpadGasTracker = 'sc311LaunchpadGasTracker';
+  static const String sc312LaunchpadRebalance = 'sc312LaunchpadRebalance';
+  static const String sc313LaunchpadMultisig = 'sc313LaunchpadMultisig';
+  static const String sc314LaunchpadSwapAggregator =
+      'sc314LaunchpadSwapAggregator';
+  static const String sc315LaunchpadLimitOrders = 'sc315LaunchpadLimitOrders';
+  static const String sc316LaunchpadDcaBuilder = 'sc316LaunchpadDcaBuilder';
+  static const String sc317LaunchpadRiskAnalytics =
+      'sc317LaunchpadRiskAnalytics';
+  static const String sc318LaunchpadDetail = 'sc318LaunchpadDetail';
+  static const String sc319RewardsHub = 'sc319RewardsHub';
+  static const String sc320EnterpriseStates = 'sc320EnterpriseStates';
+  static const String sc321UnifiedPortfolio = 'sc321UnifiedPortfolio';
+  static const String sc322CrossModuleAnalytics = 'sc322CrossModuleAnalytics';
+  static const String sc323SmartAlertCenter = 'sc323SmartAlertCenter';
+  static const String sc324TaxReportCenter = 'sc324TaxReportCenter';
+  static const String sc325RouteChecker = 'sc325RouteChecker';
+  static const String sc326PerformanceMonitor = 'sc326PerformanceMonitor';
+  static const String sc398MissingScreensShowcase =
+      'sc398MissingScreensShowcase';
+  static const String sc399DesignSystem = 'sc399DesignSystem';
+  static const String sc400DcaOverviewDemo = 'sc400DcaOverviewDemo';
+  static const String sc401CopyTradingCardDemo = 'sc401CopyTradingCardDemo';
+  static const String sc327StakingEarn = 'sc327StakingEarn';
+  static const String sc328StakingEarnStaking = 'sc328StakingEarnStaking';
+  static const String sc329Savings = 'sc329Savings';
+  static const String sc330SavingsProductDetail = 'sc330SavingsProductDetail';
+  static const String sc331SavingsRedeem = 'sc331SavingsRedeem';
+  static const String sc332SavingsReceipt = 'sc332SavingsReceipt';
+  static const String sc333SavingsPortfolio = 'sc333SavingsPortfolio';
+  static const String sc334SavingsHistory = 'sc334SavingsHistory';
+  static const String sc335SavingsGuide = 'sc335SavingsGuide';
+  static const String sc336SavingsFAQ = 'sc336SavingsFAQ';
+  static const String sc337SavingsNotifications = 'sc337SavingsNotifications';
+  static const String sc338SavingsRecommendations =
+      'sc338SavingsRecommendations';
+  static const String sc339SavingsRiskAssessment = 'sc339SavingsRiskAssessment';
+  static const String sc340SavingsComparison = 'sc340SavingsComparison';
+  static const String sc341AutoCompoundSettings = 'sc341AutoCompoundSettings';
+  static const String sc342SavingsGoal = 'sc342SavingsGoal';
+  static const String sc343SavingsAnalytics = 'sc343SavingsAnalytics';
+  static const String sc344SavingsAutoRebalance = 'sc344SavingsAutoRebalance';
+  static const String sc345SavingsNotificationPreferences =
+      'sc345SavingsNotificationPreferences';
+  static const String sc346SavingsDca = 'sc346SavingsDca';
+  static const String sc347SavingsSmartSuggestions =
+      'sc347SavingsSmartSuggestions';
+  static const String sc348SavingsExport = 'sc348SavingsExport';
+  static const String sc349SavingsBacktest = 'sc349SavingsBacktest';
+  static const String sc350SavingsAutoPilot = 'sc350SavingsAutoPilot';
+  static const String sc351SavingsLadder = 'sc351SavingsLadder';
+  static const String sc352SavingsWhatIf = 'sc352SavingsWhatIf';
+  static const String sc353StakingTerms = 'sc353StakingTerms';
+  static const String sc354StakingRiskDisclosure = 'sc354StakingRiskDisclosure';
+  static const String sc355StakingWithdrawalPolicy =
+      'sc355StakingWithdrawalPolicy';
+  static const String sc356StakingTaxGuide = 'sc356StakingTaxGuide';
+  static const String sc357StakingRiskAssessment = 'sc357StakingRiskAssessment';
+  static const String sc358StakingDashboard = 'sc358StakingDashboard';
+  static const String sc359StakingAnalytics = 'sc359StakingAnalytics';
+  static const String sc360StakingHistory = 'sc360StakingHistory';
+  static const String sc361StakingEarningsCalendar =
+      'sc361StakingEarningsCalendar';
+  static const String sc362StakingValidatorSelection =
+      'sc362StakingValidatorSelection';
+  static const String sc363StakingAutoCompound = 'sc363StakingAutoCompound';
+  static const String sc364StakingLiquidStaking = 'sc364StakingLiquidStaking';
+  static const String sc365StakingInsurance = 'sc365StakingInsurance';
+  static const String sc366StakingAdvancedOrders = 'sc366StakingAdvancedOrders';
+  static const String sc367StakingMultiChain = 'sc367StakingMultiChain';
+  static const String sc368StakingInstitutional = 'sc368StakingInstitutional';
+  static const String sc369StakingGuide = 'sc369StakingGuide';
+  static const String sc370StakingFAQ = 'sc370StakingFAQ';
+  static const String sc371StakingNotifications = 'sc371StakingNotifications';
+  static const String sc372StakingRecommendations =
+      'sc372StakingRecommendations';
+  static const String sc373StakingRegulatoryFramework =
+      'sc373StakingRegulatoryFramework';
+  static const String sc374StakingAuditReports = 'sc374StakingAuditReports';
+  static const String sc375StakingCustody = 'sc375StakingCustody';
+  static const String sc376StakingSuitabilityAssessment =
+      'sc376StakingSuitabilityAssessment';
+  static const String sc377StakingInsuranceFundTransparency =
+      'sc377StakingInsuranceFundTransparency';
+  static const String sc378StakingTransactionReporting =
+      'sc378StakingTransactionReporting';
+  static const String sc379StakingApiDocumentation =
+      'sc379StakingApiDocumentation';
+  static const String sc380StakingProofOfReserves =
+      'sc380StakingProofOfReserves';
+  static const String sc381StakingRiskDashboard = 'sc381StakingRiskDashboard';
+  static const String sc382StakingSlashingHistory =
+      'sc382StakingSlashingHistory';
+  static const String sc383StakingValidatorHealthMonitor =
+      'sc383StakingValidatorHealthMonitor';
+  static const String sc384StakingRiskScoreCalculator =
+      'sc384StakingRiskScoreCalculator';
+  static const String sc385StakingEmergencyActions =
+      'sc385StakingEmergencyActions';
+  static const String sc386StakingContingencyPlan =
+      'sc386StakingContingencyPlan';
+  static const String sc387StakingSocialFeed = 'sc387StakingSocialFeed';
+  static const String sc388StakingCommunityGovernance =
+      'sc388StakingCommunityGovernance';
+  static const String sc389StakingProposals = 'sc389StakingProposals';
+  static const String sc390StakingVotingDetail = 'sc390StakingVotingDetail';
+  static const String sc391StakingVoting = 'sc391StakingVoting';
+  static const String sc392StakingForum = 'sc392StakingForum';
+  static const String sc393StakingWebhooks = 'sc393StakingWebhooks';
+  static const String sc394StakingDataExport = 'sc394StakingDataExport';
+  static const String sc395StakingThirdPartyIntegrations =
+      'sc395StakingThirdPartyIntegrations';
+  static const String sc396StakingDeveloperConsole =
+      'sc396StakingDeveloperConsole';
+  static const String sc397Onboarding = 'sc397Onboarding';
 }
 
 final class AppRoutePaths {
@@ -655,6 +880,100 @@ final class AppRoutePaths {
   static const String referralRewards = '/referral/rewards';
   static const String referralRules = '/referral/rules';
   static String referralFriend(String friendId) => '/referral/friend/$friendId';
+  static const String enterpriseStates = '/enterprise-states';
+  static const String unifiedPortfolio = '/unified-portfolio';
+  static const String crossModuleAnalytics = '/cross-module-analytics';
+  static const String smartAlerts = '/smart-alerts';
+  static const String taxReports = '/tax-reports';
+  static const String routeChecker = '/dev/route-checker';
+  static const String performanceMonitor = '/dev/performance-monitor';
+  static const String devShowcase = '/dev/showcase';
+  static const String devDesignSystem = '/dev/design-system';
+  static const String devDcaOverview = '/dev/dca-overview';
+  static const String demoCopyCard = '/demo/copy-card';
+  static const String earn = '/earn';
+  static const String earnStaking = '/earn/staking';
+  static const String earnStakingTerms = '/earn/staking/terms';
+  static const String earnStakingRiskDisclosure =
+      '/earn/staking/risk-disclosure';
+  static const String earnStakingWithdrawalPolicy =
+      '/earn/staking/withdrawal-policy';
+  static const String earnStakingTaxGuide = '/earn/staking/tax-guide';
+  static const String earnStakingRiskAssessment =
+      '/earn/staking/risk-assessment';
+  static const String earnDashboard = '/earn/dashboard';
+  static const String earnAnalytics = '/earn/analytics';
+  static const String earnCalendar = '/earn/calendar';
+  static const String earnHistory = '/earn/history';
+  static const String earnValidatorSelection = '/earn/validator-selection';
+  static const String earnAutoCompound = '/earn/auto-compound';
+  static const String earnLiquidStaking = '/earn/liquid-staking';
+  static const String earnInsurance = '/earn/insurance';
+  static const String earnAdvancedOrders = '/earn/advanced-orders';
+  static const String earnMultiChain = '/earn/multi-chain';
+  static const String earnInstitutional = '/earn/institutional';
+  static const String earnGuide = '/earn/guide';
+  static const String earnFAQ = '/earn/faq';
+  static const String earnNotifications = '/earn/notifications';
+  static const String earnRecommendations = '/earn/recommendations';
+  static const String earnRegulatoryFramework = '/earn/regulatory-framework';
+  static const String earnAuditReports = '/earn/audit-reports';
+  static const String earnCustody = '/earn/custody';
+  static const String earnSuitabilityAssessment =
+      '/earn/suitability-assessment';
+  static const String earnInsuranceFundTransparency =
+      '/earn/insurance-fund-transparency';
+  static const String earnTransactionReporting = '/earn/transaction-reporting';
+  static const String earnApiDocumentation = '/earn/api-documentation';
+  static const String earnProofOfReserves = '/earn/proof-of-reserves';
+  static const String earnRiskDashboard = '/earn/risk-dashboard';
+  static const String earnSlashingHistory = '/earn/slashing-history';
+  static const String earnValidatorHealthMonitor =
+      '/earn/validator-health-monitor';
+  static const String earnRiskScoreCalculator = '/earn/risk-score-calculator';
+  static const String earnEmergencyActions = '/earn/emergency-actions';
+  static const String earnContingencyPlan = '/earn/contingency-plan';
+  static const String earnSocialFeed = '/earn/social-feed';
+  static const String earnCommunityGovernance = '/earn/community-governance';
+  static const String earnProposals = '/earn/proposals';
+  static const String earnVoting = '/earn/voting';
+  static String earnVotingProposal(String proposalId) =>
+      '/earn/voting/$proposalId';
+  static const String earnVotingProposalRoute = '/earn/voting/:proposalId';
+  static const String earnForum = '/earn/forum';
+  static const String earnWebhooks = '/earn/webhooks';
+  static const String earnDataExport = '/earn/data-export';
+  static const String earnThirdPartyIntegrations =
+      '/earn/third-party-integrations';
+  static const String earnDeveloperConsole = '/earn/developer-console';
+  static const String earnSavings = '/earn/savings';
+  static const String earnSavingsPortfolio = '/earn/savings/portfolio';
+  static const String earnSavingsHistory = '/earn/savings/history';
+  static const String earnSavingsGuide = '/earn/savings/guide';
+  static const String earnSavingsFAQ = '/earn/savings/faq';
+  static const String earnSavingsNotifications = '/earn/savings/notifications';
+  static const String earnSavingsRecommendations =
+      '/earn/savings/recommendations';
+  static const String earnSavingsRiskAssessment =
+      '/earn/savings/risk-assessment';
+  static const String earnSavingsComparison = '/earn/savings/comparison';
+  static const String earnSavingsAutoCompound = '/earn/savings/auto-compound';
+  static const String earnSavingsGoals = '/earn/savings/goals';
+  static const String earnSavingsAnalytics = '/earn/savings/analytics';
+  static const String earnSavingsRebalance = '/earn/savings/rebalance';
+  static const String earnSavingsNotificationPreferences =
+      '/earn/savings/notification-preferences';
+  static const String earnSavingsDca = '/earn/savings/dca';
+  static const String earnSavingsSmartSuggestions =
+      '/earn/savings/smart-suggestions';
+  static const String earnSavingsExport = '/earn/savings/export';
+  static const String earnSavingsBacktest = '/earn/savings/backtest';
+  static const String earnSavingsAutoPilot = '/earn/savings/autopilot';
+  static const String earnSavingsLadder = '/earn/savings/ladder';
+  static const String earnSavingsWhatIf = '/earn/savings/whatif';
+  static const String earnSavingsProductSample = '/earn/savings/product/sample';
+  static const String earnSavingsRedeemPos001 = '/earn/savings/redeem/pos001';
+  static const String earnSavingsReceipt = '/earn/savings/receipt';
   static const String notifications = '/notifications';
   static const String support = '/support';
   static const String supportAnnouncements = '/support/announcements';
@@ -1150,6 +1469,11 @@ GoRouter createAppRouter({
           ),
         ),
       ),
+      GoRoute(
+        path: AppRoutePaths.onboarding,
+        name: AppRouteNames.sc397Onboarding,
+        builder: (_, _) => const OnboardingFlow(),
+      ),
       ShellRoute(
         builder: (context, state, child) {
           final activeDestination = _activeDestinationForPath(state.uri.path);
@@ -1159,7 +1483,7 @@ GoRouter createAppRouter({
             activeDestination: activeDestination,
             homeBadgeCount: HomeMockData.homeBadge,
             statusBarTime: shellRenderMode.usesVisualQaFrame
-                ? _visualQaStatusBarTimeForPath(state.uri.path)
+                ? _visualQaStatusBarTimeForUri(state.uri)
                 : null,
             onDestinationSelected: (destination) {
               context.go(destination.routePath);
@@ -2631,6 +2955,114 @@ GoRouter createAppRouter({
             builder: (_, _) =>
                 LaunchpadContractPage(shellRenderMode: shellRenderMode),
           ),
+          GoRoute(
+            path: AppRoutePaths.launchpadReceiptSub001,
+            name: AppRouteNames.sc301LaunchpadReceipt,
+            builder: (_, _) =>
+                LaunchpadReceiptPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadClaimReceiptPos001,
+            name: AppRouteNames.sc302LaunchpadClaimReceipt,
+            builder: (_, _) =>
+                LaunchpadClaimReceiptPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadBatchClaim,
+            name: AppRouteNames.sc304LaunchpadBatchClaim,
+            builder: (_, _) =>
+                LaunchpadBatchClaimPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadBridgeCompare,
+            name: AppRouteNames.sc305LaunchpadBridgeCompare,
+            builder: (_, _) =>
+                LaunchpadBridgeComparePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadNotifSound,
+            name: AppRouteNames.sc306LaunchpadNotifSound,
+            builder: (_, _) =>
+                LaunchpadNotifSoundPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadEventLog,
+            name: AppRouteNames.sc307LaunchpadEventLog,
+            builder: (_, _) =>
+                LaunchpadEventLogPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadAbiDiff,
+            name: AppRouteNames.sc308LaunchpadAbiDiff,
+            builder: (_, _) =>
+                LaunchpadAbiDiffPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadAddressBook,
+            name: AppRouteNames.sc309LaunchpadAddressBook,
+            builder: (_, _) =>
+                LaunchpadAddressBookPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadWebhooks,
+            name: AppRouteNames.sc310LaunchpadWebhooks,
+            builder: (_, _) =>
+                LaunchpadWebhooksPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadGasTracker,
+            name: AppRouteNames.sc311LaunchpadGasTracker,
+            builder: (_, _) =>
+                LaunchpadGasTrackerPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadRebalance,
+            name: AppRouteNames.sc312LaunchpadRebalance,
+            builder: (_, _) =>
+                LaunchpadRebalancePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadMultisig,
+            name: AppRouteNames.sc313LaunchpadMultisig,
+            builder: (_, _) =>
+                LaunchpadMultisigPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadSwapAggregator,
+            name: AppRouteNames.sc314LaunchpadSwapAggregator,
+            builder: (_, _) =>
+                LaunchpadSwapAggregatorPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadLimitOrders,
+            name: AppRouteNames.sc315LaunchpadLimitOrders,
+            builder: (_, _) =>
+                LaunchpadLimitOrdersPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadDcaBuilder,
+            name: AppRouteNames.sc316LaunchpadDcaBuilder,
+            builder: (_, _) =>
+                LaunchpadDcaBuilderPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadRiskAnalytics,
+            name: AppRouteNames.sc317LaunchpadRiskAnalytics,
+            builder: (_, _) =>
+                LaunchpadRiskAnalyticsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadSample,
+            name: AppRouteNames.sc318LaunchpadDetail,
+            builder: (_, _) =>
+                LaunchpadDetailPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.launchpadBridgeOrderTx001,
+            name: AppRouteNames.sc303LaunchpadBridgeOrder,
+            builder: (_, _) =>
+                LaunchpadBridgeOrderPage(shellRenderMode: shellRenderMode),
+          ),
           ..._launchpadOutgoingPlaceholders,
           GoRoute(
             path: AppRoutePaths.arena,
@@ -2723,9 +3155,507 @@ GoRouter createAppRouter({
           ),
           GoRoute(
             path: AppRoutePaths.rewards,
-            name: AppRouteNames.sc196ArenaPoints,
+            name: AppRouteNames.sc319RewardsHub,
+            builder: (_, _) => RewardsHubPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.enterpriseStates,
+            name: AppRouteNames.sc320EnterpriseStates,
             builder: (_, _) =>
-                ArenaPointsPage(shellRenderMode: shellRenderMode),
+                EnterpriseStatesPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.unifiedPortfolio,
+            name: AppRouteNames.sc321UnifiedPortfolio,
+            builder: (_, _) =>
+                UnifiedPortfolioDashboard(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.crossModuleAnalytics,
+            name: AppRouteNames.sc322CrossModuleAnalytics,
+            builder: (_, _) =>
+                CrossModuleAnalytics(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.smartAlerts,
+            name: AppRouteNames.sc323SmartAlertCenter,
+            builder: (_, _) =>
+                SmartAlertCenter(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.taxReports,
+            name: AppRouteNames.sc324TaxReportCenter,
+            builder: (_, _) =>
+                TaxReportCenter(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.routeChecker,
+            name: AppRouteNames.sc325RouteChecker,
+            builder: (_, _) => RouteChecker(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.performanceMonitor,
+            name: AppRouteNames.sc326PerformanceMonitor,
+            builder: (_, _) =>
+                PerformanceMonitor(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.devShowcase,
+            name: AppRouteNames.sc398MissingScreensShowcase,
+            builder: (_, _) =>
+                MissingScreensShowcasePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.devDesignSystem,
+            name: AppRouteNames.sc399DesignSystem,
+            builder: (_, _) =>
+                DesignSystemPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.devDcaOverview,
+            name: AppRouteNames.sc400DcaOverviewDemo,
+            builder: (_, _) =>
+                DCAOverviewDemo(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.demoCopyCard,
+            name: AppRouteNames.sc401CopyTradingCardDemo,
+            builder: (_, _) =>
+                CopyTradingCardDemo(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earn,
+            name: AppRouteNames.sc327StakingEarn,
+            builder: (_, _) =>
+                StakingEarnPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnStaking,
+            name: AppRouteNames.sc328StakingEarnStaking,
+            builder: (_, _) => StakingEarnPage(
+              shellRenderMode: shellRenderMode,
+              route: StakingEarnRoute.staking,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnStakingTerms,
+            name: AppRouteNames.sc353StakingTerms,
+            builder: (_, _) =>
+                StakingTermsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnStakingRiskDisclosure,
+            name: AppRouteNames.sc354StakingRiskDisclosure,
+            builder: (_, _) =>
+                StakingRiskDisclosurePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnStakingWithdrawalPolicy,
+            name: AppRouteNames.sc355StakingWithdrawalPolicy,
+            builder: (_, _) =>
+                StakingWithdrawalPolicyPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnStakingTaxGuide,
+            name: AppRouteNames.sc356StakingTaxGuide,
+            builder: (_, _) =>
+                StakingTaxGuidePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnHistory,
+            name: AppRouteNames.sc360StakingHistory,
+            builder: (_, _) =>
+                StakingHistoryPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnStakingRiskAssessment,
+            name: AppRouteNames.sc357StakingRiskAssessment,
+            builder: (_, _) =>
+                StakingRiskAssessmentPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnDashboard,
+            name: AppRouteNames.sc358StakingDashboard,
+            builder: (_, _) =>
+                StakingDashboardPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnAnalytics,
+            name: AppRouteNames.sc359StakingAnalytics,
+            builder: (_, _) =>
+                StakingAnalyticsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnCalendar,
+            name: AppRouteNames.sc361StakingEarningsCalendar,
+            builder: (_, _) =>
+                StakingEarningsCalendarPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnValidatorSelection,
+            name: AppRouteNames.sc362StakingValidatorSelection,
+            builder: (_, _) =>
+                StakingValidatorSelectionPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnAutoCompound,
+            name: AppRouteNames.sc363StakingAutoCompound,
+            builder: (_, _) =>
+                StakingAutoCompoundPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnLiquidStaking,
+            name: AppRouteNames.sc364StakingLiquidStaking,
+            builder: (_, _) =>
+                StakingLiquidStakingPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnInsurance,
+            name: AppRouteNames.sc365StakingInsurance,
+            builder: (_, _) =>
+                StakingInsurancePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnAdvancedOrders,
+            name: AppRouteNames.sc366StakingAdvancedOrders,
+            builder: (_, _) =>
+                StakingAdvancedOrdersPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnMultiChain,
+            name: AppRouteNames.sc367StakingMultiChain,
+            builder: (_, _) =>
+                StakingMultiChainPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnInstitutional,
+            name: AppRouteNames.sc368StakingInstitutional,
+            builder: (_, _) =>
+                StakingInstitutionalPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnGuide,
+            name: AppRouteNames.sc369StakingGuide,
+            builder: (_, _) =>
+                StakingGuidePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnFAQ,
+            name: AppRouteNames.sc370StakingFAQ,
+            builder: (_, _) => StakingFAQPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnNotifications,
+            name: AppRouteNames.sc371StakingNotifications,
+            builder: (_, _) =>
+                StakingNotificationsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnRecommendations,
+            name: AppRouteNames.sc372StakingRecommendations,
+            builder: (_, _) =>
+                StakingRecommendationsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnRegulatoryFramework,
+            name: AppRouteNames.sc373StakingRegulatoryFramework,
+            builder: (_, _) => StakingRegulatoryFrameworkPage(
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnAuditReports,
+            name: AppRouteNames.sc374StakingAuditReports,
+            builder: (_, _) =>
+                StakingAuditReportsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnCustody,
+            name: AppRouteNames.sc375StakingCustody,
+            builder: (_, _) =>
+                StakingCustodyPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSuitabilityAssessment,
+            name: AppRouteNames.sc376StakingSuitabilityAssessment,
+            builder: (_, _) => StakingSuitabilityAssessmentPage(
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnInsuranceFundTransparency,
+            name: AppRouteNames.sc377StakingInsuranceFundTransparency,
+            builder: (_, _) => StakingInsuranceFundTransparencyPage(
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnTransactionReporting,
+            name: AppRouteNames.sc378StakingTransactionReporting,
+            builder: (_, _) => StakingTransactionReportingPage(
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnApiDocumentation,
+            name: AppRouteNames.sc379StakingApiDocumentation,
+            builder: (_, _) =>
+                StakingApiDocumentationPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnProofOfReserves,
+            name: AppRouteNames.sc380StakingProofOfReserves,
+            builder: (_, _) =>
+                StakingProofOfReservesPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnRiskDashboard,
+            name: AppRouteNames.sc381StakingRiskDashboard,
+            builder: (_, _) =>
+                StakingRiskDashboardPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSlashingHistory,
+            name: AppRouteNames.sc382StakingSlashingHistory,
+            builder: (_, _) =>
+                StakingSlashingHistoryPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnValidatorHealthMonitor,
+            name: AppRouteNames.sc383StakingValidatorHealthMonitor,
+            builder: (_, _) => StakingValidatorHealthMonitorPage(
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnRiskScoreCalculator,
+            name: AppRouteNames.sc384StakingRiskScoreCalculator,
+            builder: (_, _) => StakingRiskScoreCalculatorPage(
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnEmergencyActions,
+            name: AppRouteNames.sc385StakingEmergencyActions,
+            builder: (_, _) =>
+                StakingEmergencyActionsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnContingencyPlan,
+            name: AppRouteNames.sc386StakingContingencyPlan,
+            builder: (_, _) =>
+                StakingContingencyPlanPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSocialFeed,
+            name: AppRouteNames.sc387StakingSocialFeed,
+            builder: (_, _) =>
+                StakingSocialFeedPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnCommunityGovernance,
+            name: AppRouteNames.sc388StakingCommunityGovernance,
+            builder: (_, _) => StakingCommunityGovernancePage(
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnProposals,
+            name: AppRouteNames.sc389StakingProposals,
+            builder: (_, _) =>
+                StakingProposalsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnVotingProposalRoute,
+            name: AppRouteNames.sc390StakingVotingDetail,
+            builder: (_, state) => StakingVotingPage(
+              proposalId: state.pathParameters['proposalId'] ?? 'prop001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnVoting,
+            name: AppRouteNames.sc391StakingVoting,
+            builder: (_, _) =>
+                StakingVotingPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnForum,
+            name: AppRouteNames.sc392StakingForum,
+            builder: (_, _) =>
+                StakingForumPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnWebhooks,
+            name: AppRouteNames.sc393StakingWebhooks,
+            builder: (_, _) =>
+                StakingWebhooksPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnDataExport,
+            name: AppRouteNames.sc394StakingDataExport,
+            builder: (_, _) =>
+                StakingDataExportPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnThirdPartyIntegrations,
+            name: AppRouteNames.sc395StakingThirdPartyIntegrations,
+            builder: (_, _) => StakingThirdPartyIntegrationsPage(
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnDeveloperConsole,
+            name: AppRouteNames.sc396StakingDeveloperConsole,
+            builder: (_, _) =>
+                StakingDeveloperConsolePage(shellRenderMode: shellRenderMode),
+          ),
+          ..._earnRiskOutgoingPlaceholders,
+          GoRoute(
+            path: AppRoutePaths.earnSavings,
+            name: AppRouteNames.sc329Savings,
+            builder: (_, _) => SavingsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsPortfolio,
+            name: AppRouteNames.sc333SavingsPortfolio,
+            builder: (_, _) =>
+                SavingsPortfolioPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsHistory,
+            name: AppRouteNames.sc334SavingsHistory,
+            builder: (_, _) =>
+                SavingsHistoryPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsGuide,
+            name: AppRouteNames.sc335SavingsGuide,
+            builder: (_, _) =>
+                SavingsGuidePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsFAQ,
+            name: AppRouteNames.sc336SavingsFAQ,
+            builder: (_, _) => SavingsFAQPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsNotifications,
+            name: AppRouteNames.sc337SavingsNotifications,
+            builder: (_, _) =>
+                SavingsNotificationsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsRecommendations,
+            name: AppRouteNames.sc338SavingsRecommendations,
+            builder: (_, _) =>
+                SavingsRecommendationsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsRiskAssessment,
+            name: AppRouteNames.sc339SavingsRiskAssessment,
+            builder: (_, _) =>
+                SavingsRiskAssessmentPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsComparison,
+            name: AppRouteNames.sc340SavingsComparison,
+            builder: (_, _) =>
+                SavingsComparisonPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsAutoCompound,
+            name: AppRouteNames.sc341AutoCompoundSettings,
+            builder: (_, _) =>
+                AutoCompoundSettingsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsGoals,
+            name: AppRouteNames.sc342SavingsGoal,
+            builder: (_, _) =>
+                SavingsGoalPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsAnalytics,
+            name: AppRouteNames.sc343SavingsAnalytics,
+            builder: (_, _) =>
+                SavingsAnalyticsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsRebalance,
+            name: AppRouteNames.sc344SavingsAutoRebalance,
+            builder: (_, _) =>
+                SavingsAutoRebalancePage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsNotificationPreferences,
+            name: AppRouteNames.sc345SavingsNotificationPreferences,
+            builder: (_, _) => SavingsNotificationPreferencesPage(
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsDca,
+            name: AppRouteNames.sc346SavingsDca,
+            builder: (_, _) => SavingsDCAPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsSmartSuggestions,
+            name: AppRouteNames.sc347SavingsSmartSuggestions,
+            builder: (_, _) =>
+                SavingsSmartSuggestionsPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsExport,
+            name: AppRouteNames.sc348SavingsExport,
+            builder: (_, _) =>
+                SavingsExportPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsBacktest,
+            name: AppRouteNames.sc349SavingsBacktest,
+            builder: (_, _) =>
+                SavingsBacktestPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsAutoPilot,
+            name: AppRouteNames.sc350SavingsAutoPilot,
+            builder: (_, _) =>
+                SavingsAutoPilotPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsLadder,
+            name: AppRouteNames.sc351SavingsLadder,
+            builder: (_, _) =>
+                SavingsLadderPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsWhatIf,
+            name: AppRouteNames.sc352SavingsWhatIf,
+            builder: (_, _) =>
+                SavingsWhatIfPage(shellRenderMode: shellRenderMode),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsProductSample,
+            name: AppRouteNames.sc330SavingsProductDetail,
+            builder: (_, _) => SavingsProductDetailPage(
+              productId: 'sample',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsRedeemPos001,
+            name: AppRouteNames.sc331SavingsRedeem,
+            builder: (_, _) => SavingsRedeemPage(
+              positionId: 'pos001',
+              shellRenderMode: shellRenderMode,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutePaths.earnSavingsReceipt,
+            name: AppRouteNames.sc332SavingsReceipt,
+            builder: (_, _) =>
+                SavingsReceiptPage(shellRenderMode: shellRenderMode),
           ),
           GoRoute(
             path: AppRoutePaths.arenaFlowMap,
@@ -3219,6 +4149,17 @@ VitBottomNavDestination _activeDestinationForPath(String path) {
       path.startsWith('/topic/') ||
       path == AppRoutePaths.referral ||
       path.startsWith('/referral/') ||
+      path == AppRoutePaths.enterpriseStates ||
+      path == AppRoutePaths.unifiedPortfolio ||
+      path == AppRoutePaths.crossModuleAnalytics ||
+      path == AppRoutePaths.smartAlerts ||
+      path == AppRoutePaths.taxReports ||
+      path == AppRoutePaths.routeChecker ||
+      path == AppRoutePaths.performanceMonitor ||
+      path == AppRoutePaths.devShowcase ||
+      path == AppRoutePaths.devDesignSystem ||
+      path == AppRoutePaths.devDcaOverview ||
+      path == AppRoutePaths.demoCopyCard ||
       path == AppRoutePaths.support ||
       path.startsWith('/support/') ||
       path == AppRoutePaths.launchpad ||
@@ -3232,6 +4173,9 @@ VitBottomNavDestination _activeDestinationForPath(String path) {
     return VitBottomNavDestination.trade;
   }
   if (path == AppRoutePaths.dca || path.startsWith('/dca/')) {
+    return VitBottomNavDestination.trade;
+  }
+  if (path == AppRoutePaths.earn || path.startsWith('/earn/')) {
     return VitBottomNavDestination.trade;
   }
   if (path == AppRoutePaths.admin || path.startsWith('/admin/')) {
@@ -3258,7 +4202,92 @@ VitBottomNavDestination _activeDestinationForPath(String path) {
   return VitBottomNavDestination.home;
 }
 
-String _visualQaStatusBarTimeForPath(String path) {
+String _visualQaStatusBarTimeForUri(Uri uri) {
+  final path = uri.path;
+  if (path == AppRoutePaths.rewards) {
+    return uri.queryParameters['tab'] == 'arena' ? '23:34' : '23:38';
+  }
+  if (path == AppRoutePaths.enterpriseStates) return '23:38';
+  if (path == AppRoutePaths.unifiedPortfolio) return '23:38';
+  if (path == AppRoutePaths.crossModuleAnalytics) return '23:38';
+  if (path == AppRoutePaths.smartAlerts) return '23:38';
+  if (path == AppRoutePaths.taxReports) return '08:40';
+  if (path == AppRoutePaths.routeChecker) return '08:49';
+  if (path == AppRoutePaths.performanceMonitor) return '09:01';
+  if (path == AppRoutePaths.devShowcase) return '21:37';
+  if (path == AppRoutePaths.devDesignSystem) return '21:44';
+  if (path == AppRoutePaths.devDcaOverview) return '21:53';
+  if (path == AppRoutePaths.demoCopyCard) return '22:04';
+  if (path == AppRoutePaths.earn) return '09:11';
+  if (path == AppRoutePaths.earnStaking) return '09:18';
+  if (path == AppRoutePaths.earnStakingTerms) return '14:20';
+  if (path == AppRoutePaths.earnStakingRiskDisclosure) return '14:33';
+  if (path == AppRoutePaths.earnStakingWithdrawalPolicy) return '14:52';
+  if (path == AppRoutePaths.earnStakingTaxGuide) return '15:02';
+  if (path == AppRoutePaths.earnHistory) return '15:46';
+  if (path == AppRoutePaths.earnStakingRiskAssessment) return '15:12';
+  if (path == AppRoutePaths.earnDashboard) return '15:21';
+  if (path == AppRoutePaths.earnAnalytics) return '15:34';
+  if (path == AppRoutePaths.earnCalendar) return '15:56';
+  if (path == AppRoutePaths.earnValidatorSelection) return '16:12';
+  if (path == AppRoutePaths.earnAutoCompound) return '16:22';
+  if (path == AppRoutePaths.earnLiquidStaking) return '16:31';
+  if (path == AppRoutePaths.earnInsurance) return '16:42';
+  if (path == AppRoutePaths.earnAdvancedOrders) return '16:54';
+  if (path == AppRoutePaths.earnMultiChain) return '17:01';
+  if (path == AppRoutePaths.earnInstitutional) return '17:09';
+  if (path == AppRoutePaths.earnGuide) return '17:16';
+  if (path == AppRoutePaths.earnFAQ) return '17:23';
+  if (path == AppRoutePaths.earnNotifications) return '17:29';
+  if (path == AppRoutePaths.earnRecommendations) return '17:37';
+  if (path == AppRoutePaths.earnRegulatoryFramework) return '17:47';
+  if (path == AppRoutePaths.earnAuditReports) return '17:56';
+  if (path == AppRoutePaths.earnCustody) return '18:09';
+  if (path == AppRoutePaths.earnSuitabilityAssessment) return '18:18';
+  if (path == AppRoutePaths.earnInsuranceFundTransparency) return '18:29';
+  if (path == AppRoutePaths.earnTransactionReporting) return '18:37';
+  if (path == AppRoutePaths.earnApiDocumentation) return '18:47';
+  if (path == AppRoutePaths.earnProofOfReserves) return '18:58';
+  if (path == AppRoutePaths.earnRiskDashboard) return '19:08';
+  if (path == AppRoutePaths.earnSlashingHistory) return '19:17';
+  if (path == AppRoutePaths.earnValidatorHealthMonitor) return '19:25';
+  if (path == AppRoutePaths.earnRiskScoreCalculator) return '19:37';
+  if (path == AppRoutePaths.earnEmergencyActions) return '19:51';
+  if (path == AppRoutePaths.earnContingencyPlan) return '19:58';
+  if (path == AppRoutePaths.earnSocialFeed) return '20:05';
+  if (path == AppRoutePaths.earnCommunityGovernance) return '20:12';
+  if (path == AppRoutePaths.earnProposals) return '20:20';
+  if (path == AppRoutePaths.earnVotingProposal('prop001')) return '20:29';
+  if (path == AppRoutePaths.earnVoting) return '20:43';
+  if (path == AppRoutePaths.earnForum) return '20:47';
+  if (path == AppRoutePaths.earnWebhooks) return '20:55';
+  if (path == AppRoutePaths.earnDataExport) return '21:04';
+  if (path == AppRoutePaths.earnThirdPartyIntegrations) return '21:12';
+  if (path == AppRoutePaths.earnDeveloperConsole) return '21:17';
+  if (path == AppRoutePaths.earnSavings) return '09:22';
+  if (path == AppRoutePaths.earnSavingsPortfolio) return '09:51';
+  if (path == AppRoutePaths.earnSavingsHistory) return '09:59';
+  if (path == AppRoutePaths.earnSavingsGuide) return '10:08';
+  if (path == AppRoutePaths.earnSavingsFAQ) return '10:19';
+  if (path == AppRoutePaths.earnSavingsNotifications) return '10:29';
+  if (path == AppRoutePaths.earnSavingsRecommendations) return '10:38';
+  if (path == AppRoutePaths.earnSavingsRiskAssessment) return '10:46';
+  if (path == AppRoutePaths.earnSavingsComparison) return '10:58';
+  if (path == AppRoutePaths.earnSavingsAutoCompound) return '11:11';
+  if (path == AppRoutePaths.earnSavingsGoals) return '11:19';
+  if (path == AppRoutePaths.earnSavingsAnalytics) return '11:29';
+  if (path == AppRoutePaths.earnSavingsRebalance) return '11:45';
+  if (path == AppRoutePaths.earnSavingsNotificationPreferences) return '11:58';
+  if (path == AppRoutePaths.earnSavingsDca) return '12:08';
+  if (path == AppRoutePaths.earnSavingsSmartSuggestions) return '12:18';
+  if (path == AppRoutePaths.earnSavingsExport) return '12:29';
+  if (path == AppRoutePaths.earnSavingsBacktest) return '12:43';
+  if (path == AppRoutePaths.earnSavingsAutoPilot) return '12:55';
+  if (path == AppRoutePaths.earnSavingsLadder) return '13:12';
+  if (path == AppRoutePaths.earnSavingsWhatIf) return '14:06';
+  if (path == AppRoutePaths.earnSavingsProductSample) return '09:32';
+  if (path == AppRoutePaths.earnSavingsRedeemPos001) return '09:39';
+  if (path == AppRoutePaths.earnSavingsReceipt) return '09:44';
   if (path == AppRoutePaths.rewards ||
       path == AppRoutePaths.arenaPoints ||
       path == AppRoutePaths.arenaFlowMap ||
@@ -3461,102 +4490,9 @@ String _visualQaStatusBarTimeForPath(String path) {
 
 final List<GoRoute> _homeOutgoingPlaceholders = [
   _placeholderRoute(AppRoutePaths.p2p, 'P2P'),
-  _placeholderRoute('/earn/staking', 'Staking'),
-  _placeholderRoute('/earn/savings', 'Savings'),
 ];
 
-final List<GoRoute> _launchpadOutgoingPlaceholders = [
-  _placeholderRoute(
-    AppRoutePaths.launchpadBatchClaim,
-    'Batch Claim',
-    backPath: AppRoutePaths.launchpadStaking,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadClaimReceiptPos001,
-    'Claim Receipt',
-    backPath: AppRoutePaths.launchpadStaking,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadBridgeCompare,
-    'Bridge Compare',
-    backPath: AppRoutePaths.launchpadIdoBridgeSample,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadBridgeOrderTx001,
-    'Bridge Order',
-    backPath: AppRoutePaths.launchpadIdoBridgeSample,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadReceiptSub001,
-    'Launchpad Receipt',
-    backPath: AppRoutePaths.launchpadPortfolio,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadSample,
-    'Launchpad Detail',
-    backPath: AppRoutePaths.launchpad,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadNotifSound,
-    'Notification Sound',
-    backPath: AppRoutePaths.launchpad,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadEventLog,
-    'Event Log',
-    backPath: AppRoutePaths.launchpad,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadAbiDiff,
-    'ABI Diff',
-    backPath: AppRoutePaths.launchpad,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadAddressBook,
-    'Address Book',
-    backPath: AppRoutePaths.launchpad,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadWebhooks,
-    'Webhooks',
-    backPath: AppRoutePaths.launchpad,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadGasTracker,
-    'Gas Tracker',
-    backPath: AppRoutePaths.launchpad,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadRebalance,
-    'Rebalance',
-    backPath: AppRoutePaths.launchpad,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadMultisig,
-    'Multi-sig',
-    backPath: AppRoutePaths.launchpad,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadSwapAggregator,
-    'Swap Aggregator',
-    backPath: AppRoutePaths.launchpad,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadLimitOrders,
-    'Limit Orders',
-    backPath: AppRoutePaths.launchpad,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadDcaBuilder,
-    'DCA Builder',
-    backPath: AppRoutePaths.launchpad,
-  ),
-  _placeholderRoute(
-    AppRoutePaths.launchpadRiskAnalytics,
-    'Risk Analytics',
-    backPath: AppRoutePaths.launchpad,
-  ),
-];
+final List<GoRoute> _launchpadOutgoingPlaceholders = [];
 
 final List<GoRoute> _marketOutgoingPlaceholders = [];
 
@@ -3583,13 +4519,7 @@ final List<GoRoute> _adminOutgoingPlaceholders = [
   ),
 ];
 
-final List<GoRoute> _profileOutgoingPlaceholders = [
-  _placeholderRoute(
-    AppRoutePaths.onboarding,
-    'Onboarding',
-    backPath: AppRoutePaths.profile,
-  ),
-];
+final List<GoRoute> _profileOutgoingPlaceholders = [];
 
 final List<GoRoute> _tradeMarginOutgoingPlaceholders = [];
 
@@ -3611,6 +4541,8 @@ final List<GoRoute> _tradeCopyTradingOutgoingPlaceholders = [
 ];
 
 final List<GoRoute> _tradeBotsOutgoingPlaceholders = [];
+
+final List<GoRoute> _earnRiskOutgoingPlaceholders = [];
 
 GoRoute _placeholderRoute(
   String path,

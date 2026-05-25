@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.dart';
 import 'package:vit_trade_flutter/features/launchpad/presentation/launchpad_page.dart';
 import 'package:vit_trade_flutter/features/launchpad/presentation/launchpad_portfolio_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/launchpad_receipt_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
@@ -97,7 +98,7 @@ void main() {
     expect(find.text('Đã nhận'), findsWidgets);
   });
 
-  testWidgets('SC-296 subscription tap navigates to receipt placeholder', (
+  testWidgets('SC-296 subscription tap navigates to receipt screen', (
     tester,
   ) async {
     await pumpPortfolio(tester);
@@ -107,7 +108,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Launchpad Receipt'), findsOneWidget);
+    expect(find.byType(LaunchpadReceiptPage), findsOneWidget);
+    expect(find.text('Biên lai'), findsOneWidget);
   });
 
   testWidgets('SC-296 header back returns to launchpad', (tester) async {
