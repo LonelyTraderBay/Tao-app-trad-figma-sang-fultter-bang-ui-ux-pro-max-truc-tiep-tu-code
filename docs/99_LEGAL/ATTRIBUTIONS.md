@@ -1,3 +1,7 @@
-This Figma Make file includes components from [shadcn/ui](https://ui.shadcn.com/) used under [MIT license](https://github.com/shadcn-ui/ui/blob/main/LICENSE.md).
+# Attributions
 
-This Figma Make file includes photos from [Unsplash](https://unsplash.com) used under [license](https://unsplash.com/license).
+The active app is Flutter-only. Historical web/Figma Make dependencies were
+removed from the runtime source on 2026-05-26.
+
+Retain any third-party attribution required by future committed assets or
+packages in this file.

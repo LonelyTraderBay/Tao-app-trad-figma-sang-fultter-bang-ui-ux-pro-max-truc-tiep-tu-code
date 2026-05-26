@@ -2,10 +2,10 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../../app/theme/app_colors.dart';
-import '../../app/theme/app_gradients.dart';
-import '../../app/theme/app_radii.dart';
-import '../../app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_gradients.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 
 class VitPhoneFrame extends StatelessWidget {
   const VitPhoneFrame({

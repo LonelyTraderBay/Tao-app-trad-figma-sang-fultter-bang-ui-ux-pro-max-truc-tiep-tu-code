@@ -14,8 +14,7 @@ void main() {
   const route = String.fromEnvironment('CAPTURE_ROUTE', defaultValue: '/home');
   const outputPath = String.fromEnvironment(
     'CAPTURE_OUT',
-    defaultValue:
-        '../output/flutter-ui-reference/flutter-candidates/screenshots/capture.png',
+    defaultValue: 'run-artifacts/visual-qa/capture.png',
   );
   const width = int.fromEnvironment('CAPTURE_WIDTH', defaultValue: 440);
   const height = int.fromEnvironment('CAPTURE_HEIGHT', defaultValue: 956);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'shell_render_mode.dart';
-import 'vit_bottom_nav.dart';
-import 'vit_status_bar.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
 class VitAppShell extends StatefulWidget {
   const VitAppShell({

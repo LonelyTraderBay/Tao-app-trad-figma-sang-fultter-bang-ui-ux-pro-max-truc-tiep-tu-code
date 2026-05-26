@@ -4,9 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
-import 'package:vit_trade_flutter/features/earn/presentation/staking_community_governance_page.dart';
-import 'package:vit_trade_flutter/features/earn/presentation/staking_earn_page.dart';
-import 'package:vit_trade_flutter/features/earn/presentation/staking_forum_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_community_governance_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_earn_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_forum_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {

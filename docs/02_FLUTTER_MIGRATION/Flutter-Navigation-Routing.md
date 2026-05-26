@@ -1,84 +1,30 @@
-# Flutter Navigation Routing
+# Flutter Navigation And Routing
 
-Use this file to implement Flutter navigation without drifting from the React route manifest.
+Use this file to keep Flutter navigation consistent.
 
 ## Source Of Truth
 
-- Exact route coverage: `output/flutter-ui-reference/manifest.json`.
-- Screen execution status: `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`.
-- Navigation edges: `Navigation Graph` section in the master plan.
-- Unresolved edges marked `NEEDS_MANUAL_CONFIRM` must not be silently ignored.
+- Router: `flutter_app/lib/app/router/app_router.dart`.
+- Route tests: `flutter_app/test/app/router/` and feature tests.
+- Screen coverage tracker: `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`.
 
-## Router Decision
+## Rules
 
-- Use `go_router`.
-- Put router setup under `flutter_app/lib/app/router/app_router.dart`.
-- Add routes screen by screen. Do not generate all 401 screen implementations in one pass.
-- Route paths should match manifest `resolvedUrl` for the ported screen unless the user explicitly approves a Flutter-only path change.
+- Use `go_router` route names and path helpers already defined in the router.
+- Keep dynamic route ids stable and test representative sample ids.
+- Prefer redirects over duplicate route implementations when two paths represent
+  the same screen state.
+- Do not add Arena or Prediction bottom-nav tabs unless product docs are updated.
+- For new routes, add route registration, screen implementation, repository/mock
+  data, and tests in the same change.
 
-## Route Naming
+## Verification
 
-Use stable names tied to checklist IDs:
+Run from `flutter_app/`:
 
-| Checklist | Example route name |
-| --- | --- |
-| `SC-001` | `sc001Login` |
-| `SC-007` | `sc007Home` |
-| `SC-030` | `sc030PredictionEventDetail` |
-| `SC-049` | `sc049TradePair` |
+```bash
+flutter test test/app/router
+flutter test test/features/<module>
+```
 
-The checklist ID remains the migration tracking key even if display names change.
-
-## Dynamic Sample Params
-
-Use the same sample params as the capture pipeline and master plan:
-
-| Param | Sample |
-| --- | --- |
-| `pairId` | `btcusdt` |
-| `asset` | `USDT` |
-| `assetId` | `btc` |
-| `txId` | `tx001` |
-| `eventId` | `pred-1` |
-| `orderId` | `p2p001` |
-| `adId` | `ad001` |
-| `merchantId` | `mc001` |
-| `modeId` | `mode001` |
-| `creatorId` | `cr001` |
-| `challengeId` | `ch003` |
-| `providerId` | `provider001` |
-| `copyId` | `copy001` |
-| `proposalId` | `prop001` |
-
-## Bottom Nav Destinations
-
-| Tab | Route |
-| --- | --- |
-| Home | `/home` |
-| Markets | `/markets` |
-| Trade | `/trade` |
-| Wallet | `/wallet` |
-| Profile | `/profile` |
-
-Prediction Markets, P2P, Arena, Earn, Launchpad, DCA, Referral, Support, and Admin are reached through in-app links, cards, search, or module entry points, not as extra bottom tabs.
-
-## Bottom Nav Visual Standard
-
-The bottom nav follows the Home native standard from `Flutter-Native-Design-Standard.md`:
-
-- Native height is `DeviceMetrics.nativeBottomChrome = 56`.
-- Visual-QA height is `DeviceMetrics.bottomChrome = 90`.
-- Active state uses `AppColors.navActive` / `AppColors.primary` for all tabs.
-- Center Trade action uses `AppGradients.navCenter`.
-- Do not create per-module active colors for Markets, Trade, Wallet, Profile, Prediction, or any nested module.
-- Bottom nav may auto-hide in `ShellRenderMode.native`; it stays visible in `ShellRenderMode.visualQa` for screenshot parity.
-
-## Navigation QA
-
-For each `SC-xxx`:
-
-1. Verify the Flutter route path matches manifest `resolvedUrl`.
-2. Verify required incoming links from the Navigation Graph.
-3. Verify visible buttons/cards navigate to the same target as React source when the edge is confirmed.
-4. If an edge is `NEEDS_MANUAL_CONFIRM`, document the decision before marking QA done.
-5. Keep back behavior working on all inner/detail screens.
+Run full `flutter test` when route shell behavior or shared navigation changes.

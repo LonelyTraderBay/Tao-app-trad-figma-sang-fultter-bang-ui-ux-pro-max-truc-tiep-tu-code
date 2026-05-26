@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
-import 'package:vit_trade_flutter/features/predictions/presentation/prediction_event_detail_page.dart';
-import 'package:vit_trade_flutter/features/predictions/presentation/prediction_order_receipt_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/prediction_event_detail_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/prediction_order_receipt_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -58,7 +58,7 @@ void main() {
     expect(found.event?.id, 'pred-1');
   });
 
-  testWidgets('SC-035 renders the React baseline missing receipt state', (
+  testWidgets('SC-035 renders the Flutter missing receipt state', (
     tester,
   ) async {
     await pumpReceipt(tester, 'p2p001');

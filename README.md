@@ -1,40 +1,61 @@
-# VitTrade Mobile Trading App
+# VitTrade Flutter Enterprise Mono-Repo
 
-React 18 + TypeScript + Vite reference app used as the source UI for a screen-by-screen Flutter migration.
+VitTrade is maintained as a Flutter-first mobile trading app. The former
+React/Vite app, root npm tooling, and web screenshot baseline were retired on
+2026-05-26. The Flutter package under `flutter_app/` is the app source of truth.
 
-## Start Here
+## Repo Layout
 
-- AI/coding agents: read `AGENTS.md`, then `docs/00_START_HERE.md`.
-- Flutter migration plan: `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`.
-- Screenshot capture reference: `docs/02_FLUTTER_MIGRATION/Flutter-UI-Reference.md`.
-- Design/product rules: `docs/03_DESIGN_SYSTEM/Guidelines.md`.
-- Legal attribution: `docs/99_LEGAL/ATTRIBUTIONS.md`.
-
-## Current Flutter Reference Baseline
-
-- `401` screens from `output/flutter-ui-reference/manifest.json`.
-- `802` screenshots in `output/flutter-ui-reference/screenshots/`.
-- Standard viewport: `440x956`, dark theme.
-
-## Run The App
-
-```bash
-npm install
-npm run dev
+```text
+.
+├── .codex/              # Agent skills and local AI tooling
+├── docs/                # Product, design, engineering, QA, and legal docs
+├── flutter_app/         # Flutter app package
+├── AGENTS.md            # Coding rules for AI agents
+├── README.md            # This file
+└── .gitignore
 ```
 
-## Build And Test
+Generated artifacts, logs, IDE state, and emulator captures do not belong in
+Git. Use `flutter_app/run-artifacts/` for temporary QA output.
 
-```bash
-npm run build
-npm run test:run
+## Flutter App Structure
+
+```text
+flutter_app/lib/
+├── app/                 # Bootstrap, router facade, theme
+├── core/                # Config, network boundaries, errors, utilities
+├── features/            # Feature modules
+│   └── <feature>/
+│       ├── domain/      # Entities, repository contracts, use cases
+│       ├── data/        # Data sources, implementations, providers
+│       └── presentation/
+│           ├── pages/
+│           ├── widgets/
+│           └── controllers/
+└── shared/              # Reusable layout and design-system widgets
 ```
 
-## Capture Flutter UI Reference
+`flutter_app/lib/app/router/app_router.dart` remains the public router import
+and delegates to part files for paths, route groups, helpers, and visual QA
+metadata.
+
+## Commands
+
+Run commands from `flutter_app/`:
 
 ```bash
-npm run capture:ui -- --smoke
-npm run capture:ui
+flutter pub get
+dart format .
+flutter analyze
+flutter test --reporter=compact
+flutter run
 ```
 
-Generated capture artifacts live in `output/flutter-ui-reference/`.
+## Docs
+
+- Start here for agent work: `docs/00_START_HERE.md`
+- Coding constraints: `AGENTS.md`
+- Design rules: `docs/03_DESIGN_SYSTEM/Guidelines.md`
+- Architecture reference: `docs/05_ARCHITECTURE/VitTrade-Enterprise-Architecture-Report.md`
+- Flutter coverage and QA docs: `docs/02_FLUTTER_MIGRATION/`

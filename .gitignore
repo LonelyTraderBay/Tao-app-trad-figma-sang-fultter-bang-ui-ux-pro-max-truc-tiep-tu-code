@@ -1,1 +1,25 @@
-node_modules
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+flutter_app/.dart_tool/
+flutter_app/build/
+flutter_app/run-artifacts/
+flutter_app/tmp/
+flutter_app/*.log
+
+# IDE / OS
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Retired web tooling / generated artifacts
+node_modules/
+dist/
+.vite/
+output/
+*.log

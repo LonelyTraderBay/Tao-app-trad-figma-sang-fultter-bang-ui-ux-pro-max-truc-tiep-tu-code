@@ -1,85 +1,31 @@
 # HomePage Flutter Native Standard
 
-This file records the approved native Flutter UX standard for `SC-007 HomePage`.
-It complements the React screenshot baseline; it does not replace it.
+This file is the active Home reference after the 2026-05-26 Flutter-only
+cleanup. It no longer depends on deleted web screenshots.
 
-For cross-project Flutter migration work, the concise global contract is `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md`. This file is the Home-specific evidence and reference capture log behind that contract.
+## Source Of Truth
 
-## Status
+- Home implementation: `flutter_app/lib/features/home/`.
+- App shell/layout: `flutter_app/lib/shared/layout/`.
+- Theme tokens: `flutter_app/lib/app/theme/`.
+- Home tests: `flutter_app/test/features/home/`.
 
-- Screen: `SC-007 HomePage`
-- Route: `/home`
-- Runtime standard: `ShellRenderMode.native`
-- Visual parity mode: `ShellRenderMode.visualQa`
-- Approved native runtime target: emulator/real device behavior, not the fake phone frame
-- Approved native color direction: Bybit-inspired dark orange on neutral dark/OLED-clean surfaces
-- Approved visual standard: current Home native runtime after the softened portfolio shadow pass
-- Date recorded: 2026-05-19
+## Standard
 
-## Source Of Truth Boundaries
+- Home establishes the global dark runtime treatment for shared app chrome.
+- Use neutral dark backgrounds and surfaces.
+- Use the shared orange brand token for selected states and primary actions.
+- Keep bottom navigation globally consistent across modules.
+- Respect native safe areas and avoid fake device chrome in production runtime.
+- Use compact, scannable financial UI with clear risk/disclosure states.
 
-- Migration coverage still comes from `output/flutter-ui-reference/manifest.json`.
-- React parity screenshots remain in `output/flutter-ui-reference/screenshots/`.
-- Flutter native approval captures live in `output/flutter-ui-reference/flutter-candidates/screenshots/home/`.
-- Do not overwrite the React baseline with native captures.
-- Do not tick master plan status unless Flutter UI, navigation, BE draft, and QA acceptance are complete.
-- The Bybit-inspired Flutter native palette is an original VitTrade treatment; it is not an exact copy of Bybit brand assets.
+## Verification
 
-## Global Standard Scope
+Run from `flutter_app/`:
 
-The following Home decisions apply to every later Flutter native screen unless a documented screen-specific exception passes the exception process:
+```bash
+flutter analyze
+flutter test test/features/home
+```
 
-- brand color, selected states, active nav, CTA, and focus styling use `AppColors.primary = 0xFFE58A00`;
-- neutral surfaces use `AppColors.bg`, `surface`, `surface2`, `surface3`, `cardBorder`, `divider`, and `borderSolid`;
-- native bottom nav active state is the same Home brand color across Home, Markets, Trade, Wallet, and Profile;
-- page padding, input/CTA heights, card radii, text scale, and bottom insets use the shared Home tokens;
-- legacy React blue values are visual-QA history, not native Flutter brand.
-
-## Approved Native Captures
-
-Use these captures as the current Home native UX reference:
-
-| Capture | Purpose |
-| --- | --- |
-| `output/flutter-ui-reference/flutter-candidates/screenshots/home/SC-007__pixel10-pro-xl-2-latest.png` | Pixel 10 Pro XL (2) latest installed native runtime view. |
-| `output/flutter-ui-reference/flutter-candidates/screenshots/home/SC-007__android-native-area-top.png` | Native top state with OS status bar and Home header visible. |
-| `output/flutter-ui-reference/flutter-candidates/screenshots/home/SC-007__android-native-area-scroll.png` | Mid-scroll state showing Home header and bottom nav hidden. |
-| `output/flutter-ui-reference/flutter-candidates/screenshots/home/SC-007__android-native-area-bottom-final.png` | End-scroll state showing final content clear of app-owned bottom chrome. |
-| `output/flutter-ui-reference/flutter-candidates/screenshots/home/SC-007__bybit-orange-top.png` | Native top state after the dark orange brand refresh. |
-| `output/flutter-ui-reference/flutter-candidates/screenshots/home/SC-007__bybit-orange-scroll.png` | Mid-scroll state after the dark orange brand refresh, with app chrome hidden. |
-| `output/flutter-ui-reference/flutter-candidates/screenshots/home/SC-007__bybit-orange-bottom.png` | Bottom state after the dark orange brand refresh, confirming usable area and contrast. |
-| `output/flutter-ui-reference/flutter-candidates/screenshots/home/SC-007__portfolio-shadow-softened-top.png` | Approved Home top state after reducing the portfolio/hero card shadow at the right and bottom edges. |
-
-## Native UX Decisions
-
-- Use the real OS status bar and Flutter/OS safe areas.
-- Do not render `VitPhoneFrame`, `VitStatusBar`, fake dynamic island, or fake home indicator in native runtime.
-- Home header starts visible, hides on downward vertical scroll, and reappears on upward scroll or near top.
-- `VitAppShell` hides the native bottom nav on downward vertical scroll and restores it on upward scroll, top, or route change.
-- Native bottom nav uses `DeviceMetrics.nativeBottomChrome = 56`.
-- Home native content uses compact section rhythm: outer content gap `12`.
-- Home native bottom scroll inset is `DeviceMetrics.nativeBottomChrome + MediaQuery.padding.bottom + 16`.
-- Flutter native brand uses `AppColors.primary = 0xFFE58A00`, `AppColors.primaryDark = 0xFFB96000`, and `AppColors.primarySoft = 0xFFF5A524`.
-- Flutter native surfaces use neutral charcoal values to reduce the previous blue tint and make the content read cleaner on real devices.
-- Portfolio/hero card depth should stay subtle: use a light `VitCardVariant.hero` shadow, not a strong glow on the right or bottom edge.
-- Portfolio glow should stay inside the card and act as a soft highlight, not as an outer halo.
-
-## Visual QA Compatibility
-
-Visual QA remains separate:
-
-- `ShellRenderMode.visualQa` uses `VitPhoneFrame`, `VitStatusBar`, fixed `440x956` viewport, and full bottom chrome.
-- Visual QA bottom chrome remains `DeviceMetrics.bottomChrome = 90`.
-- Home visual QA spacing should not inherit native-only compact spacing unless a future task intentionally updates the React parity target.
-- React screenshots in `output/flutter-ui-reference/screenshots/` remain the migration baseline even after native brand refresh captures are approved.
-
-## Guidance For Later Screens
-
-Use this Home screen as the practical native UX bar for future Flutter phone screens:
-
-- Prefer real device safe areas over fake device chrome in native runtime.
-- Keep repeated navigation chrome compact and hide it during downward scroll when the screen is scroll-heavy.
-- Preserve minimum tap targets and readable financial data; do not trade clarity for density.
-- Use the approved Home card treatment as the default for high-value hero cards: dark gradient, soft orange accent, restrained shadow.
-- Keep Prediction Markets value surfaces and Open Arena points-only surfaces visually and semantically separate.
-- Do not copy module-local palettes, per-module nav accents, or old React blue-tinted surfaces into native runtime.
+Use emulator/device review for visual changes.

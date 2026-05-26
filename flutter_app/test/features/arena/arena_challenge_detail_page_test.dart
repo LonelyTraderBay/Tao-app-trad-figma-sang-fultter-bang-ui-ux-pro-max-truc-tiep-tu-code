@@ -4,10 +4,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
-import 'package:vit_trade_flutter/features/arena/presentation/arena_challenge_detail_page.dart';
-import 'package:vit_trade_flutter/features/arena/presentation/arena_creator_page.dart';
-import 'package:vit_trade_flutter/features/arena/presentation/arena_mode_detail_page.dart';
-import 'package:vit_trade_flutter/features/predictions/presentation/prediction_event_detail_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_challenge_detail_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_creator_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_mode_detail_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/prediction_event_detail_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {

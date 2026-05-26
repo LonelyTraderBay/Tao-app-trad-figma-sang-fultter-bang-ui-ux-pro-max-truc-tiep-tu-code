@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../app/theme/app_colors.dart';
-import '../../app/theme/app_radii.dart';
-import '../../app/theme/app_spacing.dart';
-import 'vit_card.dart';
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class VitSkeleton extends StatefulWidget {
   const VitSkeleton({

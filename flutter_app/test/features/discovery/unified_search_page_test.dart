@@ -4,10 +4,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/discovery/data/discovery_repository.dart';
-import 'package:vit_trade_flutter/features/discovery/presentation/topic_hub_page.dart';
-import 'package:vit_trade_flutter/features/discovery/presentation/unified_search_page.dart';
-import 'package:vit_trade_flutter/features/markets/presentation/pair_detail_page.dart';
-import 'package:vit_trade_flutter/features/predictions/presentation/predictions_home_page.dart';
+import 'package:vit_trade_flutter/features/discovery/presentation/pages/topic_hub_page.dart';
+import 'package:vit_trade_flutter/features/discovery/presentation/pages/unified_search_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/pair_detail_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/predictions_home_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {

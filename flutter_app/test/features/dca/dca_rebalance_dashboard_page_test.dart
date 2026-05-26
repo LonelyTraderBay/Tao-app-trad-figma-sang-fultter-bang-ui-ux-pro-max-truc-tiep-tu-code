@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
-import 'package:vit_trade_flutter/features/dca/presentation/dca_rebalance_dashboard_page.dart';
+import 'package:vit_trade_flutter/features/dca/presentation/pages/dca_rebalance_dashboard_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
@@ -50,9 +50,7 @@ void main() {
     );
   });
 
-  testWidgets('SC-171 renders React baseline missing config state', (
-    tester,
-  ) async {
+  testWidgets('SC-171 renders Flutter missing config state', (tester) async {
     await pumpRebalanceDashboard(tester);
 
     expect(find.byType(DCARebalanceDashboard), findsOneWidget);

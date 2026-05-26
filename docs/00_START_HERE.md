@@ -1,91 +1,71 @@
 # Start Here
 
-This repository has many historical guidance files. This file is the required reading order for AI agents so migration work follows one path.
+VitTrade is now a Flutter enterprise mono-repo. The former React/Vite app and
+web screenshot baseline were removed on 2026-05-26.
 
-## Required AI Reading Order
+## Required Reading Order
 
-1. Read root `AGENTS.md` for repo coding constraints.
-2. Read this file.
-3. Read `docs/01_AI_RULES/AI_EXECUTION_CONTRACT.md`.
-4. Read `docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md`.
-5. Read `docs/02_FLUTTER_MIGRATION/Flutter-Migration-Execution-Runbook.md`.
-6. Read `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md`.
-7. Read `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md`.
-8. Read `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`.
-9. Read the Flutter foundation docs in `docs/02_FLUTTER_MIGRATION/`.
-10. Read `docs/03_DESIGN_SYSTEM/Guidelines.md`.
-11. Read screen-specific references only when working on that screen.
+1. `AGENTS.md`
+2. `docs/00_START_HERE.md`
+3. `docs/01_AI_RULES/AI_EXECUTION_CONTRACT.md`
+4. `docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md`
+5. `docs/02_FLUTTER_MIGRATION/Flutter-App-Foundation.md`
+6. `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md`
+7. `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md`
+8. `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`
+9. `docs/03_DESIGN_SYSTEM/Guidelines.md`
+10. Screen- or module-specific references only when working on that area.
 
 ## Source Of Truth
 
-- Migration coverage: `output/flutter-ui-reference/manifest.json` and `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`.
-- Flutter native color/size/chrome standard: `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md` and `docs/04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md`.
-- Module identity standard: `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md`.
-- Visual parity: `output/flutter-ui-reference/screenshots/` for `ShellRenderMode.visualQa` structure/content comparison.
-- Product and design rules: `docs/03_DESIGN_SYSTEM/Guidelines.md`.
-- Coding constraints for this React repo: root `AGENTS.md`.
-- Generated capture artifacts: `output/flutter-ui-reference/`.
+- Flutter app package: `flutter_app/`
+- App source: `flutter_app/lib/`
+- Router facade: `flutter_app/lib/app/router/app_router.dart`
+- Tests: `flutter_app/test/`
+- Design rules: `docs/03_DESIGN_SYSTEM/Guidelines.md`
+- Generated QA artifacts: `flutter_app/run-artifacts/`
 
-## Current Baseline
+## Current Architecture
 
-- Total Flutter migration screens: `401`.
-- Screenshot set: `802` PNG files, with one viewport and one full-page image per screen.
-- Viewport: `440x956`.
-- Theme: dark.
-- Capture behavior: authenticated baseline with coachmarks disabled.
+```text
+flutter_app/lib/
+├── app/        # Bootstrap, router facade, theme
+├── core/       # Config, network boundaries, errors, utilities
+├── features/   # Feature modules with domain/data/presentation layers
+└── shared/     # Shared layout and design-system widgets
+```
 
-## Current Module Counts
+Screens live under `features/<feature>/presentation/pages/`. The router facade
+keeps the public `createAppRouter`, `appRouter`, `AppRoutePaths`, and
+`AppRouteNames` API while delegating implementation to router part files.
 
-| Module | Screens |
-| --- | ---: |
-| trade | 87 |
-| p2p | 73 |
-| earn | 70 |
-| arena | 26 |
-| launchpad | 24 |
-| markets | 22 |
-| wallet | 21 |
-| predictions | 17 |
-| profile | 13 |
-| dca | 11 |
-| auth | 6 |
-| referral | 5 |
-| dev | 5 |
-| admin | 4 |
-| cross-module | 4 |
-| discovery | 3 |
-| support | 3 |
-| home | 1 |
-| news | 1 |
-| notifications | 1 |
-| rewards | 1 |
-| enterprise-states | 1 |
-| onboarding | 1 |
-| demo | 1 |
+## Default Verification
+
+Run from `flutter_app/`:
+
+```bash
+flutter pub get
+dart format .
+flutter analyze
+flutter test --reporter=compact
+```
+
+Use emulator/device validation when layout, navigation, visual QA, or platform
+behavior changes.
 
 ## Docs Map
 
 | Path | Purpose |
 | --- | --- |
-| `docs/01_AI_RULES/AI_EXECUTION_CONTRACT.md` | Hard migration rules for AI execution. |
+| `AGENTS.md` | Active coding constraints for agents. |
+| `docs/01_AI_RULES/AI_EXECUTION_CONTRACT.md` | Execution rules after Flutter-only cleanup. |
 | `docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md` | Conflict resolution when docs disagree. |
-| `docs/02_FLUTTER_MIGRATION/Flutter-Migration-Execution-Runbook.md` | Single execution order for Flutter migration stages. |
-| `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md` | Global Flutter native standard based on `SC-007 HomePage` colors, sizes, chrome, and shared component treatment. |
-| `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md` | Controlled module identity layer: what may differ by module and what must stay globally consistent. |
-| `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md` | Screen-by-screen migration tracker and BE draft. |
-| `docs/02_FLUTTER_MIGRATION/Flutter-UI-Reference.md` | Screenshot capture pipeline and visual baseline notes. |
-| `docs/02_FLUTTER_MIGRATION/Flutter-App-Foundation.md` | Flutter project location, stack defaults, and app foundation rules. |
-| `docs/02_FLUTTER_MIGRATION/Flutter-Design-Tokens.md` | Token mapping from React CSS to Flutter theme constants. |
-| `docs/02_FLUTTER_MIGRATION/Flutter-Component-Mapping.md` | React-to-Flutter shared widget mapping. |
-| `docs/02_FLUTTER_MIGRATION/Flutter-Navigation-Routing.md` | Route, bottom nav, and dynamic param rules for Flutter. |
-| `docs/02_FLUTTER_MIGRATION/Flutter-Visual-QA.md` | Screenshot comparison workflow and visual acceptance criteria. |
-| `docs/03_DESIGN_SYSTEM/Guidelines.md` | Product/design rules. |
-| `docs/04_SCREEN_REFERENCES/home/` | Home screen pixel, design, and navigation references. |
-| `docs/04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md` | Approved Flutter native UX reference captures and decisions for `SC-007 HomePage`; does not replace the React baseline. |
-| `docs/05_ARCHITECTURE/VitTrade-Enterprise-Architecture-Report.md` | Architecture reference. It must not override the manifest or master plan. |
-| `docs/99_LEGAL/ATTRIBUTIONS.md` | Third-party attribution and legal notices. |
-| `.codex/skills/ui-ux-pro-max/SKILL.md` | Optional local Codex design-assist skill. It is not a source of truth. |
+| `docs/02_FLUTTER_MIGRATION/` | Retained path for Flutter engineering, coverage, and QA docs. |
+| `docs/03_DESIGN_SYSTEM/Guidelines.md` | Product and design rules. |
+| `docs/05_ARCHITECTURE/VitTrade-Enterprise-Architecture-Report.md` | Architecture reference; Flutter source wins on conflict. |
 
-## Future Guidance Files
+## Retired Material
 
-Add new long-term guidance under `docs/` and register it in this file. Do not add competing migration instructions under `output/`; `output/` is reserved for generated artifacts.
+Any reference to React source, Vite tooling, root npm scripts, or
+`output/flutter-ui-reference` is historical unless explicitly marked as current
+Flutter guidance after 2026-05-26.

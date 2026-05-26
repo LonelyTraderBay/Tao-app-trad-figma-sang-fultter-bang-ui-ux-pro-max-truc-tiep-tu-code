@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 
 final class AppTextStyles {
   const AppTextStyles._();

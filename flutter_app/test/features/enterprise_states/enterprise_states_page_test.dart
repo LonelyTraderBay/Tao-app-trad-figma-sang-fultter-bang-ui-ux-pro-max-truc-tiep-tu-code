@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/auth/presentation/login_page.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/pages/login_page.dart';
 import 'package:vit_trade_flutter/features/enterprise_states/data/enterprise_states_repository.dart';
-import 'package:vit_trade_flutter/features/enterprise_states/presentation/enterprise_states_page.dart';
-import 'package:vit_trade_flutter/features/markets/presentation/market_list_page.dart';
-import 'package:vit_trade_flutter/features/profile/presentation/kyc_page.dart';
+import 'package:vit_trade_flutter/features/enterprise_states/presentation/pages/enterprise_states_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/market_list_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/kyc_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {

@@ -4,9 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.dart';
-import 'package:vit_trade_flutter/features/launchpad/presentation/launchpad_batch_claim_page.dart';
-import 'package:vit_trade_flutter/features/launchpad/presentation/launchpad_claim_receipt_page.dart';
-import 'package:vit_trade_flutter/features/launchpad/presentation/launchpad_staking_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_batch_claim_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_claim_receipt_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_staking_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {

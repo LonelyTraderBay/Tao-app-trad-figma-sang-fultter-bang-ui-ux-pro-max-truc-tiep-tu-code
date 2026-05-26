@@ -4,9 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
-import 'package:vit_trade_flutter/features/markets/presentation/market_heatmap_page.dart';
-import 'package:vit_trade_flutter/features/markets/presentation/market_list_page.dart';
-import 'package:vit_trade_flutter/features/markets/presentation/pair_detail_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/market_heatmap_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/market_list_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/pair_detail_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -98,23 +98,22 @@ void main() {
     expect(find.byKey(MarketHeatmapPage.tileKey('matic')), findsNothing);
   });
 
-  testWidgets(
-    'SC-013 opens selected coin detail and routes to pair detail',
-    (tester) async {
-      await pumpHeatmap(tester);
+  testWidgets('SC-013 opens selected coin detail and routes to pair detail', (
+    tester,
+  ) async {
+    await pumpHeatmap(tester);
 
-      await tester.tap(find.byKey(MarketHeatmapPage.tileKey('btc')));
-      await tester.pumpAndSettle();
+    await tester.tap(find.byKey(MarketHeatmapPage.tileKey('btc')));
+    await tester.pumpAndSettle();
 
-      expect(find.text('Bitcoin'), findsOneWidget);
-      expect(find.text('BTC/USDT · Layer 1'), findsOneWidget);
+    expect(find.text('Bitcoin'), findsOneWidget);
+    expect(find.text('BTC/USDT · Layer 1'), findsOneWidget);
 
-      await tester.tap(find.byKey(MarketHeatmapPage.detailButtonKey));
-      await tester.pumpAndSettle();
+    await tester.tap(find.byKey(MarketHeatmapPage.detailButtonKey));
+    await tester.pumpAndSettle();
 
-      expect(find.byType(PairDetailPage), findsOneWidget);
-    },
-  );
+    expect(find.byType(PairDetailPage), findsOneWidget);
+  });
 
   testWidgets('SC-013 back button returns to SC-008 Markets', (tester) async {
     await pumpHeatmap(tester);

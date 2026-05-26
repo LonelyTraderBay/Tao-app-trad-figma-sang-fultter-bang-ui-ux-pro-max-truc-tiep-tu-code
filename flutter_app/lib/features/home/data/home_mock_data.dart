@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 
 class HomeAnnouncement {
   const HomeAnnouncement({required this.text});

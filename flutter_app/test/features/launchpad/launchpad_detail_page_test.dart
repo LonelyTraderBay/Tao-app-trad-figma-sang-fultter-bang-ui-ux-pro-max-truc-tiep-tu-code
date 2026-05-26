@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.dart';
-import 'package:vit_trade_flutter/features/launchpad/presentation/launchpad_detail_page.dart';
-import 'package:vit_trade_flutter/features/launchpad/presentation/launchpad_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_detail_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
@@ -43,7 +43,7 @@ void main() {
     expect(snapshot.idoBridgeRoute, '/launchpad/idobridge/sample');
     expect(snapshot.receiptRoute, '/launchpad/receipt/new');
     expect(snapshot.stakingRoute, AppRoutePaths.launchpadStaking);
-    expect(snapshot.contractNotes, contains('React error baseline'));
+    expect(snapshot.contractNotes, contains('Flutter error state'));
     expect(
       snapshot.supportedStates,
       containsAll([
@@ -55,7 +55,7 @@ void main() {
     );
   });
 
-  testWidgets('SC-318 renders React sample error baseline', (tester) async {
+  testWidgets('SC-318 renders Flutter sample error state', (tester) async {
     await pumpDetail(tester);
 
     expect(find.byType(LaunchpadDetailPage), findsOneWidget);
