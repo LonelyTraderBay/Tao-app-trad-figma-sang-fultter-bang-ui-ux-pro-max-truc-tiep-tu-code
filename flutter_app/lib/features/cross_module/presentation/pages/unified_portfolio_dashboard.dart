@@ -16,7 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/cross_module/data/unified_portfolio_repository.dart';
+import 'package:vit_trade_flutter/app/providers/cross_module_controller_providers.dart';
 
 class UnifiedPortfolioDashboard extends ConsumerStatefulWidget {
   const UnifiedPortfolioDashboard({super.key, this.shellRenderMode});
@@ -40,9 +40,8 @@ class _UnifiedPortfolioDashboardState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(unifiedPortfolioRepositoryProvider)
-        .getDashboard();
+    final controller = ref.watch(unifiedPortfolioControllerProvider);
+    final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame

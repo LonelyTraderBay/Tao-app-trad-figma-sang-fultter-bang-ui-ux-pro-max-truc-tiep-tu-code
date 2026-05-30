@@ -15,14 +15,14 @@ final class MockRewardsRepository implements RewardsRepository {
       referralRoute: '/referral',
       leaderboardRoute: '/arena/leaderboard',
       summary: RewardSummaryDraft(
-        usdtClaimed: '35.0',
+        bonusPointsClaimed: '3,500',
         currentPoints: 2220,
         lockedPoints: 450,
         rank: 142,
         topPercent: 5,
         claimedCount: 5,
         pendingCount: 3,
-        pendingUsdt: '5.5',
+        pendingBonusPoints: '550',
         pendingPoints: 130,
         expiringCount: 8,
         completionLabel: '5/24 · 21%',
@@ -138,7 +138,7 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'Hằng ngày',
           status: RewardTaskStatus.active,
           progress: .58,
-          rewardLabel: '+5 USDT · +50 pts',
+          rewardLabel: '+120 Arena Points',
           kind: RewardAccentKind.daily,
         ),
         RewardTaskDraft(
@@ -148,7 +148,7 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'Hằng ngày',
           status: RewardTaskStatus.active,
           progress: .68,
-          rewardLabel: '+2 USDT · +100 pts',
+          rewardLabel: '+140 Arena Points',
           kind: RewardAccentKind.daily,
         ),
         RewardTaskDraft(
@@ -158,7 +158,7 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'Tất cả',
           status: RewardTaskStatus.active,
           progress: .33,
-          rewardLabel: '+15 USDT · +100 pts',
+          rewardLabel: '+260 Arena Points',
           kind: RewardAccentKind.referral,
         ),
         RewardTaskDraft(
@@ -168,7 +168,7 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'Hằng ngày',
           status: RewardTaskStatus.active,
           progress: .71,
-          rewardLabel: '+5 USDT · +100 pts',
+          rewardLabel: '+180 Arena Points',
           kind: RewardAccentKind.daily,
         ),
         RewardTaskDraft(
@@ -178,7 +178,7 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'Hằng ngày',
           status: RewardTaskStatus.active,
           progress: .40,
-          rewardLabel: '+1 USDT · +50 pts',
+          rewardLabel: '+70 Arena Points',
           kind: RewardAccentKind.daily,
         ),
         RewardTaskDraft(
@@ -188,7 +188,7 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'Flash',
           status: RewardTaskStatus.active,
           progress: 0,
-          rewardLabel: '+3 USDT · +100 pts',
+          rewardLabel: '+150 Arena Points',
           kind: RewardAccentKind.flash,
         ),
         RewardTaskDraft(
@@ -198,7 +198,7 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'Flash',
           status: RewardTaskStatus.active,
           progress: .33,
-          rewardLabel: '+12 USDT · +200 pts',
+          rewardLabel: '+320 Arena Points',
           kind: RewardAccentKind.flash,
         ),
         RewardTaskDraft(
@@ -208,7 +208,7 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'Flash',
           status: RewardTaskStatus.active,
           progress: .82,
-          rewardLabel: '+8 USDT · +150 pts',
+          rewardLabel: '+240 Arena Points',
           kind: RewardAccentKind.flash,
         ),
         RewardTaskDraft(
@@ -218,7 +218,7 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'Hằng ngày',
           status: RewardTaskStatus.completed,
           progress: 1,
-          rewardLabel: '+0.5 USDT · +30 pts',
+          rewardLabel: '+40 Arena Points',
           kind: RewardAccentKind.daily,
         ),
         RewardTaskDraft(
@@ -228,7 +228,7 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'P2P',
           status: RewardTaskStatus.completed,
           progress: 1,
-          rewardLabel: '+1 USDT · +40 pts',
+          rewardLabel: '+60 Arena Points',
           kind: RewardAccentKind.p2p,
         ),
         RewardTaskDraft(
@@ -238,17 +238,17 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'Học',
           status: RewardTaskStatus.completed,
           progress: 1,
-          rewardLabel: '+2 USDT · +50 pts',
+          rewardLabel: '+80 Arena Points',
           kind: RewardAccentKind.learn,
         ),
         RewardTaskDraft(
-          id: 'task-wallet',
-          title: 'Giữ \$500 trong Wallet',
-          subtitle: 'Duy trì tối thiểu \$500 trong 7 ngày',
-          filter: 'Tất cả',
+          id: 'task-trust',
+          title: 'Hoan tat trust checklist',
+          subtitle: 'Bat cac buoc an toan cong dong trong Open Arena',
+          filter: 'Arena',
           status: RewardTaskStatus.active,
           progress: .75,
-          rewardLabel: '+10 USDT · +200 pts',
+          rewardLabel: '+220 Arena Points',
           kind: RewardAccentKind.neutral,
         ),
         RewardTaskDraft(
@@ -278,7 +278,7 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'Học',
           status: RewardTaskStatus.active,
           progress: .50,
-          rewardLabel: '+1.5 USDT · +50 pts',
+          rewardLabel: '+90 Arena Points',
           kind: RewardAccentKind.learn,
         ),
         RewardTaskDraft(
@@ -288,7 +288,7 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'Học',
           status: RewardTaskStatus.active,
           progress: .60,
-          rewardLabel: '+1.5 USDT · +50 pts',
+          rewardLabel: '+90 Arena Points',
           kind: RewardAccentKind.learn,
         ),
         RewardTaskDraft(
@@ -298,7 +298,7 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'Học',
           status: RewardTaskStatus.active,
           progress: .50,
-          rewardLabel: '+1.5 USDT · +50 pts',
+          rewardLabel: '+90 Arena Points',
           kind: RewardAccentKind.learn,
         ),
         RewardTaskDraft(
@@ -308,7 +308,7 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'Tất cả',
           status: RewardTaskStatus.active,
           progress: .67,
-          rewardLabel: '+1.5 USDT · +25 pts',
+          rewardLabel: '+70 Arena Points',
           kind: RewardAccentKind.neutral,
         ),
         RewardTaskDraft(
@@ -318,7 +318,7 @@ final class MockRewardsRepository implements RewardsRepository {
           filter: 'P2P',
           status: RewardTaskStatus.active,
           progress: .67,
-          rewardLabel: '+1.5 USDT · +35 pts',
+          rewardLabel: '+80 Arena Points',
           kind: RewardAccentKind.p2p,
         ),
         RewardTaskDraft(
@@ -410,7 +410,7 @@ final class MockRewardsRepository implements RewardsRepository {
         ),
       ],
       disclaimer:
-          'Phần thưởng USDT và Arena Points được tính dựa trên hoạt động thực tế. Arena Points không phải tài sản tài chính, ví giao dịch hoặc PnL.',
+          'Arena Points duoc tinh dua tren hoat dong thuc te va khong phai tai san tai chinh, vi giao dich hoac PnL.',
       contractNotes:
           'Rewards Hub is read-only for reference data. Claim, referral, leaderboard, and redeem buttons remain local navigation or local state until backend confirms action APIs.',
       supportedStates: {

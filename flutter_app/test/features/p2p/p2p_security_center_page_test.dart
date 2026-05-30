@@ -83,9 +83,7 @@ void main() {
     expect(find.text('Đăng nhập thất bại'), findsOneWidget);
   });
 
-  testWidgets('SC-253 feature row opens a security placeholder edge', (
-    tester,
-  ) async {
+  testWidgets('SC-253 feature row opens a security route edge', (tester) async {
     await pumpSecurityCenter(tester);
 
     await tester.tap(find.byKey(P2PSecurityCenterPage.featureKey('2fa')));

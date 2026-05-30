@@ -10,10 +10,11 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
-const _advancedGreen = Color(0xFF10B981);
-const _advancedRed = Color(0xFFEF4444);
+const _advancedGreen = AppColors.buy;
+const _advancedRed = AppColors.sell;
 const _advancedPrimary = AppColors.primary;
 
 class AdvancedTradingDemoPage extends ConsumerStatefulWidget {
@@ -40,7 +41,7 @@ class _AdvancedTradingDemoPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getAdvancedTradingDemo();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -137,7 +138,7 @@ class _PositionModeCard extends StatelessWidget {
               Text(
                 'Position Mode',
                 style: AppTextStyles.body.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
@@ -218,13 +219,13 @@ class _ModeButton extends StatelessWidget {
           duration: const Duration(milliseconds: 140),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: active ? AppColors.primary : Colors.transparent,
+            color: active ? AppColors.primary : AppColors.transparent,
             borderRadius: AppRadii.mdRadius,
           ),
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
-              color: active ? Colors.white : AppColors.text3,
+              color: active ? AppColors.onAccent : AppColors.text3,
               fontSize: 12,
               fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
               height: 1,
@@ -269,7 +270,7 @@ class _UnderlineTabs extends StatelessWidget {
                       bottom: BorderSide(
                         color: activeId == tab.$1
                             ? AppColors.primary
-                            : Colors.transparent,
+                            : AppColors.transparent,
                         width: 2,
                       ),
                     ),
@@ -317,7 +318,7 @@ class _PositionTab extends StatelessWidget {
               Text(
                 'Position Management Features',
                 style: AppTextStyles.baseMedium.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontSize: 16,
                   fontWeight: AppTextStyles.bold,
                   height: 1.1,
@@ -522,7 +523,7 @@ class _MetricsCard extends StatelessWidget {
           Text(
             title,
             style: AppTextStyles.body.copyWith(
-              color: Colors.white,
+              color: AppColors.onAccent,
               fontSize: 14,
               fontWeight: AppTextStyles.bold,
             ),
@@ -559,7 +560,7 @@ class _ChoiceChip extends StatelessWidget {
       child: Text(
         label,
         style: AppTextStyles.caption.copyWith(
-          color: active ? Colors.white : AppColors.text2,
+          color: active ? AppColors.onAccent : AppColors.text2,
           fontSize: 12,
           fontWeight: AppTextStyles.bold,
           height: 1,
@@ -639,7 +640,7 @@ class _DemoSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned.fill(
       child: DecoratedBox(
-        decoration: const BoxDecoration(color: Color(0x99000000)),
+        decoration: const BoxDecoration(color: AppColors.modalScrim),
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
@@ -668,7 +669,7 @@ class _DemoSheet extends StatelessWidget {
                       Text(
                         title,
                         style: AppTextStyles.baseMedium.copyWith(
-                          color: Colors.white,
+                          color: AppColors.onAccent,
                           fontSize: 16,
                         ),
                       ),
@@ -693,7 +694,7 @@ class _DemoSheet extends StatelessWidget {
                         child: Text(
                           'Đóng',
                           style: AppTextStyles.body.copyWith(
-                            color: Colors.white,
+                            color: AppColors.onAccent,
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),

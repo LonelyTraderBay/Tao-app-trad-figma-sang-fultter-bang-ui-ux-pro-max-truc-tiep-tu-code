@@ -14,7 +14,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
+import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 
 enum _LeaderboardTab { creators, players, teams }
 
@@ -40,7 +41,9 @@ class _ArenaLeaderboardPageState extends ConsumerState<ArenaLeaderboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(arenaRepositoryProvider).getArenaLeaderboard();
+    final snapshot = ref
+        .watch(arenaReadModelControllerProvider)
+        .getArenaLeaderboard();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -380,7 +383,7 @@ class _SeasonButton extends StatelessWidget {
             vertical: AppSpacing.x2,
           ),
           decoration: BoxDecoration(
-            color: active ? AppColors.primary12 : Colors.transparent,
+            color: active ? AppColors.primary12 : AppColors.transparent,
             borderRadius: AppRadii.smRadius,
           ),
           child: Text(

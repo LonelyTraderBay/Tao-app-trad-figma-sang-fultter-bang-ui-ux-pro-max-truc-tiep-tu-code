@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PLimitTrackerPage extends ConsumerStatefulWidget {
   const P2PLimitTrackerPage({super.key, this.shellRenderMode});
@@ -39,7 +39,7 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getLimitTracker();
+    final snapshot = ref.watch(p2pLimitTrackerProvider);
     final usage = snapshot.usageFor(_period);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -163,7 +163,7 @@ class _PeriodTab extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
-              color: selected ? Colors.white : AppColors.text2,
+              color: selected ? AppColors.onAccent : AppColors.text2,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -194,7 +194,7 @@ class _UsageHero extends StatelessWidget {
           Text(
             'Đã dùng',
             style: AppTextStyles.caption.copyWith(
-              color: Colors.white.withValues(alpha: .82),
+              color: AppColors.onAccent.withValues(alpha: .82),
               fontWeight: AppTextStyles.medium,
             ),
           ),
@@ -204,7 +204,7 @@ class _UsageHero extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.heroNumber.copyWith(
-              color: Colors.white,
+              color: AppColors.onAccent,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
@@ -212,14 +212,14 @@ class _UsageHero extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: ColoredBox(
-              color: Colors.white.withValues(alpha: .24),
+              color: AppColors.onAccent.withValues(alpha: .24),
               child: SizedBox(
                 key: P2PLimitTrackerPage.progressKey,
                 height: AppSpacing.x3,
                 child: FractionallySizedBox(
                   widthFactor: usage.percentage / 100,
                   alignment: Alignment.centerLeft,
-                  child: const ColoredBox(color: Colors.white),
+                  child: const ColoredBox(color: AppColors.onAccent),
                 ),
               ),
             ),
@@ -228,7 +228,7 @@ class _UsageHero extends StatelessWidget {
           Text(
             '${usage.percentage}% / ${_formatComma(usage.limit, 0)} VND',
             style: AppTextStyles.caption.copyWith(
-              color: Colors.white.withValues(alpha: .90),
+              color: AppColors.onAccent.withValues(alpha: .90),
               fontWeight: AppTextStyles.bold,
               fontSize: 12,
             ),

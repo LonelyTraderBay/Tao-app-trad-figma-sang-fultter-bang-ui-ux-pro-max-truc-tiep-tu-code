@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,11 +12,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _configurationPrimary = AppColors.primary;
-const _configurationGreen = Color(0xFF10B981);
-const _configurationRed = Color(0xFFEF4444);
+const _configurationGreen = AppColors.buy;
+const _configurationRed = AppColors.sell;
 
 class CopyConfigurationPage extends ConsumerStatefulWidget {
   const CopyConfigurationPage({
@@ -55,9 +56,8 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final repository = ref.watch(tradeRepositoryProvider);
-    final snapshot = repository.getCopyConfiguration(
-      providerId: widget.providerId,
+    final snapshot = ref.watch(
+      tradeCopyConfigurationProvider(widget.providerId),
     );
 
     if (snapshot.isNotFound) {
@@ -70,7 +70,13 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
 
     _ensureDraft(snapshot);
     final draft = _draft!;
-    final preview = repository.previewCopyConfiguration(draft);
+    final controller = ref.watch(
+      tradeCopyConfigurationControllerProvider((
+        providerId: widget.providerId,
+        draft: draft,
+      )),
+    );
+    final preview = controller.state.preview;
     final provider = snapshot.provider!;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame

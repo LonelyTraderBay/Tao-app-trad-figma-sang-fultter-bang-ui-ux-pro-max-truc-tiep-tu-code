@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
+import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 
 const _marketPrimary = AppColors.primary;
 
@@ -44,7 +44,7 @@ class _MarketNewsPageState extends ConsumerState<MarketNewsPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(marketRepositoryProvider)
+        .watch(marketControllerProvider)
         .getMarketNews(category: _category, sentiment: _sentimentFilter);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -289,7 +289,7 @@ class _CategoryChip extends StatelessWidget {
           border: Border.all(
             color: active
                 ? category.color.withValues(alpha: .32)
-                : Colors.transparent,
+                : AppColors.transparent,
           ),
           borderRadius: AppRadii.cardRadius,
         ),
@@ -368,7 +368,7 @@ class _SentimentChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: active
               ? badge.color.withValues(alpha: .12)
-              : Colors.transparent,
+              : AppColors.transparent,
           border: Border.all(
             color: active
                 ? badge.color.withValues(alpha: .32)

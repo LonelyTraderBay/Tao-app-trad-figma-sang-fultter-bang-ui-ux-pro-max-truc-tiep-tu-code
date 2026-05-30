@@ -1,0 +1,302 @@
+part of '../pages/social_sentiment_page.dart';
+
+class _SentimentTabs extends StatelessWidget {
+  const _SentimentTabs({required this.activeTab, required this.onChanged});
+
+  final String activeTab;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        color: AppColors.surface,
+        border: Border(bottom: BorderSide(color: AppColors.divider)),
+      ),
+      child: SizedBox(
+        height: 54,
+        child: Row(
+          children: [
+            _UnderlinedTab(
+              key: SocialSentimentPage.overviewTabKey,
+              label: 'Tổng quan',
+              value: 'overview',
+              active: activeTab == 'overview',
+              onChanged: onChanged,
+            ),
+            _UnderlinedTab(
+              key: SocialSentimentPage.tokenTabKey,
+              label: 'Theo token',
+              value: 'token',
+              active: activeTab == 'token',
+              onChanged: onChanged,
+            ),
+            _UnderlinedTab(
+              key: SocialSentimentPage.trendsTabKey,
+              label: 'Xu hướng',
+              value: 'trends',
+              active: activeTab == 'trends',
+              onChanged: onChanged,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _UnderlinedTab extends StatelessWidget {
+  const _UnderlinedTab({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.active,
+    required this.onChanged,
+  });
+
+  final String label;
+  final String value;
+  final bool active;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: InkWell(
+        onTap: () => onChanged(value),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Expanded(
+              child: Center(
+                child: Text(
+                  label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: active ? _marketPrimary : AppColors.text3,
+                    fontWeight: AppTextStyles.medium,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 2,
+              child: FractionallySizedBox(
+                widthFactor: active ? 1 : 0,
+                child: const ColoredBox(color: _marketPrimary),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SentimentHero extends StatelessWidget {
+  const _SentimentHero({required this.global});
+
+  final SocialSentimentGlobal global;
+
+  @override
+  Widget build(BuildContext context) {
+    final scoreColor = _sentimentColor(global.overallScore);
+    final gaugePct = ((global.overallScore + 100) / 2).clamp(0, 100) / 100;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [AppColors.surface, AppColors.surface2],
+        ),
+        border: Border.all(color: _marketPrimary.withValues(alpha: .2)),
+        borderRadius: AppRadii.cardRadius,
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Chỉ số tâm lý chung',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text3,
+                    fontWeight: AppTextStyles.medium,
+                  ),
+                ),
+              ),
+              Text(
+                global.overallLabel,
+                style: AppTextStyles.micro.copyWith(
+                  color: scoreColor,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '${global.overallScore}',
+                style: AppTextStyles.heroNumber.copyWith(
+                  color: scoreColor,
+                  fontSize: 30,
+                ),
+              ),
+              const SizedBox(width: 6),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: Text(
+                  '/ 100',
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(999),
+            child: SizedBox(
+              width: double.infinity,
+              height: 8,
+              child: Stack(
+                children: [
+                  Container(color: AppColors.surface2),
+                  FractionallySizedBox(
+                    alignment: Alignment.centerLeft,
+                    widthFactor: gaugePct.toDouble(),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColors.sell,
+                            AppColors.warn,
+                            AppColors.buy,
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 4),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Cực sợ',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.sell,
+                  fontSize: 8,
+                ),
+              ),
+              Text(
+                'Trung lập',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text3,
+                  fontSize: 8,
+                ),
+              ),
+              Text(
+                'Cực tham',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.buy,
+                  fontSize: 8,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SentimentStats extends StatelessWidget {
+  const _SentimentStats({required this.global});
+
+  final SocialSentimentGlobal global;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: _StatCard(
+            icon: Icons.mode_comment_outlined,
+            iconColor: _marketPrimary,
+            label: 'Lượt đề cập 24h',
+            value: _formatCompact(global.totalMentions24h),
+            sub: '+${global.mentionsChange.toStringAsFixed(2)}%',
+            subColor: AppColors.buy,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: _StatCard(
+            icon: Icons.tag_rounded,
+            iconColor: AppColors.accent,
+            label: 'Token trending',
+            value: '${global.trendingTokens}',
+            sub: 'trong 24h qua',
+            subColor: AppColors.text3,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _StatCard extends StatelessWidget {
+  const _StatCard({
+    required this.icon,
+    required this.iconColor,
+    required this.label,
+    required this.value,
+    required this.sub,
+    required this.subColor,
+  });
+
+  final IconData icon;
+  final Color iconColor;
+  final String label;
+  final String value;
+  final String sub;
+  final Color subColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 12, color: iconColor),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  label,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: AppTextStyles.baseMedium.copyWith(
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(sub, style: AppTextStyles.micro.copyWith(color: subColor)),
+        ],
+      ),
+    );
+  }
+}

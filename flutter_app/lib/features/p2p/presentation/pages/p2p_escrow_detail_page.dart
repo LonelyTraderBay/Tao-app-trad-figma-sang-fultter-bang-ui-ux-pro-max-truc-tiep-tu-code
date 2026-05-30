@@ -14,7 +14,8 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
 
 class P2PEscrowDetailPage extends ConsumerStatefulWidget {
   const P2PEscrowDetailPage({
@@ -49,9 +50,7 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getEscrowDetail(widget.orderId);
+    final snapshot = ref.watch(p2pEscrowDetailProvider(widget.orderId));
     final order = snapshot.order;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -695,44 +694,18 @@ class _SecurityNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return P2PNoticeCard(
       key: P2PEscrowDetailPage.securityKey,
-      variant: VitCardVariant.inner,
+      icon: Icons.verified_user_outlined,
+      title: snapshot.securityTitle,
+      message: snapshot.securityBody,
+      iconColor: AppColors.buy,
+      titleColor: AppColors.buy,
       radius: VitCardRadius.lg,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.verified_user_outlined,
-            color: AppColors.buy,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  snapshot.securityTitle,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.buy,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  snapshot.securityBody,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: 1.45,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+      messageStyle: AppTextStyles.caption.copyWith(
+        color: AppColors.text2,
+        height: 1.45,
       ),
     );
   }

@@ -15,7 +15,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
+import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
 
@@ -49,7 +50,7 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(arenaRepositoryProvider)
+        .watch(arenaReadModelControllerProvider)
         .getArenaModeDetail(widget.modeId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -147,13 +148,13 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
   void _showTrustSheet() {
     HapticFeedback.selectionClick();
     final snapshot = ref
-        .read(arenaRepositoryProvider)
+        .read(arenaReadModelControllerProvider)
         .getArenaModeDetail(widget.modeId);
 
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.surface,
-      barrierColor: Colors.black.withValues(alpha: .55),
+      barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .55),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadii.lg)),
       ),

@@ -12,7 +12,8 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _tradePrimary = AppColors.primary;
 const _cardBackground = AppColors.surface2;
@@ -37,7 +38,9 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getOrderReceipt();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getOrderReceipt();
     final receipt = snapshot.receipt;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -131,7 +134,7 @@ class _SuccessHero extends StatelessWidget {
             'Lệnh $sideLabel ${receipt.symbol} đang được xử lý',
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(
-              color: const Color(0xFF98A2B3),
+              color: AppColors.textMutedLight,
               height: 1.25,
             ),
           ),
@@ -222,7 +225,7 @@ class _ReceiptCard extends StatelessWidget {
           Text(
             'Quản lý rủi ro',
             style: AppTextStyles.caption.copyWith(
-              color: const Color(0xFF98A2B3),
+              color: AppColors.textMutedLight,
               fontWeight: AppTextStyles.bold,
               height: 1.2,
             ),
@@ -372,7 +375,7 @@ class _DetailRow extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: highlight
                           ? AppColors.text1
-                          : const Color(0xFFA9B1C6),
+                          : AppColors.receiptTextMuted,
                       fontSize: highlight ? 14 : 11.5,
                       fontWeight: highlight
                           ? AppTextStyles.bold
@@ -537,13 +540,13 @@ class _ReceiptFooter extends StatelessWidget {
                   icon: Icon(
                     Icons.share_rounded,
                     color: sharePressed
-                        ? const Color(0xFFC8D2E8)
-                        : const Color(0xFF98A2B3),
+                        ? AppColors.receiptTextActive
+                        : AppColors.textMutedLight,
                     size: 16,
                   ),
                   label: Text(sharePressed ? 'Đã chia sẻ' : 'Chia sẻ'),
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: const Color(0xFF98A2B3),
+                    foregroundColor: AppColors.textMutedLight,
                     side: const BorderSide(color: AppColors.borderSolid),
                     backgroundColor: AppColors.surface2,
                     shape: RoundedRectangleBorder(
@@ -566,7 +569,7 @@ class _ReceiptFooter extends StatelessWidget {
                   onPressed: onContinue,
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
-                    foregroundColor: Colors.white,
+                    foregroundColor: AppColors.onAccent,
                     backgroundColor: AppColors.buy,
                     shape: RoundedRectangleBorder(
                       borderRadius: AppRadii.mdRadius,

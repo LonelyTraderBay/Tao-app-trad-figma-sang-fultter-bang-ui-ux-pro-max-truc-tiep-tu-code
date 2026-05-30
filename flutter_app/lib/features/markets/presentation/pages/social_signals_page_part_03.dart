@@ -1,0 +1,413 @@
+part of 'social_signals_page.dart';
+
+class _ProviderMetric extends StatelessWidget {
+  const _ProviderMetric({
+    required this.label,
+    required this.value,
+    this.color = AppColors.text1,
+  });
+
+  final String label;
+  final String value;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+        Text(
+          value,
+          textAlign: TextAlign.center,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontSize: 12,
+            fontWeight: AppTextStyles.bold,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _PerformanceSummary extends StatelessWidget {
+  const _PerformanceSummary({required this.snapshot});
+
+  final MarketSocialSignalsSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.hero,
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Hiệu suất tổng hợp',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.portfolioTextMuted,
+              fontWeight: AppTextStyles.medium,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: _HeroMetric(
+                  label: 'Win rate',
+                  value: '${snapshot.overallWinRate.toStringAsFixed(1)}%',
+                  color: AppColors.warn,
+                ),
+              ),
+              Expanded(
+                child: _HeroMetric(
+                  label: 'TB PnL',
+                  value: _formatPercent(snapshot.avgPnl),
+                  color: snapshot.avgPnl >= 0 ? AppColors.buy : AppColors.sell,
+                ),
+              ),
+              Expanded(
+                child: _HeroMetric(
+                  label: 'Tổng signals',
+                  value: '${snapshot.totalSignals}',
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _HeroMetric extends StatelessWidget {
+  const _HeroMetric({
+    required this.label,
+    required this.value,
+    this.color = AppColors.text1,
+  });
+
+  final String label;
+  final String value;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          value,
+          style: AppTextStyles.sectionTitle.copyWith(
+            color: color,
+            fontSize: 20,
+            fontFeatures: AppTextStyles.tabularFigures,
+          ),
+        ),
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.portfolioTextMuted,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _StatusBreakdown extends StatelessWidget {
+  const _StatusBreakdown({required this.snapshot});
+
+  final MarketSocialSignalsSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    final counts = <TradingSignalStatus, int>{
+      for (final status in snapshot.statusConfigs.keys)
+        status: snapshot.signals
+            .where((signal) => signal.status == status)
+            .length,
+    };
+
+    return VitCard(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Phân bổ trạng thái',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text2,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: 12),
+          ClipRRect(
+            borderRadius: AppRadii.smRadius,
+            child: SizedBox(
+              height: 12,
+              child: Row(
+                children: [
+                  for (final entry in counts.entries)
+                    if (entry.value > 0)
+                      Expanded(
+                        flex: entry.value,
+                        child: ColoredBox(
+                          color: snapshot.statusConfigs[entry.key]!.color,
+                        ),
+                      ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Wrap(
+            spacing: 12,
+            runSpacing: 6,
+            children: [
+              for (final entry in counts.entries)
+                if (entry.value > 0)
+                  _LegendItem(
+                    color: snapshot.statusConfigs[entry.key]!.color,
+                    label:
+                        '${snapshot.statusConfigs[entry.key]!.label}: ${entry.value}',
+                  ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LegendItem extends StatelessWidget {
+  const _LegendItem({required this.color, required this.label});
+
+  final Color color;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 10,
+          height: 10,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(3),
+          ),
+        ),
+        const SizedBox(width: 6),
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+      ],
+    );
+  }
+}
+
+class _SignalResultRow extends StatelessWidget {
+  const _SignalResultRow({required this.signal, required this.statusConfig});
+
+  final TradingSignalDraft signal;
+  final SignalStatusConfig statusConfig;
+
+  @override
+  Widget build(BuildContext context) {
+    final positive = signal.pnlPct >= 0;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: AppRadii.mdRadius,
+      ),
+      child: Row(
+        children: [
+          Icon(
+            positive ? Icons.check_circle_rounded : Icons.cancel_rounded,
+            color: positive ? AppColors.buy : AppColors.sell,
+            size: 16,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      signal.pair,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    _TinyBadge(
+                      label: signal.direction == TradingSignalDirection.long
+                          ? 'LONG'
+                          : 'SHORT',
+                      color: signal.direction == TradingSignalDirection.long
+                          ? AppColors.buy
+                          : AppColors.sell,
+                      background:
+                          signal.direction == TradingSignalDirection.long
+                          ? AppColors.buy10
+                          : AppColors.sell10,
+                      fontSize: 8,
+                      height: 17,
+                    ),
+                  ],
+                ),
+                Text(
+                  '${signal.providerName} · ${signal.timeAgo}',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
+          ),
+          Text(
+            _formatPercent(signal.pnlPct),
+            style: AppTextStyles.caption.copyWith(
+              color: positive ? AppColors.buy : AppColors.sell,
+              fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SectionHeader extends StatelessWidget {
+  const _SectionHeader({required this.label, required this.accentColor});
+
+  final String label;
+  final Color accentColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 3,
+          height: 16,
+          decoration: BoxDecoration(
+            color: accentColor,
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          label,
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text2,
+            fontWeight: AppTextStyles.bold,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SignalsEmptyState extends StatelessWidget {
+  const _SignalsEmptyState();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 180,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.track_changes_rounded,
+              size: 32,
+              color: AppColors.text3.withValues(alpha: .35),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'Không có tín hiệu phù hợp',
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+_ConfidenceMeta _confidenceMeta(TradingSignalConfidence confidence) {
+  return switch (confidence) {
+    TradingSignalConfidence.high => const _ConfidenceMeta('Cao', AppColors.buy),
+    TradingSignalConfidence.medium => const _ConfidenceMeta(
+      'TB',
+      AppColors.warn,
+    ),
+    TradingSignalConfidence.low => const _ConfidenceMeta(
+      'Thấp',
+      AppColors.text3,
+    ),
+  };
+}
+
+final class _ConfidenceMeta {
+  const _ConfidenceMeta(this.label, this.color);
+
+  final String label;
+  final Color color;
+}
+
+String _categoryLabel(TradingSignalCategory category) {
+  return switch (category) {
+    TradingSignalCategory.scalp => 'Scalp',
+    TradingSignalCategory.swing => 'Swing',
+    TradingSignalCategory.position => 'Position',
+  };
+}
+
+String _formatPrice(double value) {
+  final decimals = value >= 1
+      ? 2
+      : value >= 0.01
+      ? 4
+      : 6;
+  final fixed = value.toStringAsFixed(decimals);
+  final parts = fixed.split('.');
+  final whole = parts.first;
+  final buffer = StringBuffer();
+  for (var index = 0; index < whole.length; index += 1) {
+    if (index > 0 && (whole.length - index) % 3 == 0) {
+      buffer.write(',');
+    }
+    buffer.write(whole[index]);
+  }
+  return '${buffer.toString()}.${parts.last}';
+}
+
+String _formatPercent(double value) {
+  final sign = value > 0 ? '+' : '';
+  return '$sign${value.toStringAsFixed(2)}%';
+}
+
+String _formatCompact(double value) {
+  final abs = value.abs();
+  if (abs >= 1000000) return '${(value / 1000000).toStringAsFixed(2)}M';
+  if (abs >= 1000) {
+    final scaled = value / 1000;
+    final fixed = scaled % 1 == 0
+        ? scaled.toStringAsFixed(0)
+        : scaled.toStringAsFixed(1);
+    return '${fixed}K';
+  }
+  return value.toStringAsFixed(0);
+}

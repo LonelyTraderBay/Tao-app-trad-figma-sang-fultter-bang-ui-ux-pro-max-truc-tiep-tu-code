@@ -10,14 +10,14 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 const _historyBackground = AppColors.bg;
 const _historyPanel2 = AppColors.surface2;
 const _historyPrimary = AppColors.primary;
-const _historyGreen = Color(0xFF10B981);
-const _historyRed = Color(0xFFEF4444);
-const _historyAmber = Color(0xFFF59E0B);
+const _historyGreen = AppColors.buy;
+const _historyRed = AppColors.sell;
+const _historyAmber = AppColors.caution;
 
 class TransactionHistoryPage extends ConsumerStatefulWidget {
   const TransactionHistoryPage({super.key, this.shellRenderMode});
@@ -40,9 +40,7 @@ class _TransactionHistoryPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(walletRepositoryProvider)
-        .getTransactionHistory();
+    final snapshot = ref.watch(walletTransactionHistoryProvider);
     final transactions = _filteredTransactions(snapshot.transactions);
     final grouped = _groupByDate(transactions);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
@@ -161,7 +159,7 @@ class _HeaderExportButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: _historyPanel2,
           borderRadius: AppRadii.mdRadius,
-          border: Border.all(color: Colors.white.withValues(alpha: .04)),
+          border: Border.all(color: AppColors.onAccent.withValues(alpha: .04)),
         ),
         child: const Icon(
           Icons.chevron_right_rounded,
@@ -287,12 +285,12 @@ class _FilterChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: active
               ? _historyPrimary.withValues(alpha: .18)
-              : Colors.transparent,
+              : AppColors.transparent,
           borderRadius: AppRadii.inputRadius,
           border: Border.all(
             color: active
                 ? _historyPrimary.withValues(alpha: .48)
-                : Colors.transparent,
+                : AppColors.transparent,
           ),
         ),
         child: Text(
@@ -421,7 +419,7 @@ class _TransactionIcon extends StatelessWidget {
           ),
           child: const Icon(
             Icons.currency_exchange_rounded,
-            color: Colors.white,
+            color: AppColors.onAccent,
             size: 14,
           ),
         ),

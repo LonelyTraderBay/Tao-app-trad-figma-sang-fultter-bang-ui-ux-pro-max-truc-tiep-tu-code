@@ -11,15 +11,16 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _inspectionBackground = AppColors.bg;
 const _inspectionPanel = AppColors.surface;
 const _inspectionPanel2 = AppColors.surface2;
 const _inspectionBorder = AppColors.borderSolid;
-const _inspectionGreen = Color(0xFF10B981);
+const _inspectionGreen = AppColors.buy;
 const _inspectionPrimary = AppColors.primary;
-const _inspectionAmber = Color(0xFFF59E0B);
+const _inspectionAmber = AppColors.caution;
 
 class RegulatoryInspectionReadyPage extends ConsumerWidget {
   const RegulatoryInspectionReadyPage({super.key, this.shellRenderMode});
@@ -33,7 +34,7 @@ class RegulatoryInspectionReadyPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getRegulatoryInspectionReady();
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -628,7 +629,7 @@ class _ReportButton extends StatelessWidget {
           snapshot.reportCta,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.body.copyWith(
-            color: Colors.white,
+            color: AppColors.onAccent,
             fontFamily: 'Roboto',
             fontSize: 14,
             fontWeight: AppTextStyles.bold,
@@ -637,7 +638,7 @@ class _ReportButton extends StatelessWidget {
         ),
         style: FilledButton.styleFrom(
           backgroundColor: _inspectionGreen,
-          foregroundColor: Colors.white,
+          foregroundColor: AppColors.onAccent,
           shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
         ),
       ),

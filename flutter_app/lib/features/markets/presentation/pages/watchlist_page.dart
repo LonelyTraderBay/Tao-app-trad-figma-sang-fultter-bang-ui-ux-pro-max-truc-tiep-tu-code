@@ -11,7 +11,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
+import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 
 const _marketPrimary = AppColors.primary;
 
@@ -46,7 +46,7 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
   void initState() {
     super.initState();
     _entries = [
-      ...ref.read(marketRepositoryProvider).getMarketWatchlist().entries,
+      ...ref.read(marketControllerProvider).getMarketWatchlist().entries,
     ];
   }
 
@@ -141,7 +141,7 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(marketRepositoryProvider).getMarketWatchlist();
+    final snapshot = ref.watch(marketControllerProvider).getMarketWatchlist();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -269,7 +269,7 @@ class _WatchlistToolbar extends StatelessWidget {
                     ),
                     child: const Icon(
                       Icons.add_rounded,
-                      color: Colors.white,
+                      color: AppColors.onAccent,
                       size: 22,
                     ),
                   ),
@@ -514,7 +514,7 @@ class _WatchlistCard extends StatelessWidget {
                   key: WatchlistPage.tradeKey(pair.id),
                   label: 'Giao dịch',
                   background: _marketPrimary,
-                  foreground: Colors.white,
+                  foreground: AppColors.onAccent,
                   onTap: onTradeTap,
                 ),
               ),

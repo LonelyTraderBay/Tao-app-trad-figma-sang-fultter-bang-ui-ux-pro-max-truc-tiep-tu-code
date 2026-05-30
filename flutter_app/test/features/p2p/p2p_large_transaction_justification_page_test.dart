@@ -106,7 +106,7 @@ void main() {
     expect(find.text('Giao dịch lớn: 125.000.000'), findsOneWidget);
   });
 
-  testWidgets('SC-270 submits to safe my-orders placeholder', (tester) async {
+  testWidgets('SC-270 submits to safe my-orders route', (tester) async {
     await pumpLargeTransaction(tester);
 
     await tester.tap(

@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_points_page.dart';
+import 'package:vit_trade_flutter/app/providers/rewards_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/features/rewards/data/rewards_repository.dart';
 
 class RewardsHubPage extends ConsumerWidget {
   const RewardsHubPage({super.key, this.shellRenderMode});
@@ -21,7 +21,7 @@ class RewardsHubPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(rewardsRepositoryProvider).getHub();
+    final snapshot = ref.watch(rewardsControllerProvider).getHub();
 
     // Delegates the visual composition to the migrated rewards hub scaffold
     // in ArenaPointsPage, which owns the VitPageLayout and VitPageContent tree.
@@ -41,14 +41,14 @@ ArenaPointsSnapshot _toArenaSnapshot(RewardsHubSnapshot snapshot) {
     endpoint: snapshot.endpoint,
     actionDraft: snapshot.actionDraft,
     summary: ArenaPointsSummaryDraft(
-      usdtClaimed: snapshot.summary.usdtClaimed,
+      bonusPointsClaimed: snapshot.summary.bonusPointsClaimed,
       currentBalance: snapshot.summary.currentPoints,
       lockedBalance: snapshot.summary.lockedPoints,
       rank: snapshot.summary.rank,
       topPercent: snapshot.summary.topPercent,
       claimedCount: snapshot.summary.claimedCount,
       pendingCount: snapshot.summary.pendingCount,
-      pendingUsdt: snapshot.summary.pendingUsdt,
+      pendingBonusPoints: snapshot.summary.pendingBonusPoints,
       pendingPoints: snapshot.summary.pendingPoints,
       expiringCount: snapshot.summary.expiringCount,
       completionLabel: snapshot.summary.completionLabel,

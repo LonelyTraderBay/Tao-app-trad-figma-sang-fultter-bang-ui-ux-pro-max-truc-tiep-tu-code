@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 enum P2PPaymentAddType { bank, ewallet }
 
@@ -53,11 +53,6 @@ class _P2PPaymentMethodAddPageState
   String? _selectedMethod;
   bool _submitting = false;
 
-  bool get _isValid =>
-      _selectedMethod != null &&
-      _accountController.text.trim().isNotEmpty &&
-      _ownerController.text.trim().isNotEmpty;
-
   @override
   void initState() {
     super.initState();
@@ -73,10 +68,13 @@ class _P2PPaymentMethodAddPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getPaymentMethodAdd();
-    final options = _type == P2PPaymentAddType.bank
-        ? snapshot.bankOptions
-        : snapshot.ewalletOptions;
+    final snapshot = ref.watch(p2pPaymentMethodAddProvider);
+    final controller = P2PPaymentMethodAddController(
+      state: P2PPaymentMethodAddViewState(snapshot: snapshot),
+    );
+    final options = controller.optionsFor(
+      bankType: _type == P2PPaymentAddType.bank,
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     const bottomInset = AppSpacing.x4;
     final footerInset =
@@ -164,13 +162,15 @@ class _P2PPaymentMethodAddPageState
                       ),
                       const SizedBox(height: AppSpacing.x4),
                       _SecurityNote(note: snapshot.securityNote),
-                      if (_isValid) ...[
+                      if (_isValidFor(controller)) ...[
                         const SizedBox(height: AppSpacing.x4),
                         _PaymentPreview(
-                          method: _selectedMethod!,
+                          preview: controller.preview(
+                            selectedMethod: _selectedMethod!,
+                            account: _accountController.text,
+                            ownerName: _ownerController.text,
+                          ),
                           type: _type,
-                          account: _accountController.text.trim(),
-                          ownerName: _ownerController.text.trim(),
                         ),
                       ],
                     ],
@@ -185,8 +185,8 @@ class _P2PPaymentMethodAddPageState
                 child: VitCtaButton(
                   key: P2PPaymentMethodAddPage.saveButtonKey,
                   loading: _submitting,
-                  onPressed: _isValid && !_submitting
-                      ? () => _confirmSave(context, snapshot)
+                  onPressed: _isValidFor(controller) && !_submitting
+                      ? () => _confirmSave(context, controller)
                       : null,
                   child: Text(_submitting ? 'Đang lưu...' : 'Thêm phương thức'),
                 ),
@@ -207,10 +207,23 @@ class _P2PPaymentMethodAddPageState
     });
   }
 
+  bool _isValidFor(P2PPaymentMethodAddController controller) {
+    return controller.canPreview(
+      selectedMethod: _selectedMethod,
+      account: _accountController.text,
+      ownerName: _ownerController.text,
+    );
+  }
+
   Future<void> _confirmSave(
     BuildContext context,
-    P2PPaymentMethodAddSnapshot snapshot,
+    P2PPaymentMethodAddController controller,
   ) async {
+    final preview = controller.preview(
+      selectedMethod: _selectedMethod ?? '',
+      account: _accountController.text,
+      ownerName: _ownerController.text,
+    );
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -218,7 +231,7 @@ class _P2PPaymentMethodAddPageState
         surfaceTintColor: AppColors.surface,
         shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
         title: Text(
-          snapshot.confirmTitle,
+          preview.confirmTitle,
           style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
         ),
         content: Column(
@@ -226,11 +239,16 @@ class _P2PPaymentMethodAddPageState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _ConfirmRow(label: 'Phương thức', value: _selectedMethod ?? '--'),
-            _ConfirmRow(label: 'Tài khoản', value: _accountController.text),
-            _ConfirmRow(label: 'Chủ tài khoản', value: _ownerController.text),
+            _ConfirmRow(label: 'Tài khoản', value: preview.maskedAccount),
+            _ConfirmRow(label: 'Chủ tài khoản', value: preview.ownerName),
+            _ConfirmRow(
+              label: 'Ownership',
+              value: preview.ownershipRiskMessage,
+            ),
+            _ConfirmRow(label: 'Limit', value: preview.limitMessage),
             const SizedBox(height: AppSpacing.x3),
             Text(
-              snapshot.confirmMessage,
+              preview.confirmMessage,
               style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ],
@@ -262,7 +280,7 @@ class _P2PPaymentMethodAddPageState
     setState(() => _submitting = true);
     await Future<void>.delayed(const Duration(milliseconds: 250));
     if (!context.mounted) return;
-    context.go(snapshot.saveRoute);
+    context.go(preview.saveRoute);
   }
 }
 
@@ -320,7 +338,7 @@ class _TypeButton extends StatelessWidget {
       button: true,
       selected: active,
       child: Material(
-        color: Colors.transparent,
+        color: AppColors.transparent,
         borderRadius: AppRadii.inputRadius,
         child: Ink(
           height: AppSpacing.ctaHeight,
@@ -412,7 +430,7 @@ class _PaymentOptionChip extends StatelessWidget {
       button: true,
       selected: selected,
       child: Material(
-        color: Colors.transparent,
+        color: AppColors.transparent,
         borderRadius: AppRadii.xlRadius,
         child: Ink(
           decoration: BoxDecoration(
@@ -461,17 +479,10 @@ class _PaymentOptionChip extends StatelessWidget {
 }
 
 class _PaymentPreview extends StatelessWidget {
-  const _PaymentPreview({
-    required this.method,
-    required this.type,
-    required this.account,
-    required this.ownerName,
-  });
+  const _PaymentPreview({required this.preview, required this.type});
 
-  final String method;
+  final P2PPaymentMethodPreview preview;
   final P2PPaymentAddType type;
-  final String account;
-  final String ownerName;
 
   @override
   Widget build(BuildContext context) {
@@ -496,7 +507,7 @@ class _PaymentPreview extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      method,
+                      preview.method,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.baseMedium.copyWith(
@@ -519,9 +530,13 @@ class _PaymentPreview extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           const Divider(color: AppColors.divider, height: 1),
           const SizedBox(height: AppSpacing.x3),
-          _PreviewRow(label: 'Tài khoản', value: account),
+          _PreviewRow(label: 'Tài khoản', value: preview.maskedAccount),
           const SizedBox(height: AppSpacing.x2),
-          _PreviewRow(label: 'Chủ tài khoản', value: ownerName),
+          _PreviewRow(label: 'Chủ tài khoản', value: preview.ownerName),
+          const SizedBox(height: AppSpacing.x2),
+          _PreviewRow(label: 'Ownership', value: preview.ownershipRiskMessage),
+          const SizedBox(height: AppSpacing.x2),
+          _PreviewRow(label: 'Limit', value: preview.limitMessage),
         ],
       ),
     );
@@ -621,7 +636,7 @@ class _PreviewRow extends StatelessWidget {
         Expanded(
           child: Text(
             value,
-            maxLines: 1,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.end,
             style: AppTextStyles.caption.copyWith(
@@ -656,7 +671,7 @@ class _ConfirmRow extends StatelessWidget {
           Flexible(
             child: Text(
               value,
-              maxLines: 1,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.end,
               style: AppTextStyles.caption.copyWith(color: AppColors.text1),

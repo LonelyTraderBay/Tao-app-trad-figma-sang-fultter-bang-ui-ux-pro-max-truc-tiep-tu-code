@@ -10,7 +10,8 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _copyPrimary = AppColors.primary;
 const _copyCardTone = AppColors.surface;
@@ -35,7 +36,7 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getCopyTrading();
+    final snapshot = ref.watch(tradeCopyTradingProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -414,7 +415,7 @@ class _SortChip extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: active ? Colors.white : AppColors.text2,
+            color: active ? AppColors.onAccent : AppColors.text2,
             fontSize: 12,
             fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
           ),
@@ -467,7 +468,7 @@ class _TraderCard extends StatelessWidget {
                           const SizedBox(width: 6),
                           const Icon(
                             Icons.star_rounded,
-                            color: Color(0xFFF59E0B),
+                            color: AppColors.caution,
                             size: 14,
                           ),
                         ],
@@ -628,11 +629,7 @@ class _MetricsGrid extends StatelessWidget {
       ('Win Rate', '${trader.winRate.toStringAsFixed(1)}%', AppColors.buy),
       ('PnL', _formatSignedUsd(trader.totalPnl), AppColors.buy),
       ('Copiers', '${trader.copiers}', AppColors.primary),
-      (
-        'Sharpe',
-        trader.sharpeRatio.toStringAsFixed(2),
-        const Color(0xFFF59E0B),
-      ),
+      ('Sharpe', trader.sharpeRatio.toStringAsFixed(2), AppColors.caution),
     ];
     return Row(
       children: [
@@ -880,7 +877,7 @@ _TierStyle _tierFor(int copiers) {
   if (copiers > 3000) {
     return const _TierStyle(
       label: 'Pro Trader',
-      color: Color(0xFFF59E0B),
+      color: AppColors.caution,
       icon: Icons.star_rounded,
     );
   }
@@ -906,7 +903,7 @@ _RiskStyle _riskFor(TradeCopyRiskLevel risk) {
     ),
     TradeCopyRiskLevel.medium => const _RiskStyle(
       label: 'Trung bình',
-      color: Color(0xFFF59E0B),
+      color: AppColors.caution,
     ),
     TradeCopyRiskLevel.high => const _RiskStyle(
       label: 'Cao',

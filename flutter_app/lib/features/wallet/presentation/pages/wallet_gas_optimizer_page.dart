@@ -12,15 +12,15 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 const _gasBackground = AppColors.bg;
 const _gasPanel = AppColors.surface;
-const _gasBorder = Color(0x14FFFFFF);
+const _gasBorder = AppColors.overlayStroke;
 const _gasPrimary = AppColors.primary;
-const _gasGreen = Color(0xFF10B981);
-const _gasAmber = Color(0xFFF59E0B);
-const _gasRed = Color(0xFFEF4444);
+const _gasGreen = AppColors.buy;
+const _gasAmber = AppColors.caution;
+const _gasRed = AppColors.sell;
 
 const _tabCurrent = 'Hien tai';
 const _tabTrends = 'Xu huong';
@@ -48,7 +48,7 @@ class _WalletGasOptimizerPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(walletRepositoryProvider).getGasOptimizer();
+    final snapshot = ref.watch(walletGasOptimizerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -126,7 +126,7 @@ class _GasTabs extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: activeTab == tab
                               ? _gasPrimary
-                              : const Color(0xFF566175),
+                              : AppColors.textDisabled,
                           fontSize: 12,
                           fontWeight: FontWeight.w800,
                           height: 1,
@@ -142,7 +142,7 @@ class _GasTabs extends StatelessWidget {
                         height: 2,
                         color: activeTab == tab
                             ? _gasPrimary
-                            : Colors.transparent,
+                            : AppColors.transparent,
                       ),
                     ),
                   ],
@@ -283,7 +283,7 @@ class _SectionLabel extends StatelessWidget {
         Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: const Color(0xFF8791A6),
+            color: AppColors.textMutedBlue,
             fontSize: 12,
             fontWeight: FontWeight.w900,
             height: 1,
@@ -890,13 +890,13 @@ class _CategoryPill extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: const Color(0x0AFFFFFF),
+        color: AppColors.overlaySubtle,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
         label,
         style: AppTextStyles.micro.copyWith(
-          color: const Color(0xFF9AA4B8),
+          color: AppColors.textSoftBlue,
           fontSize: 10,
           height: 1,
         ),

@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 class StakingEarningsCalendarPage extends ConsumerStatefulWidget {
   const StakingEarningsCalendarPage({super.key, this.shellRenderMode});
@@ -48,7 +48,8 @@ class _StakingEarningsCalendarPageState
   @override
   void initState() {
     super.initState();
-    final snapshot = const MockStakingEarningsCalendarRepository()
+    final snapshot = ref
+        .read(stakingEarningsCalendarRepositoryProvider)
         .getCalendar();
     _visibleMonth = DateTime(snapshot.currentYear, snapshot.currentMonth);
   }
@@ -471,12 +472,12 @@ class _DayCell extends StatelessWidget {
         ? AppColors.primary
         : hasEvents
         ? AppColors.cardBorder
-        : Colors.transparent;
+        : AppColors.transparent;
     final bgColor = today
         ? AppColors.primary12
         : hasEvents
         ? AppColors.surface3
-        : Colors.transparent;
+        : AppColors.transparent;
 
     return DecoratedBox(
       decoration: BoxDecoration(

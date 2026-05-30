@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_data_viz_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_gradients.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -33,6 +36,44 @@ void main() {
       expect(AppColors.buy15, const Color(0x2610B981));
       expect(AppColors.sell15, const Color(0x26EF4444));
       expect(AppColors.warn08, const Color(0x14F5A524));
+    });
+
+    test('exposes a canonical module accent registry', () {
+      expect(AppModuleAccents.registry['trade'], AppModuleAccents.trade);
+      expect(AppModuleAccents.registry['earn'], AppModuleAccents.earn);
+      expect(
+        AppModuleAccents.registry['cross_module'],
+        AppModuleAccents.crossModule,
+      );
+      expect(
+        AppModuleAccents.forKey('prediction'),
+        AppModuleAccents.predictions,
+      );
+      expect(AppModuleAccents.forKey('open-arena'), AppModuleAccents.arena);
+      expect(AppModuleAccents.forKey('missing'), AppModuleAccents.neutral);
+      expect(AppModuleAccents.keys, containsAll(['wallet', 'p2p', 'support']));
+    });
+
+    test('exposes canonical asset color lookup', () {
+      expect(AppAssetColors.registry['BTC'], AppAssetColors.btc);
+      expect(AppAssetColors.registry['ETH'], AppAssetColors.eth);
+      expect(AppAssetColors.forSymbol('bitcoin'), AppAssetColors.btc);
+      expect(AppAssetColors.forSymbol('polygon'), AppAssetColors.matic);
+      expect(AppAssetColors.forSymbol('unknown'), AppAssetColors.neutralChain);
+    });
+
+    test('exposes data visualization color roles', () {
+      expect(AppDataVizColors.positive, AppColors.buy);
+      expect(AppDataVizColors.negative, AppColors.sell);
+      expect(AppDataVizColors.correlationVeryLow, AppAssetColors.cyanChain);
+      expect(
+        AppDataVizColors.correlation(.9),
+        AppDataVizColors.correlationVeryHigh,
+      );
+      expect(
+        AppDataVizColors.correlation(.2),
+        AppDataVizColors.correlationVeryLow,
+      );
     });
 
     test('map gradients, typography, spacing, radii, and device metrics', () {

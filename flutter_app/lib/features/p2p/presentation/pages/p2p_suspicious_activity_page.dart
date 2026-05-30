@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PSuspiciousActivityPage extends ConsumerStatefulWidget {
   const P2PSuspiciousActivityPage({super.key, this.shellRenderMode});
@@ -40,14 +40,12 @@ class _P2PSuspiciousActivityPageState
   @override
   void initState() {
     super.initState();
-    _alerts = List.of(
-      ref.read(p2pRepositoryProvider).getSuspiciousActivity().alerts,
-    );
+    _alerts = List.of(ref.read(p2pSuspiciousActivityProvider).alerts);
   }
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getSuspiciousActivity();
+    final snapshot = ref.watch(p2pSuspiciousActivityProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame

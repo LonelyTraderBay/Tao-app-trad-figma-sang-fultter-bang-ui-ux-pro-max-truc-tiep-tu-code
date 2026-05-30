@@ -45,7 +45,7 @@ class VitPageLayout extends StatelessWidget {
       container: true,
       label: semanticLabel,
       child: ColoredBox(
-        color: _background ?? Colors.transparent,
+        color: _background ?? AppColors.transparent,
         child: SizedBox.expand(
           child: Padding(
             padding: EdgeInsets.only(bottom: _bottomPadding),

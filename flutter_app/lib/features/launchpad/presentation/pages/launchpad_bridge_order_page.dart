@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.dart';
+import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 
 class LaunchpadBridgeOrderPage extends ConsumerStatefulWidget {
   const LaunchpadBridgeOrderPage({
@@ -46,7 +46,7 @@ class _LaunchpadBridgeOrderPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(launchpadRepositoryProvider)
+        .watch(launchpadControllerProvider)
         .getBridgeOrder(widget.txId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -350,7 +350,7 @@ class _BridgeTimelineStep extends StatelessWidget {
                   border: Border.all(
                     color: isActive
                         ? _statusColor(step.status).withValues(alpha: .25)
-                        : Colors.transparent,
+                        : AppColors.transparent,
                   ),
                   borderRadius: AppRadii.smRadius,
                 ),

@@ -13,7 +13,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
+import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 
 const _predictionPrimary = AppColors.primary;
 
@@ -36,7 +37,7 @@ class PredictionOrderReceiptPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref
-        .watch(predictionsRepositoryProvider)
+        .watch(predictionsReadModelControllerProvider)
         .getOrderReceipt(receiptId);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -320,7 +321,7 @@ class _ShareReceiptButton extends StatelessWidget {
       button: true,
       label: 'Chia sẻ chi tiết lệnh ${receipt.id}',
       child: Material(
-        color: Colors.transparent,
+        color: AppColors.transparent,
         borderRadius: AppRadii.inputRadius,
         child: Ink(
           decoration: BoxDecoration(
@@ -342,12 +343,16 @@ class _ShareReceiptButton extends StatelessWidget {
                     color: _predictionPrimary,
                     size: 17,
                   ),
-                  const SizedBox(width: 10),
-                  Text(
-                    'Chia sẻ chi tiết lệnh',
-                    style: AppTextStyles.body.copyWith(
-                      color: _predictionPrimary,
-                      fontWeight: AppTextStyles.medium,
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      'Chia sẻ chi tiết lệnh',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.body.copyWith(
+                        color: _predictionPrimary,
+                        fontWeight: AppTextStyles.medium,
+                      ),
                     ),
                   ),
                 ],
@@ -636,10 +641,10 @@ class _SoftPill extends StatelessWidget {
 _ReceiptStatus _statusConfig(String status) {
   switch (status) {
     case 'submitted':
-      return const _ReceiptStatus(
+      return _ReceiptStatus(
         label: 'Đã gửi',
         color: AppColors.text2,
-        background: Color(0x1F94A3B8),
+        background: AppColors.medalSilverBlue.withValues(alpha: .12),
       );
     case 'accepted':
       return const _ReceiptStatus(

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/dev_tools_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -13,7 +14,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/dev/data/dev_tools_repository.dart';
 
 class DesignSystemPage extends ConsumerStatefulWidget {
   const DesignSystemPage({super.key, this.shellRenderMode});
@@ -67,9 +67,7 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(designSystemRepositoryProvider)
-        .getDesignSystem();
+    final snapshot = ref.watch(designSystemControllerProvider).snapshot();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame

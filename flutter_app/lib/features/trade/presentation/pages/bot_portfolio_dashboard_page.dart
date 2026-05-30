@@ -12,15 +12,16 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _portfolioBackground = AppColors.bg;
 const _portfolioPanel = AppColors.surface;
 const _portfolioPrimary = AppColors.primary;
-const _portfolioGreen = Color(0xFF10B981);
-const _portfolioAmber = Color(0xFFF59E0B);
-const _portfolioRed = Color(0xFFEF4444);
-const _portfolioAxis = Color(0xFF475569);
+const _portfolioGreen = AppColors.buy;
+const _portfolioAmber = AppColors.caution;
+const _portfolioRed = AppColors.sell;
+const _portfolioAxis = AppColors.chartAxisStrong;
 
 class BotPortfolioDashboardPage extends ConsumerWidget {
   const BotPortfolioDashboardPage({super.key, this.shellRenderMode});
@@ -32,7 +33,7 @@ class BotPortfolioDashboardPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getBotPortfolioDashboard();
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -473,13 +474,13 @@ class _HealthCard extends StatelessWidget {
                 height: 13,
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF6EE7B7),
+                  color: AppColors.successAccentSoft,
                   shape: BoxShape.rectangle,
                 ),
                 child: const Icon(
                   Icons.check_rounded,
                   size: 11,
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                 ),
               ),
               const SizedBox(width: 7),

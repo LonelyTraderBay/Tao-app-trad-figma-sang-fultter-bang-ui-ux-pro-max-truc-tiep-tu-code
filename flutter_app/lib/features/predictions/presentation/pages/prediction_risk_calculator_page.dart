@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
+import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
 
 const _predictionPrimary = AppColors.primary;
 
@@ -47,12 +47,14 @@ class _PredictionRiskCalculatorPageState
   late final TextEditingController _sharesController;
   late final TextEditingController _entryPriceController;
   late final TextEditingController _currentPriceController;
-  late final TextEditingController _bankrollController;
+  late final TextEditingController _riskBudgetController;
 
   @override
   void initState() {
     super.initState();
-    final snapshot = const MockPredictionsRepository().getRiskCalculator();
+    final snapshot = ref
+        .read(predictionsReadModelControllerProvider)
+        .getRiskCalculator();
     _outcome = snapshot.defaultOutcome;
     _eventController = TextEditingController(text: snapshot.defaultEventName);
     _sharesController = TextEditingController(
@@ -64,7 +66,7 @@ class _PredictionRiskCalculatorPageState
     _currentPriceController = TextEditingController(
       text: snapshot.defaultCurrentPrice.toStringAsFixed(2),
     );
-    _bankrollController = TextEditingController(
+    _riskBudgetController = TextEditingController(
       text: _formatInput(snapshot.defaultBankroll),
     );
 
@@ -73,7 +75,7 @@ class _PredictionRiskCalculatorPageState
       _sharesController,
       _entryPriceController,
       _currentPriceController,
-      _bankrollController,
+      _riskBudgetController,
     ]) {
       controller.addListener(_refresh);
     }
@@ -86,7 +88,7 @@ class _PredictionRiskCalculatorPageState
       _sharesController,
       _entryPriceController,
       _currentPriceController,
-      _bankrollController,
+      _riskBudgetController,
     ]) {
       controller
         ..removeListener(_refresh)
@@ -101,7 +103,7 @@ class _PredictionRiskCalculatorPageState
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(predictionsRepositoryProvider).getRiskCalculator();
+    ref.watch(predictionsReadModelControllerProvider).getRiskCalculator();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -114,7 +116,7 @@ class _PredictionRiskCalculatorPageState
       shares: _parse(_sharesController.text),
       entryPrice: _parse(_entryPriceController.text),
       currentPrice: _parse(_currentPriceController.text),
-      bankroll: _parse(_bankrollController.text, fallback: 1),
+      riskBudget: _parse(_riskBudgetController.text, fallback: 1),
     );
     final metrics = _calculate(inputs);
 
@@ -152,7 +154,7 @@ class _PredictionRiskCalculatorPageState
                               sharesController: _sharesController,
                               entryPriceController: _entryPriceController,
                               currentPriceController: _currentPriceController,
-                              bankrollController: _bankrollController,
+                              riskBudgetController: _riskBudgetController,
                               outcome: _outcome,
                               onOutcomeChanged: (value) =>
                                   setState(() => _outcome = value),
@@ -161,7 +163,7 @@ class _PredictionRiskCalculatorPageState
                             _RiskAnalysis(metrics: metrics),
                             _KellyRecommendation(
                               metrics: metrics,
-                              bankroll: inputs.bankroll,
+                              riskBudget: inputs.riskBudget,
                             ),
                             const _RiskWarning(),
                           ]
@@ -262,7 +264,7 @@ class _PositionInfoCard extends StatelessWidget {
     required this.sharesController,
     required this.entryPriceController,
     required this.currentPriceController,
-    required this.bankrollController,
+    required this.riskBudgetController,
     required this.outcome,
     required this.onOutcomeChanged,
   });
@@ -271,7 +273,7 @@ class _PositionInfoCard extends StatelessWidget {
   final TextEditingController sharesController;
   final TextEditingController entryPriceController;
   final TextEditingController currentPriceController;
-  final TextEditingController bankrollController;
+  final TextEditingController riskBudgetController;
   final String outcome;
   final ValueChanged<String> onOutcomeChanged;
 
@@ -324,8 +326,8 @@ class _PositionInfoCard extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: _RiskInput(
-                      label: 'Total Bankroll (\$)',
-                      controller: bankrollController,
+                      label: 'Risk Budget (\$)',
+                      controller: riskBudgetController,
                       numeric: true,
                     ),
                   ),
@@ -617,14 +619,16 @@ class _RiskAnalysis extends StatelessWidget {
 }
 
 class _KellyRecommendation extends StatelessWidget {
-  const _KellyRecommendation({required this.metrics, required this.bankroll});
+  const _KellyRecommendation({required this.metrics, required this.riskBudget});
 
   final _RiskMetrics metrics;
-  final double bankroll;
+  final double riskBudget;
 
   @override
   Widget build(BuildContext context) {
-    final pct = bankroll > 0 ? (metrics.kellyBetSize / bankroll) * 100 : 0;
+    final pct = riskBudget > 0
+        ? (metrics.suggestedExposure / riskBudget) * 100
+        : 0;
 
     return VitCard(
       borderColor: AppColors.primary15,
@@ -646,7 +650,7 @@ class _KellyRecommendation extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Kelly Criterion Recommendation',
+                      'Kelly Criterion Position Sizing',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
@@ -654,7 +658,7 @@ class _KellyRecommendation extends StatelessWidget {
                     ),
                     const SizedBox(height: 3),
                     Text(
-                      'Optimal bet size based on bankroll and edge',
+                      'Suggested exposure based on risk budget and edge',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
                         fontSize: 11,
@@ -672,14 +676,14 @@ class _KellyRecommendation extends StatelessWidget {
             runSpacing: 4,
             children: [
               Text(
-                _formatMoney(metrics.kellyBetSize),
+                _formatMoney(metrics.suggestedExposure),
                 style: AppTextStyles.sectionTitle.copyWith(
                   color: _predictionPrimary,
                   fontSize: 20,
                 ),
               ),
               Text(
-                '(${pct.toStringAsFixed(1)}% of bankroll)',
+                '(${pct.toStringAsFixed(1)}% of risk budget)',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
                   fontSize: 12,
@@ -983,13 +987,13 @@ class _RiskInputs {
     required this.shares,
     required this.entryPrice,
     required this.currentPrice,
-    required this.bankroll,
+    required this.riskBudget,
   });
 
   final double shares;
   final double entryPrice;
   final double currentPrice;
-  final double bankroll;
+  final double riskBudget;
 
   double get cost => shares * entryPrice;
   double get currentValue => shares * currentPrice;
@@ -1003,7 +1007,7 @@ class _RiskMetrics {
     required this.probabilityOfProfit,
     required this.expectedValue,
     required this.riskRewardRatio,
-    required this.kellyBetSize,
+    required this.suggestedExposure,
   });
 
   final double maxLoss;
@@ -1012,7 +1016,7 @@ class _RiskMetrics {
   final double probabilityOfProfit;
   final double expectedValue;
   final double riskRewardRatio;
-  final double kellyBetSize;
+  final double suggestedExposure;
 }
 
 _RiskMetrics _calculate(_RiskInputs inputs) {
@@ -1033,7 +1037,7 @@ _RiskMetrics _calculate(_RiskInputs inputs) {
     probabilityOfProfit: inputs.currentPrice * 100,
     expectedValue: expectedValue,
     riskRewardRatio: ratio,
-    kellyBetSize: safeKellyFraction * inputs.bankroll,
+    suggestedExposure: safeKellyFraction * inputs.riskBudget,
   );
 }
 

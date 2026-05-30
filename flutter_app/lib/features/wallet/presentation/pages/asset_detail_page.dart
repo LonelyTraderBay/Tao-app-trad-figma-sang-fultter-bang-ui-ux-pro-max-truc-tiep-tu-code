@@ -12,12 +12,12 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 const _assetBackground = AppColors.bg;
 const _assetPanel = AppColors.surface;
-const _assetGreen = Color(0xFF10B981);
-const _assetRed = Color(0xFFEF4444);
+const _assetGreen = AppColors.buy;
+const _assetRed = AppColors.sell;
 const _assetPrimary = AppColors.primary;
 
 class AssetDetailPage extends ConsumerStatefulWidget {
@@ -44,9 +44,7 @@ class _AssetDetailPageState extends ConsumerState<AssetDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(walletRepositoryProvider)
-        .getAssetDetail(widget.assetId);
+    final snapshot = ref.watch(walletAssetDetailProvider(widget.assetId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -211,7 +209,7 @@ class _AssetHero extends StatelessWidget {
                 child: _StatPill(
                   label: 'Đóng băng',
                   value: _formatFixed(snapshot.frozen, 2),
-                  valueColor: Color(0xFFFFC107),
+                  valueColor: AppColors.caution,
                 ),
               ),
               const SizedBox(width: 8),
@@ -280,7 +278,7 @@ class _StatPill extends StatelessWidget {
       height: 56,
       padding: const EdgeInsets.fromLTRB(10, 9, 8, 8),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .05),
+        color: AppColors.onAccent.withValues(alpha: .05),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -367,7 +365,7 @@ class _ActionTile extends StatelessWidget {
         decoration: BoxDecoration(
           color: _assetPanel,
           borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: const Color(0x14FFFFFF)),
+          border: Border.all(color: AppColors.overlayStroke),
         ),
         child: Column(
           children: [
@@ -417,7 +415,7 @@ class _PriceChartCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: _assetPanel,
         borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: const Color(0x14FFFFFF)),
+        border: Border.all(color: AppColors.overlayStroke),
       ),
       child: Column(
         children: [
@@ -445,7 +443,7 @@ class _PriceChartCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: activePeriod == period
                           ? _assetPrimary.withValues(alpha: .18)
-                          : Colors.transparent,
+                          : AppColors.transparent,
                       borderRadius: AppRadii.smRadius,
                     ),
                     child: Text(

@@ -12,15 +12,16 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _riskPrimary = AppColors.primary;
 const _riskPanel = AppColors.surface2;
 const _riskTabBackground = AppColors.surface;
 const _riskCard = AppColors.surface;
 const _riskWarningBackground = AppColors.warningBg;
-const _riskWarningBorder = Color(0x665A3A00);
-const _riskWarningText = Color(0xFFF59E0B);
+const _riskWarningBorder = AppColors.warningBorderStrong;
+const _riskWarningText = AppColors.caution;
 
 class PortfolioRiskAnalysisPage extends ConsumerStatefulWidget {
   const PortfolioRiskAnalysisPage({super.key, this.shellRenderMode});
@@ -41,9 +42,7 @@ class _PortfolioRiskAnalysisPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRepositoryProvider)
-        .getPortfolioRiskAnalysis();
+    final snapshot = ref.watch(tradePortfolioRiskAnalysisProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -597,7 +596,7 @@ class _ExposurePiePainter extends CustomPainter {
         ..style = PaintingStyle.fill;
       canvas.drawArc(rect, start, sweep, true, fill);
       final stroke = Paint()
-        ..color = Colors.white
+        ..color = AppColors.onAccent
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1;
       canvas.drawArc(rect, start, sweep, true, stroke);

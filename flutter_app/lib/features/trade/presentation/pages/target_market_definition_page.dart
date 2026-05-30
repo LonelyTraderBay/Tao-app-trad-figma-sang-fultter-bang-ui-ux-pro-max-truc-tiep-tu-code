@@ -10,14 +10,15 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _targetBackground = AppColors.bg;
 const _targetPanel = AppColors.surface;
 const _targetBorder = AppColors.borderSolid;
 const _targetPrimary = AppColors.primary;
-const _targetGreen = Color(0xFF10B981);
-const _targetRed = Color(0xFFEF4444);
+const _targetGreen = AppColors.buy;
+const _targetRed = AppColors.sell;
 
 class TargetMarketDefinitionPage extends ConsumerWidget {
   const TargetMarketDefinitionPage({
@@ -35,7 +36,7 @@ class TargetMarketDefinitionPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getTargetMarketDefinition(productId: productId ?? 'prod-1');
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =

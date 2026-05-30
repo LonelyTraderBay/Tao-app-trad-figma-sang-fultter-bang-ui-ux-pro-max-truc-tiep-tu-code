@@ -10,13 +10,14 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _tradePrimary = AppColors.primary;
 const _cardBackground = AppColors.surface2;
 const _chipBackground = AppColors.surface2;
-const _futuresColor = Color(0xFFF59E0B);
-const _marginColor = Color(0xFF8B5CF6);
+const _futuresColor = AppColors.caution;
+const _marginColor = AppColors.accent;
 
 class PositionDashboardPage extends ConsumerStatefulWidget {
   const PositionDashboardPage({super.key, this.shellRenderMode});
@@ -37,7 +38,9 @@ class _PositionDashboardPageState extends ConsumerState<PositionDashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getTradePositions();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getTradePositions();
     final positions = _visiblePositions(snapshot.positions);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -322,7 +325,7 @@ class _PillButton extends StatelessWidget {
               ? _tradePrimary.withValues(alpha: .16)
               : _chipBackground,
           border: Border.all(
-            color: active ? _tradePrimary : Colors.transparent,
+            color: active ? _tradePrimary : AppColors.transparent,
           ),
           borderRadius: AppRadii.lgRadius,
         ),

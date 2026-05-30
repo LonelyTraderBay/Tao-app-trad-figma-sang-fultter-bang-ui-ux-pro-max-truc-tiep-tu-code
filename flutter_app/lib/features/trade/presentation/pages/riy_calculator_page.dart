@@ -14,16 +14,17 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _riyBackground = AppColors.bg;
 const _riyPanel = AppColors.surface;
 const _riyPanel2 = AppColors.surface2;
 const _riyBorder = AppColors.borderSolid;
 const _riyPrimary = AppColors.primary;
-const _riyGreen = Color(0xFF10B981);
-const _riyRed = Color(0xFFEF4444);
-const _riyGrid = Color(0x1FFFFFFF);
+const _riyGreen = AppColors.buy;
+const _riyRed = AppColors.sell;
+const _riyGrid = AppColors.portfolioBtnGhost;
 
 class RIYCalculatorPage extends ConsumerStatefulWidget {
   const RIYCalculatorPage({super.key, this.shellRenderMode});
@@ -49,7 +50,9 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
   @override
   void initState() {
     super.initState();
-    final snapshot = ref.read(tradeRepositoryProvider).getRiyCalculator();
+    final snapshot = ref
+        .read(tradeReadModelControllerProvider)
+        .getRiyCalculator();
     _investment = snapshot.investmentAmount;
     _expectedReturn = snapshot.expectedReturnPct;
     _totalCosts = snapshot.totalCostsPct;

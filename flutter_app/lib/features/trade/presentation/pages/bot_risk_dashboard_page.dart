@@ -12,17 +12,18 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _riskBackground = AppColors.bg;
 const _riskPanel = AppColors.surface;
 const _riskPanel2 = AppColors.surface2;
 const _riskPrimary = AppColors.primary;
-const _riskGreen = Color(0xFF10B981);
-const _riskAmber = Color(0xFFF59E0B);
-const _riskRed = Color(0xFFEF4444);
-const _riskPurple = Color(0xFF8B5CF6);
-const _riskTrack = Color(0xFF202B45);
+const _riskGreen = AppColors.buy;
+const _riskAmber = AppColors.caution;
+const _riskRed = AppColors.sell;
+const _riskPurple = AppColors.accent;
+const _riskTrack = AppColors.chartTrackRisk;
 
 class BotRiskDashboardPage extends ConsumerWidget {
   const BotRiskDashboardPage({super.key, this.shellRenderMode});
@@ -35,7 +36,9 @@ class BotRiskDashboardPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getBotRiskDashboard();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getBotRiskDashboard();
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame

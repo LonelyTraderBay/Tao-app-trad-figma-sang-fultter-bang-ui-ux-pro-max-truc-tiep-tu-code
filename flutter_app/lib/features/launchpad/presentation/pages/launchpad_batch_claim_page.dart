@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.dart';
+import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 
 enum _BatchClaimStep { select, review, success }
 
@@ -49,7 +49,7 @@ class _LaunchpadBatchClaimPageState
   @override
   void initState() {
     super.initState();
-    final snapshot = const MockLaunchpadRepository().getBatchClaim();
+    final snapshot = ref.read(launchpadControllerProvider).getBatchClaim();
     _selectedIds = snapshot.positions
         .map((position) => position.positionId)
         .toSet();
@@ -57,7 +57,7 @@ class _LaunchpadBatchClaimPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadRepositoryProvider).getBatchClaim();
+    final snapshot = ref.watch(launchpadControllerProvider).getBatchClaim();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navInset = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -154,7 +154,7 @@ class _LaunchpadBatchClaimPageState
                     variant: VitCtaButtonVariant.success,
                     leading: const Icon(
                       Icons.bolt_rounded,
-                      color: Colors.white,
+                      color: AppColors.onAccent,
                       size: AppSpacing.iconSm,
                     ),
                     onPressed: () =>

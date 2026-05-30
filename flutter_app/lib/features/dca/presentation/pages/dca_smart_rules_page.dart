@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
+import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 
 enum _RulesTab { mine, templates, history }
 
@@ -37,7 +37,7 @@ class _DCASmartRulesPageState extends ConsumerState<DCASmartRulesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(dcaRepositoryProvider).getSmartRules();
+    final snapshot = ref.watch(dcaSmartRulesProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollBottom =
         (mode.usesVisualQaFrame
@@ -236,7 +236,7 @@ class _TopTab extends StatelessWidget {
                 height: 2,
                 width: active ? 116 : 0,
                 decoration: BoxDecoration(
-                  color: active ? AppColors.primary : Colors.transparent,
+                  color: active ? AppColors.primary : AppColors.transparent,
                   borderRadius: AppRadii.xsRadius,
                 ),
               ),

@@ -10,16 +10,17 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _auditPrimary = AppColors.primary;
-const _auditAmber = Color(0xFFF59E0B);
-const _auditPurple = Color(0xFF8B5CF6);
-const _auditGreen = Color(0xFF10B981);
+const _auditAmber = AppColors.caution;
+const _auditPurple = AppColors.accent;
+const _auditGreen = AppColors.buy;
 const _auditCard = AppColors.surface;
 const _auditPanel = AppColors.surface2;
 const _auditChip = AppColors.surface3;
-const _auditMuted = Color(0xFF667085);
+const _auditMuted = AppColors.text3;
 
 class CopyAuditLogPage extends ConsumerStatefulWidget {
   const CopyAuditLogPage({
@@ -57,7 +58,7 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getCopyAuditLog(copyId: widget.copyId);
     final events = _filteredEvents(snapshot);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
@@ -154,7 +155,7 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.bg,
-      barrierColor: Colors.black.withValues(alpha: .5),
+      barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .5),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -190,7 +191,7 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                     format: format,
                     onTap: () {
                       ref
-                          .read(tradeRepositoryProvider)
+                          .read(tradeReadModelControllerProvider)
                           .createCopyAuditExport(
                             TradeCopyAuditExportRequest(
                               copyId: snapshot.copyId,
@@ -417,7 +418,7 @@ class _AuditFilterPill extends StatelessWidget {
           color: active ? _auditPrimary.withValues(alpha: .14) : _auditChip,
           borderRadius: AppRadii.lgRadius,
           border: Border.all(
-            color: active ? _auditPrimary : Colors.transparent,
+            color: active ? _auditPrimary : AppColors.transparent,
           ),
         ),
         child: Text(

@@ -6,7 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
+import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 
 class DCARebalanceDashboard extends ConsumerWidget {
   const DCARebalanceDashboard({
@@ -23,9 +23,7 @@ class DCARebalanceDashboard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(dcaRepositoryProvider)
-        .getRebalanceDashboard(configId);
+    final snapshot = ref.watch(dcaRebalanceDashboardProvider(configId));
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

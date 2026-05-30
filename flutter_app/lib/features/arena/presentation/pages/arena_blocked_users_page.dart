@@ -14,7 +14,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
+import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 
 class ArenaBlockedUsersPage extends ConsumerStatefulWidget {
   const ArenaBlockedUsersPage({super.key, this.shellRenderMode});
@@ -43,7 +44,9 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(arenaRepositoryProvider).getArenaBlockedUsers();
+    final snapshot = ref
+        .watch(arenaReadModelControllerProvider)
+        .getArenaBlockedUsers();
     if (!_initialized) {
       _blockedUsers = List<ArenaBlockedUserDraft>.of(snapshot.users);
       _initialized = true;
@@ -240,7 +243,7 @@ class _BlockedUserRow extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: isLast ? Colors.transparent : AppColors.divider,
+            color: isLast ? AppColors.transparent : AppColors.divider,
           ),
         ),
       ),
@@ -348,7 +351,7 @@ class _SmallActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
@@ -384,7 +387,7 @@ class _UnblockDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: AppColors.cardBg,
-      surfaceTintColor: Colors.transparent,
+      surfaceTintColor: AppColors.transparent,
       shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       title: Text(
         'Bỏ chặn ${user.name}?',

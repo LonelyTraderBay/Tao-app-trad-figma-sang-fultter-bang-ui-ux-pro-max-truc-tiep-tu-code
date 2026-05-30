@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -10,11 +11,11 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
+import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 
 const _marketPrimary = AppColors.primary;
-const _predictionPurple = Color(0xFF8B5CF6);
-const _arenaOrange = Color(0xFFF59E0B);
+const _predictionPurple = AppColors.accent;
+const _arenaOrange = AppColors.caution;
 
 class MarketListPage extends ConsumerStatefulWidget {
   const MarketListPage({super.key, this.shellRenderMode});
@@ -41,7 +42,7 @@ class _MarketListPageState extends ConsumerState<MarketListPage> {
   void initState() {
     super.initState();
     _favoriteIds = {
-      ...ref.read(marketRepositoryProvider).getMarketList().watchlist,
+      ...ref.read(marketControllerProvider).getMarketList().watchlist,
     };
   }
 
@@ -113,7 +114,7 @@ class _MarketListPageState extends ConsumerState<MarketListPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(marketRepositoryProvider).getMarketList();
+    final snapshot = ref.watch(marketControllerProvider).getMarketList();
     final shellRenderMode = widget.shellRenderMode ?? defaultShellRenderMode();
     final nativeShell = !shellRenderMode.usesVisualQaFrame;
     final bottomChrome = shellRenderMode.usesVisualQaFrame
@@ -375,11 +376,11 @@ class _FilterChipButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: active
                 ? activeColor.withValues(alpha: 0.16)
-                : Colors.transparent,
+                : AppColors.transparent,
             border: Border.all(
               color: active
                   ? activeColor.withValues(alpha: 0.42)
-                  : Colors.transparent,
+                  : AppColors.transparent,
             ),
             borderRadius: AppRadii.cardRadius,
           ),
@@ -459,11 +460,15 @@ class _MoverCard extends StatelessWidget {
             children: [
               Icon(icon, color: color, size: 14),
               const SizedBox(width: 6),
-              Text(
-                title,
-                style: AppTextStyles.caption.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
+              Flexible(
+                child: Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: color,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
               ),
             ],
@@ -537,7 +542,7 @@ class _MarketTools extends StatelessWidget {
       icon: Icons.forum_outlined,
       label: 'Tâm lý',
       route: 'social-sentiment',
-      color: Color(0xFF06B6D4),
+      color: AppAssetColors.cyanChain,
     ),
     _MarketTool(
       icon: Icons.pie_chart_outline_rounded,
@@ -549,31 +554,31 @@ class _MarketTools extends StatelessWidget {
       icon: Icons.article_outlined,
       label: 'Tin tức',
       route: 'news',
-      color: Color(0xFF64748B),
+      color: AppColors.text3,
     ),
     _MarketTool(
       icon: Icons.show_chart_rounded,
       label: 'Phân tích',
       route: 'advanced-charts',
-      color: Color(0xFF0EA5E9),
+      color: AppAssetColors.skyChain,
     ),
     _MarketTool(
       icon: Icons.lock_open_rounded,
       label: 'Unlock',
       route: 'unlocks',
-      color: Color(0xFFA855F7),
+      color: AppAssetColors.violetChain,
     ),
     _MarketTool(
       icon: Icons.radio_button_checked,
       label: 'Tín hiệu',
       route: 'signals',
-      color: Color(0xFFF97316),
+      color: AppColors.riskHigh,
     ),
     _MarketTool(
       icon: Icons.account_tree_outlined,
       label: 'Tương quan',
       route: 'correlations',
-      color: Color(0xFF14B8A6),
+      color: AppAssetColors.tealChain,
     ),
   ];
 

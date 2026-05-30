@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PNotificationsSettingsPage extends ConsumerStatefulWidget {
   const P2PNotificationsSettingsPage({super.key, this.shellRenderMode});
@@ -36,7 +36,7 @@ class _P2PNotificationsSettingsPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getNotificationSettings();
+    final snapshot = ref.watch(p2pNotificationSettingsProvider);
     _ensureState(snapshot);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -138,7 +138,7 @@ class _Hero extends StatelessWidget {
             ),
             child: const Icon(
               Icons.notifications_none_rounded,
-              color: Colors.white,
+              color: AppColors.onAccent,
               size: 26,
             ),
           ),

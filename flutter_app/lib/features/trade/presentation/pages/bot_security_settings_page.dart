@@ -10,15 +10,16 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _securityBackground = AppColors.bg;
 const _securityPanel = AppColors.surface;
 const _securityPanel2 = AppColors.surface2;
 const _securityPrimary = AppColors.primary;
-const _securityGreen = Color(0xFF10B981);
-const _securityAmber = Color(0xFFF59E0B);
-const _securityRed = Color(0xFFEF4444);
+const _securityGreen = AppColors.buy;
+const _securityAmber = AppColors.caution;
+const _securityRed = AppColors.sell;
 
 class BotSecuritySettingsPage extends ConsumerStatefulWidget {
   const BotSecuritySettingsPage({super.key, this.shellRenderMode});
@@ -45,16 +46,18 @@ class _BotSecuritySettingsPageState
   void initState() {
     super.initState();
     _twoFaEnabled = ref
-        .read(tradeRepositoryProvider)
-        .getBotSecuritySettings()
+        .read(tradeBotSecuritySettingsControllerProvider)
+        .state
+        .snapshot
         .twoFaEnabled;
   }
 
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
-        .getBotSecuritySettings();
+        .watch(tradeBotSecuritySettingsControllerProvider)
+        .state
+        .snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -136,10 +139,8 @@ class _BotSecuritySettingsPageState
   void _toggleTwoFa(TradeBotSecuritySettingsSnapshot snapshot) {
     setState(() => _twoFaEnabled = !_twoFaEnabled);
     ref
-        .read(tradeRepositoryProvider)
-        .patchBotSecuritySettings(
-          TradeBotSecuritySettingsDraft(twoFaEnabled: _twoFaEnabled),
-        );
+        .read(tradeBotSecuritySettingsControllerProvider)
+        .saveTwoFa(_twoFaEnabled);
   }
 
   void _showApiKeySheet(
@@ -554,7 +555,7 @@ class _Switch extends StatelessWidget {
             width: 20,
             height: 20,
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: AppColors.onAccent,
               shape: BoxShape.circle,
             ),
           ),

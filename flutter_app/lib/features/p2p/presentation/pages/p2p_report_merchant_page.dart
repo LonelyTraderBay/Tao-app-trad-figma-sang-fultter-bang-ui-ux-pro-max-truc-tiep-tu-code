@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PReportMerchantPage extends ConsumerStatefulWidget {
   const P2PReportMerchantPage({
@@ -52,9 +52,7 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getReportMerchant(widget.merchantId);
+    final snapshot = ref.watch(p2pReportMerchantProvider(widget.merchantId));
     final selectedReason = snapshot.reasons.where(
       (reason) => reason.id == _selectedReasonId,
     );
@@ -304,7 +302,7 @@ class _ReportActionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       borderRadius: AppRadii.cardRadius,
       child: Ink(
         decoration: BoxDecoration(
@@ -380,7 +378,7 @@ class _ReasonCard extends StatelessWidget {
     final tone = _toneColor(reason.tone);
     return Material(
       key: P2PReportMerchantPage.reasonKey(reason.id),
-      color: Colors.transparent,
+      color: AppColors.transparent,
       borderRadius: AppRadii.cardRadius,
       child: Ink(
         decoration: BoxDecoration(

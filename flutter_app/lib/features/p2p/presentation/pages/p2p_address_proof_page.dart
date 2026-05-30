@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PAddressProofPage extends ConsumerStatefulWidget {
   const P2PAddressProofPage({super.key, this.shellRenderMode});
@@ -42,7 +42,7 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getAddressProof();
+    final snapshot = ref.watch(p2pAddressProofProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame

@@ -12,10 +12,14 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PTaxReportingPage extends ConsumerStatefulWidget {
-  const P2PTaxReportingPage({super.key, this.shellRenderMode});
+  const P2PTaxReportingPage({
+    super.key,
+    this.initialYear,
+    this.shellRenderMode,
+  });
 
   static const heroKey = Key('sc272_p2p_tax_hero');
   static const yearsKey = Key('sc272_p2p_tax_years');
@@ -30,6 +34,7 @@ class P2PTaxReportingPage extends ConsumerStatefulWidget {
   static Key jurisdictionKey(String code) =>
       Key('sc272_p2p_tax_jurisdiction_$code');
 
+  final int? initialYear;
   final ShellRenderMode? shellRenderMode;
 
   @override
@@ -42,13 +47,19 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
   String _jurisdiction = 'US';
 
   @override
+  void initState() {
+    super.initState();
+    _selectedYear = widget.initialYear ?? _selectedYear;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getTaxReporting(
-          selectedYear: _selectedYear,
-          selectedJurisdiction: _jurisdiction,
-        );
+    final snapshot = ref.watch(
+      p2pTaxReportingProvider((
+        selectedYear: _selectedYear,
+        selectedJurisdiction: _jurisdiction,
+      )),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -150,7 +161,7 @@ class _TaxHero extends StatelessWidget {
         children: [
           DecoratedBox(
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: .20),
+              color: AppColors.onAccent.withValues(alpha: .20),
               borderRadius: AppRadii.lgRadius,
             ),
             child: const SizedBox(
@@ -158,7 +169,7 @@ class _TaxHero extends StatelessWidget {
               height: AppSpacing.inputHeight,
               child: Icon(
                 Icons.description_outlined,
-                color: Colors.white,
+                color: AppColors.onAccent,
                 size: AppSpacing.iconMd,
               ),
             ),
@@ -171,7 +182,7 @@ class _TaxHero extends StatelessWidget {
                 Text(
                   'Tax Year ${snapshot.selectedYear}',
                   style: AppTextStyles.sectionTitle.copyWith(
-                    color: Colors.white,
+                    color: AppColors.onAccent,
                     fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
@@ -182,7 +193,7 @@ class _TaxHero extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
-                    color: Colors.white.withValues(alpha: .90),
+                    color: AppColors.onAccent.withValues(alpha: .90),
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -275,7 +286,7 @@ class _YearChip extends StatelessWidget {
           child: Text(
             '$year',
             style: AppTextStyles.caption.copyWith(
-              color: selected ? Colors.white : AppColors.text2,
+              color: selected ? AppColors.onAccent : AppColors.text2,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
@@ -388,7 +399,7 @@ class _JurisdictionTile extends StatelessWidget {
                     child: Center(
                       child: Icon(
                         Icons.circle,
-                        color: Colors.white,
+                        color: AppColors.onAccent,
                         size: AppSpacing.x2,
                       ),
                     ),
@@ -654,14 +665,14 @@ class _TaxDocumentRow extends StatelessWidget {
                   children: [
                     const Icon(
                       Icons.download_rounded,
-                      color: Colors.white,
+                      color: AppColors.onAccent,
                       size: 14,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Text(
                       document.format,
                       style: AppTextStyles.micro.copyWith(
-                        color: Colors.white,
+                        color: AppColors.onAccent,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),

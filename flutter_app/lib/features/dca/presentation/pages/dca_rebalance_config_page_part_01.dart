@@ -1,0 +1,514 @@
+part of 'dca_rebalance_config_page.dart';
+
+class _InfoBanner extends StatelessWidget {
+  const _InfoBanner();
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.contentPad),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const _AccentIcon(icon: Icons.verified_user_outlined),
+          const SizedBox(width: AppSpacing.x4),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Tự động cân bằng danh mục',
+                  style: AppTextStyles.base.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  'Duy trì tỷ lệ phân bổ tài sản theo mục tiêu. Hệ thống tự động mua/bán khi danh mục lệch khỏi ngưỡng.',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    height: 1.45,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AllocationSummary extends StatelessWidget {
+  const _AllocationSummary({
+    required this.targets,
+    required this.totalPercent,
+    required this.onAdd,
+  });
+
+  final List<DcaRebalanceTarget> targets;
+  final double totalPercent;
+  final VoidCallback onAdd;
+
+  bool get _valid => (totalPercent - 100).abs() < 0.01;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.contentPad),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _SectionHeader(
+            icon: Icons.bar_chart_rounded,
+            title: 'Phân bổ mục tiêu',
+            trailing: _PillButton(
+              key: DCARebalanceConfig.addTargetKey,
+              icon: Icons.add_rounded,
+              label: 'Thêm',
+              onTap: onAdd,
+              enabled: targets.length < 4,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x5),
+          Row(
+            children: [
+              SizedBox(
+                width: 132,
+                height: 132,
+                child: CustomPaint(
+                  painter: _DonutPainter(targets: targets),
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '${totalPercent.toStringAsFixed(0)}%',
+                          style: AppTextStyles.sectionTitle.copyWith(
+                            color: AppColors.text1,
+                            height: 1,
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.x1),
+                        Text(
+                          'Tổng phân bổ',
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x5),
+              Expanded(
+                child: Column(
+                  children: targets
+                      .map(
+                        (target) => Padding(
+                          padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+                          child: _LegendRow(target: target),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x5),
+          Container(
+            decoration: BoxDecoration(
+              color: _valid ? AppColors.buy10 : AppColors.sell10,
+              borderRadius: AppRadii.inputRadius,
+              border: Border.all(
+                color: _valid ? AppColors.buy20 : AppColors.sell20,
+              ),
+            ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.x4,
+              vertical: AppSpacing.x3,
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  _valid
+                      ? Icons.check_circle_outline_rounded
+                      : Icons.error_outline_rounded,
+                  color: _valid ? AppColors.buy : AppColors.sell,
+                  size: 18,
+                ),
+                const SizedBox(width: AppSpacing.x3),
+                Text(
+                  'Tổng: ${totalPercent.toStringAsFixed(0)}%',
+                  style: AppTextStyles.caption.copyWith(
+                    color: _valid ? AppColors.buy : AppColors.sell,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        _valid
+                            ? 'Hợp lệ - sẵn sàng lưu'
+                            : 'Tổng phải bằng 100%',
+                        style: AppTextStyles.micro.copyWith(
+                          color: _valid ? AppColors.buy : AppColors.text3,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TargetList extends StatelessWidget {
+  const _TargetList({
+    required this.targets,
+    required this.onPercentChanged,
+    required this.onToleranceChanged,
+    required this.onRemove,
+  });
+
+  final List<DcaRebalanceTarget> targets;
+  final void Function(String id, double value) onPercentChanged;
+  final void Function(String id, double value) onToleranceChanged;
+  final void Function(String id) onRemove;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: targets
+          .map(
+            (target) => Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.x4),
+              child: _TargetCard(
+                target: target,
+                canRemove: targets.length > 2,
+                onPercentChanged: (value) => onPercentChanged(target.id, value),
+                onToleranceChanged: (value) =>
+                    onToleranceChanged(target.id, value),
+                onRemove: () => onRemove(target.id),
+              ),
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+
+class _TargetCard extends StatelessWidget {
+  const _TargetCard({
+    required this.target,
+    required this.canRemove,
+    required this.onPercentChanged,
+    required this.onToleranceChanged,
+    required this.onRemove,
+  });
+
+  final DcaRebalanceTarget target;
+  final bool canRemove;
+  final ValueChanged<double> onPercentChanged;
+  final ValueChanged<double> onToleranceChanged;
+  final VoidCallback onRemove;
+
+  @override
+  Widget build(BuildContext context) {
+    final accent = _accentColor(target.accent);
+    return VitCard(
+      radius: VitCardRadius.lg,
+      padding: EdgeInsets.zero,
+      child: Column(
+        children: [
+          Container(
+            height: AppSpacing.x1,
+            decoration: BoxDecoration(
+              color: accent,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(AppRadii.lg),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.contentPad),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    _CoinBadge(symbol: target.symbol, accent: accent),
+                    const SizedBox(width: AppSpacing.x4),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                target.symbol,
+                                style: AppTextStyles.baseMedium.copyWith(
+                                  color: AppColors.text1,
+                                ),
+                              ),
+                              const SizedBox(width: AppSpacing.x2),
+                              const Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                color: AppColors.text3,
+                                size: 18,
+                              ),
+                            ],
+                          ),
+                          Text(
+                            target.assetName,
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.text3,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text(
+                      target.targetPercent.toStringAsFixed(0),
+                      style: AppTextStyles.pageTitle.copyWith(color: accent),
+                    ),
+                    Text(
+                      '%',
+                      style: AppTextStyles.base.copyWith(
+                        color: accent,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    if (canRemove) ...[
+                      const SizedBox(width: AppSpacing.x3),
+                      _IconBadgeButton(
+                        icon: Icons.delete_outline_rounded,
+                        onTap: onRemove,
+                        color: AppColors.sell,
+                      ),
+                    ],
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.x5),
+                Text(
+                  'Tỷ lệ mục tiêu',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text3,
+                    fontWeight: AppTextStyles.medium,
+                  ),
+                ),
+                _TokenSlider(
+                  key: DCARebalanceConfig.targetSliderKey(target.id),
+                  value: target.targetPercent,
+                  min: 0,
+                  max: 100,
+                  divisions: 100,
+                  accent: accent,
+                  onChanged: onPercentChanged,
+                ),
+                const SizedBox(height: AppSpacing.x3),
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.surface2,
+                    borderRadius: AppRadii.inputRadius,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.x4,
+                    vertical: AppSpacing.x3,
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Dung sai',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.x2),
+                      const Icon(
+                        Icons.help_outline_rounded,
+                        size: 13,
+                        color: AppColors.text3,
+                      ),
+                      const Spacer(),
+                      _IconBadgeButton(
+                        icon: Icons.remove_rounded,
+                        onTap: () => onToleranceChanged(target.tolerance - 1),
+                        color: AppColors.text1,
+                        neutral: true,
+                      ),
+                      const SizedBox(width: AppSpacing.x3),
+                      Text(
+                        '±${target.tolerance.toStringAsFixed(0)}%',
+                        style: AppTextStyles.baseMedium.copyWith(
+                          color: AppColors.text1,
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.x3),
+                      _IconBadgeButton(
+                        icon: Icons.add_rounded,
+                        onTap: () => onToleranceChanged(target.tolerance + 1),
+                        color: AppColors.text1,
+                        neutral: true,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StrategySection extends StatelessWidget {
+  const _StrategySection({
+    required this.options,
+    required this.active,
+    required this.onChanged,
+  });
+
+  final List<DcaRebalanceStrategyOption> options;
+  final DcaRebalanceStrategy active;
+  final ValueChanged<DcaRebalanceStrategy> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const _SectionHeader(
+          icon: Icons.track_changes_rounded,
+          title: 'Chiến lược',
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        ...options.map(
+          (option) => Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+            child: _StrategyOptionTile(
+              option: option,
+              selected: active == option.strategy,
+              onTap: () => onChanged(option.strategy),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _StrategyOptionTile extends StatelessWidget {
+  const _StrategyOptionTile({
+    required this.option,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final DcaRebalanceStrategyOption option;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: AppColors.transparent,
+      borderRadius: AppRadii.lgRadius,
+      child: InkWell(
+        key: DCARebalanceConfig.strategyKey(option.strategy),
+        onTap: onTap,
+        borderRadius: AppRadii.lgRadius,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 160),
+          decoration: BoxDecoration(
+            color: selected ? AppColors.accent08 : AppColors.surface,
+            borderRadius: AppRadii.lgRadius,
+            border: Border.all(
+              color: selected ? AppColors.accent30 : AppColors.cardBorder,
+              width: selected ? 2 : 1,
+            ),
+            boxShadow: selected
+                ? [
+                    const BoxShadow(
+                      color: AppColors.accent10,
+                      blurRadius: 14,
+                      offset: Offset(0, 4),
+                    ),
+                  ]
+                : null,
+          ),
+          padding: const EdgeInsets.all(AppSpacing.contentPad),
+          child: Row(
+            children: [
+              _AccentIcon(
+                icon: _strategyIcon(option.icon),
+                color: selected ? AppColors.accent : AppColors.text3,
+                muted: !selected,
+              ),
+              const SizedBox(width: AppSpacing.x4),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      option.title,
+                      style: AppTextStyles.base.copyWith(
+                        color: selected ? AppColors.accent : AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      option.subtitle,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 160),
+                width: AppSpacing.x5,
+                height: AppSpacing.x5,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: selected ? AppColors.accent : AppColors.borderSolid,
+                    width: 2,
+                  ),
+                ),
+                child: selected
+                    ? Center(
+                        child: Container(
+                          width: AppSpacing.x3,
+                          height: AppSpacing.x3,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.accent,
+                          ),
+                        ),
+                      )
+                    : null,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

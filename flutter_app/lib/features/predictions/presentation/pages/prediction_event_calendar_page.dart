@@ -12,7 +12,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
+import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 
 const _predictionPrimary = AppColors.primary;
 
@@ -46,7 +47,7 @@ class _PredictionEventCalendarPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(predictionsRepositoryProvider)
+        .watch(predictionsReadModelControllerProvider)
         .getEventCalendar(category: _category);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -293,14 +294,14 @@ class _CategoryChip extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
           decoration: BoxDecoration(
             border: Border.all(
-              color: selected ? Colors.transparent : AppColors.border,
+              color: selected ? AppColors.transparent : AppColors.border,
             ),
             borderRadius: AppRadii.mdRadius,
           ),
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
-              color: selected ? Colors.white : AppColors.text1,
+              color: selected ? AppColors.onAccent : AppColors.text1,
               fontWeight: AppTextStyles.bold,
               fontSize: 12,
             ),
@@ -376,7 +377,7 @@ class _CalendarEventCard extends StatelessWidget {
     final statusColor = _statusColor(event.status);
     final statusBg = _statusBackground(event.status);
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         key: PredictionEventCalendarPage.eventKey(event.id),
         onTap: () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
@@ -761,7 +762,7 @@ class _TogglePill extends StatelessWidget {
         width: 24,
         height: 24,
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: AppColors.onAccent,
           shape: BoxShape.circle,
         ),
       ),
@@ -864,7 +865,9 @@ Color _statusBackground(PredictionCalendarEventStatus status) {
     PredictionCalendarEventStatus.active => AppColors.buy10,
     PredictionCalendarEventStatus.upcoming => AppColors.warn10,
     PredictionCalendarEventStatus.resolving => AppColors.primary08,
-    PredictionCalendarEventStatus.resolved => const Color(0x146B7280),
+    PredictionCalendarEventStatus.resolved => AppColors.text3.withValues(
+      alpha: .08,
+    ),
   };
 }
 

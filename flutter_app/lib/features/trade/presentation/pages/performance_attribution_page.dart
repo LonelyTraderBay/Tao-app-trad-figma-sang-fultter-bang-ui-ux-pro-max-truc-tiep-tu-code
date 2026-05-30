@@ -13,13 +13,14 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _attributionPrimary = AppColors.primary;
-const _attributionPurple = Color(0xFF8B5CF6);
-const _attributionGreen = Color(0xFF10B981);
-const _attributionRed = Color(0xFFEF4444);
-const _attributionGray = Color(0xFF6B7280);
+const _attributionPurple = AppColors.accent;
+const _attributionGreen = AppColors.buy;
+const _attributionRed = AppColors.sell;
+const _attributionGray = AppColors.text3;
 
 class PerformanceAttributionPage extends ConsumerStatefulWidget {
   const PerformanceAttributionPage({
@@ -47,7 +48,7 @@ class _PerformanceAttributionPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getPerformanceAttribution(copyId: widget.copyId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -351,7 +352,7 @@ class _DrawdownTab extends StatelessWidget {
         ),
         const SizedBox(height: 14),
         _NoticePanel(
-          color: const Color(0xFFF59E0B),
+          color: AppColors.caution,
           text:
               'Underwater chart hiển thị khoảng cách từ đỉnh lịch sử. Recovery dài có thể gây stress tâm lý.',
         ),
@@ -929,10 +930,10 @@ class _CorrelationPainter extends CustomPainter {
 
 void _drawGrid(Canvas canvas, Rect plot, {required List<String> yLabels}) {
   final gridPaint = Paint()
-    ..color = const Color(0xFF1D2635)
+    ..color = AppColors.surfaceNavyDarker
     ..strokeWidth = 1;
   final axisPaint = Paint()
-    ..color = const Color(0xFF384255)
+    ..color = AppColors.surfaceNavyStroke
     ..strokeWidth = 1;
   for (var i = 0; i < 14; i++) {
     final x = plot.left + i / 13 * plot.width;
@@ -978,7 +979,7 @@ void _drawChartText(
     text: TextSpan(
       text: text,
       style: const TextStyle(
-        color: Color(0xFF64708A),
+        color: AppColors.attributionText,
         fontSize: 10,
         fontWeight: FontWeight.w500,
       ),

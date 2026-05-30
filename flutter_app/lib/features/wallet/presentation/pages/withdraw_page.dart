@@ -11,14 +11,14 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 const _withdrawBackground = AppColors.bg;
 const _withdrawPanel = AppColors.surface;
 const _withdrawPanel2 = AppColors.surface2;
 const _withdrawPrimary = AppColors.primary;
-const _withdrawGreen = Color(0xFF10B981);
-const _withdrawAmber = Color(0xFFF59E0B);
+const _withdrawGreen = AppColors.buy;
+const _withdrawAmber = AppColors.caution;
 
 class WithdrawPage extends ConsumerStatefulWidget {
   const WithdrawPage({
@@ -34,6 +34,8 @@ class WithdrawPage extends ConsumerStatefulWidget {
   static const amountFieldKey = Key('sc139_withdraw_amount_field');
   static const allAmountKey = Key('sc139_withdraw_all_amount');
   static const nextKey = Key('sc139_withdraw_next');
+  static const cancelConfirmKey = Key('sc139_withdraw_cancel_confirm');
+  static const confirmWithdrawKey = Key('sc139_withdraw_confirm_withdraw');
   static Key networkKey(String id) => Key('sc139_withdraw_network_$id');
   static Key recentAddressKey(String label) =>
       Key('sc139_withdraw_recent_$label');
@@ -67,10 +69,14 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(walletRepositoryProvider)
-        .getWithdraw(widget.asset, assetScoped: widget.assetScoped);
-    final selected = _selectedNetwork(snapshot.networks);
+    final controller = ref.watch(
+      withdrawControllerProvider((
+        asset: widget.asset,
+        assetScoped: widget.assetScoped,
+      )),
+    );
+    final snapshot = controller.state.snapshot;
+    final selected = controller.selectedNetwork(_selectedNetworkId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -108,7 +114,7 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
                     _NetworkSelector(
                       asset: snapshot.asset,
                       network: selected,
-                      onTap: () => _openNetworkPicker(snapshot.networks),
+                      onTap: () => _openNetworkPicker(controller),
                     ),
                     const SizedBox(height: 18),
                     _AddressInput(
@@ -140,7 +146,9 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
                     const SizedBox(height: 16),
                     const _WithdrawWarning(),
                     const SizedBox(height: 16),
-                    _NextButton(onTap: _showConfirmPreview),
+                    _NextButton(
+                      onTap: () => _showConfirmPreview(controller, selected),
+                    ),
                   ],
                 ),
               ),
@@ -151,17 +159,8 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
     );
   }
 
-  WalletWithdrawNetwork _selectedNetwork(List<WalletWithdrawNetwork> networks) {
-    final selectedId = _selectedNetworkId;
-    if (selectedId != null) {
-      for (final network in networks) {
-        if (network.id == selectedId) return network;
-      }
-    }
-    return networks.first;
-  }
-
-  void _openNetworkPicker(List<WalletWithdrawNetwork> networks) {
+  void _openNetworkPicker(WithdrawController controller) {
+    final networks = controller.state.snapshot.networks;
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: _withdrawPanel,
@@ -185,7 +184,9 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
                 for (final network in networks)
                   _NetworkOption(
                     network: network,
-                    selected: network.id == _selectedNetwork(networks).id,
+                    selected:
+                        network.id ==
+                        controller.selectedNetwork(_selectedNetworkId).id,
                     onTap: () {
                       setState(() => _selectedNetworkId = network.id);
                       Navigator.of(context).pop();
@@ -199,13 +200,21 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
     );
   }
 
-  void _showConfirmPreview() {
+  void _showConfirmPreview(
+    WithdrawController controller,
+    WalletWithdrawNetwork network,
+  ) {
     final amount = _amountController.text.trim().isEmpty
         ? '0'
         : _amountController.text.trim();
     final address = _addressController.text.trim().isEmpty
         ? 'Chưa nhập'
         : _addressController.text.trim();
+    final preview = controller.preview(
+      address: address,
+      amount: amount,
+      network: network,
+    );
 
     showModalBottomSheet<void>(
       context: context,
@@ -227,11 +236,14 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
                   style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
                 ),
                 const SizedBox(height: 14),
+                _PreviewRow(label: 'Số lượng', value: preview.amountLabel),
+                _PreviewRow(label: 'Mạng lưới', value: preview.networkName),
+                _PreviewRow(label: 'Phí mạng', value: preview.feeLabel),
                 _PreviewRow(
-                  label: 'Số lượng',
-                  value: '$amount ${widget.asset}',
+                  label: 'Nhận dự kiến',
+                  value: preview.receivedLabel,
                 ),
-                _PreviewRow(label: 'Địa chỉ đến', value: _maskAddress(address)),
+                _PreviewRow(label: 'Địa chỉ đến', value: preview.maskedAddress),
                 const SizedBox(height: 14),
                 Container(
                   padding: const EdgeInsets.all(14),
@@ -250,11 +262,80 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 14),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _ConfirmActionButton(
+                        key: WithdrawPage.cancelConfirmKey,
+                        label: 'Cancel',
+                        onTap: () => Navigator.of(context).pop(),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _ConfirmActionButton(
+                        key: WithdrawPage.confirmWithdrawKey,
+                        label: 'Confirm withdraw',
+                        primary: true,
+                        onTap: () => Navigator.of(context).pop(),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class _ConfirmActionButton extends StatelessWidget {
+  const _ConfirmActionButton({
+    super.key,
+    required this.label,
+    required this.onTap,
+    this.primary = false,
+  });
+
+  final String label;
+  final VoidCallback onTap;
+  final bool primary;
+
+  @override
+  Widget build(BuildContext context) {
+    final foreground = primary ? AppColors.text1 : AppColors.text2;
+    return Semantics(
+      button: true,
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          height: 46,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: primary ? _withdrawPrimary : _withdrawPanel2,
+            border: Border.all(
+              color: primary
+                  ? _withdrawPrimary.withValues(alpha: .65)
+                  : AppColors.borderSolid,
+            ),
+            borderRadius: AppRadii.inputRadius,
+          ),
+          child: Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(
+              color: foreground,
+              fontWeight: AppTextStyles.bold,
+              height: 1,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -382,12 +463,16 @@ class _NetworkSelector extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 7),
-            Text(
-              'Mạng hoạt động tốt  ·  Phí: ${_formatNetworkFee(network.fee)} $asset',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: 10,
-                height: 1,
+            Expanded(
+              child: Text(
+                'Mạng hoạt động tốt  ·  Phí: ${_formatNetworkFee(network.fee)} $asset',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text3,
+                  fontSize: 10,
+                  height: 1,
+                ),
               ),
             ),
           ],
@@ -772,7 +857,7 @@ class _NetworkOption extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected
               ? _withdrawPrimary.withValues(alpha: .10)
-              : Colors.transparent,
+              : AppColors.transparent,
           borderRadius: AppRadii.inputRadius,
         ),
         child: Row(
@@ -883,9 +968,4 @@ String _formatNumber(double value, {required int fractionDigits}) {
     buffer.write(whole[i]);
   }
   return '${buffer.toString()}.${parts[1]}';
-}
-
-String _maskAddress(String address) {
-  if (address.length < 18) return address;
-  return '${address.substring(0, 10)}...${address.substring(address.length - 8)}';
 }

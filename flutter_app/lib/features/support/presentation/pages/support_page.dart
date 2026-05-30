@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/support_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -14,7 +15,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/support/data/support_repository.dart';
 
 class SupportPage extends ConsumerStatefulWidget {
   const SupportPage({super.key, this.shellRenderMode});
@@ -43,7 +43,7 @@ class _SupportPageState extends ConsumerState<SupportPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(supportRepositoryProvider).getSupportHub();
+    final snapshot = ref.watch(supportControllerProvider).getSupportHub();
     final activeTickets = snapshot.tickets
         .where(
           (ticket) =>
@@ -352,7 +352,7 @@ class _TabButton extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.body.copyWith(
-            color: selected ? Colors.white : AppColors.text2,
+            color: selected ? AppColors.onAccent : AppColors.text2,
             fontWeight: AppTextStyles.bold,
           ),
         ),
@@ -414,11 +414,13 @@ class _CreateTicketButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.add_rounded, color: Colors.white, size: 20),
+            const Icon(Icons.add_rounded, color: AppColors.onAccent, size: 20),
             const SizedBox(width: AppSpacing.x3),
             Text(
               'Tạo ticket mới',
-              style: AppTextStyles.baseMedium.copyWith(color: Colors.white),
+              style: AppTextStyles.baseMedium.copyWith(
+                color: AppColors.onAccent,
+              ),
             ),
           ],
         ),

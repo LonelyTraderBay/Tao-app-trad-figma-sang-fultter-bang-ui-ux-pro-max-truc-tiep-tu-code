@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2P2FASettingsPage extends ConsumerStatefulWidget {
   const P2P2FASettingsPage({super.key, this.shellRenderMode});
@@ -43,14 +43,14 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
   @override
   void initState() {
     super.initState();
-    final snapshot = ref.read(p2pRepositoryProvider).getTwoFactorSettings();
+    final snapshot = ref.read(p2pTwoFactorSettingsProvider);
     _methods = List.of(snapshot.methods);
     _thresholds = List.of(snapshot.thresholds);
   }
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getTwoFactorSettings();
+    final snapshot = ref.watch(p2pTwoFactorSettingsProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -186,12 +186,12 @@ class _TwoFactorStatusCard extends StatelessWidget {
               width: 52,
               height: 52,
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: .18),
+                color: AppColors.onAccent.withValues(alpha: .18),
                 borderRadius: AppRadii.lgRadius,
               ),
               child: const Icon(
                 Icons.shield_outlined,
-                color: Colors.white,
+                color: AppColors.onAccent,
                 size: AppSpacing.iconLg,
               ),
             ),
@@ -203,7 +203,7 @@ class _TwoFactorStatusCard extends StatelessWidget {
                   Text(
                     '2FA đã bật ($enabledMethods phương thức)',
                     style: AppTextStyles.sectionTitle.copyWith(
-                      color: Colors.white,
+                      color: AppColors.onAccent,
                       fontSize: 21,
                     ),
                   ),
@@ -211,7 +211,7 @@ class _TwoFactorStatusCard extends StatelessWidget {
                   Text(
                     'Phương thức chính: $primaryMethod',
                     style: AppTextStyles.caption.copyWith(
-                      color: Colors.white.withValues(alpha: .9),
+                      color: AppColors.onAccent.withValues(alpha: .9),
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -332,9 +332,9 @@ class _MethodRow extends StatelessWidget {
                 key: P2P2FASettingsPage.methodSwitchKey(method.id),
                 value: method.enabled,
                 onChanged: (_) => onToggle(),
-                activeThumbColor: Colors.white,
+                activeThumbColor: AppColors.onAccent,
                 activeTrackColor: color,
-                inactiveThumbColor: Colors.white,
+                inactiveThumbColor: AppColors.onAccent,
                 inactiveTrackColor: AppColors.surface3,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
@@ -486,9 +486,9 @@ class _ThresholdRow extends StatelessWidget {
             key: P2P2FASettingsPage.thresholdSwitchKey(threshold.id),
             value: threshold.enabled,
             onChanged: (_) => onToggle(),
-            activeThumbColor: Colors.white,
+            activeThumbColor: AppColors.onAccent,
             activeTrackColor: AppColors.buy,
-            inactiveThumbColor: Colors.white,
+            inactiveThumbColor: AppColors.onAccent,
             inactiveTrackColor: AppColors.surface3,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),

@@ -75,12 +75,19 @@ void main() {
     expect(find.text('Huong dan'), findsOneWidget);
     expect(find.text('Thong tin vi the'), findsOneWidget);
     expect(find.text('BTC > \$100K by Dec 2026?'), findsOneWidget);
+    expect(find.text('Risk Budget (\$)'), findsOneWidget);
+    expect(find.text('Total Bankroll (\$)'), findsNothing);
     expect(find.text('Position Summary'), findsOneWidget);
     expect(find.text('\$65.00'), findsWidgets);
     expect(find.text('\$68.00'), findsOneWidget);
     expect(find.text('+\$3.00'), findsWidgets);
     expect(find.text('+4.62%'), findsOneWidget);
     expect(find.text('Risk Analysis'), findsOneWidget);
+    expect(find.text('Kelly Criterion Position Sizing'), findsOneWidget);
+    expect(
+      find.text('Suggested exposure based on risk budget and edge'),
+      findsOneWidget,
+    );
     expect(find.text('Max Loss'), findsOneWidget);
     expect(find.text('Max Gain'), findsOneWidget);
     expect(find.text('68.0%'), findsOneWidget);

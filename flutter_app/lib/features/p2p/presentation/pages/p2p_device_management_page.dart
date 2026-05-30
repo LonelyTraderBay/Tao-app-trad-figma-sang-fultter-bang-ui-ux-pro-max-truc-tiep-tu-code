@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PDeviceManagementPage extends ConsumerStatefulWidget {
   const P2PDeviceManagementPage({super.key, this.shellRenderMode});
@@ -44,13 +44,13 @@ class _P2PDeviceManagementPageState
   @override
   void initState() {
     super.initState();
-    final snapshot = ref.read(p2pRepositoryProvider).getDeviceManagement();
+    final snapshot = ref.read(p2pDeviceManagementProvider);
     _devices = List.of(snapshot.devices);
   }
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getDeviceManagement();
+    final snapshot = ref.watch(p2pDeviceManagementProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame

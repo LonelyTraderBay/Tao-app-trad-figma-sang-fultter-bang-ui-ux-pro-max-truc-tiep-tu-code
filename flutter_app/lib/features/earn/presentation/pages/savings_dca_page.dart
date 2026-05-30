@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 TextStyle get _captionBold =>
     AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold);
@@ -123,7 +123,7 @@ class _SavingsDCAPageState extends ConsumerState<SavingsDCAPage> {
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (context) => _CreatePlanSheet(snapshot: snapshot),
     );
   }

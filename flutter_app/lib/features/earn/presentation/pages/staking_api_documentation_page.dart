@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 enum _ApiTab { endpoints, examples, auth }
 
@@ -276,7 +276,7 @@ class _ApiTabs extends StatelessWidget {
           for (final tab in _ApiTab.values)
             Expanded(
               child: Material(
-                color: Colors.transparent,
+                color: AppColors.transparent,
                 child: InkWell(
                   key: StakingApiDocumentationPage.tabKey(tab.name),
                   onTap: () => onChanged(tab),
@@ -303,7 +303,7 @@ class _ApiTabs extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: active == tab
                                 ? AppColors.primarySoft
-                                : Colors.transparent,
+                                : AppColors.transparent,
                             borderRadius: AppRadii.xsRadius,
                           ),
                         ),
@@ -734,7 +734,7 @@ class _LanguageButton extends StatelessWidget {
           child: Text(
             example.label,
             style: AppTextStyles.caption.copyWith(
-              color: selected ? Colors.white : AppColors.text2,
+              color: selected ? AppColors.onAccent : AppColors.text2,
               fontWeight: AppTextStyles.bold,
             ),
           ),

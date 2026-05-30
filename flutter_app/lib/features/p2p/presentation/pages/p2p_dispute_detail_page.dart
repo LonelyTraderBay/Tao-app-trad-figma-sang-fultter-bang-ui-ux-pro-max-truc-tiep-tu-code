@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PDisputeDetailPage extends ConsumerStatefulWidget {
   const P2PDisputeDetailPage({
@@ -61,9 +61,7 @@ class _P2PDisputeDetailPageState extends ConsumerState<P2PDisputeDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getDisputeDetail(widget.disputeId);
+    final snapshot = ref.watch(p2pDisputeDetailProvider(widget.disputeId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -324,7 +322,7 @@ class _EscalationCard extends StatelessWidget {
                   ),
                   child: Icon(
                     _levelIcon(currentLevelData.iconKey),
-                    color: Colors.white,
+                    color: AppColors.onAccent,
                     size: AppSpacing.iconSm,
                   ),
                 ),
@@ -459,7 +457,7 @@ class _LevelNode extends StatelessWidget {
               isCompleted
                   ? Icons.check_circle_outline_rounded
                   : _levelIcon(level.iconKey),
-              color: isActive ? Colors.white : color,
+              color: isActive ? AppColors.onAccent : color,
               size: AppSpacing.iconSm,
             ),
           ),
@@ -874,7 +872,7 @@ class _SupportMessageBubble extends StatelessWidget {
             Text(
               message.text,
               style: AppTextStyles.caption.copyWith(
-                color: isUser ? Colors.white : AppColors.text1,
+                color: isUser ? AppColors.onAccent : AppColors.text1,
                 fontWeight: AppTextStyles.medium,
               ),
             ),
@@ -884,7 +882,9 @@ class _SupportMessageBubble extends StatelessWidget {
               child: Text(
                 message.time,
                 style: AppTextStyles.micro.copyWith(
-                  color: isUser ? Colors.white70 : AppColors.text3,
+                  color: isUser
+                      ? AppColors.onAccent.withValues(alpha: .70)
+                      : AppColors.text3,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
@@ -930,7 +930,8 @@ class _ActionsCard extends StatelessWidget {
             key: P2PDisputeDetailPage.manageEvidenceKey,
             icon: Icons.upload_outlined,
             title: 'Quản lý bằng chứng',
-            subtitle: 'Upload & xem tài liệu đã gửi',
+            subtitle:
+                'Upload & xem tài liệu đã gửi; mock/fail-closed, chưa gửi backend.',
             color: AppModuleAccents.p2p,
             onTap: () =>
                 context.go(AppRoutePaths.p2pDisputeEvidence(dispute.id)),

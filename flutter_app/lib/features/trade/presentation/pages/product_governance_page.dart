@@ -10,16 +10,17 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _govBackground = AppColors.bg;
 const _govPanel = AppColors.surface;
 const _govPanel2 = AppColors.surface2;
 const _govBorder = AppColors.borderSolid;
-const _govGreen = Color(0xFF10B981);
+const _govGreen = AppColors.buy;
 const _govPrimary = AppColors.primary;
-const _govAmber = Color(0xFFF59E0B);
-const _govRed = Color(0xFFEF4444);
+const _govAmber = AppColors.caution;
+const _govRed = AppColors.sell;
 
 class ProductGovernancePage extends ConsumerStatefulWidget {
   const ProductGovernancePage({super.key, this.shellRenderMode});
@@ -41,7 +42,9 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getProductGovernance();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getProductGovernance();
     _tab ??= snapshot.defaultTab;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =

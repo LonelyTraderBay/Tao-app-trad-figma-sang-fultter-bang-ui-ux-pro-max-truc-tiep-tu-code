@@ -102,7 +102,7 @@ void main() {
     expect(find.text('PredictionKing'), findsOneWidget);
   });
 
-  testWidgets('SC-042 tournament card uses scoped placeholder detail route', (
+  testWidgets('SC-042 tournament card uses scoped detail route', (
     tester,
   ) async {
     await pumpTournaments(tester);
@@ -111,7 +111,8 @@ void main() {
       find.byKey(PredictionTournamentsPage.tournamentKey('tour1')),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Tournament tour1'), findsOneWidget);
+    expect(find.byType(PredictionTournamentDetailPage), findsOneWidget);
+    expect(find.text('Crypto Masters Q1 2026'), findsWidgets);
   });
 
   testWidgets('SC-042 back button returns to Predictions home', (tester) async {

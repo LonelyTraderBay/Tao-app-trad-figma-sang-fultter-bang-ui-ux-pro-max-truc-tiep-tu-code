@@ -11,7 +11,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
+import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 const _apiBackground = AppColors.bg;
 const _apiPanel = AppColors.surface;
@@ -47,7 +47,7 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileRepositoryProvider).getApiManagement();
+    final snapshot = ref.watch(profileControllerProvider).getApiManagement();
     _initializeFrom(snapshot);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();

@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 class StakingRiskAssessmentPage extends ConsumerStatefulWidget {
   const StakingRiskAssessmentPage({super.key, this.shellRenderMode});
@@ -42,13 +42,14 @@ class _StakingRiskAssessmentPageState
   bool _showResult = false;
   final Map<String, int> _answers = {};
 
-  int get _score => _answers.values.fold(0, (sum, value) => sum + value);
+  int get _score {
+    return ref.read(stakingRiskAssessmentControllerProvider).score(_answers);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingRiskAssessmentRepositoryProvider)
-        .getRiskAssessment();
+    final controller = ref.watch(stakingRiskAssessmentControllerProvider);
+    final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -79,9 +80,9 @@ class _StakingRiskAssessmentPageState
                       ? [
                           _ResultView(
                             snapshot: snapshot,
-                            result: _result(snapshot),
+                            result: controller.resultForAnswers(_answers),
                             score: _score,
-                            maxScore: snapshot.questions.length * 3,
+                            maxScore: controller.state.maxScore,
                             onReset: _reset,
                           ),
                         ]
@@ -125,8 +126,9 @@ class _StakingRiskAssessmentPageState
 
   int get _questionsLength {
     return ref
-        .read(stakingRiskAssessmentRepositoryProvider)
-        .getRiskAssessment()
+        .read(stakingRiskAssessmentControllerProvider)
+        .state
+        .snapshot
         .questions
         .length;
   }
@@ -145,15 +147,6 @@ class _StakingRiskAssessmentPageState
       _showResult = false;
       _answers.clear();
     });
-  }
-
-  StakingRiskProfileResultDraft _result(
-    StakingRiskAssessmentSnapshot snapshot,
-  ) {
-    return snapshot.results.firstWhere(
-      (result) => _score >= result.minScore && _score <= result.maxScore,
-      orElse: () => snapshot.results.last,
-    );
   }
 }
 

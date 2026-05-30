@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 enum _OrdersSort { date, amount }
 
@@ -52,7 +52,7 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getMyOrders();
+    final snapshot = ref.watch(p2pMyOrdersProvider);
     _ensureState(snapshot);
     final orders = _filteredOrders(snapshot.orders);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();

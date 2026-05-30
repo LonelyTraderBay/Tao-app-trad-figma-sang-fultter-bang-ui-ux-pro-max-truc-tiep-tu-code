@@ -14,7 +14,8 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
 
 class P2PEscrowBalancePage extends ConsumerStatefulWidget {
   const P2PEscrowBalancePage({
@@ -49,9 +50,7 @@ class _P2PEscrowBalancePageState extends ConsumerState<P2PEscrowBalancePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getEscrowBalance(asset: _asset);
+    final snapshot = ref.watch(p2pEscrowBalanceProvider(_asset));
     final selectedAsset = snapshot.selectedAsset;
     final selectedBalance = snapshot.assetBalance(selectedAsset);
     final orders = snapshot.ordersFor(selectedAsset);
@@ -228,45 +227,13 @@ class _EscrowInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return P2PNoticeCard(
       key: P2PEscrowBalancePage.infoKey,
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      icon: Icons.info_outline_rounded,
+      title: snapshot.infoTitle,
+      message: snapshot.infoBody,
+      titleColor: AppModuleAccents.p2p,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: AppModuleAccents.p2p,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  snapshot.infoTitle,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppModuleAccents.p2p,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  snapshot.infoBody,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    height: 1.45,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -566,42 +533,12 @@ class _EscrowHelpCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x3),
           for (final bullet in snapshot.helpBullets) ...[
-            _HelpBullet(text: bullet),
+            P2PHelpBullet(text: bullet),
             if (bullet != snapshot.helpBullets.last)
               const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),
-    );
-  }
-}
-
-class _HelpBullet extends StatelessWidget {
-  const _HelpBullet({required this.text});
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Padding(
-          padding: EdgeInsets.only(top: 3),
-          child: Icon(
-            Icons.check_circle_outline_rounded,
-            color: AppModuleAccents.p2p,
-            size: 12,
-          ),
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        Expanded(
-          child: Text(
-            text,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-          ),
-        ),
-      ],
     );
   }
 }

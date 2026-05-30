@@ -100,7 +100,7 @@ void main() {
     expect(find.text('Vietnam · Tax Declaration'), findsOneWidget);
   });
 
-  testWidgets('SC-272 detailed report CTA opens safe placeholder', (
+  testWidgets('SC-272 detailed report CTA opens year-scoped report page', (
     tester,
   ) async {
     await pumpTaxReporting(tester);
@@ -109,8 +109,8 @@ void main() {
     await tester.tap(find.byKey(P2PTaxReportingPage.detailCtaKey));
     await tester.pumpAndSettle();
 
-    expect(find.byType(P2PTaxReportingPage), findsNothing);
-    expect(find.text('P2P Tax Report Detail'), findsOneWidget);
+    expect(find.byType(P2PTaxReportingPage), findsOneWidget);
+    expect(find.text('Tax Year 2025'), findsOneWidget);
   });
 }
 

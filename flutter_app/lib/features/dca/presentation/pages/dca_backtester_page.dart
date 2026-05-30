@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
+import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 
 enum _BacktesterTab { setup, results, analysis }
 
@@ -44,7 +44,7 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(dcaRepositoryProvider).getBacktester();
+    final snapshot = ref.watch(dcaBacktesterProvider);
 
     return VitPageLayout(
       semanticLabel: 'SC-176 DCABacktesterPage',
@@ -114,7 +114,7 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
         },
         leading: const Icon(
           Icons.play_arrow_rounded,
-          color: Colors.white,
+          color: AppColors.onAccent,
           size: AppSpacing.iconMd,
         ),
         child: const Text('Run Backtest'),
@@ -239,7 +239,7 @@ class _TopTab extends StatelessWidget {
               duration: const Duration(milliseconds: 180),
               height: AppSpacing.x1,
               width: double.infinity,
-              color: active ? AppColors.primary : Colors.transparent,
+              color: active ? AppColors.primary : AppColors.transparent,
             ),
           ],
         ),
@@ -463,7 +463,7 @@ class _SelectionButton extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: selected ? Colors.white : AppColors.text1,
+            color: selected ? AppColors.onAccent : AppColors.text1,
             fontWeight: AppTextStyles.bold,
           ),
         ),

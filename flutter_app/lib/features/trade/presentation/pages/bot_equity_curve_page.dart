@@ -12,15 +12,16 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _equityBackground = AppColors.bg;
 const _equityPanel = AppColors.surface;
 const _equityPanel2 = AppColors.surface2;
-const _equityGreen = Color(0xFF10B981);
+const _equityGreen = AppColors.buy;
 const _equityPrimary = AppColors.primary;
-const _equityRed = Color(0xFFEF4444);
-const _equityAxis = Color(0xFF475569);
+const _equityRed = AppColors.sell;
+const _equityAxis = AppColors.chartAxisStrong;
 
 class BotEquityCurvePage extends ConsumerStatefulWidget {
   const BotEquityCurvePage({super.key, this.shellRenderMode});
@@ -39,7 +40,9 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getBotEquityCurve();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getBotEquityCurve();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -201,7 +204,7 @@ class _Tabs extends StatelessWidget {
                   border: Border.all(
                     color: active == tabs[i].$1
                         ? _equityPrimary.withValues(alpha: .50)
-                        : Colors.transparent,
+                        : AppColors.transparent,
                   ),
                 ),
                 child: Text(
@@ -541,11 +544,13 @@ class _AnalysisCard extends StatelessWidget {
                 width: 13,
                 height: 13,
                 alignment: Alignment.center,
-                decoration: const BoxDecoration(color: Color(0xFF6EE7B7)),
+                decoration: const BoxDecoration(
+                  color: AppColors.successAccentSoft,
+                ),
                 child: const Icon(
                   Icons.check_rounded,
                   size: 11,
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                 ),
               ),
               const SizedBox(width: 7),
@@ -687,10 +692,13 @@ class _EquityPainter extends CustomPainter {
     canvas.drawPath(
       fill,
       Paint()
-        ..shader = const LinearGradient(
+        ..shader = LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0x5510B981), Color(0x0010B981)],
+          colors: [
+            AppColors.buy.withValues(alpha: .33),
+            AppColors.buy.withValues(alpha: 0),
+          ],
         ).createShader(chart),
     );
     canvas.drawPath(

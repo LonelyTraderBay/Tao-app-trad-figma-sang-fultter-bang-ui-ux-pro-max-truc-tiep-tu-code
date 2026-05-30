@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/enterprise_states_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -12,7 +13,6 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/enterprise_states/data/enterprise_states_repository.dart';
 
 class EnterpriseStatesPage extends ConsumerStatefulWidget {
   const EnterpriseStatesPage({super.key, this.shellRenderMode});
@@ -40,9 +40,7 @@ class _EnterpriseStatesPageState extends ConsumerState<EnterpriseStatesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(enterpriseStatesRepositoryProvider)
-        .getReference();
+    final snapshot = ref.watch(enterpriseStatesControllerProvider).reference();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -223,7 +221,7 @@ class _SectionTabButton extends StatelessWidget {
             vertical: AppSpacing.rowPy,
           ),
           decoration: BoxDecoration(
-            color: active ? AppColors.primary : Colors.transparent,
+            color: active ? AppColors.primary : AppColors.transparent,
             borderRadius: AppRadii.cardRadius,
           ),
           alignment: Alignment.center,

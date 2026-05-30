@@ -91,7 +91,7 @@ void main() {
     expect(find.text('VIPTrader_HN'), findsOneWidget);
   });
 
-  testWidgets('SC-231 header back returns to the P2P root placeholder', (
+  testWidgets('SC-231 header back returns to the P2P parent route', (
     tester,
   ) async {
     await pumpP2PReviews(tester);

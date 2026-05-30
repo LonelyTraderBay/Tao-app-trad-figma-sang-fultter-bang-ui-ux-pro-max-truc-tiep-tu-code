@@ -104,8 +104,9 @@ List<RouteBase> _predictionRoutes(ShellRenderMode shellRenderMode) {
     ),
     GoRoute(
       path: '/markets/predictions/tournament/:tournamentId',
-      builder: (_, state) => _BottomNavRouteSkeleton(
-        title: 'Tournament ${state.pathParameters['tournamentId'] ?? 'tour'}',
+      builder: (_, state) => PredictionTournamentDetailPage(
+        tournamentId: state.pathParameters['tournamentId'] ?? 'tour1',
+        shellRenderMode: shellRenderMode,
       ),
     ),
     GoRoute(

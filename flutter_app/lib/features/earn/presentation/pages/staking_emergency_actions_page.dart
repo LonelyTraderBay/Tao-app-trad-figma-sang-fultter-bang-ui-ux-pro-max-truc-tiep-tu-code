@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 class StakingEmergencyActionsPage extends ConsumerWidget {
   const StakingEmergencyActionsPage({super.key, this.shellRenderMode});
@@ -32,9 +32,8 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(stakingEmergencyActionsRepositoryProvider)
-        .getEmergencyActions();
+    final controller = ref.watch(stakingEmergencyActionsControllerProvider);
+    final snapshot = controller.state.snapshot;
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -66,7 +65,7 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
                     _EmergencyActionsSection(
                       actions: snapshot.actions,
                       onTap: (action) =>
-                          _handleActionTap(context, snapshot, action),
+                          _handleActionTap(context, controller, action),
                     ),
                     _UseCasesSection(useCases: snapshot.useCases),
                     _CurrentStatusSection(statusCards: snapshot.statusCards),
@@ -83,15 +82,14 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
 
   void _handleActionTap(
     BuildContext context,
-    StakingEmergencyActionsSnapshot snapshot,
+    StakingEmergencyActionsController controller,
     StakingEmergencyActionDraft action,
   ) {
     HapticFeedback.selectionClick();
-    if (action.id == 'pause') {
-      _showActionSheet(context, snapshot.pauseSheet, pauseSheetKey);
-    } else if (action.id == 'withdraw') {
-      _showActionSheet(context, snapshot.withdrawSheet, withdrawSheetKey);
-    }
+    final sheet = controller.sheetForAction(action);
+    if (sheet == null) return;
+    final sheetKey = action.id == 'pause' ? pauseSheetKey : withdrawSheetKey;
+    _showActionSheet(context, sheet, sheetKey);
   }
 
   void _showActionSheet(

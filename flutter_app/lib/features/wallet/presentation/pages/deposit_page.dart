@@ -14,14 +14,14 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 const _depositBackground = AppColors.bg;
 const _depositPanel = AppColors.surface;
 const _depositPanel2 = AppColors.surface2;
 const _depositPrimary = AppColors.primary;
-const _depositGreen = Color(0xFF10B981);
-const _depositRed = Color(0xFFEF4444);
+const _depositGreen = AppColors.buy;
+const _depositRed = AppColors.sell;
 
 class DepositPage extends ConsumerStatefulWidget {
   const DepositPage({
@@ -51,9 +51,12 @@ class _DepositPageState extends ConsumerState<DepositPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(walletRepositoryProvider)
-        .getDeposit(widget.asset, assetScoped: widget.assetScoped);
+    final snapshot = ref.watch(
+      walletDepositControllerProvider((
+        asset: widget.asset,
+        assetScoped: widget.assetScoped,
+      )),
+    );
     final selected = _selectedNetwork(snapshot.networks);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -324,7 +327,7 @@ class _WarningCard extends StatelessWidget {
                   Text(
                     '• $item',
                     style: AppTextStyles.micro.copyWith(
-                      color: const Color(0xFFF87171),
+                      color: AppColors.sell,
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                       height: 1.18,
@@ -395,8 +398,9 @@ class _QrAddressCard extends StatelessWidget {
             onTap: onCopy,
             behavior: HitTestBehavior.opaque,
             child: Container(
+              width: double.infinity,
               height: 42,
-              padding: const EdgeInsets.symmetric(horizontal: 22),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
                 color: copied
                     ? _depositGreen.withValues(alpha: .15)
@@ -404,7 +408,7 @@ class _QrAddressCard extends StatelessWidget {
                 borderRadius: AppRadii.cardRadius,
               ),
               child: Row(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
                     copied ? Icons.check_circle_outline : Icons.copy_rounded,
@@ -412,13 +416,17 @@ class _QrAddressCard extends StatelessWidget {
                     size: 15,
                   ),
                   const SizedBox(width: 8),
-                  Text(
-                    copied ? 'Đã sao chép địa chỉ!' : 'Sao chép địa chỉ',
-                    style: AppTextStyles.caption.copyWith(
-                      color: copied ? _depositGreen : _depositPrimary,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800,
-                      height: 1,
+                  Flexible(
+                    child: Text(
+                      copied ? 'Đã sao chép địa chỉ!' : 'Sao chép địa chỉ',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        color: copied ? _depositGreen : _depositPrimary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        height: 1,
+                      ),
                     ),
                   ),
                 ],
@@ -443,11 +451,11 @@ class _QrCode extends StatelessWidget {
       height: 180,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.onAccent,
         borderRadius: AppRadii.lgRadius,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: .32),
+            color: AppColors.dynamicIslandBg.withValues(alpha: .32),
             blurRadius: 32,
             offset: const Offset(0, 8),
           ),
@@ -467,9 +475,9 @@ class _QrPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final seed = address.codeUnits.fold<int>(0, (sum, code) => sum + code);
     final cell = size.width / 21;
-    final fill = Paint()..color = const Color(0xFF111111);
+    final fill = Paint()..color = AppColors.qrDark;
     final stroke = Paint()
-      ..color = const Color(0xFF111111)
+      ..color = AppColors.qrDark
       ..style = PaintingStyle.stroke
       ..strokeWidth = math.max(.5, cell * .08);
 
@@ -660,7 +668,7 @@ class _NetworkOption extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected
               ? _depositPrimary.withValues(alpha: .10)
-              : Colors.transparent,
+              : AppColors.transparent,
           borderRadius: AppRadii.inputRadius,
         ),
         child: Row(

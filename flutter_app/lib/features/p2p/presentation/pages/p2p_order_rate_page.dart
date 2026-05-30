@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2POrderRatePage extends ConsumerStatefulWidget {
   const P2POrderRatePage({
@@ -55,9 +55,7 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getOrderRate(widget.orderId);
+    final snapshot = ref.watch(p2pOrderRateProvider(widget.orderId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -182,7 +180,7 @@ class _MerchantSummary extends StatelessWidget {
             child: Text(
               order.merchant.substring(0, 1),
               style: AppTextStyles.sectionTitle.copyWith(
-                color: Colors.white,
+                color: AppColors.onAccent,
                 fontWeight: AppTextStyles.bold,
               ),
             ),

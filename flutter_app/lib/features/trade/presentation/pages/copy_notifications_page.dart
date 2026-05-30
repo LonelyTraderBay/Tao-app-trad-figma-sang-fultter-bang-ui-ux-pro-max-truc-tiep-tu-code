@@ -10,13 +10,14 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _notificationPrimary = AppColors.primary;
 const _notificationPanel = AppColors.surface2;
 const _notificationCard = AppColors.surface;
 const _notificationChip = AppColors.surface3;
-const _notificationMuted = Color(0xFF667085);
+const _notificationMuted = AppColors.text3;
 
 class CopyNotificationsPage extends ConsumerStatefulWidget {
   const CopyNotificationsPage({super.key, this.shellRenderMode});
@@ -41,7 +42,7 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final repository = ref.watch(tradeRepositoryProvider);
+    final repository = ref.watch(tradeReadModelControllerProvider);
     final snapshot = repository.getCopyNotifications();
     final activeTab = _activeTab ?? snapshot.defaultTab;
     _activeTab ??= snapshot.defaultTab;
@@ -248,7 +249,7 @@ class _UnreadSummary extends StatelessWidget {
       height: 44,
       padding: const EdgeInsets.symmetric(horizontal: 14),
       decoration: BoxDecoration(
-        color: Colors.transparent,
+        color: AppColors.transparent,
         borderRadius: AppRadii.cardRadius,
         border: Border.all(color: _notificationPrimary),
       ),
@@ -356,7 +357,7 @@ class _FilterPill extends StatelessWidget {
               : _notificationChip,
           borderRadius: AppRadii.cardLargeRadius,
           border: Border.all(
-            color: active ? _notificationPrimary : Colors.transparent,
+            color: active ? _notificationPrimary : AppColors.transparent,
           ),
         ),
         child: Text(
@@ -628,7 +629,7 @@ Color _notificationColor(TradeCopyNotification notification) {
   return switch (notification.type) {
     TradeCopyNotificationType.trade => _notificationPrimary,
     TradeCopyNotificationType.risk => AppColors.sell,
-    TradeCopyNotificationType.update => const Color(0xFF8B5CF6),
+    TradeCopyNotificationType.update => AppColors.accent,
     TradeCopyNotificationType.system => AppColors.text3,
   };
 }

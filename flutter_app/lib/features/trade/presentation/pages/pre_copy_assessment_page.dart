@@ -10,10 +10,11 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _assessmentPrimary = AppColors.primary;
-const _assessmentGreen = Color(0xFF10B981);
+const _assessmentGreen = AppColors.buy;
 
 class PreCopyAssessmentPage extends ConsumerStatefulWidget {
   const PreCopyAssessmentPage({
@@ -39,9 +40,9 @@ class _PreCopyAssessmentPageState extends ConsumerState<PreCopyAssessmentPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRepositoryProvider)
-        .getPreCopyAssessment(providerId: widget.providerId);
+    final snapshot = ref.watch(
+      tradePreCopyAssessmentProvider(widget.providerId),
+    );
 
     if (snapshot.isNotFound) {
       return const VitPageLayout(
@@ -183,7 +184,7 @@ class _WelcomeAssessment extends StatelessWidget {
           label: Text(
             'Bắt đầu đánh giá',
             style: AppTextStyles.baseMedium.copyWith(
-              color: Colors.white,
+              color: AppColors.onAccent,
               fontWeight: FontWeight.w800,
             ),
           ),
@@ -252,7 +253,7 @@ class _QuestionsSummary extends StatelessWidget {
           label: Text(
             'Tiếp tục cấu hình',
             style: AppTextStyles.baseMedium.copyWith(
-              color: Colors.white,
+              color: AppColors.onAccent,
               fontWeight: FontWeight.w800,
             ),
           ),

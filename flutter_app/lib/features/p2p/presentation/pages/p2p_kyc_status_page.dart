@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PKycStatusPage extends ConsumerWidget {
   const P2PKycStatusPage({super.key, this.shellRenderMode});
@@ -29,7 +29,7 @@ class P2PKycStatusPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getKycStatus();
+    final snapshot = ref.watch(p2pKycStatusProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -452,14 +452,14 @@ class _StepActionButton extends StatelessWidget {
               Text(
                 step.actionLabel!,
                 style: AppTextStyles.caption.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
               const SizedBox(width: AppSpacing.x2),
               const Icon(
                 Icons.chevron_right_rounded,
-                color: Colors.white,
+                color: AppColors.onAccent,
                 size: AppSpacing.iconSm,
               ),
             ],

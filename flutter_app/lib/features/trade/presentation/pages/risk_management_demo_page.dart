@@ -10,7 +10,8 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _riskPrimary = AppColors.primary;
 const _cardBackground = AppColors.surface2;
@@ -45,7 +46,10 @@ class _RiskManagementDemoPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getRiskManagement();
+    final snapshot = ref
+        .watch(tradeRiskManagementControllerProvider)
+        .state
+        .snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -141,12 +145,12 @@ class _RiskManagementDemoPageState
       context: context,
       isScrollControlled: true,
       useRootNavigator: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (context) => const _OcoSheet(),
     );
     if (submitted != true || !mounted) return;
     final result = ref
-        .read(tradeRepositoryProvider)
+        .read(tradeRiskManagementControllerProvider)
         .submitOcoOrder(
           const TradeOcoOrderDraft(
             symbol: 'BTC/USDT',
@@ -165,10 +169,10 @@ class _RiskManagementDemoPageState
       context: context,
       isScrollControlled: true,
       useRootNavigator: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (context) => _CalculatorSheet(
         result: ref
-            .read(tradeRepositoryProvider)
+            .read(tradeRiskManagementControllerProvider)
             .calculatePositionSize(
               const TradePositionSizeRequest(
                 accountBalance: 50000,
@@ -459,7 +463,7 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = complete ? AppColors.buy : const Color(0xFFF59E0B);
+    final color = complete ? AppColors.buy : AppColors.caution;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
@@ -538,7 +542,7 @@ class _TabButton extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? _riskPrimary : Colors.transparent,
+          color: active ? _riskPrimary : AppColors.transparent,
           borderRadius: AppRadii.smRadius,
         ),
         child: Text(
@@ -546,7 +550,7 @@ class _TabButton extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
-            color: active ? Colors.white : AppColors.text2,
+            color: active ? AppColors.onAccent : AppColors.text2,
             fontSize: 11,
             fontWeight: AppTextStyles.bold,
           ),
@@ -578,7 +582,7 @@ class _OcoTab extends StatelessWidget {
           key: RiskManagementDemoPage.ocoButtonKey,
           label: 'Mở OCO Order Form',
           icon: Icons.trending_up_rounded,
-          colors: const [Color(0xFF10B981), Color(0xFF059669)],
+          colors: const [AppColors.buy, AppColors.buyDark],
           onTap: onOpen,
         ),
       ],
@@ -608,7 +612,7 @@ class _CalculatorTab extends StatelessWidget {
           key: RiskManagementDemoPage.calculatorButtonKey,
           label: 'Mở Position Sizing Calculator',
           icon: Icons.calculate_rounded,
-          colors: const [Color(0xFF8B5CF6), Color(0xFF7C3AED)],
+          colors: const [AppColors.accent, AppColors.accentDark],
           onTap: onOpen,
         ),
       ],
@@ -805,7 +809,7 @@ class _GradientButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: Colors.white, size: 17),
+            Icon(icon, color: AppColors.onAccent, size: 17),
             const SizedBox(width: 8),
             Flexible(
               child: Text(
@@ -813,7 +817,7 @@ class _GradientButton extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                 ),
@@ -888,7 +892,7 @@ class _OcoSheet extends StatelessWidget {
               key: RiskManagementDemoPage.ocoSubmitKey,
               label: 'Đặt lệnh OCO',
               icon: Icons.check_rounded,
-              colors: const [Color(0xFF10B981), Color(0xFF059669)],
+              colors: const [AppColors.buy, AppColors.buyDark],
               onTap: () => Navigator.pop(context, true),
             ),
           ],
@@ -947,7 +951,7 @@ class _CalculatorSheet extends StatelessWidget {
               key: RiskManagementDemoPage.calculatorApplyKey,
               label: 'Áp dụng khối lượng',
               icon: Icons.check_rounded,
-              colors: const [Color(0xFF8B5CF6), Color(0xFF7C3AED)],
+              colors: const [AppColors.accent, AppColors.accentDark],
               onTap: () => Navigator.pop(context, true),
             ),
           ],
@@ -1018,7 +1022,7 @@ class _SuccessToast extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
@@ -1027,7 +1031,7 @@ class _SuccessToast extends StatelessWidget {
           border: Border.all(color: AppColors.buy.withValues(alpha: .38)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: .22),
+              color: AppColors.dynamicIslandBg.withValues(alpha: .22),
               blurRadius: 20,
               offset: const Offset(0, 12),
             ),
@@ -1045,7 +1049,7 @@ class _SuccessToast extends StatelessWidget {
               child: Text(
                 message,
                 style: AppTextStyles.caption.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),

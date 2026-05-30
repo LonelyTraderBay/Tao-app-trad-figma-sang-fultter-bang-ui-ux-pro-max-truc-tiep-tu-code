@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PFundLockHistoryPage extends ConsumerWidget {
   const P2PFundLockHistoryPage({
@@ -31,9 +31,7 @@ class P2PFundLockHistoryPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getFundLockHistory(walletHistoryAlias: walletHistoryAlias);
+    final snapshot = ref.watch(p2pFundLockHistoryProvider(walletHistoryAlias));
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -107,7 +105,7 @@ class _FundLockHero extends StatelessWidget {
           children: [
             DecoratedBox(
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: .20),
+                color: AppColors.onAccent.withValues(alpha: .20),
                 borderRadius: AppRadii.lgRadius,
               ),
               child: const SizedBox(
@@ -115,7 +113,7 @@ class _FundLockHero extends StatelessWidget {
                 height: AppSpacing.inputHeight,
                 child: Icon(
                   Icons.lock_outline_rounded,
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   size: AppSpacing.iconMd,
                 ),
               ),
@@ -128,7 +126,7 @@ class _FundLockHero extends StatelessWidget {
                   Text(
                     snapshot.heroTitle,
                     style: AppTextStyles.sectionTitle.copyWith(
-                      color: Colors.white,
+                      color: AppColors.onAccent,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -136,7 +134,7 @@ class _FundLockHero extends StatelessWidget {
                   Text(
                     '${snapshot.records.length} giao dịch gần đây',
                     style: AppTextStyles.caption.copyWith(
-                      color: Colors.white.withValues(alpha: .88),
+                      color: AppColors.onAccent.withValues(alpha: .88),
                       fontWeight: AppTextStyles.medium,
                     ),
                   ),

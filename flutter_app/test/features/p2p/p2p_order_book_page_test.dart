@@ -106,7 +106,7 @@ void main() {
     expect(find.byType(P2POrderBookPage), findsOneWidget);
   });
 
-  testWidgets('SC-273 back navigation uses safe P2P parent placeholder', (
+  testWidgets('SC-273 back navigation uses safe P2P parent route', (
     tester,
   ) async {
     await pumpOrderBook(tester);

@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PInsuranceCertificatePage extends ConsumerStatefulWidget {
   const P2PInsuranceCertificatePage({super.key, this.shellRenderMode});
@@ -36,7 +36,7 @@ class _P2PInsuranceCertificatePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getInsuranceCertificate();
+    final snapshot = ref.watch(p2pInsuranceCertificateProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -164,7 +164,7 @@ class _CertificateHero extends StatelessWidget {
               ),
               child: const Icon(
                 Icons.verified_user_outlined,
-                color: Colors.white,
+                color: AppColors.onAccent,
                 size: AppSpacing.iconLg,
               ),
             ),
@@ -173,7 +173,7 @@ class _CertificateHero extends StatelessWidget {
               'CHỨNG NHẬN BẢO HIỂM',
               textAlign: TextAlign.center,
               style: AppTextStyles.micro.copyWith(
-                color: Colors.white.withValues(alpha: .78),
+                color: AppColors.onAccent.withValues(alpha: .78),
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -181,7 +181,9 @@ class _CertificateHero extends StatelessWidget {
             Text(
               'Giao dịch P2P',
               textAlign: TextAlign.center,
-              style: AppTextStyles.sectionTitle.copyWith(color: Colors.white),
+              style: AppTextStyles.sectionTitle.copyWith(
+                color: AppColors.onAccent,
+              ),
             ),
           ],
         ),

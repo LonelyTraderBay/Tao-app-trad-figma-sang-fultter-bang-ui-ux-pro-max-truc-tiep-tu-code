@@ -12,10 +12,10 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
+import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 
 const _marketPrimary = AppColors.primary;
-const _comparePurple = Color(0xFF8B5CF6);
+const _comparePurple = AppColors.accent;
 const _maxCompare = 4;
 
 class ComparisonToolPage extends ConsumerStatefulWidget {
@@ -51,7 +51,7 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
     super.initState();
     _selectedIds = [
       ...ref
-          .read(marketRepositoryProvider)
+          .read(marketControllerProvider)
           .getMarketComparison()
           .selectedPairIds,
     ];
@@ -81,7 +81,7 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(marketRepositoryProvider).getMarketComparison();
+    final snapshot = ref.watch(marketControllerProvider).getMarketComparison();
     final selectedPairs = [
       for (final id in _selectedIds)
         if (_findPair(snapshot.marketPairs, id) != null)

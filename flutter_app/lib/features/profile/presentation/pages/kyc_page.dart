@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
+import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 const _kycBackground = AppColors.bg;
 const _kycPanel = AppColors.surface;
@@ -41,7 +41,7 @@ class _KYCPageState extends ConsumerState<KYCPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileRepositoryProvider).getKyc();
+    final snapshot = ref.watch(profileControllerProvider).getKyc();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -345,7 +345,7 @@ class _LevelIcon extends StatelessWidget {
       width: 40,
       height: 40,
       decoration: BoxDecoration(
-        color: done ? accent.withValues(alpha: .13) : Colors.transparent,
+        color: done ? accent.withValues(alpha: .13) : AppColors.transparent,
         borderRadius: AppRadii.lgRadius,
         border: Border.all(
           color: done ? accent : AppColors.borderSolid,
@@ -421,7 +421,7 @@ class _ExpandedLevelDetails extends StatelessWidget {
                     ? '\u0110ang g\u1EEDi...'
                     : 'B\u1EAFt \u0111\u1EA7u x\u00E1c minh ${level.title}',
                 style: AppTextStyles.caption.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontSize: 14,
                   fontWeight: FontWeight.w900,
                   height: 1,

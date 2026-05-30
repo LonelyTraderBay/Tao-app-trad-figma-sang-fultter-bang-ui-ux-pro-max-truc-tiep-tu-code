@@ -69,7 +69,7 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('09E - Connected Ecosystem'), findsOneWidget);
-    expect(find.text('Production Ready'), findsOneWidget);
+    expect(find.text('Release Readiness'), findsOneWidget);
     expect(find.text('Connected Ecosystem'), findsOneWidget);
     expect(find.text('Canonical'), findsOneWidget);
     expect(find.text('Canonical Connected Screens'), findsOneWidget);

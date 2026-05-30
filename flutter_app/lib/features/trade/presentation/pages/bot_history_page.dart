@@ -10,14 +10,15 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _historyBackground = AppColors.bg;
 const _historyPanel = AppColors.surface;
 const _historyPanel2 = AppColors.surface2;
 const _historyPrimary = AppColors.primary;
-const _historyGreen = Color(0xFF10B981);
-const _historyRed = Color(0xFFEF4444);
+const _historyGreen = AppColors.buy;
+const _historyRed = AppColors.sell;
 
 enum _HistoryFilter { all, buy, sell }
 
@@ -41,7 +42,9 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getBotHistory();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getBotHistory();
     final filteredTrades = _filtered(snapshot.trades);
     final totalPnL = filteredTrades.fold<double>(
       0,
@@ -128,7 +131,7 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
 
   void _handleExport() {
     ref
-        .read(tradeRepositoryProvider)
+        .read(tradeReadModelControllerProvider)
         .createBotHistoryExport(
           const TradeBotHistoryExportRequest(format: 'csv'),
         );
@@ -617,7 +620,7 @@ class _ExportNote extends StatelessWidget {
               label: Text(
                 'Export All Trades',
                 style: AppTextStyles.caption.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                 ),

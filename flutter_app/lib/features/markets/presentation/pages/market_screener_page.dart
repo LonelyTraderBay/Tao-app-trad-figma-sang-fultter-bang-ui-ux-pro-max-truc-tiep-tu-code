@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
+import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 
 const _marketPrimary = AppColors.primary;
 
@@ -140,11 +140,11 @@ class _MarketScreenerPageState extends ConsumerState<MarketScreenerPage> {
   @override
   Widget build(BuildContext context) {
     final baseSnapshot = ref
-        .watch(marketRepositoryProvider)
+        .watch(marketControllerProvider)
         .getMarketScreener();
     final appliedQuery = _query.copyWith(searchQuery: _searchController.text);
     final snapshot = ref
-        .watch(marketRepositoryProvider)
+        .watch(marketControllerProvider)
         .getMarketScreener(query: appliedQuery);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -273,7 +273,7 @@ class _PresetScroller extends StatelessWidget {
                 border: Border.all(
                   color: active
                       ? _marketPrimary.withValues(alpha: .38)
-                      : Colors.transparent,
+                      : AppColors.transparent,
                 ),
                 borderRadius: AppRadii.lgRadius,
               ),
@@ -473,7 +473,7 @@ class _CategoryChip extends StatelessWidget {
           border: Border.all(
             color: active
                 ? _marketPrimary.withValues(alpha: .36)
-                : Colors.transparent,
+                : AppColors.transparent,
           ),
           borderRadius: AppRadii.smRadius,
         ),
@@ -635,7 +635,7 @@ class _SortChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: active
               ? _marketPrimary.withValues(alpha: .10)
-              : Colors.transparent,
+              : AppColors.transparent,
           borderRadius: AppRadii.lgRadius,
         ),
         child: FittedBox(

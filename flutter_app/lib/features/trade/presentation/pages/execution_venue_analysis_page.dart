@@ -10,14 +10,15 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _venueBackground = AppColors.bg;
 const _venuePanel = AppColors.surface;
 const _venuePanel2 = AppColors.surface2;
 const _venueBorder = AppColors.borderSolid;
-const _venueGreen = Color(0xFF10B981);
-const _venueAmber = Color(0xFFF59E0B);
+const _venueGreen = AppColors.buy;
+const _venueAmber = AppColors.caution;
 const _venuePrimary = AppColors.primary;
 
 class ExecutionVenueAnalysisPage extends ConsumerStatefulWidget {
@@ -44,7 +45,7 @@ class _ExecutionVenueAnalysisPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getExecutionVenueAnalysis();
     final venues = _sorted(snapshot.venues);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
@@ -291,7 +292,7 @@ class _SortSelector extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: AppTextStyles.caption.copyWith(
                     color: activeId == option.$1
-                        ? Colors.white
+                        ? AppColors.onAccent
                         : AppColors.text2,
                     fontSize: 12,
                     fontWeight: AppTextStyles.bold,
@@ -942,7 +943,7 @@ class _NoticePanel extends StatelessWidget {
       right: 20,
       top: MediaQuery.paddingOf(context).top + 18,
       child: Material(
-        color: Colors.transparent,
+        color: AppColors.transparent,
         child: Container(
           padding: const EdgeInsets.fromLTRB(12, 9, 8, 9),
           decoration: BoxDecoration(

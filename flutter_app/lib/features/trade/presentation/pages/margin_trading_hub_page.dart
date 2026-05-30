@@ -10,7 +10,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/margin_trading_hub_widgets.dart';
 
 const _hubBackground = AppColors.bg;
 const _hubPanel = AppColors.surface;
@@ -18,8 +20,7 @@ const _hubHero = AppColors.surface;
 const _hubHeroBorder = AppColors.primary20;
 const _hubBorder = AppColors.borderSolid;
 const _hubPrimary = AppColors.primary;
-const _hubGreen = Color(0xFF10B981);
-const _hubPurple = Color(0xFF8B5CF6);
+const _hubGreen = AppColors.buy;
 
 class MarginTradingHubPage extends ConsumerWidget {
   const MarginTradingHubPage({super.key, this.shellRenderMode});
@@ -32,7 +33,9 @@ class MarginTradingHubPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getMarginTradingHub();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getMarginTradingHub();
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -102,12 +105,12 @@ class _HeroCard extends StatelessWidget {
                 width: 64,
                 height: 64,
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: .10),
+                  color: AppColors.onAccent.withValues(alpha: .10),
                   borderRadius: AppRadii.cardRadius,
                 ),
                 child: const Icon(
                   Icons.trending_up_rounded,
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   size: 36,
                 ),
               ),
@@ -119,7 +122,7 @@ class _HeroCard extends StatelessWidget {
                     Text(
                       'Margin Trading Suite',
                       style: AppTextStyles.sectionTitle.copyWith(
-                        color: Colors.white,
+                        color: AppColors.onAccent,
                         fontSize: 24,
                         fontWeight: AppTextStyles.bold,
                         height: 1.16,
@@ -127,9 +130,9 @@ class _HeroCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 7),
                     Text(
-                      'Professional-grade trading voi enterprise compliance',
+                      'Margin tools with leverage limits and compliance checks',
                       style: AppTextStyles.body.copyWith(
-                        color: Colors.white.withValues(alpha: .72),
+                        color: AppColors.onAccent.withValues(alpha: .72),
                         fontSize: 14,
                         fontWeight: AppTextStyles.medium,
                         height: 1.35,
@@ -167,7 +170,7 @@ class _HeroStat extends StatelessWidget {
       height: 85,
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 14),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .10),
+        color: AppColors.onAccent.withValues(alpha: .10),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -193,7 +196,7 @@ class _HeroStat extends StatelessWidget {
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
-              color: Colors.white.withValues(alpha: .62),
+              color: AppColors.onAccent.withValues(alpha: .62),
               fontSize: 10,
               fontWeight: AppTextStyles.bold,
               height: 1.2,
@@ -238,7 +241,7 @@ class _NavigationCard extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Text(
-            'Enterprise-level margin trading voi day du regulatory compliance, advanced controls va market intelligence.',
+            'Margin trading controls with risk limits, liquidation context, fee disclosure, and market intelligence.',
             style: AppTextStyles.body.copyWith(
               color: AppColors.text3,
               fontSize: 14,
@@ -251,7 +254,7 @@ class _NavigationCard extends StatelessWidget {
             if (item != items.last) const SizedBox(height: 12),
           ],
           const SizedBox(height: 16),
-          const _ComplianceInfoBanner(),
+          const MarginHubComplianceInfoBanner(),
         ],
       ),
     );
@@ -311,7 +314,7 @@ class _MenuItem extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 7),
-                      _PhaseBadge(label: item.badge, color: color),
+                      MarginHubPhaseBadge(label: item.badge, color: color),
                     ],
                   ),
                   const SizedBox(height: 7),
@@ -336,53 +339,6 @@ class _MenuItem extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _ComplianceInfoBanner extends StatelessWidget {
-  const _ComplianceInfoBanner();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-      decoration: BoxDecoration(
-        color: _hubPurple.withValues(alpha: .10),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(Icons.shield_outlined, color: _hubPurple, size: 16),
-          const SizedBox(width: 9),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Fully Compliant',
-                  style: AppTextStyles.caption.copyWith(
-                    color: _hubPurple,
-                    fontSize: 12,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  'Dap ung MiFID II, ESMA, FCA, MAS regulations. Bao gom appropriateness test, leverage limits, cost disclosure.',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 10,
-                    height: 1.45,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -432,7 +388,7 @@ class _FeatureCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    _PhaseBadge(label: feature.phase, color: color),
+                    MarginHubPhaseBadge(label: feature.phase, color: color),
                   ],
                 ),
               ),
@@ -570,33 +526,6 @@ class _HubCard extends StatelessWidget {
         borderRadius: AppRadii.cardRadius,
       ),
       child: child,
-    );
-  }
-}
-
-class _PhaseBadge extends StatelessWidget {
-  const _PhaseBadge({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 10,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
     );
   }
 }

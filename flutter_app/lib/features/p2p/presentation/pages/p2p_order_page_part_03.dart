@@ -1,0 +1,424 @@
+part of 'p2p_order_page.dart';
+
+class _QuickActionButton extends StatelessWidget {
+  const _QuickActionButton({required this.action});
+
+  final P2POrderQuickActionDraft action;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _quickActionColor(action.id);
+    return Material(
+      color: color.withValues(alpha: .08),
+      borderRadius: AppRadii.inputRadius,
+      child: InkWell(
+        onTap: () => context.go(action.route),
+        borderRadius: AppRadii.inputRadius,
+        child: Container(
+          height: AppSpacing.buttonCompact,
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
+          decoration: BoxDecoration(
+            border: Border.all(color: color.withValues(alpha: .18)),
+            borderRadius: AppRadii.inputRadius,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(_quickActionIcon(action.iconKey), color: color, size: 12),
+              const SizedBox(width: AppSpacing.x1),
+              Flexible(
+                child: Text(
+                  action.label,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: color,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _InfoLine extends StatelessWidget {
+  const _InfoLine({
+    required this.label,
+    required this.value,
+    this.emphasis = false,
+    this.isLast = false,
+  });
+
+  final String label;
+  final String value;
+  final bool emphasis;
+  final bool isLast;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+      decoration: BoxDecoration(
+        border: isLast
+            ? null
+            : const Border(bottom: BorderSide(color: AppColors.divider)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              label,
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Flexible(
+            child: Text(
+              value,
+              textAlign: TextAlign.right,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
+                fontWeight: emphasis
+                    ? AppTextStyles.bold
+                    : AppTextStyles.medium,
+                fontFeatures: emphasis ? AppTextStyles.tabularFigures : null,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SmallPill extends StatelessWidget {
+  const _SmallPill({
+    required this.icon,
+    required this.label,
+    required this.color,
+  });
+
+  final IconData icon;
+  final String label;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: .10),
+        borderRadius: AppRadii.inputRadius,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.x3,
+          vertical: AppSpacing.x2,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, color: color, size: 11),
+            const SizedBox(width: AppSpacing.x1),
+            Flexible(
+              child: Text(
+                label,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SmallButton extends StatelessWidget {
+  const _SmallButton({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onPressed,
+  });
+
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: color.withValues(alpha: .10),
+      borderRadius: AppRadii.inputRadius,
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: AppRadii.inputRadius,
+        child: Container(
+          height: AppSpacing.buttonCompact,
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, color: color, size: 13),
+              const SizedBox(width: AppSpacing.x1),
+              Text(
+                label,
+                style: AppTextStyles.micro.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _TextActionButton extends StatelessWidget {
+  const _TextActionButton({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onPressed,
+  });
+
+  final Widget icon;
+  final String label;
+  final Color color;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: AppColors.transparent,
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: AppRadii.inputRadius,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconTheme(
+                data: IconThemeData(color: color, size: AppSpacing.iconSm),
+                child: icon,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CopyButton extends StatelessWidget {
+  const _CopyButton({
+    super.key,
+    required this.label,
+    required this.copied,
+    required this.onPressed,
+  });
+
+  final String label;
+  final bool copied;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return _SmallButton(
+      icon: copied ? Icons.check_rounded : Icons.copy_rounded,
+      label: label,
+      color: copied ? AppColors.buy : AppModuleAccents.p2p,
+      onPressed: onPressed,
+    );
+  }
+}
+
+class _InlineWarning extends StatelessWidget {
+  const _InlineWarning({required this.title, required this.message});
+
+  final String title;
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: AppColors.warningBg,
+        border: Border.all(color: AppColors.warningBorder),
+        borderRadius: AppRadii.cardRadius,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.x3),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.warning_amber_rounded,
+              color: AppColors.warn,
+              size: AppSpacing.iconSm,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.warn,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    message,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.warn,
+                      height: 1.35,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _QrPatternPainter extends CustomPainter {
+  const _QrPatternPainter({required this.data});
+
+  final String data;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final background = Paint()..color = AppColors.onAccent;
+    final foreground = Paint()..color = AppColors.surface;
+    final cell = size.width / 21;
+    canvas.drawRect(Offset.zero & size, background);
+
+    void drawFinder(int row, int col) {
+      final origin = Offset(col * cell, row * cell);
+      canvas.drawRect(origin & Size(cell * 7, cell * 7), foreground);
+      canvas.drawRect(
+        origin + Offset(cell, cell) & Size(cell * 5, cell * 5),
+        background,
+      );
+      canvas.drawRect(
+        origin + Offset(cell * 2, cell * 2) & Size(cell * 3, cell * 3),
+        foreground,
+      );
+    }
+
+    drawFinder(0, 0);
+    drawFinder(0, 14);
+    drawFinder(14, 0);
+
+    final seed = data.codeUnits.fold<int>(0, (sum, code) => sum + code);
+    for (var row = 0; row < 21; row++) {
+      for (var col = 0; col < 21; col++) {
+        final inFinder =
+            (row < 7 && col < 7) ||
+            (row < 7 && col >= 14) ||
+            (row >= 14 && col < 7);
+        if (inFinder) continue;
+        final hash = (seed * (row * 21 + col + 1) * 31) % 100;
+        if (hash < 42) {
+          canvas.drawRect(
+            Offset(col * cell, row * cell) & Size(cell, cell),
+            foreground,
+          );
+        }
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _QrPatternPainter oldDelegate) {
+    return oldDelegate.data != data;
+  }
+}
+
+IconData _timelineIcon(String iconKey) {
+  return switch (iconKey) {
+    'created' => Icons.receipt_long_outlined,
+    'payment' => Icons.schedule_rounded,
+    'confirm' => Icons.shield_outlined,
+    'release' => Icons.lock_outline_rounded,
+    _ => Icons.circle_outlined,
+  };
+}
+
+Color _stepColor(P2POrderStepStatus status) {
+  return switch (status) {
+    P2POrderStepStatus.completed => AppColors.buy,
+    P2POrderStepStatus.active => AppModuleAccents.p2p,
+    P2POrderStepStatus.pending => AppColors.text3,
+  };
+}
+
+Color _stepBackground(P2POrderStepStatus status) {
+  return switch (status) {
+    P2POrderStepStatus.completed => AppColors.buy10,
+    P2POrderStepStatus.active => AppColors.warn10,
+    P2POrderStepStatus.pending => AppColors.surface2,
+  };
+}
+
+IconData _quickActionIcon(String iconKey) {
+  return switch (iconKey) {
+    'merchant' => Icons.groups_outlined,
+    'block' => Icons.person_off_outlined,
+    'guide' => Icons.menu_book_outlined,
+    'support' => Icons.help_outline_rounded,
+    _ => Icons.chevron_right_rounded,
+  };
+}
+
+Color _quickActionColor(String id) {
+  return switch (id) {
+    'block' => AppColors.sell,
+    'guide' => AppColors.accent,
+    'support' => AppColors.buy,
+    _ => AppColors.text2,
+  };
+}
+
+String _formatCrypto(double value) => value.toStringAsFixed(4);
+
+String _formatVnd(int value) {
+  final raw = value.toString();
+  final buffer = StringBuffer();
+  for (var i = 0; i < raw.length; i++) {
+    final reverseIndex = raw.length - i;
+    buffer.write(raw[i]);
+    if (reverseIndex > 1 && reverseIndex % 3 == 1) {
+      buffer.write('.');
+    }
+  }
+  return buffer.toString();
+}

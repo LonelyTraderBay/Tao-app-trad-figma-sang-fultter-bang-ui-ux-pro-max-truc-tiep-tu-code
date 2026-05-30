@@ -16,7 +16,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
+import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/widgets/vip_history_widgets.dart';
 
 const _vipAccent = AppColors.primary;
 const _vipGold = AppColors.warn;
@@ -45,7 +46,7 @@ class _VIPPageState extends ConsumerState<VIPPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileRepositoryProvider).getVip();
+    final snapshot = ref.watch(profileControllerProvider).getVip();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -105,7 +106,7 @@ class _VIPPageState extends ConsumerState<VIPPage> {
         snapshot: snapshot,
         onTrade: _openTrade,
       ),
-      _VipTab.history => _HistoryTab(
+      _VipTab.history => VipHistoryTab(
         key: const ValueKey('history'),
         snapshot: snapshot,
       ),
@@ -165,7 +166,7 @@ class _VipHero extends StatelessWidget {
                       colors: [
                         _vipGold.withValues(alpha: .18),
                         AppColors.primary08,
-                        Colors.transparent,
+                        AppColors.transparent,
                       ],
                       stops: const [0, .38, 1],
                     ),
@@ -553,7 +554,7 @@ class _TierRow extends StatelessWidget {
       key: VIPPage.tierRowKey(tier.level),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: active ? AppColors.primary08 : Colors.transparent,
+        color: active ? AppColors.primary08 : AppColors.transparent,
         border: const Border(top: BorderSide(color: AppColors.divider)),
       ),
       child: Row(
@@ -1029,117 +1030,12 @@ class _UpgradeCta extends StatelessWidget {
               child: Text(
                 'Giao d\u1ECBch',
                 style: AppTextStyles.micro.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontSize: 12,
                   fontWeight: FontWeight.w900,
                   height: 1,
                 ),
               ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HistoryTab extends StatelessWidget {
-  const _HistoryTab({super.key, required this.snapshot});
-
-  final ProfileVipSnapshot snapshot;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        for (final row in snapshot.history) ...[
-          _HistoryCard(row: row),
-          if (row != snapshot.history.last)
-            const SizedBox(height: AppSpacing.x4),
-        ],
-      ],
-    );
-  }
-}
-
-class _HistoryCard extends StatelessWidget {
-  const _HistoryCard({required this.row});
-
-  final ProfileVipHistoryRow row;
-
-  @override
-  Widget build(BuildContext context) {
-    final isVip = row.level != 'Standard';
-    return VitCard(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                row.date,
-                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-              ),
-              const Spacer(),
-              VitStatusPill(
-                label: row.level,
-                status: isVip
-                    ? VitStatusPillStatus.orange
-                    : VitStatusPillStatus.neutral,
-                size: VitStatusPillSize.sm,
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x4),
-          Row(
-            children: [
-              _HistoryMetric(
-                label: 'Kh\u1ED1i l\u01B0\u1EE3ng',
-                value: row.volume,
-              ),
-              _HistoryMetric(
-                label: 'Ph\u00ED \u0111\u00E3 tr\u1EA3',
-                value: row.fee,
-              ),
-              _HistoryMetric(
-                label: 'Ti\u1EBFt ki\u1EC7m',
-                value: row.saved,
-                valueColor: _vipSuccess,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HistoryMetric extends StatelessWidget {
-  const _HistoryMetric({
-    required this.label,
-    required this.value,
-    this.valueColor = AppColors.text1,
-  });
-
-  final String label;
-  final String value;
-  final Color valueColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label, style: AppTextStyles.micro.copyWith(color: _vipMuted)),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            value,
-            style: AppTextStyles.micro.copyWith(
-              color: valueColor,
-              fontSize: 12,
-              fontWeight: FontWeight.w900,
-              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],

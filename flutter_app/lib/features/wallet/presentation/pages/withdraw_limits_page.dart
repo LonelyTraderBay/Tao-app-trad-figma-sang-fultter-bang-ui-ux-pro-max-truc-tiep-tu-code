@@ -11,16 +11,16 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 const _limitsBackground = AppColors.bg;
 const _limitsPanel = AppColors.surface;
 const _limitsHero = AppColors.surface;
 const _limitsHeroBorder = AppColors.primary20;
-const _limitsBorder = Color(0x14FFFFFF);
+const _limitsBorder = AppColors.overlayStroke;
 const _limitsPrimary = AppColors.primary;
-const _limitsGreen = Color(0xFF10B981);
-const _limitsAmber = Color(0xFFF59E0B);
+const _limitsGreen = AppColors.buy;
+const _limitsAmber = AppColors.caution;
 const _limitsMuted = AppColors.text3;
 
 class WithdrawLimitsPage extends ConsumerWidget {
@@ -34,7 +34,7 @@ class WithdrawLimitsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(walletRepositoryProvider).getWithdrawLimits();
+    final snapshot = ref.watch(walletWithdrawLimitsProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -538,7 +538,7 @@ class _KycTierCard extends StatelessWidget {
             ),
             const Icon(
               Icons.chevron_right_rounded,
-              color: Color(0xFF4A5568),
+              color: AppColors.sectionLabel,
               size: 21,
             ),
           ],

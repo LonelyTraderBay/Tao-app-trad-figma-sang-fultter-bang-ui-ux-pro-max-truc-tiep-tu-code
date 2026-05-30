@@ -123,6 +123,8 @@ void main() {
     await _enterCode(tester, '123456');
 
     expect(find.byType(ResetPasswordPage), findsOneWidget);
+    expect(find.byKey(ResetPasswordPage.expiredKey), findsNothing);
+    expect(find.byKey(ResetPasswordPage.newPasswordFieldKey), findsOneWidget);
     expect(find.text('Đặt lại mật khẩu'), findsOneWidget);
     expect(find.byType(VitBottomNav), findsNothing);
   });

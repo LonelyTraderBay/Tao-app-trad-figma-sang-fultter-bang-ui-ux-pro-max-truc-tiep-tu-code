@@ -10,15 +10,16 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _governancePrimary = AppColors.primary;
 const _governanceCard = AppColors.surface;
 const _governanceTabs = AppColors.surface;
 const _governanceHeroBackground = AppColors.primary15;
 const _governanceWarningBackground = AppColors.warningBg;
-const _governanceWarningBorder = Color(0x665A3A00);
-const _governanceWarning = Color(0xFFF59E0B);
+const _governanceWarningBorder = AppColors.warningBorderStrong;
+const _governanceWarning = AppColors.caution;
 const _governancePill = AppColors.buy20;
 
 class ProviderGovernancePage extends ConsumerStatefulWidget {
@@ -43,7 +44,7 @@ class _ProviderGovernancePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getProviderGovernance();
+    final snapshot = ref.watch(tradeProviderGovernanceProvider);
     if (!_initialized) {
       _activeTabId = snapshot.defaultTabId;
       _initialized = true;
@@ -148,7 +149,7 @@ class _ProviderDashboard extends StatelessWidget {
                 ),
                 child: const Icon(
                   Icons.shield_outlined,
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   size: 24,
                 ),
               ),
@@ -546,7 +547,11 @@ class _RequestButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.edit_outlined, color: Colors.white, size: 17),
+            const Icon(
+              Icons.edit_outlined,
+              color: AppColors.onAccent,
+              size: 17,
+            ),
             const SizedBox(width: 8),
             Flexible(
               child: Text(
@@ -554,7 +559,7 @@ class _RequestButton extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.body.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontSize: 13,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
@@ -712,7 +717,7 @@ class _MessagePanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned.fill(
       child: DecoratedBox(
-        decoration: const BoxDecoration(color: Color(0x99000000)),
+        decoration: const BoxDecoration(color: AppColors.modalScrim),
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Container(

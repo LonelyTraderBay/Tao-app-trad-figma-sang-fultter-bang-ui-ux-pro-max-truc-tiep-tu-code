@@ -66,18 +66,15 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Bridge Foundation'), findsOneWidget);
-    expect(find.text('Kết nối · Prediction - Arena'), findsOneWidget);
+    expect(find.textContaining('Prediction - Arena'), findsOneWidget);
     expect(
-      find.text('09A - Arena × Predictions Bridge Foundation'),
+      find.textContaining('Predictions Bridge Foundation'),
       findsOneWidget,
     );
     expect(find.text('Principles'), findsOneWidget);
     expect(find.text('1 - Cross-Module Principles'), findsOneWidget);
     expect(find.text('Connect by content, not by value'), findsOneWidget);
-    expect(
-      find.text('Arena Points không phải tài sản tài chính'),
-      findsOneWidget,
-    );
+    expect(find.text('Arena Points are not financial assets'), findsOneWidget);
 
     await tester.ensureVisible(find.text('Allowed vs Not Allowed'));
     expect(find.text('Allowed vs Not Allowed'), findsOneWidget);
@@ -103,7 +100,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('3 - Module Boundary Components'), findsOneWidget);
-    expect(find.text('Arena Points only'), findsOneWidget);
+    expect(find.text('Arena Points are not financial assets'), findsOneWidget);
     expect(find.text('Prediction Markets'), findsWidgets);
 
     await tester.drag(

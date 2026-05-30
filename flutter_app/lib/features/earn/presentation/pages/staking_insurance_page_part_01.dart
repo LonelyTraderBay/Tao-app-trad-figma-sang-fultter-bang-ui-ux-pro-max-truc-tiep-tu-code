@@ -1,0 +1,505 @@
+part of 'staking_insurance_page.dart';
+
+class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
+  _InsuranceTab _tab = _InsuranceTab.overview;
+
+  @override
+  Widget build(BuildContext context) {
+    final snapshot = ref
+        .watch(stakingInsuranceRepositoryProvider)
+        .getInsurance();
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final bottomInset =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+        MediaQuery.paddingOf(context).bottom;
+
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'SC-365 StakingInsurancePage',
+      child: Material(
+        color: AppColors.bg,
+        child: Column(
+          children: [
+            VitHeader(
+              title: snapshot.title,
+              showBack: true,
+              onBack: () => context.go(snapshot.backRoute),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.only(bottom: bottomInset),
+                child: VitPageContent(
+                  padding: VitContentPadding.compact,
+                  gap: VitContentGap.defaultGap,
+                  children: [
+                    _InfoBanner(snapshot: snapshot),
+                    _InsuranceTabs(
+                      active: _tab,
+                      onChanged: (tab) {
+                        HapticFeedback.selectionClick();
+                        setState(() => _tab = tab);
+                      },
+                    ),
+                    if (_tab == _InsuranceTab.overview)
+                      _OverviewTab(snapshot: snapshot),
+                    if (_tab == _InsuranceTab.plans)
+                      _PlansTab(snapshot: snapshot, onOpenPlan: _showPlan),
+                    if (_tab == _InsuranceTab.positions)
+                      _PositionsTab(
+                        snapshot: snapshot,
+                        onAddInsurance: (position) {
+                          HapticFeedback.lightImpact();
+                          setState(() => _tab = _InsuranceTab.plans);
+                        },
+                      ),
+                    if (_tab == _InsuranceTab.claims)
+                      _ClaimsTab(
+                        snapshot: snapshot,
+                        onFileClaim: () => _showClaimForm(snapshot),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _showPlan(StakingInsurancePlanDraft plan) async {
+    HapticFeedback.selectionClick();
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.transparent,
+      builder: (context) => _SheetFrame(child: _PlanSheet(plan: plan)),
+    );
+  }
+
+  Future<void> _showClaimForm(StakingInsuranceSnapshot snapshot) async {
+    HapticFeedback.selectionClick();
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.transparent,
+      builder: (context) => _SheetFrame(child: _ClaimSheet(snapshot: snapshot)),
+    );
+  }
+}
+
+class _InfoBanner extends StatelessWidget {
+  const _InfoBanner({required this.snapshot});
+
+  final StakingInsuranceSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: StakingInsurancePage.infoKey,
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.buy20,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.buy,
+            size: AppSpacing.iconMd,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  snapshot.infoBody,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InsuranceTabs extends StatelessWidget {
+  const _InsuranceTabs({required this.active, required this.onChanged});
+
+  final _InsuranceTab active;
+  final ValueChanged<_InsuranceTab> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: StakingInsurancePage.tabsKey,
+      decoration: const BoxDecoration(color: AppColors.surface),
+      child: Row(
+        children: [
+          for (final tab in _InsuranceTab.values)
+            Expanded(
+              child: _TabButton(
+                tab: tab,
+                selected: active == tab,
+                onTap: () => onChanged(tab),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TabButton extends StatelessWidget {
+  const _TabButton({
+    required this.tab,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final _InsuranceTab tab;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: AppColors.transparent,
+      child: InkWell(
+        key: StakingInsurancePage.tabKey(tab.name),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.only(top: AppSpacing.x4),
+          child: Column(
+            children: [
+              Text(
+                _tabLabel(tab),
+                style: AppTextStyles.caption.copyWith(
+                  color: selected ? AppColors.primarySoft : AppColors.text3,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x4),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 160),
+                width: selected ? AppSpacing.buttonHero : 0,
+                height: 2,
+                decoration: BoxDecoration(
+                  color: selected
+                      ? AppColors.primarySoft
+                      : AppColors.transparent,
+                  borderRadius: AppRadii.xsRadius,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _OverviewTab extends StatelessWidget {
+  const _OverviewTab({required this.snapshot});
+
+  final StakingInsuranceSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    final insuredPositions = snapshot.positions.where((p) => p.insured).length;
+    final totalInsured = snapshot.positions
+        .where((p) => p.insured)
+        .fold<double>(0, (sum, p) => sum + p.usdValue);
+    final totalPremium = snapshot.positions
+        .where((p) => p.insured)
+        .fold<double>(0, (sum, position) {
+          final plan = snapshot.planById(position.insurancePlanId);
+          return sum +
+              (plan == null ? 0 : position.usdValue * plan.premium / 100);
+        });
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitCard(
+          key: StakingInsurancePage.overviewSummaryKey,
+          radius: VitCardRadius.lg,
+          padding: const EdgeInsets.all(AppSpacing.x4),
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Giá trị được bảo hiểm',
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.x3),
+                        Text(
+                          _formatUsd(totalInsured),
+                          style: AppTextStyles.heroNumber.copyWith(
+                            fontSize: 28,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: AppColors.buy10,
+                      borderRadius: BorderRadius.circular(999),
+                      border: Border.all(color: AppColors.buy, width: 2),
+                    ),
+                    child: const Icon(
+                      Icons.shield_outlined,
+                      color: AppColors.buy,
+                      size: AppSpacing.iconLg,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.x5),
+              Row(
+                children: [
+                  Expanded(
+                    child: _SummaryMetric(
+                      label: 'Vị thế có BH',
+                      value: '$insuredPositions/${snapshot.positions.length}',
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: _SummaryMetric(
+                      label: 'Phí/năm',
+                      value: _formatUsd(totalPremium),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        _BenefitsGrid(snapshot: snapshot),
+        const SizedBox(height: AppSpacing.x4),
+        _WarningNote(snapshot: snapshot),
+      ],
+    );
+  }
+}
+
+class _SummaryMetric extends StatelessWidget {
+  const _SummaryMetric({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              value,
+              style: AppTextStyles.sectionTitle.copyWith(
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BenefitsGrid extends StatelessWidget {
+  const _BenefitsGrid({required this.snapshot});
+
+  final StakingInsuranceSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitPageSection(
+      key: StakingInsurancePage.benefitsKey,
+      label: 'Lợi ích Bảo hiểm',
+      accentColor: AppColors.primarySoft,
+      children: [
+        GridView.builder(
+          itemCount: snapshot.benefits.length,
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: AppSpacing.x4,
+            mainAxisSpacing: AppSpacing.x4,
+            childAspectRatio: 1.55,
+          ),
+          itemBuilder: (context, index) {
+            final benefit = snapshot.benefits[index];
+            return _BenefitCard(benefit: benefit);
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _BenefitCard extends StatelessWidget {
+  const _BenefitCard({required this.benefit});
+
+  final StakingInsuranceBenefitDraft benefit;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: AppSpacing.ctaHeight,
+            height: AppSpacing.ctaHeight,
+            decoration: BoxDecoration(
+              color: _iconFillColor(benefit.icon),
+              borderRadius: BorderRadius.circular(999),
+              border: Border.all(color: _iconBorder(benefit.icon)),
+            ),
+            child: Icon(
+              _benefitIcon(benefit.icon),
+              color: _iconColor(benefit.icon),
+              size: AppSpacing.iconMd,
+            ),
+          ),
+          const Spacer(),
+          Text(
+            benefit.label,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            benefit.description,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _WarningNote extends StatelessWidget {
+  const _WarningNote({required this.snapshot});
+
+  final StakingInsuranceSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: StakingInsurancePage.warningKey,
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.warningBorder,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: AppColors.warn,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(snapshot.warningTitle, style: AppTextStyles.baseMedium),
+                const SizedBox(height: AppSpacing.x3),
+                for (final bullet in snapshot.warningBullets)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: AppSpacing.x1),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: AppSpacing.x1,
+                          height: AppSpacing.x1,
+                          margin: const EdgeInsets.only(top: AppSpacing.x3),
+                          decoration: const BoxDecoration(
+                            color: AppColors.warn,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        const SizedBox(width: AppSpacing.x3),
+                        Expanded(
+                          child: Text(
+                            bullet,
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.text2,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PlansTab extends StatelessWidget {
+  const _PlansTab({required this.snapshot, required this.onOpenPlan});
+
+  final StakingInsuranceSnapshot snapshot;
+  final ValueChanged<StakingInsurancePlanDraft> onOpenPlan;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitPageSection(
+      label: 'Chọn Plan Bảo hiểm',
+      accentColor: AppColors.primarySoft,
+      children: [
+        for (final plan in snapshot.plans)
+          _PlanCard(plan: plan, onTap: () => onOpenPlan(plan)),
+      ],
+    );
+  }
+}

@@ -101,7 +101,7 @@ void main() {
     expect(find.text('Nâng cấp lên VIP'), findsOneWidget);
   });
 
-  testWidgets('SC-230 header back returns to the P2P root placeholder', (
+  testWidgets('SC-230 header back returns to the P2P parent route', (
     tester,
   ) async {
     await pumpP2PTradingLevel(tester);

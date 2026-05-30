@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
   const P2PPaymentMethodCoolingPeriodPage({super.key, this.shellRenderMode});
@@ -24,17 +24,16 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getPaymentMethodCoolingPeriod();
+    final controller = ref.watch(
+      p2pPaymentMethodCoolingPeriodControllerProvider,
+    );
+    final snapshot = controller.state.snapshot;
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + AppSpacing.x5
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
-    final daysLeft = snapshot.hoursRemaining ~/ 24;
-    final hoursLeft = snapshot.hoursRemaining % 24;
 
     return VitPageLayout(
       semanticLabel: 'SC-235 P2PPaymentMethodCoolingPeriodPage',
@@ -65,7 +64,10 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      _CoolingHero(daysLeft: daysLeft, hoursLeft: hoursLeft),
+                      _CoolingHero(
+                        daysLeft: controller.daysLeft,
+                        hoursLeft: controller.hoursLeft,
+                      ),
                       const SizedBox(height: AppSpacing.x4),
                       _TimelineCard(snapshot: snapshot),
                       const SizedBox(height: AppSpacing.x5),

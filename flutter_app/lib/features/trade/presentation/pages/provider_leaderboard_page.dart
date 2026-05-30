@@ -11,7 +11,8 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _leaderPrimary = AppColors.primary;
 const _leaderCard = AppColors.surface;
@@ -19,7 +20,7 @@ const _leaderPanel = AppColors.surface2;
 const _leaderChip = AppColors.surface3;
 const _leaderWarningBackground = AppColors.warningBg;
 const _leaderWarningBorder = AppColors.warningBorder;
-const _leaderWarningText = Color(0xFFF59E0B);
+const _leaderWarningText = AppColors.caution;
 
 class ProviderLeaderboardPage extends ConsumerStatefulWidget {
   const ProviderLeaderboardPage({super.key, this.shellRenderMode});
@@ -46,9 +47,7 @@ class _ProviderLeaderboardPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRepositoryProvider)
-        .getProviderLeaderboard();
+    final snapshot = ref.watch(tradeProviderLeaderboardProvider);
     if (!_initialized) {
       _sortId = snapshot.defaultSortId;
       _riskFilterId = snapshot.defaultRiskFilterId;
@@ -263,14 +262,14 @@ class _SortTabs extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: option.id == activeId
                         ? _leaderPrimary
-                        : Colors.transparent,
+                        : AppColors.transparent,
                     borderRadius: AppRadii.cardRadius,
                   ),
                   child: Text(
                     option.label,
                     style: AppTextStyles.caption.copyWith(
                       color: option.id == activeId
-                          ? Colors.white
+                          ? AppColors.onAccent
                           : AppColors.text3,
                       fontSize: 12,
                       fontWeight: AppTextStyles.bold,
@@ -359,7 +358,7 @@ class _RiskChip extends StatelessWidget {
         child: Text(
           filter.label,
           style: AppTextStyles.caption.copyWith(
-            color: selected ? Colors.white : AppColors.text2,
+            color: selected ? AppColors.onAccent : AppColors.text2,
             fontSize: 12,
             fontWeight: selected ? AppTextStyles.bold : AppTextStyles.medium,
             height: 1,
@@ -444,7 +443,7 @@ class _TogglePill extends StatelessWidget {
           width: 20,
           height: 20,
           decoration: const BoxDecoration(
-            color: Colors.white,
+            color: AppColors.onAccent,
             shape: BoxShape.circle,
           ),
         ),
@@ -540,7 +539,7 @@ class _RankBadge extends StatelessWidget {
         shape: BoxShape.circle,
         border: podium
             ? Border.all(color: _leaderWarningText, width: 2)
-            : Border.all(color: Colors.transparent),
+            : Border.all(color: AppColors.transparent),
       ),
       child: Text(
         '#$rank',

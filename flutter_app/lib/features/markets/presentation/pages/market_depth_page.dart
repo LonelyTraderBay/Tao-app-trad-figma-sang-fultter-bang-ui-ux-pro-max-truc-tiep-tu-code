@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_data_viz_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -14,7 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
+import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 
 const _marketPrimary = AppColors.primary;
 
@@ -48,7 +49,7 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(marketRepositoryProvider)
+        .watch(marketControllerProvider)
         .getMarketDepth(pairId: widget.pairId, levels: _levels);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -482,7 +483,7 @@ class _LevelChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: active
               ? _marketPrimary.withValues(alpha: .16)
-              : Colors.transparent,
+              : AppColors.transparent,
           borderRadius: AppRadii.smRadius,
         ),
         child: Text(
@@ -547,7 +548,10 @@ class _DepthChartPainter extends CustomPainter {
       ..shader = const LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [Color(0x5910B981), Color(0x0D10B981)],
+        colors: [
+          AppDataVizColors.heatmapSoftPositive,
+          AppDataVizColors.heatmapFaintPositive,
+        ],
       ).createShader(Offset.zero & size);
     canvas.drawPath(bidPath, bidFill);
 
@@ -572,7 +576,10 @@ class _DepthChartPainter extends CustomPainter {
       ..shader = const LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [Color(0x59EF4444), Color(0x0DEF4444)],
+        colors: [
+          AppDataVizColors.heatmapSoftNegative,
+          AppDataVizColors.heatmapFaintNegative,
+        ],
       ).createShader(Offset.zero & size);
     canvas.drawPath(askPath, askFill);
 

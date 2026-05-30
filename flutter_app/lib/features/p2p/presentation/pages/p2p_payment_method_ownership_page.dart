@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PPaymentMethodOwnershipPage extends ConsumerStatefulWidget {
   const P2PPaymentMethodOwnershipPage({
@@ -46,20 +46,17 @@ class _P2PPaymentMethodOwnershipPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getPaymentMethodOwnership(widget.methodId);
+    final controller = ref.watch(
+      p2pPaymentMethodOwnershipControllerProvider(widget.methodId),
+    );
+    final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + AppSpacing.x5
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
-    final canSubmit =
-        snapshot.documents
-            .where((doc) => !doc.optional)
-            .every((doc) => _uploaded.contains(doc.id)) &&
-        !_submitting;
+    final canSubmit = controller.canSubmit(_uploaded) && !_submitting;
 
     return VitPageLayout(
       semanticLabel: 'SC-234 P2PPaymentMethodOwnershipPage',
@@ -113,7 +110,7 @@ class _P2PPaymentMethodOwnershipPageState
                         key: P2PPaymentMethodOwnershipPage.submitButtonKey,
                         loading: _submitting,
                         onPressed: canSubmit
-                            ? () => _confirmSubmit(context, snapshot)
+                            ? () => _confirmSubmit(context, controller)
                             : null,
                         trailing: const Icon(Icons.chevron_right_rounded),
                         child: const Text('Gửi xác minh'),
@@ -141,8 +138,9 @@ class _P2PPaymentMethodOwnershipPageState
 
   Future<void> _confirmSubmit(
     BuildContext context,
-    P2PPaymentMethodOwnershipSnapshot snapshot,
+    P2PPaymentMethodOwnershipController controller,
   ) async {
+    final preview = controller.submitPreview(_uploaded);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -150,11 +148,11 @@ class _P2PPaymentMethodOwnershipPageState
         surfaceTintColor: AppColors.surface,
         shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
         title: Text(
-          snapshot.confirmTitle,
+          preview.confirmTitle,
           style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
         ),
         content: Text(
-          snapshot.confirmMessage,
+          preview.confirmMessage,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
         actions: [
@@ -184,7 +182,7 @@ class _P2PPaymentMethodOwnershipPageState
     setState(() => _submitting = true);
     await Future<void>.delayed(const Duration(milliseconds: 250));
     if (!context.mounted) return;
-    context.go(snapshot.saveRoute);
+    context.go(preview.saveRoute);
   }
 }
 
@@ -356,7 +354,7 @@ class _UploadButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       borderRadius: AppRadii.inputRadius,
       child: Ink(
         decoration: BoxDecoration(

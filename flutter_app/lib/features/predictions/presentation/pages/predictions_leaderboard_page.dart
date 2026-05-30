@@ -12,7 +12,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
+import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 
 const _predictionPrimary = AppColors.primary;
 
@@ -47,7 +48,7 @@ class _PredictionsLeaderboardPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(predictionsRepositoryProvider)
+        .watch(predictionsReadModelControllerProvider)
         .getLeaderboard(timeFilter: _timeFilter, metric: _metric);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -188,7 +189,7 @@ class _TimeFilterButton extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? AppColors.surface : Colors.transparent,
+          color: active ? AppColors.surface : AppColors.transparent,
           borderRadius: AppRadii.cardRadius,
         ),
         child: Text(
@@ -285,7 +286,7 @@ class _MetricTab extends StatelessWidget {
           border: Border.all(
             color: active
                 ? _predictionPrimary.withValues(alpha: .38)
-                : Colors.transparent,
+                : AppColors.transparent,
           ),
           borderRadius: AppRadii.mdRadius,
         ),
@@ -327,7 +328,11 @@ class _Podium extends StatelessWidget {
       if (traders.length > 2) traders[2],
     ];
     const heights = [90.0, 110.0, 75.0];
-    const colors = [Color(0xFFC0C0C0), Color(0xFFFFD700), Color(0xFFCD7F32)];
+    const colors = [
+      AppColors.medalSilver,
+      AppColors.medalGold,
+      AppColors.medalBronze,
+    ];
     const labels = ['2nd', '1st', '3rd'];
 
     return VitCard(
@@ -421,7 +426,7 @@ class _PodiumColumn extends StatelessWidget {
               if (winner) ...[
                 const Icon(
                   Icons.workspace_premium_rounded,
-                  color: Color(0xFFFFD700),
+                  color: AppColors.medalGold,
                   size: 14,
                 ),
                 const SizedBox(width: 4),
@@ -640,10 +645,10 @@ class _RankBadge extends StatelessWidget {
       );
     }
     final color = rank == 1
-        ? const Color(0xFFFFD700)
+        ? AppColors.medalGold
         : rank == 2
-        ? const Color(0xFFC0C0C0)
-        : const Color(0xFFCD7F32);
+        ? AppColors.medalSilver
+        : AppColors.medalBronze;
     return Container(
       width: 21,
       height: 21,
@@ -702,7 +707,7 @@ class _BiggestWinCard extends StatelessWidget {
       onTap: event == null
           ? null
           : () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
-      borderColor: Colors.transparent,
+      borderColor: AppColors.transparent,
       padding: const EdgeInsets.all(14),
       child: Row(
         children: [

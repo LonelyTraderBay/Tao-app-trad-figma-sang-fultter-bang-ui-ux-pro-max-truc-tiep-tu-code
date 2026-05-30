@@ -9,7 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
+import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 const _profileBackground = AppColors.bg;
 const _profilePanel = AppColors.surface;
@@ -44,7 +44,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileRepositoryProvider).getProfile();
+    final snapshot = ref.watch(profileControllerProvider).getProfile();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -148,7 +148,7 @@ class _ProfileHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 208,
+      height: 216,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: _profileHero,
@@ -186,7 +186,7 @@ class _ProfileHero extends StatelessWidget {
                 child: Text(
                   user.fullName.characters.first,
                   style: AppTextStyles.sectionTitle.copyWith(
-                    color: Colors.white,
+                    color: AppColors.onAccent,
                     fontSize: 24,
                     fontWeight: FontWeight.w900,
                   ),
@@ -219,10 +219,11 @@ class _ProfileHero extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    Row(
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 6,
                       children: [
                         _HeroPill(label: user.vipLevel, color: _profileAmber),
-                        const SizedBox(width: 8),
                         _HeroPill(
                           label: 'KYC ${user.kycLevel}',
                           color: _profileGreen,
@@ -240,10 +241,10 @@ class _ProfileHero extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: .11),
+                    color: AppColors.onAccent.withValues(alpha: .11),
                     borderRadius: AppRadii.lgRadius,
                     border: Border.all(
-                      color: Colors.white.withValues(alpha: .12),
+                      color: AppColors.onAccent.withValues(alpha: .12),
                     ),
                   ),
                   alignment: Alignment.center,
@@ -339,9 +340,9 @@ class _HeroInfoBox extends StatelessWidget {
       height: 66,
       padding: const EdgeInsets.fromLTRB(14, 13, 14, 12),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .08),
+        color: AppColors.onAccent.withValues(alpha: .08),
         borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: Colors.white.withValues(alpha: .08)),
+        border: Border.all(color: AppColors.onAccent.withValues(alpha: .08)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -408,14 +409,19 @@ class _VipCard extends StatelessWidget {
                   height: 1,
                 ),
               ),
-              const Spacer(),
-              Text(
-                '${vip.label} \u2192 ${vip.nextLabel}',
-                style: AppTextStyles.micro.copyWith(
-                  color: _profileAmber,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w900,
-                  height: 1,
+              const SizedBox(width: 12),
+              Flexible(
+                child: Text(
+                  '${vip.label} \u2192 ${vip.nextLabel}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.end,
+                  style: AppTextStyles.micro.copyWith(
+                    color: _profileAmber,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w900,
+                    height: 1,
+                  ),
                 ),
               ),
             ],
@@ -498,20 +504,26 @@ class _PredictionCard extends StatelessWidget {
             const Spacer(),
             Row(
               children: [
-                _ModuleStat(
-                  label: 'V\u1ECB th\u1EBF',
-                  value: '${prediction.positions}',
+                Expanded(
+                  child: _ModuleStat(
+                    label: 'V\u1ECB th\u1EBF',
+                    value: '${prediction.positions}',
+                  ),
                 ),
-                const SizedBox(width: 28),
-                _ModuleStat(
-                  label: 'L\u1EC7nh m\u1EDF',
-                  value: '${prediction.openOrders}',
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _ModuleStat(
+                    label: 'L\u1EC7nh m\u1EDF',
+                    value: '${prediction.openOrders}',
+                  ),
                 ),
-                const SizedBox(width: 28),
-                _ModuleStat(
-                  label: 'P/L',
-                  value: prediction.pnlLabel,
-                  valueColor: _profileGreen,
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _ModuleStat(
+                    label: 'P/L',
+                    value: prediction.pnlLabel,
+                    valueColor: _profileGreen,
+                  ),
                 ),
               ],
             ),
@@ -613,18 +625,27 @@ class _ArenaCard extends StatelessWidget {
             const Spacer(),
             Row(
               children: [
-                _ModuleStat(
-                  label: 'Arena Points',
-                  value: arena.pointsLabel,
-                  valueColor: _profileAmber,
+                Expanded(
+                  child: _ModuleStat(
+                    label: 'Arena Points',
+                    value: arena.pointsLabel,
+                    valueColor: _profileAmber,
+                  ),
                 ),
-                const SizedBox(width: 28),
-                _ModuleStat(label: 'Ph\u00F2ng', value: '${arena.rooms}'),
-                const SizedBox(width: 28),
-                _ModuleStat(
-                  label: 'Creator',
-                  value: arena.creatorScoreLabel,
-                  valueColor: _profileGreen,
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _ModuleStat(
+                    label: 'Ph\u00F2ng',
+                    value: '${arena.rooms}',
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _ModuleStat(
+                    label: 'Creator',
+                    value: arena.creatorScoreLabel,
+                    valueColor: _profileGreen,
+                  ),
                 ),
               ],
             ),
@@ -694,6 +715,8 @@ class _ModuleStat extends StatelessWidget {
       children: [
         Text(
           label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: _profileMuted,
             fontSize: 10,
@@ -703,6 +726,8 @@ class _ModuleStat extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: AppTextStyles.caption.copyWith(
             color: valueColor,
             fontSize: 13,

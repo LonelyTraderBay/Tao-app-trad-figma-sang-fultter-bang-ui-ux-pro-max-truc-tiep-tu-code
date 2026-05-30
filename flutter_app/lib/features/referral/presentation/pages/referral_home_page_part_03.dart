@@ -1,0 +1,544 @@
+part of 'referral_home_page.dart';
+
+class _PendingCommissionCard extends StatelessWidget {
+  const _PendingCommissionCard({required this.item});
+
+  final ReferralPendingCommissionDraft item;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      borderColor: AppColors.warningBorder,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              _Avatar(initial: item.friendInitial, color: AppColors.warn),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.friendName,
+                      style: AppTextStyles.body.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    _InlineIconText(
+                      icon: Icons.schedule_rounded,
+                      text: item.reason,
+                      color: AppColors.warn,
+                    ),
+                  ],
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    '~${_formatUsd(item.amount)}',
+                    style: AppTextStyles.base.copyWith(
+                      color: AppColors.warn,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  Text(
+                    item.currency,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          _ProgressBar(progress: item.progress / 100, color: AppColors.warn),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            item.reasonDetail,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: _TinyPill(
+              label: item.eta,
+              color: AppColors.warn,
+              background: AppColors.warn08,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RewardCard extends StatelessWidget {
+  const _RewardCard({
+    required this.icon,
+    required this.title,
+    required this.value,
+    required this.subtitle,
+    required this.color,
+    this.chip,
+  });
+
+  final IconData icon;
+  final String title;
+  final String value;
+  final String subtitle;
+  final Color color;
+  final String? chip;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      borderColor: color.withValues(alpha: .20),
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              _IconBubble(
+                icon: icon,
+                color: color,
+                background: color.withValues(alpha: .10),
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  title,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            value,
+            style: AppTextStyles.sectionTitle.copyWith(
+              color: color,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
+          ),
+          Text(
+            subtitle,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+          if (chip != null) ...[
+            const SizedBox(height: AppSpacing.x3),
+            _TinyPill(
+              label: chip!,
+              color: AppColors.primarySoft,
+              background: AppColors.warn08,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _LeaderboardRow extends StatelessWidget {
+  const _LeaderboardRow({required this.item});
+
+  final ReferralLeaderboardDraft item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(
+          width: 28,
+          child: Text(
+            '#${item.rank}',
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+        ),
+        _Avatar(initial: item.name.characters.first, color: AppColors.primary),
+        const SizedBox(width: AppSpacing.x3),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                item.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              Text(
+                '${item.friends} bạn mới · ${item.tier}',
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
+            ],
+          ),
+        ),
+        Text(
+          _formatUsd(item.totalEarned),
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.buy,
+            fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _DetailLinkRow extends StatelessWidget {
+  const _DetailLinkRow({
+    required this.item,
+    required this.showDivider,
+    required this.onTap,
+  });
+
+  final ReferralDetailLinkDraft item;
+  final bool showDivider;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final style = _detailStyle(item.id);
+    return InkWell(
+      key: switch (item.id) {
+        'friends' => ReferralHomePage.detailHistoryKey,
+        'rewards' => ReferralHomePage.detailRewardsKey,
+        'rules' => ReferralHomePage.detailRulesKey,
+        _ => null,
+      },
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          border: showDivider
+              ? const Border(bottom: BorderSide(color: AppColors.divider))
+              : null,
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.x4,
+          vertical: AppSpacing.x3,
+        ),
+        child: Row(
+          children: [
+            _IconBubble(
+              icon: style.icon,
+              color: style.color,
+              background: style.color.withValues(alpha: .10),
+            ),
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.title,
+                    style: AppTextStyles.body.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  Text(
+                    item.subtitle,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text3,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.text3,
+              size: AppSpacing.iconMd,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _StepRow extends StatelessWidget {
+  const _StepRow({required this.step});
+
+  final ReferralStepDraft step;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = [
+      AppColors.primary,
+      AppColors.accent,
+      AppColors.warn,
+      AppColors.buy,
+    ];
+    final color = colors[(step.step - 1).clamp(0, colors.length - 1)];
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      child: Row(
+        children: [
+          _IconBubble(
+            icon: Icons.check_rounded,
+            color: color,
+            background: color.withValues(alpha: .10),
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  step.title,
+                  style: AppTextStyles.body.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                Text(
+                  step.description,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 28,
+            height: 28,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColors.surface2,
+              borderRadius: AppRadii.lgRadius,
+            ),
+            child: Text(
+              '${step.step}',
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text2,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CampaignHistoryCard extends StatelessWidget {
+  const _CampaignHistoryCard({required this.item});
+
+  final ReferralCampaignHistoryDraft item;
+
+  @override
+  Widget build(BuildContext context) {
+    final active = item.statusLabel == 'Đang diễn ra';
+    final progress = active ? .28 : 1.0;
+    final color = active ? AppColors.buy : AppColors.primary;
+    return VitCard(
+      key: ReferralHomePage.campaignHistoryKey(item.id),
+      borderColor: active ? AppColors.buy20 : AppColors.cardBorder,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  item.title,
+                  style: AppTextStyles.body.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+              _TinyPill(
+                label: item.statusLabel,
+                color: active ? AppColors.buy : AppColors.text2,
+                background: active ? AppColors.buy10 : AppColors.surface2,
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            item.dateRange,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            item.description,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          VitCard(
+            variant: VitCardVariant.inner,
+            padding: const EdgeInsets.all(AppSpacing.x3),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    _TinyPill(
+                      label: item.bonusLabel,
+                      color: AppColors.accent,
+                      background: AppColors.accent10,
+                    ),
+                    const Spacer(),
+                    Text(
+                      '${_formatCompactInt(item.participants)} tham gia',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.x3),
+                Text(
+                  item.result,
+                  style: AppTextStyles.caption.copyWith(
+                    color: color,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x3),
+                _ProgressBar(progress: progress, color: color),
+                const SizedBox(height: AppSpacing.x3),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _HistoryDatum(
+                        label: 'Kết quả của bạn',
+                        value: item.result,
+                        color: color,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.x3),
+                    Expanded(
+                      child: _HistoryDatum(
+                        label: 'Cộng đồng',
+                        value:
+                            '${_formatCompactInt(item.participants)} tham gia',
+                        color: AppColors.accent,
+                      ),
+                    ),
+                  ],
+                ),
+                if (active) ...[
+                  const SizedBox(height: AppSpacing.x3),
+                  const _NoticeCard(
+                    icon: Icons.campaign_rounded,
+                    text: 'Đang diễn ra - mời thêm bạn bè để nhận x2.',
+                    color: AppColors.buy,
+                    background: AppColors.buy10,
+                    border: AppColors.buy20,
+                    dense: true,
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _HistoryDatum extends StatelessWidget {
+  const _HistoryDatum({
+    required this.label,
+    required this.value,
+    required this.color,
+  });
+
+  final String label;
+  final String value;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.x3),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: AppRadii.smRadius,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            value,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SectionTitle extends StatelessWidget {
+  const _SectionTitle({
+    required this.title,
+    this.trailing,
+    this.color = AppModuleAccents.referral,
+  });
+
+  final String title;
+  final String? trailing;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 4,
+          height: 18,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: AppRadii.xsRadius,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.x2),
+        Expanded(
+          child: Text(
+            title,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+        ),
+        if (trailing != null)
+          Text(
+            trailing!,
+            style: AppTextStyles.micro.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+      ],
+    );
+  }
+}

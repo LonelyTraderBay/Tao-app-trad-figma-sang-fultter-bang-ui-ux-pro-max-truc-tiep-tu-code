@@ -10,11 +10,12 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _providerPrimary = AppColors.primary;
-const _providerGreen = Color(0xFF10B981);
-const _providerRed = Color(0xFFEF4444);
+const _providerGreen = AppColors.buy;
+const _providerRed = AppColors.sell;
 const _providerPanel = AppColors.surface2;
 
 class CopyProviderDetailPage extends ConsumerWidget {
@@ -35,9 +36,7 @@ class CopyProviderDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(tradeRepositoryProvider)
-        .getCopyProviderDetail(providerId: providerId);
+    final snapshot = ref.watch(tradeCopyProviderDetailProvider(providerId));
     final provider = snapshot.provider;
 
     if (provider == null) {
@@ -98,7 +97,7 @@ class CopyProviderDetailPage extends ConsumerWidget {
                       label: Text(
                         'Đánh giá rủi ro',
                         style: AppTextStyles.baseMedium.copyWith(
-                          color: Colors.white,
+                          color: AppColors.onAccent,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
@@ -184,7 +183,7 @@ class _RiskWarning extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: AppColors.warningBg,
-        border: Border.all(color: const Color(0xFF92400E)),
+        border: Border.all(color: AppColors.warningBorderDark),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
@@ -192,7 +191,7 @@ class _RiskWarning extends StatelessWidget {
         children: [
           const Icon(
             Icons.warning_amber_rounded,
-            color: Color(0xFFF59E0B),
+            color: AppColors.caution,
             size: 18,
           ),
           const SizedBox(width: 10),
@@ -200,7 +199,7 @@ class _RiskWarning extends StatelessWidget {
             child: Text(
               'Hiệu suất quá khứ không đảm bảo lợi nhuận tương lai. Bạn có thể mất toàn bộ vốn đầu tư.',
               style: AppTextStyles.caption.copyWith(
-                color: const Color(0xFFF59E0B),
+                color: AppColors.caution,
                 fontSize: 10,
                 height: 1.4,
               ),
@@ -299,7 +298,7 @@ class _MetricGrid extends StatelessWidget {
       (
         'AUM',
         '\$${(provider.aum / 1000000).toStringAsFixed(1)}M',
-        const Color(0xFFF59E0B),
+        AppColors.caution,
       ),
     ];
 
@@ -374,7 +373,7 @@ class _Pill extends StatelessWidget {
 Color _riskColor(TradeCopyRiskLevel level) {
   return switch (level) {
     TradeCopyRiskLevel.low => _providerGreen,
-    TradeCopyRiskLevel.medium => const Color(0xFFF59E0B),
+    TradeCopyRiskLevel.medium => AppColors.caution,
     TradeCopyRiskLevel.high => _providerRed,
   };
 }

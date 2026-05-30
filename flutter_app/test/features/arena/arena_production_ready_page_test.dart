@@ -9,7 +9,7 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_produc
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
-  Future<void> pumpProductionReady(WidgetTester tester) async {
+  Future<void> pumpReleaseReadiness(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
@@ -27,7 +27,7 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-206 mock repository exposes production readiness BE draft', () {
+  test('SC-206 mock repository exposes release readiness BE draft', () {
     final snapshot = const MockArenaRepository().getArenaProductionReady();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-production');
@@ -47,7 +47,10 @@ void main() {
     expect(snapshot.flows.map((flow) => flow.id), contains('points_audit'));
     expect(snapshot.components.first.file, 'ArenaChips.tsx');
     expect(snapshot.dictionaries.first.category, 'Resolution Methods');
-    expect(snapshot.qaItems, contains('Arena Points disclaimer hiển thị rõ'));
+    expect(
+      snapshot.qaItems,
+      contains('Arena Points disclaimer hiá»ƒn thá»‹ rÃµ'),
+    );
     expect(
       snapshot.supportedStates,
       containsAll([
@@ -59,17 +62,17 @@ void main() {
     );
   });
 
-  testWidgets('SC-206 renders production readiness screen baseline', (
+  testWidgets('SC-206 renders release readiness handoff baseline', (
     tester,
   ) async {
-    await pumpProductionReady(tester);
+    await pumpReleaseReadiness(tester);
 
     expect(find.byType(ArenaProductionReadyPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Production Ready'), findsOneWidget);
-    expect(find.text('Sẵn sàng · Open Arena'), findsOneWidget);
-    expect(find.text('08 - Open Arena Production Ready'), findsOneWidget);
+    expect(find.text('Release Readiness'), findsOneWidget);
+    expect(find.text('Internal handoff - Open Arena'), findsOneWidget);
+    expect(find.text('08 - Open Arena Release Readiness'), findsOneWidget);
     expect(find.text('Screens'), findsOneWidget);
     expect(find.text('A - Canonical Screens (vFinal)'), findsOneWidget);
     expect(find.text('ArenaHomePage'), findsOneWidget);
@@ -80,7 +83,7 @@ void main() {
   testWidgets('SC-206 switches readiness tabs with stable mock data', (
     tester,
   ) async {
-    await pumpProductionReady(tester);
+    await pumpReleaseReadiness(tester);
 
     await tester.tap(ArenaProductionReadyPage.tabKey('states').finder);
     await tester.pumpAndSettle();
@@ -99,7 +102,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(ArenaProductionReadyPage.tabKey('registry').finder);
     await tester.pumpAndSettle();
-    expect(find.text('D - Production vs Future vs QA'), findsOneWidget);
+    expect(find.text('D - Live vs Release-gated vs QA'), findsOneWidget);
     expect(find.text('QA/Dev (2)'), findsOneWidget);
 
     await tester.drag(
@@ -116,7 +119,7 @@ void main() {
   testWidgets('SC-206 screen cards navigate through canonical routes', (
     tester,
   ) async {
-    await pumpProductionReady(tester);
+    await pumpReleaseReadiness(tester);
 
     await tester.ensureVisible(
       find.byKey(ArenaProductionReadyPage.screenKey('ArenaPointsLedgerPage')),

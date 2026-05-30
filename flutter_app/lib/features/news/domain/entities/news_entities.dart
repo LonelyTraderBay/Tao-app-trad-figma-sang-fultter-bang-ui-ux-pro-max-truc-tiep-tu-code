@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 enum NewsArticleType {
   maintenance,
   newFeature,
@@ -26,15 +24,6 @@ extension NewsArticleTypeConfig on NewsArticleType {
     NewsArticleType.security => '🔐',
     NewsArticleType.listing => '📊',
     NewsArticleType.general => '📰',
-  };
-
-  Color get color => switch (this) {
-    NewsArticleType.maintenance => const Color(0xFF8B95B3),
-    NewsArticleType.newFeature => const Color(0xFF3B82F6),
-    NewsArticleType.promotion => const Color(0xFF10B981),
-    NewsArticleType.security => const Color(0xFFEF4444),
-    NewsArticleType.listing => const Color(0xFFF59E0B),
-    NewsArticleType.general => const Color(0xFF8B5CF6),
   };
 }
 

@@ -15,7 +15,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/admin/data/admin_repository.dart';
+import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_dashboard_state_content.dart';
 
 class AnalyticsDashboard extends ConsumerStatefulWidget {
   const AnalyticsDashboard({super.key, this.shellRenderMode});
@@ -38,7 +39,8 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(adminRepositoryProvider).getAnalytics();
+    final controller = ref.watch(adminAnalyticsControllerProvider);
+    final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollBottom =
         (mode.usesVisualQaFrame
@@ -65,19 +67,26 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
               child: VitPageContent(
                 customGap: AppSpacing.x5,
                 children: [
-                  _Controls(
-                    ranges: snapshot.ranges,
-                    activeRange: _activeRange,
-                    onRangeChanged: (range) {
-                      setState(() => _activeRange = range);
-                    },
+                  AdminDashboardStateContent(
+                    status: controller.state.status,
+                    title: 'Analytics dashboard',
+                    message: controller.state.message,
+                    children: [
+                      _Controls(
+                        ranges: snapshot.ranges,
+                        activeRange: _activeRange,
+                        onRangeChanged: (range) {
+                          setState(() => _activeRange = range);
+                        },
+                      ),
+                      _KeyMetrics(snapshot: snapshot),
+                      _EventVolumeCard(stats: snapshot.dailyStats),
+                      _TopEventsCard(events: snapshot.topEvents),
+                      _DistributionCard(events: snapshot.topEvents),
+                      _RecentEventsCard(events: snapshot.recentEvents),
+                      _QueueSummaryCard(text: snapshot.queueSummary),
+                    ],
                   ),
-                  _KeyMetrics(snapshot: snapshot),
-                  _EventVolumeCard(stats: snapshot.dailyStats),
-                  _TopEventsCard(events: snapshot.topEvents),
-                  _DistributionCard(events: snapshot.topEvents),
-                  _RecentEventsCard(events: snapshot.recentEvents),
-                  _QueueSummaryCard(text: snapshot.queueSummary),
                 ],
               ),
             ),
@@ -127,16 +136,20 @@ class _Controls extends StatelessWidget {
           ),
         ),
         const SizedBox(width: AppSpacing.x5),
-        _IconAction(
+        VitIconButton(
           key: AnalyticsDashboard.refreshKey,
           icon: Icons.refresh_rounded,
-          onTap: () {},
+          tooltip: 'Refresh analytics',
+          onPressed: () {},
+          size: VitIconButtonSize.md,
         ),
         const SizedBox(width: AppSpacing.x3),
-        _IconAction(
+        VitIconButton(
           key: AnalyticsDashboard.exportKey,
           icon: Icons.download_rounded,
-          onTap: () {},
+          tooltip: 'Export analytics',
+          onPressed: () {},
+          size: VitIconButtonSize.md,
         ),
       ],
     );
@@ -156,48 +169,36 @@ class _RangeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      key: AnalyticsDashboard.rangeKey(option.range),
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: active ? AppColors.surface3 : Colors.transparent,
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x2,
-            vertical: AppSpacing.x2,
+    return Semantics(
+      button: true,
+      selected: active,
+      label: '${option.label} range',
+      child: GestureDetector(
+        key: AnalyticsDashboard.rangeKey(option.range),
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: active ? AppColors.surface3 : AppColors.transparent,
+            borderRadius: AppRadii.mdRadius,
           ),
-          child: Text(
-            option.label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? AppColors.text1 : AppColors.text3,
-              fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.x2,
+              vertical: AppSpacing.x2,
+            ),
+            child: Text(
+              option.label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.caption.copyWith(
+                color: active ? AppColors.text1 : AppColors.text3,
+                fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _IconAction extends StatelessWidget {
-  const _IconAction({super.key, required this.icon, required this.onTap});
-
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: SizedBox(
-        width: AppSpacing.buttonCompact,
-        height: AppSpacing.buttonCompact,
-        child: Icon(icon, color: AppColors.text2, size: 20),
       ),
     );
   }
@@ -218,6 +219,8 @@ class _KeyMetrics extends StatelessWidget {
             title: 'Tổng sự kiện',
             value: '${snapshot.totalEvents}',
             caption: snapshot.eventsPerDayLabel,
+            delta: '0.0%',
+            timeframe: 'Selected range',
             tint: AppColors.accent15,
             accent: AppColors.accent,
           ),
@@ -229,6 +232,8 @@ class _KeyMetrics extends StatelessWidget {
             title: 'Người dùng',
             value: '${snapshot.uniqueUsers}',
             caption: 'Unique users',
+            delta: '0.0%',
+            timeframe: 'Selected range',
             tint: AppColors.primary15,
             accent: AppColors.primary,
           ),
@@ -244,6 +249,8 @@ class _MetricCard extends StatelessWidget {
     required this.title,
     required this.value,
     required this.caption,
+    required this.delta,
+    required this.timeframe,
     required this.tint,
     required this.accent,
   });
@@ -252,6 +259,8 @@ class _MetricCard extends StatelessWidget {
   final String title;
   final String value;
   final String caption;
+  final String delta;
+  final String timeframe;
   final Color tint;
   final Color accent;
 
@@ -288,6 +297,8 @@ class _MetricCard extends StatelessWidget {
                     ),
                     Text(
                       value,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.sectionTitle.copyWith(
                         fontSize: 20,
                         fontFeatures: AppTextStyles.tabularFigures,
@@ -301,10 +312,36 @@ class _MetricCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           Text(
             caption,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
               fontSize: 11,
             ),
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Wrap(
+            spacing: AppSpacing.x2,
+            runSpacing: AppSpacing.x1,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              VitStatusPill(
+                label: delta,
+                status: delta.startsWith('-')
+                    ? VitStatusPillStatus.error
+                    : VitStatusPillStatus.success,
+                size: VitStatusPillSize.sm,
+              ),
+              Text(
+                timeframe,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text3,
+                  fontSize: 10,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -319,6 +356,7 @@ class _EventVolumeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasEvents = stats.any((stat) => stat.events > 0 || stat.users > 0);
     return VitCard(
       padding: const EdgeInsets.all(AppSpacing.x4),
       child: Column(
@@ -331,11 +369,24 @@ class _EventVolumeCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
             height: 180,
-            child: CustomPaint(
-              painter: _EventVolumePainter(stats: stats),
-              child: const SizedBox.expand(),
+            child: Semantics(
+              label: hasEvents
+                  ? 'Event volume chart for ${stats.length} days'
+                  : 'Event volume chart has no events in this range',
+              child: CustomPaint(
+                painter: _EventVolumePainter(stats: stats),
+                child: const SizedBox.expand(),
+              ),
             ),
           ),
+          if (!hasEvents) ...[
+            const SizedBox(height: AppSpacing.x3),
+            const AdminInlineEmptyState(
+              icon: Icons.bar_chart_outlined,
+              title: 'No event volume',
+              message: 'The selected range has no tracked admin events yet.',
+            ),
+          ],
         ],
       ),
     );
@@ -363,8 +414,17 @@ class _TopEventsCard extends StatelessWidget {
             for (final event in events)
               Text(
                 event.eventName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text1),
               ),
+          ] else ...[
+            const SizedBox(height: AppSpacing.x4),
+            const AdminInlineEmptyState(
+              icon: Icons.trending_up_rounded,
+              title: 'No top events',
+              message: 'Events will rank here after tracking data arrives.',
+            ),
           ],
         ],
       ),
@@ -392,8 +452,33 @@ class _DistributionCard extends StatelessWidget {
           SizedBox(
             height: 260,
             child: events.isEmpty
-                ? const SizedBox.shrink()
-                : const Center(child: Text('')),
+                ? const Center(
+                    child: AdminInlineEmptyState(
+                      icon: Icons.pie_chart_outline_rounded,
+                      title: 'No distribution',
+                      message: 'Distribution appears after events are grouped.',
+                    ),
+                  )
+                : Semantics(
+                    label: 'Event distribution summary',
+                    child: ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: events.length,
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: AppSpacing.x2),
+                      itemBuilder: (context, index) {
+                        final event = events[index];
+                        return Text(
+                          '${event.eventName}: ${event.percentage.toStringAsFixed(1)}%',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text2,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
           ),
         ],
       ),
@@ -419,23 +504,10 @@ class _RecentEventsCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x6),
           if (events.isEmpty)
-            Center(
-              child: Column(
-                children: [
-                  const Icon(
-                    Icons.monitor_heart_outlined,
-                    color: AppColors.text3,
-                    size: 34,
-                  ),
-                  const SizedBox(height: AppSpacing.x3),
-                  Text(
-                    'Chưa có sự kiện nào',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text3,
-                    ),
-                  ),
-                ],
-              ),
+            const AdminInlineEmptyState(
+              icon: Icons.monitor_heart_outlined,
+              title: 'No recent events',
+              message: 'The event stream is quiet for the selected period.',
             ),
           const SizedBox(height: AppSpacing.x5),
         ],

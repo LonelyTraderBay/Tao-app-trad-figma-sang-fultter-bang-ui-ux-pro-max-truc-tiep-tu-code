@@ -13,7 +13,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
+import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 
 const _predictionPrimary = AppColors.primary;
 
@@ -67,7 +68,7 @@ class _PredictionDataIntegrationPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(predictionsRepositoryProvider)
+        .watch(predictionsReadModelControllerProvider)
         .getDataIntegration();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -976,12 +977,12 @@ class _PrimaryBlueButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: Colors.white, size: 18),
+            Icon(icon, color: AppColors.onAccent, size: 18),
             const SizedBox(width: 8),
             Text(
               label,
               style: AppTextStyles.body.copyWith(
-                color: Colors.white,
+                color: AppColors.onAccent,
                 fontWeight: AppTextStyles.bold,
               ),
             ),

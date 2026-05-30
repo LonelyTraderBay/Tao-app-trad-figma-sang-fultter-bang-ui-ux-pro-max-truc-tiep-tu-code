@@ -1,352 +1,467 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vit_trade_flutter/core/data/repository_guard.dart';
 import 'package:vit_trade_flutter/features/earn/domain/repositories/earn_repository.dart';
 import 'package:vit_trade_flutter/features/earn/data/repositories/mock_earn_repository.dart';
 
-final stakingEarnRepositoryProvider = Provider<StakingEarnRepository>((ref) {
-  return const MockStakingEarnRepository();
-});
+import '../repositories/fail_closed_earn_repository.dart';
 
-final savingsRepositoryProvider = Provider<SavingsRepository>((ref) {
-  return const MockSavingsRepository();
-});
+T _guardedEarnRepository<T>(Ref ref, T Function() mock) {
+  return guardedRepository(
+    ref,
+    featureName: 'Earn',
+    mock: mock,
+    failClosed: failClosedEarnRepository<T>,
+  );
+}
 
-final savingsProductDetailRepositoryProvider =
-    Provider<SavingsProductDetailRepository>((ref) {
-      return const MockSavingsProductDetailRepository();
-    });
-
-final savingsRedeemRepositoryProvider = Provider<SavingsRedeemRepository>((
-  ref,
-) {
-  return const MockSavingsRedeemRepository();
-});
-
-final savingsReceiptRepositoryProvider = Provider<SavingsReceiptRepository>((
-  ref,
-) {
-  return const MockSavingsReceiptRepository();
-});
-
-final savingsPortfolioRepositoryProvider = Provider<SavingsPortfolioRepository>(
-  (ref) {
-    return const MockSavingsPortfolioRepository();
-  },
+final stakingEarnRepositoryProvider = Provider<StakingEarnRepository>(
+  (ref) => _guardedEarnRepository(ref, () => const MockStakingEarnRepository()),
 );
 
-final savingsHistoryRepositoryProvider = Provider<SavingsHistoryRepository>((
-  ref,
-) {
-  return const MockSavingsHistoryRepository();
-});
+final savingsRepositoryProvider = Provider<SavingsRepository>(
+  (ref) => _guardedEarnRepository(ref, () => const MockSavingsRepository()),
+);
 
-final savingsGuideRepositoryProvider = Provider<SavingsGuideRepository>((ref) {
-  return const MockSavingsGuideRepository();
-});
+final savingsProductDetailRepositoryProvider =
+    Provider<SavingsProductDetailRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockSavingsProductDetailRepository(),
+      ),
+    );
 
-final savingsFAQRepositoryProvider = Provider<SavingsFAQRepository>((ref) {
-  return const MockSavingsFAQRepository();
-});
+final savingsRedeemRepositoryProvider = Provider<SavingsRedeemRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockSavingsRedeemRepository()),
+);
+
+final savingsReceiptRepositoryProvider = Provider<SavingsReceiptRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockSavingsReceiptRepository()),
+);
+
+final savingsPortfolioRepositoryProvider = Provider<SavingsPortfolioRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockSavingsPortfolioRepository()),
+);
+
+final savingsHistoryRepositoryProvider = Provider<SavingsHistoryRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockSavingsHistoryRepository()),
+);
+
+final savingsGuideRepositoryProvider = Provider<SavingsGuideRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockSavingsGuideRepository()),
+);
+
+final savingsFAQRepositoryProvider = Provider<SavingsFAQRepository>(
+  (ref) => _guardedEarnRepository(ref, () => const MockSavingsFAQRepository()),
+);
 
 final savingsNotificationsRepositoryProvider =
-    Provider<SavingsNotificationsRepository>((ref) {
-      return const MockSavingsNotificationsRepository();
-    });
+    Provider<SavingsNotificationsRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockSavingsNotificationsRepository(),
+      ),
+    );
 
 final savingsRecommendationsRepositoryProvider =
-    Provider<SavingsRecommendationsRepository>((ref) {
-      return const MockSavingsRecommendationsRepository();
-    });
+    Provider<SavingsRecommendationsRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockSavingsRecommendationsRepository(),
+      ),
+    );
 
 final savingsRiskAssessmentRepositoryProvider =
-    Provider<SavingsRiskAssessmentRepository>((ref) {
-      return const MockSavingsRiskAssessmentRepository();
-    });
+    Provider<SavingsRiskAssessmentRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockSavingsRiskAssessmentRepository(),
+      ),
+    );
 
 final savingsComparisonRepositoryProvider =
-    Provider<SavingsComparisonRepository>((ref) {
-      return const MockSavingsComparisonRepository();
-    });
+    Provider<SavingsComparisonRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockSavingsComparisonRepository(),
+      ),
+    );
 
 final autoCompoundSettingsRepositoryProvider =
-    Provider<AutoCompoundSettingsRepository>((ref) {
-      return const MockAutoCompoundSettingsRepository();
-    });
+    Provider<AutoCompoundSettingsRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockAutoCompoundSettingsRepository(),
+      ),
+    );
 
-final savingsGoalsRepositoryProvider = Provider<SavingsGoalsRepository>((ref) {
-  return const MockSavingsGoalsRepository();
-});
+final savingsGoalsRepositoryProvider = Provider<SavingsGoalsRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockSavingsGoalsRepository()),
+);
 
 final savingsAnalyticsRepositoryProvider = Provider<SavingsAnalyticsRepository>(
-  (ref) {
-    return const MockSavingsAnalyticsRepository();
-  },
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockSavingsAnalyticsRepository()),
 );
 
 final savingsAutoRebalanceRepositoryProvider =
-    Provider<SavingsAutoRebalanceRepository>((ref) {
-      return const MockSavingsAutoRebalanceRepository();
-    });
+    Provider<SavingsAutoRebalanceRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockSavingsAutoRebalanceRepository(),
+      ),
+    );
 
 final savingsNotificationPreferencesRepositoryProvider =
-    Provider<SavingsNotificationPreferencesRepository>((ref) {
-      return const MockSavingsNotificationPreferencesRepository();
-    });
+    Provider<SavingsNotificationPreferencesRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockSavingsNotificationPreferencesRepository(),
+      ),
+    );
 
-final savingsDcaRepositoryProvider = Provider<SavingsDcaRepository>((ref) {
-  return const MockSavingsDcaRepository();
-});
-
-final savingsSmartSuggestionsRepositoryProvider =
-    Provider<SavingsSmartSuggestionsRepository>((ref) {
-      return const MockSavingsSmartSuggestionsRepository();
-    });
-
-final savingsExportRepositoryProvider = Provider<SavingsExportRepository>((
-  ref,
-) {
-  return const MockSavingsExportRepository();
-});
-
-final savingsBacktestRepositoryProvider = Provider<SavingsBacktestRepository>((
-  ref,
-) {
-  return const MockSavingsBacktestRepository();
-});
-
-final savingsAutoPilotRepositoryProvider = Provider<SavingsAutoPilotRepository>(
-  (ref) {
-    return const MockSavingsAutoPilotRepository();
-  },
+final savingsDcaRepositoryProvider = Provider<SavingsDcaRepository>(
+  (ref) => _guardedEarnRepository(ref, () => const MockSavingsDcaRepository()),
 );
 
-final savingsLadderRepositoryProvider = Provider<SavingsLadderRepository>((
-  ref,
-) {
-  return const MockSavingsLadderRepository();
-});
+final savingsSmartSuggestionsRepositoryProvider =
+    Provider<SavingsSmartSuggestionsRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockSavingsSmartSuggestionsRepository(),
+      ),
+    );
 
-final savingsWhatIfRepositoryProvider = Provider<SavingsWhatIfRepository>((
-  ref,
-) {
-  return const MockSavingsWhatIfRepository();
-});
+final savingsExportRepositoryProvider = Provider<SavingsExportRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockSavingsExportRepository()),
+);
 
-final stakingTermsRepositoryProvider = Provider<StakingTermsRepository>((ref) {
-  return const MockStakingTermsRepository();
-});
+final savingsBacktestRepositoryProvider = Provider<SavingsBacktestRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockSavingsBacktestRepository()),
+);
+
+final savingsAutoPilotRepositoryProvider = Provider<SavingsAutoPilotRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockSavingsAutoPilotRepository()),
+);
+
+final savingsLadderRepositoryProvider = Provider<SavingsLadderRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockSavingsLadderRepository()),
+);
+
+final savingsWhatIfRepositoryProvider = Provider<SavingsWhatIfRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockSavingsWhatIfRepository()),
+);
+
+final stakingTermsRepositoryProvider = Provider<StakingTermsRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockStakingTermsRepository()),
+);
 
 final stakingRiskDisclosureRepositoryProvider =
-    Provider<StakingRiskDisclosureRepository>((ref) {
-      return const MockStakingRiskDisclosureRepository();
-    });
+    Provider<StakingRiskDisclosureRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingRiskDisclosureRepository(),
+      ),
+    );
 
 final stakingWithdrawalPolicyRepositoryProvider =
-    Provider<StakingWithdrawalPolicyRepository>((ref) {
-      return const MockStakingWithdrawalPolicyRepository();
-    });
+    Provider<StakingWithdrawalPolicyRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingWithdrawalPolicyRepository(),
+      ),
+    );
 
-final stakingTaxGuideRepositoryProvider = Provider<StakingTaxGuideRepository>((
-  ref,
-) {
-  return const MockStakingTaxGuideRepository();
-});
+final stakingTaxGuideRepositoryProvider = Provider<StakingTaxGuideRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockStakingTaxGuideRepository()),
+);
 
 final stakingRiskAssessmentRepositoryProvider =
-    Provider<StakingRiskAssessmentRepository>((ref) {
-      return const MockStakingRiskAssessmentRepository();
-    });
+    Provider<StakingRiskAssessmentRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingRiskAssessmentRepository(),
+      ),
+    );
 
 final stakingDashboardRepositoryProvider = Provider<StakingDashboardRepository>(
-  (ref) {
-    return const MockStakingDashboardRepository();
-  },
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockStakingDashboardRepository()),
 );
 
 final stakingAnalyticsRepositoryProvider = Provider<StakingAnalyticsRepository>(
-  (ref) {
-    return const MockStakingAnalyticsRepository();
-  },
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockStakingAnalyticsRepository()),
 );
 
-final stakingHistoryRepositoryProvider = Provider<StakingHistoryRepository>((
-  ref,
-) {
-  return const MockStakingHistoryRepository();
-});
+final stakingHistoryRepositoryProvider = Provider<StakingHistoryRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockStakingHistoryRepository()),
+);
 
 final stakingEarningsCalendarRepositoryProvider =
-    Provider<StakingEarningsCalendarRepository>((ref) {
-      return const MockStakingEarningsCalendarRepository();
-    });
+    Provider<StakingEarningsCalendarRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingEarningsCalendarRepository(),
+      ),
+    );
 
 final stakingValidatorSelectionRepositoryProvider =
-    Provider<StakingValidatorSelectionRepository>((ref) {
-      return const MockStakingValidatorSelectionRepository();
-    });
+    Provider<StakingValidatorSelectionRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingValidatorSelectionRepository(),
+      ),
+    );
 
 final stakingAutoCompoundRepositoryProvider =
-    Provider<StakingAutoCompoundRepository>((ref) {
-      return const MockStakingAutoCompoundRepository();
-    });
+    Provider<StakingAutoCompoundRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingAutoCompoundRepository(),
+      ),
+    );
 
 final stakingLiquidStakingRepositoryProvider =
-    Provider<StakingLiquidStakingRepository>((ref) {
-      return const MockStakingLiquidStakingRepository();
-    });
+    Provider<StakingLiquidStakingRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingLiquidStakingRepository(),
+      ),
+    );
 
 final stakingInsuranceRepositoryProvider = Provider<StakingInsuranceRepository>(
-  (ref) {
-    return const MockStakingInsuranceRepository();
-  },
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockStakingInsuranceRepository()),
 );
 
 final stakingInsuranceFundTransparencyRepositoryProvider =
-    Provider<StakingInsuranceFundTransparencyRepository>((ref) {
-      return const MockStakingInsuranceFundTransparencyRepository();
-    });
+    Provider<StakingInsuranceFundTransparencyRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingInsuranceFundTransparencyRepository(),
+      ),
+    );
 
 final stakingTransactionReportingRepositoryProvider =
-    Provider<StakingTransactionReportingRepository>((ref) {
-      return const MockStakingTransactionReportingRepository();
-    });
+    Provider<StakingTransactionReportingRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingTransactionReportingRepository(),
+      ),
+    );
 
 final stakingApiDocumentationRepositoryProvider =
-    Provider<StakingApiDocumentationRepository>((ref) {
-      return const MockStakingApiDocumentationRepository();
-    });
+    Provider<StakingApiDocumentationRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingApiDocumentationRepository(),
+      ),
+    );
 
 final stakingProofOfReservesRepositoryProvider =
-    Provider<StakingProofOfReservesRepository>((ref) {
-      return const MockStakingProofOfReservesRepository();
-    });
+    Provider<StakingProofOfReservesRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingProofOfReservesRepository(),
+      ),
+    );
 
 final stakingRiskDashboardRepositoryProvider =
-    Provider<StakingRiskDashboardRepository>((ref) {
-      return const MockStakingRiskDashboardRepository();
-    });
+    Provider<StakingRiskDashboardRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingRiskDashboardRepository(),
+      ),
+    );
 
 final stakingSlashingHistoryRepositoryProvider =
-    Provider<StakingSlashingHistoryRepository>((ref) {
-      return const MockStakingSlashingHistoryRepository();
-    });
+    Provider<StakingSlashingHistoryRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingSlashingHistoryRepository(),
+      ),
+    );
 
 final stakingValidatorHealthMonitorRepositoryProvider =
-    Provider<StakingValidatorHealthMonitorRepository>((ref) {
-      return const MockStakingValidatorHealthMonitorRepository();
-    });
+    Provider<StakingValidatorHealthMonitorRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingValidatorHealthMonitorRepository(),
+      ),
+    );
 
 final stakingRiskScoreCalculatorRepositoryProvider =
-    Provider<StakingRiskScoreCalculatorRepository>((ref) {
-      return const MockStakingRiskScoreCalculatorRepository();
-    });
+    Provider<StakingRiskScoreCalculatorRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingRiskScoreCalculatorRepository(),
+      ),
+    );
 
 final stakingEmergencyActionsRepositoryProvider =
-    Provider<StakingEmergencyActionsRepository>((ref) {
-      return const MockStakingEmergencyActionsRepository();
-    });
+    Provider<StakingEmergencyActionsRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingEmergencyActionsRepository(),
+      ),
+    );
 
 final stakingContingencyPlanRepositoryProvider =
-    Provider<StakingContingencyPlanRepository>((ref) {
-      return const MockStakingContingencyPlanRepository();
-    });
+    Provider<StakingContingencyPlanRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingContingencyPlanRepository(),
+      ),
+    );
 
 final stakingSocialFeedRepositoryProvider =
-    Provider<StakingSocialFeedRepository>((ref) {
-      return const MockStakingSocialFeedRepository();
-    });
+    Provider<StakingSocialFeedRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingSocialFeedRepository(),
+      ),
+    );
 
 final stakingCommunityGovernanceRepositoryProvider =
-    Provider<StakingCommunityGovernanceRepository>((ref) {
-      return const MockStakingCommunityGovernanceRepository();
-    });
+    Provider<StakingCommunityGovernanceRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingCommunityGovernanceRepository(),
+      ),
+    );
 
 final stakingProposalsRepositoryProvider = Provider<StakingProposalsRepository>(
-  (ref) {
-    return const MockStakingProposalsRepository();
-  },
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockStakingProposalsRepository()),
 );
 
-final stakingVotingRepositoryProvider = Provider<StakingVotingRepository>((
-  ref,
-) {
-  return const MockStakingVotingRepository();
-});
+final stakingVotingRepositoryProvider = Provider<StakingVotingRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockStakingVotingRepository()),
+);
 
-final stakingForumRepositoryProvider = Provider<StakingForumRepository>((ref) {
-  return const MockStakingForumRepository();
-});
+final stakingForumRepositoryProvider = Provider<StakingForumRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockStakingForumRepository()),
+);
 
-final stakingWebhooksRepositoryProvider = Provider<StakingWebhooksRepository>((
-  ref,
-) {
-  return const MockStakingWebhooksRepository();
-});
+final stakingWebhooksRepositoryProvider = Provider<StakingWebhooksRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockStakingWebhooksRepository()),
+);
 
 final stakingDataExportRepositoryProvider =
-    Provider<StakingDataExportRepository>((ref) {
-      return const MockStakingDataExportRepository();
-    });
+    Provider<StakingDataExportRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingDataExportRepository(),
+      ),
+    );
 
 final stakingThirdPartyIntegrationsRepositoryProvider =
-    Provider<StakingThirdPartyIntegrationsRepository>((ref) {
-      return const MockStakingThirdPartyIntegrationsRepository();
-    });
+    Provider<StakingThirdPartyIntegrationsRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingThirdPartyIntegrationsRepository(),
+      ),
+    );
 
 final stakingDeveloperConsoleRepositoryProvider =
-    Provider<StakingDeveloperConsoleRepository>((ref) {
-      return const MockStakingDeveloperConsoleRepository();
-    });
+    Provider<StakingDeveloperConsoleRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingDeveloperConsoleRepository(),
+      ),
+    );
 
 final stakingAdvancedOrdersRepositoryProvider =
-    Provider<StakingAdvancedOrdersRepository>((ref) {
-      return const MockStakingAdvancedOrdersRepository();
-    });
+    Provider<StakingAdvancedOrdersRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingAdvancedOrdersRepository(),
+      ),
+    );
 
 final stakingMultiChainRepositoryProvider =
-    Provider<StakingMultiChainRepository>((ref) {
-      return const MockStakingMultiChainRepository();
-    });
+    Provider<StakingMultiChainRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingMultiChainRepository(),
+      ),
+    );
 
 final stakingInstitutionalRepositoryProvider =
-    Provider<StakingInstitutionalRepository>((ref) {
-      return const MockStakingInstitutionalRepository();
-    });
+    Provider<StakingInstitutionalRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingInstitutionalRepository(),
+      ),
+    );
 
-final stakingGuideRepositoryProvider = Provider<StakingGuideRepository>((ref) {
-  return const MockStakingGuideRepository();
-});
+final stakingGuideRepositoryProvider = Provider<StakingGuideRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockStakingGuideRepository()),
+);
 
-final stakingFAQRepositoryProvider = Provider<StakingFAQRepository>((ref) {
-  return const MockStakingFAQRepository();
-});
+final stakingFAQRepositoryProvider = Provider<StakingFAQRepository>(
+  (ref) => _guardedEarnRepository(ref, () => const MockStakingFAQRepository()),
+);
 
 final stakingNotificationsRepositoryProvider =
-    Provider<StakingNotificationsRepository>((ref) {
-      return const MockStakingNotificationsRepository();
-    });
+    Provider<StakingNotificationsRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingNotificationsRepository(),
+      ),
+    );
 
 final stakingRecommendationsRepositoryProvider =
-    Provider<StakingRecommendationsRepository>((ref) {
-      return const MockStakingRecommendationsRepository();
-    });
+    Provider<StakingRecommendationsRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingRecommendationsRepository(),
+      ),
+    );
 
 final stakingRegulatoryFrameworkRepositoryProvider =
-    Provider<StakingRegulatoryFrameworkRepository>((ref) {
-      return const MockStakingRegulatoryFrameworkRepository();
-    });
+    Provider<StakingRegulatoryFrameworkRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingRegulatoryFrameworkRepository(),
+      ),
+    );
 
 final stakingAuditReportsRepositoryProvider =
-    Provider<StakingAuditReportsRepository>((ref) {
-      return const MockStakingAuditReportsRepository();
-    });
+    Provider<StakingAuditReportsRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingAuditReportsRepository(),
+      ),
+    );
 
-final stakingCustodyRepositoryProvider = Provider<StakingCustodyRepository>((
-  ref,
-) {
-  return const MockStakingCustodyRepository();
-});
+final stakingCustodyRepositoryProvider = Provider<StakingCustodyRepository>(
+  (ref) =>
+      _guardedEarnRepository(ref, () => const MockStakingCustodyRepository()),
+);
 
 final stakingSuitabilityAssessmentRepositoryProvider =
-    Provider<StakingSuitabilityAssessmentRepository>((ref) {
-      return const MockStakingSuitabilityAssessmentRepository();
-    });
+    Provider<StakingSuitabilityAssessmentRepository>(
+      (ref) => _guardedEarnRepository(
+        ref,
+        () => const MockStakingSuitabilityAssessmentRepository(),
+      ),
+    );

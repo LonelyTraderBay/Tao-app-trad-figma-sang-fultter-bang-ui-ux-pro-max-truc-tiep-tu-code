@@ -79,7 +79,7 @@ class VitCard extends StatelessWidget {
         );
       case VitCardVariant.ghost:
         return BoxDecoration(
-          color: Colors.transparent,
+          color: AppColors.transparent,
           border: resolvedBorder == null
               ? null
               : Border.all(color: resolvedBorder),

@@ -13,7 +13,8 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
 
 class P2PWalletPage extends ConsumerStatefulWidget {
   const P2PWalletPage({super.key, this.shellRenderMode});
@@ -48,7 +49,7 @@ class _P2PWalletPageState extends ConsumerState<P2PWalletPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getWallet();
+    final snapshot = ref.watch(p2pWalletProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -197,7 +198,7 @@ class _WalletHero extends StatelessWidget {
                     Text(
                       'Tổng tài sản P2P',
                       style: AppTextStyles.caption.copyWith(
-                        color: Colors.white.withValues(alpha: .82),
+                        color: AppColors.onAccent.withValues(alpha: .82),
                         fontWeight: AppTextStyles.medium,
                       ),
                     ),
@@ -209,7 +210,7 @@ class _WalletHero extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.heroNumber.copyWith(
-                        color: Colors.white,
+                        color: AppColors.onAccent,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
@@ -219,7 +220,7 @@ class _WalletHero extends StatelessWidget {
               const SizedBox(width: AppSpacing.x3),
               Material(
                 key: P2PWalletPage.privacyKey,
-                color: Colors.white.withValues(alpha: .18),
+                color: AppColors.onAccent.withValues(alpha: .18),
                 shape: const CircleBorder(),
                 child: InkWell(
                   onTap: onPrivacyToggle,
@@ -231,7 +232,7 @@ class _WalletHero extends StatelessWidget {
                       balanceVisible
                           ? Icons.visibility_rounded
                           : Icons.visibility_off_rounded,
-                      color: Colors.white,
+                      color: AppColors.onAccent,
                       size: AppSpacing.iconSm,
                     ),
                   ),
@@ -286,7 +287,9 @@ class _HeroActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: filled ? Colors.white : Colors.white.withValues(alpha: .18),
+      color: filled
+          ? AppColors.onAccent
+          : AppColors.onAccent.withValues(alpha: .18),
       borderRadius: AppRadii.inputRadius,
       child: InkWell(
         onTap: onTap,
@@ -302,14 +305,14 @@ class _HeroActionButton extends StatelessWidget {
               children: [
                 Icon(
                   icon,
-                  color: filled ? AppModuleAccents.p2p : Colors.white,
+                  color: filled ? AppModuleAccents.p2p : AppColors.onAccent,
                   size: AppSpacing.iconSm,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Text(
                   label,
                   style: AppTextStyles.caption.copyWith(
-                    color: filled ? AppModuleAccents.p2p : Colors.white,
+                    color: filled ? AppModuleAccents.p2p : AppColors.onAccent,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -329,33 +332,16 @@ class _WalletInfoBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return P2PNoticeCard(
       key: P2PWalletPage.infoKey,
+      icon: Icons.info_outline_rounded,
+      message: text,
+      borderColor: AppModuleAccents.p2p.withValues(alpha: .28),
       padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
-        color: AppModuleAccents.p2p.withValues(alpha: .10),
-        borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppModuleAccents.p2p.withValues(alpha: .28)),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: AppModuleAccents.p2p,
-            size: 16,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              text,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontSize: 12,
-              ),
-            ),
-          ),
-        ],
+      iconSize: 16,
+      messageStyle: AppTextStyles.caption.copyWith(
+        color: AppColors.text2,
+        fontSize: 12,
       ),
     );
   }

@@ -12,11 +12,12 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _providerPrimary = AppColors.primary;
-const _providerGreen = Color(0xFF10B981);
-const _providerWarning = Color(0xFFF59E0B);
+const _providerGreen = AppColors.buy;
+const _providerWarning = AppColors.caution;
 const _providerPanel = AppColors.surface2;
 const _providerField = AppColors.surface3;
 
@@ -59,8 +60,8 @@ class _ProviderApplicationPageState
 
   @override
   Widget build(BuildContext context) {
-    final repository = ref.watch(tradeRepositoryProvider);
-    final snapshot = repository.getProviderApplication();
+    final controller = ref.watch(tradeProviderApplicationControllerProvider);
+    final snapshot = controller.state.snapshot;
     _step ??= snapshot.defaultStep;
     _draft ??= snapshot.defaultDraft;
     if (!_controllersReady) {
@@ -134,7 +135,7 @@ class _ProviderApplicationPageState
                   child: _FooterButton(
                     step: step,
                     enabled: _canProceed(step, draft),
-                    onPressed: () => _handlePrimaryAction(repository),
+                    onPressed: () => _handlePrimaryAction(controller),
                   ),
                 ),
               ),
@@ -167,7 +168,7 @@ class _ProviderApplicationPageState
     };
   }
 
-  void _handlePrimaryAction(TradeRepository repository) {
+  void _handlePrimaryAction(TradeProviderApplicationController controller) {
     final step = _step!;
     final draft = _draft!;
     if (!_canProceed(step, draft)) return;
@@ -182,7 +183,7 @@ class _ProviderApplicationPageState
       case TradeProviderApplicationStep.fees:
         setState(() => _step = TradeProviderApplicationStep.review);
       case TradeProviderApplicationStep.review:
-        repository.submitProviderApplication(draft);
+        controller.submit(draft);
         context.go(AppRoutePaths.tradeCopyTrading);
     }
   }
@@ -290,7 +291,7 @@ class _BenefitCard extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: const BoxDecoration(
-              color: Color(0xFFF0FDF4),
+              color: AppColors.surfaceSuccessSoft,
               shape: BoxShape.circle,
             ),
             child: Icon(_benefitIcon(benefit.iconName), color: _providerGreen),
@@ -608,12 +609,12 @@ class _FooterButton extends StatelessWidget {
         icon: Icon(
           submit ? Icons.workspace_premium_outlined : Icons.chevron_right,
           size: 17,
-          color: Colors.white,
+          color: AppColors.onAccent,
         ),
         label: Text(
           submit ? 'Gửi đơn đăng ký' : 'Tiếp tục',
           style: AppTextStyles.baseMedium.copyWith(
-            color: Colors.white,
+            color: AppColors.onAccent,
             fontWeight: FontWeight.w800,
           ),
         ),

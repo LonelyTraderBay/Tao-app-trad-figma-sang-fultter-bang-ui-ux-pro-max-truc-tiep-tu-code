@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 class StakingRiskDisclosurePage extends ConsumerStatefulWidget {
   const StakingRiskDisclosurePage({super.key, this.shellRenderMode});
@@ -428,7 +428,7 @@ class _RiskCategoryCard extends StatelessWidget {
       child: Column(
         children: [
           Material(
-            color: Colors.transparent,
+            color: AppColors.transparent,
             child: InkWell(
               onTap: onTap,
               child: Padding(

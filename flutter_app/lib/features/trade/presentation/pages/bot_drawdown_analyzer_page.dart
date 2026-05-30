@@ -12,16 +12,17 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _drawdownBackground = AppColors.bg;
 const _drawdownPanel = AppColors.surface;
 const _drawdownPanel2 = AppColors.surface2;
-const _drawdownRed = Color(0xFFEF4444);
-const _drawdownAmber = Color(0xFFF59E0B);
-const _drawdownGreen = Color(0xFF10B981);
+const _drawdownRed = AppColors.sell;
+const _drawdownAmber = AppColors.caution;
+const _drawdownGreen = AppColors.buy;
 const _drawdownPrimary = AppColors.primary;
-const _drawdownAxis = Color(0xFF475569);
+const _drawdownAxis = AppColors.chartAxisStrong;
 
 class BotDrawdownAnalyzerPage extends ConsumerWidget {
   const BotDrawdownAnalyzerPage({super.key, this.shellRenderMode});
@@ -33,7 +34,7 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getBotDrawdownAnalyzer();
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -610,10 +611,10 @@ class _UnderwaterPainter extends CustomPainter {
     canvas.drawPath(
       fill,
       Paint()
-        ..shader = const LinearGradient(
+        ..shader = LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0x55EF4444), Color(0x00EF4444)],
+          colors: [AppColors.sell33, AppColors.sell.withValues(alpha: 0)],
         ).createShader(chart),
     );
     canvas.drawPath(

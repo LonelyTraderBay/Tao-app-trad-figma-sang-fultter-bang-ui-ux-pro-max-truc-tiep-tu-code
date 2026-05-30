@@ -10,14 +10,15 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _kidBackground = AppColors.bg;
 const _kidPanel = AppColors.surface;
 const _kidPanel2 = AppColors.surface2;
 const _kidBorder = AppColors.borderSolid;
 const _kidPrimary = AppColors.primary;
-const _kidGreen = Color(0xFF10B981);
+const _kidGreen = AppColors.buy;
 
 class KIDGeneratorPage extends ConsumerWidget {
   const KIDGeneratorPage({super.key, this.shellRenderMode});
@@ -32,7 +33,9 @@ class KIDGeneratorPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getKidGenerator();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getKidGenerator();
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -316,7 +319,7 @@ class _KidSectionCard extends StatelessWidget {
               width: 24,
               height: 24,
               decoration: const BoxDecoration(
-                color: Color(0x1A10B981),
+                color: AppColors.buy10,
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -386,7 +389,9 @@ class _ActionButton extends StatelessWidget {
           foregroundColor: AppColors.text1,
           shape: RoundedRectangleBorder(
             borderRadius: AppRadii.inputRadius,
-            side: BorderSide(color: filled ? Colors.transparent : _kidBorder),
+            side: BorderSide(
+              color: filled ? AppColors.transparent : _kidBorder,
+            ),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 12),
         ),

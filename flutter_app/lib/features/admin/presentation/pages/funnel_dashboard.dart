@@ -15,7 +15,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/admin/data/admin_repository.dart';
+import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_dashboard_state_content.dart';
 
 class FunnelDashboard extends ConsumerStatefulWidget {
   const FunnelDashboard({super.key, this.shellRenderMode});
@@ -36,16 +37,18 @@ class _FunnelDashboardState extends ConsumerState<FunnelDashboard> {
   @override
   void initState() {
     super.initState();
-    _selectedFunnelId = const AdminRepository().getFunnels().selectedFunnelId;
+    _selectedFunnelId = ref
+        .read(adminFunnelsControllerProvider)
+        .state
+        .snapshot
+        .selectedFunnelId;
   }
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(adminRepositoryProvider).getFunnels();
-    final selectedFunnel = snapshot.funnels.firstWhere(
-      (funnel) => funnel.id == _selectedFunnelId,
-      orElse: () => snapshot.funnels.first,
-    );
+    final controller = ref.watch(adminFunnelsControllerProvider);
+    final snapshot = controller.state.snapshot;
+    final selectedFunnel = controller.selectedFunnel(_selectedFunnelId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollBottom =
         (mode.usesVisualQaFrame
@@ -72,16 +75,25 @@ class _FunnelDashboardState extends ConsumerState<FunnelDashboard> {
               child: VitPageContent(
                 customGap: AppSpacing.x4,
                 children: [
-                  _FunnelSelector(
-                    funnels: snapshot.funnels,
-                    selectedFunnelId: _selectedFunnelId,
-                    onChanged: (id) => setState(() => _selectedFunnelId = id),
+                  AdminDashboardStateContent(
+                    status: controller.state.status,
+                    title: 'Funnel dashboard',
+                    message: controller.state.message,
+                    gap: AppSpacing.x4,
+                    children: [
+                      _FunnelSelector(
+                        funnels: snapshot.funnels,
+                        selectedFunnelId: _selectedFunnelId,
+                        onChanged: (id) =>
+                            setState(() => _selectedFunnelId = id),
+                      ),
+                      _MetricsGrid(snapshot: snapshot),
+                      _WaterfallCard(funnel: selectedFunnel),
+                      _DropoutChartCard(funnel: selectedFunnel),
+                      _StepDetailsCard(funnel: selectedFunnel),
+                      if (snapshot.totalSessions == 0) const _EmptyFunnelCard(),
+                    ],
                   ),
-                  _MetricsGrid(snapshot: snapshot),
-                  _WaterfallCard(funnel: selectedFunnel),
-                  _DropoutChartCard(funnel: selectedFunnel),
-                  _StepDetailsCard(funnel: selectedFunnel),
-                  if (snapshot.totalSessions == 0) const _EmptyFunnelCard(),
                 ],
               ),
             ),
@@ -126,44 +138,53 @@ class _FunnelSelector extends StatelessWidget {
           itemBuilder: (context, index) {
             final funnel = funnels[index];
             final selected = funnel.id == selectedFunnelId;
-            return GestureDetector(
-              key: FunnelDashboard.selectorKey(funnel.id),
-              behavior: HitTestBehavior.opaque,
-              onTap: () => onChanged(funnel.id),
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: selected ? AppColors.surface : AppColors.surface2,
-                  borderRadius: AppRadii.inputRadius,
-                  border: Border.all(
-                    color: selected ? AppColors.accent : Colors.transparent,
-                    width: selected ? 2 : 1,
+            return Semantics(
+              button: true,
+              selected: selected,
+              label: '${funnel.name} funnel selector',
+              child: GestureDetector(
+                key: FunnelDashboard.selectorKey(funnel.id),
+                behavior: HitTestBehavior.opaque,
+                onTap: () => onChanged(funnel.id),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: selected ? AppColors.surface : AppColors.surface2,
+                    borderRadius: AppRadii.inputRadius,
+                    border: Border.all(
+                      color: selected
+                          ? AppColors.accent
+                          : AppColors.transparent,
+                      width: selected ? 2 : 1,
+                    ),
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.x4),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        funnel.name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                          height: 1.2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppSpacing.x4),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          funnel.name,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
+                            height: 1.2,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: AppSpacing.x1),
-                      Text(
-                        funnel.stepCountLabel,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                          height: 1.2,
+                        const SizedBox(height: AppSpacing.x1),
+                        Text(
+                          funnel.stepCountLabel,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                            height: 1.2,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -190,6 +211,8 @@ class _MetricsGrid extends StatelessWidget {
             title: 'Phiên',
             value: '${snapshot.totalSessions}',
             caption: '${snapshot.completedSessions} hoàn thành',
+            delta: '0.0%',
+            timeframe: 'Selected funnel',
             tint: AppColors.accent15,
             accent: AppColors.accent,
           ),
@@ -201,6 +224,8 @@ class _MetricsGrid extends StatelessWidget {
             title: 'Tỷ lệ hoàn thành',
             value: snapshot.completionRateLabel,
             caption: 'Trung bình ${snapshot.avgCompletionTimeLabel}',
+            delta: '0.0%',
+            timeframe: 'Selected funnel',
             tint: AppColors.buy15,
             accent: AppColors.buy,
           ),
@@ -216,6 +241,8 @@ class _MetricCard extends StatelessWidget {
     required this.title,
     required this.value,
     required this.caption,
+    required this.delta,
+    required this.timeframe,
     required this.tint,
     required this.accent,
   });
@@ -224,6 +251,8 @@ class _MetricCard extends StatelessWidget {
   final String title;
   final String value;
   final String caption;
+  final String delta;
+  final String timeframe;
   final Color tint;
   final Color accent;
 
@@ -260,6 +289,8 @@ class _MetricCard extends StatelessWidget {
                     ),
                     Text(
                       value,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: accent,
                         fontSize: 20,
@@ -274,10 +305,36 @@ class _MetricCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           Text(
             caption,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
               fontSize: 11,
             ),
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Wrap(
+            spacing: AppSpacing.x2,
+            runSpacing: AppSpacing.x1,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              VitStatusPill(
+                label: delta,
+                status: delta.startsWith('-')
+                    ? VitStatusPillStatus.error
+                    : VitStatusPillStatus.success,
+                size: VitStatusPillSize.sm,
+              ),
+              Text(
+                timeframe,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text3,
+                  fontSize: 10,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -352,7 +409,7 @@ class _WaterfallStep extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '0%',
+                  step.completionRateLabel,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
@@ -412,6 +469,7 @@ class _DropoutChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasDropout = funnel.steps.any((step) => step.reached > 0);
     return VitCard(
       padding: const EdgeInsets.all(AppSpacing.x4),
       child: Column(
@@ -424,11 +482,24 @@ class _DropoutChartCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
             height: 200,
-            child: CustomPaint(
-              painter: _DropoutChartPainter(steps: funnel.steps),
-              child: const SizedBox.expand(),
+            child: Semantics(
+              label: hasDropout
+                  ? '${funnel.name} dropout chart'
+                  : '${funnel.name} dropout chart has no sessions',
+              child: CustomPaint(
+                painter: _DropoutChartPainter(steps: funnel.steps),
+                child: const SizedBox.expand(),
+              ),
             ),
           ),
+          if (!hasDropout) ...[
+            const SizedBox(height: AppSpacing.x3),
+            const AdminInlineEmptyState(
+              icon: Icons.trending_down_rounded,
+              title: 'No dropout data',
+              message: 'Dropout rates appear after sessions enter this funnel.',
+            ),
+          ],
         ],
       ),
     );
@@ -518,7 +589,10 @@ class _StepDetailRow extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: _DetailStat(label: 'Tỷ lệ', value: '0%'),
+                  child: _DetailStat(
+                    label: 'Tỷ lệ',
+                    value: step.completionRateLabel,
+                  ),
                 ),
                 Expanded(
                   child: _DetailStat(

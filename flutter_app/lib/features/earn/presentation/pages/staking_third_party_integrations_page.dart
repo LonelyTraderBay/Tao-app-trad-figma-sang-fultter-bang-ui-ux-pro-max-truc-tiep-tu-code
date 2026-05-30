@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 class StakingThirdPartyIntegrationsPage extends ConsumerStatefulWidget {
   const StakingThirdPartyIntegrationsPage({super.key, this.shellRenderMode});
@@ -295,7 +295,7 @@ class _ApiAccess extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x3),
                 Material(
-                  color: Colors.transparent,
+                  color: AppColors.transparent,
                   child: InkWell(
                     key: StakingThirdPartyIntegrationsPage.apiDocsKey,
                     borderRadius: AppRadii.smRadius,

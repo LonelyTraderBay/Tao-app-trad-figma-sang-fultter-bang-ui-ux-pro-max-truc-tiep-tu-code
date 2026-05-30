@@ -48,7 +48,7 @@ class VitCtaButton extends StatelessWidget {
       case VitCtaButtonVariant.primary:
         return const _CtaStyle(
           gradient: AppGradients.navCenter,
-          foreground: Colors.white,
+          foreground: AppColors.onAccent,
           shadow: AppColors.primary30,
         );
       case VitCtaButtonVariant.secondary:
@@ -60,32 +60,32 @@ class VitCtaButton extends StatelessWidget {
       case VitCtaButtonVariant.success:
         return const _CtaStyle(
           background: AppColors.buy,
-          foreground: Colors.white,
+          foreground: AppColors.onAccent,
           shadow: AppColors.buy20,
         );
       case VitCtaButtonVariant.danger:
       case VitCtaButtonVariant.destructive:
         return const _CtaStyle(
           background: AppColors.sell,
-          foreground: Colors.white,
+          foreground: AppColors.onAccent,
           shadow: AppColors.sell20,
         );
       case VitCtaButtonVariant.warning:
         return const _CtaStyle(
           background: AppColors.warn,
-          foreground: Colors.white,
+          foreground: AppColors.onAccent,
           shadow: AppColors.warn15,
         );
       case VitCtaButtonVariant.ghost:
         return const _CtaStyle(
-          background: Colors.transparent,
+          background: AppColors.transparent,
           foreground: AppColors.text1,
           border: AppColors.borderSolid,
         );
       case VitCtaButtonVariant.auth:
         return const _CtaStyle(
           gradient: AppGradients.navCenter,
-          foreground: Colors.white,
+          foreground: AppColors.onAccent,
           shadow: AppColors.primary30,
         );
     }
@@ -104,7 +104,7 @@ class VitCtaButton extends StatelessWidget {
       width: fullWidth ? double.infinity : null,
       height: height,
       child: Material(
-        color: Colors.transparent,
+        color: AppColors.transparent,
         borderRadius: AppRadii.inputRadius,
         child: Ink(
           decoration: BoxDecoration(

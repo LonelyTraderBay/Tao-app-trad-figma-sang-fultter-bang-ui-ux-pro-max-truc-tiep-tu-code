@@ -77,6 +77,7 @@ void main() {
     expect(find.text('Tiến trình'), findsOneWidget);
     expect(find.text('Chat với hỗ trợ'), findsOneWidget);
     expect(find.text('Hành động'), findsOneWidget);
+    expect(find.textContaining('mock/fail-closed'), findsOneWidget);
   });
 
   testWidgets('SC-218 escalation and support message state work', (

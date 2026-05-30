@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PGuidePage extends ConsumerStatefulWidget {
   const P2PGuidePage({super.key, this.shellRenderMode});
@@ -43,7 +43,7 @@ class _P2PGuidePageState extends ConsumerState<P2PGuidePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getGuide();
+    final snapshot = ref.watch(p2pGuideProvider);
     _ensureState(snapshot);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -417,7 +417,7 @@ class _ModeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected ? color : Colors.transparent,
+      color: selected ? color : AppColors.transparent,
       borderRadius: AppRadii.inputRadius,
       child: InkWell(
         onTap: onTap,

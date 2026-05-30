@@ -1,50 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
-
-class HomeAnnouncement {
-  const HomeAnnouncement({required this.text});
-
-  final String text;
-}
-
-class HomeQuickAction {
-  const HomeQuickAction({
-    required this.icon,
-    required this.label,
-    required this.routePath,
-    required this.accentColor,
-  });
-
-  final IconData icon;
-  final String label;
-  final String routePath;
-  final Color accentColor;
-}
-
-class HomeCryptoPair {
-  const HomeCryptoPair({
-    required this.id,
-    required this.symbol,
-    required this.baseAsset,
-    required this.price,
-    required this.change24h,
-    required this.volume24h,
-    required this.sparkline,
-    required this.logoColor,
-    required this.isFavorite,
-  });
-
-  final String id;
-  final String symbol;
-  final String baseAsset;
-  final double price;
-  final double change24h;
-  final double volume24h;
-  final List<double> sparkline;
-  final Color logoColor;
-  final bool isFavorite;
-}
+import 'package:vit_trade_flutter/features/home/domain/entities/home_entities.dart';
 
 class HomeMockData {
   const HomeMockData._();
@@ -54,6 +12,17 @@ class HomeMockData {
   static const double dailyPct = 3.52;
   static const int notifications = 3;
   static const int homeBadge = 2;
+
+  static const snapshot = HomeSnapshot(
+    totalBalance: totalBalance,
+    dailyPnl: dailyPnl,
+    dailyPct: dailyPct,
+    notifications: notifications,
+    homeBadge: homeBadge,
+    announcements: announcements,
+    quickActions: quickActions,
+    pairs: pairs,
+  );
 
   static const announcements = [
     HomeAnnouncement(text: '🎉 Phí giao dịch 0% cho BTC/USDT trong 7 ngày!'),
@@ -166,7 +135,7 @@ class HomeMockData {
         67100,
         67543,
       ],
-      logoColor: Color(0xFFF7931A),
+      logoColor: AppAssetColors.btc,
       isFavorite: true,
     ),
     HomeCryptoPair(
@@ -190,7 +159,7 @@ class HomeMockData {
         3530,
         3521,
       ],
-      logoColor: Color(0xFF627EEA),
+      logoColor: AppAssetColors.eth,
       isFavorite: true,
     ),
     HomeCryptoPair(
@@ -201,7 +170,7 @@ class HomeMockData {
       change24h: 3.61,
       volume24h: 1234567000,
       sparkline: [398, 400, 402, 405, 403, 407, 410, 408, 411, 413, 412.87],
-      logoColor: Color(0xFFF3BA2F),
+      logoColor: AppAssetColors.bnb,
       isFavorite: false,
     ),
     HomeCryptoPair(
@@ -212,7 +181,7 @@ class HomeMockData {
       change24h: 8.07,
       volume24h: 3456789000,
       sparkline: [165, 168, 170, 172, 171, 175, 176, 179, 178, 180, 178.32],
-      logoColor: Color(0xFF9945FF),
+      logoColor: AppAssetColors.sol,
       isFavorite: true,
     ),
     HomeCryptoPair(
@@ -223,7 +192,7 @@ class HomeMockData {
       change24h: -2.59,
       volume24h: 1876543000,
       sparkline: [0.64, 0.638, 0.635, 0.632, 0.628, 0.625, 0.621, 0.6234],
-      logoColor: Color(0xFF00AAE4),
+      logoColor: AppAssetColors.xrp,
       isFavorite: false,
     ),
     HomeCryptoPair(
@@ -234,7 +203,7 @@ class HomeMockData {
       change24h: 3.22,
       volume24h: 654321000,
       sparkline: [0.438, 0.440, 0.442, 0.445, 0.448, 0.450, 0.452, 0.4521],
-      logoColor: Color(0xFF0033AD),
+      logoColor: AppAssetColors.ada,
       isFavorite: false,
     ),
     HomeCryptoPair(
@@ -245,7 +214,7 @@ class HomeMockData {
       change24h: -3.55,
       volume24h: 432109000,
       sparkline: [8.12, 8.05, 7.98, 7.92, 7.88, 7.85, 7.83, 7.832],
-      logoColor: Color(0xFFE6007A),
+      logoColor: AppAssetColors.dot,
       isFavorite: false,
     ),
     HomeCryptoPair(
@@ -256,7 +225,7 @@ class HomeMockData {
       change24h: 5.60,
       volume24h: 789012000,
       sparkline: [0.850, 0.855, 0.862, 0.870, 0.875, 0.882, 0.890, 0.8976],
-      logoColor: Color(0xFF8247E5),
+      logoColor: AppAssetColors.matic,
       isFavorite: false,
     ),
     HomeCryptoPair(
@@ -267,7 +236,7 @@ class HomeMockData {
       change24h: 4.73,
       volume24h: 567890000,
       sparkline: [36.8, 37.0, 37.3, 37.6, 37.9, 38.1, 38.4, 38.54],
-      logoColor: Color(0xFFE84142),
+      logoColor: AppAssetColors.avax,
       isFavorite: false,
     ),
     HomeCryptoPair(
@@ -278,7 +247,7 @@ class HomeMockData {
       change24h: -5.76,
       volume24h: 345678000,
       sparkline: [15.10, 15.00, 14.85, 14.70, 14.55, 14.40, 14.30, 14.23],
-      logoColor: Color(0xFF2A5ADA),
+      logoColor: AppAssetColors.link,
       isFavorite: false,
     ),
   ];

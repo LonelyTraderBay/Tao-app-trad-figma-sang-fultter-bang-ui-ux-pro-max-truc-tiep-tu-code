@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/discovery_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -14,7 +15,6 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/discovery/data/discovery_repository.dart';
 
 class UnifiedSearchPage extends ConsumerStatefulWidget {
   const UnifiedSearchPage({super.key, this.shellRenderMode});
@@ -49,8 +49,8 @@ class _UnifiedSearchPageState extends ConsumerState<UnifiedSearchPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(discoveryRepositoryProvider)
-        .getUnifiedSearch(query: _searchController.text);
+        .watch(discoveryControllerProvider)
+        .unifiedSearch(query: _searchController.text);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame

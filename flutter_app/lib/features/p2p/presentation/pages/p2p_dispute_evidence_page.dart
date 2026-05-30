@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PDisputeEvidencePage extends ConsumerStatefulWidget {
   const P2PDisputeEvidencePage({
@@ -42,23 +42,17 @@ class _P2PDisputeEvidencePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getDisputeEvidence(widget.disputeId);
+    final controller = ref.watch(
+      p2pDisputeEvidenceControllerProvider(widget.disputeId),
+    );
+    final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + AppSpacing.x6
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
-    final documents = snapshot.documents
-        .map(
-          (item) => _EvidenceDocumentView(
-            source: item,
-            uploaded: item.uploaded || _uploaded.contains(item.id),
-          ),
-        )
-        .toList(growable: false);
+    final documents = controller.documents(_uploaded);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -95,6 +89,11 @@ class _P2PDisputeEvidencePageState
                         title: snapshot.title,
                         subtitle: snapshot.subtitle,
                       ),
+                      const SizedBox(height: AppSpacing.x3),
+                      const _MockActionNote(
+                        text:
+                            'Mock/fail-closed: upload chỉ cập nhật trạng thái cục bộ trong dev smoke; chưa gửi file lên backend.',
+                      ),
                       const SizedBox(height: AppSpacing.x4),
                       for (final document in documents) ...[
                         _EvidenceRow(
@@ -106,12 +105,19 @@ class _P2PDisputeEvidencePageState
                       const SizedBox(height: AppSpacing.x2),
                       VitCtaButton(
                         key: P2PDisputeEvidencePage.submitKey,
-                        onPressed: () {
-                          HapticFeedback.mediumImpact();
-                          context.go(
-                            AppRoutePaths.p2pDisputeDetail(widget.disputeId),
-                          );
-                        },
+                        onPressed: controller.canSubmit(_uploaded)
+                            ? () {
+                                HapticFeedback.mediumImpact();
+                                final preview = controller.submitPreview(
+                                  _uploaded,
+                                );
+                                context.go(
+                                  AppRoutePaths.p2pDisputeDetail(
+                                    preview.disputeId,
+                                  ),
+                                );
+                              }
+                            : null,
                         child: const Text('Gửi bằng chứng'),
                       ),
                     ],
@@ -163,17 +169,34 @@ class _HeroCard extends StatelessWidget {
   }
 }
 
-class _EvidenceDocumentView {
-  const _EvidenceDocumentView({required this.source, required this.uploaded});
+class _MockActionNote extends StatelessWidget {
+  const _MockActionNote({required this.text});
 
-  final P2PDisputeEvidenceDocumentDraft source;
-  final bool uploaded;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      padding: const EdgeInsets.all(AppSpacing.x3),
+      borderColor: AppColors.warningBorder,
+      child: Text(
+        text,
+        style: AppTextStyles.micro.copyWith(
+          color: AppColors.warn,
+          fontWeight: AppTextStyles.medium,
+          height: 1.45,
+        ),
+      ),
+    );
+  }
 }
 
 class _EvidenceRow extends StatelessWidget {
   const _EvidenceRow({required this.document, required this.onUpload});
 
-  final _EvidenceDocumentView document;
+  final P2PDisputeEvidenceDocumentViewState document;
   final VoidCallback onUpload;
 
   @override

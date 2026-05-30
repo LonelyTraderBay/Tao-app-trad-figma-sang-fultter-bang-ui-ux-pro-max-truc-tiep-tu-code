@@ -1,17 +1,41 @@
-# vit_trade_flutter
+# VitTrade Flutter
 
-A new Flutter project.
+Enterprise Flutter mobile app for VitTrade crypto trading, wallet, P2P,
+Prediction Markets, Open Arena, Earn, DCA, and account operations.
 
-## Getting Started
+## Source of Truth
 
-This project is a starting point for a Flutter application.
+- App source: `lib/`
+- Router facade: `lib/app/router/app_router.dart`
+- Tests: `test/`
+- QA docs: `../docs/02_FLUTTER_MIGRATION/`
 
-A few resources to get you started if this is your first Flutter project:
+## Development
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+Run from `flutter_app/`:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+flutter pub get
+dart format .
+flutter analyze
+flutter test --reporter=compact
+flutter build apk --debug
+```
+
+For production-like runs, pass Dart defines instead of changing code:
+
+```bash
+flutter run \
+  --dart-define=APP_ENV=staging \
+  --dart-define=API_BASE_URL=https://staging-api.vittrade.example
+```
+
+`APP_ENV=production` disables mock repositories by default. Critical feature
+repositories fail closed until remote implementations are configured.
+
+## Release Notes
+
+Android release builds require signing through `android/key.properties` or the
+`VITTRADE_KEYSTORE_PATH`, `VITTRADE_KEYSTORE_PASSWORD`,
+`VITTRADE_KEY_ALIAS`, and `VITTRADE_KEY_PASSWORD` environment variables.
+Unsigned release tasks fail before producing an artifact.

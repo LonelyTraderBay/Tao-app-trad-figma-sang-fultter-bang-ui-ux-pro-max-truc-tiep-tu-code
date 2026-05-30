@@ -10,16 +10,17 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _assessmentBackground = AppColors.bg;
 const _assessmentPanel = AppColors.surface;
 const _assessmentPanel2 = AppColors.surface2;
 const _assessmentPrimary = AppColors.primary;
 const _assessmentOptionBorder = AppColors.borderSolid;
-const _assessmentGreen = Color(0xFF10B981);
-const _assessmentAmber = Color(0xFFF59E0B);
-const _assessmentRed = Color(0xFFEF4444);
+const _assessmentGreen = AppColors.buy;
+const _assessmentAmber = AppColors.caution;
+const _assessmentRed = AppColors.sell;
 
 class BotSuitabilityAssessmentPage extends ConsumerStatefulWidget {
   const BotSuitabilityAssessmentPage({super.key, this.shellRenderMode});
@@ -47,9 +48,8 @@ class _BotSuitabilityAssessmentPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRepositoryProvider)
-        .getBotSuitabilityAssessment();
+    final controller = ref.watch(tradeBotSuitabilityControllerProvider);
+    final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -100,8 +100,9 @@ class _BotSuitabilityAssessmentPageState
 
   void _handleAnswer(String optionId) {
     final snapshot = ref
-        .read(tradeRepositoryProvider)
-        .getBotSuitabilityAssessment();
+        .read(tradeBotSuitabilityControllerProvider)
+        .state
+        .snapshot;
     final question = snapshot.questions[_currentQuestion];
 
     setState(() {
@@ -116,20 +117,14 @@ class _BotSuitabilityAssessmentPageState
 
   void _handleComplete(TradeBotSuitabilityOutcomeCopy result) {
     if (result.outcome == TradeBotSuitabilityOutcome.fail) return;
-    final snapshot = ref
-        .read(tradeRepositoryProvider)
-        .getBotSuitabilityAssessment();
-    context.go(snapshot.completionPath);
+    final path = ref
+        .read(tradeBotSuitabilityControllerProvider)
+        .completionPathFor(result);
+    if (path.isNotEmpty) context.go(path);
   }
 
   int _score(TradeBotSuitabilityAssessmentSnapshot snapshot) {
-    var total = 0;
-    for (final entry in _answers.entries) {
-      final question = snapshot.questions.firstWhere((q) => q.id == entry.key);
-      final option = question.options.firstWhere((o) => o.id == entry.value);
-      total += option.score;
-    }
-    return total;
+    return ref.read(tradeBotSuitabilityControllerProvider).score(_answers);
   }
 }
 
@@ -308,7 +303,7 @@ class _OptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         key: BotSuitabilityAssessmentPage.optionKey(questionId, option.id),
         borderRadius: AppRadii.cardRadius,
@@ -496,7 +491,7 @@ class _ResultView extends StatelessWidget {
             child: Text(
               result.ctaLabel,
               style: AppTextStyles.body.copyWith(
-                color: Colors.white,
+                color: AppColors.onAccent,
                 fontSize: 14,
                 fontWeight: AppTextStyles.bold,
                 height: 1,

@@ -25,21 +25,21 @@ class VitServiceTile extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.sm,
       onTap: onTap,
-      padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 8),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 28,
-            height: 28,
+            width: 26,
+            height: 26,
             decoration: BoxDecoration(
               color: accentColor.withValues(alpha: .12),
               borderRadius: AppRadii.mdRadius,
               border: Border.all(color: accentColor.withValues(alpha: .20)),
             ),
-            child: Icon(icon, color: accentColor, size: AppSpacing.iconMd),
+            child: Icon(icon, color: accentColor, size: 20),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             label,
             maxLines: 1,

@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_identity_verification_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_kyc_status_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_selfie_verification_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
@@ -108,7 +109,8 @@ void main() {
     );
     await tester.tap(find.byKey(P2PIdentityVerificationPage.submitKey));
     await tester.pumpAndSettle();
-    expect(find.text('P2P KYC Face Match'), findsOneWidget);
+    expect(find.byType(P2PSelfieVerificationPage), findsOneWidget);
+    expect(find.text('Selfie Verification'), findsOneWidget);
   });
 
   testWidgets('SC-249 back returns to KYC status page', (tester) async {

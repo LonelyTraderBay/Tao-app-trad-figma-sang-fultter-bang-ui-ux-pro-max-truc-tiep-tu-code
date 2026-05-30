@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PChatPage extends ConsumerStatefulWidget {
   const P2PChatPage({super.key, required this.orderId, this.shellRenderMode});
@@ -52,7 +52,7 @@ class _P2PChatPageState extends ConsumerState<P2PChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getChat(widget.orderId);
+    final snapshot = ref.watch(p2pChatProvider(widget.orderId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -191,7 +191,7 @@ class _ChatHeader extends StatelessWidget {
                 child: Text(
                   snapshot.merchantInitial,
                   style: AppTextStyles.caption.copyWith(
-                    color: Colors.white,
+                    color: AppColors.onAccent,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -499,7 +499,7 @@ class _MessageBubble extends StatelessWidget {
               child: Text(
                 merchantInitial,
                 style: AppTextStyles.micro.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -532,7 +532,7 @@ class _MessageBubble extends StatelessWidget {
                       child: Text(
                         message.text,
                         style: AppTextStyles.body.copyWith(
-                          color: isMe ? Colors.white : AppColors.text1,
+                          color: isMe ? AppColors.onAccent : AppColors.text1,
                           fontWeight: AppTextStyles.medium,
                         ),
                       ),

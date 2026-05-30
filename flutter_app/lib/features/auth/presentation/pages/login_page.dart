@@ -9,7 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/auth/data/auth_repository.dart';
+import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
 
 const _authPrimary = AppColors.primary;
 const _authPrimaryDark = AppColors.primaryDark;
@@ -84,9 +84,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
     try {
       await ref
-          .read(authRepositoryProvider)
+          .read(authControllerProvider)
           .login(identifier: identifier, password: password, demo: demo);
       if (mounted) context.go(AppRoutePaths.home);
+    } catch (error) {
+      if (mounted) {
+        setState(() => _error = authOperationErrorMessage(error));
+      }
     } finally {
       if (mounted) {
         setState(() => _submitting = false);
@@ -441,13 +445,13 @@ class _VitTradeLogoPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final primary = Paint()
-      ..color = Colors.white
+      ..color = AppColors.onAccent
       ..strokeWidth = 3
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
     final secondary = Paint()
-      ..color = Colors.white.withValues(alpha: 0.5)
+      ..color = AppColors.onAccent.withValues(alpha: 0.5)
       ..strokeWidth = 2.5
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round

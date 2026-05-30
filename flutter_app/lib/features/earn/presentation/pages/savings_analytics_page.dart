@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 class SavingsAnalyticsPage extends ConsumerStatefulWidget {
   const SavingsAnalyticsPage({super.key, this.shellRenderMode});
@@ -768,7 +768,7 @@ class _MonthlyBarsPainter extends CustomPainter {
       ..shader = const LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [AppColors.buy, Color(0x3310B981)],
+        colors: [AppColors.buy, AppColors.buy20],
       ).createShader(chart);
 
     for (var i = 0; i < points.length; i++) {

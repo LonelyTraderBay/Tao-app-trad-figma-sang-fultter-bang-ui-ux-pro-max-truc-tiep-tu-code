@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PAntiPhishingCodePage extends ConsumerStatefulWidget {
   const P2PAntiPhishingCodePage({super.key, this.shellRenderMode});
@@ -50,7 +50,7 @@ class _P2PAntiPhishingCodePageState
   @override
   void initState() {
     super.initState();
-    final snapshot = ref.read(p2pRepositoryProvider).getAntiPhishingCode();
+    final snapshot = ref.read(p2pAntiPhishingCodeProvider);
     _code = snapshot.currentCode;
     _editing = !snapshot.hasCode;
     _codeController = TextEditingController(text: _code);
@@ -70,7 +70,7 @@ class _P2PAntiPhishingCodePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getAntiPhishingCode();
+    final snapshot = ref.watch(p2pAntiPhishingCodeProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -307,12 +307,12 @@ class _StatusCard extends StatelessWidget {
               width: AppSpacing.inputHeight,
               height: AppSpacing.inputHeight,
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: .18),
+                color: AppColors.onAccent.withValues(alpha: .18),
                 borderRadius: AppRadii.lgRadius,
               ),
               child: const Icon(
                 Icons.shield_outlined,
-                color: Colors.white,
+                color: AppColors.onAccent,
                 size: AppSpacing.iconMd,
               ),
             ),
@@ -324,7 +324,7 @@ class _StatusCard extends StatelessWidget {
                   Text(
                     snapshot.statusTitle,
                     style: AppTextStyles.sectionTitle.copyWith(
-                      color: Colors.white,
+                      color: AppColors.onAccent,
                       fontSize: 22,
                       height: 1.12,
                     ),
@@ -333,7 +333,7 @@ class _StatusCard extends StatelessWidget {
                   Text(
                     snapshot.statusBody,
                     style: AppTextStyles.caption.copyWith(
-                      color: Colors.white.withValues(alpha: .9),
+                      color: AppColors.onAccent.withValues(alpha: .9),
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -477,7 +477,7 @@ class _EmailExampleCard extends StatelessWidget {
                     VitCard(
                       radius: VitCardRadius.sm,
                       variant: VitCardVariant.inner,
-                      borderColor: Colors.transparent,
+                      borderColor: AppColors.transparent,
                       padding: const EdgeInsets.all(AppSpacing.x3),
                       child: Text(
                         example.preview,

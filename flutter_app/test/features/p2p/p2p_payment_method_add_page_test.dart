@@ -108,13 +108,16 @@ void main() {
     expect(find.byKey(P2PPaymentMethodAddPage.previewKey), findsOneWidget);
     expect(find.text('Tài khoản'), findsOneWidget);
     expect(find.text('Chủ tài khoản'), findsOneWidget);
+    expect(find.text('007...3456'), findsOneWidget);
+    expect(find.textContaining('Ownership review'), findsOneWidget);
+    expect(find.textContaining('Limits:'), findsOneWidget);
 
     await tester.tap(find.byKey(P2PPaymentMethodAddPage.saveButtonKey));
     await tester.pumpAndSettle();
 
     expect(find.text('Xác nhận thêm phương thức?'), findsOneWidget);
     expect(find.text('Vietcombank'), findsNWidgets(3));
-    expect(find.text('0071000123456'), findsNWidgets(4));
+    expect(find.text('007...3456'), findsNWidgets(2));
 
     await tester.tap(find.byKey(P2PPaymentMethodAddPage.confirmSaveKey));
     await tester.pumpAndSettle();

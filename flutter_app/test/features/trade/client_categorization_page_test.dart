@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/client_categorization_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/regulatory_disclosures_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/security_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -103,15 +104,14 @@ void main() {
     expect(find.text('Opt-Up Requested'), findsOneWidget);
   });
 
-  testWidgets('SC-099 opt-up edge uses scoped placeholder route', (
-    tester,
-  ) async {
+  testWidgets('SC-099 opt-up edge uses scoped request route', (tester) async {
     await pumpClientCategorization(tester);
 
     await tester.ensureVisible(find.byKey(ClientCategorizationPage.optUpKey));
     await tester.tap(find.byKey(ClientCategorizationPage.optUpKey));
     await tester.pumpAndSettle();
 
+    expect(find.byType(ClientOptUpRequestPage), findsOneWidget);
     expect(find.text('Client Opt-Up Request'), findsOneWidget);
   });
 
@@ -136,7 +136,7 @@ void main() {
     await tester.tap(find.byKey(ClientCategorizationPage.settingsKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Security Settings'), findsOneWidget);
+    expect(find.byType(SecurityPage), findsOneWidget);
   });
 }
 

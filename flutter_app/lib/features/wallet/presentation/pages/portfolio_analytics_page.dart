@@ -12,14 +12,14 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 const _analyticsBackground = AppColors.bg;
 const _analyticsPanel = AppColors.surface;
 const _analyticsPanel2 = AppColors.surface2;
 const _analyticsPrimary = AppColors.primary;
-const _analyticsGreen = Color(0xFF10B981);
-const _analyticsRed = Color(0xFFEF4444);
+const _analyticsGreen = AppColors.buy;
+const _analyticsRed = AppColors.sell;
 
 class PortfolioAnalyticsPage extends ConsumerStatefulWidget {
   const PortfolioAnalyticsPage({super.key, this.shellRenderMode});
@@ -48,9 +48,7 @@ class _PortfolioAnalyticsPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(walletRepositoryProvider)
-        .getPortfolioAnalytics();
+    final snapshot = ref.watch(walletPortfolioAnalyticsProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -254,7 +252,7 @@ class _QuickStat extends StatelessWidget {
       height: 74,
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 7),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .055),
+        color: AppColors.onAccent.withValues(alpha: .055),
         borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
@@ -330,7 +328,7 @@ class _ViewSwitcher extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: active == item.id
                         ? _analyticsPrimary.withValues(alpha: .18)
-                        : Colors.transparent,
+                        : AppColors.transparent,
                     borderRadius: AppRadii.cardRadius,
                   ),
                   child: Row(
@@ -425,7 +423,7 @@ class _PeriodSelector extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: active == period
                       ? _analyticsPrimary.withValues(alpha: .20)
-                      : Colors.transparent,
+                      : AppColors.transparent,
                   borderRadius: AppRadii.inputRadius,
                 ),
                 child: Text(

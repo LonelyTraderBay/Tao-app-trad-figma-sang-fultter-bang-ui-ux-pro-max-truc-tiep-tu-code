@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/core/config/app_environment.dart';
+import 'package:vit_trade_flutter/core/network/api_client.dart';
 import 'package:vit_trade_flutter/features/auth/data/auth_repository.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/pages/login_page.dart';
@@ -35,6 +37,23 @@ Widget _app({
         initialLocation: initialLocation,
         shellRenderMode: shellRenderMode,
       ),
+    ),
+  );
+}
+
+Widget _productionFailClosedApp() {
+  return ProviderScope(
+    overrides: [
+      appConfigProvider.overrideWithValue(
+        AppConfig(
+          environment: AppEnvironment.production,
+          apiBaseUrl: Uri.parse('https://api.vittrade.example'),
+          enableMockData: false,
+        ),
+      ),
+    ],
+    child: VitTradeApp(
+      routerConfig: createAppRouter(initialLocation: AppRoutePaths.authLogin),
     ),
   );
 }
@@ -137,6 +156,29 @@ void main() {
 
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_active_home')), findsOneWidget);
+  });
+
+  testWidgets('SC-001 production auth without backend fails closed in UI', (
+    tester,
+  ) async {
+    _setPhoneViewport(tester);
+
+    await tester.pumpWidget(_productionFailClosedApp());
+    await tester.pumpAndSettle();
+
+    await tester.enterText(
+      find.byKey(LoginPage.identifierFieldKey),
+      'user@vittrade.vn',
+    );
+    await tester.enterText(find.byKey(LoginPage.passwordFieldKey), 'password');
+    await tester.tap(find.byKey(LoginPage.submitKey));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.textContaining('Authentication service is unavailable'),
+      findsOneWidget,
+    );
+    expect(find.byType(LoginPage), findsOneWidget);
   });
 
   testWidgets('SC-001 outgoing auth links open auth routes', (tester) async {

@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/auth/data/auth_repository.dart';
+import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
 
 const _authPrimary = AppColors.primary;
 const _authPrimary10 = AppColors.primary12;
@@ -116,7 +116,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
     });
     try {
       final result = await ref
-          .read(authRepositoryProvider)
+          .read(authControllerProvider)
           .requestPasswordReset(email: _email);
 
       if (!mounted) return;
@@ -128,6 +128,10 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
         return;
       }
       setState(() => _step = _ForgotPasswordStep.otp);
+    } catch (error) {
+      if (mounted) {
+        setState(() => _emailError = authOperationErrorMessage(error));
+      }
     } finally {
       if (mounted) setState(() => _submitting = false);
     }
@@ -142,7 +146,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
 
     try {
       final result = await ref
-          .read(authRepositoryProvider)
+          .read(authControllerProvider)
           .verifyFactor(
             contact: _email,
             code: _otp,
@@ -158,6 +162,10 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
         return;
       }
       setState(() => _step = _ForgotPasswordStep.reset);
+    } catch (error) {
+      if (mounted) {
+        setState(() => _otpError = authOperationErrorMessage(error));
+      }
     } finally {
       if (mounted) setState(() => _submitting = false);
     }
@@ -180,7 +188,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
     });
     try {
       final result = await ref
-          .read(authRepositoryProvider)
+          .read(authControllerProvider)
           .resetPassword(email: _email, otp: _otp, newPassword: _newPassword);
 
       if (!mounted) return;
@@ -193,6 +201,10 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
         return;
       }
       setState(() => _step = _ForgotPasswordStep.success);
+    } catch (error) {
+      if (mounted) {
+        setState(() => _passwordError = authOperationErrorMessage(error));
+      }
     } finally {
       if (mounted) setState(() => _submitting = false);
     }

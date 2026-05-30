@@ -11,7 +11,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PPaymentMethodHistoryPage extends ConsumerWidget {
   const P2PPaymentMethodHistoryPage({super.key, this.shellRenderMode});
@@ -23,7 +23,7 @@ class P2PPaymentMethodHistoryPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getPaymentMethodHistory();
+    final snapshot = ref.watch(p2pPaymentMethodHistoryProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame

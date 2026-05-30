@@ -14,7 +14,9 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
+import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_state_cards.dart';
 
 class ArenaReportCasePage extends ConsumerStatefulWidget {
   const ArenaReportCasePage({
@@ -44,9 +46,14 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaRepositoryProvider)
-        .getArenaReportCase(widget.caseId);
+    final controller = ref.watch(
+      arenaReportCaseControllerProvider(widget.caseId),
+    );
+    final snapshot = controller.state.snapshot;
+    final reviewState = controller.reviewState(
+      appealSubmitted: _appealSubmitted,
+    );
+    final relatedReports = controller.relatedReportsExcludingCurrent();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -92,6 +99,7 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
                           padding: VitContentPadding.compact,
                           customGap: AppSpacing.x5,
                           children: [
+                            ArenaReportReviewStateCard(state: reviewState),
                             _CaseSummaryCard(reportCase: snapshot.reportCase!),
                             _ReportReasonCard(reportCase: snapshot.reportCase!),
                             _TimelineCard(reportCase: snapshot.reportCase!),
@@ -118,7 +126,7 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
                             if (snapshot.reportCase!.status ==
                                 ArenaReportCaseStatus.actionTaken)
                               _AppealNotice(
-                                submitted: _appealSubmitted,
+                                state: reviewState,
                                 onAppeal: _markAppealSubmitted,
                               ),
                             _LinkedActionRow(
@@ -131,7 +139,7 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
                                 context.go(AppRoutePaths.arenaMyReports);
                               },
                             ),
-                            _RelatedReports(reports: snapshot.relatedReports),
+                            _RelatedReports(reports: relatedReports),
                             _DisclaimerCard(disclaimer: snapshot.disclaimer),
                             VitCtaButton(
                               key: ArenaReportCasePage.primaryCtaKey,
@@ -503,9 +511,9 @@ class _SystemNotePanel extends StatelessWidget {
 }
 
 class _AppealNotice extends StatelessWidget {
-  const _AppealNotice({required this.submitted, required this.onAppeal});
+  const _AppealNotice({required this.state, required this.onAppeal});
 
-  final bool submitted;
+  final ArenaReportReviewState state;
   final VoidCallback onAppeal;
 
   @override
@@ -526,7 +534,7 @@ class _AppealNotice extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      submitted
+                      !state.canAppeal
                           ? 'Khiếu nại đã ghi nhận'
                           : 'Bạn có thể khiếu nại',
                       style: AppTextStyles.body.copyWith(
@@ -548,7 +556,7 @@ class _AppealNotice extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x3),
-          if (submitted)
+          if (!state.canAppeal)
             const VitStatusPill(
               label: 'Đã gửi yêu cầu xem xét',
               status: VitStatusPillStatus.warning,

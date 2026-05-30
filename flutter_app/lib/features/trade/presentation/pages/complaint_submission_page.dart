@@ -12,7 +12,8 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _submissionBackground = AppColors.bg;
 const _submissionPanel = AppColors.surface;
@@ -54,7 +55,7 @@ class _ComplaintSubmissionPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getComplaintSubmission();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -527,7 +528,7 @@ class _SubmissionFooter extends StatelessWidget {
           key: ComplaintSubmissionPage.submitKey,
           style: FilledButton.styleFrom(
             backgroundColor: enabled ? _submissionPrimary : _submissionPanel2,
-            foregroundColor: enabled ? Colors.white : AppColors.text3,
+            foregroundColor: enabled ? AppColors.onAccent : AppColors.text3,
             disabledBackgroundColor: _submissionPanel2,
             disabledForegroundColor: AppColors.text3,
             shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
@@ -543,7 +544,7 @@ class _SubmissionFooter extends StatelessWidget {
                 Text(
                   'Submit Complaint',
                   style: AppTextStyles.caption.copyWith(
-                    color: enabled ? Colors.white : AppColors.text3,
+                    color: enabled ? AppColors.onAccent : AppColors.text3,
                     fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                     height: 1,

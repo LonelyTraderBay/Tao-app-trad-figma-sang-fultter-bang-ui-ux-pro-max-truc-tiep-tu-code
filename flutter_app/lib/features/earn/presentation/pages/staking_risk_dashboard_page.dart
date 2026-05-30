@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 class StakingRiskDashboardPage extends ConsumerWidget {
   const StakingRiskDashboardPage({super.key, this.shellRenderMode});
@@ -639,7 +639,7 @@ class _ExposurePiePainter extends CustomPainter {
 Color _riskColor(int score) {
   if (score < 25) return AppColors.buy;
   if (score < 50) return AppColors.warn;
-  if (score < 75) return const Color(0xFFF97316);
+  if (score < 75) return AppColors.riskHigh;
   return AppColors.sell;
 }
 

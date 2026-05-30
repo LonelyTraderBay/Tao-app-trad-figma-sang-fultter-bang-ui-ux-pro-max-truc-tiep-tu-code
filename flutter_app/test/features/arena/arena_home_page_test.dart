@@ -85,7 +85,7 @@ void main() {
     expect(find.text('BTC \$70K? — Tuần 9'), findsOneWidget);
   });
 
-  testWidgets('SC-184 navigation edges open canonical placeholders', (
+  testWidgets('SC-184 navigation edges open canonical Arena routes', (
     tester,
   ) async {
     await pumpArenaHome(tester);

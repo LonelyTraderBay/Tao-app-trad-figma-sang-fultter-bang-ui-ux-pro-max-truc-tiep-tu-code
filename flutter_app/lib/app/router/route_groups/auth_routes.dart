@@ -46,12 +46,9 @@ List<RouteBase> _topLevelRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.authResetPassword,
       name: AppRouteNames.sc006ResetPassword,
-      builder: (_, state) => _AuthRouteShell(
+      builder: (_, _) => _AuthRouteShell(
         renderMode: shellRenderMode,
-        child: ResetPasswordPage(
-          email: state.uri.queryParameters['email'] ?? 'user@vittrade.vn',
-          otp: state.uri.queryParameters['otp'] ?? '123456',
-        ),
+        child: const ResetPasswordPage(),
       ),
     ),
     GoRoute(

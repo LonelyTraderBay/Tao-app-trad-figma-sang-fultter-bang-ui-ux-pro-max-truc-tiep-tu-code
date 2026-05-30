@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/dev_tools_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -13,7 +14,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/dev/data/dev_tools_repository.dart';
 
 class MissingScreensShowcasePage extends ConsumerStatefulWidget {
   const MissingScreensShowcasePage({super.key, this.shellRenderMode});
@@ -40,8 +40,8 @@ class _MissingScreensShowcasePageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(missingScreensShowcaseRepositoryProvider)
-        .getShowcase();
+        .watch(missingScreensShowcaseControllerProvider)
+        .snapshot();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -115,7 +115,7 @@ class _ShowcaseTitle extends StatelessWidget {
       children: [
         const _IconBadge(
           icon: Icons.layers_outlined,
-          color: Colors.white,
+          color: AppColors.onAccent,
           background: AppColors.primary,
         ),
         const SizedBox(width: AppSpacing.x3),

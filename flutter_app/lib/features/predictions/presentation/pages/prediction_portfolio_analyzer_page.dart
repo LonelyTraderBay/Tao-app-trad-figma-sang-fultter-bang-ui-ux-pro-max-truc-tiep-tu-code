@@ -13,10 +13,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
+import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 
 const _predictionPrimary = AppColors.primary;
-const _purple = Color(0xFF8B5CF6);
+const _purple = AppColors.accent;
 
 enum _AnalyzerTab { overview, performance, risk }
 
@@ -42,7 +43,7 @@ class _PredictionPortfolioAnalyzerPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(predictionsRepositoryProvider)
+        .watch(predictionsReadModelControllerProvider)
         .getPortfolioAnalyzer();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame

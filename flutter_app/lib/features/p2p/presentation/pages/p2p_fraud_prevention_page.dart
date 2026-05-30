@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PFraudPreventionPage extends ConsumerStatefulWidget {
   const P2PFraudPreventionPage({super.key, this.shellRenderMode});
@@ -49,14 +49,12 @@ class _P2PFraudPreventionPageState
   @override
   void initState() {
     super.initState();
-    _checklist = List.of(
-      ref.read(p2pRepositoryProvider).getFraudPrevention().checklist,
-    );
+    _checklist = List.of(ref.read(p2pFraudPreventionProvider).checklist);
   }
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getFraudPrevention();
+    final snapshot = ref.watch(p2pFraudPreventionProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -612,7 +610,7 @@ class _CategoryTab extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.micro.copyWith(
-                  color: selected ? Colors.white : AppColors.text2,
+                  color: selected ? AppColors.onAccent : AppColors.text2,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -621,7 +619,7 @@ class _CategoryTab extends StatelessWidget {
                 '$checked/${items.length}',
                 style: AppTextStyles.micro.copyWith(
                   color: selected
-                      ? Colors.white.withValues(alpha: .72)
+                      ? AppColors.onAccent.withValues(alpha: .72)
                       : AppColors.text3,
                 ),
               ),
@@ -642,7 +640,7 @@ class _ChecklistItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         key: P2PFraudPreventionPage.checklistItemKey(item.id),
         onTap: () => onTap(item.id),
@@ -657,7 +655,7 @@ class _ChecklistItem extends StatelessWidget {
                 height: 22,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: item.checked ? AppColors.buy : Colors.transparent,
+                  color: item.checked ? AppColors.buy : AppColors.transparent,
                   borderRadius: AppRadii.smRadius,
                   border: Border.all(
                     color: item.checked ? AppColors.buy : AppColors.borderSolid,
@@ -666,7 +664,7 @@ class _ChecklistItem extends StatelessWidget {
                 child: item.checked
                     ? const Icon(
                         Icons.check_rounded,
-                        color: Colors.white,
+                        color: AppColors.onAccent,
                         size: 14,
                       )
                     : null,

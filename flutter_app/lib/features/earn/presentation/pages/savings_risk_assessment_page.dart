@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 class SavingsRiskAssessmentPage extends ConsumerStatefulWidget {
   const SavingsRiskAssessmentPage({super.key, this.shellRenderMode});
@@ -43,13 +43,14 @@ class _SavingsRiskAssessmentPageState
   bool _showResult = false;
   final Map<String, int> _answers = {};
 
-  int get _score => _answers.values.fold(0, (sum, value) => sum + value);
+  int get _score {
+    return ref.read(savingsRiskAssessmentControllerProvider).score(_answers);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(savingsRiskAssessmentRepositoryProvider)
-        .getRiskAssessment();
+    final controller = ref.watch(savingsRiskAssessmentControllerProvider);
+    final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -80,7 +81,7 @@ class _SavingsRiskAssessmentPageState
                       ? [
                           _ResultView(
                             snapshot: snapshot,
-                            result: _result(snapshot),
+                            result: controller.resultForAnswers(_answers),
                             score: _score,
                             onReset: _reset,
                           ),
@@ -125,8 +126,9 @@ class _SavingsRiskAssessmentPageState
 
   int get _questionsLength {
     return ref
-        .read(savingsRiskAssessmentRepositoryProvider)
-        .getRiskAssessment()
+        .read(savingsRiskAssessmentControllerProvider)
+        .state
+        .snapshot
         .questions
         .length;
   }
@@ -145,15 +147,6 @@ class _SavingsRiskAssessmentPageState
       _showResult = false;
       _answers.clear();
     });
-  }
-
-  SavingsRiskProfileResultDraft _result(
-    SavingsRiskAssessmentSnapshot snapshot,
-  ) {
-    return snapshot.results.firstWhere(
-      (result) => _score >= result.minScore && _score <= result.maxScore,
-      orElse: () => snapshot.results.last,
-    );
   }
 }
 
@@ -429,7 +422,7 @@ class _OptionMarker extends StatelessWidget {
           child: Text(
             '${value + 1}',
             style: AppTextStyles.caption.copyWith(
-              color: selected ? Colors.white : AppColors.text2,
+              color: selected ? AppColors.onAccent : AppColors.text2,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
             ),

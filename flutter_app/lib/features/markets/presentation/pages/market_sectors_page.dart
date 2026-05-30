@@ -14,10 +14,10 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
+import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 
 const _marketPrimary = AppColors.primary;
-const _sectorPurple = Color(0xFF8B5CF6);
+const _sectorPurple = AppColors.accent;
 
 class MarketSectorsPage extends ConsumerStatefulWidget {
   const MarketSectorsPage({
@@ -73,7 +73,7 @@ class _MarketSectorsPageState extends ConsumerState<MarketSectorsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(marketRepositoryProvider).getMarketSectors();
+    final snapshot = ref.watch(marketControllerProvider).getMarketSectors();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -777,7 +777,7 @@ class _ComparisonRow extends StatelessWidget {
       decoration: BoxDecoration(
         color: highlighted
             ? sector.color.withValues(alpha: 0.10)
-            : Colors.transparent,
+            : AppColors.transparent,
         borderRadius: AppRadii.smRadius,
       ),
       child: Row(
@@ -1146,18 +1146,6 @@ _SectorCoin _coinForSymbol(
     }
   }
 
-  final fallbackMover = _fallbackMover(symbol);
-  if (fallbackMover != null) {
-    return _SectorCoin(
-      id: fallbackMover.id,
-      symbol: fallbackMover.symbol,
-      name: fallbackMover.name,
-      priceLabel: _formatPrice(fallbackMover.price),
-      change24h: fallbackMover.change24h,
-      color: fallbackMover.color,
-    );
-  }
-
   return _SectorCoin(
     id: symbol.toLowerCase(),
     symbol: symbol,
@@ -1166,14 +1154,6 @@ _SectorCoin _coinForSymbol(
     change24h: sector.change24h,
     color: sector.color,
   );
-}
-
-MarketMover? _fallbackMover(String symbol) {
-  final repository = const MockMarketRepository().getMarketMovers();
-  for (final mover in repository.movers) {
-    if (mover.symbol == symbol) return mover;
-  }
-  return null;
 }
 
 String _formatBillions(double value) {

@@ -11,18 +11,18 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 const _dustBackground = AppColors.bg;
 const _dustPanel = AppColors.surface;
 const _dustPanel2 = AppColors.surface3;
 const _dustHero = AppColors.surface;
 const _dustHeroBorder = AppColors.primary20;
-const _dustBorder = Color(0x14FFFFFF);
+const _dustBorder = AppColors.overlayStroke;
 const _dustPrimary = AppColors.primary;
-const _dustGreen = Color(0xFF10B981);
-const _dustAmber = Color(0xFFF59E0B);
-const _dustMuted = Color(0xFF667085);
+const _dustGreen = AppColors.buy;
+const _dustAmber = AppColors.caution;
+const _dustMuted = AppColors.text3;
 
 class DustConverterPage extends ConsumerStatefulWidget {
   const DustConverterPage({super.key, this.shellRenderMode});
@@ -49,7 +49,7 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(walletRepositoryProvider).getDustConverter();
+    final snapshot = ref.watch(walletDustConverterProvider);
     final assets = snapshot.eligibleAssets(_targetSymbol);
     final selectedAssets = assets
         .where((asset) => _selectedIds.contains(asset.id))
@@ -615,7 +615,9 @@ class _DustAssetRow extends StatelessWidget {
           color: selected ? color.withValues(alpha: .07) : _dustPanel2,
           borderRadius: AppRadii.cardRadius,
           border: Border.all(
-            color: selected ? color.withValues(alpha: .45) : Colors.transparent,
+            color: selected
+                ? color.withValues(alpha: .45)
+                : AppColors.transparent,
           ),
         ),
         child: Row(
@@ -718,7 +720,7 @@ class _ConvertFooter extends StatelessWidget {
         bottomSpace + 6,
       ),
       decoration: const BoxDecoration(
-        color: Color(0xF2080C14),
+        color: AppColors.modalScrimStrong,
         border: Border(top: BorderSide(color: AppColors.border)),
       ),
       child: _PrimaryButton(
@@ -762,7 +764,7 @@ class _PrimaryButton extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.baseMedium.copyWith(
-            color: enabled ? Colors.white : AppColors.text3,
+            color: enabled ? AppColors.onAccent : AppColors.text3,
             fontSize: 16,
             fontWeight: FontWeight.w900,
             height: 1,

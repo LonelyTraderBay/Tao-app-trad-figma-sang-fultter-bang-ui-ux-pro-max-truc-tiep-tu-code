@@ -96,7 +96,7 @@ class VitBottomNav extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Colors.transparent,
+                        AppColors.transparent,
                         AppColors.bg.withValues(alpha: 0.25),
                         AppColors.navBg,
                       ],
@@ -114,25 +114,37 @@ class VitBottomNav extends StatelessWidget {
                   decoration: const BoxDecoration(
                     border: Border(top: BorderSide(color: AppColors.navBorder)),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        for (final item in _items)
-                          _VitBottomNavButton(
-                            item: item,
-                            active: item.destination == activeDestination,
-                            renderMode: renderMode,
-                            badgeCount:
-                                item.destination == VitBottomNavDestination.home
-                                ? homeBadgeCount
-                                : 0,
-                            onTap: () =>
-                                onDestinationSelected?.call(item.destination),
-                          ),
-                      ],
-                    ),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final horizontalPad = constraints.maxWidth < 380
+                          ? 4.0
+                          : 8.0;
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: horizontalPad,
+                        ),
+                        child: Row(
+                          children: [
+                            for (final item in _items)
+                              Expanded(
+                                child: _VitBottomNavButton(
+                                  item: item,
+                                  active: item.destination == activeDestination,
+                                  renderMode: renderMode,
+                                  badgeCount:
+                                      item.destination ==
+                                          VitBottomNavDestination.home
+                                      ? homeBadgeCount
+                                      : 0,
+                                  onTap: () => onDestinationSelected?.call(
+                                    item.destination,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -188,7 +200,7 @@ class _VitBottomNavButton extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadii.cardRadius,
           child: SizedBox(
-            width: 72,
+            width: double.infinity,
             height: DeviceMetrics.tabBar,
             child: Stack(
               clipBehavior: Clip.none,
@@ -222,9 +234,14 @@ class _VitBottomNavButton extends StatelessWidget {
                   ),
                 ),
                 Positioned(
+                  left: 0,
+                  right: 0,
                   bottom: renderMode.usesVisualQaFrame ? 2 : 4,
                   child: Text(
                     item.label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
                     style: AppTextStyles.micro.copyWith(
                       color: activeColor,
                       fontWeight: AppTextStyles.medium,
@@ -247,7 +264,7 @@ class _VitBottomNavButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: SizedBox(
-          width: 72,
+          width: double.infinity,
           height: 48,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -328,7 +345,7 @@ class _NavBadge extends StatelessWidget {
       child: Text(
         count > 99 ? '99+' : '$count',
         style: AppTextStyles.micro.copyWith(
-          color: Colors.white,
+          color: AppColors.onAccent,
           fontSize: 9,
           fontWeight: AppTextStyles.bold,
           height: 1,

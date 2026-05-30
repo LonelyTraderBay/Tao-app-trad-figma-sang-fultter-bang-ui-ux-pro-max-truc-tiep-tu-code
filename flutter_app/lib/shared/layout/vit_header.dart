@@ -45,7 +45,7 @@ class VitHeader extends StatelessWidget {
     final hasSubtitle = subtitle != null && subtitle!.isNotEmpty;
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: transparent ? Colors.transparent : AppColors.navBg,
+        color: transparent ? AppColors.transparent : AppColors.navBg,
         border: transparent
             ? null
             : const Border(bottom: BorderSide(color: AppColors.border)),
@@ -279,7 +279,7 @@ class _CountBadge extends StatelessWidget {
       child: Text(
         count > 99 ? '99+' : '$count',
         style: AppTextStyles.micro.copyWith(
-          color: Colors.white,
+          color: AppColors.onAccent,
           fontSize: 9,
           fontWeight: AppTextStyles.bold,
           height: 1,

@@ -11,7 +11,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/auth/data/auth_repository.dart';
+import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/pages/otp_page.dart';
 
 const _authPrimary = AppColors.primary;
@@ -122,7 +122,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     setState(() => _submitting = true);
     try {
       await ref
-          .read(authRepositoryProvider)
+          .read(authControllerProvider)
           .register(
             name: _nameController.text.trim(),
             contact: _contactController.text.trim(),
@@ -145,6 +145,10 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
             purpose: AuthOtpPurpose.register,
           ),
         );
+      }
+    } catch (error) {
+      if (mounted) {
+        setState(() => _errors = {'form': authOperationErrorMessage(error)});
       }
     } finally {
       if (mounted) {
@@ -286,6 +290,14 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         });
                       },
                     ),
+                    if (_errors['form'] case final formError?)
+                      Text(
+                        formError,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.sell,
+                          fontSize: 12,
+                        ),
+                      ),
                     VitCtaButton(
                       key: RegisterPage.submitKey,
                       onPressed: _submitting ? null : _handleRegister,
@@ -389,7 +401,7 @@ class _RegisterSegmentButton extends StatelessWidget {
     return Expanded(
       child: SizedBox.expand(
         child: Material(
-          color: Colors.transparent,
+          color: AppColors.transparent,
           borderRadius: AppRadii.cardRadius,
           child: InkWell(
             onTap: onPressed,
@@ -398,7 +410,7 @@ class _RegisterSegmentButton extends StatelessWidget {
               duration: const Duration(milliseconds: 150),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: selected ? _authSegmentActive : Colors.transparent,
+                color: selected ? _authSegmentActive : AppColors.transparent,
                 borderRadius: AppRadii.cardRadius,
               ),
               child: Text(
@@ -446,7 +458,7 @@ class _AgreementRow extends StatelessWidget {
                   height: 20,
                   margin: const EdgeInsets.only(top: 2),
                   decoration: BoxDecoration(
-                    color: agreed ? _authPrimary : Colors.transparent,
+                    color: agreed ? _authPrimary : AppColors.transparent,
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: hasError
@@ -460,7 +472,7 @@ class _AgreementRow extends StatelessWidget {
                   child: agreed
                       ? const Icon(
                           Icons.check_rounded,
-                          color: Colors.white,
+                          color: AppColors.onAccent,
                           size: 14,
                         )
                       : null,

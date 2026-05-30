@@ -11,11 +11,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _confirmationPrimary = AppColors.primary;
-const _confirmationGreen = Color(0xFF10B981);
-const _confirmationRed = Color(0xFFEF4444);
+const _confirmationGreen = AppColors.buy;
+const _confirmationRed = AppColors.sell;
 
 class CopyConfirmationPage extends ConsumerStatefulWidget {
   const CopyConfirmationPage({
@@ -26,6 +27,7 @@ class CopyConfirmationPage extends ConsumerStatefulWidget {
 
   static const contentKey = Key('sc073_copy_confirmation_content');
   static const submitKey = Key('sc073_copy_confirmation_submit');
+  static const suitabilityKey = Key('sc073_copy_confirmation_suitability');
 
   static Key consentKey(String id) =>
       Key('sc073_copy_confirmation_consent_$id');
@@ -44,10 +46,13 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final repository = ref.watch(tradeRepositoryProvider);
-    final snapshot = repository.getCopyConfirmation(
-      providerId: widget.providerId,
+    final controller = ref.watch(
+      tradeCopyConfirmationControllerProvider((
+        providerId: widget.providerId,
+        acceptedConsentIds: _acceptedConsentIds.toList(growable: false),
+      )),
     );
+    final snapshot = controller.state.snapshot;
 
     if (snapshot.isNotFound) {
       return const VitPageLayout(
@@ -57,9 +62,7 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
       );
     }
 
-    final allRequiredAccepted = snapshot.consentItems
-        .where((item) => item.required)
-        .every((item) => _acceptedConsentIds.contains(item.id));
+    final allRequiredAccepted = controller.allRequiredAccepted;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -94,6 +97,8 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
                     const SizedBox(height: 16),
                     _ProviderSummary(provider: snapshot.provider!),
                     const SizedBox(height: 16),
+                    _SuitabilityReviewCard(snapshot: snapshot),
+                    const SizedBox(height: 16),
                     _ConfigurationSummary(snapshot: snapshot),
                     const SizedBox(height: 16),
                     _FeeBreakdown(snapshot: snapshot),
@@ -125,7 +130,7 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
                     VitCtaButton(
                       key: CopyConfirmationPage.submitKey,
                       onPressed: allRequiredAccepted && !_submitting
-                          ? () => _submit(context, repository, snapshot)
+                          ? () => _submit(context, controller)
                           : null,
                       loading: _submitting,
                       variant: VitCtaButtonVariant.danger,
@@ -164,17 +169,10 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
 
   Future<void> _submit(
     BuildContext context,
-    TradeRepository repository,
-    TradeCopyConfirmationSnapshot snapshot,
+    TradeCopyConfirmationController controller,
   ) async {
     setState(() => _submitting = true);
-    final result = repository.submitCopyConfirmation(
-      TradeCopyConfirmationRequest(
-        providerId: snapshot.providerId,
-        configuration: snapshot.configuration,
-        acceptedConsentIds: _acceptedConsentIds.toList(growable: false),
-      ),
-    );
+    final result = controller.submit();
     await Future<void>.delayed(const Duration(milliseconds: 180));
     if (!context.mounted) return;
     if (result.status == 'pending_cooling_off') {
@@ -220,7 +218,7 @@ class _CriticalWarning extends StatelessWidget {
                 Text(
                   'Copy Trading có rủi ro cao. Bạn có thể mất toàn bộ số tiền \$${snapshot.configuration.copyCapital.toStringAsFixed(0)} đã cam kết.',
                   style: AppTextStyles.caption.copyWith(
-                    color: const Color(0xFFFCA5A5),
+                    color: AppColors.sellSoft,
                     fontSize: 12,
                     height: 1.45,
                   ),
@@ -331,6 +329,58 @@ class _ConfigurationSummary extends StatelessWidget {
                 value: config.useTrailingStop
                     ? '${config.trailingStopPercent.toStringAsFixed(0)}%'
                     : 'Không',
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SuitabilityReviewCard extends StatelessWidget {
+  const _SuitabilityReviewCard({required this.snapshot});
+
+  final TradeCopyConfirmationSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = snapshot.provider!;
+    final config = snapshot.configuration;
+    return VitPageSection(
+      key: CopyConfirmationPage.suitabilityKey,
+      label: 'Suitability & limits review',
+      accentColor: AppColors.warn,
+      children: [
+        VitCard(
+          variant: VitCardVariant.inner,
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _SummaryRow(
+                label: 'Risk suitability',
+                value:
+                    '${_riskLabel(provider.riskLevel)} risk · DD ${provider.maxDrawdown.toStringAsFixed(1)}%',
+                valueColor: AppColors.warn,
+              ),
+              _SummaryRow(
+                label: 'Copy amount review',
+                value: '\$${config.copyCapital.toStringAsFixed(0)} at risk',
+                valueColor: _confirmationRed,
+              ),
+              const _SummaryRow(
+                label: 'Provider limit',
+                value: 'Max 20% portfolio per provider',
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'Confirm this amount fits your risk tolerance, provider drawdown, and portfolio limit before cooling-off starts.',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text2,
+                  fontSize: 12,
+                  height: 1.45,
+                ),
               ),
             ],
           ),
@@ -460,7 +510,7 @@ class _MaxLossCard extends StatelessWidget {
           Text(
             'Bạn có thể mất tối đa \$${snapshot.maxLossAmount.toStringAsFixed(0)} nếu provider gặp drawdown nghiêm trọng.',
             style: AppTextStyles.caption.copyWith(
-              color: const Color(0xFFFCA5A5),
+              color: AppColors.sellSoft,
               fontSize: 12,
               height: 1.45,
             ),
@@ -666,11 +716,16 @@ class _SummaryRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          Text(
-            value,
-            style: AppTextStyles.caption.copyWith(
-              color: valueColor,
-              fontWeight: FontWeight.w700,
+          Flexible(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              softWrap: true,
+              style: AppTextStyles.caption.copyWith(
+                color: valueColor,
+                fontWeight: FontWeight.w700,
+                height: 1.25,
+              ),
             ),
           ),
         ],
@@ -684,5 +739,13 @@ String _copyModeLabel(TradeCopyConfigurationMode mode) {
     TradeCopyConfigurationMode.mirror => 'Mirror Copy',
     TradeCopyConfigurationMode.fixed => 'Fixed 50%',
     TradeCopyConfigurationMode.smart => 'Smart Copy',
+  };
+}
+
+String _riskLabel(TradeCopyRiskLevel risk) {
+  return switch (risk) {
+    TradeCopyRiskLevel.low => 'Low',
+    TradeCopyRiskLevel.medium => 'Medium',
+    TradeCopyRiskLevel.high => 'High',
   };
 }

@@ -15,7 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 class StakingDashboardPage extends ConsumerStatefulWidget {
   const StakingDashboardPage({super.key, this.shellRenderMode});
@@ -178,7 +178,7 @@ class _SummaryCard extends StatelessWidget {
                     Text(
                       _formatUsd(snapshot.totalStakedUsd),
                       style: AppTextStyles.display.copyWith(
-                        color: Colors.white,
+                        color: AppColors.onAccent,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
@@ -278,7 +278,11 @@ class _CircleIconButton extends StatelessWidget {
           child: SizedBox(
             width: AppSpacing.buttonCompact,
             height: AppSpacing.buttonCompact,
-            child: Icon(icon, color: Colors.white, size: AppSpacing.iconMd),
+            child: Icon(
+              icon,
+              color: AppColors.onAccent,
+              size: AppSpacing.iconMd,
+            ),
           ),
         ),
       ),

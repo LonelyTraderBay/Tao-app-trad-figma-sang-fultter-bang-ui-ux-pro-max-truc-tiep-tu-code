@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.dart';
+import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 
 enum _SwapTab { compare, history, settings }
 
@@ -58,7 +58,7 @@ class _LaunchpadSwapAggregatorPageState
   @override
   void initState() {
     super.initState();
-    final snapshot = ref.read(launchpadRepositoryProvider).getSwapAggregator();
+    final snapshot = ref.read(launchpadControllerProvider).getSwapAggregator();
     _fromToken = snapshot.fromToken;
     _toToken = snapshot.toToken;
     _slippage = snapshot.slippageTolerance.toStringAsFixed(1);
@@ -74,7 +74,7 @@ class _LaunchpadSwapAggregatorPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadRepositoryProvider).getSwapAggregator();
+    final snapshot = ref.watch(launchpadControllerProvider).getSwapAggregator();
     final bestDex = snapshot.dexQuotes.firstWhere(
       (quote) => quote.recommended,
       orElse: () => snapshot.dexQuotes.first,
@@ -280,7 +280,7 @@ class _SwapInputCard extends StatelessWidget {
               onPressed: onFlip,
               style: IconButton.styleFrom(
                 backgroundColor: AppColors.primary,
-                foregroundColor: Colors.white,
+                foregroundColor: AppColors.onAccent,
               ),
               icon: const Icon(Icons.swap_horiz_rounded, size: 18),
             ),
@@ -624,7 +624,7 @@ class _BestPill extends StatelessWidget {
         child: Text(
           'BEST',
           style: AppTextStyles.micro.copyWith(
-            color: Colors.white,
+            color: AppColors.onAccent,
             fontWeight: AppTextStyles.bold,
             fontSize: 8,
             height: 1,
@@ -1108,7 +1108,7 @@ class _SlippageButton extends StatelessWidget {
         child: Text(
           '$value%',
           style: AppTextStyles.caption.copyWith(
-            color: active ? Colors.white : AppColors.text1,
+            color: active ? AppColors.onAccent : AppColors.text1,
             fontWeight: AppTextStyles.bold,
           ),
         ),

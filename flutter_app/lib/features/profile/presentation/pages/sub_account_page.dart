@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
+import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 class SubAccountPage extends ConsumerStatefulWidget {
   const SubAccountPage({super.key, this.shellRenderMode});
@@ -39,7 +39,7 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileRepositoryProvider).getSubAccounts();
+    final snapshot = ref.watch(profileControllerProvider).getSubAccounts();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -323,7 +323,7 @@ class _CreateSubAccountButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         key: SubAccountPage.createButtonKey,
         onTap: onTap,
@@ -580,7 +580,7 @@ class _SubAccountCard extends StatelessWidget {
       child: Column(
         children: [
           Material(
-            color: Colors.transparent,
+            color: AppColors.transparent,
             child: InkWell(
               key: SubAccountPage.expandKey(account.id),
               onTap: onTap,

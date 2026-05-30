@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PRiskAssessmentPage extends ConsumerWidget {
   const P2PRiskAssessmentPage({super.key, this.shellRenderMode});
@@ -27,7 +27,10 @@ class P2PRiskAssessmentPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getRiskAssessment();
+    final snapshot = ref.watch(p2pRiskAssessmentProvider);
+    final controller = P2PRiskAssessmentController(
+      state: P2PRiskAssessmentViewState(snapshot: snapshot),
+    );
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -75,7 +78,7 @@ class P2PRiskAssessmentPage extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(height: AppSpacing.x3),
-                      _RiskFactorList(factors: snapshot.factors),
+                      _RiskFactorList(factors: controller.materialFactors),
                     ],
                   ),
                 ),
@@ -107,7 +110,7 @@ class _RiskScoreHero extends StatelessWidget {
         children: [
           DecoratedBox(
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: .20),
+              color: AppColors.onAccent.withValues(alpha: .20),
               shape: BoxShape.circle,
             ),
             child: SizedBox(
@@ -117,7 +120,7 @@ class _RiskScoreHero extends StatelessWidget {
                 child: Text(
                   '${snapshot.score}',
                   style: AppTextStyles.heroNumber.copyWith(
-                    color: Colors.white,
+                    color: AppColors.onAccent,
                     fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
@@ -129,7 +132,7 @@ class _RiskScoreHero extends StatelessWidget {
           Text(
             snapshot.scoreLabel,
             style: AppTextStyles.pageTitle.copyWith(
-              color: Colors.white,
+              color: AppColors.onAccent,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -137,7 +140,7 @@ class _RiskScoreHero extends StatelessWidget {
           Text(
             snapshot.scoreSubtitle,
             style: AppTextStyles.micro.copyWith(
-              color: Colors.white.withValues(alpha: .90),
+              color: AppColors.onAccent.withValues(alpha: .90),
               fontWeight: AppTextStyles.bold,
             ),
           ),

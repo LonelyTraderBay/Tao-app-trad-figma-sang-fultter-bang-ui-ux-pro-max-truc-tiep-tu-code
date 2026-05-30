@@ -10,14 +10,15 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _moneyBackground = AppColors.bg;
 const _moneyPanel = AppColors.surface;
 const _moneyPanel2 = AppColors.surface2;
 const _moneyBorder = AppColors.borderSolid;
 const _moneyPrimary = AppColors.primary;
-const _moneyGreen = Color(0xFF10B981);
+const _moneyGreen = AppColors.buy;
 
 class ClientMoneyProtectionPage extends ConsumerStatefulWidget {
   const ClientMoneyProtectionPage({super.key, this.shellRenderMode});
@@ -40,7 +41,7 @@ class _ClientMoneyProtectionPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getClientMoneyProtection();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -516,7 +517,7 @@ class _Documents extends StatelessWidget {
       (
         'Insolvency Protection Guide',
         'What happens to your funds',
-        Color(0xFFF59E0B),
+        AppColors.caution,
       ),
     ];
     return Column(

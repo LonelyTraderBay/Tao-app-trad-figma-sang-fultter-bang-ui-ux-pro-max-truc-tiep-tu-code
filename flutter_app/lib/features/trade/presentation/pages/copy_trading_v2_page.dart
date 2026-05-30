@@ -10,7 +10,8 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _copyPrimary = AppColors.primary;
 const _copyPanel = AppColors.surface;
@@ -38,7 +39,7 @@ class _CopyTradingV2PageState extends ConsumerState<CopyTradingV2Page> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getCopyTradingV2();
+    final snapshot = ref.watch(tradeCopyTradingV2Provider);
     final copyTrading = snapshot.copyTrading;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -200,7 +201,7 @@ class _VariantButton extends StatelessWidget {
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-          color: active ? _copyPrimary : Colors.transparent,
+          color: active ? _copyPrimary : AppColors.transparent,
           border: Border.all(
             color: active ? _copyPrimary : AppColors.cardBorder,
           ),
@@ -209,7 +210,7 @@ class _VariantButton extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
-            color: active ? Colors.white : AppColors.text2,
+            color: active ? AppColors.onAccent : AppColors.text2,
             fontSize: 11,
             fontWeight: AppTextStyles.bold,
             height: 1,
@@ -263,7 +264,7 @@ class _GlassHero extends StatelessWidget {
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
-                  colors: [AppColors.accent20, Colors.transparent],
+                  colors: [AppColors.accent20, AppColors.transparent],
                 ),
               ),
             ),
@@ -352,18 +353,22 @@ class _BoldHero extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: .20),
+              color: AppColors.onAccent.withValues(alpha: .20),
               borderRadius: BorderRadius.circular(999),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.copy_rounded, color: Colors.white, size: 14),
+                const Icon(
+                  Icons.copy_rounded,
+                  color: AppColors.onAccent,
+                  size: 14,
+                ),
                 const SizedBox(width: 7),
                 Text(
                   'COPY TRADING',
                   style: AppTextStyles.micro.copyWith(
-                    color: Colors.white,
+                    color: AppColors.onAccent,
                     fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
@@ -376,7 +381,7 @@ class _BoldHero extends StatelessWidget {
           Text(
             'Sao chép trader hàng đầu',
             style: AppTextStyles.sectionTitle.copyWith(
-              color: Colors.white,
+              color: AppColors.onAccent,
               fontSize: 20,
               fontWeight: FontWeight.w800,
             ),
@@ -385,7 +390,7 @@ class _BoldHero extends StatelessWidget {
           Text(
             'Tự động · Minh bạch · Kiểm soát rủi ro',
             style: AppTextStyles.caption.copyWith(
-              color: Colors.white.withValues(alpha: .90),
+              color: AppColors.onAccent.withValues(alpha: .90),
               fontSize: 12,
             ),
           ),
@@ -434,7 +439,7 @@ class _CopyIconBox extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: AppColors.accent20,
-        border: Border.all(color: const Color(0x26FFFFFF)),
+        border: Border.all(color: AppColors.portfolioBtnGhostBorder),
         borderRadius: AppRadii.cardRadius,
       ),
       child: const Icon(Icons.copy_rounded, color: _copyPrimary, size: 23),
@@ -461,8 +466,8 @@ class _GlassStatCard extends StatelessWidget {
       height: 104,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .05),
-        border: Border.all(color: Colors.white.withValues(alpha: .08)),
+        color: AppColors.onAccent.withValues(alpha: .05),
+        border: Border.all(color: AppColors.onAccent.withValues(alpha: .08)),
         borderRadius: AppRadii.inputRadius,
       ),
       child: Column(
@@ -537,7 +542,7 @@ class _BoldStatCard extends StatelessWidget {
           Text(
             label,
             style: AppTextStyles.micro.copyWith(
-              color: Colors.white.withValues(alpha: .80),
+              color: AppColors.onAccent.withValues(alpha: .80),
               fontSize: 9,
               fontWeight: AppTextStyles.bold,
               height: 1,
@@ -549,7 +554,7 @@ class _BoldStatCard extends StatelessWidget {
             child: Text(
               value,
               style: AppTextStyles.caption.copyWith(
-                color: Colors.white,
+                color: AppColors.onAccent,
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
                 height: 1,
@@ -682,7 +687,7 @@ class _SortChip extends StatelessWidget {
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
-              color: active ? Colors.white : AppColors.text2,
+              color: active ? AppColors.onAccent : AppColors.text2,
               fontSize: 12,
               fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
               height: 1,

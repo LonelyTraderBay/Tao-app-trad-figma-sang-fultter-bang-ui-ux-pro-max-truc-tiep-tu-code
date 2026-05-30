@@ -78,7 +78,7 @@ void main() {
     expect(find.text('Spam, quảng cáo, link lạ'), findsOneWidget);
   });
 
-  testWidgets('SC-198 quick links use safe placeholder routes', (tester) async {
+  testWidgets('SC-198 quick links use safe Arena routes', (tester) async {
     await pumpSafetyCenter(tester);
 
     await tester.ensureVisible(

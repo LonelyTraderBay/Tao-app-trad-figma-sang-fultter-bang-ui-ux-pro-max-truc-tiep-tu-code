@@ -11,14 +11,15 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _apiBackground = AppColors.bg;
 const _apiPanel = AppColors.surface;
 const _apiPanel2 = AppColors.surface2;
 const _apiPrimary = AppColors.primary;
-const _apiGreen = Color(0xFF10B981);
-const _apiRed = Color(0xFFEF4444);
+const _apiGreen = AppColors.buy;
+const _apiRed = AppColors.sell;
 const _apiTabBackground = AppColors.surface2;
 
 class BotApiDocumentationPage extends ConsumerStatefulWidget {
@@ -47,7 +48,9 @@ class _BotApiDocumentationPageState
   @override
   void initState() {
     super.initState();
-    final snapshot = ref.read(tradeRepositoryProvider).getBotApiDocumentation();
+    final snapshot = ref
+        .read(tradeReadModelControllerProvider)
+        .getBotApiDocumentation();
     _view = snapshot.defaultView;
     _language = snapshot.defaultLanguage;
   }
@@ -55,7 +58,7 @@ class _BotApiDocumentationPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getBotApiDocumentation();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -222,7 +225,7 @@ class _Tabs extends StatelessWidget {
                 border: Border.all(
                   color: active == tabs[i].id
                       ? _apiPrimary.withValues(alpha: .42)
-                      : Colors.transparent,
+                      : AppColors.transparent,
                 ),
                 borderRadius: AppRadii.cardRadius,
               ),
@@ -571,7 +574,7 @@ class _ExamplesView extends StatelessWidget {
                     example.label,
                     style: AppTextStyles.caption.copyWith(
                       color: selected.language == example.language
-                          ? Colors.white
+                          ? AppColors.onAccent
                           : AppColors.text1,
                       fontSize: 12,
                       fontWeight: AppTextStyles.bold,

@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 enum _MerchantProfileTab { ads, reviews }
 
@@ -48,9 +48,7 @@ class _P2PMerchantProfilePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getMerchantProfile(widget.merchantId);
+    final snapshot = ref.watch(p2pMerchantProfileProvider(widget.merchantId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -158,7 +156,7 @@ class _P2PMerchantProfilePageState
       builder: (dialogContext) {
         return AlertDialog(
           backgroundColor: AppColors.surface,
-          surfaceTintColor: Colors.transparent,
+          surfaceTintColor: AppColors.transparent,
           shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
           title: Text(
             'Chặn ${snapshot.merchant.name}?',
@@ -364,7 +362,7 @@ class _MerchantAvatar extends StatelessWidget {
           child: Text(
             merchant.name.characters.first,
             style: AppTextStyles.pageTitle.copyWith(
-              color: Colors.white,
+              color: AppColors.onAccent,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -725,7 +723,7 @@ class _OutlineActionButton extends StatelessWidget {
     return SizedBox(
       height: AppSpacing.buttonCompact,
       child: Material(
-        color: Colors.transparent,
+        color: AppColors.transparent,
         borderRadius: AppRadii.inputRadius,
         child: Ink(
           decoration: BoxDecoration(
@@ -809,7 +807,7 @@ class _ReviewCard extends StatelessWidget {
                 child: Text(
                   review.fromUser.characters.first,
                   style: AppTextStyles.caption.copyWith(
-                    color: Colors.white,
+                    color: AppColors.onAccent,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),

@@ -64,12 +64,16 @@ class AdminMetricTile {
     required this.value,
     required this.accent,
     required this.icon,
+    this.deltaLabel = '0.0%',
+    this.timeframeLabel = 'Current window',
   });
 
   final String label;
   final String value;
   final AdminMetricAccent accent;
   final AdminDashboardIcon icon;
+  final String deltaLabel;
+  final String timeframeLabel;
 }
 
 class AdminDashboardLink {

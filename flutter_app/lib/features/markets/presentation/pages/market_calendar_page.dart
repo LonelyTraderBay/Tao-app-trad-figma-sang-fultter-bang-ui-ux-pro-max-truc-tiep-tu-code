@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -13,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
+import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 
 const _marketPrimary = AppColors.primary;
 
@@ -66,7 +67,7 @@ class _MarketCalendarPageState extends ConsumerState<MarketCalendarPage> {
       impact: _impactFilter,
     );
     final snapshot = ref
-        .watch(marketRepositoryProvider)
+        .watch(marketControllerProvider)
         .getMarketCalendar(query: query);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -394,7 +395,7 @@ class _FilterChipButton extends StatelessWidget {
           border: Border.all(
             color: active
                 ? activeColor.withValues(alpha: .55)
-                : Colors.transparent,
+                : AppColors.transparent,
           ),
           borderRadius: AppRadii.cardRadius,
         ),
@@ -432,7 +433,9 @@ class _ImpactChip extends StatelessWidget {
         duration: const Duration(milliseconds: 160),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          color: active ? cfg.color.withValues(alpha: .14) : Colors.transparent,
+          color: active
+              ? cfg.color.withValues(alpha: .14)
+              : AppColors.transparent,
           border: Border.all(
             color: active
                 ? cfg.color.withValues(alpha: .38)
@@ -819,11 +822,11 @@ class _CalendarDay extends StatelessWidget {
               ? _marketPrimary.withValues(alpha: .12)
               : hasEvents
               ? AppColors.surface2
-              : Colors.transparent,
+              : AppColors.transparent,
           border: Border.all(
             color: isToday
                 ? _marketPrimary.withValues(alpha: .35)
-                : Colors.transparent,
+                : AppColors.transparent,
             width: 1.5,
           ),
           borderRadius: AppRadii.smRadius,
@@ -996,7 +999,7 @@ _EventTypeConfig _eventTypeConfig(MarketCalendarEventType type) {
   return switch (type) {
     MarketCalendarEventType.unlock => const _EventTypeConfig(
       label: 'Token Unlock',
-      color: Color(0xFFF59E0B),
+      color: AppColors.caution,
       icon: Icons.lock_open_rounded,
     ),
     MarketCalendarEventType.upgrade => const _EventTypeConfig(
@@ -1016,7 +1019,7 @@ _EventTypeConfig _eventTypeConfig(MarketCalendarEventType type) {
     ),
     MarketCalendarEventType.listing => const _EventTypeConfig(
       label: 'Niêm yết',
-      color: Color(0xFF06B6D4),
+      color: AppAssetColors.cyanChain,
       icon: Icons.receipt_long_rounded,
     ),
     MarketCalendarEventType.fork => const _EventTypeConfig(
@@ -1026,17 +1029,17 @@ _EventTypeConfig _eventTypeConfig(MarketCalendarEventType type) {
     ),
     MarketCalendarEventType.burn => const _EventTypeConfig(
       label: 'Đốt token',
-      color: Color(0xFFF97316),
+      color: AppColors.riskHigh,
       icon: Icons.local_fire_department_rounded,
     ),
     MarketCalendarEventType.conference => const _EventTypeConfig(
       label: 'Hội nghị',
-      color: Color(0xFF6366F1),
+      color: AppAssetColors.indigoChain,
       icon: Icons.mic_rounded,
     ),
     MarketCalendarEventType.report => const _EventTypeConfig(
       label: 'Báo cáo',
-      color: Color(0xFF64748B),
+      color: AppColors.text3,
       icon: Icons.bar_chart_rounded,
     ),
   };

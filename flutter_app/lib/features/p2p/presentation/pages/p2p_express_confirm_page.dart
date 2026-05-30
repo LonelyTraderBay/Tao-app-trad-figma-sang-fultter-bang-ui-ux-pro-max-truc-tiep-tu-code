@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PExpressConfirmPage extends ConsumerStatefulWidget {
   const P2PExpressConfirmPage({
@@ -49,16 +49,19 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getExpressConfirm(
-          tradeType: widget.tradeType,
-          asset: widget.asset,
-          fiatAmount: widget.fiatAmount,
-          cryptoAmount: widget.cryptoAmount,
-          adId: widget.adId,
-          paymentMethod: widget.paymentMethod,
-        );
+    final snapshot = ref.watch(
+      p2pExpressConfirmProvider((
+        tradeType: widget.tradeType,
+        asset: widget.asset,
+        fiatAmount: widget.fiatAmount,
+        cryptoAmount: widget.cryptoAmount,
+        adId: widget.adId,
+        paymentMethod: widget.paymentMethod,
+      )),
+    );
+    final controller = P2PExpressConfirmController(
+      state: P2PExpressConfirmViewState(snapshot: snapshot),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -75,7 +78,7 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
         child: Column(
           children: [
             VitHeader(
-              title: 'Xác nhận ${snapshot.isBuy ? 'mua' : 'bán'} nhanh',
+              title: controller.confirmationTitle,
               subtitle: 'Express - P2P',
               showBack: true,
               onBack: () => _close(context),
@@ -120,7 +123,7 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
                         processing: _processing,
                         isBuy: snapshot.isBuy,
                         onCancel: () => _close(context),
-                        onConfirm: () => _confirm(context, snapshot),
+                        onConfirm: () => _confirm(context, controller),
                       ),
                     ],
                   ),
@@ -135,14 +138,14 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
 
   Future<void> _confirm(
     BuildContext context,
-    P2PExpressConfirmSnapshot snapshot,
+    P2PExpressConfirmController controller,
   ) async {
     if (_processing) return;
     HapticFeedback.mediumImpact();
     setState(() => _processing = true);
     await Future<void>.delayed(const Duration(milliseconds: 350));
     if (!context.mounted) return;
-    context.go(AppRoutePaths.p2pOrder(snapshot.order.id));
+    context.go(AppRoutePaths.p2pOrder(controller.orderRouteId));
   }
 
   static void _close(BuildContext context) {
@@ -174,7 +177,7 @@ class _Hero extends StatelessWidget {
           ),
           child: const Icon(
             Icons.bolt_outlined,
-            color: Colors.white,
+            color: AppColors.onAccent,
             size: AppSpacing.iconMd,
           ),
         ),
@@ -338,7 +341,7 @@ class _MerchantCard extends StatelessWidget {
             child: Text(
               ad.merchant.characters.first,
               style: AppTextStyles.caption.copyWith(
-                color: Colors.white,
+                color: AppColors.onAccent,
                 fontWeight: AppTextStyles.bold,
               ),
             ),

@@ -103,7 +103,7 @@ void main() {
     expect(find.text('Xác nhận (0 ảnh)'), findsOneWidget);
   });
 
-  testWidgets('SC-215 confirm after upload returns to P2P order placeholder', (
+  testWidgets('SC-215 confirm after upload returns to P2P order route', (
     tester,
   ) async {
     await pumpP2POrderProof(tester);

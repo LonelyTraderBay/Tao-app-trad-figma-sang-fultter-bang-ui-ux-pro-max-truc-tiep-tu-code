@@ -1,11 +1,11 @@
 {
-    "name": "vit_trade_flutter",
-    "short_name": "vit_trade_flutter",
+    "name": "VitTrade",
+    "short_name": "VitTrade",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#07090D",
+    "theme_color": "#E58A00",
+    "description": "Enterprise crypto trading, wallet, P2P, Prediction Markets, and Open Arena app.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

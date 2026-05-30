@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PLoginHistoryPage extends ConsumerStatefulWidget {
   const P2PLoginHistoryPage({super.key, this.shellRenderMode});
@@ -43,7 +43,7 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getLoginHistory();
+    final snapshot = ref.watch(p2pLoginHistoryProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -329,7 +329,7 @@ class _FilterPill extends StatelessWidget {
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
-              color: selected ? Colors.white : AppColors.text2,
+              color: selected ? AppColors.onAccent : AppColors.text2,
               fontWeight: AppTextStyles.bold,
             ),
           ),

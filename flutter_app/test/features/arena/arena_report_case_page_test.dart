@@ -78,6 +78,7 @@ void main() {
   ) async {
     await pumpReportCase(tester, caseId: 'rpt001');
 
+    expect(find.text('Moderation review state'), findsOneWidget);
     expect(find.text('#RPT001'), findsOneWidget);
     expect(find.text('GameMaker_HN'), findsOneWidget);
     expect(find.text('Thao túng kết quả'), findsOneWidget);
@@ -108,26 +109,25 @@ void main() {
     expect(find.text('Chi tiết challenge'), findsOneWidget);
   });
 
-  testWidgets(
-    'SC-202 report links navigate to safe placeholder/detail routes',
-    (tester) async {
-      await pumpReportCase(tester, caseId: 'rpt001');
+  testWidgets('SC-202 report links navigate to local preview/detail routes', (
+    tester,
+  ) async {
+    await pumpReportCase(tester, caseId: 'rpt001');
 
-      await tester.ensureVisible(find.byKey(ArenaReportCasePage.myReportsKey));
-      await tester.tap(find.byKey(ArenaReportCasePage.myReportsKey));
-      await tester.pumpAndSettle();
-      expect(find.text('Báo cáo của tôi'), findsOneWidget);
+    await tester.ensureVisible(find.byKey(ArenaReportCasePage.myReportsKey));
+    await tester.tap(find.byKey(ArenaReportCasePage.myReportsKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Báo cáo của tôi'), findsOneWidget);
 
-      await pumpReportCase(tester, caseId: 'rpt001');
-      await tester.ensureVisible(
-        find.byKey(ArenaReportCasePage.relatedReportKey('rpt002')),
-      );
-      await tester.tap(
-        find.byKey(ArenaReportCasePage.relatedReportKey('rpt002')),
-      );
-      await tester.pumpAndSettle();
-      expect(find.text('#RPT002'), findsOneWidget);
-      expect(find.text('SpamBot_X'), findsOneWidget);
-    },
-  );
+    await pumpReportCase(tester, caseId: 'rpt001');
+    await tester.ensureVisible(
+      find.byKey(ArenaReportCasePage.relatedReportKey('rpt002')),
+    );
+    await tester.tap(
+      find.byKey(ArenaReportCasePage.relatedReportKey('rpt002')),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('#RPT002'), findsOneWidget);
+    expect(find.text('SpamBot_X'), findsOneWidget);
+  });
 }

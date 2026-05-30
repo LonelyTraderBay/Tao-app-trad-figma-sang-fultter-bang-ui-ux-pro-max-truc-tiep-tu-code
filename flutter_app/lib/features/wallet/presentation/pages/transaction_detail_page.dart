@@ -12,15 +12,15 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 const _detailBackground = AppColors.bg;
 const _detailPanel = AppColors.surface;
 const _detailPanel2 = AppColors.surface2;
 const _detailPrimary = AppColors.primary;
-const _detailGreen = Color(0xFF10B981);
-const _detailRed = Color(0xFFEF4444);
-const _detailAmber = Color(0xFFF59E0B);
+const _detailGreen = AppColors.buy;
+const _detailRed = AppColors.sell;
+const _detailAmber = AppColors.caution;
 
 class TransactionDetailPage extends ConsumerWidget {
   const TransactionDetailPage({
@@ -39,9 +39,7 @@ class TransactionDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(walletRepositoryProvider)
-        .getTransactionDetail(transactionId);
+    final snapshot = ref.watch(walletTransactionDetailProvider(transactionId));
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -553,7 +551,7 @@ class _MissingTransaction extends StatelessWidget {
             child: Text(
               'Quay lại lịch sử',
               style: AppTextStyles.caption.copyWith(
-                color: Colors.white,
+                color: AppColors.onAccent,
                 fontWeight: FontWeight.w800,
               ),
             ),

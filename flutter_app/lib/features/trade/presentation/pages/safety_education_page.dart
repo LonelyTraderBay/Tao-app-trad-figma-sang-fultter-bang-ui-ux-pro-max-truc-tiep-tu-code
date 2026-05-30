@@ -10,7 +10,8 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _safetyPrimary = AppColors.primary;
 const _safetyCard = AppColors.surface;
@@ -38,7 +39,9 @@ class _SafetyEducationPageState extends ConsumerState<SafetyEducationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getSafetyEducation();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getSafetyEducation();
     if (!_initialized) {
       _activeTabId = snapshot.defaultTabId;
       _initialized = true;
@@ -138,7 +141,7 @@ class _HeroBanner extends StatelessWidget {
             ),
             child: const Icon(
               Icons.shield_outlined,
-              color: Colors.white,
+              color: AppColors.onAccent,
               size: 24,
             ),
           ),
@@ -683,7 +686,7 @@ class _ReportTab extends StatelessWidget {
                 child: Text(
                   'Submit Report',
                   style: AppTextStyles.body.copyWith(
-                    color: Colors.white,
+                    color: AppColors.onAccent,
                     fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                   ),

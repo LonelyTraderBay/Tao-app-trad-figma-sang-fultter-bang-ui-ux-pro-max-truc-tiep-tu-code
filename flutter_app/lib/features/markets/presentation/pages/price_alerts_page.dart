@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
+import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 
 const _marketPrimary = AppColors.primary;
 
@@ -51,7 +51,7 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
   void initState() {
     super.initState();
     _alerts = [
-      ...ref.read(marketRepositoryProvider).getPriceAlerts().priceAlerts,
+      ...ref.read(marketControllerProvider).getPriceAlerts().priceAlerts,
     ];
   }
 
@@ -103,7 +103,7 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(marketRepositoryProvider).getPriceAlerts();
+    final snapshot = ref.watch(marketControllerProvider).getPriceAlerts();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -287,7 +287,7 @@ class _FilterTab extends StatelessWidget {
           border: Border.all(
             color: active
                 ? _marketPrimary.withValues(alpha: .48)
-                : Colors.transparent,
+                : AppColors.transparent,
           ),
           borderRadius: AppRadii.cardRadius,
         ),
@@ -432,7 +432,7 @@ class _AlertCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: _isTriggered
               ? AppColors.buy.withValues(alpha: .04)
-              : Colors.transparent,
+              : AppColors.transparent,
           borderRadius: AppRadii.cardRadius,
         ),
         child: Column(

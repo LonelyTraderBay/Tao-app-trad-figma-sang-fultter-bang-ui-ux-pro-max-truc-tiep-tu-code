@@ -70,6 +70,8 @@ void main() {
     expect(find.text('NvN'), findsOneWidget);
     expect(find.text('Công khai'), findsWidgets);
     expect(find.text('Points Only'), findsOneWidget);
+    expect(find.text('Points-only review'), findsOneWidget);
+    expect(find.text('Net Points pool'), findsOneWidget);
     expect(find.text('Entry Points'), findsOneWidget);
     expect(find.text('7.2K'), findsWidgets);
     expect(find.text('Team SOL'), findsWidgets);

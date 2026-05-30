@@ -118,7 +118,7 @@ class VitStatusPill extends StatelessWidget {
       height: metrics.height,
       padding: EdgeInsets.symmetric(horizontal: metrics.paddingX),
       decoration: BoxDecoration(
-        color: outline ? Colors.transparent : palette.background,
+        color: outline ? AppColors.transparent : palette.background,
         border: Border.all(color: palette.border),
         borderRadius: BorderRadius.circular(metrics.height / 2),
       ),
@@ -140,15 +140,17 @@ class VitStatusPill extends StatelessWidget {
             Icon(icon, color: palette.foreground, size: metrics.iconSize),
             SizedBox(width: metrics.gap),
           ],
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: palette.foreground,
-              fontSize: metrics.fontSize,
-              fontWeight: AppTextStyles.medium,
-              height: 1,
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption.copyWith(
+                color: palette.foreground,
+                fontSize: metrics.fontSize,
+                fontWeight: AppTextStyles.medium,
+                height: 1,
+              ),
             ),
           ),
           if (hasCount) ...[
@@ -165,7 +167,7 @@ class VitStatusPill extends StatelessWidget {
               child: Text(
                 count! > 99 ? '99+' : '${count!}',
                 style: AppTextStyles.micro.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontSize: metrics.fontSize - 2,
                   fontWeight: AppTextStyles.bold,
                   height: 1,

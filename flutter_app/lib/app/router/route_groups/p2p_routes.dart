@@ -182,15 +182,15 @@ List<RouteBase> _p2pRoutes(ShellRenderMode shellRenderMode) {
       name: AppRouteNames.sc250P2PAddressProof,
       builder: (_, _) => P2PAddressProofPage(shellRenderMode: shellRenderMode),
     ),
-    _placeholderRoute(
-      AppRoutePaths.p2pKycVerify,
-      'P2P KYC Verify',
-      backPath: AppRoutePaths.p2pKycRequirements,
+    GoRoute(
+      path: AppRoutePaths.p2pKycVerify,
+      builder: (_, _) =>
+          P2PIdentityVerificationPage(shellRenderMode: shellRenderMode),
     ),
-    _placeholderRoute(
-      AppRoutePaths.p2pKycFaceMatch,
-      'P2P KYC Face Match',
-      backPath: AppRoutePaths.p2pKycIdentity,
+    GoRoute(
+      path: AppRoutePaths.p2pKycFaceMatch,
+      builder: (_, _) =>
+          P2PSelfieVerificationPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: AppRoutePaths.p2pKycSelfie,
@@ -238,20 +238,17 @@ List<RouteBase> _p2pRoutes(ShellRenderMode shellRenderMode) {
       builder: (_, _) =>
           P2PSuspiciousActivityPage(shellRenderMode: shellRenderMode),
     ),
-    _placeholderRoute(
-      AppRoutePaths.p2pSecurityWhitelist,
-      'P2P Whitelist Mode',
-      backPath: AppRoutePaths.p2pSecurityCenter,
+    GoRoute(
+      path: AppRoutePaths.p2pSecurityWhitelist,
+      builder: (_, _) => P2PWhitelistModePage(shellRenderMode: shellRenderMode),
     ),
-    _placeholderRoute(
-      AppRoutePaths.settingsSecurityBiometric,
-      'Biometric Lock',
-      backPath: AppRoutePaths.p2pSecurityCenter,
+    GoRoute(
+      path: AppRoutePaths.settingsSecurityBiometric,
+      builder: (_, _) => SecurityPage(shellRenderMode: shellRenderMode),
     ),
-    _placeholderRoute(
-      AppRoutePaths.settingsSecurityChangePassword,
-      'Change Password',
-      backPath: AppRoutePaths.p2pSecurityCenter,
+    GoRoute(
+      path: AppRoutePaths.settingsSecurityChangePassword,
+      builder: (_, _) => SecurityPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: '/p2p/report/:merchantId',
@@ -497,10 +494,12 @@ List<RouteBase> _p2pRoutes(ShellRenderMode shellRenderMode) {
       name: AppRouteNames.sc275P2PAchievements,
       builder: (_, _) => P2PAchievementsPage(shellRenderMode: shellRenderMode),
     ),
-    _placeholderRoute(
-      '/p2p/tax-report/detailed/:year',
-      'P2P Tax Report Detail',
-      backPath: AppRoutePaths.p2pTaxReporting,
+    GoRoute(
+      path: '/p2p/tax-report/detailed/:year',
+      builder: (_, state) => P2PTaxReportingPage(
+        initialYear: int.tryParse(state.pathParameters['year'] ?? ''),
+        shellRenderMode: shellRenderMode,
+      ),
     ),
     GoRoute(
       path: AppRoutePaths.p2p,

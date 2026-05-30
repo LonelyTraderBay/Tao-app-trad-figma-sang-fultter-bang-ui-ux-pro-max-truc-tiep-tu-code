@@ -14,7 +14,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
+import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 
 class ArenaPointsEntryDetailPage extends ConsumerStatefulWidget {
   const ArenaPointsEntryDetailPage({
@@ -45,7 +46,7 @@ class _ArenaPointsEntryDetailPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(arenaRepositoryProvider)
+        .watch(arenaReadModelControllerProvider)
         .getArenaPointsEntryDetail(widget.entryId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =

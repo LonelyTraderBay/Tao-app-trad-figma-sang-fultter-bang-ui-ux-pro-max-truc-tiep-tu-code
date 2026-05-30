@@ -1,0 +1,232 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+
+class AdminSettingsPage extends ConsumerWidget {
+  const AdminSettingsPage({super.key, this.shellRenderMode});
+
+  static const contentKey = Key('sc180_admin_settings_content');
+  static const routingKey = Key('sc180_admin_settings_routing');
+
+  final ShellRenderMode? shellRenderMode;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(adminHomeControllerProvider);
+    final snapshot = controller.state.snapshot;
+    final mode = shellRenderMode ?? defaultShellRenderMode();
+    final bottomInset =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x5
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+        MediaQuery.paddingOf(context).bottom;
+
+    return VitPageLayout(
+      semanticLabel: 'SC-180 AdminSettingsPage',
+      child: Column(
+        children: [
+          VitHeader(
+            title: 'Admin Settings',
+            subtitle: 'Operations controls',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.admin),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              key: contentKey,
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.only(bottom: bottomInset),
+              child: VitPageContent(
+                customGap: AppSpacing.x5,
+                children: [
+                  VitCard(
+                    key: routingKey,
+                    padding: const EdgeInsets.all(AppSpacing.x4),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const _SettingsSectionTitle(
+                          icon: Icons.route_outlined,
+                          title: 'Dashboard routing',
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        for (final dashboard in snapshot.dashboards) ...[
+                          _AdminSettingsRow(
+                            icon: _settingsMetricIcon(dashboard.icon),
+                            title: dashboard.title,
+                            subtitle: dashboard.description,
+                            trailing: dashboard.stat,
+                            onTap: () => context.go(dashboard.route),
+                          ),
+                          if (dashboard != snapshot.dashboards.last)
+                            const Divider(color: AppColors.divider),
+                        ],
+                      ],
+                    ),
+                  ),
+                  VitCard(
+                    padding: const EdgeInsets.all(AppSpacing.x4),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const _SettingsSectionTitle(
+                          icon: Icons.health_and_safety_outlined,
+                          title: 'Operational health',
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        _AdminSettingsRow(
+                          icon: Icons.bolt_rounded,
+                          title: 'Event stream',
+                          subtitle: snapshot.adminMetrics.liveEventWindowLabel,
+                          trailing: snapshot.adminMetrics.eventsPerMinute,
+                        ),
+                        const Divider(color: AppColors.divider),
+                        _AdminSettingsRow(
+                          icon: Icons.verified_outlined,
+                          title: 'System health',
+                          subtitle: snapshot.adminMetrics.footerUpdatedLabel,
+                          trailing: snapshot.adminMetrics.healthLabel,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AdminSettingsRow extends StatelessWidget {
+  const _AdminSettingsRow({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.trailing,
+    this.onTap,
+  });
+
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final String trailing;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: AppRadii.inputRadius,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+        child: Row(
+          children: [
+            Icon(icon, color: AppColors.primary, size: 18),
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    subtitle,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text3,
+                      height: 1.3,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: AppSpacing.x3),
+            Flexible(
+              child: Text(
+                trailing,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.end,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ),
+            if (onTap != null) ...[
+              const SizedBox(width: AppSpacing.x1),
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: AppColors.text3,
+                size: 18,
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SettingsSectionTitle extends StatelessWidget {
+  const _SettingsSectionTitle({required this.icon, required this.title});
+
+  final IconData icon;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, color: AppColors.text1, size: 18),
+        const SizedBox(width: AppSpacing.x2),
+        Expanded(
+          child: Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.baseMedium.copyWith(
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+IconData _settingsMetricIcon(AdminDashboardIcon icon) {
+  switch (icon) {
+    case AdminDashboardIcon.analytics:
+      return Icons.bar_chart_rounded;
+    case AdminDashboardIcon.experiment:
+      return Icons.science_outlined;
+    case AdminDashboardIcon.funnel:
+      return Icons.filter_alt_outlined;
+  }
+}

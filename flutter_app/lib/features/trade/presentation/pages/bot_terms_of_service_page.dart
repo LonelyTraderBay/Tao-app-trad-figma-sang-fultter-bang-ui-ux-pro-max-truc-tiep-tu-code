@@ -10,14 +10,15 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _termsBackground = AppColors.bg;
 const _termsPanel = AppColors.surface;
 const _termsPanel2 = AppColors.surface2;
 const _termsPrimary = AppColors.primary;
-const _termsAmber = Color(0xFFF59E0B);
-const _termsRed = Color(0xFFEF4444);
+const _termsAmber = AppColors.caution;
+const _termsRed = AppColors.sell;
 
 class BotTermsOfServicePage extends ConsumerStatefulWidget {
   const BotTermsOfServicePage({super.key, this.shellRenderMode});
@@ -55,7 +56,9 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getBotTermsOfService();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getBotTermsOfService();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -441,7 +444,7 @@ class _AgreementCard extends StatelessWidget {
                 height: 24,
                 margin: const EdgeInsets.only(top: 2),
                 decoration: BoxDecoration(
-                  color: agreed ? AppColors.primary : Colors.transparent,
+                  color: agreed ? AppColors.primary : AppColors.transparent,
                   border: Border.all(
                     color: agreed ? AppColors.primary : AppColors.borderSolid,
                   ),
@@ -450,7 +453,7 @@ class _AgreementCard extends StatelessWidget {
                 child: agreed
                     ? const Icon(
                         Icons.check_circle_outline_rounded,
-                        color: Colors.white,
+                        color: AppColors.onAccent,
                         size: 16,
                       )
                     : null,
@@ -516,7 +519,7 @@ class _TermsCta extends StatelessWidget {
         child: Text(
           agreed ? snapshot.enabledCta : snapshot.disabledCta,
           style: AppTextStyles.body.copyWith(
-            color: agreed ? Colors.white : AppColors.text3,
+            color: agreed ? AppColors.onAccent : AppColors.text3,
             fontFamily: 'Roboto',
             fontSize: 14,
             fontWeight: AppTextStyles.bold,

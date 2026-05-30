@@ -11,16 +11,17 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _guideBackground = AppColors.bg;
 const _guidePanel = AppColors.surface;
 const _guidePanel2 = AppColors.surface2;
 const _guidePrimary = AppColors.primary;
-const _guideGreen = Color(0xFF10B981);
-const _guideAmber = Color(0xFFF59E0B);
-const _guidePurple = Color(0xFF8B5CF6);
-const _guideRed = Color(0xFFEF4444);
+const _guideGreen = AppColors.buy;
+const _guideAmber = AppColors.caution;
+const _guidePurple = AppColors.accent;
+const _guideRed = AppColors.sell;
 
 class BotGuidePage extends ConsumerStatefulWidget {
   const BotGuidePage({super.key, this.shellRenderMode});
@@ -41,7 +42,7 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getBotGuide();
+    final snapshot = ref.watch(tradeReadModelControllerProvider).getBotGuide();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -194,7 +195,7 @@ class _Tabs extends StatelessWidget {
                 border: Border.all(
                   color: active == tabs[i].$1
                       ? _guidePrimary.withValues(alpha: .42)
-                      : Colors.transparent,
+                      : AppColors.transparent,
                 ),
                 borderRadius: AppRadii.cardRadius,
               ),
@@ -900,7 +901,7 @@ class _VideoTutorialsCard extends StatelessWidget {
             child: Text(
               'View All Tutorials',
               style: AppTextStyles.caption.copyWith(
-                color: Colors.white,
+                color: AppColors.onAccent,
                 fontSize: 12,
                 fontWeight: AppTextStyles.bold,
                 height: 1,

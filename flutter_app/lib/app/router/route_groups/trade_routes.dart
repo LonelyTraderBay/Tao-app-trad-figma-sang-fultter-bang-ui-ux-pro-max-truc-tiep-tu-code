@@ -379,7 +379,7 @@ List<RouteBase> _tradeRoutes(ShellRenderMode shellRenderMode) {
       builder: (_, _) =>
           RegulatoryInspectionReadyPage(shellRenderMode: shellRenderMode),
     ),
-    ..._tradeCopyTradingOutgoingPlaceholders,
+    ..._tradeCopyTradingOutgoingPlaceholders(shellRenderMode),
     GoRoute(
       path: AppRoutePaths.tradeMargin,
       name: AppRouteNames.sc085MarginTrading,

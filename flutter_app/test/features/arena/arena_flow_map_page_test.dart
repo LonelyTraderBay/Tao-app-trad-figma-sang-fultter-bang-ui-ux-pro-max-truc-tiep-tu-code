@@ -47,7 +47,10 @@ void main() {
       snapshot.qaItems.map((item) => item.category),
       contains('Moderation'),
     );
-    expect(snapshot.disclaimer, contains('không phải ví giao dịch hoặc PnL'));
+    expect(
+      snapshot.disclaimer,
+      contains('not a trading account or prediction performance'),
+    );
     expect(
       snapshot.supportedStates,
       containsAll([
@@ -66,9 +69,9 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Open Arena Flow Map'), findsOneWidget);
-    expect(find.text('06F — Prototype & QA'), findsOneWidget);
+    expect(find.textContaining('Prototype & QA'), findsOneWidget);
     expect(find.text('Open Arena Module'), findsOneWidget);
-    expect(find.text('SECTION 1 — Flow Map'), findsOneWidget);
+    expect(find.textContaining('SECTION 1'), findsOneWidget);
     expect(find.text('Route Registry'), findsOneWidget);
     expect(find.text('/arena'), findsOneWidget);
     expect(find.text('Core Entry Points'), findsOneWidget);
@@ -88,8 +91,10 @@ void main() {
     await tester.ensureVisible(find.byKey(ArenaFlowMapPage.sectionKey('qa')));
     await tester.tap(find.byKey(ArenaFlowMapPage.sectionKey('qa')));
     await tester.pumpAndSettle();
-    expect(find.text('Tiến độ QA'), findsOneWidget);
+    expect(find.byKey(ArenaFlowMapPage.qaKey('qa01')), findsOneWidget);
 
+    await tester.ensureVisible(find.byKey(ArenaFlowMapPage.qaKey('qa01')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(ArenaFlowMapPage.qaKey('qa01')));
     await tester.pumpAndSettle();
     expect(find.text('1/8'), findsOneWidget);

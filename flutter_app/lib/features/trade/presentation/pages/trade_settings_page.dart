@@ -10,7 +10,8 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _tradePrimary = AppColors.primary;
 const _cardBackground = AppColors.surface2;
@@ -46,7 +47,10 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
   @override
   void initState() {
     super.initState();
-    _settings = ref.read(tradeRepositoryProvider).getTradeSettings().settings;
+    _settings = ref
+        .read(tradeReadModelControllerProvider)
+        .getTradeSettings()
+        .settings;
   }
 
   @override
@@ -121,14 +125,14 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
 
   void _updateSettings(TradeSettings settings) {
     final updated = ref
-        .read(tradeRepositoryProvider)
+        .read(tradeReadModelControllerProvider)
         .patchTradeSettings(settings);
     setState(() => _settings = updated);
   }
 
   void _resetSettings() {
     _updateSettings(
-      ref.read(tradeRepositoryProvider).getTradeSettings().settings,
+      ref.read(tradeReadModelControllerProvider).getTradeSettings().settings,
     );
   }
 }
@@ -158,7 +162,7 @@ class _SettingsSection extends StatelessWidget {
             Text(
               title,
               style: AppTextStyles.micro.copyWith(
-                color: const Color(0xFF98A2B3),
+                color: AppColors.textMutedLight,
                 fontSize: 12,
                 fontWeight: AppTextStyles.bold,
                 height: 1.2,
@@ -454,7 +458,7 @@ class _ChoiceBlock extends StatelessWidget {
               child: Text(
                 label,
                 style: AppTextStyles.caption.copyWith(
-                  color: const Color(0xFF98A2B3),
+                  color: AppColors.textMutedLight,
                   fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1.2,
@@ -532,7 +536,7 @@ class _ChoiceChipButton extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.caption.copyWith(
-            color: active ? _tradePrimary : const Color(0xFF98A2B3),
+            color: active ? _tradePrimary : AppColors.textMutedLight,
             fontSize: height < 32 ? 11 : 12,
             fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
             height: 1,
@@ -623,11 +627,11 @@ class _VitToggle extends StatelessWidget {
               height: 20,
               margin: const EdgeInsets.symmetric(horizontal: 2),
               decoration: const BoxDecoration(
-                color: Colors.white,
+                color: AppColors.onAccent,
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Color(0x33000000),
+                    color: AppColors.overlayScrim,
                     blurRadius: 4,
                     offset: Offset(0, 1),
                   ),

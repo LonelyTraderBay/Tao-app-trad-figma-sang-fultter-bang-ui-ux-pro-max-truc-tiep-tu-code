@@ -70,7 +70,7 @@ void main() {
     expect(find.text('Top sự kiện'), findsOneWidget);
     expect(find.text('Phân bổ sự kiện'), findsOneWidget);
     expect(find.text('Sự kiện gần đây'), findsOneWidget);
-    expect(find.text('Chưa có sự kiện nào'), findsOneWidget);
+    expect(find.text('No recent events'), findsOneWidget);
   });
 
   testWidgets('SC-181 supports range selection and back route', (tester) async {

@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 enum _SlashingTab { history, statistics, prevention }
 
@@ -268,7 +268,7 @@ class _SlashingTabs extends StatelessWidget {
           for (final tab in _SlashingTab.values)
             Expanded(
               child: Material(
-                color: Colors.transparent,
+                color: AppColors.transparent,
                 child: InkWell(
                   key: StakingSlashingHistoryPage.tabKey(tab.name),
                   onTap: () => onChanged(tab),
@@ -295,7 +295,7 @@ class _SlashingTabs extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: active == tab
                                 ? AppColors.primarySoft
-                                : Colors.transparent,
+                                : AppColors.transparent,
                             borderRadius: AppRadii.xsRadius,
                           ),
                         ),
@@ -986,7 +986,7 @@ String _statusLabel(String status) {
 Color _severityColor(String severity) {
   return switch (severity) {
     'critical' => AppColors.sell,
-    'high' => const Color(0xFFF97316),
+    'high' => AppColors.riskHigh,
     _ => AppColors.warn,
   };
 }

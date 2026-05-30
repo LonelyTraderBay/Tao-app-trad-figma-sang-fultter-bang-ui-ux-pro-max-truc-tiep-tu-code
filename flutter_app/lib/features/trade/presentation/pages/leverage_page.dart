@@ -9,7 +9,8 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _tradePrimary = AppColors.primary;
 const _tradePrimaryDark = AppColors.primaryDark;
@@ -41,21 +42,24 @@ class _LeveragePageState extends ConsumerState<LeveragePage> {
   void initState() {
     super.initState();
     final snapshot = ref
-        .read(tradeRepositoryProvider)
-        .getFuturesLeverage(pairId: widget.pairId);
+        .read(
+          tradeLeverageControllerProvider((pairId: widget.pairId, leverage: 1)),
+        )
+        .state
+        .snapshot;
     _leverage = snapshot.currentLeverage;
   }
 
   @override
   Widget build(BuildContext context) {
-    final repo = ref.watch(tradeRepositoryProvider);
-    final snapshot = repo.getFuturesLeverage(pairId: widget.pairId);
-    final request = TradeFuturesLeverageRequest(
-      pairId: widget.pairId,
-      leverage: _leverage,
-      exampleMargin: snapshot.exampleMargin,
+    final controller = ref.watch(
+      tradeLeverageControllerProvider((
+        pairId: widget.pairId,
+        leverage: _leverage,
+      )),
     );
-    final preview = repo.previewFuturesLeverage(request);
+    final snapshot = controller.state.snapshot;
+    final preview = controller.state.preview;
     final riskColor = Color(preview.riskColorHex);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -121,7 +125,7 @@ class _LeveragePageState extends ConsumerState<LeveragePage> {
                     const SizedBox(height: 38),
                     _ConfirmButton(
                       leverage: _leverage,
-                      onPressed: () => _confirm(request),
+                      onPressed: () => _confirm(controller),
                     ),
                     const SizedBox(height: 16),
                   ],
@@ -135,11 +139,11 @@ class _LeveragePageState extends ConsumerState<LeveragePage> {
   }
 
   void _setLeverage(int leverage) {
-    setState(() => _leverage = leverage.clamp(1, 100).toInt());
+    setState(() => _leverage = TradeLeverageController.sanitize(leverage));
   }
 
-  void _confirm(TradeFuturesLeverageRequest request) {
-    ref.read(tradeRepositoryProvider).submitFuturesLeverage(request);
+  void _confirm(TradeLeverageController controller) {
+    controller.submit();
     _returnToFutures();
   }
 
@@ -332,9 +336,9 @@ class _RiskMeter extends StatelessWidget {
   }
 
   Color _segmentColor(int level) {
-    if (level <= 2) return const Color(0xFF10B981);
-    if (level <= 4) return const Color(0xFFF59E0B);
-    return const Color(0xFFEF4444);
+    if (level <= 2) return AppColors.buy;
+    if (level <= 4) return AppColors.caution;
+    return AppColors.sell;
   }
 }
 
@@ -368,7 +372,7 @@ class _LeverageSlider extends StatelessWidget {
           data: SliderTheme.of(context).copyWith(
             trackHeight: 4,
             activeTrackColor: riskColor,
-            inactiveTrackColor: const Color(0xFF9CA3AF),
+            inactiveTrackColor: AppColors.medalSilverMuted,
             thumbColor: riskColor,
             overlayColor: riskColor.withValues(alpha: .12),
             thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
@@ -433,7 +437,7 @@ class _StopButton extends StatelessWidget {
         child: Text(
           '${leverage}x',
           style: AppTextStyles.caption.copyWith(
-            color: active ? Colors.white : AppColors.text2,
+            color: active ? AppColors.onAccent : AppColors.text2,
             fontSize: 12,
             fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
             height: 1,
@@ -523,7 +527,7 @@ class _PresetButton extends StatelessWidget {
               : null,
           borderRadius: AppRadii.cardRadius,
           border: Border.all(
-            color: active ? Colors.transparent : AppColors.borderSolid,
+            color: active ? AppColors.transparent : AppColors.borderSolid,
           ),
           boxShadow: active
               ? [
@@ -538,7 +542,7 @@ class _PresetButton extends StatelessWidget {
         child: Text(
           '${leverage}x',
           style: AppTextStyles.caption.copyWith(
-            color: active ? Colors.white : AppColors.text2,
+            color: active ? AppColors.onAccent : AppColors.text2,
             fontSize: 14,
             fontWeight: AppTextStyles.bold,
             height: 1,
@@ -820,7 +824,7 @@ class _ConfirmButton extends StatelessWidget {
         child: Text(
           'Xác nhận đòn bẩy ${leverage}x',
           style: AppTextStyles.baseMedium.copyWith(
-            color: Colors.white,
+            color: AppColors.onAccent,
             fontWeight: AppTextStyles.bold,
           ),
         ),

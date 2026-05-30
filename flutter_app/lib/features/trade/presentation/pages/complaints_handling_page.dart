@@ -11,16 +11,17 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _complaintsBackground = AppColors.bg;
 const _complaintsPanel = AppColors.surface;
 const _complaintsPanel2 = AppColors.surface2;
 const _complaintsBorder = AppColors.borderSolid;
 const _complaintsPrimary = AppColors.primary;
-const _complaintsGreen = Color(0xFF10B981);
-const _complaintsAmber = Color(0xFFF59E0B);
-const _complaintsRed = Color(0xFFEF4444);
+const _complaintsGreen = AppColors.buy;
+const _complaintsAmber = AppColors.caution;
+const _complaintsRed = AppColors.sell;
 
 enum _ComplaintsTab { overview, myComplaints, process }
 
@@ -45,7 +46,9 @@ class _ComplaintsHandlingPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getComplaintsHandling();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getComplaintsHandling();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -245,12 +248,12 @@ class _SubmitComplaintButton extends StatelessWidget {
                   width: 48,
                   height: AppSpacing.inputHeight,
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: .20),
+                    color: AppColors.onAccent.withValues(alpha: .20),
                     borderRadius: AppRadii.cardRadius,
                   ),
                   child: const Icon(
                     Icons.chat_bubble_outline_rounded,
-                    color: Colors.white,
+                    color: AppColors.onAccent,
                     size: 25,
                   ),
                 ),
@@ -263,7 +266,7 @@ class _SubmitComplaintButton extends StatelessWidget {
                       Text(
                         'Submit a Complaint',
                         style: AppTextStyles.baseMedium.copyWith(
-                          color: Colors.white,
+                          color: AppColors.onAccent,
                           fontSize: 14,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
@@ -273,7 +276,7 @@ class _SubmitComplaintButton extends StatelessWidget {
                       Text(
                         "We'll respond within 8 weeks",
                         style: AppTextStyles.caption.copyWith(
-                          color: Colors.white,
+                          color: AppColors.onAccent,
                           fontSize: 11,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
@@ -284,7 +287,7 @@ class _SubmitComplaintButton extends StatelessWidget {
                 ),
                 const Icon(
                   Icons.chevron_right_rounded,
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   size: 25,
                 ),
               ],
@@ -371,7 +374,7 @@ class _TabButton extends StatelessWidget {
             Container(
               width: 100,
               height: 2,
-              color: isActive ? _complaintsPrimary : Colors.transparent,
+              color: isActive ? _complaintsPrimary : AppColors.transparent,
             ),
           ],
         ),

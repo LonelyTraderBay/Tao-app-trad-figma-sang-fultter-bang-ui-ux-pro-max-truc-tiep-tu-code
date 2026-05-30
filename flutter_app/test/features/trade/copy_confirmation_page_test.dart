@@ -97,6 +97,9 @@ void main() {
 
     expect(find.text('Xác nhận Copy'), findsOneWidget);
     expect(find.text('AlphaHunter_VN'), findsOneWidget);
+    expect(find.byKey(CopyConfirmationPage.suitabilityKey), findsOneWidget);
+    expect(find.text('Suitability & limits review'), findsOneWidget);
+    expect(find.text('Max 20% portfolio per provider'), findsOneWidget);
     expect(find.text('Xác nhận & Đồng ý'), findsOneWidget);
 
     final submit = tester.widget<VitCtaButton>(

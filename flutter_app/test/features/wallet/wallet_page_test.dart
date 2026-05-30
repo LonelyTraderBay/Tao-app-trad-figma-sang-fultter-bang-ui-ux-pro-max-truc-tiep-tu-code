@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/core/config/app_environment.dart';
+import 'package:vit_trade_flutter/core/network/api_client.dart';
 import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/wallet_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
@@ -18,6 +20,31 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(initialLocation: AppRoutePaths.wallet),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> pumpProductionFailClosedWallet(WidgetTester tester) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          appConfigProvider.overrideWithValue(
+            AppConfig(
+              environment: AppEnvironment.production,
+              apiBaseUrl: Uri.parse('https://api.vittrade.example'),
+              enableMockData: false,
+            ),
+          ),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(initialLocation: AppRoutePaths.wallet),
         ),
@@ -74,6 +101,20 @@ void main() {
     expect(find.text('Tìm tài sản...'), findsOneWidget);
     expect(find.text('13 tài sản'), findsOneWidget);
     expect(find.text('USDT'), findsOneWidget);
+  });
+
+  testWidgets('SC-135 production wallet without backend fails closed in UI', (
+    tester,
+  ) async {
+    await pumpProductionFailClosedWallet(tester);
+
+    expect(find.byType(WalletPage), findsOneWidget);
+    expect(
+      find.textContaining('Wallet service is unavailable'),
+      findsOneWidget,
+    );
+    expect(find.text('\$0.00'), findsWidgets);
+    expect(find.textContaining('0 t'), findsOneWidget);
   });
 
   testWidgets('SC-135 balance toggle, search, and filter update asset view', (

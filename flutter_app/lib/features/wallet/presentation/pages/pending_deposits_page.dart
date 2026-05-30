@@ -10,16 +10,16 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 const _pendingBackground = AppColors.bg;
 const _pendingPanel = AppColors.surface;
 const _pendingPanel2 = AppColors.surface3;
-const _pendingBorder = Color(0x14FFFFFF);
+const _pendingBorder = AppColors.overlayStroke;
 const _pendingPrimary = AppColors.primary;
-const _pendingGreen = Color(0xFF10B981);
-const _pendingAmber = Color(0xFFF59E0B);
-const _pendingRed = Color(0xFFEF4444);
+const _pendingGreen = AppColors.buy;
+const _pendingAmber = AppColors.caution;
+const _pendingRed = AppColors.sell;
 
 enum _DepositFilter { all, pending, done }
 
@@ -46,7 +46,7 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(walletRepositoryProvider).getPendingDeposits();
+    final snapshot = ref.watch(walletPendingDepositsProvider);
     final deposits = _filteredDeposits(snapshot.deposits);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -263,12 +263,12 @@ class _FilterChips extends StatelessWidget {
               decoration: BoxDecoration(
                 color: active == item.$1
                     ? _pendingPrimary.withValues(alpha: .14)
-                    : Colors.transparent,
+                    : AppColors.transparent,
                 borderRadius: AppRadii.inputRadius,
                 border: Border.all(
                   color: active == item.$1
                       ? _pendingPrimary.withValues(alpha: .45)
-                      : Colors.transparent,
+                      : AppColors.transparent,
                 ),
               ),
               child: Text(
@@ -613,7 +613,7 @@ class _DepositDetails extends StatelessWidget {
                   height: 24,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: .04),
+                    color: AppColors.onAccent.withValues(alpha: .04),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(

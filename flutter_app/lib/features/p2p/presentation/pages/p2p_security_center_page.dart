@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PSecurityCenterPage extends ConsumerWidget {
   const P2PSecurityCenterPage({super.key, this.shellRenderMode});
@@ -33,7 +33,7 @@ class P2PSecurityCenterPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getSecurityCenter();
+    final snapshot = ref.watch(p2pSecurityCenterProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -136,6 +136,182 @@ class P2PSecurityCenterPage extends ConsumerWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class P2PWhitelistModePage extends ConsumerWidget {
+  const P2PWhitelistModePage({super.key, this.shellRenderMode});
+
+  static const contentKey = Key('sc253_p2p_whitelist_mode_content');
+  static const devicesKey = Key('sc253_p2p_whitelist_devices');
+  static const antiPhishingKey = Key('sc253_p2p_whitelist_anti_phishing');
+
+  final ShellRenderMode? shellRenderMode;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final snapshot = ref.watch(p2pSecurityCenterProvider);
+    final trustedDevicesRoute = snapshot.features
+        .firstWhere((feature) => feature.id == 'trusted_devices')
+        .route;
+    final antiPhishingRoute = snapshot.features
+        .firstWhere((feature) => feature.id == 'anti_phishing')
+        .route;
+    final mode = shellRenderMode ?? defaultShellRenderMode();
+    final bottomInset =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x5
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+        MediaQuery.paddingOf(context).bottom;
+
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'SC-253 P2PWhitelistModePage',
+      child: Material(
+        type: MaterialType.transparency,
+        child: Column(
+          children: [
+            VitHeader(
+              title: 'Whitelist Mode',
+              subtitle: 'Security Center · P2P',
+              showBack: true,
+              onBack: () => context.go('/p2p/security/center'),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                key: contentKey,
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.fromLTRB(
+                  AppSpacing.contentPad,
+                  AppSpacing.x4,
+                  AppSpacing.contentPad,
+                  bottomInset,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    VitCard(
+                      radius: VitCardRadius.lg,
+                      padding: const EdgeInsets.all(AppSpacing.x5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const _IconBadge(
+                            icon: Icons.shield_outlined,
+                            color: AppModuleAccents.p2p,
+                          ),
+                          const SizedBox(height: AppSpacing.x4),
+                          Text(
+                            'Trusted device whitelist',
+                            style: AppTextStyles.sectionTitle,
+                          ),
+                          const SizedBox(height: AppSpacing.x2),
+                          Text(
+                            'Only reviewed devices and protected payment sessions can continue sensitive P2P actions.',
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.text2,
+                              height: 1.45,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x4),
+                    _WhitelistAction(
+                      key: devicesKey,
+                      icon: Icons.desktop_windows_rounded,
+                      title: 'Review trusted devices',
+                      body:
+                          'Check recent devices before enabling stricter P2P allow-lists.',
+                      onTap: () {
+                        HapticFeedback.selectionClick();
+                        context.go(trustedDevicesRoute);
+                      },
+                    ),
+                    const SizedBox(height: AppSpacing.x3),
+                    _WhitelistAction(
+                      key: antiPhishingKey,
+                      icon: Icons.gpp_good_outlined,
+                      title: 'Confirm anti-phishing code',
+                      body:
+                          'Keep payment and escrow messages recognizable before changing whitelist rules.',
+                      onTap: () {
+                        HapticFeedback.selectionClick();
+                        context.go(antiPhishingRoute);
+                      },
+                    ),
+                    const SizedBox(height: AppSpacing.x5),
+                    VitCtaButton(
+                      onPressed: () {
+                        HapticFeedback.selectionClick();
+                        context.go('/p2p/security/center');
+                      },
+                      child: const Text('Back to Security Center'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _WhitelistAction extends StatelessWidget {
+  const _WhitelistAction({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.body,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String title;
+  final String body;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      onTap: onTap,
+      child: Row(
+        children: [
+          _IconBadge(icon: icon, color: AppModuleAccents.p2p),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.baseMedium.copyWith(
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  body,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text3,
+                    height: 1.35,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.iconMd,
+          ),
+        ],
       ),
     );
   }

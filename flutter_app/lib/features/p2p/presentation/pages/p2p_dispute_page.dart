@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PDisputePage extends ConsumerStatefulWidget {
   const P2PDisputePage({
@@ -59,9 +59,7 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getDisputeOpen(widget.orderId);
+    final snapshot = ref.watch(p2pDisputeOpenProvider(widget.orderId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -252,7 +250,7 @@ class _ReasonTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected ? AppColors.sell10 : Colors.transparent,
+      color: selected ? AppColors.sell10 : AppColors.transparent,
       borderRadius: AppRadii.inputRadius,
       child: InkWell(
         onTap: onTap,

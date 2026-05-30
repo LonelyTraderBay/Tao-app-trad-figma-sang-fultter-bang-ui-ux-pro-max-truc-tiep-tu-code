@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/news_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -12,9 +13,19 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/news/data/news_repository.dart';
 
 const _newsPrimary = AppColors.primary;
+
+extension _NewsArticleTypePresentationColor on NewsArticleType {
+  Color get color => switch (this) {
+    NewsArticleType.maintenance => AppColors.textMutedBlue,
+    NewsArticleType.newFeature => AppColors.info,
+    NewsArticleType.promotion => AppColors.buy,
+    NewsArticleType.security => AppColors.sell,
+    NewsArticleType.listing => AppColors.caution,
+    NewsArticleType.general => AppColors.accent,
+  };
+}
 
 class NewsPage extends ConsumerStatefulWidget {
   const NewsPage({super.key, this.shellRenderMode});
@@ -39,7 +50,7 @@ class _NewsPageState extends ConsumerState<NewsPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(newsRepositoryProvider)
+        .watch(newsControllerProvider)
         .getNews(type: _activeType);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -127,8 +138,8 @@ class _NewsPageState extends ConsumerState<NewsPage> {
       isScrollControlled: true,
       useRootNavigator: true,
       useSafeArea: true,
-      barrierColor: Colors.black.withValues(alpha: .80),
-      backgroundColor: Colors.transparent,
+      barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .80),
+      backgroundColor: AppColors.transparent,
       builder: (context) => _ArticleSheet(article: article),
     );
   }
@@ -291,7 +302,7 @@ class _NewsArticleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final type = article.type;
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
@@ -630,7 +641,7 @@ class _ArticleSheet extends StatelessWidget {
                           onPressed: () => Navigator.of(context).pop(),
                           style: FilledButton.styleFrom(
                             backgroundColor: _newsPrimary,
-                            foregroundColor: Colors.white,
+                            foregroundColor: AppColors.onAccent,
                             shape: RoundedRectangleBorder(
                               borderRadius: AppRadii.lgRadius,
                             ),
@@ -638,7 +649,7 @@ class _ArticleSheet extends StatelessWidget {
                           child: Text(
                             'Đóng',
                             style: AppTextStyles.baseMedium.copyWith(
-                              color: Colors.white,
+                              color: AppColors.onAccent,
                               fontSize: 15,
                             ),
                           ),

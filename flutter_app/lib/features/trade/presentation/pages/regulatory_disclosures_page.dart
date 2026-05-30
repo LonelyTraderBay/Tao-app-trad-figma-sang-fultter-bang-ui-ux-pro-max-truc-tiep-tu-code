@@ -10,14 +10,15 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _legalPrimary = AppColors.primary;
 const _legalBackground = AppColors.bg;
 const _legalTabsBackground = AppColors.surface;
 const _legalCard = AppColors.surface2;
-const _legalGreen = Color(0xFF10B981);
-const _legalAmber = Color(0xFFF59E0B);
+const _legalGreen = AppColors.buy;
+const _legalAmber = AppColors.caution;
 
 class RegulatoryDisclosuresPage extends ConsumerStatefulWidget {
   const RegulatoryDisclosuresPage({super.key, this.shellRenderMode});
@@ -41,7 +42,7 @@ class _RegulatoryDisclosuresPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getRegulatoryDisclosures();
     _activeTabId ??= snapshot.defaultTabId;
 
@@ -130,7 +131,7 @@ class _LegalHero extends StatelessWidget {
             ),
             child: const Icon(
               Icons.balance_rounded,
-              color: Colors.white,
+              color: AppColors.onAccent,
               size: 24,
             ),
           ),
@@ -838,7 +839,7 @@ class _RegulatoryNoticePanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned.fill(
       child: DecoratedBox(
-        decoration: const BoxDecoration(color: Color(0x99000000)),
+        decoration: const BoxDecoration(color: AppColors.modalScrim),
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Container(
@@ -877,7 +878,7 @@ class _RegulatoryNoticePanel extends StatelessWidget {
                     child: Text(
                       'Done',
                       style: AppTextStyles.body.copyWith(
-                        color: Colors.white,
+                        color: AppColors.onAccent,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),

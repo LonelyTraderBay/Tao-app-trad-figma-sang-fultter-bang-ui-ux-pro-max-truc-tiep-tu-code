@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 class SavingsNotificationsPage extends ConsumerStatefulWidget {
   const SavingsNotificationsPage({super.key, this.shellRenderMode});
@@ -327,7 +327,7 @@ class _NotificationCard extends StatelessWidget {
         ? AppColors.surface2
         : _notificationFill(notification.type);
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       borderRadius: AppRadii.cardLargeRadius,
       child: InkWell(
         onTap: onTap,
@@ -624,7 +624,7 @@ class _ToggleSwitch extends StatelessWidget {
               height: 16,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   shape: BoxShape.circle,
                 ),
               ),

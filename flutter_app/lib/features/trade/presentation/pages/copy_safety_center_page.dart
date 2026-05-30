@@ -10,13 +10,14 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _safetyPrimary = AppColors.primary;
 const _safetyTabsBackground = AppColors.surface;
 const _safetyCard = AppColors.surface;
 const _safetyWarningBackground = AppColors.warningBg;
-const _safetyWarningBorder = Color(0x665A3A00);
+const _safetyWarningBorder = AppColors.warningBorderStrong;
 
 class CopySafetyCenterPage extends ConsumerStatefulWidget {
   const CopySafetyCenterPage({super.key, this.shellRenderMode});
@@ -40,7 +41,9 @@ class _CopySafetyCenterPageState extends ConsumerState<CopySafetyCenterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getCopySafetyCenter();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getCopySafetyCenter();
     _activeTabId ??= snapshot.defaultTabId;
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
@@ -134,7 +137,7 @@ class _HeroBanner extends StatelessWidget {
             ),
             child: const Icon(
               Icons.shield_outlined,
-              color: Colors.white,
+              color: AppColors.onAccent,
               size: 25,
             ),
           ),
@@ -986,7 +989,7 @@ class _EmergencyPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned.fill(
       child: DecoratedBox(
-        decoration: const BoxDecoration(color: Color(0x99000000)),
+        decoration: const BoxDecoration(color: AppColors.modalScrim),
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Container(
@@ -1025,7 +1028,7 @@ class _EmergencyPanel extends StatelessWidget {
                     child: Text(
                       'Done',
                       style: AppTextStyles.body.copyWith(
-                        color: Colors.white,
+                        color: AppColors.onAccent,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),

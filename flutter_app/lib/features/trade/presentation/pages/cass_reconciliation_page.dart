@@ -10,16 +10,17 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _cassBackground = AppColors.bg;
 const _cassPanel = AppColors.surface;
 const _cassPanel2 = AppColors.surface2;
 const _cassBorder = AppColors.borderSolid;
 const _cassPrimary = AppColors.primary;
-const _cassGreen = Color(0xFF10B981);
-const _cassAmber = Color(0xFFF59E0B);
-const _cassRed = Color(0xFFEF4444);
+const _cassGreen = AppColors.buy;
+const _cassAmber = AppColors.caution;
+const _cassRed = AppColors.sell;
 
 class CassReconciliationPage extends ConsumerStatefulWidget {
   const CassReconciliationPage({super.key, this.shellRenderMode});
@@ -42,7 +43,9 @@ class _CassReconciliationPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getCassReconciliation();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getCassReconciliation();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame

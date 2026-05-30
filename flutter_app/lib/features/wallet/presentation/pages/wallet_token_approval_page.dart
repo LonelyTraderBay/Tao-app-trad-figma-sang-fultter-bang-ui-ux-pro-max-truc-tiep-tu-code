@@ -11,17 +11,18 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_revoke_sheet.dart';
 
 const _approvalBackground = AppColors.bg;
 const _approvalPanel = AppColors.surface;
-const _approvalBorder = Color(0x14FFFFFF);
+const _approvalBorder = AppColors.overlayStroke;
 const _approvalPrimary = AppColors.primary;
-const _approvalGreen = Color(0xFF10B981);
-const _approvalAmber = Color(0xFFF59E0B);
-const _approvalOrange = Color(0xFFF97316);
-const _approvalRed = Color(0xFFEF4444);
-const _approvalPurple = Color(0xFF8B5CF6);
+const _approvalGreen = AppColors.buy;
+const _approvalAmber = AppColors.caution;
+const _approvalOrange = AppColors.riskHigh;
+const _approvalRed = AppColors.sell;
+const _approvalPurple = AppColors.accent;
 
 const _tabActive = 'Ho\u1EA1t \u0111\u1ED9ng';
 const _tabHistory = 'L\u1ECBch s\u1EED';
@@ -55,7 +56,7 @@ class _WalletTokenApprovalPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(walletRepositoryProvider).getTokenApprovals();
+    final controller = ref.watch(tokenApprovalControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -83,7 +84,7 @@ class _WalletTokenApprovalPageState
               child: SingleChildScrollView(
                 key: WalletTokenApprovalPage.contentKey,
                 padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-                child: _contentForTab(snapshot),
+                child: _contentForTab(controller),
               ),
             ),
           ],
@@ -92,7 +93,8 @@ class _WalletTokenApprovalPageState
     );
   }
 
-  Widget _contentForTab(WalletTokenApprovalSnapshot snapshot) {
+  Widget _contentForTab(TokenApprovalController controller) {
+    final snapshot = controller.state.snapshot;
     if (_tab == _tabHistory) return _HistoryTab(snapshot: snapshot);
     if (_tab == _tabSettings) {
       return _SettingsTab(
@@ -105,72 +107,23 @@ class _WalletTokenApprovalPageState
     }
     return _ActiveApprovalsTab(
       snapshot: snapshot,
-      onRevoke: _showRevokeSheet,
-      onRevokeAll: () => _showRevokeSheet(null),
+      onRevoke: (approval) => _showRevokeSheet(controller, approval),
+      onRevokeAll: () => _showRevokeSheet(controller, null),
     );
   }
 
-  void _showRevokeSheet(WalletTokenApproval? approval) {
-    final title = approval == null
-        ? 'Revoke all high-risk approvals'
-        : 'Revoke ${approval.token} approval';
+  void _showRevokeSheet(
+    TokenApprovalController controller,
+    WalletTokenApproval? approval,
+  ) {
+    final preview = controller.revokePreview(approval);
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: _approvalPanel,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
-      builder: (context) {
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  title,
-                  style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  'This mock flow requires an explicit confirmation before any token approval revocation action.',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 12,
-                    height: 1.45,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _SheetButton(
-                        key: WalletTokenApprovalPage.revokeSheetCancelKey,
-                        label: 'Cancel',
-                        background: AppColors.surface3,
-                        color: AppColors.text2,
-                        onTap: () => Navigator.of(context).pop(),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _SheetButton(
-                        key: WalletTokenApprovalPage.revokeSheetConfirmKey,
-                        label: 'Confirm',
-                        background: _approvalRed,
-                        color: Colors.white,
-                        onTap: () => Navigator.of(context).pop(),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+      builder: (context) => WalletTokenRevokeSheet(preview: preview),
     );
   }
 }
@@ -205,7 +158,7 @@ class _ApprovalTabs extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: activeTab == tab
                               ? _approvalPrimary
-                              : const Color(0xFF566175),
+                              : AppColors.textDisabled,
                           fontSize: 12,
                           fontWeight: FontWeight.w800,
                           height: 1,
@@ -221,7 +174,7 @@ class _ApprovalTabs extends StatelessWidget {
                         height: 2,
                         color: activeTab == tab
                             ? _approvalPrimary
-                            : Colors.transparent,
+                            : AppColors.transparent,
                       ),
                     ),
                   ],
@@ -305,27 +258,33 @@ class _SecurityOverview extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 13),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Token Approvals',
-                    style: AppTextStyles.baseMedium.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w900,
-                      height: 1,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Token Approvals',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.baseMedium.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                        height: 1,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '${snapshot.approvals.length} active approvals',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 12,
-                      height: 1,
+                    const SizedBox(height: 8),
+                    Text(
+                      '${snapshot.approvals.length} active approvals',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text3,
+                        fontSize: 12,
+                        height: 1,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
@@ -415,7 +374,7 @@ class _CriticalAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 90,
+      height: 104,
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
       decoration: BoxDecoration(
         color: _approvalRed.withValues(alpha: .07),
@@ -485,7 +444,7 @@ class _SectionLabel extends StatelessWidget {
         Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: const Color(0xFF8791A6),
+            color: AppColors.textMutedBlue,
             fontSize: 12,
             fontWeight: FontWeight.w900,
             height: 1,
@@ -510,7 +469,7 @@ class _ApprovalCard extends StatelessWidget {
     final showUnusedWarning = approval.unlimited && approval.usageCount == 0;
     return Container(
       key: WalletTokenApprovalPage.approvalKey(approval.id),
-      height: showUnusedWarning ? 240 : 200,
+      height: showUnusedWarning ? 252 : 212,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
       decoration: BoxDecoration(
         color: _approvalPanel,
@@ -1050,7 +1009,7 @@ class _SettingsTab extends StatelessWidget {
           child: Text(
             'Scan for Risky Approvals',
             style: AppTextStyles.caption.copyWith(
-              color: Colors.white,
+              color: AppColors.onAccent,
               fontSize: 14,
               fontWeight: FontWeight.w900,
             ),
@@ -1127,7 +1086,7 @@ class _SettingsRow extends StatelessWidget {
                 width: 24,
                 height: 24,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -1192,45 +1151,6 @@ class _BestPracticesCard extends StatelessWidget {
               ),
             ),
         ],
-      ),
-    );
-  }
-}
-
-class _SheetButton extends StatelessWidget {
-  const _SheetButton({
-    super.key,
-    required this.label,
-    required this.background,
-    required this.color,
-    required this.onTap,
-  });
-
-  final String label;
-  final Color background;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 46,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: background,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: color,
-            fontSize: 14,
-            fontWeight: FontWeight.w900,
-          ),
-        ),
       ),
     );
   }

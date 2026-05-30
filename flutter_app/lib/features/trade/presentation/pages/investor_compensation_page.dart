@@ -10,16 +10,17 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _compBackground = AppColors.bg;
 const _compPanel = AppColors.surface;
 const _compPanel2 = AppColors.surface2;
 const _compBorder = AppColors.borderSolid;
 const _compPrimary = AppColors.primary;
-const _compGreen = Color(0xFF10B981);
-const _compAmber = Color(0xFFF59E0B);
-const _compRed = Color(0xFFEF4444);
+const _compGreen = AppColors.buy;
+const _compAmber = AppColors.caution;
+const _compRed = AppColors.sell;
 
 class InvestorCompensationPage extends ConsumerStatefulWidget {
   const InvestorCompensationPage({super.key, this.shellRenderMode});
@@ -42,7 +43,7 @@ class _InvestorCompensationPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getInvestorCompensation();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -561,7 +562,7 @@ class _ClaimGuide extends StatelessWidget {
             label: Text(
               'Visit FSCS Website',
               style: AppTextStyles.caption.copyWith(
-                color: Colors.white,
+                color: AppColors.onAccent,
                 fontSize: 13,
                 fontWeight: AppTextStyles.bold,
               ),

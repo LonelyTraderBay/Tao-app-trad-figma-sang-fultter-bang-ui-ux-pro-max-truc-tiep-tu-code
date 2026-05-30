@@ -1,0 +1,225 @@
+part of '../pages/launchpad_event_log_page.dart';
+
+class _EventList extends StatelessWidget {
+  const _EventList({
+    required this.events,
+    required this.selectedIds,
+    required this.expandedId,
+    required this.onSelect,
+    required this.onExpand,
+  });
+
+  final List<LaunchpadEventLogEntryDraft> events;
+  final Set<String> selectedIds;
+  final String? expandedId;
+  final ValueChanged<String> onSelect;
+  final ValueChanged<String> onExpand;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      key: LaunchpadEventLogPage.eventListKey,
+      children: [
+        for (final event in events) ...[
+          _EventLogCard(
+            event: event,
+            selected: selectedIds.contains(event.id),
+            expanded: expandedId == event.id,
+            onSelect: () => onSelect(event.id),
+            onExpand: () => onExpand(event.id),
+          ),
+          if (event != events.last) const SizedBox(height: AppSpacing.x3),
+        ],
+      ],
+    );
+  }
+}
+
+class _EventLogCard extends StatelessWidget {
+  const _EventLogCard({
+    required this.event,
+    required this.selected,
+    required this.expanded,
+    required this.onSelect,
+    required this.onExpand,
+  });
+
+  final LaunchpadEventLogEntryDraft event;
+  final bool selected;
+  final bool expanded;
+  final VoidCallback onSelect;
+  final VoidCallback onExpand;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = event.level.color;
+    return VitCard(
+      key: LaunchpadEventLogPage.eventKey(event.id),
+      borderColor: selected
+          ? color.withValues(alpha: .44)
+          : AppColors.cardBorder,
+      padding: EdgeInsets.zero,
+      clip: true,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.x3),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _SelectBox(
+                  key: LaunchpadEventLogPage.eventSelectKey(event.id),
+                  selected: selected,
+                  color: color,
+                  onTap: onSelect,
+                ),
+                const SizedBox(width: AppSpacing.x3),
+                _EventIcon(level: event.level),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          _LevelBadge(level: event.level),
+                          const SizedBox(width: AppSpacing.x2),
+                          Expanded(
+                            child: Text(
+                              event.source,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            event.timestamp,
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.text3,
+                              fontFeatures: const [
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        event.message,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: FontWeight.w800,
+                          height: 1.24,
+                        ),
+                      ),
+                      if (event.tags.isNotEmpty) ...[
+                        const SizedBox(height: AppSpacing.x2),
+                        Wrap(
+                          spacing: AppSpacing.x1,
+                          runSpacing: AppSpacing.x1,
+                          children: [
+                            for (final tag in event.tags) _TagPill(label: tag),
+                          ],
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                IconButton(
+                  key: LaunchpadEventLogPage.eventExpandKey(event.id),
+                  visualDensity: VisualDensity.compact,
+                  onPressed: onExpand,
+                  icon: Icon(
+                    expanded
+                        ? Icons.keyboard_arrow_up_rounded
+                        : Icons.keyboard_arrow_down_rounded,
+                    color: AppColors.text3,
+                    size: 18,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (expanded) _EventDetails(event: event),
+        ],
+      ),
+    );
+  }
+}
+
+class _EventDetails extends StatelessWidget {
+  const _EventDetails({required this.event});
+
+  final LaunchpadEventLogEntryDraft event;
+
+  @override
+  Widget build(BuildContext context) {
+    final rows = [
+      if (event.details != null) ('Chi tiet', event.details!),
+      if (event.txHash != null) ('TxHash', event.txHash!),
+      if (event.chain != null) ('Chain', event.chain!),
+      if (event.contractAddress != null) ('Contract', event.contractAddress!),
+      if (event.gasUsed != null) ('Gas used', event.gasUsed!),
+      if (event.blockNumber != null)
+        ('Block', '#${event.blockNumber!.toString()}'),
+    ];
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        border: Border(top: BorderSide(color: AppColors.divider)),
+      ),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.x3,
+        AppSpacing.x2,
+        AppSpacing.x3,
+        AppSpacing.x3,
+      ),
+      child: Column(
+        children: [
+          for (final row in rows) _DetailRow(label: row.$1, value: row.$2),
+        ],
+      ),
+    );
+  }
+}
+
+class _DetailRow extends StatelessWidget {
+  const _DetailRow({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 76,
+            child: Text(
+              label,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              textAlign: TextAlign.right,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text2,
+                fontWeight: FontWeight.w600,
+                height: 1.35,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

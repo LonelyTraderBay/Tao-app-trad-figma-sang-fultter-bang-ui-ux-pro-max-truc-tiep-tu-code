@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PWalletTransferPage extends ConsumerStatefulWidget {
   const P2PWalletTransferPage({
@@ -74,9 +74,9 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getWalletTransfer(asset: _asset, type: _type);
+    final snapshot = ref.watch(
+      p2pWalletTransferProvider((asset: _asset, type: _type)),
+    );
     if (!snapshot.assets.any((item) => item.symbol == _asset)) {
       _asset = snapshot.defaultAsset;
     }
@@ -771,7 +771,7 @@ class _SubmitButton extends StatelessWidget {
             child: Text(
               label.trim(),
               style: AppTextStyles.baseMedium.copyWith(
-                color: enabled ? Colors.white : AppColors.text3,
+                color: enabled ? AppColors.onAccent : AppColors.text3,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -887,7 +887,7 @@ class _ConfirmTransferView extends StatelessWidget {
                 buttonKey: P2PWalletTransferPage.confirmKey,
                 label: 'Xác nhận',
                 background: AppModuleAccents.p2p,
-                color: Colors.white,
+                color: AppColors.onAccent,
                 onTap: onConfirm,
               ),
             ),

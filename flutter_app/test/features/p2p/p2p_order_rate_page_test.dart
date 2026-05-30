@@ -103,7 +103,7 @@ void main() {
     );
   });
 
-  testWidgets('SC-213 skip returns to P2P order placeholder', (tester) async {
+  testWidgets('SC-213 skip returns to P2P order route', (tester) async {
     await pumpP2POrderRate(tester);
 
     await tester.tap(find.byKey(P2POrderRatePage.skipKey));

@@ -12,7 +12,9 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
+import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/widgets/predictions_portfolio_bridge_card.dart';
 
 const _predictionPrimary = AppColors.primary;
 
@@ -55,7 +57,8 @@ class _PredictionsPortfolioPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(predictionsRepositoryProvider).getPortfolio();
+    final controller = ref.watch(predictionsPortfolioControllerProvider);
+    final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -64,9 +67,7 @@ class _PredictionsPortfolioPageState
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame ? 54 : 20);
-    final openOrders = snapshot.openOrders
-        .where((order) => !_cancelledOrderIds.contains(order.id))
-        .toList();
+    final openOrders = controller.openOrdersExcluding(_cancelledOrderIds);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -134,7 +135,8 @@ class _PredictionsPortfolioPageState
                             _cancelledOrderIds.add(orderId);
                           }),
                         ),
-                      _ArenaBridgeCard(
+                      PredictionsPortfolioArenaBridgeCard(
+                        key: PredictionsPortfolioPage.arenaBridgeKey,
                         onTap: () => context.go(AppRoutePaths.arena),
                       ),
                     ],
@@ -220,7 +222,7 @@ class _SummaryCard extends StatelessWidget {
           Text(
             isHidden ? '••••••' : _formatMoney(snapshot.totalCurrentValue),
             style: AppTextStyles.heroNumber.copyWith(
-              color: Colors.white,
+              color: AppColors.onAccent,
               fontSize: 29,
               height: 1.05,
               fontWeight: FontWeight.w800,
@@ -230,41 +232,49 @@ class _SummaryCard extends StatelessWidget {
             const SizedBox(height: 6),
             Row(
               children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: pnlColor.withValues(alpha: .16),
-                    border: Border.all(color: pnlColor.withValues(alpha: .22)),
-                    borderRadius: AppRadii.mdRadius,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        snapshot.totalPnl >= 0
-                            ? Icons.trending_up_rounded
-                            : Icons.trending_down_rounded,
-                        color: pnlColor,
-                        size: 13,
+                Flexible(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: pnlColor.withValues(alpha: .16),
+                      border: Border.all(
+                        color: pnlColor.withValues(alpha: .22),
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        '${_formatSignedMoney(snapshot.totalPnl)} '
-                        '(${snapshot.totalPnlPct.toStringAsFixed(1)}%)',
-                        style: AppTextStyles.micro.copyWith(
+                      borderRadius: AppRadii.mdRadius,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          snapshot.totalPnl >= 0
+                              ? Icons.trending_up_rounded
+                              : Icons.trending_down_rounded,
                           color: pnlColor,
-                          fontSize: 12,
-                          fontWeight: AppTextStyles.bold,
-                          fontFeatures: AppTextStyles.tabularFigures,
+                          size: 13,
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 4),
+                        Flexible(
+                          child: Text(
+                            '${_formatSignedMoney(snapshot.totalPnl)} '
+                            '(${snapshot.totalPnlPct.toStringAsFixed(1)}%)',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.micro.copyWith(
+                              color: pnlColor,
+                              fontSize: 12,
+                              fontWeight: AppTextStyles.bold,
+                              fontFeatures: AppTextStyles.tabularFigures,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 8),
                 Text(
                   'all time',
                   style: AppTextStyles.micro.copyWith(
@@ -320,7 +330,7 @@ class _SummaryStat extends StatelessWidget {
       height: 51,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 9),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .10),
+        color: AppColors.onAccent.withValues(alpha: .10),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Column(
@@ -341,7 +351,7 @@ class _SummaryStat extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
-              color: Colors.white,
+              color: AppColors.onAccent,
               fontSize: 13,
               height: 1.2,
               fontWeight: AppTextStyles.bold,
@@ -492,18 +502,24 @@ class _PortfolioTabButton extends StatelessWidget {
         duration: const Duration(milliseconds: 160),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? AppColors.surface : Colors.transparent,
+          color: active ? AppColors.surface : AppColors.transparent,
           borderRadius: AppRadii.cardRadius,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: active ? AppColors.text1 : AppColors.text3,
-                fontSize: 12,
-                fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
+            Flexible(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(
+                  color: active ? AppColors.text1 : AppColors.text3,
+                  fontSize: 12,
+                  fontWeight: active
+                      ? AppTextStyles.bold
+                      : AppTextStyles.normal,
+                ),
               ),
             ),
             const SizedBox(width: 5),
@@ -677,24 +693,30 @@ class _PositionCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    _SmallMetric(
-                      label: 'Avg:',
-                      value: '\$${position.avgPrice.toStringAsFixed(2)}',
+                    Expanded(
+                      child: _SmallMetric(
+                        label: 'Avg:',
+                        value: '\$${position.avgPrice.toStringAsFixed(2)}',
+                      ),
                     ),
-                    const SizedBox(width: 18),
-                    _SmallMetric(
-                      label: 'Current:',
-                      value: '\$${position.currentPrice.toStringAsFixed(2)}',
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: _SmallMetric(
+                        label: 'Current:',
+                        value: '\$${position.currentPrice.toStringAsFixed(2)}',
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 6),
                 Row(
                   children: [
-                    _SmallMetric(
-                      label: 'Value:',
-                      value: _formatMoney(position.currentValue),
-                      strong: true,
+                    Expanded(
+                      child: _SmallMetric(
+                        label: 'Value:',
+                        value: _formatMoney(position.currentValue),
+                        strong: true,
+                      ),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
@@ -762,7 +784,6 @@ class _SmallMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           label,
@@ -773,14 +794,18 @@ class _SmallMetric extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 4),
-        Text(
-          value,
-          style: AppTextStyles.micro.copyWith(
-            color: strong ? AppColors.text1 : AppColors.text2,
-            fontSize: strong ? 12 : 10,
-            height: 1.2,
-            fontWeight: strong ? AppTextStyles.bold : AppTextStyles.normal,
-            fontFeatures: AppTextStyles.tabularFigures,
+        Flexible(
+          child: Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(
+              color: strong ? AppColors.text1 : AppColors.text2,
+              fontSize: strong ? 12 : 10,
+              height: 1.2,
+              fontWeight: strong ? AppTextStyles.bold : AppTextStyles.normal,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
           ),
         ),
       ],
@@ -807,11 +832,15 @@ class _OpenOrdersSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(
-              'Pending limit orders awaiting fill',
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            Expanded(
+              child: Text(
+                'Pending limit orders awaiting fill',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
             ),
-            const Spacer(),
+            const SizedBox(width: 8),
             Text(
               '${orders.length}',
               style: AppTextStyles.micro.copyWith(
@@ -1105,88 +1134,6 @@ class _ReceiptCard extends StatelessWidget {
             Icons.chevron_right_rounded,
             color: AppColors.text3,
             size: 15,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ArenaBridgeCard extends StatelessWidget {
-  const _ArenaBridgeCard({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      key: PredictionsPortfolioPage.arenaBridgeKey,
-      onTap: onTap,
-      borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(14),
-      child: Row(
-        children: [
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: AppColors.warn10,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: const Icon(
-              Icons.sports_esports_rounded,
-              color: AppColors.warn,
-              size: 17,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Khám phá Arena cùng chủ đề',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                Text(
-                  'Social points-only · Không liên quan ví hay vị thế Prediction',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 9,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 8),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-            decoration: BoxDecoration(
-              color: AppColors.warn10,
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Text(
-              'Arena Points',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.warn,
-                fontSize: 8,
-                fontWeight: AppTextStyles.bold,
-                height: 1.1,
-              ),
-            ),
-          ),
-          const SizedBox(width: 7),
-          const Icon(
-            Icons.chevron_right_rounded,
-            color: AppColors.warn,
-            size: 17,
           ),
         ],
       ),

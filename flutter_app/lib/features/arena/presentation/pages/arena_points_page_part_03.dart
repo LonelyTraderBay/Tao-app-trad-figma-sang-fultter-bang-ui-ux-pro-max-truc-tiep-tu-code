@@ -1,0 +1,408 @@
+part of 'arena_points_page.dart';
+
+class _ProgressSection extends StatelessWidget {
+  const _ProgressSection({
+    required this.summary,
+    required this.leaderboard,
+    required this.onLeaderboardTap,
+  });
+
+  final ArenaPointsSummaryDraft summary;
+  final List<ArenaPointsLeaderboardDraft> leaderboard;
+  final VoidCallback onLeaderboardTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const _SectionTitle(
+          title: 'Tiến trình & Phần thưởng',
+          trailing: 'Bạc',
+          icon: Icons.workspace_premium_outlined,
+          color: AppColors.accent,
+        ),
+        const SizedBox(height: AppSpacing.x2),
+        VitCard(
+          padding: const EdgeInsets.all(AppSpacing.x4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  _AccentIcon(
+                    icon: Icons.workspace_premium_outlined,
+                    color: AppColors.accent,
+                  ),
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Bạc',
+                          style: AppTextStyles.baseMedium.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
+                          ),
+                        ),
+                        Text(
+                          'Cần thêm points để lên hạng Vàng',
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    '${formatArenaPoints(summary.currentBalance)} pts',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.accent,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.x4),
+              _ProgressBar(value: .56, color: AppColors.accent),
+              const SizedBox(height: AppSpacing.x5),
+              Text(
+                'Bảng xếp hạng',
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: VitStatusPill(
+                  key: ArenaPointsPage.leaderboardKey,
+                  label: 'Tất cả',
+                  icon: Icons.chevron_right_rounded,
+                  status: VitStatusPillStatus.purple,
+                  size: VitStatusPillSize.sm,
+                  onTap: onLeaderboardTap,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x2),
+              for (final entry in leaderboard) ...[
+                _LeaderboardRow(entry: entry),
+                if (entry != leaderboard.last)
+                  const Divider(height: 1, color: AppColors.divider),
+              ],
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LeaderboardRow extends StatelessWidget {
+  const _LeaderboardRow({required this.entry});
+
+  final ArenaPointsLeaderboardDraft entry;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+      child: Row(
+        children: [
+          SizedBox(
+            width: AppSpacing.x6,
+            child: Text(
+              '#${entry.rank}',
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.warn,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              entry.name,
+              style: AppTextStyles.caption.copyWith(color: AppColors.text1),
+            ),
+          ),
+          Text(
+            entry.pointsLabel,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text2,
+              fontWeight: AppTextStyles.medium,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RewardsDisclaimer extends StatelessWidget {
+  const _RewardsDisclaimer({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(Icons.shield_outlined, color: AppColors.accent, size: 17),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text3,
+                height: 1.35,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SectionTitle extends StatelessWidget {
+  const _SectionTitle({
+    required this.title,
+    required this.icon,
+    required this.color,
+    this.trailing,
+  });
+
+  final String title;
+  final IconData icon;
+  final Color color;
+  final String? trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, color: color, size: 16),
+        const SizedBox(width: AppSpacing.x2),
+        Expanded(
+          child: Text(
+            title,
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+        ),
+        if (trailing != null)
+          Text(
+            trailing!,
+            style: AppTextStyles.micro.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _TaskStatusPill extends StatelessWidget {
+  const _TaskStatusPill({required this.status});
+
+  final ArenaRewardTaskStatus status;
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (status) {
+      ArenaRewardTaskStatus.completed => const VitStatusPill(
+        label: 'Nhận',
+        status: VitStatusPillStatus.orange,
+        size: VitStatusPillSize.sm,
+      ),
+      ArenaRewardTaskStatus.claimed => const VitStatusPill(
+        label: 'Đã nhận',
+        status: VitStatusPillStatus.success,
+        size: VitStatusPillSize.sm,
+      ),
+      ArenaRewardTaskStatus.active => const VitStatusPill(
+        label: 'Đang làm',
+        status: VitStatusPillStatus.neutral,
+        size: VitStatusPillSize.sm,
+      ),
+    };
+  }
+}
+
+class _ProgressBar extends StatelessWidget {
+  const _ProgressBar({
+    required this.value,
+    required this.color,
+    this.trackColor = AppColors.surface3,
+  });
+
+  final double value;
+  final Color color;
+  final Color trackColor;
+
+  @override
+  Widget build(BuildContext context) {
+    final safeValue = value.clamp(0.0, 1.0).toDouble();
+    return ClipRRect(
+      borderRadius: AppRadii.xsRadius,
+      child: Container(
+        height: AppSpacing.x3,
+        color: trackColor,
+        alignment: Alignment.centerLeft,
+        child: FractionallySizedBox(
+          widthFactor: safeValue,
+          child: Container(color: color),
+        ),
+      ),
+    );
+  }
+}
+
+class _TinyStat extends StatelessWidget {
+  const _TinyStat({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.color,
+    this.alignEnd = false,
+  });
+
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color color;
+  final bool alignEnd;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: alignEnd
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.start,
+      children: [
+        Icon(icon, color: color, size: 13),
+        const SizedBox(width: AppSpacing.x2),
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+        ),
+        const SizedBox(width: AppSpacing.x1),
+        Flexible(
+          child: Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _Legend extends StatelessWidget {
+  const _Legend({required this.label, required this.color});
+
+  final String label;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: AppSpacing.x2,
+          height: AppSpacing.x2,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
+        const SizedBox(width: AppSpacing.x1),
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+      ],
+    );
+  }
+}
+
+class _MiniBadge extends StatelessWidget {
+  const _MiniBadge({required this.label, required this.color});
+
+  final String label;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x1),
+      decoration: BoxDecoration(color: color, borderRadius: AppRadii.xsRadius),
+      child: Text(
+        label,
+        style: AppTextStyles.micro.copyWith(
+          color: AppColors.bg,
+          fontWeight: AppTextStyles.bold,
+          height: 1.2,
+        ),
+      ),
+    );
+  }
+}
+
+class _AccentIcon extends StatelessWidget {
+  const _AccentIcon({required this.icon, required this.color});
+
+  final IconData icon;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: AppSpacing.buttonCompact,
+      height: AppSpacing.buttonCompact,
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: .14),
+        border: Border.all(color: color.withValues(alpha: .24)),
+        borderRadius: AppRadii.mdRadius,
+      ),
+      child: Icon(icon, color: color, size: AppSpacing.iconMd),
+    );
+  }
+}
+
+Color _accentColor(ArenaRewardAccentKind kind) {
+  return switch (kind) {
+    ArenaRewardAccentKind.daily => AppColors.primary,
+    ArenaRewardAccentKind.weekly => AppColors.accent,
+    ArenaRewardAccentKind.flash => AppColors.sell,
+    ArenaRewardAccentKind.learn => AppColors.buy,
+    ArenaRewardAccentKind.achievement => AppColors.warn,
+    ArenaRewardAccentKind.arena => AppColors.buy,
+    ArenaRewardAccentKind.p2p => AppColors.primarySoft,
+    ArenaRewardAccentKind.referral => AppColors.buy,
+    ArenaRewardAccentKind.neutral => AppColors.text2,
+  };
+}
+
+IconData _accentIcon(ArenaRewardAccentKind kind) {
+  return switch (kind) {
+    ArenaRewardAccentKind.daily => Icons.local_fire_department_outlined,
+    ArenaRewardAccentKind.weekly => Icons.calendar_view_week_outlined,
+    ArenaRewardAccentKind.flash => Icons.bolt_outlined,
+    ArenaRewardAccentKind.learn => Icons.school_outlined,
+    ArenaRewardAccentKind.achievement => Icons.emoji_events_outlined,
+    ArenaRewardAccentKind.arena => Icons.shield_outlined,
+    ArenaRewardAccentKind.p2p => Icons.handshake_outlined,
+    ArenaRewardAccentKind.referral => Icons.group_add_outlined,
+    ArenaRewardAccentKind.neutral => Icons.task_alt_outlined,
+  };
+}

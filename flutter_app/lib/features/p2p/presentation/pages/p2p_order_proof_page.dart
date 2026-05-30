@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2POrderProofPage extends ConsumerStatefulWidget {
   const P2POrderProofPage({
@@ -43,9 +43,7 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getOrderProof(widget.orderId);
+    final snapshot = ref.watch(p2pOrderProofProvider(widget.orderId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -439,7 +437,7 @@ class _ProofThumb extends StatelessWidget {
             ),
             icon: const Icon(
               Icons.delete_outline,
-              color: Colors.white,
+              color: AppColors.onAccent,
               size: AppSpacing.iconSm,
             ),
           ),

@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PComplianceOverviewPage extends ConsumerWidget {
   const P2PComplianceOverviewPage({super.key, this.shellRenderMode});
@@ -26,7 +26,7 @@ class P2PComplianceOverviewPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getComplianceOverview();
+    final snapshot = ref.watch(p2pComplianceOverviewProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -105,7 +105,7 @@ class _ComplianceHero extends StatelessWidget {
         children: [
           DecoratedBox(
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: .20),
+              color: AppColors.onAccent.withValues(alpha: .20),
               borderRadius: AppRadii.lgRadius,
             ),
             child: const SizedBox(
@@ -113,7 +113,7 @@ class _ComplianceHero extends StatelessWidget {
               height: AppSpacing.inputHeight,
               child: Icon(
                 Icons.shield_outlined,
-                color: Colors.white,
+                color: AppColors.onAccent,
                 size: AppSpacing.iconMd,
               ),
             ),
@@ -128,7 +128,7 @@ class _ComplianceHero extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.sectionTitle.copyWith(
-                    color: Colors.white,
+                    color: AppColors.onAccent,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -138,7 +138,7 @@ class _ComplianceHero extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
-                    color: Colors.white.withValues(alpha: .90),
+                    color: AppColors.onAccent.withValues(alpha: .90),
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -184,7 +184,7 @@ class _ComplianceRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         key: P2PComplianceOverviewPage.itemKey(item.id),
         onTap: () {

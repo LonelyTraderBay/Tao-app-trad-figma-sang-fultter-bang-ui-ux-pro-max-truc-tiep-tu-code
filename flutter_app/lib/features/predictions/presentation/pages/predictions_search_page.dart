@@ -12,7 +12,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
+import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 
 const _predictionPrimary = AppColors.primary;
 
@@ -62,7 +63,7 @@ class _PredictionsSearchPageState extends ConsumerState<PredictionsSearchPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(predictionsRepositoryProvider)
+        .watch(predictionsReadModelControllerProvider)
         .getSearch(
           sort: _sort,
           status: _status,
@@ -240,7 +241,7 @@ class _SearchControl extends StatelessWidget {
               decoration: BoxDecoration(
                 color: showFilters
                     ? _predictionPrimary.withValues(alpha: .16)
-                    : Colors.transparent,
+                    : AppColors.transparent,
                 borderRadius: AppRadii.smRadius,
               ),
               child: Icon(

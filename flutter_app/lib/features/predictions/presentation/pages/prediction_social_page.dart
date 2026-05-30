@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,7 +13,9 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
+import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_social_support_widgets.dart';
 
 const _predictionPrimary = AppColors.primary;
 
@@ -64,7 +64,9 @@ class _PredictionSocialPageState extends ConsumerState<PredictionSocialPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(predictionsRepositoryProvider).getSocial();
+    final snapshot = ref
+        .watch(predictionsReadModelControllerProvider)
+        .getSocial();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -354,14 +356,16 @@ class _NewCommentCard extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.send_outlined,
-                    color: Colors.white.withValues(alpha: hasComment ? 1 : .5),
+                    color: AppColors.onAccent.withValues(
+                      alpha: hasComment ? 1 : .5,
+                    ),
                     size: 16,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     'Dang binh luan',
                     style: AppTextStyles.caption.copyWith(
-                      color: Colors.white.withValues(
+                      color: AppColors.onAccent.withValues(
                         alpha: hasComment ? 1 : .55,
                       ),
                       fontWeight: AppTextStyles.bold,
@@ -403,7 +407,7 @@ class _StanceButton extends StatelessWidget {
             child: Text(
               _stanceLabel(stance).toUpperCase(),
               style: AppTextStyles.micro.copyWith(
-                color: selected ? Colors.white : AppColors.text2,
+                color: selected ? AppColors.onAccent : AppColors.text2,
                 fontWeight: AppTextStyles.bold,
                 fontSize: 11,
               ),
@@ -597,7 +601,7 @@ class _TierAvatar extends StatelessWidget {
       ),
       child: const Icon(
         Icons.person_outline_rounded,
-        color: Colors.white,
+        color: AppColors.onAccent,
         size: 17,
       ),
     );
@@ -648,7 +652,7 @@ class _ActionPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
       decoration: BoxDecoration(
-        color: flat ? Colors.transparent : AppColors.bg,
+        color: flat ? AppColors.transparent : AppColors.bg,
         borderRadius: AppRadii.smRadius,
       ),
       child: Row(
@@ -720,7 +724,7 @@ class _SentimentCard extends StatelessWidget {
           SizedBox(
             height: 190,
             child: CustomPaint(
-              painter: _SentimentPiePainter(snapshot.sentiment),
+              painter: PredictionSocialSentimentPiePainter(snapshot.sentiment),
               child: const SizedBox.expand(),
             ),
           ),
@@ -728,7 +732,7 @@ class _SentimentCard extends StatelessWidget {
           Row(
             children: [
               for (final item in snapshot.sentiment)
-                Expanded(child: _SentimentLegend(item: item)),
+                Expanded(child: PredictionSocialSentimentLegend(item: item)),
             ],
           ),
         ],
@@ -769,11 +773,17 @@ class _SocialShareButtons extends StatelessWidget {
         Row(
           children: const [
             Expanded(
-              child: _ShareButton(label: 'Twitter', color: Color(0xFF1DA1F2)),
+              child: PredictionSocialShareButton(
+                label: 'Twitter',
+                color: AppColors.brandTwitter,
+              ),
             ),
             SizedBox(width: 12),
             Expanded(
-              child: _ShareButton(label: 'Facebook', color: Color(0xFF1877F2)),
+              child: PredictionSocialShareButton(
+                label: 'Facebook',
+                color: AppColors.brandFacebook,
+              ),
             ),
           ],
         ),
@@ -841,7 +851,7 @@ class _CopyLinkCard extends StatelessWidget {
                     backgroundColor: copied
                         ? AppColors.buy
                         : _predictionPrimary,
-                    foregroundColor: Colors.white,
+                    foregroundColor: AppColors.onAccent,
                     textStyle: AppTextStyles.micro.copyWith(
                       fontWeight: AppTextStyles.bold,
                     ),
@@ -869,10 +879,13 @@ class _ShareStatsCard extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: _Metric(label: 'Total Shares', value: '1,247'),
+            child: PredictionSocialMetric(
+              label: 'Total Shares',
+              value: '1,247',
+            ),
           ),
           Expanded(
-            child: _Metric(
+            child: PredictionSocialMetric(
               label: 'Views from Shares',
               value: '4,892',
               valueColor: AppColors.buy,
@@ -911,7 +924,7 @@ class _SharePreviewCard extends StatelessWidget {
                 ),
                 child: const Icon(
                   Icons.bar_chart_rounded,
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   size: 28,
                 ),
               ),
@@ -1035,142 +1048,6 @@ class _SentimentTrendCard extends StatelessWidget {
   }
 }
 
-class _ShareButton extends StatelessWidget {
-  const _ShareButton({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 56,
-      padding: const EdgeInsets.symmetric(horizontal: 14),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        children: [
-          const Icon(Icons.share_rounded, color: Colors.white, size: 20),
-          const SizedBox(width: 10),
-          Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: Colors.white,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _Metric extends StatelessWidget {
-  const _Metric({
-    required this.label,
-    required this.value,
-    this.valueColor = AppColors.text1,
-  });
-
-  final String label;
-  final String value;
-  final Color valueColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: AppTextStyles.baseMedium.copyWith(
-            color: valueColor,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _SentimentLegend extends StatelessWidget {
-  const _SentimentLegend({required this.item});
-
-  final PredictionSentimentDraft item;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 10,
-              height: 10,
-              decoration: BoxDecoration(
-                color: item.color,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-            const SizedBox(width: 4),
-            Text(
-              item.name,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-            ),
-          ],
-        ),
-        const SizedBox(height: 4),
-        Text(
-          '${item.value}%',
-          style: AppTextStyles.baseMedium.copyWith(
-            color: item.color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _SentimentPiePainter extends CustomPainter {
-  const _SentimentPiePainter(this.data);
-
-  final List<PredictionSentimentDraft> data;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final total = data.fold<int>(0, (sum, item) => sum + item.value);
-    if (total == 0) return;
-    final rect = Rect.fromCircle(
-      center: Offset(size.width / 2, size.height / 2),
-      radius: math.min(size.width, size.height) / 2 - 14,
-    );
-    final paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 30;
-    var start = 0.0;
-    for (final item in data) {
-      final sweep = -(item.value / total) * math.pi * 2;
-      paint.color = item.color;
-      canvas.drawArc(rect, start, sweep + .025, false, paint);
-      start += sweep;
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _SentimentPiePainter oldDelegate) {
-    return oldDelegate.data != data;
-  }
-}
-
 Color _stanceColor(PredictionSocialStance stance) {
   return switch (stance) {
     PredictionSocialStance.bullish => AppColors.buy,
@@ -1189,10 +1066,10 @@ String _stanceLabel(PredictionSocialStance stance) {
 
 Color _tierColor(PredictionSocialTier tier) {
   return switch (tier) {
-    PredictionSocialTier.platinum => const Color(0xFFE5E7EB),
+    PredictionSocialTier.platinum => AppColors.tierPlatinum,
     PredictionSocialTier.gold => AppColors.warn,
-    PredictionSocialTier.silver => const Color(0xFF9CA3AF),
-    PredictionSocialTier.bronze => const Color(0xFFD97706),
+    PredictionSocialTier.silver => AppColors.medalSilverMuted,
+    PredictionSocialTier.bronze => AppColors.medalBronzeMuted,
   };
 }
 
@@ -1208,7 +1085,7 @@ String _tierLabel(PredictionSocialTier tier) {
 Color _rankColor(int rank) {
   return switch (rank) {
     0 => AppColors.warn,
-    1 => const Color(0xFF9CA3AF),
-    _ => const Color(0xFFD97706),
+    1 => AppColors.medalSilverMuted,
+    _ => AppColors.medalBronzeMuted,
   };
 }

@@ -94,6 +94,7 @@ void main() {
     expect(find.text('Price / Probability'), findsOneWidget);
     expect(find.text('Order Book'), findsOneWidget);
     expect(find.text('Trade'), findsOneWidget);
+    expect(find.text('Order Preview'), findsOneWidget);
     expect(find.text('Rules'), findsWidgets);
     expect(find.text('Related Markets'), findsOneWidget);
     expect(find.text('Open Arena trên cùng chủ đề'), findsOneWidget);

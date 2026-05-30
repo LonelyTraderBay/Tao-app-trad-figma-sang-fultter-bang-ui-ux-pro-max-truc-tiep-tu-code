@@ -11,7 +11,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
+import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 const _activityBackground = AppColors.bg;
 const _activityPanel = AppColors.surface;
@@ -45,7 +45,7 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileRepositoryProvider).getActivity();
+    final snapshot = ref.watch(profileControllerProvider).getActivity();
     final logs = _filteredLogs(snapshot.logs);
     final suspiciousCount = snapshot.logs
         .where((log) => log.status == 'suspicious')
@@ -271,12 +271,12 @@ class _FilterChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected
               ? _activityPrimary.withValues(alpha: .2)
-              : Colors.white.withValues(alpha: .04),
+              : AppColors.onAccent.withValues(alpha: .04),
           borderRadius: AppRadii.inputRadius,
           border: Border.all(
             color: selected
                 ? _activityPrimary.withValues(alpha: .6)
-                : Colors.white.withValues(alpha: .08),
+                : AppColors.onAccent.withValues(alpha: .08),
           ),
         ),
         alignment: Alignment.center,

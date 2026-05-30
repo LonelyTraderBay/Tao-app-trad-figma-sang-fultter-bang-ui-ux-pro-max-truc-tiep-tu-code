@@ -13,7 +13,10 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/admin/data/admin_repository.dart';
+import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_dashboard_state_content.dart';
+
+export 'admin_settings_page.dart';
 
 class AdminHome extends ConsumerStatefulWidget {
   const AdminHome({super.key, this.shellRenderMode});
@@ -35,7 +38,8 @@ class _AdminHomeState extends ConsumerState<AdminHome> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(adminRepositoryProvider).getHome();
+    final controller = ref.watch(adminHomeControllerProvider);
+    final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollBottom =
         (mode.usesVisualQaFrame
@@ -63,14 +67,21 @@ class _AdminHomeState extends ConsumerState<AdminHome> {
               child: VitPageContent(
                 customGap: AppSpacing.x5,
                 children: [
-                  _MetricGrid(metrics: snapshot.quickStats),
-                  _RealTimeMetricsSection(
-                    snapshot: snapshot,
-                    isLive: _isLive,
-                    onToggleLive: () => setState(() => _isLive = !_isLive),
+                  AdminDashboardStateContent(
+                    status: controller.state.status,
+                    title: 'Admin dashboard',
+                    message: controller.state.message,
+                    children: [
+                      _MetricGrid(metrics: snapshot.quickStats),
+                      _RealTimeMetricsSection(
+                        snapshot: snapshot,
+                        isLive: _isLive,
+                        onToggleLive: () => setState(() => _isLive = !_isLive),
+                      ),
+                      _DashboardsSection(dashboards: snapshot.dashboards),
+                      _FooterCard(snapshot: snapshot),
+                    ],
                   ),
-                  _DashboardsSection(dashboards: snapshot.dashboards),
-                  _FooterCard(snapshot: snapshot),
                 ],
               ),
             ),
@@ -160,12 +171,38 @@ class _MetricCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x1),
           Text(
             metric.value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: AppTextStyles.baseMedium.copyWith(
               fontSize: 18,
               fontWeight: AppTextStyles.bold,
               color: metric.label == 'Health' ? AppColors.buy : AppColors.text1,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Wrap(
+            spacing: AppSpacing.x2,
+            runSpacing: AppSpacing.x1,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              VitStatusPill(
+                label: metric.deltaLabel,
+                status: metric.deltaLabel.startsWith('-')
+                    ? VitStatusPillStatus.error
+                    : VitStatusPillStatus.success,
+                size: VitStatusPillSize.sm,
+              ),
+              Text(
+                metric.timeframeLabel,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text3,
+                  fontSize: 10,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -235,6 +272,8 @@ class _RealTimeMetricsSection extends StatelessWidget {
                   ),
                   Text(
                     metrics.liveEventWindowLabel,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
@@ -376,6 +415,8 @@ class _DashboardCard extends StatelessWidget {
               children: [
                 Text(
                   dashboard.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
                     fontWeight: AppTextStyles.bold,
                   ),
@@ -383,6 +424,8 @@ class _DashboardCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   dashboard.description,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
@@ -391,6 +434,8 @@ class _DashboardCard extends StatelessWidget {
           const SizedBox(width: AppSpacing.x3),
           Text(
             dashboard.stat,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: accent,
               fontWeight: AppTextStyles.bold,
@@ -452,10 +497,14 @@ class _SectionTitle extends StatelessWidget {
       children: [
         Icon(icon, color: AppColors.text1, size: 18),
         const SizedBox(width: AppSpacing.x2),
-        Text(
-          title,
-          style: AppTextStyles.baseMedium.copyWith(
-            fontWeight: AppTextStyles.bold,
+        Expanded(
+          child: Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.baseMedium.copyWith(
+              fontWeight: AppTextStyles.bold,
+            ),
           ),
         ),
       ],

@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
+import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 const _apiBackground = AppColors.bg;
 const _apiPanel = AppColors.surface;
@@ -60,7 +60,7 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileRepositoryProvider).getApiKeyCreate();
+    final snapshot = ref.watch(profileControllerProvider).getApiKeyCreate();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -457,13 +457,13 @@ class _PermissionCheck extends StatelessWidget {
       width: 24,
       height: 24,
       decoration: BoxDecoration(
-        color: selected ? color : Colors.transparent,
+        color: selected ? color : AppColors.transparent,
         shape: BoxShape.circle,
         border: Border.all(color: selected ? color : _apiBorder, width: 2),
       ),
       alignment: Alignment.center,
       child: selected
-          ? const Icon(Icons.check_rounded, color: Colors.white, size: 15)
+          ? const Icon(Icons.check_rounded, color: AppColors.onAccent, size: 15)
           : null,
     );
   }
@@ -515,7 +515,7 @@ class _IpWhitelistSection extends StatelessWidget {
                   alignment: Alignment.center,
                   child: const Icon(
                     Icons.add_rounded,
-                    color: Colors.white,
+                    color: AppColors.onAccent,
                     size: 22,
                   ),
                 ),
@@ -867,7 +867,7 @@ class _PrimaryCta extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.baseMedium.copyWith(
-            color: enabled ? Colors.white : AppColors.borderSolid,
+            color: enabled ? AppColors.onAccent : AppColors.borderSolid,
             fontSize: 16,
             fontWeight: FontWeight.w800,
             height: 1,

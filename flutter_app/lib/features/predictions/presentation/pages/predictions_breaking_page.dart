@@ -12,10 +12,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
+import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 
 const _predictionPrimary = AppColors.primary;
-const _emailPurple = Color(0xFF8B5CF6);
+const _emailPurple = AppColors.accent;
 
 class PredictionsBreakingPage extends ConsumerStatefulWidget {
   const PredictionsBreakingPage({super.key, this.shellRenderMode});
@@ -51,7 +52,7 @@ class _PredictionsBreakingPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(predictionsRepositoryProvider)
+        .watch(predictionsReadModelControllerProvider)
         .getBreaking(category: _category);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -273,11 +274,11 @@ class _CategoryTabButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: active
               ? _predictionPrimary.withValues(alpha: .14)
-              : Colors.transparent,
+              : AppColors.transparent,
           border: Border.all(
             color: active
                 ? _predictionPrimary.withValues(alpha: .36)
-                : Colors.transparent,
+                : AppColors.transparent,
           ),
           borderRadius: AppRadii.mdRadius,
         ),
@@ -311,8 +312,8 @@ class _MoverCard extends StatelessWidget {
     final isUp = event.change24h > 0;
     final rankColor = switch (rank) {
       1 => AppColors.warn,
-      2 => const Color(0xFF94A3B8),
-      3 => const Color(0xFFCD7F32),
+      2 => AppColors.medalSilverBlue,
+      3 => AppColors.medalBronze,
       _ => AppColors.text3,
     };
     final changeColor = isUp ? AppColors.buy : AppColors.sell;
@@ -650,7 +651,7 @@ class _EmailCta extends StatelessWidget {
                   child: Text(
                     'Subscribe',
                     style: AppTextStyles.caption.copyWith(
-                      color: Colors.white,
+                      color: AppColors.onAccent,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),

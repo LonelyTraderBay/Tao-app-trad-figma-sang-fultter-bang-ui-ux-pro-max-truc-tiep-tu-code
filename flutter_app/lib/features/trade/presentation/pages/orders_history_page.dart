@@ -10,7 +10,8 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _tradePrimary = AppColors.primary;
 const _fieldBackground = AppColors.surface2;
@@ -35,7 +36,10 @@ class _OrdersHistoryPageState extends ConsumerState<OrdersHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getOrdersHistory();
+    final snapshot = ref
+        .watch(tradeOrdersHistoryControllerProvider)
+        .state
+        .snapshot;
     final orders = _visibleOrders(snapshot);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -115,8 +119,8 @@ class _OrdersHistoryPageState extends ConsumerState<OrdersHistoryPage> {
 
   void _cancelOrder(String orderId) {
     final result = ref
-        .read(tradeRepositoryProvider)
-        .submitOrderAction(orderId: orderId, action: 'cancel');
+        .read(tradeOrdersHistoryControllerProvider)
+        .cancelOrder(orderId);
     if (Scaffold.maybeOf(context) != null) {
       ScaffoldMessenger.of(
         context,
@@ -207,7 +211,7 @@ class _TopTabButton extends StatelessWidget {
             Text(
               label,
               style: AppTextStyles.caption.copyWith(
-                color: active ? Colors.white : AppColors.text2,
+                color: active ? AppColors.onAccent : AppColors.text2,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -216,14 +220,14 @@ class _TopTabButton extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
                 color: active
-                    ? Colors.white.withValues(alpha: .18)
+                    ? AppColors.onAccent.withValues(alpha: .18)
                     : AppColors.surface3,
                 borderRadius: AppRadii.xsRadius,
               ),
               child: Text(
                 '$count',
                 style: AppTextStyles.micro.copyWith(
-                  color: active ? Colors.white : AppColors.text2,
+                  color: active ? AppColors.onAccent : AppColors.text2,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -300,7 +304,7 @@ class _FilterChip extends StatelessWidget {
             : const EdgeInsets.symmetric(horizontal: 10),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? color : Colors.transparent,
+          color: active ? color : AppColors.transparent,
           borderRadius: AppRadii.lgRadius,
         ),
         child: compactAll
@@ -308,7 +312,7 @@ class _FilterChip extends StatelessWidget {
             : Text(
                 label,
                 style: AppTextStyles.caption.copyWith(
-                  color: active ? Colors.white : AppColors.text2,
+                  color: active ? AppColors.onAccent : AppColors.text2,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),

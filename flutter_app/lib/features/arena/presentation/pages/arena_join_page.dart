@@ -15,7 +15,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
+import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
 
@@ -46,13 +47,17 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaRepositoryProvider)
-        .getArenaJoin(widget.challengeId);
+    final controller = ref.watch(
+      arenaJoinControllerProvider(widget.challengeId),
+    );
+    final snapshot = controller.state.snapshot;
     final challenge = snapshot.challenge;
     final hasEnough = snapshot.currentBalance >= challenge.entryPoints;
     final remainingBalance = snapshot.currentBalance - challenge.entryPoints;
-    final canJoin = hasEnough && _readRules && _understandPoints;
+    final canJoin = controller.canJoin(
+      readRules: _readRules,
+      understandPoints: _understandPoints,
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -585,7 +590,7 @@ class _AcknowledgementRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
@@ -599,7 +604,7 @@ class _AcknowledgementRow extends StatelessWidget {
                 width: 26,
                 height: 26,
                 decoration: BoxDecoration(
-                  color: checked ? AppColors.primary : Colors.transparent,
+                  color: checked ? AppColors.primary : AppColors.transparent,
                   borderRadius: AppRadii.smRadius,
                   border: Border.all(
                     color: checked ? AppColors.primary : AppColors.borderSolid,
@@ -610,7 +615,7 @@ class _AcknowledgementRow extends StatelessWidget {
                     ? const Icon(
                         Icons.check_rounded,
                         size: 18,
-                        color: Colors.white,
+                        color: AppColors.onAccent,
                       )
                     : null,
               ),

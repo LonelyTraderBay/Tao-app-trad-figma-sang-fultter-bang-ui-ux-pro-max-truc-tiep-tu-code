@@ -13,12 +13,13 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _settingsPrimary = AppColors.primary;
 const _settingsPanel = AppColors.surface2;
 const _settingsInput = AppColors.surface3;
-const _sliderInactive = Color(0xFFE5E7EB);
+const _sliderInactive = AppColors.tierPlatinum;
 
 class CopySettingsPage extends ConsumerStatefulWidget {
   const CopySettingsPage({super.key, this.shellRenderMode});
@@ -52,8 +53,8 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final repository = ref.watch(tradeRepositoryProvider);
-    final snapshot = repository.getCopySettings();
+    final controller = ref.watch(tradeCopySettingsControllerProvider);
+    final snapshot = controller.state.snapshot;
     final settings = _settings ?? snapshot.settings;
     _settings ??= snapshot.settings;
 
@@ -299,7 +300,7 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
                     _SaveButton(
                       saved: _saved,
                       onTap: () {
-                        final result = repository.patchCopySettings(settings);
+                        final result = controller.save(settings);
                         _update(result.settings);
                         setState(() => _saved = result.status == 'saved');
                         _savedTimer?.cancel();
@@ -447,7 +448,7 @@ class _ModeButton extends StatelessWidget {
         child: Text(
           _modeLabel(mode),
           style: AppTextStyles.caption.copyWith(
-            color: active ? Colors.white : AppColors.text2,
+            color: active ? AppColors.onAccent : AppColors.text2,
             fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
@@ -669,7 +670,7 @@ class _CompactSlider extends StatelessWidget {
           activeTrackColor: color,
           inactiveTrackColor: _sliderInactive,
           thumbColor: color,
-          overlayColor: Colors.transparent,
+          overlayColor: AppColors.transparent,
           thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 7),
           overlayShape: SliderComponentShape.noOverlay,
         ),
@@ -768,7 +769,7 @@ class _ToggleSwitch extends StatelessWidget {
             width: 20,
             height: 20,
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: AppColors.onAccent,
               shape: BoxShape.circle,
             ),
           ),
@@ -812,7 +813,7 @@ class _ChannelButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: active
               ? _settingsPrimary.withValues(alpha: .08)
-              : Colors.transparent,
+              : AppColors.transparent,
           border: Border.all(
             color: active ? _settingsPrimary : AppColors.cardBorder,
           ),
@@ -1050,14 +1051,14 @@ class _SaveButton extends StatelessWidget {
           children: [
             Icon(
               saved ? Icons.shield_rounded : Icons.settings_rounded,
-              color: Colors.white,
+              color: AppColors.onAccent,
               size: 16,
             ),
             const SizedBox(width: 9),
             Text(
               saved ? 'Đã lưu!' : 'Lưu cài đặt',
               style: AppTextStyles.caption.copyWith(
-                color: Colors.white,
+                color: AppColors.onAccent,
                 fontSize: 14,
                 fontWeight: AppTextStyles.bold,
                 height: 1,

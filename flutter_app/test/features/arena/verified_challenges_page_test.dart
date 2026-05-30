@@ -35,7 +35,7 @@ void main() {
       'POST /arena/challenges|join|resolve|report where applicable',
     );
     expect(snapshot.title, 'Verified Challenges');
-    expect(snapshot.statusLabel, 'Coming Soon');
+    expect(snapshot.statusLabel, 'Release-gated Preview');
     expect(
       snapshot.features.map((feature) => feature.kind),
       containsAll([
@@ -56,7 +56,7 @@ void main() {
     );
   });
 
-  testWidgets('SC-195 renders Verified Challenges coming soon baseline', (
+  testWidgets('SC-195 renders Verified Challenges release-gated preview', (
     tester,
   ) async {
     await pumpVerified(tester);
@@ -65,19 +65,30 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Verified Challenges'), findsWidgets);
-    expect(find.text('Đã xác minh · Open Arena'), findsOneWidget);
-    expect(find.text('Coming Soon'), findsOneWidget);
-    expect(find.text('Điều gì sẽ khác?'), findsOneWidget);
+    expect(find.text('Release-gated preview - Open Arena'), findsOneWidget);
+    expect(find.text('Release-gated Preview'), findsOneWidget);
+    expect(find.text('Preview scope'), findsOneWidget);
     expect(
-      find.text('Challenge được verify bởi hệ thống Oracle'),
+      find.text(
+        'Challenge Ã„â€˜Ã†Â°Ã¡Â»Â£c verify bÃ¡Â»Å¸i hÃ¡Â»â€¡ thÃ¡Â»â€˜ng Oracle',
+      ),
       findsOneWidget,
     );
-    expect(find.text('Prize pool lớn hơn với cơ chế escrow'), findsOneWidget);
-    expect(find.text('Leaderboard riêng cho verified players'), findsOneWidget);
-    expect(find.text('Creator badges và trust score nâng cao'), findsOneWidget);
+    expect(
+      find.text('Points pool policy with release review gate'),
+      findsOneWidget,
+    );
+    expect(
+      find.text('Leaderboard riÃƒÂªng cho verified players'),
+      findsOneWidget,
+    );
+    expect(
+      find.text('Creator badges vÃƒÂ  trust score nÃƒÂ¢ng cao'),
+      findsOneWidget,
+    );
   });
 
-  testWidgets('SC-195 uses a compact static coming soon state', (tester) async {
+  testWidgets('SC-195 uses a compact static preview state', (tester) async {
     await pumpVerified(tester);
 
     expect(find.byKey(VerifiedChallengesPage.contentKey), findsOneWidget);

@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PSourceOfFundsPage extends ConsumerStatefulWidget {
   const P2PSourceOfFundsPage({super.key, this.shellRenderMode});
@@ -44,7 +44,7 @@ class _P2PSourceOfFundsPageState extends ConsumerState<P2PSourceOfFundsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getSourceOfFunds();
+    final snapshot = ref.watch(p2pSourceOfFundsProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -161,7 +161,7 @@ class _SourceHero extends StatelessWidget {
               height: AppSpacing.inputHeight,
               child: Icon(
                 Icons.attach_money_rounded,
-                color: Colors.white,
+                color: AppColors.onAccent,
                 size: AppSpacing.iconMd,
               ),
             ),

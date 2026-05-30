@@ -10,13 +10,14 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _disputePrimary = AppColors.primary;
 const _disputeField = AppColors.surface2;
 const _disputeFieldBorder = AppColors.borderSolid;
 const _disputeFooter = AppColors.surface;
-const _disputeDangerBackground = Color(0x221F2937);
+const _disputeDangerBackground = AppColors.disputeDangerBg;
 
 class DisputeResolutionPage extends ConsumerStatefulWidget {
   const DisputeResolutionPage({super.key, this.shellRenderMode});
@@ -72,7 +73,9 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getDisputeResolution();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getDisputeResolution();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final activeBottomInset = mode.usesVisualQaFrame
         ? DeviceMetrics.nativeBottomChrome + 18
@@ -161,7 +164,7 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
     if (!_canSubmit) return;
 
     final result = ref
-        .read(tradeRepositoryProvider)
+        .read(tradeReadModelControllerProvider)
         .submitDisputeComplaint(
           TradeDisputeComplaintDraft(
             complaintType: _selectedType!,
@@ -574,14 +577,14 @@ class _SubmitButton extends StatelessWidget {
           children: [
             Icon(
               Icons.send_outlined,
-              color: enabled ? Colors.white : AppColors.text3,
+              color: enabled ? AppColors.onAccent : AppColors.text3,
               size: 17,
             ),
             const SizedBox(width: 9),
             Text(
               'Submit Complaint',
               style: AppTextStyles.body.copyWith(
-                color: enabled ? Colors.white : AppColors.text3,
+                color: enabled ? AppColors.onAccent : AppColors.text3,
                 fontSize: 14,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
@@ -681,7 +684,7 @@ class _TabBadge extends StatelessWidget {
       child: Text(
         '$count',
         style: AppTextStyles.micro.copyWith(
-          color: Colors.white,
+          color: AppColors.onAccent,
           fontSize: 10,
           fontWeight: AppTextStyles.bold,
           height: 1,

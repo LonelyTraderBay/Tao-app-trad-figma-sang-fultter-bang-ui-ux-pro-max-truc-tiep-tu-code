@@ -15,7 +15,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
+import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 
 class ArenaSafetyCenterPage extends ConsumerWidget {
   const ArenaSafetyCenterPage({super.key, this.shellRenderMode});
@@ -29,7 +30,9 @@ class ArenaSafetyCenterPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(arenaRepositoryProvider).getArenaSafetyCenter();
+    final snapshot = ref
+        .watch(arenaReadModelControllerProvider)
+        .getArenaSafetyCenter();
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame

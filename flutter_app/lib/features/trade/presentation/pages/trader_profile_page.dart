@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -13,12 +11,14 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trader_profile_chart_painters.dart';
 
 const _profilePrimary = AppColors.primary;
-const _profileGreen = Color(0xFF10B981);
-const _profileAmber = Color(0xFFF59E0B);
-const _profileRed = Color(0xFFEF4444);
+const _profileGreen = AppColors.buy;
+const _profileAmber = AppColors.caution;
+const _profileRed = AppColors.sell;
 const _profileCard = AppColors.surface;
 
 class TraderProfilePage extends ConsumerStatefulWidget {
@@ -46,7 +46,7 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getTraderProfile(traderId: widget.traderId);
     final trader = snapshot.trader;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
@@ -177,7 +177,7 @@ class _ProfileHero extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.baseMedium.copyWith(
-                              color: Colors.white,
+                              color: AppColors.onAccent,
                               fontSize: 18,
                               fontWeight: AppTextStyles.bold,
                               height: 1.2,
@@ -265,7 +265,7 @@ class _ProfileHero extends StatelessWidget {
             child: LinearProgressIndicator(
               minHeight: 8,
               value: (trader.copiers / trader.maxCopiers).clamp(0, 1),
-              backgroundColor: Colors.white.withValues(alpha: .10),
+              backgroundColor: AppColors.onAccent.withValues(alpha: .10),
               valueColor: const AlwaysStoppedAnimation(_profilePrimary),
             ),
           ),
@@ -293,14 +293,14 @@ class _ProfileHero extends StatelessWidget {
                     isFollowing
                         ? Icons.warning_amber_rounded
                         : Icons.content_copy_rounded,
-                    color: isFollowing ? _profileRed : Colors.white,
+                    color: isFollowing ? _profileRed : AppColors.onAccent,
                     size: 17,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     isFollowing ? 'Hủy theo dõi' : 'Copy Trader này',
                     style: AppTextStyles.body.copyWith(
-                      color: isFollowing ? _profileRed : Colors.white,
+                      color: isFollowing ? _profileRed : AppColors.onAccent,
                       fontSize: 14,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
@@ -328,7 +328,7 @@ class _TagChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: (color ?? Colors.white).withValues(alpha: .08),
+        color: (color ?? AppColors.onAccent).withValues(alpha: .08),
         borderRadius: AppRadii.smRadius,
       ),
       child: Text(
@@ -362,7 +362,7 @@ class _HeroMetric extends StatelessWidget {
         height: 54,
         padding: const EdgeInsets.fromLTRB(8, 9, 8, 8),
         decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: .05),
+          color: AppColors.onAccent.withValues(alpha: .05),
           borderRadius: AppRadii.cardRadius,
         ),
         child: Column(
@@ -439,14 +439,14 @@ class _SegmentTabs extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: activeId == tab.id
                         ? _profilePrimary
-                        : Colors.transparent,
+                        : AppColors.transparent,
                     borderRadius: AppRadii.mdRadius,
                   ),
                   child: Text(
                     tab.label,
                     style: AppTextStyles.caption.copyWith(
                       color: activeId == tab.id
-                          ? Colors.white
+                          ? AppColors.onAccent
                           : AppColors.text3,
                       fontSize: 12,
                       fontWeight: activeId == tab.id
@@ -479,7 +479,9 @@ class _OverviewTab extends StatelessWidget {
           child: SizedBox(
             height: 160,
             child: CustomPaint(
-              painter: _AreaChartPainter(points: snapshot.pnlHistory),
+              painter: TraderProfileAreaChartPainter(
+                points: snapshot.pnlHistory,
+              ),
               child: const SizedBox.expand(),
             ),
           ),
@@ -490,7 +492,7 @@ class _OverviewTab extends StatelessWidget {
           child: SizedBox(
             height: 100,
             child: CustomPaint(
-              painter: _DailyBarsPainter(
+              painter: TraderProfileDailyBarsPainter(
                 points: snapshot.pnlHistory.takeLast(14),
               ),
               child: const SizedBox.expand(),
@@ -524,7 +526,7 @@ class _ChartCard extends StatelessWidget {
                 child: Text(
                   title,
                   style: AppTextStyles.body.copyWith(
-                    color: Colors.white,
+                    color: AppColors.onAccent,
                     fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                     height: 1.1,
@@ -596,7 +598,7 @@ class _DetailsCard extends StatelessWidget {
           Text(
             'Chi tiết',
             style: AppTextStyles.body.copyWith(
-              color: Colors.white,
+              color: AppColors.onAccent,
               fontSize: 14,
               fontWeight: AppTextStyles.bold,
               height: 1,
@@ -660,7 +662,7 @@ class _DetailRow extends StatelessWidget {
               Text(
                 item.value,
                 style: AppTextStyles.caption.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontSize: 13,
                   fontWeight: AppTextStyles.medium,
                   height: 1,
@@ -710,7 +712,7 @@ class _TradeCard extends StatelessWidget {
               Text(
                 trade.pair,
                 style: AppTextStyles.body.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
@@ -846,8 +848,8 @@ class _StatsTab extends StatelessWidget {
         '${trader.maxDrawdown.toStringAsFixed(1)}%',
         _profileRed,
       ),
-      _StatRow('Avg Holding Time', trader.avgHoldingTime, Colors.white),
-      _StatRow('Tổng lệnh', _formatInt(trader.totalTrades), Colors.white),
+      _StatRow('Avg Holding Time', trader.avgHoldingTime, AppColors.onAccent),
+      _StatRow('Tổng lệnh', _formatInt(trader.totalTrades), AppColors.onAccent),
       _StatRow('AUM', _compactUsd(trader.aum), _profilePrimary),
       _StatRow(
         'Copiers',
@@ -866,7 +868,7 @@ class _StatsTab extends StatelessWidget {
               Text(
                 'Tỷ lệ thắng/thua',
                 style: AppTextStyles.body.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
@@ -930,7 +932,7 @@ class _StatsTab extends StatelessWidget {
               Text(
                 'Thống kê chi tiết',
                 style: AppTextStyles.body.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
@@ -1086,101 +1088,6 @@ _RiskPresentation _riskPresentation(TradeCopyRiskLevel level) {
     ),
     TradeCopyRiskLevel.high => const _RiskPresentation(_profileRed, 'Cao'),
   };
-}
-
-class _AreaChartPainter extends CustomPainter {
-  const _AreaChartPainter({required this.points});
-
-  final List<TradeTraderPnlPoint> points;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (points.length < 2) return;
-    const padding = 4.0;
-    final values = points.map((point) => point.cumPnl).toList(growable: false);
-    final minValue = values.reduce(math.min);
-    final maxValue = values.reduce(math.max);
-    final span = math.max(1, maxValue - minValue);
-    final linePath = Path();
-    final areaPath = Path();
-
-    for (var i = 0; i < values.length; i++) {
-      final x = padding + (size.width - padding * 2) * i / (values.length - 1);
-      final y =
-          padding +
-          (size.height - padding * 2) * (1 - (values[i] - minValue) / span);
-      if (i == 0) {
-        linePath.moveTo(x, y);
-        areaPath.moveTo(x, size.height - padding);
-        areaPath.lineTo(x, y);
-      } else {
-        linePath.lineTo(x, y);
-        areaPath.lineTo(x, y);
-      }
-    }
-    areaPath
-      ..lineTo(size.width - padding, size.height - padding)
-      ..close();
-
-    final fillPaint = Paint()
-      ..shader = LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          _profileGreen.withValues(alpha: .30),
-          _profileGreen.withValues(alpha: 0),
-        ],
-      ).createShader(Offset.zero & size);
-    final linePaint = Paint()
-      ..color = _profileGreen
-      ..strokeWidth = 2
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
-
-    canvas.drawPath(areaPath, fillPaint);
-    canvas.drawPath(linePath, linePaint);
-  }
-
-  @override
-  bool shouldRepaint(covariant _AreaChartPainter oldDelegate) =>
-      oldDelegate.points != points;
-}
-
-class _DailyBarsPainter extends CustomPainter {
-  const _DailyBarsPainter({required this.points});
-
-  final List<TradeTraderPnlPoint> points;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (points.isEmpty) return;
-    final maxAbs = points
-        .map((point) => point.pnl.abs())
-        .fold<double>(0, math.max)
-        .clamp(1, double.infinity);
-    final zeroY = size.height * .58;
-    final gap = 5.0;
-    final barWidth = (size.width - gap * (points.length - 1)) / points.length;
-
-    for (var i = 0; i < points.length; i++) {
-      final point = points[i];
-      final height = (point.pnl.abs() / maxAbs) * (size.height * .46);
-      final left = i * (barWidth + gap);
-      final top = point.pnl >= 0 ? zeroY - height : zeroY;
-      final rect = RRect.fromRectAndRadius(
-        Rect.fromLTWH(left, top, barWidth, height.clamp(3, size.height)),
-        const Radius.circular(3),
-      );
-      final paint = Paint()
-        ..color = point.pnl >= 0 ? _profileGreen : _profileRed;
-      canvas.drawRRect(rect, paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _DailyBarsPainter oldDelegate) =>
-      oldDelegate.points != points;
 }
 
 extension _TakeLast<T> on Iterable<T> {

@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 enum _SavingsTab { products, my }
 
@@ -51,14 +51,15 @@ class _SavingsPageState extends ConsumerState<SavingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(savingsRepositoryProvider).getSavings();
+    final controller = ref.watch(savingsControllerProvider);
+    final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + AppSpacing.x7
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
-    final products = _filteredProducts(snapshot.products, _filter);
+    final products = _filteredProducts(controller, _filter);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -899,19 +900,17 @@ class _ProgressBar extends StatelessWidget {
 }
 
 List<SavingsProductDraft> _filteredProducts(
-  List<SavingsProductDraft> products,
+  SavingsController controller,
   _SavingsFilter filter,
 ) {
   return switch (filter) {
-    _SavingsFilter.all => products,
-    _SavingsFilter.flexible =>
-      products
-          .where((product) => product.type == SavingsProductType.flexible)
-          .toList(),
-    _SavingsFilter.locked =>
-      products
-          .where((product) => product.type == SavingsProductType.locked)
-          .toList(),
+    _SavingsFilter.all => controller.productsByType(null),
+    _SavingsFilter.flexible => controller.productsByType(
+      SavingsProductType.flexible,
+    ),
+    _SavingsFilter.locked => controller.productsByType(
+      SavingsProductType.locked,
+    ),
   };
 }
 

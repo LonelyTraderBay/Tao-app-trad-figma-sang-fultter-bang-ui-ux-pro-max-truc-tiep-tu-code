@@ -56,28 +56,28 @@ final class RewardsHubSnapshot {
 
 final class RewardSummaryDraft {
   const RewardSummaryDraft({
-    required this.usdtClaimed,
+    required this.bonusPointsClaimed,
     required this.currentPoints,
     required this.lockedPoints,
     required this.rank,
     required this.topPercent,
     required this.claimedCount,
     required this.pendingCount,
-    required this.pendingUsdt,
+    required this.pendingBonusPoints,
     required this.pendingPoints,
     required this.expiringCount,
     required this.completionLabel,
     required this.tierLabel,
   });
 
-  final String usdtClaimed;
+  final String bonusPointsClaimed;
   final int currentPoints;
   final int lockedPoints;
   final int rank;
   final int topPercent;
   final int claimedCount;
   final int pendingCount;
-  final String pendingUsdt;
+  final String pendingBonusPoints;
   final int pendingPoints;
   final int expiringCount;
   final String completionLabel;

@@ -99,7 +99,7 @@ void main() {
     expect(find.byType(P2PTransactionLimitsPage), findsOneWidget);
   });
 
-  testWidgets('SC-267 navigation uses safe placeholders for upcoming pages', (
+  testWidgets('SC-267 navigation uses confirmed compliance route edges', (
     tester,
   ) async {
     await pumpComplianceOverview(tester);

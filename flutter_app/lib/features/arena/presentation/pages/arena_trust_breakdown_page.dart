@@ -14,7 +14,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
+import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 
 class ArenaTrustBreakdownPage extends ConsumerWidget {
   const ArenaTrustBreakdownPage({
@@ -34,7 +35,7 @@ class ArenaTrustBreakdownPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref
-        .watch(arenaRepositoryProvider)
+        .watch(arenaReadModelControllerProvider)
         .getArenaTrustBreakdown(entityId);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =

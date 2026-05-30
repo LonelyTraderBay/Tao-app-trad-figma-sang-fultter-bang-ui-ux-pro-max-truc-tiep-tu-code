@@ -13,7 +13,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/admin/data/admin_repository.dart';
+import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_dashboard_state_content.dart';
 
 class ABTestDashboard extends ConsumerStatefulWidget {
   const ABTestDashboard({super.key, this.shellRenderMode});
@@ -33,7 +34,8 @@ class _ABTestDashboardState extends ConsumerState<ABTestDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(adminRepositoryProvider).getAbTests();
+    final controller = ref.watch(adminAbTestsControllerProvider);
+    final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollBottom =
         (mode.usesVisualQaFrame
@@ -60,24 +62,32 @@ class _ABTestDashboardState extends ConsumerState<ABTestDashboard> {
               child: VitPageContent(
                 customGap: AppSpacing.x4,
                 children: [
-                  _SummaryGrid(snapshot: snapshot),
-                  const _SectionTitle(title: 'Tất cả A/B Tests'),
-                  if (snapshot.tests.isEmpty)
-                    const _EmptyTestsCard()
-                  else
-                    for (final test in snapshot.tests) ...[
-                      _ABTestCard(
-                        test: test,
-                        selected: test.id == _selectedTestId,
-                        onTap: () {
-                          setState(() {
-                            _selectedTestId = test.id == _selectedTestId
-                                ? null
-                                : test.id;
-                          });
-                        },
-                      ),
+                  AdminDashboardStateContent(
+                    status: controller.state.status,
+                    title: 'A/B test dashboard',
+                    message: controller.state.message,
+                    gap: AppSpacing.x4,
+                    children: [
+                      _SummaryGrid(snapshot: snapshot),
+                      const _SectionTitle(title: 'Tất cả A/B Tests'),
+                      if (snapshot.tests.isEmpty)
+                        const _EmptyTestsCard()
+                      else
+                        for (final test in snapshot.tests) ...[
+                          _ABTestCard(
+                            test: test,
+                            selected: test.id == _selectedTestId,
+                            onTap: () {
+                              setState(() {
+                                _selectedTestId = test.id == _selectedTestId
+                                    ? null
+                                    : test.id;
+                              });
+                            },
+                          ),
+                        ],
                     ],
+                  ),
                 ],
               ),
             ),
@@ -102,6 +112,8 @@ class _SummaryGrid extends StatelessWidget {
             icon: Icons.science_outlined,
             label: 'Tests đang chạy',
             value: '${snapshot.activeTests}',
+            delta: '0.0%',
+            timeframe: 'Current tests',
             tint: AppColors.accent15,
             accent: AppColors.accent,
           ),
@@ -112,6 +124,8 @@ class _SummaryGrid extends StatelessWidget {
             icon: Icons.workspace_premium_outlined,
             label: 'Có kết quả',
             value: '${snapshot.completedTests}',
+            delta: '0.0%',
+            timeframe: 'Current tests',
             tint: AppColors.buy15,
             accent: AppColors.buy,
           ),
@@ -126,6 +140,8 @@ class _SummaryCard extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.value,
+    required this.delta,
+    required this.timeframe,
     required this.tint,
     required this.accent,
   });
@@ -133,6 +149,8 @@ class _SummaryCard extends StatelessWidget {
   final IconData icon;
   final String label;
   final String value;
+  final String delta;
+  final String timeframe;
   final Color tint;
   final Color accent;
 
@@ -166,10 +184,36 @@ class _SummaryCard extends StatelessWidget {
                 ),
                 Text(
                   value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.sectionTitle.copyWith(
                     fontSize: 20,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
+                ),
+                const SizedBox(height: AppSpacing.x2),
+                Wrap(
+                  spacing: AppSpacing.x2,
+                  runSpacing: AppSpacing.x1,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    VitStatusPill(
+                      label: delta,
+                      status: delta.startsWith('-')
+                          ? VitStatusPillStatus.error
+                          : VitStatusPillStatus.success,
+                      size: VitStatusPillSize.sm,
+                    ),
+                    Text(
+                      timeframe,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -207,30 +251,35 @@ class _ABTestCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      key: ABTestDashboard.testKey(test.id),
-      onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      borderColor: selected ? AppColors.accent30 : AppColors.cardBorder,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _TestHeader(test: test),
-          const SizedBox(height: AppSpacing.x4),
-          _StatsRow(test: test),
-          const SizedBox(height: AppSpacing.x4),
-          for (final variant in test.variants) ...[
-            _VariantResult(variant: variant),
-            if (variant != test.variants.last)
-              const SizedBox(height: AppSpacing.x3),
-          ],
-          if (selected) ...[
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: '${test.name} A/B test',
+      child: VitCard(
+        key: ABTestDashboard.testKey(test.id),
+        onTap: onTap,
+        padding: const EdgeInsets.all(AppSpacing.x4),
+        borderColor: selected ? AppColors.accent30 : AppColors.cardBorder,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _TestHeader(test: test),
             const SizedBox(height: AppSpacing.x4),
-            const Divider(height: 1, color: AppColors.divider),
+            _StatsRow(test: test),
             const SizedBox(height: AppSpacing.x4),
-            _ExpandedDetails(test: test),
+            for (final variant in test.variants) ...[
+              _VariantResult(variant: variant),
+              if (variant != test.variants.last)
+                const SizedBox(height: AppSpacing.x3),
+            ],
+            if (selected) ...[
+              const SizedBox(height: AppSpacing.x4),
+              const Divider(height: 1, color: AppColors.divider),
+              const SizedBox(height: AppSpacing.x4),
+              _ExpandedDetails(test: test),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
@@ -270,38 +319,16 @@ class _TestHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(width: AppSpacing.x3),
-        _StatusPill(status: test.status),
+        VitStatusPill(
+          label: test.status == AdminAbTestStatus.active
+              ? 'DANG CHAY'
+              : 'HOAN THANH',
+          status: test.status == AdminAbTestStatus.active
+              ? VitStatusPillStatus.info
+              : VitStatusPillStatus.success,
+          size: VitStatusPillSize.sm,
+        ),
       ],
-    );
-  }
-}
-
-class _StatusPill extends StatelessWidget {
-  const _StatusPill({required this.status});
-
-  final AdminAbTestStatus status;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: _statusTint(status),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
-        child: Text(
-          status == AdminAbTestStatus.active ? 'ĐANG CHẠY' : 'HOÀN THÀNH',
-          style: AppTextStyles.micro.copyWith(
-            color: _statusColor(status),
-            fontWeight: AppTextStyles.bold,
-            fontSize: 10,
-          ),
-        ),
-      ),
     );
   }
 }
@@ -380,6 +407,9 @@ class _VariantResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final rate = variant.exposures == 0
+        ? 0.0
+        : (variant.conversions / variant.exposures).clamp(0.0, 1.0).toDouble();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -418,7 +448,7 @@ class _VariantResult extends StatelessWidget {
                   child: ColoredBox(color: AppColors.surface2),
                 ),
                 FractionallySizedBox(
-                  widthFactor: 0,
+                  widthFactor: rate,
                   alignment: Alignment.centerLeft,
                   child: ColoredBox(color: _variantAccent(variant)),
                 ),
@@ -585,24 +615,6 @@ class _EmptyTestsCard extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-Color _statusColor(AdminAbTestStatus status) {
-  switch (status) {
-    case AdminAbTestStatus.active:
-      return AppColors.primary;
-    case AdminAbTestStatus.completed:
-      return AppColors.buy;
-  }
-}
-
-Color _statusTint(AdminAbTestStatus status) {
-  switch (status) {
-    case AdminAbTestStatus.active:
-      return AppColors.primary15;
-    case AdminAbTestStatus.completed:
-      return AppColors.buy15;
   }
 }
 

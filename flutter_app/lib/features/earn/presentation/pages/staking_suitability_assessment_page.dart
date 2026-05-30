@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 class StakingSuitabilityAssessmentPage extends ConsumerStatefulWidget {
   const StakingSuitabilityAssessmentPage({super.key, this.shellRenderMode});
@@ -51,9 +51,8 @@ class _StakingSuitabilityAssessmentPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingSuitabilityAssessmentRepositoryProvider)
-        .getAssessment();
+    final controller = ref.watch(stakingSuitabilityControllerProvider);
+    final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -89,6 +88,7 @@ class _StakingSuitabilityAssessmentPageState
                       ? [
                           _ResultView(
                             snapshot: snapshot,
+                            profile: controller.profileForScore(_score),
                             score: _score,
                             onReset: _reset,
                           ),
@@ -137,7 +137,8 @@ class _StakingSuitabilityAssessmentPageState
                         child: VitCtaButton(
                           key: StakingSuitabilityAssessmentPage.nextButtonKey,
                           height: AppSpacing.ctaHeight,
-                          onPressed: _isAnswered(snapshot.questions[_step])
+                          onPressed:
+                              _isAnswered(controller, snapshot.questions[_step])
                               ? () => _next(snapshot)
                               : null,
                           child: Text(
@@ -158,27 +159,9 @@ class _StakingSuitabilityAssessmentPageState
   }
 
   int get _score {
-    final snapshot = ref
-        .read(stakingSuitabilityAssessmentRepositoryProvider)
-        .getAssessment();
-    var total = 0;
-    for (final question in snapshot.questions) {
-      final answer = _answers[question.id];
-      if (question.type == StakingSuitabilityQuestionType.single &&
-          answer != null) {
-        total += question.options[answer].weight;
-      } else if (question.type == StakingSuitabilityQuestionType.slider &&
-          answer != null) {
-        total += answer * (question.weight ?? 1);
-      } else if (question.type == StakingSuitabilityQuestionType.quiz) {
-        for (var i = 0; i < question.quizQuestions.length; i++) {
-          if (_quizAnswers[i] == question.quizQuestions[i].correctIndex) {
-            total += question.weight ?? 1;
-          }
-        }
-      }
-    }
-    return total.clamp(0, 100);
+    return ref
+        .read(stakingSuitabilityControllerProvider)
+        .score(answers: _answers, quizAnswers: _quizAnswers);
   }
 
   void _selectAnswer(String questionId, int value) {
@@ -191,11 +174,15 @@ class _StakingSuitabilityAssessmentPageState
     setState(() => _quizAnswers[questionIndex] = optionIndex);
   }
 
-  bool _isAnswered(StakingSuitabilityQuestionDraft question) {
-    if (question.type == StakingSuitabilityQuestionType.quiz) {
-      return _quizAnswers.length == question.quizQuestions.length;
-    }
-    return _answers.containsKey(question.id);
+  bool _isAnswered(
+    StakingSuitabilityController controller,
+    StakingSuitabilityQuestionDraft question,
+  ) {
+    return controller.isAnswered(
+      question,
+      answers: _answers,
+      quizAnswers: _quizAnswers,
+    );
   }
 
   void _next(StakingSuitabilityAssessmentSnapshot snapshot) {
@@ -374,7 +361,7 @@ class _OptionTile extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             border: Border.all(
-              color: selected ? AppColors.primary : Colors.transparent,
+              color: selected ? AppColors.primary : AppColors.transparent,
               width: 1.5,
             ),
             borderRadius: AppRadii.xlRadius,
@@ -585,20 +572,18 @@ class _InfoBanner extends StatelessWidget {
 class _ResultView extends ConsumerWidget {
   const _ResultView({
     required this.snapshot,
+    required this.profile,
     required this.score,
     required this.onReset,
   });
 
   final StakingSuitabilityAssessmentSnapshot snapshot;
+  final StakingSuitabilityProfileDraft profile;
   final int score;
   final VoidCallback onReset;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final profile = snapshot.profiles.firstWhere(
-      (item) => score >= item.minScore && score <= item.maxScore,
-      orElse: () => snapshot.profiles.last,
-    );
     final color = _profileColor(profile.level);
 
     return Column(

@@ -115,7 +115,7 @@ void main() {
     expect(find.text('VIPTrader_HN'), findsOneWidget);
   });
 
-  testWidgets('SC-211 marketplace button returns to P2P placeholder', (
+  testWidgets('SC-211 marketplace button returns to P2P parent route', (
     tester,
   ) async {
     await pumpP2PExpress(tester);

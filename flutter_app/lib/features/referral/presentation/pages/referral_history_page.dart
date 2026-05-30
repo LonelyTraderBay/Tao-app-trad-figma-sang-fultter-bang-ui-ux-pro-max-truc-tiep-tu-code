@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/referral/data/referral_repository.dart';
+import 'package:vit_trade_flutter/app/providers/referral_controller_providers.dart';
 
 class ReferralHistoryPage extends ConsumerStatefulWidget {
   const ReferralHistoryPage({super.key, this.shellRenderMode});
@@ -53,7 +53,7 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(referralRepositoryProvider)
+        .watch(referralControllerProvider)
         .getHistory(
           filter: _filter,
           sort: _sort,
@@ -367,7 +367,7 @@ class _SortChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? AppColors.primary12 : Colors.transparent,
+          color: active ? AppColors.primary12 : AppColors.transparent,
           borderRadius: AppRadii.smRadius,
         ),
         child: Text(

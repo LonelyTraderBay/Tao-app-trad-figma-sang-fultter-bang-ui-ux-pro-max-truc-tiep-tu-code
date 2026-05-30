@@ -10,15 +10,16 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _ombudsmanBackground = AppColors.bg;
 const _ombudsmanPanel = AppColors.surface;
 const _ombudsmanPanel2 = AppColors.surface3;
 const _ombudsmanBorder = AppColors.borderSolid;
 const _ombudsmanPrimary = AppColors.primary;
-const _ombudsmanGreen = Color(0xFF10B981);
-const _ombudsmanAmber = Color(0xFFF59E0B);
+const _ombudsmanGreen = AppColors.buy;
+const _ombudsmanAmber = AppColors.caution;
 
 class OmbudsmanReferralPage extends ConsumerWidget {
   const OmbudsmanReferralPage({super.key, this.shellRenderMode});
@@ -30,7 +31,9 @@ class OmbudsmanReferralPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getOmbudsmanReferral();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getOmbudsmanReferral();
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -397,7 +400,7 @@ class _VisitButton extends StatelessWidget {
       label: Text(
         snapshot.ctaLabel,
         style: AppTextStyles.body.copyWith(
-          color: Colors.white,
+          color: AppColors.onAccent,
           fontFamily: 'Roboto',
           fontSize: 14,
           fontWeight: AppTextStyles.bold,
@@ -407,7 +410,7 @@ class _VisitButton extends StatelessWidget {
       style: FilledButton.styleFrom(
         fixedSize: const Size.fromHeight(48),
         backgroundColor: _ombudsmanPrimary,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.onAccent,
         textStyle: AppTextStyles.body.copyWith(
           fontSize: 14,
           fontWeight: AppTextStyles.bold,

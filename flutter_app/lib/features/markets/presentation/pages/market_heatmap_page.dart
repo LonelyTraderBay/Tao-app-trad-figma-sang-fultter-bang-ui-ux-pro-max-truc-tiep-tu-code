@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_data_viz_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -12,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
+import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 
 const _marketPrimary = AppColors.primary;
 
@@ -41,7 +42,7 @@ class _MarketHeatmapPageState extends ConsumerState<MarketHeatmapPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(marketRepositoryProvider).getMarketHeatmap();
+    final snapshot = ref.watch(marketControllerProvider).getMarketHeatmap();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -342,13 +343,13 @@ class _FilterChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: active
               ? _marketPrimary.withValues(alpha: 0.18)
-              : Colors.transparent,
+              : AppColors.transparent,
           borderRadius: AppRadii.cardRadius,
           border: outlined
               ? Border.all(
                   color: active
                       ? _marketPrimary.withValues(alpha: 0.48)
-                      : Colors.transparent,
+                      : AppColors.transparent,
                 )
               : null,
         ),
@@ -540,8 +541,8 @@ class _HeatmapTile extends StatelessWidget {
           color: _heatmapColor(change),
           border: Border.all(
             color: selected
-                ? Colors.white
-                : Colors.white.withValues(alpha: .10),
+                ? AppColors.onAccent
+                : AppColors.onAccent.withValues(alpha: .10),
             width: selected ? 2 : 1,
           ),
           borderRadius: AppRadii.xsRadius,
@@ -554,7 +555,7 @@ class _HeatmapTile extends StatelessWidget {
               Text(
                 coin.symbol,
                 style: AppTextStyles.baseMedium.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontSize: large ? 16 : 13,
                   fontWeight: AppTextStyles.bold,
                   shadows: _textShadow,
@@ -565,7 +566,7 @@ class _HeatmapTile extends StatelessWidget {
               Text(
                 _formatPercent(change),
                 style: AppTextStyles.caption.copyWith(
-                  color: Colors.white.withValues(alpha: .92),
+                  color: AppColors.onAccent.withValues(alpha: .92),
                   fontSize: large ? 12 : 10,
                   fontWeight: AppTextStyles.bold,
                   fontFeatures: AppTextStyles.tabularFigures,
@@ -578,7 +579,7 @@ class _HeatmapTile extends StatelessWidget {
                 Text(
                   _formatCompact(coin.marketCap),
                   style: AppTextStyles.micro.copyWith(
-                    color: Colors.white.withValues(alpha: .58),
+                    color: AppColors.onAccent.withValues(alpha: .58),
                     fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
                     shadows: _textShadow,
@@ -600,11 +601,17 @@ class _HeatmapLegend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const items = [
-      _LegendSpec(label: '<-5%', color: Color(0xBFDC4444)),
-      _LegendSpec(label: '-2~0%', color: Color(0x598C2E34)),
-      _LegendSpec(label: '0~2%', color: Color(0x59107861)),
-      _LegendSpec(label: '2~5%', color: Color(0x8C109969)),
-      _LegendSpec(label: '>5%', color: Color(0xBF10B981)),
+      _LegendSpec(label: '<-5%', color: AppDataVizColors.heatmapStrongNegative),
+      _LegendSpec(
+        label: '-2~0%',
+        color: AppDataVizColors.heatmapNeutralNegative,
+      ),
+      _LegendSpec(
+        label: '0~2%',
+        color: AppDataVizColors.heatmapNeutralPositive,
+      ),
+      _LegendSpec(label: '2~5%', color: AppDataVizColors.heatmapLegendPositive),
+      _LegendSpec(label: '>5%', color: AppDataVizColors.heatmapStrongPositive),
     ];
     return Padding(
       padding: const EdgeInsets.only(top: 4, bottom: 2),
@@ -706,7 +713,7 @@ class _SelectedCoinCard extends StatelessWidget {
                   child: Text(
                     'Chi tiết',
                     style: AppTextStyles.caption.copyWith(
-                      color: Colors.white,
+                      color: AppColors.onAccent,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),
@@ -968,7 +975,7 @@ final class _LegendSpec {
 }
 
 const _textShadow = [
-  Shadow(color: Color(0x99000000), blurRadius: 2, offset: Offset(0, 1)),
+  Shadow(color: AppColors.modalScrim, blurRadius: 2, offset: Offset(0, 1)),
 ];
 
 HeatmapCoin? _findCoin(List<HeatmapCoin> coins, String? id) {
@@ -980,13 +987,13 @@ HeatmapCoin? _findCoin(List<HeatmapCoin> coins, String? id) {
 }
 
 Color _heatmapColor(double change) {
-  if (change >= 8) return const Color(0xD9059669);
-  if (change >= 5) return const Color(0xBF10B981);
-  if (change >= 2) return const Color(0x8C10B981);
-  if (change >= 0) return const Color(0x5910B981);
-  if (change >= -2) return const Color(0x59EF4444);
-  if (change >= -5) return const Color(0x8CEF4444);
-  return const Color(0xBFEF4444);
+  if (change >= 8) return AppDataVizColors.heatmapExtremePositive;
+  if (change >= 5) return AppDataVizColors.heatmapStrongPositive;
+  if (change >= 2) return AppDataVizColors.heatmapMediumPositive;
+  if (change >= 0) return AppDataVizColors.heatmapSoftPositive;
+  if (change >= -2) return AppDataVizColors.heatmapSoftNegative;
+  if (change >= -5) return AppDataVizColors.heatmapMediumNegative;
+  return AppDataVizColors.heatmapStrongNegative;
 }
 
 String _formatCompact(double value) {

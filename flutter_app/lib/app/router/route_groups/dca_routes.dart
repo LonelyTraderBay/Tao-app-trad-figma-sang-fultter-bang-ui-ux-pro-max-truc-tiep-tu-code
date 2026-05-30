@@ -65,6 +65,6 @@ List<RouteBase> _dcaRoutes(ShellRenderMode shellRenderMode) {
         shellRenderMode: shellRenderMode,
       ),
     ),
-    ..._dcaOutgoingPlaceholders,
+    ..._dcaOutgoingPlaceholders(shellRenderMode),
   ];
 }

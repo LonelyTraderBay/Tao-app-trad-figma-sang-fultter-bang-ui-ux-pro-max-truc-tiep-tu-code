@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 enum _InstitutionalBatchTab { pending, executed }
 
@@ -121,7 +121,7 @@ class _StakingInstitutionalPageState
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (context) =>
           _SheetFrame(child: _CreateBatchSheet(snapshot: snapshot)),
     );
@@ -251,7 +251,7 @@ class _BatchTabs extends StatelessWidget {
           for (final tab in _InstitutionalBatchTab.values)
             Expanded(
               child: Material(
-                color: Colors.transparent,
+                color: AppColors.transparent,
                 child: InkWell(
                   key: StakingInstitutionalPage.tabKey(tab.name),
                   onTap: () => onChanged(tab),
@@ -276,7 +276,7 @@ class _BatchTabs extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: active == tab
                                 ? AppColors.primarySoft
-                                : Colors.transparent,
+                                : AppColors.transparent,
                             borderRadius: AppRadii.xsRadius,
                           ),
                         ),
@@ -440,7 +440,7 @@ class _InlineAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       borderRadius: AppRadii.lgRadius,
       child: InkWell(
         onTap: HapticFeedback.selectionClick,
@@ -457,7 +457,7 @@ class _InlineAction extends StatelessWidget {
           child: Text(
             label,
             style: AppTextStyles.micro.copyWith(
-              color: Colors.white,
+              color: AppColors.onAccent,
               fontWeight: AppTextStyles.bold,
             ),
           ),

@@ -10,7 +10,8 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _faqBackground = AppColors.bg;
 const _faqPanel = AppColors.surface;
@@ -52,7 +53,7 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getBotFaq();
+    final snapshot = ref.watch(tradeReadModelControllerProvider).getBotFaq();
     final category = snapshot.categories.firstWhere(
       (item) => item.id == _categoryId,
       orElse: () => snapshot.categories.first,
@@ -239,7 +240,7 @@ class _CategoryTabs extends StatelessWidget {
                     border: Border.all(
                       color: activeId == categories[i].id
                           ? _faqPrimary.withValues(alpha: .42)
-                          : Colors.transparent,
+                          : AppColors.transparent,
                     ),
                     borderRadius: AppRadii.cardRadius,
                   ),
@@ -474,7 +475,7 @@ class _HelpCard extends StatelessWidget {
                 child: _HelpButton(
                   label: 'Contact Support',
                   background: _faqPrimary,
-                  foreground: Colors.white,
+                  foreground: AppColors.onAccent,
                 ),
               ),
             ],

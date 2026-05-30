@@ -10,16 +10,17 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _scenarioBackground = AppColors.bg;
 const _scenarioPanel = AppColors.surface;
 const _scenarioPanel2 = AppColors.surface2;
 const _scenarioBorder = AppColors.borderSolid;
 const _scenarioPrimary = AppColors.primary;
-const _scenarioRed = Color(0xFFEF4444);
-const _scenarioAmber = Color(0xFFF59E0B);
-const _scenarioGreen = Color(0xFF10B981);
+const _scenarioRed = AppColors.sell;
+const _scenarioAmber = AppColors.caution;
+const _scenarioGreen = AppColors.buy;
 
 class PerformanceScenariosPage extends ConsumerStatefulWidget {
   const PerformanceScenariosPage({super.key, this.shellRenderMode});
@@ -43,7 +44,7 @@ class _PerformanceScenariosPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getPerformanceScenarios();
     final selectedPeriod = _holdingPeriod ?? snapshot.defaultHoldingPeriod;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
@@ -230,7 +231,7 @@ class _HoldingPeriodSelector extends StatelessWidget {
                       ? _scenarioPrimary
                       : _scenarioPanel2,
                   foregroundColor: selectedPeriod == period
-                      ? Colors.white
+                      ? AppColors.onAccent
                       : AppColors.text2,
                   shape: const StadiumBorder(),
                 ),
@@ -238,7 +239,7 @@ class _HoldingPeriodSelector extends StatelessWidget {
                   '$period ${period == 1 ? 'Year' : 'Years'}',
                   style: AppTextStyles.caption.copyWith(
                     color: selectedPeriod == period
-                        ? Colors.white
+                        ? AppColors.onAccent
                         : AppColors.text2,
                     fontSize: 12,
                     fontWeight: selectedPeriod == period

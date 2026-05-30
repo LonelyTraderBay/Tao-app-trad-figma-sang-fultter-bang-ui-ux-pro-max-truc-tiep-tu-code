@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2POrderCancelPage extends ConsumerStatefulWidget {
   const P2POrderCancelPage({
@@ -42,9 +42,7 @@ class _P2POrderCancelPageState extends ConsumerState<P2POrderCancelPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getOrderCancel(widget.orderId);
+    final snapshot = ref.watch(p2pOrderCancelProvider(widget.orderId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -345,7 +343,7 @@ class _ReasonButton extends StatelessWidget {
                 width: AppSpacing.x5,
                 height: AppSpacing.x5,
                 decoration: BoxDecoration(
-                  color: selected ? AppColors.sell : Colors.transparent,
+                  color: selected ? AppColors.sell : AppColors.transparent,
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: selected ? AppColors.sell : AppColors.borderSolid,
@@ -355,7 +353,7 @@ class _ReasonButton extends StatelessWidget {
                 child: selected
                     ? const Icon(
                         Icons.check_rounded,
-                        color: Colors.white,
+                        color: AppColors.onAccent,
                         size: AppSpacing.iconSm,
                       )
                     : null,

@@ -11,7 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/auth/data/auth_repository.dart';
+import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/controllers/password_reset_flow_controller.dart';
 
 const _authPrimary = AppColors.primary;
 const _authPrimary10 = AppColors.primary12;
@@ -37,16 +38,10 @@ bool _hasLetter(String value) => RegExp('[a-zA-Z]').hasMatch(value);
 bool _hasDigit(String value) => RegExp(r'\d').hasMatch(value);
 
 class ResetPasswordPage extends ConsumerStatefulWidget {
-  const ResetPasswordPage({
-    super.key,
-    this.email = 'user@vittrade.vn',
-    this.otp = '123456',
-  });
-
-  final String email;
-  final String otp;
+  const ResetPasswordPage({super.key});
 
   static const contentKey = Key('sc006_reset_content');
+  static const expiredKey = Key('sc006_reset_expired');
   static const newPasswordFieldKey = Key('sc006_reset_new_password_field');
   static const confirmPasswordFieldKey = Key(
     'sc006_reset_confirm_password_field',
@@ -56,6 +51,7 @@ class ResetPasswordPage extends ConsumerStatefulWidget {
     'sc006_reset_confirm_password_toggle',
   );
   static const submitKey = Key('sc006_reset_submit');
+  static const retryKey = Key('sc006_reset_retry');
   static const loginKey = Key('sc006_reset_login');
 
   @override
@@ -95,8 +91,9 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
   bool get _showMatch =>
       _confirmTouched && _confirmPassword.isNotEmpty && _passwordsMatch;
 
-  bool get _canSubmit =>
+  bool _canSubmit(PasswordResetChallenge? challenge) =>
       !_submitting &&
+      challenge != null &&
       _allRulesPass &&
       _passwordsMatch &&
       _confirmPassword.isNotEmpty;
@@ -123,7 +120,9 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
   }
 
   Future<void> _handleSubmit() async {
-    if (!_canSubmit) return;
+    final challenge = ref.read(passwordResetChallengeProvider);
+    if (challenge == null || !_canSubmit(challenge)) return;
+
     setState(() {
       _submitting = true;
       _error = '';
@@ -131,10 +130,10 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
 
     try {
       final result = await ref
-          .read(authRepositoryProvider)
+          .read(authControllerProvider)
           .resetPassword(
-            email: widget.email,
-            otp: widget.otp,
+            email: challenge.email,
+            otp: challenge.otp,
             newPassword: _newPassword,
           );
 
@@ -148,7 +147,12 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
         return;
       }
 
+      ref.read(passwordResetChallengeControllerProvider).clear();
       setState(() => _success = true);
+    } catch (error) {
+      if (mounted) {
+        setState(() => _error = authOperationErrorMessage(error));
+      }
     } finally {
       if (mounted) setState(() => _submitting = false);
     }
@@ -156,6 +160,8 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    final challenge = ref.watch(passwordResetChallengeProvider);
+
     return VitPageLayout(
       semanticLabel: 'SC-006 ResetPasswordPage',
       child: Column(
@@ -173,7 +179,11 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
               child: VitPageContent(
                 padding: VitContentPadding.relaxed,
                 gap: VitContentGap.relaxed,
-                children: _success ? _successContent : _formContent,
+                children: _success
+                    ? _successContent
+                    : challenge == null
+                    ? _expiredContent
+                    : _formContent(challenge),
               ),
             ),
           ),
@@ -182,7 +192,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
     );
   }
 
-  List<Widget> get _formContent => [
+  List<Widget> _formContent(PasswordResetChallenge challenge) => [
     const _ResetHero(),
     Column(
       children: [
@@ -243,7 +253,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
     if (_error.isNotEmpty) _InlinePasswordState(error: _error),
     VitCtaButton(
       key: ResetPasswordPage.submitKey,
-      onPressed: _canSubmit ? _handleSubmit : null,
+      onPressed: _canSubmit(challenge) ? _handleSubmit : null,
       loading: _submitting,
       variant: VitCtaButtonVariant.auth,
       child: Text(_submitting ? 'Đang cập nhật...' : 'Cập nhật mật khẩu'),
@@ -251,6 +261,32 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
     TextButton(
       key: ResetPasswordPage.loginKey,
       onPressed: _submitting ? null : () => context.go(AppRoutePaths.authLogin),
+      style: TextButton.styleFrom(
+        foregroundColor: _authPrimary,
+        minimumSize: const Size(0, 36),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
+      child: Text(
+        'Quay lại đăng nhập',
+        style: AppTextStyles.caption.copyWith(
+          color: _authPrimary,
+          fontWeight: AppTextStyles.medium,
+        ),
+      ),
+    ),
+  ];
+
+  List<Widget> get _expiredContent => [
+    const _ResetExpired(),
+    VitCtaButton(
+      key: ResetPasswordPage.retryKey,
+      onPressed: () => context.go(AppRoutePaths.authForgotPassword),
+      variant: VitCtaButtonVariant.auth,
+      child: const Text('Xác minh lại'),
+    ),
+    TextButton(
+      key: ResetPasswordPage.loginKey,
+      onPressed: () => context.go(AppRoutePaths.authLogin),
       style: TextButton.styleFrom(
         foregroundColor: _authPrimary,
         minimumSize: const Size(0, 36),
@@ -275,6 +311,52 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
       child: const Text('Đăng nhập'),
     ),
   ];
+}
+
+class _ResetExpired extends StatelessWidget {
+  const _ResetExpired();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      key: ResetPasswordPage.expiredKey,
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x6),
+      child: Column(
+        children: [
+          Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              color: AppColors.warn10,
+              shape: BoxShape.circle,
+              border: Border.all(color: AppColors.warningBorder, width: 2),
+            ),
+            child: const Icon(
+              Icons.lock_clock_outlined,
+              color: AppColors.warn,
+              size: 40,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x6),
+          Text(
+            'Phiên xác minh đã hết hạn',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            'Vui lòng xác minh OTP lại để tạo mật khẩu mới. '
+            'Mã OTP không được lưu trong URL.',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.text2,
+              height: 1.6,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _ResetHero extends StatelessWidget {

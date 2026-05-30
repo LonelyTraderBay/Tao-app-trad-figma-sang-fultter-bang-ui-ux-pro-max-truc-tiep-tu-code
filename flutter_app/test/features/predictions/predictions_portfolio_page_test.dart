@@ -128,6 +128,12 @@ void main() {
     );
     expect(find.text('Khám phá Arena cùng chủ đề'), findsOneWidget);
     expect(find.text('Arena Points'), findsOneWidget);
+    expect(
+      find.text(
+        'Prediction positions and P/L stay separate from Arena Points.',
+      ),
+      findsOneWidget,
+    );
   });
 
   testWidgets('SC-031 local tabs, visibility and cancel state work', (

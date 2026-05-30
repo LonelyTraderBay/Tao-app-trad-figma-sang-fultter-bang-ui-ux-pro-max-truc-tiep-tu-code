@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
-import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
+import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 const _editBackground = AppColors.bg;
 const _editPanel = AppColors.surface;
@@ -47,7 +47,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   @override
   void initState() {
     super.initState();
-    final snapshot = const MockProfileRepository().getEditProfile();
+    final snapshot = ref.read(profileControllerProvider).getEditProfile();
     _nameController = TextEditingController(text: snapshot.user.fullName);
     _emailController = TextEditingController(text: snapshot.user.email);
     _phoneController = TextEditingController(text: snapshot.user.phone);
@@ -63,7 +63,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileRepositoryProvider).getEditProfile();
+    final snapshot = ref.watch(profileControllerProvider).getEditProfile();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -202,7 +202,7 @@ class _AvatarEditor extends StatelessWidget {
               child: Text(
                 initial,
                 style: AppTextStyles.sectionTitle.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontSize: 36,
                   fontWeight: FontWeight.w900,
                   height: 1,
@@ -229,7 +229,7 @@ class _AvatarEditor extends StatelessWidget {
                     selected
                         ? Icons.check_rounded
                         : Icons.photo_camera_outlined,
-                    color: Colors.white,
+                    color: AppColors.onAccent,
                     size: 15,
                   ),
                 ),

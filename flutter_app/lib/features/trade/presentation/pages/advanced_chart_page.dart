@@ -11,10 +11,11 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _tradePrimary = AppColors.primary;
-const _chartBlack = Color(0xFF000000);
+const _chartBlack = AppColors.dynamicIslandBg;
 const _toolbarBackground = AppColors.surface3;
 
 class AdvancedChartPage extends ConsumerStatefulWidget {
@@ -52,7 +53,7 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
   void initState() {
     super.initState();
     _indicators = ref
-        .read(tradeRepositoryProvider)
+        .read(tradeReadModelControllerProvider)
         .getAdvancedChart(pairId: widget.pairId)
         .indicators
         .toList(growable: true);
@@ -61,7 +62,7 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getAdvancedChart(pairId: widget.pairId);
     final pair = snapshot.pair;
     final enabledIndicators = _indicators
@@ -149,7 +150,7 @@ class _AdvancedHeader extends StatelessWidget {
               height: 36,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: .08),
+                color: AppColors.onAccent.withValues(alpha: .08),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -473,13 +474,13 @@ class _TimeframeButton extends StatelessWidget {
         height: 32,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? _tradePrimary : Colors.transparent,
+          color: active ? _tradePrimary : AppColors.transparent,
           borderRadius: AppRadii.inputRadius,
         ),
         child: Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: active ? Colors.white : AppColors.text3,
+            color: active ? AppColors.onAccent : AppColors.text3,
             fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
@@ -514,7 +515,7 @@ class _ChartTypeButton extends StatelessWidget {
         height: 32,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: active ? AppColors.borderSolid : Colors.transparent,
+          color: active ? AppColors.borderSolid : AppColors.transparent,
           borderRadius: AppRadii.smRadius,
         ),
         child: Icon(
@@ -589,7 +590,7 @@ class _LegendChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 6),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: .72),
+        color: AppColors.dynamicIslandBg.withValues(alpha: .72),
         border: Border.all(color: color.withValues(alpha: .45)),
         borderRadius: BorderRadius.circular(9),
       ),
@@ -650,7 +651,9 @@ class _ActionBar extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: _toolbarBackground,
-                border: Border.all(color: Colors.white12),
+                border: Border.all(
+                  color: AppColors.onAccent.withValues(alpha: .12),
+                ),
                 borderRadius: AppRadii.cardRadius,
               ),
               child: const Icon(
@@ -721,7 +724,7 @@ class _IndicatorSheet extends StatelessWidget {
       child: GestureDetector(
         onTap: onClose,
         child: ColoredBox(
-          color: Colors.black.withValues(alpha: .68),
+          color: AppColors.dynamicIslandBg.withValues(alpha: .68),
           child: Align(
             alignment: Alignment.bottomCenter,
             child: GestureDetector(
@@ -843,7 +846,7 @@ class _IndicatorOption extends StatelessWidget {
               height: 24,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: indicator.enabled ? color : Colors.transparent,
+                color: indicator.enabled ? color : AppColors.transparent,
                 border: Border.all(
                   color: indicator.enabled ? color : AppColors.borderSolid,
                 ),
@@ -852,7 +855,7 @@ class _IndicatorOption extends StatelessWidget {
               child: indicator.enabled
                   ? const Icon(
                       Icons.check_rounded,
-                      color: Colors.white,
+                      color: AppColors.onAccent,
                       size: 14,
                     )
                   : null,
@@ -908,7 +911,7 @@ class _AdvancedTradeChartPainter extends CustomPainter {
         chartTop + chartHeight - ((value - low) / range) * chartHeight;
 
     final grid = Paint()
-      ..color = Colors.white.withValues(alpha: .055)
+      ..color = AppColors.onAccent.withValues(alpha: .055)
       ..strokeWidth = .7;
     for (var i = 0; i < 4; i++) {
       final y = chartTop + chartHeight * i / 3;

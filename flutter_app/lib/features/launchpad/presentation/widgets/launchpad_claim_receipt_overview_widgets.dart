@@ -1,0 +1,239 @@
+part of '../pages/launchpad_claim_receipt_page.dart';
+
+class _ClaimableBanner extends StatelessWidget {
+  const _ClaimableBanner({required this.receipt, required this.onClaim});
+
+  final LaunchpadRewardClaimReceiptDraft receipt;
+  final VoidCallback onClaim;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: LaunchpadClaimReceiptPage.claimableKey,
+      radius: VitCardRadius.lg,
+      borderColor: AppColors.buy.withValues(alpha: .30),
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Row(
+        children: [
+          Container(
+            width: 36,
+            height: 36,
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
+              color: AppColors.buy15,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.card_giftcard_rounded,
+              color: AppColors.buy,
+              size: AppSpacing.iconMd,
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Có thể nhận ngay',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.buy,
+                    fontWeight: AppTextStyles.bold,
+                    height: 1.2,
+                  ),
+                ),
+                Text(
+                  '${_formatNumber(receipt.claimableTotal)} ${receipt.rewardToken}',
+                  style: AppTextStyles.baseMedium.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 150,
+            child: VitCtaButton(
+              onPressed: onClaim,
+              variant: VitCtaButtonVariant.success,
+              child: const Text('Nhận'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _NextUnlockCard extends StatelessWidget {
+  const _NextUnlockCard({required this.receipt});
+
+  final LaunchpadRewardClaimReceiptDraft receipt;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.calendar_today_rounded,
+                color: AppColors.warn,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Text(
+                'Đợt mở khóa tiếp theo',
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Row(
+            children: [
+              const Icon(
+                Icons.check_circle_outline_rounded,
+                color: AppColors.buy,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Text(
+                _unlockStateText(receipt.nextUnlockDate),
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.buy,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ReceiptDetailsCard extends StatelessWidget {
+  const _ReceiptDetailsCard({required this.receipt});
+
+  final LaunchpadRewardClaimReceiptDraft receipt;
+
+  @override
+  Widget build(BuildContext context) {
+    final rows = [
+      _DetailRow('Pool', receipt.projectName),
+      _DetailRow(
+        'Token stake',
+        '${_formatNumber(receipt.stakedAmount)} ${receipt.stakeToken}',
+      ),
+      _DetailRow(
+        'APY',
+        '${_formatNumber(receipt.poolApy)}%',
+        color: AppColors.buy,
+      ),
+      _DetailRow('Reward token', receipt.rewardToken),
+      _DetailRow('Giá token', _formatUsd(receipt.rewardTokenPrice)),
+      _DetailRow(
+        'Tổng earned',
+        '${_formatNumber(receipt.totalEarned)} ${receipt.rewardToken}',
+      ),
+      _DetailRow(
+        'Giá trị earned',
+        _formatUsd(receipt.totalEarned * receipt.rewardTokenPrice),
+      ),
+      _DetailRow('Chain', receipt.chain),
+      _DetailRow('Contract', _truncateAddress(receipt.contractAddress)),
+    ];
+
+    return VitCard(
+      key: LaunchpadClaimReceiptPage.detailsKey,
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.receipt_long_outlined,
+                color: AppColors.text2,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Text(
+                'Chi tiết vị trí',
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          for (final row in rows) _DetailLine(row: row),
+        ],
+      ),
+    );
+  }
+}
+
+class _VestingPreviewCard extends StatelessWidget {
+  const _VestingPreviewCard({required this.receipt, required this.onOpenAll});
+
+  final LaunchpadRewardClaimReceiptDraft receipt;
+  final VoidCallback onOpenAll;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: LaunchpadClaimReceiptPage.vestingPreviewKey,
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.lock_outline_rounded,
+                color: AppColors.accent,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  'Lịch vesting',
+                  style: AppTextStyles.body.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+              TextButton(onPressed: onOpenAll, child: const Text('Xem tất cả')),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          for (final entry in receipt.vestingSchedule.take(4))
+            _VestingMiniRow(entry: entry),
+          if (receipt.vestingSchedule.length > 4)
+            Padding(
+              padding: const EdgeInsets.only(top: AppSpacing.x2),
+              child: Text(
+                '+${receipt.vestingSchedule.length - 4} đợt nữa',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}

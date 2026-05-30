@@ -72,8 +72,10 @@ class _DynamicIsland extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.dynamicIslandBg,
           borderRadius: BorderRadius.circular(22),
-          border: Border.all(color: const Color(0x0DFFFFFF)),
-          boxShadow: const [BoxShadow(color: Color(0xCC000000), blurRadius: 2)],
+          border: Border.all(color: AppColors.divider),
+          boxShadow: const [
+            BoxShadow(color: AppColors.phoneChromeShadow, blurRadius: 2),
+          ],
         ),
         child: Stack(
           children: [
@@ -84,7 +86,7 @@ class _DynamicIsland extends StatelessWidget {
                 width: 5,
                 height: 5,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF0A0A0A),
+                  color: AppColors.phoneSensor,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -100,9 +102,9 @@ class _DynamicIsland extends StatelessWidget {
                   gradient: RadialGradient(
                     center: Alignment(-0.3, -0.3),
                     colors: [
-                      Color(0xFF1A2540),
-                      Color(0xFF0A0E1A),
-                      Color(0xFF000000),
+                      AppColors.phoneLensStart,
+                      AppColors.phoneLensMid,
+                      AppColors.phoneLensEnd,
                     ],
                     stops: [0, 0.6, 1],
                   ),

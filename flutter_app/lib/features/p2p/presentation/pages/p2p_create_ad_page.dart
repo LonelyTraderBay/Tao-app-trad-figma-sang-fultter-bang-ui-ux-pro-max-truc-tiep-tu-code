@@ -13,26 +13,30 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_create_ad_sections.dart';
 
 class P2PCreateAdPage extends ConsumerStatefulWidget {
   const P2PCreateAdPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc226_p2p_create_content');
-  static const priceFieldKey = Key('sc226_price_field');
-  static const marginFieldKey = Key('sc226_margin_field');
-  static const totalFieldKey = Key('sc226_total_field');
-  static const minFieldKey = Key('sc226_min_field');
-  static const maxFieldKey = Key('sc226_max_field');
-  static const publishButtonKey = Key('sc226_publish');
-  static const confirmPublishKey = Key('sc226_confirm_publish');
+  static const priceFieldKey = P2PCreateAdUiKeys.priceFieldKey;
+  static const marginFieldKey = P2PCreateAdUiKeys.marginFieldKey;
+  static const totalFieldKey = P2PCreateAdUiKeys.totalFieldKey;
+  static const minFieldKey = P2PCreateAdUiKeys.minFieldKey;
+  static const maxFieldKey = P2PCreateAdUiKeys.maxFieldKey;
+  static const publishButtonKey = P2PCreateAdUiKeys.publishButtonKey;
+  static const confirmPublishKey = P2PCreateAdUiKeys.confirmPublishKey;
 
-  static Key adTypeKey(P2PTradeType type) => Key('sc226_type_${type.name}');
-  static Key assetKey(String asset) => Key('sc226_asset_$asset');
-  static Key currencyKey(String currency) => Key('sc226_currency_$currency');
-  static Key priceTypeKey(String type) => Key('sc226_price_type_$type');
-  static Key paymentKey(String payment) => Key('sc226_payment_$payment');
-  static Key paymentWindowKey(int minutes) => Key('sc226_window_$minutes');
+  static Key adTypeKey(P2PTradeType type) => P2PCreateAdUiKeys.adTypeKey(type);
+  static Key assetKey(String asset) => P2PCreateAdUiKeys.assetKey(asset);
+  static Key currencyKey(String currency) =>
+      P2PCreateAdUiKeys.currencyKey(currency);
+  static Key priceTypeKey(String type) => P2PCreateAdUiKeys.priceTypeKey(type);
+  static Key paymentKey(String payment) =>
+      P2PCreateAdUiKeys.paymentKey(payment);
+  static Key paymentWindowKey(int minutes) =>
+      P2PCreateAdUiKeys.paymentWindowKey(minutes);
 
   final ShellRenderMode? shellRenderMode;
 
@@ -79,7 +83,11 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getCreateAd();
+    final snapshot = ref.watch(p2pCreateAdProvider);
+    final formController = P2PCreateAdController(
+      state: P2PCreateAdViewState(snapshot: snapshot),
+    );
+    final preview = formController.preview(_draft());
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -91,15 +99,6 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
             ? DeviceMetrics.bottomChrome
             : DeviceMetrics.nativeBottomChrome) +
         MediaQuery.paddingOf(context).bottom;
-    final marketPrice = snapshot.marketPrices[_asset] ?? 25300;
-    final effectivePrice = _effectivePrice(marketPrice);
-    final priceDiff = effectivePrice <= 0
-        ? 0.0
-        : ((effectivePrice - marketPrice) / marketPrice) * 100;
-    final isValid =
-        effectivePrice > 0 &&
-        _parseNum(_totalController.text) > 0 &&
-        _selectedPayments.isNotEmpty;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -181,11 +180,11 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                         _InputBlock(
                           label: 'Giá ($_currency/$_asset) *',
                           hint:
-                              'Giá thị trường: ${_formatVnd(marketPrice)} $_currency',
+                              'Giá thị trường: ${preview.marketPriceLabel} $_currency',
                           child: VitInput(
                             controller: _priceController,
                             fieldKey: P2PCreateAdPage.priceFieldKey,
-                            hintText: _formatVnd(marketPrice),
+                            hintText: preview.marketPriceLabel,
                             keyboardType: TextInputType.number,
                             suffix: Text(
                               _currency,
@@ -197,19 +196,17 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                           ),
                         )
                       else
-                        _FloatingPriceBlock(
+                        P2PCreateAdFloatingPriceBlock(
                           controller: _marginController,
-                          marketPrice: marketPrice,
-                          effectivePrice: effectivePrice,
-                          currency: _currency,
+                          preview: preview,
                           onChanged: () => setState(() {}),
                         ),
-                      if (effectivePrice > 0) ...[
+                      if (preview.effectivePrice > 0) ...[
                         const SizedBox(height: AppSpacing.x2),
                         Text(
-                          '${priceDiff >= 0 ? 'Tăng' : 'Giảm'} ${priceDiff.abs().toStringAsFixed(2)}% so với thị trường',
+                          preview.priceDiffLabel,
                           style: AppTextStyles.micro.copyWith(
-                            color: priceDiff >= 0
+                            color: preview.priceDiffPercent >= 0
                                 ? AppColors.buy
                                 : AppColors.sell,
                             fontWeight: AppTextStyles.bold,
@@ -264,13 +261,13 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                         ],
                       ),
                       const SizedBox(height: AppSpacing.x5),
-                      _PaymentsBlock(
+                      P2PCreateAdPaymentsBlock(
                         options: snapshot.paymentOptions,
                         selected: _selectedPayments,
                         onToggle: _togglePayment,
                       ),
                       const SizedBox(height: AppSpacing.x5),
-                      _PaymentWindowBlock(
+                      P2PCreateAdPaymentWindowBlock(
                         values: snapshot.paymentWindows,
                         selected: _paymentWindow,
                         onSelected: (value) {
@@ -290,7 +287,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                         },
                       ),
                       const SizedBox(height: AppSpacing.x5),
-                      _RequirementCard(
+                      P2PCreateAdRequirementCard(
                         requireKyc: _requireKyc,
                         requiredKycLevel: _requiredKycLevel,
                         minTradesController: _minTradesController,
@@ -305,14 +302,14 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                         },
                       ),
                       const SizedBox(height: AppSpacing.x5),
-                      _MultilineBlock(
+                      P2PCreateAdMultilineBlock(
                         label: 'Điều kiện giao dịch (tuỳ chọn)',
                         controller: _termsController,
                         hintText:
                             'VD: Chỉ giao dịch với tài khoản đã xác minh KYC...',
                       ),
                       const SizedBox(height: AppSpacing.x5),
-                      _MultilineBlock(
+                      P2PCreateAdMultilineBlock(
                         label: 'Tin nhắn tự động (tuỳ chọn)',
                         controller: _autoReplyController,
                         hintText:
@@ -320,20 +317,14 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                         hint: 'Gửi tự động khi đối tác tạo đơn.',
                       ),
                       const SizedBox(height: AppSpacing.x5),
-                      _WarningCard(text: snapshot.warningNote),
+                      P2PCreateAdWarningCard(text: snapshot.warningNote),
                       const SizedBox(height: AppSpacing.x5),
-                      _LivePreviewCard(
+                      P2PCreateAdLivePreviewCard(
                         expanded: _previewExpanded,
-                        isValid: isValid,
                         onTap: () => setState(
                           () => _previewExpanded = !_previewExpanded,
                         ),
-                        adType: _adType,
-                        asset: _asset,
-                        currency: _currency,
-                        price: effectivePrice,
-                        totalAmount: _totalController.text,
-                        payments: _selectedPayments,
+                        preview: preview,
                       ),
                     ],
                   ),
@@ -346,17 +337,15 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                 padding: EdgeInsets.only(bottom: footerInset),
                 child: VitCtaButton(
                   key: P2PCreateAdPage.publishButtonKey,
-                  onPressed: isValid && !_submitting
-                      ? () => _confirmPublish(context, effectivePrice)
+                  onPressed: preview.canPublish && !_submitting
+                      ? () => _confirmPublish(context, preview)
                       : null,
                   variant: _adType == P2PTradeType.buy
                       ? VitCtaButtonVariant.success
                       : VitCtaButtonVariant.danger,
                   loading: _submitting,
                   child: Text(
-                    _submitting
-                        ? 'Đang đăng...'
-                        : 'Đăng quảng cáo ${_adType == P2PTradeType.buy ? 'MUA' : 'BÁN'} $_asset',
+                    _submitting ? 'Đang đăng...' : preview.publishLabel,
                   ),
                 ),
               ),
@@ -367,30 +356,51 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
     );
   }
 
-  int _effectivePrice(int marketPrice) {
-    if (_priceType == 'fixed') return _parseNum(_priceController.text).round();
-    final margin = _parseNum(_marginController.text);
-    return (marketPrice * (1 + margin / 100)).round();
+  P2PCreateAdDraft _draft() {
+    return P2PCreateAdDraft(
+      adType: _adType,
+      asset: _asset,
+      currency: _currency,
+      priceType: _priceType,
+      paymentWindow: _paymentWindow,
+      tradingHours: _tradingHours,
+      requireKyc: _requireKyc,
+      requiredKycLevel: _requiredKycLevel,
+      selectedPayments: _selectedPayments,
+      priceText: _priceController.text,
+      marginText: _marginController.text,
+      totalText: _totalController.text,
+      minLimitText: _minController.text,
+      maxLimitText: _maxController.text,
+    );
   }
 
   void _togglePayment(String payment) {
     HapticFeedback.selectionClick();
+    final formController = P2PCreateAdController(
+      state: P2PCreateAdViewState(snapshot: ref.read(p2pCreateAdProvider)),
+    );
+    final nextPayments = formController.toggledPayments(
+      _selectedPayments,
+      payment,
+    );
     setState(() {
-      if (_selectedPayments.contains(payment)) {
-        _selectedPayments.remove(payment);
-      } else if (_selectedPayments.length < 5) {
-        _selectedPayments.add(payment);
-      }
+      _selectedPayments
+        ..clear()
+        ..addAll(nextPayments);
     });
   }
 
-  Future<void> _confirmPublish(BuildContext context, int effectivePrice) async {
+  Future<void> _confirmPublish(
+    BuildContext context,
+    P2PCreateAdPreview preview,
+  ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
           backgroundColor: AppColors.surface,
-          surfaceTintColor: Colors.transparent,
+          surfaceTintColor: AppColors.transparent,
           shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
           title: Text(
             'Xác nhận đăng quảng cáo',
@@ -400,25 +410,30 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _ConfirmRow(
-                label: 'Loại',
-                value: _adType == P2PTradeType.buy ? 'MUA' : 'BÁN',
-              ),
-              _ConfirmRow(
+              P2PCreateAdConfirmRow(label: 'Loại', value: preview.typeLabel),
+              P2PCreateAdConfirmRow(
                 label: 'Tài sản',
-                value: '${_totalController.text} $_asset',
+                value: preview.totalAmountLabel,
               ),
-              _ConfirmRow(
+              P2PCreateAdConfirmRow(
                 label: 'Giá',
-                value: '${_formatVnd(effectivePrice)} $_currency/$_asset',
+                value: '${preview.priceLabel}/$_asset',
               ),
-              _ConfirmRow(
+              P2PCreateAdConfirmRow(
                 label: 'Thanh toán',
-                value: _selectedPayments.join(', '),
+                value: preview.paymentSummary,
+              ),
+              P2PCreateAdConfirmRow(
+                label: 'Limit',
+                value: preview.limitSummary,
+              ),
+              P2PCreateAdConfirmRow(
+                label: 'Fee',
+                value: preview.feeReviewLabel,
               ),
               const SizedBox(height: AppSpacing.x3),
               Text(
-                'Tôi xác nhận thông tin chính xác và đồng ý với điều khoản đăng quảng cáo P2P.',
+                '${preview.escrowReviewLabel}\n${preview.riskReviewLabel}',
                 style: AppTextStyles.micro.copyWith(color: AppColors.warn),
               ),
             ],
@@ -583,13 +598,13 @@ class _SegmentButton extends StatelessWidget {
           height: AppSpacing.inputHeight - AppSpacing.x2,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: selected ? color : Colors.transparent,
+            color: selected ? color : AppColors.transparent,
             borderRadius: AppRadii.mdRadius,
           ),
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
-              color: selected ? Colors.white : AppColors.text3,
+              color: selected ? AppColors.onAccent : AppColors.text3,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -706,529 +721,4 @@ class _InputBlock extends StatelessWidget {
       ],
     );
   }
-}
-
-class _FloatingPriceBlock extends StatelessWidget {
-  const _FloatingPriceBlock({
-    required this.controller,
-    required this.marketPrice,
-    required this.effectivePrice,
-    required this.currency,
-    required this.onChanged,
-  });
-
-  final TextEditingController controller;
-  final int marketPrice;
-  final int effectivePrice;
-  final String currency;
-  final VoidCallback onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return _InputBlock(
-      label: 'Biên độ giá (%) *',
-      hint:
-          'Giá = Thị trường x (1 + biên độ%). Giá hiện tại: ${_formatVnd(effectivePrice)} $currency',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          VitInput(
-            controller: controller,
-            fieldKey: P2PCreateAdPage.marginFieldKey,
-            hintText: '0.00',
-            keyboardType: TextInputType.number,
-            prefix: Text('±', style: AppTextStyles.caption),
-            suffix: Text('%', style: AppTextStyles.caption),
-            onChanged: (_) => onChanged(),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Wrap(
-            spacing: AppSpacing.x2,
-            children: [
-              for (final value in const [-1, -0.5, 0, .5, 1, 2])
-                _ChoiceChipButton(
-                  label: '${value >= 0 ? '+' : ''}$value%',
-                  selected: controller.text == value.toString(),
-                  onTap: () {
-                    controller.text = value.toString();
-                    onChanged();
-                  },
-                ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PaymentsBlock extends StatelessWidget {
-  const _PaymentsBlock({
-    required this.options,
-    required this.selected,
-    required this.onToggle,
-  });
-
-  final List<String> options;
-  final Set<String> selected;
-  final ValueChanged<String> onToggle;
-
-  @override
-  Widget build(BuildContext context) {
-    return _InputBlock(
-      label: 'Phương thức thanh toán *',
-      hint: 'Đã chọn ${selected.length}/5',
-      child: Wrap(
-        spacing: AppSpacing.x2,
-        runSpacing: AppSpacing.x2,
-        children: [
-          for (final payment in options)
-            _PaymentChip(
-              key: P2PCreateAdPage.paymentKey(payment),
-              label: payment,
-              selected: selected.contains(payment),
-              onTap: () => onToggle(payment),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PaymentChip extends StatelessWidget {
-  const _PaymentChip({
-    super.key,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Ink(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
-            color: selected ? AppColors.primary12 : AppColors.surface2,
-            border: Border.all(
-              color: selected ? AppColors.primary30 : AppColors.cardBorder,
-            ),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (selected) ...[
-                const Icon(
-                  Icons.check_circle_rounded,
-                  color: AppColors.primarySoft,
-                  size: AppSpacing.iconSm,
-                ),
-                const SizedBox(width: AppSpacing.x1),
-              ],
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: selected ? AppColors.primarySoft : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _PaymentWindowBlock extends StatelessWidget {
-  const _PaymentWindowBlock({
-    required this.values,
-    required this.selected,
-    required this.onSelected,
-  });
-
-  final List<int> values;
-  final int selected;
-  final ValueChanged<int> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    return _InputBlock(
-      label: 'Thời gian thanh toán',
-      child: Row(
-        children: [
-          for (final value in values) ...[
-            Expanded(
-              child: _ChoiceChipButton(
-                key: P2PCreateAdPage.paymentWindowKey(value),
-                label: '$value phút',
-                selected: selected == value,
-                onTap: () => onSelected(value),
-              ),
-            ),
-            if (value != values.last) const SizedBox(width: AppSpacing.x3),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class _RequirementCard extends StatelessWidget {
-  const _RequirementCard({
-    required this.requireKyc,
-    required this.requiredKycLevel,
-    required this.minTradesController,
-    required this.minDaysController,
-    required this.onKycChanged,
-    required this.onLevelChanged,
-  });
-
-  final bool requireKyc;
-  final String requiredKycLevel;
-  final TextEditingController minTradesController;
-  final TextEditingController minDaysController;
-  final ValueChanged<bool> onKycChanged;
-  final ValueChanged<String> onLevelChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.shield_outlined,
-                color: AppColors.text2,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: Text(
-                  'Yêu cầu đối tác',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-              Text(
-                'Tuỳ chọn',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x4),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'Yêu cầu KYC',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
-              ),
-              Switch(
-                value: requireKyc,
-                activeThumbColor: AppColors.primarySoft,
-                activeTrackColor: AppColors.primary20,
-                onChanged: onKycChanged,
-              ),
-            ],
-          ),
-          if (requireKyc) ...[
-            const SizedBox(height: AppSpacing.x2),
-            Wrap(
-              spacing: AppSpacing.x2,
-              children: [
-                for (final level in const ['1', '2', '3'])
-                  _ChoiceChipButton(
-                    label: 'Cấp $level',
-                    selected: requiredKycLevel == level,
-                    onTap: () => onLevelChanged(level),
-                  ),
-              ],
-            ),
-          ],
-          const SizedBox(height: AppSpacing.x3),
-          VitInput(
-            controller: minTradesController,
-            label: 'Số đơn tối thiểu',
-            hintText: '0',
-            keyboardType: TextInputType.number,
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          VitInput(
-            controller: minDaysController,
-            label: 'Số ngày tối thiểu',
-            hintText: '0',
-            keyboardType: TextInputType.number,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _MultilineBlock extends StatelessWidget {
-  const _MultilineBlock({
-    required this.label,
-    required this.controller,
-    required this.hintText,
-    this.hint,
-  });
-
-  final String label;
-  final TextEditingController controller;
-  final String hintText;
-  final String? hint;
-
-  @override
-  Widget build(BuildContext context) {
-    return _InputBlock(
-      label: label,
-      hint: hint,
-      child: Container(
-        constraints: const BoxConstraints(
-          minHeight: AppSpacing.buttonHero + AppSpacing.x6,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-        decoration: BoxDecoration(
-          color: AppColors.surface2,
-          border: Border.all(color: AppColors.borderSolid, width: 1.5),
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: TextField(
-          controller: controller,
-          maxLines: 3,
-          cursorColor: AppColors.primary,
-          style: AppTextStyles.body.copyWith(fontSize: 14, height: 1.45),
-          decoration: InputDecoration.collapsed(
-            hintText: hintText,
-            hintStyle: AppTextStyles.body.copyWith(
-              color: AppColors.text3,
-              fontSize: 14,
-              height: 1.45,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _WarningCard extends StatelessWidget {
-  const _WarningCard({required this.text});
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.warn10,
-        border: Border.all(color: AppColors.warningBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.warning_amber_rounded,
-              color: AppColors.warn,
-              size: AppSpacing.iconSm,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Text(
-                text,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.warn,
-                  height: 1.55,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _LivePreviewCard extends StatelessWidget {
-  const _LivePreviewCard({
-    required this.expanded,
-    required this.isValid,
-    required this.onTap,
-    required this.adType,
-    required this.asset,
-    required this.currency,
-    required this.price,
-    required this.totalAmount,
-    required this.payments,
-  });
-
-  final bool expanded;
-  final bool isValid;
-  final VoidCallback onTap;
-  final P2PTradeType adType;
-  final String asset;
-  final String currency;
-  final int price;
-  final String totalAmount;
-  final Set<String> payments;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      child: Column(
-        children: [
-          InkWell(
-            onTap: onTap,
-            borderRadius: AppRadii.inputRadius,
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.radio_button_checked_rounded,
-                  color: AppColors.buy,
-                  size: AppSpacing.iconSm,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Expanded(
-                  child: Text(
-                    'Live Preview',
-                    style: AppTextStyles.baseMedium.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ),
-                _PreviewBadge(label: isValid ? '100%' : '0%'),
-                const SizedBox(width: AppSpacing.x2),
-                Icon(
-                  expanded
-                      ? Icons.keyboard_arrow_up_rounded
-                      : Icons.keyboard_arrow_down_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.iconMd,
-                ),
-              ],
-            ),
-          ),
-          if (expanded) ...[
-            const SizedBox(height: AppSpacing.x4),
-            _ConfirmRow(
-              label: adType == P2PTradeType.buy ? 'MUA' : 'BÁN',
-              value: '$totalAmount $asset',
-            ),
-            _ConfirmRow(label: 'Giá', value: '${_formatVnd(price)} $currency'),
-            _ConfirmRow(label: 'Thanh toán', value: payments.join(', ')),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class _PreviewBadge extends StatelessWidget {
-  const _PreviewBadge({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.buy10,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.buy),
-        ),
-      ),
-    );
-  }
-}
-
-class _ConfirmRow extends StatelessWidget {
-  const _ConfirmRow({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 76,
-            child: Text(
-              label,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value,
-              textAlign: TextAlign.end,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-num _parseNum(String value) {
-  var normalized = value.replaceAll(',', '').replaceAll(' ', '').trim();
-  final dotParts = normalized.split('.');
-  if (dotParts.length > 2 ||
-      (dotParts.length == 2 &&
-          dotParts.last.length == 3 &&
-          dotParts.first.length > 1)) {
-    normalized = normalized.replaceAll('.', '');
-  }
-  return num.tryParse(normalized) ?? 0;
-}
-
-String _formatVnd(num value) {
-  final raw = value.round().toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i++) {
-    final remaining = raw.length - i;
-    buffer.write(raw[i]);
-    if (remaining > 1 && remaining % 3 == 1) buffer.write('.');
-  }
-  return buffer.toString();
 }

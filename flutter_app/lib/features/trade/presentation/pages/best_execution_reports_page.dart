@@ -10,14 +10,15 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _bestBackground = AppColors.bg;
 const _bestPanel = AppColors.surface;
 const _bestPanel2 = AppColors.surface2;
 const _bestBorder = AppColors.borderSolid;
-const _bestGreen = Color(0xFF10B981);
-const _bestAmber = Color(0xFFF59E0B);
+const _bestGreen = AppColors.buy;
+const _bestAmber = AppColors.caution;
 const _bestPrimary = AppColors.primary;
 
 class BestExecutionReportsPage extends ConsumerStatefulWidget {
@@ -45,7 +46,7 @@ class _BestExecutionReportsPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getBestExecutionReports();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -133,7 +134,7 @@ class _ComplianceNotice extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       decoration: BoxDecoration(
-        color: Colors.transparent,
+        color: AppColors.transparent,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
@@ -749,7 +750,7 @@ class _ReportActions extends StatelessWidget {
                   label: 'Publish Report',
                   icon: Icons.open_in_new_rounded,
                   background: _bestPrimary,
-                  foreground: Colors.white,
+                  foreground: AppColors.onAccent,
                   onTap: onPublish,
                 ),
               ),
@@ -984,7 +985,7 @@ class _NoticePanel extends StatelessWidget {
       right: 20,
       top: MediaQuery.paddingOf(context).top + 18,
       child: Material(
-        color: Colors.transparent,
+        color: AppColors.transparent,
         child: Container(
           padding: const EdgeInsets.fromLTRB(12, 9, 8, 9),
           decoration: BoxDecoration(
@@ -993,7 +994,7 @@ class _NoticePanel extends StatelessWidget {
             borderRadius: AppRadii.inputRadius,
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: .25),
+                color: AppColors.dynamicIslandBg.withValues(alpha: .25),
                 blurRadius: 18,
                 offset: const Offset(0, 8),
               ),

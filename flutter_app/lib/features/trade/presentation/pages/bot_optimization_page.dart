@@ -12,7 +12,8 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _optimizationBackground = AppColors.bg;
 const _optimizationPanel = AppColors.surface;
@@ -43,7 +44,9 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getBotOptimization();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getBotOptimization();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
     return VitPageLayout(
@@ -137,7 +140,7 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
 
   void _handleStart() {
     final result = ref
-        .read(tradeRepositoryProvider)
+        .read(tradeReadModelControllerProvider)
         .runBotOptimization(
           TradeBotOptimizationRequest(
             targetId: _selectedTarget,
@@ -411,7 +414,7 @@ class _RangeSliderRow extends StatelessWidget {
           data: SliderTheme.of(context).copyWith(
             trackHeight: 7,
             activeTrackColor: _optimizationPrimary,
-            inactiveTrackColor: Colors.white,
+            inactiveTrackColor: AppColors.onAccent,
             thumbColor: _optimizationPrimary,
             overlayColor: _optimizationPrimary.withValues(alpha: .12),
             thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 7),
@@ -537,14 +540,14 @@ class _StartFooter extends StatelessWidget {
           label: Text(
             'Start Optimization',
             style: AppTextStyles.baseMedium.copyWith(
-              color: Colors.white,
+              color: AppColors.onAccent,
               fontSize: 14,
               height: 1,
             ),
           ),
           style: ElevatedButton.styleFrom(
             backgroundColor: _optimizationPrimary,
-            foregroundColor: Colors.white,
+            foregroundColor: AppColors.onAccent,
             elevation: 0,
             shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
           ),

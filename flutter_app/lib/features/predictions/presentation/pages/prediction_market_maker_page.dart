@@ -14,7 +14,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
+import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 
 const _predictionPrimary = AppColors.primary;
 
@@ -52,7 +53,9 @@ class _PredictionMarketMakerPageState
   @override
   void initState() {
     super.initState();
-    final snapshot = const MockPredictionsRepository().getMarketMaker();
+    final snapshot = ref
+        .read(predictionsReadModelControllerProvider)
+        .getMarketMaker();
     _spreadBps = snapshot.defaultSpreadBps;
     _eventController = TextEditingController(text: snapshot.defaultEventName);
     _amountController = TextEditingController();
@@ -78,7 +81,9 @@ class _PredictionMarketMakerPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(predictionsRepositoryProvider).getMarketMaker();
+    final snapshot = ref
+        .watch(predictionsReadModelControllerProvider)
+        .getMarketMaker();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -578,14 +583,16 @@ class _AddLiquidityButton extends StatelessWidget {
             children: [
               Icon(
                 Icons.add_rounded,
-                color: Colors.white.withValues(alpha: enabled ? 1 : .5),
+                color: AppColors.onAccent.withValues(alpha: enabled ? 1 : .5),
                 size: 20,
               ),
               const SizedBox(width: 8),
               Text(
                 'Them thanh khoan',
                 style: AppTextStyles.body.copyWith(
-                  color: Colors.white.withValues(alpha: enabled ? 1 : .55),
+                  color: AppColors.onAccent.withValues(
+                    alpha: enabled ? 1 : .55,
+                  ),
                   fontWeight: AppTextStyles.bold,
                 ),
               ),

@@ -74,9 +74,7 @@ void main() {
     expect(find.text('By: Seller'), findsNWidgets(3));
   });
 
-  testWidgets('SC-212 back button returns to P2P order placeholder', (
-    tester,
-  ) async {
+  testWidgets('SC-212 back button returns to P2P order route', (tester) async {
     await pumpP2POrderTimeline(tester);
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));

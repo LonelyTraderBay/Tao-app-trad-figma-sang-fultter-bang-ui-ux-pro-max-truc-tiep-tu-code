@@ -11,7 +11,8 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _backtestBackground = AppColors.bg;
 const _backtestPanel = AppColors.surface;
@@ -57,7 +58,9 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getBotBacktesting();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getBotBacktesting();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomGap =
         (mode.usesVisualQaFrame
@@ -150,7 +153,7 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
     final capital =
         double.tryParse(_capitalController.text) ?? snapshot.defaultCapital;
     ref
-        .read(tradeRepositoryProvider)
+        .read(tradeReadModelControllerProvider)
         .runBotBacktest(
           TradeBotBacktestRequest(
             strategyId: _selectedStrategy,
@@ -345,7 +348,7 @@ class _ChoicePill extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: selected ? Colors.white : AppColors.text1,
+            color: selected ? AppColors.onAccent : AppColors.text1,
             fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
@@ -494,7 +497,7 @@ class _RunFooter extends StatelessWidget {
           label: Text(
             'Run Backtest',
             style: AppTextStyles.caption.copyWith(
-              color: Colors.white,
+              color: AppColors.onAccent,
               fontSize: 14,
               fontWeight: AppTextStyles.bold,
               height: 1,

@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
+import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 
 class DCAScheduleConfig extends ConsumerStatefulWidget {
   const DCAScheduleConfig({super.key, this.shellRenderMode});
@@ -53,7 +53,7 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(dcaRepositoryProvider).getScheduleConfig();
+    final snapshot = ref.watch(dcaScheduleConfigProvider);
     _initialize(snapshot);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();

@@ -11,17 +11,18 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _reportBackground = AppColors.bg;
 const _reportPanel = AppColors.surface;
 const _reportPanel2 = AppColors.surface2;
 const _reportBorder = AppColors.borderSolid;
 const _reportPrimary = AppColors.primary;
-const _reportGreen = Color(0xFF10B981);
-const _reportRed = Color(0xFFEF4444);
-const _reportAmber = Color(0xFFF59E0B);
-const _reportMuted = Color(0xFF94A3B8);
+const _reportGreen = AppColors.buy;
+const _reportRed = AppColors.sell;
+const _reportAmber = AppColors.caution;
+const _reportMuted = AppColors.medalSilverBlue;
 
 class TransactionReportingPage extends ConsumerStatefulWidget {
   const TransactionReportingPage({super.key, this.shellRenderMode});
@@ -47,7 +48,7 @@ class _TransactionReportingPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getTransactionReporting();
     final reports = _filteredReports(snapshot);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
@@ -878,7 +879,7 @@ class _StatsTab extends StatelessWidget {
                 context.go(AppRoutePaths.tradeCopyRegulatoryReportsDashboard),
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
+              foregroundColor: AppColors.onAccent,
               shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
             ),
             icon: const Icon(Icons.bar_chart_rounded, size: 17),
@@ -1093,7 +1094,7 @@ class _NoticePanel extends StatelessWidget {
       right: 20,
       bottom: 108 + MediaQuery.paddingOf(context).bottom,
       child: Material(
-        color: Colors.transparent,
+        color: AppColors.transparent,
         child: Container(
           padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
           decoration: BoxDecoration(
@@ -1102,7 +1103,7 @@ class _NoticePanel extends StatelessWidget {
             borderRadius: AppRadii.cardRadius,
             boxShadow: const [
               BoxShadow(
-                color: Color(0x99000000),
+                color: AppColors.modalScrim,
                 blurRadius: 18,
                 offset: Offset(0, 8),
               ),

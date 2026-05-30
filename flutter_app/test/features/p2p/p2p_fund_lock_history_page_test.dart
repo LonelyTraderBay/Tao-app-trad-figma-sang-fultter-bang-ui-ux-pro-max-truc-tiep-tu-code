@@ -97,9 +97,7 @@ void main() {
     expect(find.text('Order #45850 released'), findsOneWidget);
   });
 
-  testWidgets('SC-262 back returns to P2P wallet placeholder safely', (
-    tester,
-  ) async {
+  testWidgets('SC-262 back returns to P2P wallet route safely', (tester) async {
     await pumpFundLockHistory(tester);
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));

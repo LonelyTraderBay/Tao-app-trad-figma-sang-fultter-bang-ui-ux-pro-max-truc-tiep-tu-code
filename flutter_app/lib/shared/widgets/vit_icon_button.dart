@@ -69,7 +69,7 @@ class VitIconButton extends StatelessWidget {
     switch (variant) {
       case VitIconButtonVariant.defaultAction:
         return const _IconButtonStyle(
-          background: Colors.transparent,
+          background: AppColors.transparent,
           foreground: AppColors.text1,
         );
       case VitIconButtonVariant.ghost:
@@ -98,7 +98,7 @@ class VitIconButton extends StatelessWidget {
         );
       case VitIconButtonVariant.transparent:
         return const _IconButtonStyle(
-          background: Colors.transparent,
+          background: AppColors.transparent,
           foreground: AppColors.text2,
         );
     }
@@ -157,7 +157,7 @@ class VitIconButton extends StatelessWidget {
           width: hasLabel ? null : metrics.height,
           height: metrics.height,
           child: Material(
-            color: Colors.transparent,
+            color: AppColors.transparent,
             borderRadius: radius,
             child: Ink(
               decoration: BoxDecoration(

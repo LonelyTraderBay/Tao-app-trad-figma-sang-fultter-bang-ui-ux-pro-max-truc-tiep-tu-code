@@ -12,14 +12,15 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _compareBackground = AppColors.bg;
 const _comparePanel = AppColors.surface;
 const _comparePanel2 = AppColors.surface2;
 const _comparePrimary = AppColors.primary;
-const _compareGreen = Color(0xFF10B981);
-const _compareAxis = Color(0xFF475569);
+const _compareGreen = AppColors.buy;
+const _compareAxis = AppColors.chartAxisStrong;
 
 class BotStrategyComparePage extends ConsumerStatefulWidget {
   const BotStrategyComparePage({super.key, this.shellRenderMode});
@@ -41,7 +42,9 @@ class _BotStrategyComparePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getBotStrategyCompare();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getBotStrategyCompare();
     final selectedStrategies = snapshot.strategies
         .where((strategy) => _selected.contains(strategy.id))
         .toList();
@@ -904,7 +907,7 @@ class _RadarPainter extends CustomPainter {
       'Low Risk',
     ];
     final gridPaint = Paint()
-      ..color = const Color(0xFF64748B)
+      ..color = AppColors.text3
       ..strokeWidth = .7
       ..style = PaintingStyle.stroke;
 

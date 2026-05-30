@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.dart';
+import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 
 class LaunchpadAddressBookPage extends ConsumerStatefulWidget {
   const LaunchpadAddressBookPage({super.key, this.shellRenderMode});
@@ -63,7 +63,7 @@ class _LaunchpadAddressBookPageState
   void initState() {
     super.initState();
     _addresses = ref
-        .read(launchpadRepositoryProvider)
+        .read(launchpadControllerProvider)
         .getAddressBook()
         .addresses;
   }
@@ -76,7 +76,7 @@ class _LaunchpadAddressBookPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadRepositoryProvider).getAddressBook();
+    final snapshot = ref.watch(launchpadControllerProvider).getAddressBook();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -621,7 +621,7 @@ class _AddAddressSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return ColoredBox(
       key: LaunchpadAddressBookPage.addSheetKey,
-      color: Colors.black.withValues(alpha: .72),
+      color: AppColors.dynamicIslandBg.withValues(alpha: .72),
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Container(
@@ -663,7 +663,10 @@ class _AddAddressSheet extends StatelessWidget {
               VitCtaButton(
                 key: LaunchpadAddressBookPage.addSheetCloseKey,
                 onPressed: onClose,
-                leading: const Icon(Icons.close_rounded, color: Colors.white),
+                leading: const Icon(
+                  Icons.close_rounded,
+                  color: AppColors.onAccent,
+                ),
                 child: const Text('Dong'),
               ),
             ],
@@ -738,7 +741,9 @@ class _FilterChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: active ? color.withValues(alpha: .12) : AppColors.surface2,
           border: Border.all(
-            color: active ? color.withValues(alpha: .32) : Colors.transparent,
+            color: active
+                ? color.withValues(alpha: .32)
+                : AppColors.transparent,
           ),
           borderRadius: AppRadii.xlRadius,
         ),

@@ -78,12 +78,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Đang mở kháng cáo'), findsOneWidget);
-    expect(find.text('Form kháng cáo đã được chuẩn bị.'), findsOneWidget);
+    expect(find.textContaining('Mock/fail-closed'), findsOneWidget);
   });
 
-  testWidgets('SC-220 CTA returns to disputes list placeholder', (
-    tester,
-  ) async {
+  testWidgets('SC-220 CTA returns to disputes list route', (tester) async {
     await pumpP2PDisputeResolution(tester);
 
     await tester.tap(find.byKey(P2PDisputeResolutionPage.disputesKey));

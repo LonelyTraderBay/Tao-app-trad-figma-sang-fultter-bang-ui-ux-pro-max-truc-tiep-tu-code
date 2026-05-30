@@ -68,6 +68,7 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Arena Studio'), findsOneWidget);
+    expect(find.text('Governance state'), findsOneWidget);
     expect(find.text('10C — Governance Gate'), findsOneWidget);
     expect(find.text('Luật chơi — Governed Mode'), findsOneWidget);
     expect(find.text('Quyền riêng tư'), findsOneWidget);

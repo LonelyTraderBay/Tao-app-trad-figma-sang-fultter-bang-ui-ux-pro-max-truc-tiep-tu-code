@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 enum _MyAdsFilter { all, active, paused }
 
@@ -42,7 +42,7 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getMyAds();
+    final snapshot = ref.watch(p2pMyAdsProvider);
     final ads = _resolveAds(snapshot.ads);
     final activeCount = ads
         .where((ad) => ad.status == P2PMyAdStatus.active)
@@ -187,7 +187,7 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
       builder: (dialogContext) {
         return AlertDialog(
           backgroundColor: AppColors.surface,
-          surfaceTintColor: Colors.transparent,
+          surfaceTintColor: AppColors.transparent,
           shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
           title: Text(
             'Xóa quảng cáo này?',

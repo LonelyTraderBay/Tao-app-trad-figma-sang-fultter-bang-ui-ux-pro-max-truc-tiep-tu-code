@@ -11,7 +11,8 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _copyPrimary = AppColors.primary;
 const _educationCard = AppColors.surface;
@@ -41,7 +42,9 @@ class _CopyEducationPageState extends ConsumerState<CopyEducationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getCopyEducation();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getCopyEducation();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -589,14 +592,14 @@ class _ProviderCta extends StatelessWidget {
           children: [
             const Icon(
               Icons.visibility_outlined,
-              color: Colors.white,
+              color: AppColors.onAccent,
               size: 16,
             ),
             const SizedBox(width: 9),
             Text(
               'Xem danh sách providers',
               style: AppTextStyles.caption.copyWith(
-                color: Colors.white,
+                color: AppColors.onAccent,
                 fontSize: 14,
                 fontWeight: AppTextStyles.bold,
                 height: 1,

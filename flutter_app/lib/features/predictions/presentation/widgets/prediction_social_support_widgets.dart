@@ -1,0 +1,151 @@
+import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
+
+class PredictionSocialShareButton extends StatelessWidget {
+  const PredictionSocialShareButton({
+    super.key,
+    required this.label,
+    required this.color,
+  });
+
+  final String label;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 56,
+      padding: const EdgeInsets.symmetric(horizontal: 14),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: AppRadii.cardRadius,
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.share_rounded, color: AppColors.onAccent, size: 20),
+          const SizedBox(width: 10),
+          Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.onAccent,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class PredictionSocialMetric extends StatelessWidget {
+  const PredictionSocialMetric({
+    super.key,
+    required this.label,
+    required this.value,
+    this.valueColor = AppColors.text1,
+  });
+
+  final String label;
+  final String value;
+  final Color valueColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: AppTextStyles.baseMedium.copyWith(
+            color: valueColor,
+            fontWeight: AppTextStyles.bold,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class PredictionSocialSentimentLegend extends StatelessWidget {
+  const PredictionSocialSentimentLegend({super.key, required this.item});
+
+  final PredictionSentimentDraft item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 10,
+              height: 10,
+              decoration: BoxDecoration(
+                color: item.color,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(width: 4),
+            Text(
+              item.name,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+            ),
+          ],
+        ),
+        const SizedBox(height: 4),
+        Text(
+          '${item.value}%',
+          style: AppTextStyles.baseMedium.copyWith(
+            color: item.color,
+            fontWeight: AppTextStyles.bold,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class PredictionSocialSentimentPiePainter extends CustomPainter {
+  const PredictionSocialSentimentPiePainter(this.data);
+
+  final List<PredictionSentimentDraft> data;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final total = data.fold<int>(0, (sum, item) => sum + item.value);
+    if (total == 0) return;
+    final rect = Rect.fromCircle(
+      center: Offset(size.width / 2, size.height / 2),
+      radius: math.min(size.width, size.height) / 2 - 14,
+    );
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 30;
+    var start = 0.0;
+    for (final item in data) {
+      final sweep = -(item.value / total) * math.pi * 2;
+      paint.color = item.color;
+      canvas.drawArc(rect, start, sweep + .025, false, paint);
+      start += sweep;
+    }
+  }
+
+  @override
+  bool shouldRepaint(
+    covariant PredictionSocialSentimentPiePainter oldDelegate,
+  ) {
+    return oldDelegate.data != data;
+  }
+}

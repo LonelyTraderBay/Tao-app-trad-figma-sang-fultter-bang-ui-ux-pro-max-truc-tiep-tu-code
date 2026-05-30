@@ -12,7 +12,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
+import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 
 const _predictionPrimary = AppColors.primary;
 
@@ -41,7 +42,9 @@ class _PredictionTournamentsPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(predictionsRepositoryProvider).getTournaments();
+    final snapshot = ref
+        .watch(predictionsReadModelControllerProvider)
+        .getTournaments();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -121,6 +124,164 @@ class _PredictionTournamentsPageState
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class PredictionTournamentDetailPage extends ConsumerWidget {
+  const PredictionTournamentDetailPage({
+    super.key,
+    required this.tournamentId,
+    this.shellRenderMode,
+  });
+
+  static const contentKey = Key('sc042_tournament_detail_content');
+  static const missingKey = Key('sc042_tournament_detail_missing');
+
+  final String tournamentId;
+  final ShellRenderMode? shellRenderMode;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final snapshot = ref
+        .watch(predictionsReadModelControllerProvider)
+        .getTournaments();
+    final tournament = _findTournament(snapshot.tournaments, tournamentId);
+    final mode = shellRenderMode ?? defaultShellRenderMode();
+    final bottomInset =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + 54
+            : DeviceMetrics.nativeBottomChrome + 20) +
+        MediaQuery.paddingOf(context).bottom;
+
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'SC-042 PredictionTournamentDetailPage',
+      child: Material(
+        type: MaterialType.transparency,
+        child: Column(
+          children: [
+            VitHeader(
+              title: tournament?.name ?? 'Tournament',
+              showBack: true,
+              onBack: () =>
+                  context.go(AppRoutePaths.marketsPredictionsTournaments),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                key: contentKey,
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.only(bottom: bottomInset),
+                child: VitPageContent(
+                  padding: VitContentPadding.relaxed,
+                  customGap: 16,
+                  children: [
+                    if (tournament == null)
+                      const _EmptyStateCard(
+                        key: missingKey,
+                        icon: Icons.emoji_events_outlined,
+                        title: 'Tournament not found',
+                        message: 'Return to the tournament list to continue.',
+                      )
+                    else ...[
+                      _TournamentDetailHero(tournament: tournament),
+                      _TournamentStatsGrid(tournament: tournament),
+                      const _TournamentInfoCard(),
+                      if (tournament.isJoined)
+                        _FinalLeaderboard(entries: snapshot.leaderboard),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+PredictionTournamentDraft? _findTournament(
+  List<PredictionTournamentDraft> tournaments,
+  String tournamentId,
+) {
+  for (final tournament in tournaments) {
+    if (tournament.id == tournamentId) return tournament;
+  }
+  return null;
+}
+
+class _TournamentDetailHero extends StatelessWidget {
+  const _TournamentDetailHero({required this.tournament});
+
+  final PredictionTournamentDraft tournament;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: const EdgeInsets.all(16),
+      borderColor: _predictionPrimary.withValues(alpha: .28),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              _StatusPill(
+                status: tournament.status,
+                color: _statusColor(tournament.status),
+              ),
+              const Spacer(),
+              _CategoryChip(label: tournament.category),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Text(
+            tournament.name,
+            style: AppTextStyles.sectionTitle.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            tournament.description,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text2,
+              height: 1.45,
+            ),
+          ),
+          if (tournament.isJoined && tournament.myRank != null) ...[
+            const SizedBox(height: 14),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                color: AppColors.buy.withValues(alpha: .08),
+                borderRadius: AppRadii.cardRadius,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Row(
+                  children: [
+                    Text(
+                      'Your rank',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text2,
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      '#${tournament.myRank} - ${tournament.myScore} pts',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.buy,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }
@@ -667,6 +828,7 @@ class _NoPastTournamentsCard extends StatelessWidget {
 
 class _EmptyStateCard extends StatelessWidget {
   const _EmptyStateCard({
+    super.key,
     required this.icon,
     required this.title,
     this.message,
@@ -797,8 +959,8 @@ String _statusLabel(TournamentStatus status) {
 Color _rankColor(int rank) {
   return switch (rank) {
     1 => AppColors.warn,
-    2 => const Color(0xFF9CA3AF),
-    3 => const Color(0xFFD97706),
+    2 => AppColors.medalSilverMuted,
+    3 => AppColors.medalBronzeMuted,
     _ => AppColors.text2,
   };
 }

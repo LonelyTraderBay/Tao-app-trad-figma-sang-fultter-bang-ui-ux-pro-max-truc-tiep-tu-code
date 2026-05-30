@@ -15,7 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2POrderBookPage extends ConsumerStatefulWidget {
   const P2POrderBookPage({super.key, this.shellRenderMode});
@@ -41,9 +41,7 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getOrderBook(selectedAsset: _selectedAsset);
+    final snapshot = ref.watch(p2pOrderBookProvider(_selectedAsset));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame

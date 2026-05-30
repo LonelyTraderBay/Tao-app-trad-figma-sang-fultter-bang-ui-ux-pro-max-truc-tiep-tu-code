@@ -11,13 +11,14 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _performancePrimary = AppColors.primary;
-const _performancePurple = Color(0xFF8B5CF6);
-const _performanceGreen = Color(0xFF10B981);
-const _performanceRed = Color(0xFFEF4444);
-const _performancePanel = Color(0xFF1E263A);
+const _performancePurple = AppColors.accent;
+const _performanceGreen = AppColors.buy;
+const _performanceRed = AppColors.sell;
+const _performancePanel = AppColors.surfaceNavy;
 
 class CopyPerformancePage extends ConsumerStatefulWidget {
   const CopyPerformancePage({
@@ -44,7 +45,7 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getCopyPerformance(copyId: widget.copyId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
@@ -126,10 +127,10 @@ class _PerformanceSummary extends StatelessWidget {
                   value: '+${snapshot.yourReturnPct.toStringAsFixed(1)}%',
                   range:
                       '\$${snapshot.initialCapital.toStringAsFixed(0)} → \$${snapshot.yourCurrentValue.toStringAsFixed(0)}',
-                  background: const Color(0xFFEFF6FF),
+                  background: AppColors.surfaceInfoLight,
                   border: _performancePrimary,
                   foreground: _performancePrimary,
-                  textColor: const Color(0xFF1E3A8A),
+                  textColor: AppColors.infoTextStrong,
                 ),
               ),
               const SizedBox(width: 12),
@@ -139,10 +140,10 @@ class _PerformanceSummary extends StatelessWidget {
                   value: '+${snapshot.providerReturnPct.toStringAsFixed(1)}%',
                   range:
                       '\$${snapshot.initialCapital.toStringAsFixed(0)} → \$${snapshot.providerTheoreticalValue.toStringAsFixed(0)}',
-                  background: const Color(0xFFF5F3FF),
+                  background: AppColors.surfaceAccentLight,
                   border: _performancePurple,
                   foreground: _performancePurple,
-                  textColor: const Color(0xFF4C1D95),
+                  textColor: AppColors.accentTextStrong,
                 ),
               ),
             ],
@@ -151,7 +152,7 @@ class _PerformanceSummary extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFFEFFDF5),
+              color: AppColors.surfaceSuccessLight,
               border: Border.all(color: _performanceGreen),
               borderRadius: AppRadii.inputRadius,
             ),
@@ -891,7 +892,7 @@ class _SidePill extends StatelessWidget {
         child: Text(
           buy ? 'BUY' : 'SELL',
           style: AppTextStyles.micro.copyWith(
-            color: Colors.white,
+            color: AppColors.onAccent,
             fontWeight: FontWeight.w800,
           ),
         ),

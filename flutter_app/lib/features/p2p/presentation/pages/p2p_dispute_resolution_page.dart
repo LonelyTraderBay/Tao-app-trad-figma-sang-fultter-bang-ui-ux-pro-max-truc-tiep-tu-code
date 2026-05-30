@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PDisputeResolutionPage extends ConsumerStatefulWidget {
   const P2PDisputeResolutionPage({
@@ -40,9 +40,7 @@ class _P2PDisputeResolutionPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(p2pRepositoryProvider)
-        .getDisputeResolution(widget.disputeId);
+    final snapshot = ref.watch(p2pDisputeResolutionProvider(widget.disputeId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -139,7 +137,7 @@ class _DecisionHero extends StatelessWidget {
             ),
             child: const Icon(
               Icons.check_circle_outline_rounded,
-              color: Colors.white,
+              color: AppColors.onAccent,
               size: AppSpacing.iconMd,
             ),
           ),
@@ -309,7 +307,7 @@ class _AppealCard extends StatelessWidget {
                 if (appealOpened) ...[
                   const SizedBox(height: AppSpacing.x2),
                   Text(
-                    'Form kháng cáo đã được chuẩn bị.',
+                    'Form kháng cáo đã được chuẩn bị. Mock/fail-closed: chưa gửi appeal lên backend.',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.warn,
                       fontWeight: AppTextStyles.medium,

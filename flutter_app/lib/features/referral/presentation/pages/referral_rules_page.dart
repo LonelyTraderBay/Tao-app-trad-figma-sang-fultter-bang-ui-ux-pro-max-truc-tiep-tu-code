@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/referral/data/referral_repository.dart';
+import 'package:vit_trade_flutter/app/providers/referral_controller_providers.dart';
 
 class ReferralRulesPage extends ConsumerStatefulWidget {
   const ReferralRulesPage({super.key, this.shellRenderMode});
@@ -41,7 +41,7 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(referralRepositoryProvider).getRules();
+    final snapshot = ref.watch(referralControllerProvider).getRules();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -290,7 +290,7 @@ class _TierRow extends StatelessWidget {
 
     return Container(
       key: ReferralRulesPage.tierKey(tier.id),
-      color: current ? AppColors.primary08 : Colors.transparent,
+      color: current ? AppColors.primary08 : AppColors.transparent,
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.x4,
         vertical: AppSpacing.x3,

@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_identity_verification_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_kyc_requirements_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
@@ -100,11 +101,10 @@ void main() {
     );
     await tester.tap(find.byKey(P2PKycRequirementsPage.upgradeKey(2)));
     await tester.pumpAndSettle();
-    expect(find.text('P2P KYC Verify'), findsOneWidget);
+    expect(find.byType(P2PIdentityVerificationPage), findsOneWidget);
+    expect(find.text('Identity Verification'), findsOneWidget);
 
-    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
-    await tester.pumpAndSettle();
-    expect(find.byType(P2PKycRequirementsPage), findsOneWidget);
+    await pumpP2PKycRequirements(tester);
 
     await tester.ensureVisible(find.byKey(P2PKycRequirementsPage.supportKey));
     await tester.tap(find.text('Liên hệ Support'));

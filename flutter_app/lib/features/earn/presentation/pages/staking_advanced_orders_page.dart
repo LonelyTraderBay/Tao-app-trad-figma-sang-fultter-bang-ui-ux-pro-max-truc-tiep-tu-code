@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 enum _AdvancedOrderTab { active, history }
 
@@ -122,7 +122,7 @@ class _StakingAdvancedOrdersPageState
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (context) =>
           _SheetFrame(child: _CreateOrderSheet(snapshot: snapshot)),
     );
@@ -249,7 +249,7 @@ class _OrderTabs extends StatelessWidget {
           for (final tab in _AdvancedOrderTab.values)
             Expanded(
               child: Material(
-                color: Colors.transparent,
+                color: AppColors.transparent,
                 child: InkWell(
                   key: StakingAdvancedOrdersPage.tabKey(tab.name),
                   onTap: () => onChanged(tab),
@@ -274,7 +274,7 @@ class _OrderTabs extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: active == tab
                                 ? AppColors.primarySoft
-                                : Colors.transparent,
+                                : AppColors.transparent,
                             borderRadius: AppRadii.xsRadius,
                           ),
                         ),
@@ -655,7 +655,7 @@ class _TypeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       borderRadius: AppRadii.inputRadius,
       child: InkWell(
         key: StakingAdvancedOrdersPage.typeKey(type),
@@ -675,7 +675,7 @@ class _TypeButton extends StatelessWidget {
               _orderTypeLabel(type),
               textAlign: TextAlign.center,
               style: AppTextStyles.micro.copyWith(
-                color: selected ? Colors.white : AppColors.text2,
+                color: selected ? AppColors.onAccent : AppColors.text2,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -770,7 +770,7 @@ class _InputPreview extends StatelessWidget {
               child: Text(
                 suffix,
                 style: AppTextStyles.micro.copyWith(
-                  color: Colors.white,
+                  color: AppColors.onAccent,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),

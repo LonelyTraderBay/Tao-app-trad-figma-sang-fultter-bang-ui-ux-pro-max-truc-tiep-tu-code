@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.dart';
+import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 
 class LaunchpadReceiptPage extends ConsumerWidget {
   const LaunchpadReceiptPage({
@@ -34,7 +34,7 @@ class LaunchpadReceiptPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref
-        .watch(launchpadRepositoryProvider)
+        .watch(launchpadControllerProvider)
         .getReceipt(subscriptionId);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =

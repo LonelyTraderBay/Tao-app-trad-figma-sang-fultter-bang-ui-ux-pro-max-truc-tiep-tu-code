@@ -63,6 +63,7 @@ void main() {
     expect(find.text('Tranh chấp · P2P'), findsOneWidget);
     expect(find.text('Dispute #sample'), findsOneWidget);
     expect(find.text('Upload tài liệu chứng minh'), findsOneWidget);
+    expect(find.textContaining('Mock/fail-closed'), findsOneWidget);
     expect(find.text('Payment Receipt'), findsOneWidget);
     expect(find.text('Chat Screenshot'), findsOneWidget);
     expect(find.text('Transaction Proof'), findsOneWidget);

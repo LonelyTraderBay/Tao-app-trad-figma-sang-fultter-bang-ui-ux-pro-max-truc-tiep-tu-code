@@ -11,14 +11,15 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _stopBackground = AppColors.bg;
 const _stopPanel = AppColors.surface;
 const _stopPanel2 = AppColors.surface2;
 const _stopPrimary = AppColors.primary;
-const _stopGreen = Color(0xFF10B981);
-const _stopRed = Color(0xFFEF4444);
+const _stopGreen = AppColors.buy;
+const _stopRed = AppColors.sell;
 const _stopOptionBorder = AppColors.borderSolid;
 
 class BotEmergencyStopPage extends ConsumerStatefulWidget {
@@ -50,7 +51,10 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getBotEmergencyStop();
+    final snapshot = ref
+        .watch(tradeBotEmergencyStopControllerProvider)
+        .state
+        .snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -143,17 +147,19 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
   }
 
   void _submit(TradeBotEmergencyStopSnapshot snapshot) {
-    if (_reasonId == null || !_confirmed || _stopping) return;
+    final controller = ref.read(tradeBotEmergencyStopControllerProvider);
+    if (!controller.canSubmit(reasonId: _reasonId, confirmed: _confirmed) ||
+        _stopping) {
+      return;
+    }
     setState(() => _stopping = true);
-    final result = ref
-        .read(tradeRepositoryProvider)
-        .submitBotEmergencyStop(
-          TradeBotEmergencyStopDraft(
-            reasonId: _reasonId!,
-            closePositions: _closePositions,
-            confirmed: _confirmed,
-          ),
-        );
+    final result = controller.submit(
+      TradeBotEmergencyStopDraft(
+        reasonId: _reasonId!,
+        closePositions: _closePositions,
+        confirmed: _confirmed,
+      ),
+    );
     context.go(result.redirectPath);
   }
 }
@@ -391,7 +397,7 @@ class _CheckActionCard extends StatelessWidget {
           border: Border.all(
             color: danger
                 ? _stopRed.withValues(alpha: .48)
-                : Colors.transparent,
+                : AppColors.transparent,
             width: 2,
           ),
           borderRadius: AppRadii.cardRadius,
@@ -543,7 +549,7 @@ class _StickyActions extends StatelessWidget {
                 style: FilledButton.styleFrom(
                   backgroundColor: canSubmit ? _stopRed : _stopPanel,
                   disabledBackgroundColor: _stopPanel,
-                  foregroundColor: Colors.white,
+                  foregroundColor: AppColors.onAccent,
                   disabledForegroundColor: AppColors.text3.withValues(
                     alpha: .4,
                   ),
@@ -558,7 +564,7 @@ class _StickyActions extends StatelessWidget {
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.white,
+                            AppColors.onAccent,
                           ),
                         ),
                       )
@@ -566,7 +572,7 @@ class _StickyActions extends StatelessWidget {
                         Icons.pause_rounded,
                         size: 16,
                         color: canSubmit
-                            ? Colors.white
+                            ? AppColors.onAccent
                             : AppColors.text3.withValues(alpha: .32),
                       ),
                 label: Text(
@@ -575,7 +581,7 @@ class _StickyActions extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
                     color: canSubmit
-                        ? Colors.white
+                        ? AppColors.onAccent
                         : AppColors.text3.withValues(alpha: .32),
                     fontSize: 13,
                     fontWeight: AppTextStyles.bold,
@@ -665,7 +671,7 @@ class _CheckboxMark extends StatelessWidget {
       margin: const EdgeInsets.only(top: 1),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: selected ? color : Colors.transparent,
+        color: selected ? color : AppColors.transparent,
         border: Border.all(
           color: selected ? color : _stopOptionBorder,
           width: 2,
@@ -673,7 +679,7 @@ class _CheckboxMark extends StatelessWidget {
         borderRadius: BorderRadius.circular(7),
       ),
       child: selected
-          ? const Icon(Icons.check_rounded, color: Colors.white, size: 16)
+          ? const Icon(Icons.check_rounded, color: AppColors.onAccent, size: 16)
           : null,
     );
   }
@@ -691,10 +697,10 @@ IconData _reasonIcon(String iconName) {
 
 Color _reasonColor(TradeBotEmergencyReason reason) {
   return switch (reason.iconName) {
-    'crash' => const Color(0xFFE879F9),
-    'bug' => const Color(0xFF34D399),
-    'unauthorized' => const Color(0xFFF87171),
-    'drawdown' => const Color(0xFFFBBF24),
+    'crash' => AppColors.crashAccent,
+    'bug' => AppColors.statusBattery,
+    'unauthorized' => AppColors.sell,
+    'drawdown' => AppColors.caution,
     _ => AppColors.text2,
   };
 }

@@ -1,0 +1,294 @@
+part of 'p2p_express_page.dart';
+
+class _AssetMark extends StatelessWidget {
+  const _AssetMark({required this.symbol, required this.color});
+
+  final String symbol;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: AppSpacing.x5,
+      height: AppSpacing.x5,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(color: color.withValues(alpha: .16)),
+      child: Text(
+        symbol.substring(0, 1),
+        style: AppTextStyles.micro.copyWith(
+          color: color,
+          fontWeight: AppTextStyles.bold,
+        ),
+      ),
+    );
+  }
+}
+
+class _QuickAmountChip extends StatelessWidget {
+  const _QuickAmountChip({
+    required this.amount,
+    required this.selected,
+    required this.color,
+    required this.onPressed,
+  });
+
+  final int amount;
+  final bool selected;
+  final Color color;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ActionChip(
+      key: P2PExpressPage.quickAmountKey(amount),
+      onPressed: onPressed,
+      label: Text(_formatVnd(amount)),
+      backgroundColor: selected
+          ? color.withValues(alpha: .15)
+          : AppColors.surface2,
+      side: BorderSide(
+        color: selected ? color.withValues(alpha: .45) : AppColors.borderSolid,
+      ),
+      labelStyle: AppTextStyles.micro.copyWith(
+        color: selected ? color : AppColors.text2,
+        fontWeight: AppTextStyles.bold,
+        fontFeatures: AppTextStyles.tabularFigures,
+      ),
+    );
+  }
+}
+
+class _PaymentChip extends StatelessWidget {
+  const _PaymentChip({
+    required this.method,
+    required this.selected,
+    required this.onPressed,
+  });
+
+  final P2PPaymentMethodDraft method;
+  final bool selected;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ActionChip(
+      key: P2PExpressPage.paymentKey(method.id),
+      onPressed: onPressed,
+      avatar: selected
+          ? const Icon(Icons.check_circle_outline, size: AppSpacing.iconSm)
+          : null,
+      label: Text(method.bankName),
+      backgroundColor: selected ? AppColors.primary12 : AppColors.surface2,
+      side: BorderSide(
+        color: selected ? AppColors.primary40 : AppColors.borderSolid,
+      ),
+      labelStyle: AppTextStyles.micro.copyWith(
+        color: selected ? AppColors.primary : AppColors.text2,
+        fontWeight: AppTextStyles.bold,
+      ),
+    );
+  }
+}
+
+class _MerchantOfferRow extends StatelessWidget {
+  const _MerchantOfferRow({required this.ad, required this.onMerchant});
+
+  final P2PAdDraft ad;
+  final VoidCallback onMerchant;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(color: AppColors.divider)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+        child: Row(
+          children: [
+            Container(
+              width: AppSpacing.x6,
+              height: AppSpacing.x6,
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                color: AppColors.primary,
+                shape: BoxShape.circle,
+              ),
+              child: Text(
+                ad.merchant.substring(0, 1),
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.onAccent,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ),
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          ad.merchant,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.x1),
+                      const Icon(
+                        Icons.shield_outlined,
+                        color: AppColors.primary,
+                        size: AppSpacing.iconSm,
+                      ),
+                    ],
+                  ),
+                  Wrap(
+                    spacing: AppSpacing.x2,
+                    runSpacing: AppSpacing.x1,
+                    children: [
+                      Text(
+                        '${ad.completedOrders} đơn',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                      Text(
+                        '${ad.completionRate.toStringAsFixed(1)}%',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.buy,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                      Text(
+                        ad.avgResponseTime,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            IconButton(
+              onPressed: onMerchant,
+              icon: const Icon(
+                Icons.chevron_right_rounded,
+                color: AppColors.text3,
+                size: AppSpacing.iconMd,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _OfferMetric extends StatelessWidget {
+  const _OfferMetric({
+    required this.label,
+    required this.value,
+    required this.caption,
+    this.valueColor = AppColors.text1,
+  });
+
+  final String label;
+  final String value;
+  final String caption;
+  final Color valueColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: const EdgeInsets.all(AppSpacing.x3),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(
+              color: valueColor,
+              fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
+          ),
+          Text(
+            caption,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SmallTextChip extends StatelessWidget {
+  const _SmallTextChip(this.label);
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: AppColors.surface2,
+        borderRadius: AppRadii.xsRadius,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.x2,
+          vertical: AppSpacing.x1,
+        ),
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+        ),
+      ),
+    );
+  }
+}
+
+IconData _stepIcon(String key) {
+  return switch (key) {
+    'amount' => Icons.payments_outlined,
+    'match' => Icons.bolt_outlined,
+    'confirm' => Icons.check_circle_outline,
+    _ => Icons.info_outline,
+  };
+}
+
+String _formatVnd(int value) {
+  final raw = value.toString();
+  final buffer = StringBuffer();
+  for (var i = 0; i < raw.length; i++) {
+    final reverseIndex = raw.length - i;
+    buffer.write(raw[i]);
+    if (reverseIndex > 1 && reverseIndex % 3 == 1) {
+      buffer.write('.');
+    }
+  }
+  return buffer.toString();
+}
+
+String _formatAmount(double value) {
+  if (value == 0) return '0.00';
+  if (value == value.roundToDouble()) return value.toStringAsFixed(2);
+  return value.toStringAsFixed(6);
+}

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/support_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -14,7 +15,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/support/data/support_repository.dart';
 
 class AnnouncementsPage extends ConsumerStatefulWidget {
   const AnnouncementsPage({super.key, this.shellRenderMode});
@@ -40,7 +40,7 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(supportRepositoryProvider).getAnnouncements();
+    final snapshot = ref.watch(supportControllerProvider).getAnnouncements();
     final filter = snapshot.filters.firstWhere(
       (item) => item.id == _activeFilterId,
     );

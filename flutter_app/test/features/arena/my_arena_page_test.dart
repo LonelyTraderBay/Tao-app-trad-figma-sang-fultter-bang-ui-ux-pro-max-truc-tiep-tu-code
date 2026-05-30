@@ -177,7 +177,7 @@ void main() {
     expect(find.text('An to\u00E0n & Quy t\u1EAFc Arena'), findsOneWidget);
   });
 
-  testWidgets('SC-168 canonical route edges open safe placeholders', (
+  testWidgets('SC-168 canonical route edges open real or preview routes', (
     tester,
   ) async {
     await pumpMyArena(tester);

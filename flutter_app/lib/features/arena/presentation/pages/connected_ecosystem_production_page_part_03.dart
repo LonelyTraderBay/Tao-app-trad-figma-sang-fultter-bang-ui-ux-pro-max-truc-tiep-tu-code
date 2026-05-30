@@ -1,0 +1,533 @@
+part of 'connected_ecosystem_production_page.dart';
+
+class _BridgeRules extends StatelessWidget {
+  const _BridgeRules({required this.rules});
+
+  final List<ConnectedBridgeRuleDraft> rules;
+
+  @override
+  Widget build(BuildContext context) {
+    return _HandoffCard(
+      title: 'Bridge Rules',
+      subtitle: 'Allowed transfer fields vs forbidden financial fields',
+      children: [
+        for (final rule in rules)
+          _HandoffRow(
+            title: rule.field,
+            subtitle: rule.reason,
+            leading: Icon(
+              rule.allowed ? Icons.check_rounded : Icons.close_rounded,
+              color: rule.allowed ? AppColors.buy : AppColors.sell,
+              size: 16,
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _QaChecklist extends StatelessWidget {
+  const _QaChecklist({required this.items});
+
+  final List<ConnectedQaCheckDraft> items;
+
+  @override
+  Widget build(BuildContext context) {
+    return _HandoffCard(
+      title: 'QA Checklist',
+      subtitle: '${items.length} pre-ship checks',
+      children: [
+        for (final item in items)
+          _HandoffRow(
+            title: '${item.category} · ${item.id}',
+            subtitle: item.check,
+            trailing: _MiniPill(
+              label: _qaSeverityLabel(item.severity),
+              color: _qaSeverityColor(item.severity),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _HandoffCard extends StatelessWidget {
+  const _HandoffCard({
+    required this.title,
+    required this.subtitle,
+    required this.children,
+  });
+
+  final String title;
+  final String subtitle;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            subtitle,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+          const SizedBox(height: AppSpacing.x4),
+          for (final child in children) ...[
+            child,
+            if (child != children.last)
+              const Divider(height: AppSpacing.x5, color: AppColors.divider),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _HandoffRow extends StatelessWidget {
+  const _HandoffRow({
+    required this.title,
+    required this.subtitle,
+    this.leading,
+    this.trailing,
+  });
+
+  final String title;
+  final String subtitle;
+  final Widget? leading;
+  final Widget? trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (leading != null) ...[
+          leading!,
+          const SizedBox(width: AppSpacing.x2),
+        ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x1),
+              Text(
+                subtitle,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text3,
+                  height: 1.4,
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (trailing != null) ...[
+          const SizedBox(width: AppSpacing.x2),
+          trailing!,
+        ],
+      ],
+    );
+  }
+}
+
+class _SummaryMetric extends StatelessWidget {
+  const _SummaryMetric({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        children: [
+          Text(
+            value,
+            style: AppTextStyles.sectionTitle.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InfoLine extends StatelessWidget {
+  const _InfoLine({required this.icon, required this.text, this.color});
+
+  final IconData icon;
+  final String text;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, color: color ?? AppColors.text3, size: 13),
+        const SizedBox(width: AppSpacing.x2),
+        Expanded(
+          child: Text(
+            text,
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              height: 1.4,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SmallTextAction extends StatelessWidget {
+  const _SmallTextAction({
+    required this.label,
+    required this.icon,
+    required this.color,
+    required this.onTap,
+  });
+
+  final String label;
+  final IconData icon;
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: AppColors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.smRadius,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, color: color, size: 13),
+              const SizedBox(width: AppSpacing.x1),
+              Text(
+                label,
+                style: AppTextStyles.micro.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _StatusPill extends StatelessWidget {
+  const _StatusPill({required this.label, required this.color});
+
+  final String label;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return _MiniPill(label: label, color: color);
+  }
+}
+
+class _MiniPill extends StatelessWidget {
+  const _MiniPill({required this.label, required this.color});
+
+  final String label;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(minHeight: 22),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.x2,
+        vertical: AppSpacing.x1,
+      ),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: .12),
+        borderRadius: AppRadii.smRadius,
+      ),
+      child: Text(
+        label,
+        style: AppTextStyles.micro.copyWith(
+          color: color,
+          fontWeight: AppTextStyles.bold,
+        ),
+      ),
+    );
+  }
+}
+
+class _TintIcon extends StatelessWidget {
+  const _TintIcon({
+    required this.icon,
+    required this.color,
+    this.small = false,
+  });
+
+  final IconData icon;
+  final Color color;
+  final bool small;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = small ? 30.0 : 36.0;
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: .12),
+        border: Border.all(color: color.withValues(alpha: .20)),
+        borderRadius: BorderRadius.circular(small ? 12 : 14),
+      ),
+      child: Icon(icon, color: color, size: small ? 15 : 17),
+    );
+  }
+}
+
+class _EcosystemFooter extends StatelessWidget {
+  const _EcosystemFooter({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: const EdgeInsets.all(AppSpacing.x3),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.info_outline_rounded,
+            color: AppColors.text3,
+            size: 14,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text3,
+                height: 1.45,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+final class _SectionConfig {
+  const _SectionConfig({
+    required this.section,
+    required this.id,
+    required this.label,
+    required this.icon,
+  });
+
+  final _EcosystemSection section;
+  final String id;
+  final String label;
+  final IconData icon;
+}
+
+final class _HandoffBoard {
+  const _HandoffBoard({
+    required this.id,
+    required this.label,
+    required this.icon,
+  });
+
+  final String id;
+  final String label;
+  final IconData icon;
+}
+
+const _sectionConfigs = [
+  _SectionConfig(
+    section: _EcosystemSection.canonical,
+    id: 'canonical',
+    label: 'Canonical',
+    icon: Icons.layers_outlined,
+  ),
+  _SectionConfig(
+    section: _EcosystemSection.states,
+    id: 'states',
+    label: 'States',
+    icon: Icons.warning_amber_rounded,
+  ),
+  _SectionConfig(
+    section: _EcosystemSection.flows,
+    id: 'flows',
+    label: 'E2E Flows',
+    icon: Icons.map_outlined,
+  ),
+  _SectionConfig(
+    section: _EcosystemSection.registry,
+    id: 'registry',
+    label: 'Registry',
+    icon: Icons.inventory_2_outlined,
+  ),
+  _SectionConfig(
+    section: _EcosystemSection.handoff,
+    id: 'handoff',
+    label: 'Handoff',
+    icon: Icons.description_outlined,
+  ),
+];
+
+const _handoffBoards = [
+  _HandoffBoard(id: 'routes', label: 'Routes', icon: Icons.map_outlined),
+  _HandoffBoard(
+    id: 'components',
+    label: 'Components',
+    icon: Icons.inventory_2_outlined,
+  ),
+  _HandoffBoard(id: 'rules', label: 'Bridge Rules', icon: Icons.menu_book),
+  _HandoffBoard(
+    id: 'qa',
+    label: 'QA Checklist',
+    icon: Icons.check_circle_outline,
+  ),
+];
+
+String _resolveConnectedRoute(String route) {
+  return switch (route) {
+    '/' => AppRoutePaths.home,
+    '/markets/predictions/event/:id' => AppRoutePaths.marketsPredictionEvent(
+      'pred-1',
+    ),
+    '/arena/challenge/:id' => AppRoutePaths.arenaChallenge('ch003'),
+    '/arena/challenge/:challengeId' => AppRoutePaths.arenaChallenge('ch003'),
+    '/arena/mode/:id' => AppRoutePaths.arenaMode('mode001'),
+    '/profile/arena' => AppRoutePaths.profileArena,
+    '/markets/predictions/portfolio' =>
+      AppRoutePaths.marketsPredictionsPortfolio,
+    _ => route,
+  };
+}
+
+String _statusLabel(ConnectedEcosystemScreenStatus status) {
+  return switch (status) {
+    ConnectedEcosystemScreenStatus.vFinal => 'vFinal',
+    ConnectedEcosystemScreenStatus.live => 'Live',
+    ConnectedEcosystemScreenStatus.needsReview => 'Needs Review',
+    ConnectedEcosystemScreenStatus.archived => 'Archived',
+  };
+}
+
+Color _statusColor(ConnectedEcosystemScreenStatus status) {
+  return switch (status) {
+    ConnectedEcosystemScreenStatus.vFinal => AppColors.buy,
+    ConnectedEcosystemScreenStatus.live => AppColors.primary,
+    ConnectedEcosystemScreenStatus.needsReview => AppColors.warn,
+    ConnectedEcosystemScreenStatus.archived => AppColors.text3,
+  };
+}
+
+Color _toneColor(ArenaBridgeTone tone) {
+  return switch (tone) {
+    ArenaBridgeTone.content => AppColors.primary,
+    ArenaBridgeTone.arena => AppModuleAccents.arena,
+    ArenaBridgeTone.prediction => AppModuleAccents.predictions,
+    ArenaBridgeTone.disclosure => AppColors.buy,
+    ArenaBridgeTone.danger => AppColors.sell,
+    ArenaBridgeTone.blocked => AppColors.sell,
+    ArenaBridgeTone.neutral => AppColors.text2,
+  };
+}
+
+IconData _toneIcon(ArenaBridgeTone tone) {
+  return switch (tone) {
+    ArenaBridgeTone.content => Icons.link_rounded,
+    ArenaBridgeTone.arena => Icons.sports_esports_outlined,
+    ArenaBridgeTone.prediction => Icons.shield_outlined,
+    ArenaBridgeTone.disclosure => Icons.check_circle_outline,
+    ArenaBridgeTone.danger => Icons.warning_amber_rounded,
+    ArenaBridgeTone.blocked => Icons.block_rounded,
+    ArenaBridgeTone.neutral => Icons.info_outline_rounded,
+  };
+}
+
+String _bridgeTypeLabel(ConnectedBridgeType type) {
+  return switch (type) {
+    ConnectedBridgeType.none => 'none',
+    ConnectedBridgeType.source => 'source',
+    ConnectedBridgeType.target => 'target',
+    ConnectedBridgeType.bidirectional => 'bidirectional',
+  };
+}
+
+Color _bridgeTypeColor(ConnectedBridgeType type) {
+  return switch (type) {
+    ConnectedBridgeType.none => AppColors.text3,
+    ConnectedBridgeType.source => AppColors.primary,
+    ConnectedBridgeType.target => AppModuleAccents.arena,
+    ConnectedBridgeType.bidirectional => AppModuleAccents.predictions,
+  };
+}
+
+String _severityLabel(ConnectedRuleSeverity severity) {
+  return switch (severity) {
+    ConnectedRuleSeverity.critical => 'CRITICAL',
+    ConnectedRuleSeverity.high => 'HIGH',
+    ConnectedRuleSeverity.medium => 'MEDIUM',
+  };
+}
+
+Color _severityColor(ConnectedRuleSeverity severity) {
+  return switch (severity) {
+    ConnectedRuleSeverity.critical => AppColors.sell,
+    ConnectedRuleSeverity.high => AppColors.warn,
+    ConnectedRuleSeverity.medium => AppColors.primary,
+  };
+}
+
+String _qaSeverityLabel(ConnectedQaSeverity severity) {
+  return switch (severity) {
+    ConnectedQaSeverity.must => 'MUST',
+    ConnectedQaSeverity.should => 'SHOULD',
+    ConnectedQaSeverity.may => 'MAY',
+  };
+}
+
+Color _qaSeverityColor(ConnectedQaSeverity severity) {
+  return switch (severity) {
+    ConnectedQaSeverity.must => AppColors.sell,
+    ConnectedQaSeverity.should => AppColors.warn,
+    ConnectedQaSeverity.may => AppColors.text2,
+  };
+}

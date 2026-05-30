@@ -96,9 +96,7 @@ void main() {
     expect(find.text('Chi tiết đơn hàng'), findsOneWidget);
   });
 
-  testWidgets('SC-214 back action returns to P2P order placeholder', (
-    tester,
-  ) async {
+  testWidgets('SC-214 back action returns to P2P order route', (tester) async {
     await pumpP2POrderCancel(tester);
 
     await tester.ensureVisible(find.byKey(P2POrderCancelPage.backKey));

@@ -10,16 +10,17 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _taxBackground = AppColors.bg;
 const _taxPanel = AppColors.surface;
 const _taxPanel2 = AppColors.surface2;
 const _taxPrimary = AppColors.primary;
-const _taxGreen = Color(0xFF10B981);
-const _taxAmber = Color(0xFFF59E0B);
-const _taxRed = Color(0xFFEF4444);
-const _taxOptionBorder = Color(0xFF314166);
+const _taxGreen = AppColors.buy;
+const _taxAmber = AppColors.caution;
+const _taxRed = AppColors.sell;
+const _taxOptionBorder = AppColors.taxOptionBorder;
 
 class BotTaxReportingPage extends ConsumerStatefulWidget {
   const BotTaxReportingPage({super.key, this.shellRenderMode});
@@ -47,7 +48,9 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
   @override
   void initState() {
     super.initState();
-    final snapshot = ref.read(tradeRepositoryProvider).getBotTaxReporting();
+    final snapshot = ref
+        .read(tradeReadModelControllerProvider)
+        .getBotTaxReporting();
     _selectedYear = snapshot.defaultYear;
     _costBasisMethod = snapshot.defaultCostBasisMethod;
     _selectedReportIds = {
@@ -58,7 +61,7 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final repository = ref.watch(tradeRepositoryProvider);
+    final repository = ref.watch(tradeReadModelControllerProvider);
     final snapshot = repository.getBotTaxReporting();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -556,7 +559,7 @@ class _ReportTypeCard extends StatelessWidget {
                         const _Pill(
                           text: 'Recommended',
                           color: _taxGreen,
-                          background: Color(0x1F10B981),
+                          background: AppColors.buy12,
                         ),
                       ],
                     ],
@@ -772,13 +775,13 @@ class _GenerateFooter extends StatelessWidget {
                   height: 16,
                   child: CircularProgressIndicator(
                     strokeWidth: 2,
-                    color: Colors.white,
+                    color: AppColors.onAccent,
                   ),
                 )
               else
                 Icon(
                   Icons.download_rounded,
-                  color: disabled ? AppColors.text3 : Colors.white,
+                  color: disabled ? AppColors.text3 : AppColors.onAccent,
                   size: 17,
                 ),
               const SizedBox(width: 8),
@@ -790,7 +793,7 @@ class _GenerateFooter extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
-                    color: disabled ? AppColors.text3 : Colors.white,
+                    color: disabled ? AppColors.text3 : AppColors.onAccent,
                     fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
@@ -861,7 +864,7 @@ class _CheckBox extends StatelessWidget {
       height: 24,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: selected ? _taxPrimary : Colors.transparent,
+        color: selected ? _taxPrimary : AppColors.transparent,
         border: Border.all(
           color: selected ? _taxPrimary : _taxOptionBorder,
           width: 2,
@@ -871,7 +874,7 @@ class _CheckBox extends StatelessWidget {
       child: selected
           ? const Icon(
               Icons.check_circle_rounded,
-              color: Colors.white,
+              color: AppColors.onAccent,
               size: 16,
             )
           : null,

@@ -10,15 +10,16 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _trackingBackground = AppColors.bg;
 const _trackingPanel = AppColors.surface;
 const _trackingPanel2 = AppColors.surface3;
 const _trackingBorder = AppColors.borderSolid;
 const _trackingPrimary = AppColors.primary;
-const _trackingGreen = Color(0xFF10B981);
-const _trackingAmber = Color(0xFFF59E0B);
+const _trackingGreen = AppColors.buy;
+const _trackingAmber = AppColors.caution;
 
 class ComplaintTrackingPage extends ConsumerWidget {
   const ComplaintTrackingPage({
@@ -36,7 +37,7 @@ class ComplaintTrackingPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getComplaintTracking(complaintId: complaintId);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =

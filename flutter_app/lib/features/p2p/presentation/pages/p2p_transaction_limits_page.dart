@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PTransactionLimitsPage extends ConsumerWidget {
   const P2PTransactionLimitsPage({super.key, this.shellRenderMode});
@@ -34,7 +34,7 @@ class P2PTransactionLimitsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getTransactionLimits();
+    final snapshot = ref.watch(p2pTransactionLimitsProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -140,7 +140,7 @@ class _TierHero extends StatelessWidget {
             children: [
               const Icon(
                 Icons.shield_outlined,
-                color: Colors.white,
+                color: AppColors.onAccent,
                 size: AppSpacing.iconMd,
               ),
               const SizedBox(width: AppSpacing.x2),
@@ -153,7 +153,7 @@ class _TierHero extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.sectionTitle.copyWith(
-                        color: Colors.white,
+                        color: AppColors.onAccent,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -161,7 +161,7 @@ class _TierHero extends StatelessWidget {
                     Text(
                       'Giới hạn hiện tại của bạn',
                       style: AppTextStyles.caption.copyWith(
-                        color: Colors.white.withValues(alpha: .90),
+                        color: AppColors.onAccent.withValues(alpha: .90),
                         fontWeight: AppTextStyles.medium,
                       ),
                     ),
@@ -171,7 +171,7 @@ class _TierHero extends StatelessWidget {
               const SizedBox(width: AppSpacing.x3),
               DecoratedBox(
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: .20),
+                  color: AppColors.onAccent.withValues(alpha: .20),
                   borderRadius: AppRadii.inputRadius,
                 ),
                 child: Padding(
@@ -182,7 +182,7 @@ class _TierHero extends StatelessWidget {
                   child: Text(
                     tier.statusLabel,
                     style: AppTextStyles.micro.copyWith(
-                      color: Colors.white,
+                      color: AppColors.onAccent,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -224,7 +224,7 @@ class _TierMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .18),
+        color: AppColors.onAccent.withValues(alpha: .18),
         borderRadius: AppRadii.lgRadius,
       ),
       child: Padding(
@@ -235,7 +235,7 @@ class _TierMetric extends StatelessWidget {
             Text(
               label,
               style: AppTextStyles.micro.copyWith(
-                color: Colors.white.withValues(alpha: .82),
+                color: AppColors.onAccent.withValues(alpha: .82),
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -245,7 +245,7 @@ class _TierMetric extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.baseMedium.copyWith(
-                color: Colors.white,
+                color: AppColors.onAccent,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -618,7 +618,7 @@ class _UpgradeCard extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.baseMedium.copyWith(
-                              color: Colors.white,
+                              color: AppColors.onAccent,
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
@@ -626,7 +626,7 @@ class _UpgradeCard extends StatelessWidget {
                         const SizedBox(width: AppSpacing.x2),
                         const Icon(
                           Icons.chevron_right_rounded,
-                          color: Colors.white,
+                          color: AppColors.onAccent,
                           size: AppSpacing.iconMd,
                         ),
                       ],

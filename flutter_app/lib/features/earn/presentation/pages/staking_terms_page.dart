@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 class StakingTermsPage extends ConsumerStatefulWidget {
   const StakingTermsPage({super.key, this.shellRenderMode});
@@ -318,7 +318,7 @@ class _TermsSectionCard extends StatelessWidget {
       child: Column(
         children: [
           Material(
-            color: Colors.transparent,
+            color: AppColors.transparent,
             child: InkWell(
               onTap: onTap,
               child: Padding(
@@ -427,14 +427,18 @@ class _AcceptanceCard extends StatelessWidget {
             height: 22,
             margin: const EdgeInsets.only(top: 2),
             decoration: BoxDecoration(
-              color: accepted ? AppColors.buy : Colors.transparent,
+              color: accepted ? AppColors.buy : AppColors.transparent,
               borderRadius: AppRadii.smRadius,
               border: Border.all(
                 color: accepted ? AppColors.buy : AppColors.borderSolid,
               ),
             ),
             child: accepted
-                ? const Icon(Icons.check_rounded, color: Colors.white, size: 15)
+                ? const Icon(
+                    Icons.check_rounded,
+                    color: AppColors.onAccent,
+                    size: 15,
+                  )
                 : null,
           ),
           const SizedBox(width: AppSpacing.x3),

@@ -11,7 +11,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
+import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 const _settingsBackground = AppColors.bg;
 const _settingsPanel = AppColors.surface;
@@ -47,7 +47,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileRepositoryProvider).getSettings();
+    final snapshot = ref.watch(profileControllerProvider).getSettings();
     _initializeFrom(snapshot);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
@@ -262,7 +262,7 @@ class _CurrencyChip extends StatelessWidget {
         child: Text(
           currency,
           style: AppTextStyles.micro.copyWith(
-            color: selected ? Colors.white : AppColors.text2,
+            color: selected ? AppColors.onAccent : AppColors.text2,
             fontSize: 12,
             fontWeight: FontWeight.w700,
             height: 1,
@@ -328,7 +328,7 @@ class _LanguageRow extends StatelessWidget {
       child: Container(
         height: 54,
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        color: selected ? _settingsSelected : Colors.transparent,
+        color: selected ? _settingsSelected : AppColors.transparent,
         child: Row(
           children: [
             Expanded(
@@ -503,16 +503,16 @@ class _SettingsSwitch extends StatelessWidget {
             width: 22,
             height: 22,
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: AppColors.onAccent,
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: Color(0x33000000),
+                  color: AppColors.overlayScrim,
                   blurRadius: 4,
                   offset: Offset(0, 2),
                 ),
                 BoxShadow(
-                  color: Color(0x1A000000),
+                  color: AppColors.overlayScrimSoft,
                   blurRadius: 1,
                   offset: Offset(0, 1),
                 ),

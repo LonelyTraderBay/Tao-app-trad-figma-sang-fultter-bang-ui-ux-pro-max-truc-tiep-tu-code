@@ -10,18 +10,18 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 const _networkBackground = AppColors.bg;
 const _networkPanel = AppColors.surface;
 const _networkPanel2 = AppColors.surface2;
-const _networkBorder = Color(0x14FFFFFF);
+const _networkBorder = AppColors.overlayStroke;
 const _networkPrimary = AppColors.primary;
-const _networkGreen = Color(0xFF10B981);
-const _networkAmber = Color(0xFFF59E0B);
-const _networkOrange = Color(0xFFF97316);
-const _networkRed = Color(0xFFEF4444);
-const _networkMuted = Color(0xFF667085);
+const _networkGreen = AppColors.buy;
+const _networkAmber = AppColors.caution;
+const _networkOrange = AppColors.riskHigh;
+const _networkRed = AppColors.sell;
+const _networkMuted = AppColors.text3;
 
 class NetworkStatusPage extends ConsumerWidget {
   const NetworkStatusPage({super.key, this.shellRenderMode});
@@ -34,7 +34,7 @@ class NetworkStatusPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(walletRepositoryProvider).getNetworkStatus();
+    final snapshot = ref.watch(walletNetworkStatusProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -107,12 +107,12 @@ class _SummaryCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: _networkPanel,
         borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: Colors.white.withValues(alpha: .3)),
+        border: Border.all(color: AppColors.onAccent.withValues(alpha: .3)),
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Colors.white.withValues(alpha: .05),
+            AppColors.onAccent.withValues(alpha: .05),
             summaryColor.withValues(alpha: .04),
             _networkPanel2,
           ],

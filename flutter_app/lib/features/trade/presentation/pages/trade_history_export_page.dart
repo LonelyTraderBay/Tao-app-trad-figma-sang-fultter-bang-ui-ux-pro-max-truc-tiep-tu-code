@@ -11,7 +11,8 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _tradePrimary = AppColors.primary;
 const _tradePrimaryDark = AppColors.primaryDark;
@@ -48,7 +49,9 @@ class _TradeHistoryExportPageState
   @override
   void initState() {
     super.initState();
-    final snapshot = ref.read(tradeRepositoryProvider).getTradeExport();
+    final snapshot = ref
+        .read(tradeReadModelControllerProvider)
+        .getTradeExport();
     _format = snapshot.formats.first.id;
     _period = '30d';
     _includes = snapshot.includes.toList(growable: true);
@@ -56,7 +59,9 @@ class _TradeHistoryExportPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getTradeExport();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getTradeExport();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -178,7 +183,9 @@ class _TradeHistoryExportPageState
           if (item.checked) item.id,
       ],
     );
-    final result = ref.read(tradeRepositoryProvider).createTradeExport(request);
+    final result = ref
+        .read(tradeReadModelControllerProvider)
+        .createTradeExport(request);
     if (!mounted) return;
     setState(() {
       _isExporting = false;
@@ -322,7 +329,7 @@ class _Section extends StatelessWidget {
             Text(
               title,
               style: AppTextStyles.micro.copyWith(
-                color: const Color(0xFF98A2B3),
+                color: AppColors.textMutedLight,
                 fontSize: 12,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
@@ -382,7 +389,7 @@ class _FormatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = active ? _tradePrimary : const Color(0xFFAEB7CC);
+    final color = active ? _tradePrimary : AppColors.textSoftLight;
     final icon = format.id == 'csv'
         ? Icons.table_chart_outlined
         : Icons.description_outlined;
@@ -400,7 +407,7 @@ class _FormatCard extends StatelessWidget {
           border: Border.all(
             color: active
                 ? _tradePrimary.withValues(alpha: .7)
-                : Colors.white12,
+                : AppColors.onAccent.withValues(alpha: .12),
             width: active ? 1.2 : 1,
           ),
           borderRadius: AppRadii.cardRadius,
@@ -489,7 +496,7 @@ class _PeriodChip extends StatelessWidget {
           border: Border.all(
             color: active
                 ? _tradePrimary.withValues(alpha: .8)
-                : Colors.white12,
+                : AppColors.onAccent.withValues(alpha: .12),
           ),
           borderRadius: AppRadii.cardRadius,
         ),
@@ -568,7 +575,7 @@ class _IncludeRow extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: isLast ? Colors.transparent : AppColors.divider,
+              color: isLast ? AppColors.transparent : AppColors.divider,
             ),
           ),
         ),
@@ -606,7 +613,7 @@ class _CheckBox extends StatelessWidget {
       height: 20,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: checked ? AppColors.buy : Colors.transparent,
+        color: checked ? AppColors.buy : AppColors.transparent,
         border: Border.all(
           color: checked ? AppColors.buy : AppColors.borderSolid,
           width: 2,
@@ -616,7 +623,7 @@ class _CheckBox extends StatelessWidget {
       child: checked
           ? const Icon(
               Icons.check_circle_outline,
-              color: Colors.white,
+              color: AppColors.onAccent,
               size: 14,
             )
           : null,
@@ -740,9 +747,9 @@ class _ExportFooter extends StatelessWidget {
                           key: TradeHistoryExportPage.downloadKey,
                           label: 'Tải ${format.toUpperCase()}',
                           icon: Icons.file_download_outlined,
-                          foreground: Colors.white,
+                          foreground: AppColors.onAccent,
                           gradient: const LinearGradient(
-                            colors: [AppColors.buy, Color(0xFF059669)],
+                            colors: [AppColors.buy, AppColors.buyDark],
                           ),
                           onTap: () {},
                         ),
@@ -759,7 +766,7 @@ class _ExportFooter extends StatelessWidget {
                 icon: isExporting
                     ? Icons.schedule_outlined
                     : Icons.file_download_outlined,
-                foreground: isExporting ? AppColors.text3 : Colors.white,
+                foreground: isExporting ? AppColors.text3 : AppColors.onAccent,
                 gradient: isExporting
                     ? null
                     : const LinearGradient(

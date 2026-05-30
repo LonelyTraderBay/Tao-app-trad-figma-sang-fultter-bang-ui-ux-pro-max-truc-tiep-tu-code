@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 class StakingRiskScoreCalculatorPage extends ConsumerStatefulWidget {
   const StakingRiskScoreCalculatorPage({super.key, this.shellRenderMode});
@@ -46,7 +46,8 @@ class _StakingRiskScoreCalculatorPageState
   @override
   void initState() {
     super.initState();
-    final snapshot = const MockStakingRiskScoreCalculatorRepository()
+    final snapshot = ref
+        .read(stakingRiskScoreCalculatorRepositoryProvider)
         .getCalculator();
     _amountController = TextEditingController(
       text: snapshot.defaultAmountUsd.toStringAsFixed(0),

@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/auth/data/auth_repository.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/controllers/password_reset_flow_controller.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/pages/login_page.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/pages/reset_password_page.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -22,12 +23,17 @@ void _setPhoneViewport(WidgetTester tester) {
 Widget _app({
   String initialLocation = AppRoutePaths.authResetPassword,
   ShellRenderMode shellRenderMode = ShellRenderMode.native,
+  bool seedChallenge = true,
 }) {
   return ProviderScope(
     overrides: [
       authRepositoryProvider.overrideWithValue(
         const MockAuthRepository(delay: Duration.zero),
       ),
+      if (seedChallenge)
+        passwordResetChallengeProvider.overrideWithBuild(
+          (_, _) => _defaultChallenge(),
+        ),
     ],
     child: VitTradeApp(
       shellRenderMode: shellRenderMode,
@@ -36,6 +42,14 @@ Widget _app({
         shellRenderMode: shellRenderMode,
       ),
     ),
+  );
+}
+
+PasswordResetChallenge _defaultChallenge() {
+  return PasswordResetChallenge(
+    email: 'user@vittrade.vn',
+    otp: '123456',
+    verifiedAt: DateTime(2026, 5, 26),
   );
 }
 
@@ -54,6 +68,42 @@ void main() {
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.text('Đặt lại mật khẩu'), findsOneWidget);
     expect(find.text('Tạo mật khẩu mới'), findsOneWidget);
+  });
+
+  testWidgets('/auth/reset-password without challenge expires safely', (
+    tester,
+  ) async {
+    _setPhoneViewport(tester);
+
+    await tester.pumpWidget(_app(seedChallenge: false));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ResetPasswordPage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsNothing);
+    expect(find.byType(VitPhoneFrame), findsNothing);
+    expect(find.byType(VitStatusBar), findsNothing);
+    expect(find.byKey(ResetPasswordPage.expiredKey), findsOneWidget);
+    expect(find.byKey(ResetPasswordPage.retryKey), findsOneWidget);
+    expect(find.byKey(ResetPasswordPage.newPasswordFieldKey), findsNothing);
+  });
+
+  testWidgets('/auth/reset-password ignores email and otp query params', (
+    tester,
+  ) async {
+    _setPhoneViewport(tester);
+
+    await tester.pumpWidget(
+      _app(
+        initialLocation:
+            '${AppRoutePaths.authResetPassword}?email=attacker@example.com&otp=123456',
+        seedChallenge: false,
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ResetPasswordPage), findsOneWidget);
+    expect(find.byKey(ResetPasswordPage.expiredKey), findsOneWidget);
+    expect(find.byKey(ResetPasswordPage.newPasswordFieldKey), findsNothing);
   });
 
   testWidgets('/auth/reset-password visual QA shell keeps fake status only', (

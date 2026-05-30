@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PSettingsPage extends ConsumerStatefulWidget {
   const P2PSettingsPage({super.key, this.shellRenderMode});
@@ -49,7 +49,7 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getSettings();
+    final snapshot = ref.watch(p2pSettingsProvider);
     _ensureState(snapshot);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -362,7 +362,7 @@ class _OptionChip extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             border: Border.all(
-              color: selected ? AppColors.primary40 : Colors.transparent,
+              color: selected ? AppColors.primary40 : AppColors.transparent,
             ),
             borderRadius: AppRadii.inputRadius,
           ),
@@ -836,7 +836,7 @@ class _SwitchButton extends StatelessWidget {
         alignment: value ? Alignment.centerRight : Alignment.centerLeft,
         child: const DecoratedBox(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.onAccent,
             shape: BoxShape.circle,
           ),
           child: SizedBox(width: 18, height: 18),
@@ -860,7 +860,7 @@ class _SegmentButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected ? AppColors.primary12 : Colors.transparent,
+      color: selected ? AppColors.primary12 : AppColors.transparent,
       borderRadius: AppRadii.inputRadius,
       child: InkWell(
         onTap: onTap,

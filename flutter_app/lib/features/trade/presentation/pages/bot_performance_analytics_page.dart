@@ -12,17 +12,18 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _analyticsBackground = AppColors.bg;
 const _analyticsPanel = AppColors.surface;
 const _analyticsPanel2 = AppColors.surface2;
 const _analyticsPrimary = AppColors.primary;
-const _analyticsGreen = Color(0xFF10B981);
-const _analyticsAmber = Color(0xFFF59E0B);
-const _analyticsRed = Color(0xFFEF4444);
-const _chartAxis = Color(0xFF475569);
-const _chartTrack = Color(0xFF20283A);
+const _analyticsGreen = AppColors.buy;
+const _analyticsAmber = AppColors.caution;
+const _analyticsRed = AppColors.sell;
+const _chartAxis = AppColors.chartAxisStrong;
+const _chartTrack = AppColors.chartTrack;
 
 enum _AnalyticsTimeframe { sevenDays, thirtyDays, allTime }
 
@@ -47,7 +48,7 @@ class _BotPerformanceAnalyticsPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(tradeRepositoryProvider)
+        .watch(tradeReadModelControllerProvider)
         .getBotPerformanceAnalytics();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
@@ -177,7 +178,7 @@ class _KeyMetricsCard extends StatelessWidget {
                   ),
                   child: const Icon(
                     Icons.check_rounded,
-                    color: Colors.white,
+                    color: AppColors.onAccent,
                     size: 11,
                   ),
                 ),
@@ -992,10 +993,10 @@ class _DurationDonutPainter extends CustomPainter {
     final rect = Rect.fromCircle(center: center, radius: 70);
     var start = -math.pi / 2;
     final colors = [
-      const Color(0xFFF5F7FA),
-      const Color(0xFFE9EDF5),
-      const Color(0xFFDDE3EE),
-      const Color(0xFFF5F7FA),
+      AppColors.text1,
+      AppColors.chartLightMid,
+      AppColors.chartLightLow,
+      AppColors.text1,
     ];
     for (var i = 0; i < distribution.length; i++) {
       final sweep = distribution[i].count / total * math.pi * 2;

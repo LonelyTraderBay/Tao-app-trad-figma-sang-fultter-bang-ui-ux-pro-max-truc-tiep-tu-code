@@ -10,15 +10,16 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _slipBackground = AppColors.bg;
 const _slipPanel = AppColors.surface;
 const _slipPanel2 = AppColors.surface2;
 const _slipBorder = AppColors.borderSolid;
-const _slipGreen = Color(0xFF10B981);
-const _slipAmber = Color(0xFFF59E0B);
-const _slipRed = Color(0xFFEF4444);
+const _slipGreen = AppColors.buy;
+const _slipAmber = AppColors.caution;
+const _slipRed = AppColors.sell;
 const _slipPrimary = AppColors.primary;
 
 class SlippageMonitoringPage extends ConsumerStatefulWidget {
@@ -42,7 +43,9 @@ class _SlippageMonitoringPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeRepositoryProvider).getSlippageMonitoring();
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getSlippageMonitoring();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -124,7 +127,7 @@ class _CriticalAlert extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       decoration: BoxDecoration(
-        color: Colors.transparent,
+        color: AppColors.transparent,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
@@ -888,7 +891,10 @@ class _SwitchVisual extends StatelessWidget {
       alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
       padding: const EdgeInsets.all(4),
       child: const DecoratedBox(
-        decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+        decoration: BoxDecoration(
+          color: AppColors.onAccent,
+          shape: BoxShape.circle,
+        ),
         child: SizedBox(width: 16, height: 16),
       ),
     );
@@ -962,7 +968,7 @@ class _NoticePanel extends StatelessWidget {
       right: 20,
       top: MediaQuery.paddingOf(context).top + 18,
       child: Material(
-        color: Colors.transparent,
+        color: AppColors.transparent,
         child: Container(
           padding: const EdgeInsets.fromLTRB(12, 9, 8, 9),
           decoration: BoxDecoration(

@@ -89,7 +89,7 @@ void main() {
     expect(find.text('BIDV'), findsOneWidget);
   });
 
-  testWidgets('SC-210 confirm CTA opens the P2P order placeholder', (
+  testWidgets('SC-210 confirm CTA opens the canonical P2P order route', (
     tester,
   ) async {
     await pumpP2PExpressConfirm(tester);
@@ -103,7 +103,7 @@ void main() {
     expect(find.text('Chi tiết đơn hàng'), findsOneWidget);
   });
 
-  testWidgets('SC-210 cancel CTA returns to the P2P placeholder', (
+  testWidgets('SC-210 cancel CTA returns to the P2P parent route', (
     tester,
   ) async {
     await pumpP2PExpressConfirm(tester);

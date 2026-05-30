@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 class StakingWebhooksPage extends ConsumerWidget {
   const StakingWebhooksPage({super.key, this.shellRenderMode});
@@ -87,7 +87,7 @@ class StakingWebhooksPage extends ConsumerWidget {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (context) =>
           _SheetFrame(child: _CreateWebhookSheet(snapshot: snapshot)),
     );
@@ -207,7 +207,7 @@ class _WebhookCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x2),
               Material(
-                color: Colors.transparent,
+                color: AppColors.transparent,
                 child: InkWell(
                   key: StakingWebhooksPage.webhookDeleteKey(webhook.id),
                   borderRadius: AppRadii.smRadius,

@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 class P2PPaymentMethodsPage extends ConsumerStatefulWidget {
   const P2PPaymentMethodsPage({super.key, this.shellRenderMode});
@@ -46,7 +46,7 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getPaymentMethods();
+    final snapshot = ref.watch(p2pPaymentMethodsProvider);
     if (!_seeded) {
       _methods = List<P2PPaymentListMethodDraft>.of(snapshot.methods);
       _seeded = true;
@@ -259,7 +259,7 @@ class _AddMethodButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
@@ -503,7 +503,7 @@ class _SetDefaultButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         key: P2PPaymentMethodsPage.defaultKey(methodId),
         onTap: onTap,

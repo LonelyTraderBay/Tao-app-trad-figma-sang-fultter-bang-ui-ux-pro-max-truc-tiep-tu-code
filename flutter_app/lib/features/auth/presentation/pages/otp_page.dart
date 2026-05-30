@@ -14,7 +14,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/auth/data/auth_repository.dart';
+import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/controllers/password_reset_flow_controller.dart';
 
 const _authPrimary = AppColors.primary;
 const _authPrimary10 = AppColors.primary12;
@@ -146,7 +147,7 @@ class _OTPPageState extends ConsumerState<OTPPage> {
 
     try {
       final result = await ref
-          .read(authRepositoryProvider)
+          .read(authControllerProvider)
           .verifyFactor(
             contact: widget.contact,
             code: _code,
@@ -167,17 +168,25 @@ class _OTPPageState extends ConsumerState<OTPPage> {
         case AuthOtpPurpose.twoFactor:
           context.go(AppRoutePaths.home);
         case AuthOtpPurpose.passwordReset:
-          context.go(
-            '${AppRoutePaths.authResetPassword}?email=${Uri.encodeComponent(widget.contact)}&otp=$_code',
-          );
+          _savePasswordResetChallenge();
+          context.go(AppRoutePaths.authResetPassword);
         case AuthOtpPurpose.verify:
+          _savePasswordResetChallenge();
           context.go(AppRoutePaths.authResetPassword);
       }
+    } catch (error) {
+      if (mounted) _clearOtp(error: authOperationErrorMessage(error));
     } finally {
       if (mounted) {
         setState(() => _submitting = false);
       }
     }
+  }
+
+  void _savePasswordResetChallenge() {
+    ref
+        .read(passwordResetChallengeControllerProvider)
+        .save(email: widget.contact, otp: _code);
   }
 
   void _clearOtp({required String error}) {

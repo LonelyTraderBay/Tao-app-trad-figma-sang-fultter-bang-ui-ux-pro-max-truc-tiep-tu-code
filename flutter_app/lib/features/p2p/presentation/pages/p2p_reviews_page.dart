@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 enum _P2PReviewTab { received, given }
 
@@ -38,7 +38,7 @@ class _P2PReviewsPageState extends ConsumerState<P2PReviewsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pRepositoryProvider).getReviews();
+    final snapshot = ref.watch(p2pReviewsProvider);
     final reviews = _tab == _P2PReviewTab.received
         ? snapshot.receivedReviews
         : snapshot.givenReviews;
@@ -466,7 +466,7 @@ class _ReviewAvatar extends StatelessWidget {
       child: Text(
         letter,
         style: AppTextStyles.caption.copyWith(
-          color: Colors.white,
+          color: AppColors.onAccent,
           fontWeight: AppTextStyles.bold,
         ),
       ),

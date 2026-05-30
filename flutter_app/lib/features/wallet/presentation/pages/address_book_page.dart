@@ -11,15 +11,15 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 const _bookBackground = AppColors.bg;
 const _bookPanel = AppColors.surface;
 const _bookPanel2 = AppColors.surface2;
 const _bookPrimary = AppColors.primary;
-const _bookGreen = Color(0xFF10B981);
-const _bookAmber = Color(0xFFF59E0B);
-const _bookRed = Color(0xFFEF4444);
+const _bookGreen = AppColors.buy;
+const _bookAmber = AppColors.caution;
+const _bookRed = AppColors.sell;
 
 class AddressBookPage extends ConsumerStatefulWidget {
   const AddressBookPage({super.key, this.shellRenderMode});
@@ -51,7 +51,7 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
   @override
   void initState() {
     super.initState();
-    _addresses = ref.read(walletRepositoryProvider).getAddressBook().addresses;
+    _addresses = ref.read(walletAddressBookProvider).addresses;
   }
 
   @override
@@ -62,7 +62,7 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(walletRepositoryProvider).getAddressBook();
+    final snapshot = ref.watch(walletAddressBookProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -316,7 +316,7 @@ class _WhitelistModeCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: _bookPanel,
           borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: const Color(0x14FFFFFF)),
+          border: Border.all(color: AppColors.overlayStroke),
         ),
         child: Row(
           children: [
@@ -395,7 +395,7 @@ class _SwitchPill extends StatelessWidget {
           height: 22,
           margin: const EdgeInsets.symmetric(horizontal: 2.5),
           decoration: BoxDecoration(
-            color: enabled ? Colors.white : const Color(0xFF65718A),
+            color: enabled ? AppColors.onAccent : AppColors.textDisabledBlue,
             shape: BoxShape.circle,
           ),
         ),
@@ -434,10 +434,10 @@ class _NetworkFilterBar extends StatelessWidget {
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(horizontal: 13),
               decoration: BoxDecoration(
-                color: selected ? AppColors.primary15 : Colors.transparent,
+                color: selected ? AppColors.primary15 : AppColors.transparent,
                 borderRadius: AppRadii.inputRadius,
                 border: Border.all(
-                  color: selected ? AppColors.primary60 : Colors.transparent,
+                  color: selected ? AppColors.primary60 : AppColors.transparent,
                 ),
               ),
               child: Text(
@@ -489,7 +489,7 @@ class _AddressStats extends StatelessWidget {
               decoration: BoxDecoration(
                 color: _bookPanel,
                 borderRadius: AppRadii.mdRadius,
-                border: Border.all(color: const Color(0x14FFFFFF)),
+                border: Border.all(color: AppColors.overlayStroke),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -573,7 +573,7 @@ class _AddressCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: _bookPanel,
         borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: const Color(0x14FFFFFF)),
+        border: Border.all(color: AppColors.overlayStroke),
       ),
       child: Column(
         children: [
@@ -836,16 +836,16 @@ class _RoundActionButton extends StatelessWidget {
         height: 36,
         decoration: BoxDecoration(
           color: danger
-              ? const Color(0x14EF4444)
+              ? AppColors.sell.withValues(alpha: .08)
               : filled
-              ? const Color(0x1AF59E0B)
+              ? AppColors.caution.withValues(alpha: .10)
               : _bookPanel2,
           borderRadius: AppRadii.cardRadius,
           border: Border.all(
             color: danger
-                ? const Color(0x26EF4444)
+                ? AppColors.sell15
                 : filled
-                ? const Color(0x33F59E0B)
+                ? AppColors.caution.withValues(alpha: .20)
                 : AppColors.borderSolid,
           ),
         ),

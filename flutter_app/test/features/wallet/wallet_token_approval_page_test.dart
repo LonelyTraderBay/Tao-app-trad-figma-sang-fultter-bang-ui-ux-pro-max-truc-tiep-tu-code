@@ -100,7 +100,17 @@ void main() {
     await tester.tap(find.byKey(WalletTokenApprovalPage.revokeKey('a3')));
     await tester.pumpAndSettle();
     expect(find.text('Revoke WETH approval'), findsOneWidget);
-    await tester.tapAt(const Offset(220, 700));
+    expect(
+      find.textContaining('Review the spender, token, allowance'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('Spender: Unknown Contract'), findsOneWidget);
+    expect(find.textContaining('Token: WETH'), findsOneWidget);
+    expect(find.textContaining('Allowance: Unlimited'), findsOneWidget);
+    expect(find.textContaining('Gas estimate:'), findsOneWidget);
+    expect(find.textContaining('Impact:'), findsOneWidget);
+    expect(find.textContaining('mock flow'), findsNothing);
+    await tester.tapAt(const Offset(220, 500));
     await tester.pumpAndSettle();
     expect(find.text('Revoke WETH approval'), findsNothing);
 

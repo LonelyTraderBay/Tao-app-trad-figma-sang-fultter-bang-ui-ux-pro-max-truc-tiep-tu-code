@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/notifications_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -13,7 +14,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/notifications/data/notifications_repository.dart';
 
 enum _NotificationFilter { all, unread }
 
@@ -42,7 +42,7 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
-        .watch(notificationsRepositoryProvider)
+        .watch(notificationsControllerProvider)
         .getNotifications();
     _notifications ??= snapshot.notifications;
     final notifications = _notifications!;
@@ -288,7 +288,7 @@ class _NotificationRow extends StatelessWidget {
           AppSpacing.x2,
         ),
         decoration: BoxDecoration(
-          color: highlighted ? AppColors.primary08 : Colors.transparent,
+          color: highlighted ? AppColors.primary08 : AppColors.transparent,
           border: showDivider
               ? const Border(bottom: BorderSide(color: AppColors.divider))
               : null,

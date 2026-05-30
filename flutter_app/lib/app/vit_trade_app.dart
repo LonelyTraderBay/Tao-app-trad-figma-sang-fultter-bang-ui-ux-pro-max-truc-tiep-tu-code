@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -17,18 +18,20 @@ class VitTradeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final resolvedShellRenderMode = shellRenderMode ?? defaultShellRenderMode();
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
-        statusBarBrightness: Brightness.dark,
-        systemNavigationBarColor: AppColors.bg,
-        systemNavigationBarIconBrightness: Brightness.light,
-      ),
-      child: _VitTradeMaterialApp(
-        routerConfig:
-            routerConfig ??
-            createAppRouter(shellRenderMode: resolvedShellRenderMode),
+    return ProviderScope(
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: const SystemUiOverlayStyle(
+          statusBarColor: AppColors.transparent,
+          statusBarIconBrightness: Brightness.light,
+          statusBarBrightness: Brightness.dark,
+          systemNavigationBarColor: AppColors.bg,
+          systemNavigationBarIconBrightness: Brightness.light,
+        ),
+        child: _VitTradeMaterialApp(
+          routerConfig:
+              routerConfig ??
+              createAppRouter(shellRenderMode: resolvedShellRenderMode),
+        ),
       ),
     );
   }

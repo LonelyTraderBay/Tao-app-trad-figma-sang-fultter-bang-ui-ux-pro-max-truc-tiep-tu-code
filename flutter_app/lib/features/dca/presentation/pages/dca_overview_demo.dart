@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
+import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 
 class DCAOverviewDemo extends ConsumerStatefulWidget {
   const DCAOverviewDemo({super.key, this.shellRenderMode});
@@ -40,7 +40,7 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(dcaRepositoryProvider).getOverviewDemo();
+    final snapshot = ref.watch(dcaOverviewDemoProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame

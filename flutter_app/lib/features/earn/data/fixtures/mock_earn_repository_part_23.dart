@@ -1,0 +1,501 @@
+part of '../repositories/mock_earn_repository.dart';
+
+final class MockSavingsAutoPilotRepository
+    implements SavingsAutoPilotRepository {
+  const MockSavingsAutoPilotRepository();
+
+  @override
+  SavingsAutoPilotSnapshot getAutoPilot() {
+    return const SavingsAutoPilotSnapshot(
+      endpoint: '/api/mobile/earn/earn-savings-autopilot',
+      actionDraft:
+          'GET /earn/savings/autopilot | POST /earn/subscribe|redeem|claim|vote where applicable; POST /earn/savings/autopilot/activate|pause|approve-action',
+      title: 'AutoPilot',
+      backRoute: '/earn/savings',
+      tabs: [
+        SavingsPreferenceTabDraft(id: 'overview', label: 'Tổng quan'),
+        SavingsPreferenceTabDraft(id: 'actions', label: 'Hoạt động (1)'),
+        SavingsPreferenceTabDraft(id: 'settings', label: 'Cài đặt'),
+      ],
+      defaultTab: 'overview',
+      heroLabel: 'AutoPilot Savings',
+      config: SavingsAutoPilotConfigDraft(
+        mode: SavingsAutoPilotMode.balanced,
+        status: SavingsAutoPilotStatus.active,
+        monthlyBudgetUsd: 1000,
+        dcaEnabled: true,
+        dcaFrequencyLabel: 'Hằng tuần',
+        rebalanceEnabled: true,
+        rebalanceThresholdPct: 10,
+        smartSwitchEnabled: true,
+        switchMinApyGainPct: .8,
+        compoundEnabled: true,
+        riskGuardEnabled: true,
+        maxSingleAssetPct: 40,
+        notificationsEnabled: true,
+        approvalRequired: true,
+      ),
+      modes: [
+        SavingsAutoPilotModeDraft(
+          id: SavingsAutoPilotMode.conservative,
+          label: 'An toàn',
+          description:
+              'Stablecoin-first, DCA chậm, rebalance ít, chỉ switch khi APY chênh nhiều',
+          iconKey: 'shield',
+          tone: EarnRiskLevel.low,
+          dcaFrequency: 'Hằng tháng',
+          rebalanceThreshold: '15%',
+          switchMinGain: '1.5%+',
+          maxConcentration: '50%',
+        ),
+        SavingsAutoPilotModeDraft(
+          id: SavingsAutoPilotMode.balanced,
+          label: 'Cân bằng',
+          description:
+              'Đa dạng hóa, DCA trung bình, rebalance tự động, switch linh hoạt',
+          iconKey: 'target',
+          tone: EarnRiskLevel.medium,
+          dcaFrequency: 'Hằng tuần',
+          rebalanceThreshold: '10%',
+          switchMinGain: '0.8%+',
+          maxConcentration: '40%',
+        ),
+        SavingsAutoPilotModeDraft(
+          id: SavingsAutoPilotMode.growth,
+          label: 'Tăng trưởng',
+          description:
+              'Ưu tiên APY cao, DCA nhanh, rebalance thường xuyên, switch nhanh',
+          iconKey: 'bolt',
+          tone: EarnRiskLevel.high,
+          dcaFrequency: 'Hằng ngày',
+          rebalanceThreshold: '5%',
+          switchMinGain: '0.3%+',
+          maxConcentration: '35%',
+        ),
+      ],
+      metrics: [
+        SavingsAutoPilotMetricDraft(
+          id: 'effective_apy',
+          label: 'APY hiệu quả',
+          value: '5.2%',
+          deltaLabel: '+0.8%',
+          iconKey: 'trend',
+          tone: EarnRiskLevel.low,
+        ),
+        SavingsAutoPilotMetricDraft(
+          id: 'dca',
+          label: 'Tổng DCA',
+          value: '\$250.00',
+          deltaLabel: '1 lần',
+          iconKey: 'repeat',
+          tone: EarnRiskLevel.medium,
+        ),
+        SavingsAutoPilotMetricDraft(
+          id: 'rebalance',
+          label: 'Rebalance',
+          value: '3 lần',
+          deltaLabel: '30 ngày',
+          iconKey: 'rebalance',
+          tone: EarnRiskLevel.medium,
+        ),
+        SavingsAutoPilotMetricDraft(
+          id: 'apy_saved',
+          label: 'Tối ưu APY',
+          value: '+10.1%',
+          deltaLabel: '5 hành động',
+          iconKey: 'spark',
+          tone: EarnRiskLevel.high,
+        ),
+      ],
+      modules: [
+        SavingsAutoPilotModuleDraft(
+          id: 'dca',
+          label: 'DCA tự động',
+          description: 'Hằng tuần · \$1,000.00/tháng',
+          enabled: true,
+          iconKey: 'repeat',
+          tone: EarnRiskLevel.low,
+          route: '/earn/savings/dca',
+        ),
+        SavingsAutoPilotModuleDraft(
+          id: 'rebalance',
+          label: 'Tái cân bằng',
+          description: 'Ngưỡng: 10% drift',
+          enabled: true,
+          iconKey: 'rebalance',
+          tone: EarnRiskLevel.medium,
+          route: '/earn/savings/rebalance',
+        ),
+        SavingsAutoPilotModuleDraft(
+          id: 'smart_switch',
+          label: 'Smart Switch',
+          description: 'Min APY gain: 0.8%',
+          enabled: true,
+          iconKey: 'spark',
+          tone: EarnRiskLevel.high,
+          route: '/earn/savings/smart-suggestions',
+        ),
+        SavingsAutoPilotModuleDraft(
+          id: 'compound',
+          label: 'Lãi kép tự động',
+          description: 'Tự động tái đầu tư lãi',
+          enabled: true,
+          iconKey: 'bolt',
+          tone: EarnRiskLevel.low,
+          route: '/earn/savings/auto-compound',
+        ),
+        SavingsAutoPilotModuleDraft(
+          id: 'risk_guard',
+          label: 'Risk Guard',
+          description: 'Max single-asset: 40%',
+          enabled: true,
+          iconKey: 'shield',
+          tone: EarnRiskLevel.high,
+          route: '/earn/savings/risk-assessment',
+        ),
+      ],
+      actions: [
+        SavingsAutoPilotActionDraft(
+          id: 'act1',
+          type: SavingsAutoPilotActionType.dcaExecuted,
+          title: 'DCA USDT Linh hoạt',
+          description:
+              'Tự động gửi 250 USDT vào sản phẩm Linh hoạt theo lịch DCA hằng tuần.',
+          timestamp: '09/03/2026 08:00',
+          impact: '+250 USDT',
+          impactValue: 250,
+          status: SavingsAutoPilotActionStatus.executed,
+          details: {
+            'Sản phẩm': 'USDT Linh hoạt',
+            'Số lượng': '250 USDT',
+            'APY': '4.8%',
+            'Nguồn': 'Ví Spot',
+          },
+        ),
+        SavingsAutoPilotActionDraft(
+          id: 'act2',
+          type: SavingsAutoPilotActionType.rebalanced,
+          title: 'Tái cân bằng danh mục',
+          description:
+              'Tỷ trọng USDT vượt 45% (target 40%). Chuyển 5% sang ETH Linh hoạt.',
+          timestamp: '08/03/2026 14:00',
+          impact: 'USDT -5% → ETH +5%',
+          impactValue: 0,
+          status: SavingsAutoPilotActionStatus.executed,
+          details: {
+            'Từ': 'USDT Linh hoạt (45%→40%)',
+            'Đến': 'ETH Linh hoạt (15%→20%)',
+            'Số tiền': '~\$500',
+          },
+        ),
+        SavingsAutoPilotActionDraft(
+          id: 'act3',
+          type: SavingsAutoPilotActionType.apyOptimized,
+          title: 'Tối ưu APY BTC',
+          description:
+              'APY BTC Cố định 60D tăng từ 3.2% lên 3.8%. Tăng mức DCA BTC.',
+          timestamp: '07/03/2026 10:30',
+          impact: '+0.6% APY',
+          impactValue: .6,
+          status: SavingsAutoPilotActionStatus.executed,
+          details: {
+            'Sản phẩm': 'BTC Cố định 60D',
+            'APY cũ': '3.2%',
+            'APY mới': '3.8%',
+            'Hành động': 'Tăng DCA 10%',
+          },
+        ),
+        SavingsAutoPilotActionDraft(
+          id: 'act4',
+          type: SavingsAutoPilotActionType.switchProduct,
+          title: 'Chuyển SOL sang AVAX',
+          description:
+              'SOL Cố định 30D APY giảm 1.2%. AVAX Cố định 90D có APY cao hơn 1.5%. Đề xuất chuyển.',
+          timestamp: '06/03/2026 16:00',
+          impact: '+1.5% APY',
+          impactValue: 1.5,
+          status: SavingsAutoPilotActionStatus.needsApproval,
+          details: {
+            'Từ': 'SOL Cố định 30D (5.3%)',
+            'Đến': 'AVAX Cố định 90D (6.8%)',
+            'Chênh': '+1.5% APY',
+            'Lưu ý': 'Lock 90 ngày',
+          },
+        ),
+        SavingsAutoPilotActionDraft(
+          id: 'act5',
+          type: SavingsAutoPilotActionType.compoundActivated,
+          title: 'Bật lãi kép ETH',
+          description:
+              'ETH Linh hoạt đủ điều kiện lãi kép tự động. Dự kiến tăng +\$8/năm.',
+          timestamp: '05/03/2026 09:00',
+          impact: '+~\$8/năm',
+          impactValue: 8,
+          status: SavingsAutoPilotActionStatus.executed,
+          details: {
+            'Sản phẩm': 'ETH Linh hoạt',
+            'APY hiệu quả': '4.05% → 4.22%',
+            'Dự kiến thêm': '+\$8/năm',
+          },
+        ),
+        SavingsAutoPilotActionDraft(
+          id: 'act6',
+          type: SavingsAutoPilotActionType.riskAdjusted,
+          title: 'Điều chỉnh rủi ro',
+          description:
+              'AVAX chiếm 32% danh mục, vượt ngưỡng 30%. Giảm 2% sang USDT.',
+          timestamp: '04/03/2026 12:00',
+          impact: 'Giảm rủi ro tập trung',
+          impactValue: 0,
+          status: SavingsAutoPilotActionStatus.executed,
+          details: {
+            'Tài sản': 'AVAX (32%→30%)',
+            'Chuyển': '2% sang USDT Linh hoạt',
+            'Lý do': 'Vượt ngưỡng single-asset',
+          },
+        ),
+      ],
+      disclaimer:
+          'AutoPilot tự động thực hiện giao dịch với tài sản của bạn. Kết quả phụ thuộc vào điều kiện thị trường và thay đổi APY. Đây không phải lời khuyên tài chính. Bạn có thể tắt bất kỳ lúc nào.',
+      contractNotes:
+          'Match screenshot first; wire BE after visual parity. Include earnProducts, stakingPositions, savingsPositions, validators, rewards, riskData, autopilot config, module status, approval queue, and action history.',
+      supportedStates: {
+        EarnScreenState.loading,
+        EarnScreenState.empty,
+        EarnScreenState.error,
+        EarnScreenState.offline,
+        EarnScreenState.submitting,
+        EarnScreenState.success,
+      },
+    );
+  }
+}
+
+final class MockSavingsLadderRepository implements SavingsLadderRepository {
+  const MockSavingsLadderRepository();
+
+  @override
+  SavingsLadderSnapshot getLadder() {
+    return const SavingsLadderSnapshot(
+      endpoint: '/api/mobile/earn/earn-savings-ladder',
+      actionDraft:
+          'GET /earn/savings/ladder | POST /earn/subscribe|redeem|claim|vote where applicable; POST /earn/savings/ladder/create|add-rung|toggle-renew',
+      title: 'Maturity Ladder',
+      backRoute: '/earn/savings',
+      heroLabel: 'Staggered Maturity Builder',
+      tabs: [
+        SavingsPreferenceTabDraft(id: 'builder', label: 'Xây dựng'),
+        SavingsPreferenceTabDraft(id: 'timeline', label: 'Timeline'),
+        SavingsPreferenceTabDraft(id: 'analysis', label: 'Phân tích'),
+      ],
+      defaultTab: 'builder',
+      defaultAmountUsd: 10000,
+      quickAmounts: [5000, 10000, 25000, 50000],
+      defaultPreset: SavingsLadderPreset.monthly,
+      templates: [
+        SavingsLadderTemplateDraft(
+          id: SavingsLadderPreset.monthly,
+          label: 'Thang hóa hằng tháng',
+          description:
+              'Mỗi tháng có 1 rung đáo hạn, đảm bảo thanh khoản liên tục.',
+          iconKey: 'calendar',
+          tone: EarnRiskLevel.low,
+          intervals: [
+            SavingsLadderIntervalDraft(
+              lockDays: 30,
+              allocationPct: 33,
+              product: 'USDT Cố định 30D',
+              asset: 'USDT',
+              apyPct: 5.2,
+              colorKey: 'buy',
+            ),
+            SavingsLadderIntervalDraft(
+              lockDays: 60,
+              allocationPct: 33,
+              product: 'USDT Cố định 60D',
+              asset: 'USDT',
+              apyPct: 5.8,
+              colorKey: 'primary',
+            ),
+            SavingsLadderIntervalDraft(
+              lockDays: 90,
+              allocationPct: 34,
+              product: 'USDT Cố định 90D',
+              asset: 'USDT',
+              apyPct: 6.5,
+              colorKey: 'buy',
+            ),
+          ],
+        ),
+        SavingsLadderTemplateDraft(
+          id: SavingsLadderPreset.quarterly,
+          label: 'Đáo hạn theo quý',
+          description: 'Tối ưu APY với chu kỳ 3 tháng, phù hợp vốn trung hạn.',
+          iconKey: 'bars',
+          tone: EarnRiskLevel.medium,
+          intervals: [
+            SavingsLadderIntervalDraft(
+              lockDays: 90,
+              allocationPct: 25,
+              product: 'USDT Cố định 90D',
+              asset: 'USDT',
+              apyPct: 6.5,
+              colorKey: 'buy',
+            ),
+            SavingsLadderIntervalDraft(
+              lockDays: 90,
+              allocationPct: 25,
+              product: 'BTC Cố định 90D',
+              asset: 'BTC',
+              apyPct: 4.0,
+              colorKey: 'warn',
+            ),
+            SavingsLadderIntervalDraft(
+              lockDays: 90,
+              allocationPct: 25,
+              product: 'SOL Cố định 90D',
+              asset: 'SOL',
+              apyPct: 7.5,
+              colorKey: 'accent',
+            ),
+            SavingsLadderIntervalDraft(
+              lockDays: 90,
+              allocationPct: 25,
+              product: 'AVAX Cố định 90D',
+              asset: 'AVAX',
+              apyPct: 7.2,
+              colorKey: 'sell',
+            ),
+          ],
+        ),
+        SavingsLadderTemplateDraft(
+          id: SavingsLadderPreset.biannual,
+          label: 'Ladder 6 tháng',
+          description: 'Chia đều vốn thành 6 bậc, mỗi tháng 1 bậc đáo hạn.',
+          iconKey: 'layers',
+          tone: EarnRiskLevel.high,
+          intervals: [
+            SavingsLadderIntervalDraft(
+              lockDays: 30,
+              allocationPct: 17,
+              product: 'USDT Cố định 30D',
+              asset: 'USDT',
+              apyPct: 5.2,
+              colorKey: 'buy',
+            ),
+            SavingsLadderIntervalDraft(
+              lockDays: 60,
+              allocationPct: 17,
+              product: 'USDT Cố định 60D',
+              asset: 'USDT',
+              apyPct: 5.8,
+              colorKey: 'primary',
+            ),
+            SavingsLadderIntervalDraft(
+              lockDays: 90,
+              allocationPct: 17,
+              product: 'USDT Cố định 90D',
+              asset: 'USDT',
+              apyPct: 6.5,
+              colorKey: 'buy',
+            ),
+            SavingsLadderIntervalDraft(
+              lockDays: 30,
+              allocationPct: 16,
+              product: 'BTC Cố định 30D',
+              asset: 'BTC',
+              apyPct: 2.8,
+              colorKey: 'warn',
+            ),
+            SavingsLadderIntervalDraft(
+              lockDays: 60,
+              allocationPct: 16,
+              product: 'ETH Cố định 60D',
+              asset: 'ETH',
+              apyPct: 3.9,
+              colorKey: 'accent',
+            ),
+            SavingsLadderIntervalDraft(
+              lockDays: 90,
+              allocationPct: 17,
+              product: 'SOL Cố định 90D',
+              asset: 'SOL',
+              apyPct: 7.5,
+              colorKey: 'primary',
+            ),
+          ],
+        ),
+        SavingsLadderTemplateDraft(
+          id: SavingsLadderPreset.custom,
+          label: 'Tùy chỉnh',
+          description: 'Tự tạo ladder theo ý muốn của bạn.',
+          iconKey: 'sliders',
+          tone: EarnRiskLevel.medium,
+          intervals: [],
+        ),
+      ],
+      availableProducts: [
+        SavingsLadderProductDraft(
+          id: 'lp1',
+          product: 'USDT Cố định 30D',
+          asset: 'USDT',
+          colorKey: 'buy',
+          lockDays: 30,
+          apyPct: 5.2,
+        ),
+        SavingsLadderProductDraft(
+          id: 'lp2',
+          product: 'USDT Cố định 60D',
+          asset: 'USDT',
+          colorKey: 'primary',
+          lockDays: 60,
+          apyPct: 5.8,
+        ),
+        SavingsLadderProductDraft(
+          id: 'lp3',
+          product: 'USDT Cố định 90D',
+          asset: 'USDT',
+          colorKey: 'buy',
+          lockDays: 90,
+          apyPct: 6.5,
+        ),
+        SavingsLadderProductDraft(
+          id: 'lp4',
+          product: 'BTC Cố định 30D',
+          asset: 'BTC',
+          colorKey: 'warn',
+          lockDays: 30,
+          apyPct: 2.8,
+        ),
+        SavingsLadderProductDraft(
+          id: 'lp5',
+          product: 'ETH Cố định 60D',
+          asset: 'ETH',
+          colorKey: 'accent',
+          lockDays: 60,
+          apyPct: 3.9,
+        ),
+        SavingsLadderProductDraft(
+          id: 'lp6',
+          product: 'SOL Cố định 90D',
+          asset: 'SOL',
+          colorKey: 'primary',
+          lockDays: 90,
+          apyPct: 7.5,
+        ),
+      ],
+      disclaimer:
+          'Ladder chia vốn thành nhiều kỳ hạn để tạo dòng tiền định kỳ. APY và khả năng rút trước hạn phụ thuộc điều kiện sản phẩm tại thời điểm xác nhận.',
+      contractNotes:
+          'Match screenshot first; wire BE after visual parity. Include earnProducts, stakingPositions, savingsPositions, validators, rewards, riskData, ladder templates, rung schedule, maturity calendar, auto-renew state, and confirm preview.',
+      supportedStates: {
+        EarnScreenState.loading,
+        EarnScreenState.empty,
+        EarnScreenState.error,
+        EarnScreenState.offline,
+        EarnScreenState.submitting,
+        EarnScreenState.success,
+      },
+    );
+  }
+}

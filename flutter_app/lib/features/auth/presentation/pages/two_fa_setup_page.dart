@@ -12,7 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/auth/data/auth_repository.dart';
+import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
 
 const _authPrimary = AppColors.primary;
 const _authPrimary10 = AppColors.primary12;
@@ -108,7 +108,7 @@ class _TwoFASetupPageState extends ConsumerState<TwoFASetupPage> {
 
     try {
       final result = await ref
-          .read(authRepositoryProvider)
+          .read(authControllerProvider)
           .verifyFactor(
             contact: 'user@vittrade.vn',
             code: _code,
@@ -126,6 +126,14 @@ class _TwoFASetupPageState extends ConsumerState<TwoFASetupPage> {
       }
 
       setState(() => _step = 3);
+    } catch (error) {
+      if (mounted) {
+        setState(() {
+          _error = authOperationErrorMessage(error);
+          _codeController.clear();
+        });
+        _codeFocusNode.requestFocus();
+      }
     } finally {
       if (mounted) setState(() => _submitting = false);
     }
@@ -140,7 +148,7 @@ class _TwoFASetupPageState extends ConsumerState<TwoFASetupPage> {
 
     try {
       final result = await ref
-          .read(authRepositoryProvider)
+          .read(authControllerProvider)
           .setupTwoFactor(
             secretKey: _secretKey,
             code: _code,
@@ -158,6 +166,10 @@ class _TwoFASetupPageState extends ConsumerState<TwoFASetupPage> {
       }
 
       context.go(AppRoutePaths.home);
+    } catch (error) {
+      if (mounted) {
+        setState(() => _error = authOperationErrorMessage(error));
+      }
     } finally {
       if (mounted) setState(() => _submitting = false);
     }
@@ -293,11 +305,11 @@ class _StepDot extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       child: isComplete
-          ? const Icon(Icons.check_rounded, color: Colors.white, size: 17)
+          ? const Icon(Icons.check_rounded, color: AppColors.onAccent, size: 17)
           : Text(
               '$index',
               style: AppTextStyles.caption.copyWith(
-                color: isActive ? Colors.white : AppColors.text3,
+                color: isActive ? AppColors.onAccent : AppColors.text3,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -395,7 +407,7 @@ class _QrPreview extends StatelessWidget {
         height: 192,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.onAccent,
           borderRadius: AppRadii.cardLargeRadius,
         ),
         child: const CustomPaint(painter: _QrPainter()),
@@ -409,7 +421,7 @@ class _QrPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    const qrColor = Color(0xFF111827);
+    const qrColor = AppColors.qrNavy;
     final paint = Paint()..color = qrColor;
     final module = size.width / 21;
 
@@ -916,7 +928,7 @@ class _BackupSavedRow extends StatelessWidget {
               height: 22,
               margin: const EdgeInsets.only(top: 1),
               decoration: BoxDecoration(
-                color: saved ? _authPrimary : Colors.transparent,
+                color: saved ? _authPrimary : AppColors.transparent,
                 shape: BoxShape.circle,
                 border: Border.all(
                   color: saved ? _authPrimary : AppColors.borderSolid,
@@ -926,7 +938,7 @@ class _BackupSavedRow extends StatelessWidget {
               child: saved
                   ? const Icon(
                       Icons.check_rounded,
-                      color: Colors.white,
+                      color: AppColors.onAccent,
                       size: 15,
                     )
                   : null,

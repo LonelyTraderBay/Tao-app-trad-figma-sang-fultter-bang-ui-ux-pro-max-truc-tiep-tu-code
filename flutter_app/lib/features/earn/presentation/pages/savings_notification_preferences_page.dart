@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 TextStyle get _captionMedium =>
     AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.medium);
@@ -51,7 +51,8 @@ class _SavingsNotificationPreferencesPageState
   @override
   void initState() {
     super.initState();
-    final snapshot = const MockSavingsNotificationPreferencesRepository()
+    final snapshot = ref
+        .read(savingsNotificationPreferencesRepositoryProvider)
         .getPreferences();
     _alerts = snapshot.alerts;
     _channels = snapshot.channels;
@@ -897,7 +898,7 @@ class _TokenSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final trackColor = value ? AppColors.buy : AppColors.surface3;
-    final thumbColor = value ? Colors.white : AppColors.text3;
+    final thumbColor = value ? AppColors.onAccent : AppColors.text3;
 
     return Semantics(
       button: true,
@@ -931,7 +932,7 @@ class _TokenSwitch extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: const [
                     BoxShadow(
-                      color: Color(0x33000000),
+                      color: AppColors.overlayScrim,
                       blurRadius: 4,
                       offset: Offset(0, 1),
                     ),
