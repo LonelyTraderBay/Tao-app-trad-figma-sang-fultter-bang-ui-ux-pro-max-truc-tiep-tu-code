@@ -1,0 +1,155 @@
+import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_entities.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+
+class LaunchpadRebalanceAllocationCard extends StatelessWidget {
+  const LaunchpadRebalanceAllocationCard({super.key, required this.assets});
+
+  final List<LaunchpadRebalanceAssetDraft> assets;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: const EdgeInsets.all(AppSpacing.x3),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Hien tai vs Muc tieu',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Row(
+            children: [
+              Expanded(
+                child: _DonutBlock(
+                  label: 'Hien tai',
+                  values: [for (final asset in assets) asset.currentPercent],
+                  colors: [for (final asset in assets) asset.accent],
+                ),
+              ),
+              const Icon(Icons.sync_rounded, color: AppColors.text3, size: 18),
+              Expanded(
+                child: _DonutBlock(
+                  label: 'Muc tieu',
+                  values: [for (final asset in assets) asset.targetPercent],
+                  colors: [for (final asset in assets) asset.accent],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: AppSpacing.x3,
+            runSpacing: AppSpacing.x2,
+            children: [
+              for (final asset in assets)
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: asset.accent,
+                        borderRadius: AppRadii.xsRadius,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.x1),
+                    Text(
+                      asset.symbol,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                        fontSize: 9,
+                      ),
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DonutBlock extends StatelessWidget {
+  const _DonutBlock({
+    required this.label,
+    required this.values,
+    required this.colors,
+  });
+
+  final String label;
+  final List<double> values;
+  final List<Color> colors;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text3,
+            fontSize: 9,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x2),
+        SizedBox(
+          width: 104,
+          height: 104,
+          child: CustomPaint(
+            painter: _DonutPainter(values: values, colors: colors),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _DonutPainter extends CustomPainter {
+  const _DonutPainter({required this.values, required this.colors});
+
+  final List<double> values;
+  final List<Color> colors;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = size.center(Offset.zero);
+    final radius = math.min(size.width, size.height) / 2;
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 24
+      ..strokeCap = StrokeCap.butt;
+    final total = values.fold<double>(0, (sum, value) => sum + value);
+    var start = -math.pi / 2;
+    for (var i = 0; i < values.length; i++) {
+      final sweep = total == 0 ? 0.0 : values[i] / total * math.pi * 2;
+      paint.color = colors[i % colors.length];
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius - 13),
+        start,
+        sweep,
+        false,
+        paint,
+      );
+      start += sweep;
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _DonutPainter oldDelegate) => true;
+}

@@ -1,0 +1,109 @@
+import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_manager_common.dart';
+
+class WalletManagerDistributionCard extends StatelessWidget {
+  const WalletManagerDistributionCard({super.key, required this.snapshot});
+
+  final WalletMultiManagerSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 245,
+      padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
+      decoration: BoxDecoration(
+        color: walletManagerPanel,
+        borderRadius: AppRadii.cardRadius,
+        border: Border.all(color: walletManagerBorder),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Portfolio Distribution',
+            style: AppTextStyles.baseMedium.copyWith(
+              fontSize: 13,
+              fontWeight: FontWeight.w900,
+              height: 1,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Expanded(
+            child: CustomPaint(
+              painter: _DistributionPainter(wallets: _chartWallets(snapshot)),
+              child: const SizedBox.expand(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DistributionPainter extends CustomPainter {
+  const _DistributionPainter({required this.wallets});
+
+  final List<WalletManagerItem> wallets;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (wallets.isEmpty) return;
+    final total = wallets.fold<double>(
+      0,
+      (sum, wallet) => sum + wallet.balanceUsd,
+    );
+    if (total <= 0) return;
+
+    final center = Offset(size.width / 2, size.height * .54);
+    final radius = math.min(size.width, size.height) * .315;
+    const strokeWidth = 27.0;
+    final rect = Rect.fromCircle(center: center, radius: radius);
+
+    final gapPaint = Paint()
+      ..color = AppColors.onAccent.withValues(alpha: .92)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth
+      ..strokeCap = StrokeCap.butt;
+    canvas.drawCircle(center, radius, gapPaint);
+
+    var start = -math.pi / 2;
+    const gap = .033;
+    for (final wallet in wallets) {
+      final sweep = (wallet.balanceUsd / total) * math.pi * 2;
+      final paint = Paint()
+        ..color = Color(wallet.distributionColorHex)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = strokeWidth
+        ..strokeCap = StrokeCap.butt;
+      canvas.drawArc(
+        rect,
+        start + gap / 2,
+        math.max(0, sweep - gap),
+        false,
+        paint,
+      );
+      start += sweep;
+    }
+
+    final centerPaint = Paint()..color = walletManagerPanel;
+    canvas.drawCircle(center, radius - strokeWidth / 2, centerPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant _DistributionPainter oldDelegate) {
+    return oldDelegate.wallets != wallets;
+  }
+}
+
+List<WalletManagerItem> _chartWallets(WalletMultiManagerSnapshot snapshot) {
+  WalletManagerItem byId(String id) =>
+      snapshot.wallets.firstWhere((wallet) => wallet.id == id);
+  return [byId('w2'), byId('w1'), byId('w4'), byId('w3')];
+}

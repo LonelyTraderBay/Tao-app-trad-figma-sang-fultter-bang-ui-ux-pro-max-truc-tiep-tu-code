@@ -13,6 +13,7 @@ class VitInput extends StatelessWidget {
     this.fieldKey,
     this.focusNode,
     this.label,
+    this.semanticLabel,
     this.hintText,
     this.prefix,
     this.suffix,
@@ -33,6 +34,7 @@ class VitInput extends StatelessWidget {
   final Key? fieldKey;
   final FocusNode? focusNode;
   final String? label;
+  final String? semanticLabel;
   final String? hintText;
   final Widget? prefix;
   final Widget? suffix;
@@ -51,6 +53,27 @@ class VitInput extends StatelessWidget {
   bool get _hasError => errorText != null;
 
   bool get _showErrorText => errorText != null && errorText!.trim().isNotEmpty;
+
+  String? get _resolvedSemanticLabel {
+    final parts = <String>[];
+    final explicit = semanticLabel?.trim();
+    final visual = label?.trim();
+    if (explicit != null && explicit.isNotEmpty) {
+      parts.add(explicit);
+    } else if (visual != null && visual.isNotEmpty) {
+      parts.add(visual);
+    }
+    if (_showErrorText) {
+      parts.add('Error: ${errorText!.trim()}');
+    }
+    return parts.isEmpty ? null : parts.join('. ');
+  }
+
+  String? get _resolvedSemanticHint {
+    if (_showErrorText) return errorText!.trim();
+    final hint = hintText?.trim();
+    return hint == null || hint.isEmpty ? null : hint;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +143,8 @@ class VitInput extends StatelessWidget {
         ],
         Semantics(
           textField: true,
-          label: label,
+          label: _resolvedSemanticLabel,
+          hint: _resolvedSemanticHint,
           enabled: enabled,
           child: input,
         ),

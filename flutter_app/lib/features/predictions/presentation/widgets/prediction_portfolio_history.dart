@@ -1,0 +1,138 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/features/predictions/domain/entities/predictions_entities.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+
+class PredictionPortfolioHistorySection extends StatelessWidget {
+  const PredictionPortfolioHistorySection({required this.snapshot, super.key});
+
+  final PredictionPortfolioSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    final receipts = snapshot.historyReceipts;
+    if (receipts.isEmpty) {
+      return const VitEmptyState(
+        icon: Icons.receipt_long_outlined,
+        title: 'Ch\u01b0a c\u00f3 l\u1ecbch s\u1eed l\u1ec7nh',
+        message:
+            'C\u00e1c l\u1ec7nh \u0111\u00e3 kh\u1edbp ho\u1eb7c \u0111\u00e3 h\u1ee7y s\u1ebd hi\u1ec3n th\u1ecb \u1edf \u0111\u00e2y',
+      );
+    }
+
+    return VitPageSection(
+      label: 'L\u1ecbch s\u1eed l\u1ec7nh',
+      accentColor: AppColors.accent,
+      children: [
+        for (var index = 0; index < receipts.length; index += 1) ...[
+          PredictionPortfolioReceiptCard(
+            key: predictionPortfolioReceiptKey(receipts[index].id),
+            receipt: receipts[index],
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class PredictionPortfolioReceiptCard extends StatelessWidget {
+  const PredictionPortfolioReceiptCard({required this.receipt, super.key});
+
+  final PredictionPortfolioReceiptDraft receipt;
+
+  @override
+  Widget build(BuildContext context) {
+    final isBuy = receipt.side == 'buy';
+    final isFilled = receipt.status == 'filled';
+    final color = isFilled
+        ? AppColors.buy
+        : receipt.status == 'canceled'
+        ? AppColors.text3
+        : AppColors.sell;
+
+    return VitCard(
+      onTap: () =>
+          context.go(AppRoutePaths.marketsPredictionReceipt(receipt.id)),
+      padding: const EdgeInsets.all(13),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: .12),
+              borderRadius: AppRadii.mdRadius,
+            ),
+            child: Icon(
+              isFilled
+                  ? Icons.check_circle_outline_rounded
+                  : Icons.cancel_outlined,
+              color: color,
+              size: 17,
+            ),
+          ),
+          const SizedBox(width: 11),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  receipt.eventTitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontSize: 12,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 4,
+                  children: [
+                    PredictionPortfolioTinyBadge(
+                      label: '${isBuy ? 'Buy' : 'Sell'} ${receipt.outcome}',
+                      color: isBuy ? AppColors.buy : AppColors.sell,
+                      background: (isBuy ? AppColors.buy : AppColors.sell)
+                          .withValues(alpha: .12),
+                    ),
+                    PredictionPortfolioTinyBadge(
+                      label: isFilled ? 'Filled' : 'Canceled',
+                      color: color,
+                      background: color.withValues(alpha: .12),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  '${formatPredictionPortfolioShares(receipt.filledShares)}/'
+                  '${formatPredictionPortfolioShares(receipt.shares)} shares \u00b7 '
+                  '${formatPredictionPortfolioMoney(receipt.total)} \u00b7 ${receipt.createdAt}',
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    fontSize: 10,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: 15,
+          ),
+        ],
+      ),
+    );
+  }
+}

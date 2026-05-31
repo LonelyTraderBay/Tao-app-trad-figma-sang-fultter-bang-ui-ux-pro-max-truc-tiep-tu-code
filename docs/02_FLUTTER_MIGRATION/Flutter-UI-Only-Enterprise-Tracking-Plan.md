@@ -34,9 +34,9 @@ Van duoc lam trong UI-only:
 
 | Hang muc | Trang thai hien tai | Danh gia UI-only |
 | --- | --- | --- |
-| Sequential backlog | `33/35` packets `[x]`, `2/35` packets `[!]` historical/manual blockers | Historical queue da xu ly het; UI-01 den UI-06 da dong cho UI-only scope. |
-| Todo/In progress packets | `4` UI-only packets `[ ]` | UI-07 den UI-10 con lai trong extension backlog. |
-| Full local checks | S8-02 pass format/analyze/full test/route audit; UI-06 admin checks + analyze pass | Tot. |
+| Sequential backlog | Historical `33/35` packets `[x]`, `2/35` packets `[!]`; UI-only extension `10/10` packets `[x]` | Historical queue da xu ly het; UI-01 den UI-10 da dong cho UI-only scope. |
+| Todo/In progress packets | `0` open or in-progress UI-only packets | UI-only extension closed. |
+| Full local checks | S8-02 pass format/analyze/full test/route audit; UI-10 final format/analyze/focused tests/route audit pass | Tot. |
 | Full test suite | `1841` tests pass | Tot cho UI/mock scope. |
 | Route coverage | `417` entries, `414` real pages, `3` aliases | Tot, khong con placeholder route. |
 | Page/widget data imports | `0` | Dat UI architecture boundary. |
@@ -48,10 +48,11 @@ Van duoc lam trong UI-only:
 | Page part-files | `217` | UI-03 first Trade batch reduced this from `218`; can giam tiep. |
 | Manual high-risk smoke | UI-only text-entry harness pass | Address Add va P2P Payment Add da co Flutter `enterText` harness evidence; khong claim manual/emulator screenshot moi. |
 
-Ket luan: UI frontend dang o muc **architecture-ready va locally verified**.
-De goi la UI enterprise-grade manh hon, can dong cac viec con lai ben duoi.
+Ket luan: UI frontend dang o muc **UI-only enterprise-grade va locally
+verified** cho mock/fail-closed scope. Khong claim production enterprise-grade
+cho den khi backend/release ops ben ngoai duoc dong.
 
-## 3. Phan chua dat trong UI-only
+## 3. Phan da dong va no can theo doi trong UI-only
 
 ### 3.1 Address Add manual/emulator confirmation
 
@@ -475,7 +476,7 @@ Verification log:
 
 ### UI-07 - Accessibility and semantics pass
 
-Status: `[ ]`
+Status: `[x]`
 
 Goal:
 
@@ -494,9 +495,29 @@ Acceptance:
 - Error text gan voi field context.
 - UIAutomator dump/doc evidence de doc flow de hon.
 
+Verification log:
+
+- 2026-05-31: Added `test/quality/accessibility_semantics_critical_flows_test.dart`
+  covering high-risk controls and form semantics for Withdraw `SC-139`,
+  Address Add `SC-143`, P2P Payment Add `SC-232`, Token Approval Revoke
+  `SC-150`, Prediction Risk Calculator `SC-036`, and Admin KPI/chart surfaces.
+- 2026-05-31: Added explicit `Semantics` labels/roles for custom
+  GestureDetector/InkWell controls, text fields, selectors, toggles, icon-only
+  actions, revoke/confirm/cancel buttons, prediction tabs/scenarios, and admin
+  KPI/chart summaries. `VitInput` now carries optional explicit semantic labels
+  plus hint/error context.
+- 2026-05-31: `flutter test test/quality/accessibility_semantics_critical_flows_test.dart --reporter=compact`
+  passed (`6` tests).
+- 2026-05-31: `flutter test test/features/wallet test/features/p2p test/features/predictions test/features/admin test/quality/product_copy_guardrails_test.dart test/quality/architecture_baseline_guardrails_test.dart --reporter=compact`
+  passed (`506` tests).
+- 2026-05-31: `dart format .` passed (`1523` files, `0` changed).
+- 2026-05-31: `flutter analyze` passed with no issues.
+- Evidence type: Flutter widget harness evidence only. No new manual/emulator
+  screenshots, UI dumps, backend APIs, or production claims were made.
+
 ### UI-08 - Copy and language consistency pass
 
-Status: `[ ]`
+Status: `[x]`
 
 Goal:
 
@@ -523,9 +544,29 @@ Acceptance:
 - Guardrail pass.
 - High-risk copy khong mau thuan voi UI-only scope.
 
+Verification log:
+
+- 2026-05-31: Scanned Arena, Prediction, Wallet, P2P, and UI-only readiness
+  copy for prohibited financial/casino/production-ready terms. Arena page scan
+  stayed points-only; only the legacy `/arena/production-ready` route string
+  remains as a route identifier, not user-facing readiness copy.
+- 2026-05-31: Replaced Prediction Risk Calculator `Payout` copy/model wording
+  with `Settlement value` and `P/L` so Prediction Markets copy avoids
+  casino-style payout language while preserving financial safety context.
+- 2026-05-31: Extended `test/quality/product_copy_guardrails_test.dart` to
+  prevent `payout` from returning to the Prediction Risk Calculator.
+- 2026-05-31: `flutter test test/quality/product_copy_guardrails_test.dart --reporter=compact`
+  passed (`13` tests).
+- 2026-05-31: `flutter test test/features/predictions/prediction_risk_calculator_page_test.dart test/quality/accessibility_semantics_critical_flows_test.dart --reporter=compact`
+  passed (`11` tests).
+- 2026-05-31: `dart format lib/features/predictions/presentation/pages/prediction_risk_calculator_page.dart test/quality/product_copy_guardrails_test.dart`
+  passed (`2` files, `0` changed).
+- Evidence type: Flutter widget/static guardrail evidence only. No backend or
+  production-readiness claims were made.
+
 ### UI-09 - Route and navigation UX polish
 
-Status: `[ ]`
+Status: `[x]`
 
 Goal:
 
@@ -550,9 +591,22 @@ Acceptance:
 - Route audit pass.
 - Critical flow back navigation khong roi khoi shell sai cach.
 
+Verification log:
+
+- 2026-05-31: Added `test/app/router/critical_navigation_back_behavior_test.dart`
+  to guard header back behavior for Withdraw `SC-139`, Address Add `SC-143`,
+  Token Approval `SC-150`, P2P Payment Add `SC-232`, Prediction Risk Calculator
+  `SC-036`, and Admin dashboards `SC-181` to `SC-183`.
+- 2026-05-31: `flutter test test/app/router test/quality/route_coverage_guardrails_test.dart --reporter=compact`
+  passed (`12` tests).
+- 2026-05-31: `dart run tool/route_coverage_audit.dart --check` passed
+  (`Route coverage artifact is current.`).
+- 2026-05-31: `dart format test/app/router/critical_navigation_back_behavior_test.dart`
+  passed (`1` file, `0` changed).
+
 ### UI-10 - Final UI-only readiness report
 
-Status: `[ ]`
+Status: `[x]`
 
 Goal:
 
@@ -571,6 +625,20 @@ Acceptance:
   - UI remaining.
   - Out-of-scope backend/release blockers.
 
+Verification log:
+
+- 2026-05-31: Updated `Flutter-Evidence-QA-Report.md` with final UI-only
+  closeout groups: UI done, UI remaining, and out-of-scope backend/release
+  blockers.
+- 2026-05-31: `dart format .` passed from `flutter_app/` (`1524` files,
+  `0` changed).
+- 2026-05-31: `flutter analyze` passed from `flutter_app/`
+  (`No issues found!`).
+- 2026-05-31: `flutter test test/quality/accessibility_semantics_critical_flows_test.dart test/quality/product_copy_guardrails_test.dart test/app/router test/quality/route_coverage_guardrails_test.dart test/quality/architecture_baseline_guardrails_test.dart test/features/predictions/prediction_risk_calculator_page_test.dart --reporter=compact`
+  passed (`46` tests).
+- 2026-05-31: `dart run tool/route_coverage_audit.dart --check` passed
+  (`Route coverage artifact is current.`).
+
 ## 5. Tracking board de cap nhat
 
 | ID | Work item | Status | Owner | Evidence/command | Next exact step |
@@ -581,10 +649,10 @@ Acceptance:
 | UI-04 | High-risk UI state depth | `[x]` | Frontend/Product | Focused controller/page tests + copy/architecture guardrails + analyze | Start UI-05 responsive visual QA matrix. |
 | UI-05 | Responsive visual QA matrix | `[x]` | QA/Frontend | `responsive_visual_qa_matrix_test.dart` + focused tests + checklist/report | Start UI-06 with admin dashboard UI hardening. |
 | UI-06 | Admin dashboard UI hardening | `[x]` | Frontend | Admin tests + architecture guardrail + admin responsive matrix slice + analyze | Start UI-07 accessibility/semantics pass. |
-| UI-07 | Accessibility/semantics pass | `[ ]` | Frontend/QA | Widget tests/UI dump | Start with high-risk buttons/forms. |
-| UI-08 | Copy consistency pass | `[ ]` | Product/Frontend | Product copy guardrail | Scan Arena/Prediction/high-risk copy. |
-| UI-09 | Route/navigation UX polish | `[ ]` | Frontend | Router tests + route audit | Check back behavior on critical flows. |
-| UI-10 | UI-only readiness report | `[ ]` | Docs/QA | Updated report | Write after UI-01 to UI-09 close or block. |
+| UI-07 | Accessibility/semantics pass | `[x]` | Frontend/QA | `accessibility_semantics_critical_flows_test.dart` + focused feature/guardrail tests + analyze | Start UI-08 copy consistency pass. |
+| UI-08 | Copy consistency pass | `[x]` | Product/Frontend | Product copy guardrail + Prediction risk focused tests | Start UI-09 route/navigation UX polish. |
+| UI-09 | Route/navigation UX polish | `[x]` | Frontend | Critical back-behavior router test + route guardrail + route audit | Start UI-10 readiness report. |
+| UI-10 | UI-only readiness report | `[x]` | Docs/QA | Evidence report + final focused verification pass | UI-only extension closed; backend/release blockers remain external. |
 
 ## 6. Definition of Done cho moi UI packet
 

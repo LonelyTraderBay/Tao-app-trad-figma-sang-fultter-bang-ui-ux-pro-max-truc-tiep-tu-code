@@ -188,6 +188,10 @@ void main() {
         RegExp('bet size', caseSensitive: false).allMatches(predictionRisk),
         isEmpty,
       );
+      expect(
+        RegExp('payout', caseSensitive: false).allMatches(predictionRisk),
+        isEmpty,
+      );
 
       final tokenApproval = _read(
         'lib/features/wallet/presentation/pages/'
@@ -439,6 +443,14 @@ void main() {
       final targets = [
         _HighRiskCopyTarget(
           path: 'lib/features/wallet/presentation/pages/withdraw_page.dart',
+          paths: [
+            'lib/features/wallet/presentation/pages/withdraw_page.dart',
+            'lib/features/wallet/presentation/widgets/withdraw_common.dart',
+            'lib/features/wallet/presentation/widgets/withdraw_form_sections.dart',
+            'lib/features/wallet/presentation/widgets/withdraw_network_picker.dart',
+            'lib/features/wallet/presentation/widgets/withdraw_preview_sheet.dart',
+            'lib/features/wallet/presentation/controllers/wallet_controller.dart',
+          ],
           roles: {
             'preview': [RegExp(r'\bpreview\b|_PreviewRow')],
             'confirm': [RegExp(r'\bconfirm\b|xac nhan', caseSensitive: false)],

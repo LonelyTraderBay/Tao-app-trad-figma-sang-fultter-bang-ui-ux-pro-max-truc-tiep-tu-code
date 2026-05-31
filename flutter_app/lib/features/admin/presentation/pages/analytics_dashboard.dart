@@ -266,84 +266,88 @@ class _MetricCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: tint,
-                  borderRadius: AppRadii.inputRadius,
+    return Semantics(
+      label:
+          'Admin analytics metric $title: $value. $caption. $delta $timeframe',
+      child: VitCard(
+        padding: const EdgeInsets.all(AppSpacing.x4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: tint,
+                    borderRadius: AppRadii.inputRadius,
+                  ),
+                  child: Icon(icon, color: accent, size: 20),
                 ),
-                child: Icon(icon, color: accent, size: 20),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                        fontSize: 11,
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                          fontSize: 11,
+                        ),
                       ),
-                    ),
-                    Text(
-                      value,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.sectionTitle.copyWith(
-                        fontSize: 20,
-                        fontFeatures: AppTextStyles.tabularFigures,
+                      Text(
+                        value,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.sectionTitle.copyWith(
+                          fontSize: 20,
+                          fontFeatures: AppTextStyles.tabularFigures,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          Text(
-            caption,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 11,
+              ],
             ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Wrap(
-            spacing: AppSpacing.x2,
-            runSpacing: AppSpacing.x1,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              VitStatusPill(
-                label: delta,
-                status: delta.startsWith('-')
-                    ? VitStatusPillStatus.error
-                    : VitStatusPillStatus.success,
-                size: VitStatusPillSize.sm,
+            const SizedBox(height: AppSpacing.x3),
+            Text(
+              caption,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text3,
+                fontSize: 11,
               ),
-              Text(
-                timeframe,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 10,
+            ),
+            const SizedBox(height: AppSpacing.x2),
+            Wrap(
+              spacing: AppSpacing.x2,
+              runSpacing: AppSpacing.x1,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                VitStatusPill(
+                  label: delta,
+                  status: delta.startsWith('-')
+                      ? VitStatusPillStatus.error
+                      : VitStatusPillStatus.success,
+                  size: VitStatusPillSize.sm,
                 ),
-              ),
-            ],
-          ),
-        ],
+                Text(
+                  timeframe,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    fontSize: 10,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

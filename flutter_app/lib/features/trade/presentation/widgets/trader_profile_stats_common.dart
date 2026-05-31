@@ -1,0 +1,309 @@
+part of '../pages/trader_profile_page.dart';
+
+class _StatsTab extends StatelessWidget {
+  const _StatsTab({required this.trader});
+
+  final TradeCopyTrader trader;
+
+  @override
+  Widget build(BuildContext context) {
+    final wins = (trader.totalTrades * trader.winRate / 100).round();
+    final losses = trader.totalTrades - wins;
+    final rows = [
+      _StatRow('Tổng PnL', _signedUsd(trader.totalPnl), _profileGreen),
+      _StatRow(
+        'ROI tổng',
+        '+${trader.totalPnlPct.toStringAsFixed(1)}%',
+        _profileGreen,
+      ),
+      _StatRow(
+        'Sharpe Ratio',
+        trader.sharpeRatio.toStringAsFixed(2),
+        _profileAmber,
+      ),
+      _StatRow(
+        'Max Drawdown',
+        '${trader.maxDrawdown.toStringAsFixed(1)}%',
+        _profileRed,
+      ),
+      _StatRow('Avg Holding Time', trader.avgHoldingTime, AppColors.onAccent),
+      _StatRow('Tổng lệnh', _formatInt(trader.totalTrades), AppColors.onAccent),
+      _StatRow('AUM', _compactUsd(trader.aum), _profilePrimary),
+      _StatRow(
+        'Copiers',
+        '${trader.copiers} / ${trader.maxCopiers}',
+        _profilePrimary,
+      ),
+    ];
+
+    return Column(
+      children: [
+        _Panel(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Tỷ lệ thắng/thua',
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.onAccent,
+                  fontSize: 14,
+                  fontWeight: AppTextStyles.bold,
+                  height: 1,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(999),
+                      child: SizedBox(
+                        height: 12,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: trader.winRate.round(),
+                              child: const ColoredBox(color: _profileGreen),
+                            ),
+                            Expanded(
+                              flex: 100 - trader.winRate.round(),
+                              child: const ColoredBox(color: _profileRed),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  SizedBox(
+                    width: 54,
+                    child: Text(
+                      '${trader.winRate.toStringAsFixed(1)}%',
+                      textAlign: TextAlign.right,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text2,
+                        fontSize: 12,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 11),
+              Row(
+                children: [
+                  _LegendDot(color: _profileGreen, label: 'Thắng: $wins'),
+                  const Spacer(),
+                  _LegendDot(color: _profileRed, label: 'Thua: $losses'),
+                ],
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+        _Panel(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Thống kê chi tiết',
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.onAccent,
+                  fontSize: 14,
+                  fontWeight: AppTextStyles.bold,
+                  height: 1,
+                ),
+              ),
+              const SizedBox(height: 9),
+              for (final row in rows) _StatsLine(row: row),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _StatRow {
+  const _StatRow(this.label, this.value, this.color);
+
+  final String label;
+  final String value;
+  final Color color;
+}
+
+class _StatsLine extends StatelessWidget {
+  const _StatsLine({required this.row});
+
+  final _StatRow row;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 9),
+      decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(color: AppColors.divider)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              row.label,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text3,
+                fontSize: 12,
+                height: 1,
+              ),
+            ),
+          ),
+          Text(
+            row.value,
+            style: AppTextStyles.caption.copyWith(
+              color: row.color,
+              fontSize: 13,
+              fontWeight: AppTextStyles.medium,
+              fontFeatures: AppTextStyles.tabularFigures,
+              height: 1,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LegendDot extends StatelessWidget {
+  const _LegendDot({required this.color, required this.label});
+
+  final Color color;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
+        const SizedBox(width: 5),
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text3,
+            fontSize: 10,
+            height: 1,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _MiniBadge extends StatelessWidget {
+  const _MiniBadge({required this.label, required this.color});
+
+  final String label;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: .12),
+        borderRadius: AppRadii.smRadius,
+      ),
+      child: Text(
+        label,
+        style: AppTextStyles.micro.copyWith(
+          color: color,
+          fontSize: 9,
+          fontWeight: AppTextStyles.bold,
+          height: 1,
+        ),
+      ),
+    );
+  }
+}
+
+class _Panel extends StatelessWidget {
+  const _Panel({required this.child, required this.padding});
+
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: padding,
+      decoration: BoxDecoration(
+        color: _profileCard,
+        border: Border.all(color: AppColors.cardBorder),
+        borderRadius: AppRadii.cardRadius,
+      ),
+      child: child,
+    );
+  }
+}
+
+class _RiskPresentation {
+  const _RiskPresentation(this.color, this.label);
+
+  final Color color;
+  final String label;
+}
+
+_RiskPresentation _riskPresentation(TradeCopyRiskLevel level) {
+  return switch (level) {
+    TradeCopyRiskLevel.low => const _RiskPresentation(_profileGreen, 'Thấp'),
+    TradeCopyRiskLevel.medium => const _RiskPresentation(
+      _profileAmber,
+      'Trung bình',
+    ),
+    TradeCopyRiskLevel.high => const _RiskPresentation(_profileRed, 'Cao'),
+  };
+}
+
+extension _TakeLast<T> on Iterable<T> {
+  List<T> takeLast(int count) {
+    final list = toList(growable: false);
+    if (list.length <= count) return list;
+    return list.sublist(list.length - count);
+  }
+}
+
+String _signedUsd(double value) {
+  final sign = value >= 0 ? '+' : '-';
+  return '$sign\$${_formatMoney(value.abs())}';
+}
+
+String _compactUsd(double value) {
+  if (value >= 1000000) {
+    return '\$${(value / 1000000).toStringAsFixed(value >= 10000000 ? 1 : 2)}M';
+  }
+  if (value >= 1000) return '\$${(value / 1000).toStringAsFixed(1)}K';
+  return '\$${value.toStringAsFixed(0)}';
+}
+
+String _formatMoney(double value) {
+  return value
+      .toStringAsFixed(2)
+      .replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (_) => ',');
+}
+
+String _formatPrice(double value) {
+  return value
+      .toStringAsFixed(0)
+      .replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (_) => ',');
+}
+
+String _formatInt(int value) {
+  return value.toString().replaceAllMapped(
+    RegExp(r'\B(?=(\d{3})+(?!\d))'),
+    (_) => ',',
+  );
+}

@@ -1,0 +1,214 @@
+part of '../pages/smart_alert_center.dart';
+
+class _SmartAlertCard extends StatelessWidget {
+  const _SmartAlertCard({required this.alert});
+
+  final SmartAlertDraft alert;
+
+  @override
+  Widget build(BuildContext context) {
+    final module = _moduleVisual(alert.module);
+
+    return VitCard(
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      radius: VitCardRadius.lg,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _IconBadge(
+                icon: module.icon,
+                color: module.color,
+                background: module.background,
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: AppSpacing.x2,
+                      runSpacing: AppSpacing.x1,
+                      children: [
+                        Text(
+                          alert.type,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.baseMedium.copyWith(
+                            fontSize: AppSpacing.x4,
+                            fontWeight: AppTextStyles.bold,
+                          ),
+                        ),
+                        _StatusBadge(status: alert.status),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.x2),
+                    Text(
+                      alert.moduleName,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              _SmallIconAction(
+                icon: Icons.edit_outlined,
+                color: AppColors.text3,
+                background: AppColors.surface2,
+                onTap: HapticFeedback.selectionClick,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              _SmallIconAction(
+                icon: Icons.delete_outline_rounded,
+                color: AppColors.sell,
+                background: AppColors.sell10,
+                onTap: HapticFeedback.selectionClick,
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x5),
+          _DetailBlock(label: 'Condition', value: alert.condition),
+          const SizedBox(height: AppSpacing.x3),
+          _DetailBlock(label: 'Action', value: alert.action),
+          const SizedBox(height: AppSpacing.x4),
+          Row(
+            children: [
+              Expanded(
+                child: _DetailBlock(
+                  label: 'Triggered',
+                  value: '${alert.triggerCount} times',
+                  emphasize: true,
+                ),
+              ),
+              if (alert.lastTriggeredLabel != null)
+                Expanded(
+                  child: _DetailBlock(
+                    label: 'Last Trigger',
+                    value: alert.lastTriggeredLabel!,
+                    emphasize: true,
+                  ),
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StatusBadge extends StatelessWidget {
+  const _StatusBadge({required this.status});
+
+  final SmartAlertStatus status;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = switch (status) {
+      SmartAlertStatus.active => AppColors.buy,
+      SmartAlertStatus.paused => AppColors.text3,
+      SmartAlertStatus.triggered => AppColors.primary,
+    };
+    final background = switch (status) {
+      SmartAlertStatus.active => AppColors.buy10,
+      SmartAlertStatus.paused => AppColors.surface3,
+      SmartAlertStatus.triggered => AppColors.primary12,
+    };
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: AppRadii.xlRadius,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.x2,
+          vertical: AppSpacing.x1,
+        ),
+        child: Text(
+          status.name.toUpperCase(),
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            fontSize: AppSpacing.x3,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DetailBlock extends StatelessWidget {
+  const _DetailBlock({
+    required this.label,
+    required this.value,
+    this.emphasize = false,
+  });
+
+  final String label;
+  final String value;
+  final bool emphasize;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          value,
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text1,
+            fontWeight: emphasize ? AppTextStyles.bold : AppTextStyles.medium,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _CreateAlertButton extends StatelessWidget {
+  const _CreateAlertButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: AppColors.primary,
+      borderRadius: AppRadii.inputRadius,
+      child: InkWell(
+        key: SmartAlertCenter.createButtonKey,
+        onTap: HapticFeedback.selectionClick,
+        borderRadius: AppRadii.inputRadius,
+        child: SizedBox(
+          height: AppSpacing.ctaHeight,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.add_rounded,
+                size: AppSpacing.iconMd,
+                color: AppColors.navCenterIcon,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Text(
+                'Create Alert',
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.navCenterIcon,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

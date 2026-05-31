@@ -1,0 +1,233 @@
+part of '../pages/execution_venue_analysis_page.dart';
+
+class _SpeedTab extends StatelessWidget {
+  const _SpeedTab({required this.venues});
+
+  final List<TradeExecutionVenueAnalysisMetric> venues;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const _SectionLabel('Speed Metrics'),
+        const SizedBox(height: 12),
+        for (final venue in venues) ...[
+          _Card(
+            padding: const EdgeInsets.all(13),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        venue.venue,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontSize: 13,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ),
+                    Icon(
+                      Icons.bolt_rounded,
+                      color: venue.avgFillTime < .4 ? _venueGreen : _venueAmber,
+                      size: 15,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      '${_formatSpeed(venue.avgFillTime)}s',
+                      style: AppTextStyles.caption.copyWith(
+                        color: venue.avgFillTime < .4
+                            ? _venueGreen
+                            : _venueAmber,
+                        fontSize: 14,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 11),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _MetricBox(
+                        label: 'Latency',
+                        value: '${venue.avgLatency}ms',
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: _MetricBox(
+                        label: 'Reliability',
+                        value: '${venue.reliability.toStringAsFixed(2)}%',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          if (venue != venues.last) const SizedBox(height: 12),
+        ],
+      ],
+    );
+  }
+}
+
+class _TrendsTab extends StatelessWidget {
+  const _TrendsTab({required this.trends});
+
+  final List<TradeExecutionVenueCostTrend> trends;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const _SectionLabel('Cost Trends (Last 3 Months)'),
+        const SizedBox(height: 12),
+        _Card(
+          padding: const EdgeInsets.all(14),
+          child: Column(
+            children: [
+              for (final trend in trends) ...[
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 44,
+                      child: Text(
+                        trend.month,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text2,
+                          fontSize: 11,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: _TrendBar(
+                        value: trend.binance,
+                        color: _venueAmber,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      '${trend.binance.toStringAsFixed(2)} bps',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
+                ),
+                if (trend != trends.last) const SizedBox(height: 12),
+              ],
+              const SizedBox(height: 14),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: _venueGreen.withValues(alpha: .12),
+                  borderRadius: AppRadii.mdRadius,
+                ),
+                child: Text(
+                  'Overall costs trending down 5% over last 3 months',
+                  style: AppTextStyles.caption.copyWith(
+                    color: _venueGreen,
+                    fontSize: 11,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _TrendBar extends StatelessWidget {
+  const _TrendBar({required this.value, required this.color});
+
+  final double value;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(999),
+      child: SizedBox(
+        height: 8,
+        child: Stack(
+          children: [
+            const ColoredBox(color: _venuePanel2),
+            FractionallySizedBox(
+              widthFactor: (value / 5).clamp(0, 1).toDouble(),
+              child: ColoredBox(color: color),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ProgressMetric extends StatelessWidget {
+  const _ProgressMetric({
+    required this.label,
+    required this.value,
+    required this.factor,
+    required this.color,
+  });
+
+  final String label;
+  final String value;
+  final double factor;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                label,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text3,
+                  fontSize: 10,
+                ),
+              ),
+            ),
+            Text(
+              value,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text2,
+                fontSize: 11,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 7),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(999),
+          child: SizedBox(
+            height: 6,
+            child: Stack(
+              children: [
+                const ColoredBox(color: _venuePanel2),
+                FractionallySizedBox(
+                  widthFactor: factor.clamp(0, 1).toDouble(),
+                  child: ColoredBox(color: color),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

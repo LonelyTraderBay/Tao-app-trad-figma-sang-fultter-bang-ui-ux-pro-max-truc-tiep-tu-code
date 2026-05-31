@@ -1,0 +1,244 @@
+part of '../pages/p2p_wallet_transfer_page.dart';
+
+class _ConfirmTransferView extends StatelessWidget {
+  const _ConfirmTransferView({
+    required this.snapshot,
+    required this.source,
+    required this.destination,
+    required this.amount,
+    required this.asset,
+    required this.onEdit,
+    required this.onConfirm,
+  });
+
+  final P2PWalletTransferSnapshot snapshot;
+  final P2PWalletTransferBalanceDraft source;
+  final P2PWalletTransferBalanceDraft destination;
+  final double amount;
+  final String asset;
+  final VoidCallback onEdit;
+  final VoidCallback onConfirm;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      key: P2PWalletTransferPage.confirmPanelKey,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+          child: Column(
+            children: [
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: AppModuleAccents.p2p.withValues(alpha: .14),
+                  shape: BoxShape.circle,
+                ),
+                child: const SizedBox(
+                  width: 80,
+                  height: 80,
+                  child: Icon(
+                    Icons.swap_horiz_rounded,
+                    color: AppModuleAccents.p2p,
+                    size: 40,
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x4),
+              Text('Kiểm tra thông tin', style: AppTextStyles.sectionTitle),
+              const SizedBox(height: AppSpacing.x1),
+              Text(
+                'Đảm bảo thông tin chính xác trước khi xác nhận',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x5),
+        VitCard(
+          radius: VitCardRadius.lg,
+          padding: EdgeInsets.zero,
+          child: Column(
+            children: [
+              _ConfirmRow(
+                label: 'Số tiền',
+                value: '${_formatAvailable(amount, asset)} $asset',
+                large: true,
+              ),
+              const Divider(color: AppColors.divider, height: 1),
+              _ConfirmRow(label: 'Từ', value: source.walletLabel),
+              _ConfirmRow(label: 'Đến', value: destination.walletLabel),
+              _ConfirmRow(
+                label: 'Phí giao dịch',
+                value: snapshot.feeLabel,
+                valueColor: AppColors.buy,
+              ),
+              _ConfirmRow(
+                label: 'Thời gian',
+                value: snapshot.processingLabel,
+                valueColor: AppModuleAccents.p2p,
+              ),
+              const _ConfirmRow(
+                label: 'Loại giao dịch',
+                value: 'Internal Transfer',
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x5),
+        _EscrowNotice(text: snapshot.confirmationNote),
+        const SizedBox(height: AppSpacing.x5),
+        Row(
+          children: [
+            Expanded(
+              child: _ConfirmButton(
+                label: 'Quay lại',
+                background: AppColors.surface2,
+                color: AppColors.text1,
+                onTap: onEdit,
+              ),
+            ),
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: _ConfirmButton(
+                buttonKey: P2PWalletTransferPage.confirmKey,
+                label: 'Xác nhận',
+                background: AppModuleAccents.p2p,
+                color: AppColors.onAccent,
+                onTap: onConfirm,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _ConfirmRow extends StatelessWidget {
+  const _ConfirmRow({
+    required this.label,
+    required this.value,
+    this.valueColor,
+    this.large = false,
+  });
+
+  final String label;
+  final String value;
+  final Color? valueColor;
+  final bool large;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              label,
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+            ),
+          ),
+          Text(
+            value,
+            style: (large ? AppTextStyles.sectionTitle : AppTextStyles.caption)
+                .copyWith(
+                  color: valueColor ?? AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ConfirmButton extends StatelessWidget {
+  const _ConfirmButton({
+    this.buttonKey,
+    required this.label,
+    required this.background,
+    required this.color,
+    required this.onTap,
+  });
+
+  final Key? buttonKey;
+  final String label;
+  final Color background;
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      key: buttonKey,
+      color: background,
+      borderRadius: AppRadii.lgRadius,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.lgRadius,
+        child: SizedBox(
+          height: AppSpacing.inputHeight,
+          child: Center(
+            child: Text(
+              label,
+              style: AppTextStyles.baseMedium.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+IconData _walletIcon(String walletKey) {
+  return switch (walletKey) {
+    'p2p' => Icons.account_balance_wallet_outlined,
+    _ => Icons.wallet_outlined,
+  };
+}
+
+Color _assetColor(String symbol) {
+  return switch (symbol) {
+    'BTC' => AppColors.warn,
+    'VND' => AppColors.text1,
+    _ => AppModuleAccents.p2p,
+  };
+}
+
+String _formatTransferAmount(double value, String asset) {
+  final decimals = switch (asset) {
+    'BTC' => 8,
+    'VND' => 0,
+    _ => 2,
+  };
+  return value.toStringAsFixed(decimals);
+}
+
+String _formatAvailable(double value, String asset) {
+  return _withCommas(_formatTransferAmount(value, asset));
+}
+
+String _withCommas(String value) {
+  final parts = value.split('.');
+  final whole = parts.first;
+  final buffer = StringBuffer();
+  for (var i = 0; i < whole.length; i++) {
+    final remaining = whole.length - i;
+    buffer.write(whole[i]);
+    if (remaining > 1 && remaining % 3 == 1) {
+      buffer.write(',');
+    }
+  }
+  if (parts.length > 1) {
+    buffer.write('.');
+    buffer.write(parts[1]);
+  }
+  return buffer.toString();
+}

@@ -1,0 +1,325 @@
+part of '../pages/dca_overview_demo.dart';
+
+class _ActionRow extends StatelessWidget {
+  const _ActionRow({required this.scenarioId});
+
+  final String scenarioId;
+
+  @override
+  Widget build(BuildContext context) {
+    const actions = [
+      _ActionSpec(
+        'create',
+        Icons.add_rounded,
+        'Tạo mới',
+        AppColors.buy,
+        AppColors.buy15,
+      ),
+      _ActionSpec(
+        'pause',
+        Icons.pause_rounded,
+        'Tạm dừng',
+        AppColors.warn,
+        AppColors.warn15,
+      ),
+      _ActionSpec(
+        'chart',
+        Icons.bar_chart_rounded,
+        'Biểu đồ',
+        AppColors.accent,
+        AppColors.accent15,
+      ),
+      _ActionSpec(
+        'history',
+        Icons.format_list_bulleted_rounded,
+        'Lịch sử',
+        AppColors.text2,
+        AppColors.hoverBg,
+      ),
+    ];
+    return Row(
+      children: [
+        for (var i = 0; i < actions.length; i++) ...[
+          Expanded(
+            child: _ActionButton(scenarioId: scenarioId, spec: actions[i]),
+          ),
+          if (i < actions.length - 1) const SizedBox(width: AppSpacing.x3),
+        ],
+      ],
+    );
+  }
+}
+
+class _ActionButton extends StatelessWidget {
+  const _ActionButton({required this.scenarioId, required this.spec});
+
+  final String scenarioId;
+  final _ActionSpec spec;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      key: DCAOverviewDemo.actionKey(scenarioId, spec.id),
+      onTap: HapticFeedback.selectionClick,
+      borderRadius: AppRadii.cardRadius,
+      child: DecoratedBox(
+        decoration: const BoxDecoration(
+          color: AppColors.portfolioBtnGhost,
+          borderRadius: AppRadii.cardRadius,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.x2,
+            vertical: AppSpacing.x3,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: spec.bg,
+                  shape: BoxShape.circle,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.x3),
+                  child: Icon(spec.icon, color: spec.color, size: 18),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x2),
+              Text(
+                spec.label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.portfolioTextDim,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ActionSpec {
+  const _ActionSpec(this.id, this.icon, this.label, this.color, this.bg);
+
+  final String id;
+  final IconData icon;
+  final String label;
+  final Color color;
+  final Color bg;
+}
+
+class _OverviewSkeleton extends StatelessWidget {
+  const _OverviewSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            VitSkeleton(width: 160, height: 14),
+            Spacer(),
+            VitSkeleton(width: 21, height: 21, borderRadius: AppRadii.xlRadius),
+          ],
+        ),
+        SizedBox(height: AppSpacing.x5),
+        VitSkeleton(
+          width: null,
+          height: AppSpacing.x6,
+          borderRadius: AppRadii.inputRadius,
+        ),
+        SizedBox(height: AppSpacing.x4),
+        Row(
+          children: [
+            VitSkeleton(
+              width: 130,
+              height: AppSpacing.x5,
+              borderRadius: AppRadii.smRadius,
+            ),
+            SizedBox(width: AppSpacing.x3),
+            VitSkeleton(width: 60, height: 12),
+          ],
+        ),
+        SizedBox(height: AppSpacing.x5),
+        Row(
+          children: [
+            Expanded(
+              child: VitSkeleton(
+                width: null,
+                height: AppSpacing.buttonHero,
+                borderRadius: AppRadii.cardRadius,
+              ),
+            ),
+            SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: VitSkeleton(
+                width: null,
+                height: AppSpacing.buttonHero,
+                borderRadius: AppRadii.cardRadius,
+              ),
+            ),
+            SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: VitSkeleton(
+                width: null,
+                height: AppSpacing.buttonHero,
+                borderRadius: AppRadii.cardRadius,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: AppSpacing.x4),
+        VitSkeleton(
+          width: null,
+          height: AppSpacing.x7,
+          borderRadius: AppRadii.cardRadius,
+        ),
+        SizedBox(height: AppSpacing.x4),
+        Row(
+          children: [
+            Expanded(
+              child: VitSkeleton(
+                width: null,
+                height: AppSpacing.x7,
+                borderRadius: AppRadii.cardRadius,
+              ),
+            ),
+            SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: VitSkeleton(
+                width: null,
+                height: AppSpacing.x7,
+                borderRadius: AppRadii.cardRadius,
+              ),
+            ),
+            SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: VitSkeleton(
+                width: null,
+                height: AppSpacing.x7,
+                borderRadius: AppRadii.cardRadius,
+              ),
+            ),
+            SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: VitSkeleton(
+                width: null,
+                height: AppSpacing.x7,
+                borderRadius: AppRadii.cardRadius,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _DemoFooter extends StatelessWidget {
+  const _DemoFooter({required this.snapshot});
+
+  final DcaOverviewDemoSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: DCAOverviewDemo.footerKey,
+      variant: VitCardVariant.inner,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Text(
+        'Component: ${snapshot.componentName} · Location: ${snapshot.componentLocation}',
+        textAlign: TextAlign.center,
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+      ),
+    );
+  }
+}
+
+class _SparklinePainter extends CustomPainter {
+  const _SparklinePainter({
+    required this.values,
+    required this.lineColor,
+    required this.fillColor,
+  });
+
+  final List<double> values;
+  final Color lineColor;
+  final Color fillColor;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (values.length < 2 || size.width <= 0 || size.height <= 0) return;
+    final min = values.reduce((a, b) => a < b ? a : b);
+    final max = values.reduce((a, b) => a > b ? a : b);
+    final range = max - min == 0 ? 1 : max - min;
+    final points = <Offset>[
+      for (var i = 0; i < values.length; i++)
+        Offset(
+          (i / (values.length - 1)) * size.width,
+          AppSpacing.x1 +
+              (size.height - AppSpacing.x2) -
+              ((values[i] - min) / range) * (size.height - AppSpacing.x2),
+        ),
+    ];
+
+    final line = Path()..moveTo(points.first.dx, points.first.dy);
+    for (var i = 1; i < points.length; i++) {
+      line.lineTo(points[i].dx, points[i].dy);
+    }
+
+    final area = Path.from(line)
+      ..lineTo(size.width, size.height)
+      ..lineTo(0, size.height)
+      ..close();
+
+    canvas.drawPath(area, Paint()..color = fillColor);
+    canvas.drawPath(
+      line,
+      Paint()
+        ..color = lineColor
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round,
+    );
+    canvas.drawCircle(points.last, AppSpacing.x2, Paint()..color = lineColor);
+  }
+
+  @override
+  bool shouldRepaint(covariant _SparklinePainter oldDelegate) {
+    return oldDelegate.values != values ||
+        oldDelegate.lineColor != lineColor ||
+        oldDelegate.fillColor != fillColor;
+  }
+}
+
+String _formatFullVnd(int amount) {
+  final sign = amount < 0 ? '-' : '';
+  final digits = amount.abs().toString();
+  final buffer = StringBuffer(sign);
+  for (var i = 0; i < digits.length; i++) {
+    if (i > 0 && (digits.length - i) % 3 == 0) buffer.write('.');
+    buffer.write(digits[i]);
+  }
+  return buffer.toString();
+}
+
+String _formatCompactVnd(int amount) {
+  final sign = amount < 0 ? '-' : '';
+  final abs = amount.abs();
+  if (abs >= 1000000000) {
+    return '$sign${(abs / 1000000000).toStringAsFixed(2)}B';
+  }
+  return '$sign${(abs / 1000000).toStringAsFixed(2)}M';
+}
+
+String _formatPercent(double value) {
+  final sign = value >= 0 ? '+' : '';
+  return '$sign${value.toStringAsFixed(1).replaceAll('.', ',')}%';
+}

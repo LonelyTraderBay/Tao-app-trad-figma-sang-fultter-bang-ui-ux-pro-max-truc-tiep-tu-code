@@ -366,34 +366,37 @@ class _MiniStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x3,
+    return Semantics(
+      label: 'Admin A/B test metric $label: $value',
+      child: DecoratedBox(
+        decoration: const BoxDecoration(
+          color: AppColors.surface2,
+          borderRadius: AppRadii.inputRadius,
         ),
-        child: Column(
-          children: [
-            Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-            Text(
-              value,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-                fontFamily: 'monospace',
-                fontFeatures: AppTextStyles.tabularFigures,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.x3,
+            vertical: AppSpacing.x3,
+          ),
+          child: Column(
+            children: [
+              Text(
+                label,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-            ),
-          ],
+              Text(
+                value,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                  fontFamily: 'monospace',
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -410,59 +413,63 @@ class _VariantResult extends StatelessWidget {
     final rate = variant.exposures == 0
         ? 0.0
         : (variant.conversions / variant.exposures).clamp(0.0, 1.0).toDouble();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                variant.label,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
+    return Semantics(
+      label:
+          '${variant.label} variant conversion rate ${variant.conversionRateLabel}, ${variant.conversions} of ${variant.exposures} conversions',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  variant.label,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Text(
+                variant.conversionRateLabel,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
+                  fontFamily: 'monospace',
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
-            ),
-            const SizedBox(width: AppSpacing.x3),
-            Text(
-              variant.conversionRateLabel,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-                fontFamily: 'monospace',
-                fontFeatures: AppTextStyles.tabularFigures,
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          ClipRRect(
+            borderRadius: AppRadii.xsRadius,
+            child: SizedBox(
+              height: 7,
+              child: Stack(
+                children: [
+                  const Positioned.fill(
+                    child: ColoredBox(color: AppColors.surface2),
+                  ),
+                  FractionallySizedBox(
+                    widthFactor: rate,
+                    alignment: Alignment.centerLeft,
+                    child: ColoredBox(color: _variantAccent(variant)),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.x2),
-        ClipRRect(
-          borderRadius: AppRadii.xsRadius,
-          child: SizedBox(
-            height: 7,
-            child: Stack(
-              children: [
-                const Positioned.fill(
-                  child: ColoredBox(color: AppColors.surface2),
-                ),
-                FractionallySizedBox(
-                  widthFactor: rate,
-                  alignment: Alignment.centerLeft,
-                  child: ColoredBox(color: _variantAccent(variant)),
-                ),
-              ],
             ),
           ),
-        ),
-        const SizedBox(height: AppSpacing.x1),
-        Text(
-          '${variant.conversions} / ${variant.exposures} conversions',
-          textAlign: TextAlign.center,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-        ),
-      ],
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            '${variant.conversions} / ${variant.exposures} conversions',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+        ],
+      ),
     );
   }
 }

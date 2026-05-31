@@ -3,8 +3,10 @@
 Generated: 2026-05-31
 Scope: full-repo enterprise readiness line audit, local remediation validation,
 repository-wide security scan, S7 emulator smoke evidence sync, UI-05
-responsive widget-matrix evidence, and UI-06 admin dashboard hardening evidence
-for the Flutter-only VitTrade app.
+responsive widget-matrix evidence, UI-06 admin dashboard hardening evidence,
+UI-07 accessibility semantics evidence, UI-08 product-copy consistency, and
+UI-09 route/navigation back-behavior evidence, plus UI-10 final UI-only
+readiness closeout for the Flutter-only VitTrade app.
 
 ## Executive Verdict
 
@@ -15,12 +17,16 @@ guardrails now prevent route placeholder regressions, copy boundary drift,
 architecture baseline increases, release signing bypasses, and OTP-in-URL
 regressions, and the required local verification commands pass. UI-05 adds a
 responsive visual widget matrix for 25 priority routes across `360x800`,
-`440x956`, and `480x1040`; UI-06 adds state-aware admin dashboard hardening.
+`440x956`, and `480x1040`; UI-06 adds state-aware admin dashboard hardening;
+UI-07 adds focused accessibility semantics coverage for critical controls;
+UI-08 tightens product copy guardrails; UI-09 adds critical back-navigation
+coverage; UI-10 closes the UI-only readiness report.
 
 Verdict: **local remediation scope completed; production enterprise-grade is
 still blocked externally**. The repo now passes format, analyze, full tests,
 route audit, debug Android build, emulator preconditions, and core navigation
-smoke, plus the UI-05/UI-06 responsive and focused guardrail sets. High-risk emulator
+smoke, plus the UI-05 through UI-10 responsive, admin, accessibility, copy,
+navigation, final closeout, and focused guardrail sets. High-risk emulator
 smoke is partially passed as device evidence:
 Prediction, Arena, Withdraw, and Token Approval evidence is current. Address
 Add and P2P Payment Add completion now have UI-only Flutter `enterText`
@@ -28,8 +34,8 @@ widget-harness evidence. UI-05 responsive evidence is also Flutter widget
 harness only; no new manual/emulator screenshot evidence is claimed.
 The app must not be called production enterprise-grade until real remote
 repositories and backend contracts exist for critical features, secure release
-signing/CI secrets are provisioned, and the remaining high-risk manual smoke
-items are completed.
+signing/CI secrets are provisioned, and release-target device evidence is
+completed.
 
 Top blockers:
 
@@ -40,19 +46,22 @@ Top blockers:
 - P1 enterprise acceptance: remaining non-controller feature-data imports and
   large stateful pages remain guarded but not fully refactored.
 - P1 QA: S7 core navigation smoke passed, UI-01 closes Address Add/P2P
-  text-entry completion, and UI-05 covers responsive rendering with Flutter
-  widget harnesses. Manual device retakes remain useful for release evidence.
+  text-entry completion, UI-05 covers responsive rendering, UI-07 covers
+  critical semantics, UI-08 covers copy consistency, UI-09 covers critical
+  header back behavior, and UI-10 closes the readiness report with Flutter
+  widget/static harnesses. Manual device retakes remain useful for release
+  evidence.
 
 ## Evidence Snapshot
 
 | Check | Result |
 | --- | --- |
 | Flutter toolchain | Flutter `3.41.9` stable, Dart `3.11.5`. |
-| Source size | `1094` Dart files in `flutter_app/lib`, `432291` Dart lines, average `395.1` lines/file after UI-06 admin dashboard hardening. |
-| Test inventory | `426` test files; `1522` Dart files across `lib + test + tool` after UI-06 added admin dashboard state tests. |
+| Source size | `1094` Dart files in `flutter_app/lib`, `462871` Dart lines, average `423.1` lines/file after UI-10 final verification. |
+| Test inventory | `428` test files; `1524` Dart files across `lib + test + tool` after UI-10 final verification. |
 | `flutter pub get` | Passed during S7-01; pub reported 8 packages with newer incompatible versions. |
-| `dart format --output=none --set-exit-if-changed .` | Passed during S8-02: `1512 files`, `0 changed`, after cleaning generated `flutter_app/build/` output. UI-06 final `dart format .` also passed: `1522 files`, `0 changed`. |
-| `flutter analyze` | Passed during S8-02, UI-05, and UI-06: no issues found. |
+| `dart format --output=none --set-exit-if-changed .` | Passed during S8-02: `1512 files`, `0 changed`, after cleaning generated `flutter_app/build/` output. UI-10 final `dart format .` also passed: `1524` files, `0` changed. |
+| `flutter analyze` | Passed during S8-02, UI-05, UI-06, UI-07, and UI-10: no issues found. |
 | `flutter test --reporter=compact` | Passed during S8-02: `1841` tests. |
 | `dart run tool/route_coverage_audit.dart --check` | Passed during S8-02: route coverage artifact is current. |
 | `flutter build apk --debug` | Passed: built `build/app/outputs/flutter-apk/app-debug.apk`. |
@@ -65,6 +74,10 @@ Top blockers:
 | UI-04 high-risk state depth | Passed; Wallet/P2P/Trade/Predictions/Arena high-risk controllers now expose deeper draft, validation, preview, confirming/submitting, submitted/success, error, and offline state helpers plus focused validation/review methods. `p2p_flow_status.dart` keeps large-file debt flat: feature files `>1200 = 0`, feature files `>600 = 239`, page part-files remain `217`. |
 | UI-05 responsive visual QA matrix | Passed; `test/quality/responsive_visual_qa_matrix_test.dart` renders 25 priority routes through `VitTradeApp` at `360x800`, `440x956`, and `480x1040`, asserts no Flutter layout errors, and checks active shell navigation visibility. Focused feature tests, product copy guardrail, architecture guardrail, and analyze also passed. |
 | UI-06 admin dashboard hardening | Passed; Admin Home, Analytics, A/B Tests, and Funnel dashboards now have state-aware loading/empty/error/offline rendering, KPI delta/timeframe metadata, selected semantics, chart summaries, and empty fallbacks. `admin_settings_page.dart` split keeps Admin Home under 600 lines; admin tests, architecture guardrail, admin responsive slice, and analyze passed. |
+| UI-07 accessibility semantics pass | Passed; `test/quality/accessibility_semantics_critical_flows_test.dart` covers semantic labels/roles for Withdraw, Address Add, P2P Payment Add, Token Approval Revoke, Prediction Risk Calculator tabs/scenarios, and Admin KPI/chart summaries. Focused Wallet/P2P/Predictions/Admin tests, product copy guardrail, architecture guardrail, format, and analyze passed. |
+| UI-08 copy consistency pass | Passed; Prediction Risk Calculator no longer uses payout copy and `product_copy_guardrails_test.dart` prevents that term from returning there. Arena stayed points-only, high-risk copy guardrails passed, and focused Prediction/semantics tests passed. |
+| UI-09 route/navigation UX polish | Passed; `test/app/router/critical_navigation_back_behavior_test.dart` guards header back behavior for Withdraw, Address Add, Token Approval, P2P Payment Add, Prediction Risk Calculator, and Admin dashboards. Router tests, route guardrail, and route audit passed. |
+| UI-10 final UI-only readiness report | Passed; this report now separates UI done, UI remaining, and out-of-scope backend/release blockers. Final focused verification passed: `dart format .`, `flutter analyze`, `46` focused UI/router/guardrail tests, and route coverage audit. |
 | Route inventory | `417` static route entries: `414` real pages, `3` redirect aliases, `0` placeholders, `0` skeleton routes. |
 | Router static count | `417` `GoRoute(...)` calls and `400` named route declarations in route groups. |
 | Placeholder/skeleton guard | `0` `_placeholderRoute(` calls and `0` `_BottomNavRouteSkeleton` / `UnportedRoutePlaceholder` refs in router groups. |
@@ -93,11 +106,19 @@ Top blockers:
 
 | Area | Status |
 | --- | --- |
-| Sequential backlog | Historical S8 queue is complete. UI-only extension has UI-01 to UI-06 closed; UI-07 to UI-10 remain open. |
+| Sequential backlog | Historical S8 queue is complete. UI-only extension UI-01 through UI-10 is closed. |
 | Remaining historical `[!]` packets | `S2-06 - Wallet smoke evidence` and `S7-03 - Execute high-risk smoke` record the earlier emulator/manual ADB text-entry limitation. UI-01 closes the current UI-only blocker with Flutter widget-harness evidence, without claiming new manual screenshots. |
 | Backend blockers | Auth, Wallet, Trade, P2P, Predictions, and Arena production remote repositories/backend contracts remain external. |
 | Release blockers | Android release signing secrets and observed hosted CI/store release artifact validation remain external. |
-| Latest full local verification | S8-02 passed format, analyze, full tests, and route coverage audit. UI-06 passed format, admin tests, architecture guardrail, admin responsive matrix slice, and analyze. |
+| Latest full local verification | S8-02 passed format, analyze, full tests, and route coverage audit. UI-10 final verification passed `dart format .`, `flutter analyze`, `46` focused UI/router/guardrail tests, and route coverage audit. |
+
+## UI-Only Readiness Closeout
+
+| Group | Status |
+| --- | --- |
+| UI done | UI-01 through UI-10 are closed: text-entry harness, large-file cleanup, part-file reduction, high-risk state depth, responsive matrix, admin dashboard hardening, accessibility semantics, copy consistency, route/back navigation guardrails, and the final UI-only readiness report. |
+| UI remaining | No open UI-only implementation or docs packet remains. Residual UI maintenance debt is guarded rather than blocking: files over 600 lines, page part-file debt, and optional manual device retakes for richer release evidence. |
+| Out-of-scope blockers | Production backend remote repositories, real backend contracts, Android release signing secrets, hosted CI/store release artifacts, and production credentials remain external blockers. Do not call the app production enterprise-grade until those are complete. |
 
 ## Enterprise Scorecard
 
@@ -107,12 +128,12 @@ Top blockers:
 | Routing coverage | 4.8/5 | `docs/02_FLUTTER_MIGRATION/Flutter-Route-Coverage-Truth-Table.md:11` to `13` shows `414` real pages, `3` redirects, `417` total, no placeholder class; route audit passes. | Manual smoke covered core/high-risk samples, not every route. |
 | State/data/backend readiness | 2.6/5 | Production ignores mock-enable flags and repository providers fail closed without remote implementations. | Critical remote repositories and contract tests are still missing. |
 | Security | 3.9/5 | SEC-01/SEC-02 fixed; network baseline hardened; no secret scan hits; route/copy/security guardrails pass. | Backend auth/session, real remote validation, and release secret operations remain open. |
-| UI/design-system consistency | 4.0/5 | Shared layout/card/header usage is broad; `0` runtime `Colors.*` and `0` hardcoded colors outside `lib/app/theme/` remain in `lib`; UI-05 fixed responsive overflow in shared nav/status/service primitives, and UI-06 hardened admin KPI/state/chart surfaces. | Accessibility, copy consistency, and large-page simplification remain ongoing. |
+| UI/design-system consistency | 4.2/5 | Shared layout/card/header usage is broad; `0` runtime `Colors.*` and `0` hardcoded colors outside `lib/app/theme/` remain in `lib`; UI-05 fixed responsive overflow, UI-06 hardened admin KPI/state/chart surfaces, UI-07 adds semantic labels/roles for critical custom controls, UI-08 removes payout-style Prediction risk copy, and UI-09 guards critical back navigation. | Large-page simplification remains ongoing but guarded. |
 | Financial safety | 4.2/5 | High-risk copy guardrails pass; Withdraw preview has explicit cancel/confirm actions; Token Approval revoke review passed smoke; Address Add and P2P Payment Add confirmation paths pass the UI-01 Flutter harness. | Backend side-effect enforcement and manual release retakes remain required. |
-| Prediction/Arena boundary | 4.4/5 | Product-copy guardrails pass; S7 smoke verified Prediction order preview/receipt language and Arena Points-only join copy. | Manual compliance review remains required for all bridge surfaces. |
-| Testing/QA | 4.7/5 | S8-02 full local checks passed; `1841` full-suite tests passed at S8-02; route, copy, ops, network, config, layout, widget, core navigation smoke, high-risk partial smoke, UI-01 text-entry harness, UI-05 responsive matrix, and UI-06 admin state tests exist. | Device-level manual retakes for Address Add and P2P Payment Add remain useful release evidence. |
+| Prediction/Arena boundary | 4.5/5 | Product-copy guardrails pass; S7 smoke verified Prediction order preview/receipt language and Arena Points-only join copy; UI-08 blocks payout copy in the Prediction Risk Calculator. | Manual compliance review remains required for all bridge surfaces. |
+| Testing/QA | 4.8/5 | S8-02 full local checks passed; `1841` full-suite tests passed at S8-02; route, copy, ops, network, config, layout, widget, core navigation smoke, high-risk partial smoke, UI-01 text-entry harness, UI-05 responsive matrix, UI-06 admin state tests, UI-07 accessibility semantics tests, UI-09 critical back-navigation tests, and UI-10 final focused verification exist. | Device-level manual retakes for Address Add and P2P Payment Add remain useful release evidence. |
 | Platform/release | 3.3/5 | Debug APK builds; release signing fails fast without signing config and has metadata guardrail coverage. | Store signing secrets and observed release CI remain external blockers. |
-| Docs/ops | 4.3/5 | Active Flutter docs, route artifact, security scan bundle, CI workflow, smoke checklist, QA report, sequential backlog, and UI-only tracking plan are synced through UI-06. | First hosted CI/release run and manual device retakes remain pending. |
+| Docs/ops | 4.5/5 | Active Flutter docs, route artifact, security scan bundle, CI workflow, smoke checklist, QA report, sequential backlog, and UI-only tracking plan are synced through UI-10. | First hosted CI/release run and manual device retakes remain pending. |
 
 ## Line Inventory Metrics
 
@@ -120,36 +141,36 @@ Largest runtime files:
 
 | Lines | File |
 | ---: | --- |
+| `1198` | `flutter_app/lib/features/wallet/presentation/pages/wallet_token_approval_page.dart` |
 | `1197` | `flutter_app/lib/features/trade/presentation/pages/execution_quality_demo_page.dart` |
 | `1196` | `flutter_app/lib/features/trade/presentation/pages/transaction_reporting_page.dart` |
 | `1194` | `flutter_app/lib/features/markets/presentation/pages/market_sectors_page.dart` |
 | `1194` | `flutter_app/lib/features/trade/presentation/widgets/live_market_data_analytics_widgets.dart` |
+| `1186` | `flutter_app/lib/features/predictions/presentation/pages/predictions_portfolio_page.dart` |
 | `1186` | `flutter_app/lib/features/launchpad/presentation/pages/launchpad_rebalance_page.dart` |
-| `1184` | `flutter_app/lib/features/markets/presentation/pages/market_depth_page.dart` |
 | `1184` | `flutter_app/lib/features/launchpad/presentation/pages/launchpad_dca_builder_page.dart` |
+| `1184` | `flutter_app/lib/features/markets/presentation/pages/market_depth_page.dart` |
 | `1181` | `flutter_app/lib/features/dev/presentation/pages/design_system_page.dart` |
 | `1171` | `flutter_app/lib/features/markets/presentation/pages/derivatives_overview_page.dart` |
 | `1168` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_multi_manager_sections.dart` |
+| `1167` | `flutter_app/lib/features/markets/presentation/pages/market_list_page.dart` |
 | `1167` | `flutter_app/lib/features/earn/presentation/pages/staking_dashboard_page.dart` |
-| `1163` | `flutter_app/lib/features/markets/presentation/pages/market_list_page.dart` |
-| `1161` | `flutter_app/lib/features/wallet/presentation/pages/wallet_token_approval_page.dart` |
-| `1159` | `flutter_app/lib/features/predictions/presentation/pages/predictions_portfolio_page.dart` |
 | `1156` | `flutter_app/lib/features/earn/presentation/pages/staking_api_documentation_page.dart` |
 
 Largest feature modules by runtime lines:
 
 | Feature | Files | Lines |
 | --- | ---: | ---: |
-| trade | `174` | `95927` |
+| trade | `174` | `96327` |
 | earn | `170` | `82271` |
-| p2p | `130` | `64550` |
-| arena | `86` | `35772` |
+| p2p | `131` | `64669` |
+| arena | `86` | `35919` |
 | launchpad | `76` | `31645` |
-| markets | `73` | `30865` |
-| wallet | `44` | `23146` |
-| predictions | `47` | `22907` |
-| dca | `39` | `16058` |
-| profile | `20` | `10600` |
+| markets | `73` | `30869` |
+| wallet | `44` | `23409` |
+| predictions | `47` | `23241` |
+| dca | `39` | `15977` |
+| profile | `20` | `10625` |
 | referral | `18` | `6507` |
 | cross_module | `31` | `5816` |
 

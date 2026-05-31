@@ -399,6 +399,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+part 'app_route_names.dart';
 part 'app_route_paths.dart';
 part 'route_groups/root_routes.dart';
 part 'route_groups/auth_routes.dart';

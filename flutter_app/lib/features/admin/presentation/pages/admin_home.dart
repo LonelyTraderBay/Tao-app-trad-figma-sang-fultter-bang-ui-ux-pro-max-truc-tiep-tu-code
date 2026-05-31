@@ -150,61 +150,67 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = _accentColor(metric.accent);
-    return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(_metricIcon(metric.icon), color: accent, size: 14),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: Text(
-                  metric.label,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+    return Semantics(
+      label:
+          'Admin home metric ${metric.label}: ${metric.value}. ${metric.deltaLabel} ${metric.timeframeLabel}',
+      child: VitCard(
+        padding: const EdgeInsets.all(AppSpacing.x3),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(_metricIcon(metric.icon), color: accent, size: 14),
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Text(
+                    metric.label,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            metric.value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.baseMedium.copyWith(
-              fontSize: 18,
-              fontWeight: AppTextStyles.bold,
-              color: metric.label == 'Health' ? AppColors.buy : AppColors.text1,
-              fontFeatures: AppTextStyles.tabularFigures,
+              ],
             ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Wrap(
-            spacing: AppSpacing.x2,
-            runSpacing: AppSpacing.x1,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              VitStatusPill(
-                label: metric.deltaLabel,
-                status: metric.deltaLabel.startsWith('-')
-                    ? VitStatusPillStatus.error
-                    : VitStatusPillStatus.success,
-                size: VitStatusPillSize.sm,
+            const SizedBox(height: AppSpacing.x1),
+            Text(
+              metric.value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.baseMedium.copyWith(
+                fontSize: 18,
+                fontWeight: AppTextStyles.bold,
+                color: metric.label == 'Health'
+                    ? AppColors.buy
+                    : AppColors.text1,
+                fontFeatures: AppTextStyles.tabularFigures,
               ),
-              Text(
-                metric.timeframeLabel,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 10,
+            ),
+            const SizedBox(height: AppSpacing.x2),
+            Wrap(
+              spacing: AppSpacing.x2,
+              runSpacing: AppSpacing.x1,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                VitStatusPill(
+                  label: metric.deltaLabel,
+                  status: metric.deltaLabel.startsWith('-')
+                      ? VitStatusPillStatus.error
+                      : VitStatusPillStatus.success,
+                  size: VitStatusPillSize.sm,
                 ),
-              ),
-            ],
-          ),
-        ],
+                Text(
+                  metric.timeframeLabel,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    fontSize: 10,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -332,26 +338,30 @@ class _PauseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface3,
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: GestureDetector(
-        key: AdminHome.pauseKey,
-        onTap: onPressed,
-        behavior: HitTestBehavior.opaque,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x2,
-          ),
-          child: Text(
-            isLive ? 'Tạm dừng' : 'Tiếp tục',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-              fontSize: 11,
+    return Semantics(
+      button: true,
+      label: isLive ? 'Pause live admin updates' : 'Resume live admin updates',
+      child: DecoratedBox(
+        decoration: const BoxDecoration(
+          color: AppColors.surface3,
+          borderRadius: AppRadii.inputRadius,
+        ),
+        child: GestureDetector(
+          key: AdminHome.pauseKey,
+          onTap: onPressed,
+          behavior: HitTestBehavior.opaque,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.x4,
+              vertical: AppSpacing.x2,
+            ),
+            child: Text(
+              isLive ? 'Tạm dừng' : 'Tiếp tục',
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text2,
+                fontWeight: AppTextStyles.bold,
+                fontSize: 11,
+              ),
             ),
           ),
         ),

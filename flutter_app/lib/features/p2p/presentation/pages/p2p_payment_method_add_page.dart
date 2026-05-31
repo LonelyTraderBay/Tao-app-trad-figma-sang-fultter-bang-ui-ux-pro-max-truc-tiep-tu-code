@@ -135,6 +135,7 @@ class _P2PPaymentMethodAddPageState
                       VitInput(
                         controller: _accountController,
                         fieldKey: P2PPaymentMethodAddPage.accountFieldKey,
+                        semanticLabel: 'P2P payment account',
                         label: _type == P2PPaymentAddType.bank
                             ? 'Số tài khoản'
                             : 'Số điện thoại / tài khoản ví',
@@ -152,6 +153,7 @@ class _P2PPaymentMethodAddPageState
                       VitInput(
                         controller: _ownerController,
                         fieldKey: P2PPaymentMethodAddPage.ownerFieldKey,
+                        semanticLabel: 'P2P payment account owner',
                         label: 'Tên chủ tài khoản',
                         hintText: snapshot.ownerNameHint,
                         prefix: const Icon(Icons.person_outline_rounded),
@@ -182,13 +184,20 @@ class _P2PPaymentMethodAddPageState
               backgroundColor: AppColors.surface.withValues(alpha: 0.96),
               child: Padding(
                 padding: EdgeInsets.only(bottom: footerInset),
-                child: VitCtaButton(
-                  key: P2PPaymentMethodAddPage.saveButtonKey,
-                  loading: _submitting,
-                  onPressed: _isValidFor(controller) && !_submitting
-                      ? () => _confirmSave(context, controller)
-                      : null,
-                  child: Text(_submitting ? 'Đang lưu...' : 'Thêm phương thức'),
+                child: Semantics(
+                  label: 'Preview and add P2P payment method',
+                  button: true,
+                  enabled: _isValidFor(controller) && !_submitting,
+                  child: VitCtaButton(
+                    key: P2PPaymentMethodAddPage.saveButtonKey,
+                    loading: _submitting,
+                    onPressed: _isValidFor(controller) && !_submitting
+                        ? () => _confirmSave(context, controller)
+                        : null,
+                    child: Text(
+                      _submitting ? 'Đang lưu...' : 'Thêm phương thức',
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -337,6 +346,7 @@ class _TypeButton extends StatelessWidget {
     return Semantics(
       button: true,
       selected: active,
+      label: '$label payment type',
       child: Material(
         color: AppColors.transparent,
         borderRadius: AppRadii.inputRadius,
@@ -429,6 +439,7 @@ class _PaymentOptionChip extends StatelessWidget {
     return Semantics(
       button: true,
       selected: selected,
+      label: '$label payment option',
       child: Material(
         color: AppColors.transparent,
         borderRadius: AppRadii.xlRadius,

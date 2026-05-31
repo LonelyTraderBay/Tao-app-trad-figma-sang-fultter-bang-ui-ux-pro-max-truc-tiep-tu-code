@@ -80,22 +80,26 @@ class _TokenSheetButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 46,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: background,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: color,
-            fontSize: 14,
-            fontWeight: FontWeight.w900,
+    return Semantics(
+      button: true,
+      label: label == 'Cancel' ? 'Cancel token revoke preview' : label,
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          height: 46,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: background,
+            borderRadius: AppRadii.inputRadius,
+          ),
+          child: Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: color,
+              fontSize: 14,
+              fontWeight: FontWeight.w900,
+            ),
           ),
         ),
       ),
