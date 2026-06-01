@@ -1,14 +1,16 @@
 part of 'app_router.dart';
 
 VitBottomNavDestination _activeDestinationForPath(String path) {
-  if (path == AppRoutePaths.news) {
-    return VitBottomNavDestination.trade;
-  }
-  if (path == AppRoutePaths.search ||
+  if (path == AppRoutePaths.news ||
+      path == AppRoutePaths.search ||
       path == AppRoutePaths.notifications ||
       path == AppRoutePaths.topics ||
       path.startsWith('/topic/') ||
-      path == AppRoutePaths.referral ||
+      path == AppRoutePaths.support ||
+      path.startsWith('/support/')) {
+    return VitBottomNavDestination.home;
+  }
+  if (path == AppRoutePaths.referral ||
       path.startsWith('/referral/') ||
       path == AppRoutePaths.enterpriseStates ||
       path == AppRoutePaths.unifiedPortfolio ||
@@ -21,8 +23,6 @@ VitBottomNavDestination _activeDestinationForPath(String path) {
       path == AppRoutePaths.devDesignSystem ||
       path == AppRoutePaths.devDcaOverview ||
       path == AppRoutePaths.demoCopyCard ||
-      path == AppRoutePaths.support ||
-      path.startsWith('/support/') ||
       path == AppRoutePaths.launchpad ||
       path.startsWith('/launchpad/')) {
     return VitBottomNavDestination.trade;
@@ -52,10 +52,14 @@ VitBottomNavDestination _activeDestinationForPath(String path) {
     return VitBottomNavDestination.trade;
   }
   if (path.startsWith('/pair/')) {
-    return VitBottomNavDestination.trade;
+    return VitBottomNavDestination.markets;
   }
   if (path.startsWith(AppRoutePaths.wallet)) {
     return VitBottomNavDestination.wallet;
+  }
+  if (path == AppRoutePaths.settingsSecurity ||
+      path.startsWith('/settings/security/')) {
+    return VitBottomNavDestination.profile;
   }
   if (path.startsWith(AppRoutePaths.profile)) {
     return VitBottomNavDestination.profile;

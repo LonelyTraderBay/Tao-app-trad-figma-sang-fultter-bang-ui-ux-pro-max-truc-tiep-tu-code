@@ -47,10 +47,7 @@ void main() {
     expect(snapshot.flows.map((flow) => flow.id), contains('points_audit'));
     expect(snapshot.components.first.file, 'ArenaChips.tsx');
     expect(snapshot.dictionaries.first.category, 'Resolution Methods');
-    expect(
-      snapshot.qaItems,
-      contains('Arena Points disclaimer hiá»ƒn thá»‹ rÃµ'),
-    );
+    expect(snapshot.qaItems, contains('Arena Points disclaimer hiển thị rõ'));
     expect(
       snapshot.supportedStates,
       containsAll([

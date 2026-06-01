@@ -30,6 +30,7 @@ class ArenaPointsPage extends ConsumerStatefulWidget {
     this.backRoute = AppRoutePaths.arena,
     this.referralRoute = AppRoutePaths.referral,
     this.leaderboardRoute = AppRoutePaths.arenaLeaderboard,
+    this.initialFilter,
   });
 
   static const contentKey = Key('sc196_arena_points_content');
@@ -38,6 +39,7 @@ class ArenaPointsPage extends ConsumerStatefulWidget {
   static const leaderboardKey = Key('sc196_leaderboard_all');
 
   static Key filterKey(String label) => Key('sc196_filter_$label');
+  static Key activeFilterKey(String label) => Key('sc196_active_filter_$label');
   static Key taskKey(String id) => Key('sc196_task_$id');
 
   final ShellRenderMode? shellRenderMode;
@@ -46,6 +48,7 @@ class ArenaPointsPage extends ConsumerStatefulWidget {
   final String backRoute;
   final String referralRoute;
   final String leaderboardRoute;
+  final String? initialFilter;
 
   @override
   ConsumerState<ArenaPointsPage> createState() => _ArenaPointsPageState();

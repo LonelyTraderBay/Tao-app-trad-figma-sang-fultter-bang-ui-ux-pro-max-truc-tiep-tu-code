@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_payment_methods_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_wallet_page.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/predictions_home_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/address_book_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/wallet_page.dart';
@@ -46,6 +47,11 @@ void main() {
       id: 'SC-232 P2P payment add',
       path: AppRoutePaths.p2pPaymentMethodAdd,
       expectedParent: P2PPaymentMethodsPage,
+    ),
+    _BackCase(
+      id: 'SC-261 P2P wallet transfer',
+      path: AppRoutePaths.p2pWalletTransfer,
+      expectedParent: P2PWalletPage,
     ),
     _BackCase(
       id: 'SC-036 prediction risk calculator',

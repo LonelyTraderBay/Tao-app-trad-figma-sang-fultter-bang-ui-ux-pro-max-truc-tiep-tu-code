@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
@@ -56,5 +57,49 @@ void main() {
       find.byKey(const Key('vit_bottom_nav_active_markets')),
       findsOneWidget,
     );
+  });
+
+  testWidgets('representative route namespaces keep intentional active tabs', (
+    WidgetTester tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    final cases = <String, VitBottomNavDestination>{
+      AppRoutePaths.home: VitBottomNavDestination.home,
+      AppRoutePaths.markets: VitBottomNavDestination.markets,
+      AppRoutePaths.pairDetail('btcusdt'): VitBottomNavDestination.markets,
+      AppRoutePaths.tradePair('btcusdt'): VitBottomNavDestination.trade,
+      AppRoutePaths.wallet: VitBottomNavDestination.wallet,
+      AppRoutePaths.profile: VitBottomNavDestination.profile,
+      AppRoutePaths.settingsSecurity: VitBottomNavDestination.profile,
+      AppRoutePaths.p2p: VitBottomNavDestination.trade,
+      AppRoutePaths.earnStaking: VitBottomNavDestination.trade,
+      AppRoutePaths.arena: VitBottomNavDestination.trade,
+      AppRoutePaths.launchpad: VitBottomNavDestination.trade,
+      AppRoutePaths.support: VitBottomNavDestination.home,
+      AppRoutePaths.search: VitBottomNavDestination.home,
+      AppRoutePaths.notifications: VitBottomNavDestination.home,
+      AppRoutePaths.news: VitBottomNavDestination.home,
+    };
+
+    for (final entry in cases.entries) {
+      await tester.pumpWidget(
+        ProviderScope(
+          child: VitTradeApp(
+            routerConfig: createAppRouter(initialLocation: entry.key),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byKey(Key('vit_bottom_nav_active_${entry.value.name}')),
+        findsOneWidget,
+        reason: entry.key,
+      );
+    }
   });
 }

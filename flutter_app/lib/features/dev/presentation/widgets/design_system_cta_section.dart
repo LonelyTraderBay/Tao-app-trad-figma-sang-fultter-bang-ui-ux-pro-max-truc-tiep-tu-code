@@ -40,7 +40,7 @@ class DesignSystemCtaSection extends StatelessWidget {
               child: VitCtaButton(
                 variant: VitCtaButtonVariant.danger,
                 onPressed: () {},
-                child: const Text('BÃ¡n'),
+                child: const Text('Bán'),
               ),
             ),
           ],

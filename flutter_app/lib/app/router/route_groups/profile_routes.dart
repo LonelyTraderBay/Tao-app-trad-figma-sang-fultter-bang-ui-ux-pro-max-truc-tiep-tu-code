@@ -71,6 +71,11 @@ List<RouteBase> _profileRoutes(ShellRenderMode shellRenderMode) {
       name: AppRouteNames.sc168MyArena,
       builder: (_, _) => MyArenaPage(shellRenderMode: shellRenderMode),
     ),
+    GoRoute(
+      path: AppRoutePaths.settingsSecurity,
+      name: AppRouteNames.sc413SettingsSecurity,
+      builder: (_, _) => SecurityPage(shellRenderMode: shellRenderMode),
+    ),
     ..._profileOutgoingPlaceholders,
   ];
 }

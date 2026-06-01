@@ -65,6 +65,18 @@ List<RouteBase> _dcaRoutes(ShellRenderMode shellRenderMode) {
         shellRenderMode: shellRenderMode,
       ),
     ),
-    ..._dcaOutgoingPlaceholders(shellRenderMode),
+    GoRoute(
+      path: '/dca/rebalance/:configId/edit',
+      name: AppRouteNames.sc408DcaRebalanceEdit,
+      builder: (_, _) => DCARebalanceConfig(shellRenderMode: shellRenderMode),
+    ),
+    GoRoute(
+      path: '/dca/rebalance/:configId/history',
+      name: AppRouteNames.sc409DcaRebalanceHistory,
+      builder: (_, state) => DCARebalanceDashboard(
+        configId: state.pathParameters['configId'] ?? 'config001',
+        shellRenderMode: shellRenderMode,
+      ),
+    ),
   ];
 }

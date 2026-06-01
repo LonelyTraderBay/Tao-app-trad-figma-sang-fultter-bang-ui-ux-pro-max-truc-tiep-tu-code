@@ -21,7 +21,7 @@ mixin _MockArenaRepositoryMethodsPart08 on _MockArenaRepositoryBase {
             ArenaProductionScreenState.offline,
           ],
           notes:
-              'Gá»n hÆ¡n v4: bá»›t quick chips, giá»¯ hero + templates + modes + rooms + creators.',
+              'Gọn hơn v4: bớt quick chips, giữ hero + templates + modes + rooms + creators.',
         ),
         ArenaProductionScreenDraft(
           name: 'ArenaStudioPage',
@@ -36,7 +36,7 @@ mixin _MockArenaRepositoryMethodsPart08 on _MockArenaRepositoryBase {
             ArenaProductionScreenState.underReview,
           ],
           notes:
-              'PublishEligibilityPanel rÃµ hÆ¡n, GovernanceHintBanner á»Ÿ má»—i step.',
+              'PublishEligibilityPanel rõ hơn, GovernanceHintBanner ở mỗi step.',
         ),
         ArenaProductionScreenDraft(
           name: 'ArenaChallengeDetailPage',
@@ -56,7 +56,7 @@ mixin _MockArenaRepositoryMethodsPart08 on _MockArenaRepositoryBase {
             ArenaProductionScreenState.canceled,
           ],
           notes:
-              'Trust-first: tab máº·c Ä‘á»‹nh lÃ  luáº­t chÆ¡i, safety snapshot trÆ°á»›c CTA.',
+              'Trust-first: tab mặc định là luật chơi, safety snapshot trước CTA.',
         ),
         ArenaProductionScreenDraft(
           name: 'ArenaSafetyCenterPage',
@@ -69,7 +69,7 @@ mixin _MockArenaRepositoryMethodsPart08 on _MockArenaRepositoryBase {
             ArenaProductionScreenState.error,
           ],
           notes:
-              'Trung tÃ¢m an toÃ n: chÃ­nh sÃ¡ch, bÃ¡o cÃ¡o, cháº·n users, quy táº¯c cá»™ng Ä‘á»“ng.',
+              'Trung tâm an toàn: chính sách, báo cáo, chặn users, quy tắc cộng đồng.',
         ),
         ArenaProductionScreenDraft(
           name: 'ArenaResolutionCenterPage',
@@ -84,7 +84,7 @@ mixin _MockArenaRepositoryMethodsPart08 on _MockArenaRepositoryBase {
             ArenaProductionScreenState.resolved,
           ],
           notes:
-              'Chá»‘t káº¿t quáº£: method-specific UI, evidence, timeline, receipt sheet.',
+              'Chốt kết quả: method-specific UI, evidence, timeline, receipt sheet.',
         ),
         ArenaProductionScreenDraft(
           name: 'ArenaPointsLedgerPage',
@@ -112,7 +112,7 @@ mixin _MockArenaRepositoryMethodsPart08 on _MockArenaRepositoryBase {
             ArenaProductionScreenState.error,
           ],
           notes:
-              '3 má»¥c riÃªng: challenges, modes, settings; links to reports + blocked users.',
+              '3 mục riêng: challenges, modes, settings; links to reports + blocked users.',
         ),
       ],
       supportingScreens: [
@@ -136,7 +136,7 @@ mixin _MockArenaRepositoryMethodsPart08 on _MockArenaRepositoryBase {
             ArenaProductionScreenState.defaultView,
             ArenaProductionScreenState.empty,
           ],
-          notes: 'Chi tiáº¿t giao dá»‹ch Ä‘iá»ƒm: amount hero, balance, refId.',
+          notes: 'Chi tiết giao dịch điểm: amount hero, balance, refId.',
         ),
         ArenaProductionScreenDraft(
           name: 'ArenaJoinPage',
@@ -148,7 +148,7 @@ mixin _MockArenaRepositoryMethodsPart08 on _MockArenaRepositoryBase {
             ArenaProductionScreenState.loading,
             ArenaProductionScreenState.error,
           ],
-          notes: 'Preview trÆ°á»›c join: entry pts, checkboxes, fee.',
+          notes: 'Preview trước join: entry pts, checkboxes, fee.',
         ),
         ArenaProductionScreenDraft(
           name: 'ArenaCreatorPage',
@@ -176,7 +176,7 @@ mixin _MockArenaRepositoryMethodsPart08 on _MockArenaRepositoryBase {
           status: ArenaProductionScreenStatus.qaOnly,
           version: 'v1',
           states: [ArenaProductionScreenState.defaultView],
-          notes: 'Flow visualization cho dev/QA, khÃ´ng pháº£i user-facing.',
+          notes: 'Flow visualization cho dev/QA, không phải user-facing.',
         ),
         ArenaProductionScreenDraft(
           name: 'ArenaProductionReadyPage',
@@ -184,7 +184,7 @@ mixin _MockArenaRepositoryMethodsPart08 on _MockArenaRepositoryBase {
           status: ArenaProductionScreenStatus.qaOnly,
           version: 'v1',
           states: [ArenaProductionScreenState.defaultView],
-          notes: 'Trang handoff dashboard nÃ y.',
+          notes: 'Trang handoff dashboard này.',
         ),
       ],
       flows: [
@@ -195,12 +195,12 @@ mixin _MockArenaRepositoryMethodsPart08 on _MockArenaRepositoryBase {
             ArenaProductionFlowStepDraft(
               label: 'ArenaHome',
               route: '/arena',
-              description: 'Tap táº¡o challenge.',
+              description: 'Tap tạo challenge.',
             ),
             ArenaProductionFlowStepDraft(
               label: 'ArenaStudio',
               route: '/arena/studio',
-              description: 'Template -> cáº¥u trÃºc -> luáº­t -> review.',
+              description: 'Template -> cấu trúc -> luật -> review.',
             ),
             ArenaProductionFlowStepDraft(
               label: 'ChallengeDetail',
@@ -210,7 +210,7 @@ mixin _MockArenaRepositoryMethodsPart08 on _MockArenaRepositoryBase {
             ArenaProductionFlowStepDraft(
               label: 'Resolution',
               route: '/arena/resolution',
-              description: 'Khi háº¿t háº¡n -> chá»‘t káº¿t quáº£.',
+              description: 'Khi hết hạn -> chốt kết quả.',
             ),
           ],
         ),
@@ -221,12 +221,12 @@ mixin _MockArenaRepositoryMethodsPart08 on _MockArenaRepositoryBase {
             ArenaProductionFlowStepDraft(
               label: 'ReportDialog',
               route: '/arena/challenge/:id',
-              description: 'Chá»n lÃ½ do vÃ  gá»­i bÃ¡o cÃ¡o.',
+              description: 'Chọn lý do và gửi báo cáo.',
             ),
             ArenaProductionFlowStepDraft(
               label: 'MyArenaReports',
               route: '/arena/my-reports',
-              description: 'Theo dÃµi cÃ¡c case Ä‘Ã£ gá»­i.',
+              description: 'Theo dõi các case đã gửi.',
             ),
             ArenaProductionFlowStepDraft(
               label: 'ReportCase',
@@ -294,18 +294,18 @@ mixin _MockArenaRepositoryMethodsPart08 on _MockArenaRepositoryBase {
           items: [
             ArenaProductionDictionaryItemDraft(
               code: 'auto',
-              label: 'Tá»± Ä‘á»™ng',
-              description: 'Káº¿t quáº£ tá»« nguá»“n dá»¯ liá»‡u bÃªn ngoÃ i.',
+              label: 'Tự động',
+              description: 'Kết quả từ nguồn dữ liệu bên ngoài.',
             ),
             ArenaProductionDictionaryItemDraft(
               code: 'mutual_confirm',
-              label: 'XÃ¡c nháº­n 2 bÃªn',
-              description: 'Táº¥t cáº£ bÃªn pháº£i xÃ¡c nháº­n káº¿t quáº£.',
+              label: 'Xác nhận 2 bên',
+              description: 'Tất cả bên phải xác nhận kết quả.',
             ),
             ArenaProductionDictionaryItemDraft(
               code: 'community_vote',
-              label: 'BÃ¬nh chá»n cá»™ng Ä‘á»“ng',
-              description: 'Bá» phiáº¿u vá»›i ngÆ°á»¡ng tá»‘i thiá»ƒu.',
+              label: 'Bình chọn cộng đồng',
+              description: 'Bỏ phiếu với ngưỡng tối thiểu.',
             ),
           ],
         ),
@@ -314,30 +314,29 @@ mixin _MockArenaRepositoryMethodsPart08 on _MockArenaRepositoryBase {
           items: [
             ArenaProductionDictionaryItemDraft(
               code: 'earned',
-              label: 'Nháº­n',
-              description:
-                  'Points nháº­n Ä‘Æ°á»£c tá»« task, check-in hoáº·c tháº¯ng.',
+              label: 'Nhận',
+              description: 'Points nhận được từ task, check-in hoặc thắng.',
             ),
             ArenaProductionDictionaryItemDraft(
               code: 'entry',
               label: 'Tham gia',
-              description: 'Kháº¥u trá»« khi join challenge.',
+              description: 'Khấu trừ khi join challenge.',
             ),
             ArenaProductionDictionaryItemDraft(
               code: 'refund',
-              label: 'HoÃ n Ä‘iá»ƒm',
-              description: 'HoÃ n khi challenge bá»‹ void hoáº·c cancel.',
+              label: 'Hoàn điểm',
+              description: 'Hoàn khi challenge bị void hoặc cancel.',
             ),
           ],
         ),
       ],
       qaItems: [
         'Tap targets >= 44pt / 48dp',
-        'Contrast >= 4.5:1 cho text thÆ°á»ng',
-        'Fee breakdown trÆ°á»›c confirm Points',
-        'Error, empty, loading states Ä‘áº§y Ä‘á»§',
-        'KhÃ´ng cÃ³ dark patterns hoáº·c FOMO copy',
-        'Arena Points disclaimer hiá»ƒn thá»‹ rÃµ',
+        'Contrast >= 4.5:1 cho text thường',
+        'Fee breakdown trước confirm Points',
+        'Error, empty, loading states đầy đủ',
+        'Không có dark patterns hoặc FOMO copy',
+        'Arena Points disclaimer hiển thị rõ',
         'Routes DRY qua route config',
       ],
       disclaimer:

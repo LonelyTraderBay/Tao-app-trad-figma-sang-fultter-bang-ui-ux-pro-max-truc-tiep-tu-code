@@ -106,6 +106,19 @@ void main() {
     expect(find.text('Chờ release'), findsOneWidget);
   });
 
+  testWidgets('SC-245 invalid query asset falls back to default escrow asset', (
+    tester,
+  ) async {
+    await pumpP2PEscrowBalance(
+      tester,
+      initialLocation: '${AppRoutePaths.p2pEscrowBalance}?asset=DOGE',
+    );
+
+    expect(find.byType(P2PEscrowBalancePage), findsOneWidget);
+    expect(find.text('USDT 3'), findsOneWidget);
+    expect(find.text('#P2P-45892'), findsOneWidget);
+  });
+
   testWidgets('SC-245 order tap uses canonical P2P order route', (
     tester,
   ) async {

@@ -34,7 +34,7 @@ class ExecutionQualityIntroCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  '3 cÃ´ng cá»¥ Ä‘áº£m báº£o execution tá»‘i Æ°u: báº£o vá»‡ khá»i slippage xáº¥u, transparency vá» routing, vÃ  modify orders khÃ´ng máº¥t queue position.',
+                  '3 công cụ đảm bảo execution tối ưu: bảo vệ khỏi slippage xấu, transparency về routing, và modify orders không mất queue position.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
                     fontSize: 12,
@@ -127,19 +127,19 @@ class ExecutionQualityBenefitsCard extends StatelessWidget {
   static const _items = [
     (
       Icons.security_rounded,
-      'Slippage giáº£m 25 bps',
-      'Trung bÃ¬nh tá»« 0.15% xuá»‘ng 0.025%',
+      'Slippage giảm 25 bps',
+      'Trung bình từ 0.15% xuống 0.025%',
     ),
     (Icons.diamond_rounded, 'Best execution', 'Smart routing qua 3+ venues'),
     (
       Icons.flash_on_rounded,
-      'Modify nhanh hÆ¡n',
-      'Amend thay vÃ¬ cancel + replace',
+      'Modify nhanh hơn',
+      'Amend thay vì cancel + replace',
     ),
     (
       Icons.query_stats_rounded,
       'Full transparency',
-      'Chi tiáº¿t má»i fill + quality score',
+      'Chi tiết mọi fill + quality score',
     ),
   ];
 
@@ -239,7 +239,7 @@ class ExecutionQualityParityCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Phase 1 + Phase 2 = 100% feature parity vá»›i Binance/Coinbase Pro cho execution quality. Order amendment + slippage protection lÃ  standard features trÃªn cÃ¡c sÃ n hÃ ng Ä‘áº§u.',
+                  'Phase 1 + Phase 2 = 100% feature parity với Binance/Coinbase Pro cho execution quality. Order amendment + slippage protection là standard features trên các sàn hàng đầu.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
                     fontSize: 12,

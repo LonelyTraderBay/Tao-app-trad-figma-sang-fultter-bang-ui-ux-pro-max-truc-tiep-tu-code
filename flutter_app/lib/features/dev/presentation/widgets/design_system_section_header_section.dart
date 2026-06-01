@@ -84,11 +84,11 @@ class DesignSystemSectionHeaderSection extends StatelessWidget {
                 color: AppColors.buy,
               ),
               DesignSystemAccentSample(
-                label: 'BÃ¡n (Sell)',
+                label: 'Bán (Sell)',
                 color: AppColors.sell,
               ),
               DesignSystemAccentSample(
-                label: 'Cáº£nh bÃ¡o',
+                label: 'Cảnh báo',
                 color: AppColors.warn,
               ),
               DesignSystemAccentSample(

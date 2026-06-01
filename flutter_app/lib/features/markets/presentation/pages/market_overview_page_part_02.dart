@@ -74,21 +74,21 @@ class _QuickNavigation extends StatelessWidget {
         label: 'Biến động',
         icon: Icons.trending_up_rounded,
         color: AppColors.buy,
-        route: '/markets/movers',
+        route: AppRoutePaths.marketsMovers,
       ),
       _QuickNavItem(
         buttonKey: MarketOverviewPage.quickSectorsKey,
         label: 'Ngành',
         icon: Icons.layers_rounded,
         color: _sectorPurple,
-        route: '/markets/sectors',
+        route: AppRoutePaths.marketsSectors,
       ),
       _QuickNavItem(
         buttonKey: MarketOverviewPage.quickHeatmapKey,
         label: 'Heatmap',
         icon: Icons.bar_chart_rounded,
         color: _marketPrimary,
-        route: '/markets/heatmap',
+        route: AppRoutePaths.marketsHeatmap,
       ),
     ];
 
@@ -208,7 +208,7 @@ class _MoverListCard extends StatelessWidget {
         children: [
           InkWell(
             key: headerKey,
-            onTap: () => context.go('/markets/movers'),
+            onTap: () => context.go(AppRoutePaths.marketsMovers),
             borderRadius: AppRadii.smRadius,
             child: Padding(
               padding: const EdgeInsets.only(right: 2),
@@ -349,11 +349,13 @@ class _SectorPerformance extends StatelessWidget {
                 _SectorRow(
                   key: Key('sc009_sector_${sector.id}'),
                   sector: sector,
-                  onTap: () => context.go('/markets/sectors?id=${sector.id}'),
+                  onTap: () => context.go(
+                    '${AppRoutePaths.marketsSectors}?id=${sector.id}',
+                  ),
                 ),
               InkWell(
                 key: MarketOverviewPage.allSectorsKey,
-                onTap: () => context.go('/markets/sectors'),
+                onTap: () => context.go(AppRoutePaths.marketsSectors),
                 borderRadius: AppRadii.smRadius,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 13),

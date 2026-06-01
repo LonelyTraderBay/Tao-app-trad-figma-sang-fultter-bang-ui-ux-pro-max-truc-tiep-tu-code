@@ -7,9 +7,16 @@ on:
       - main
       - master
 
+permissions:
+  contents: read
+
+concurrency:
+  group: flutter-ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   flutter:
-    name: Format, Analyze, Test, Build
+    name: Enterprise Flutter Gates
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -41,10 +48,31 @@ jobs:
       - name: Route coverage artifact is current
         run: dart run tool/route_coverage_audit.dart --check
 
+      - name: Navigation edge artifact is current
+        run: dart run tool/navigation_edge_audit.dart --check
+
       - name: Analyze
         run: flutter analyze
 
-      - name: Test
+      - name: Router contracts
+        run: flutter test test/app/router --reporter=compact
+
+      - name: Navigation route guardrails
+        run: flutter test test/quality/navigation_route_guardrails_test.dart --reporter=compact
+
+      - name: Architecture guardrails
+        run: flutter test test/quality/architecture_baseline_guardrails_test.dart --reporter=compact
+
+      - name: Product copy guardrails
+        run: >
+          flutter test
+          test/quality/product_copy_guardrails_test.dart
+          test/quality/trade_product_copy_guardrails_test.dart
+          test/quality/prediction_product_copy_guardrails_test.dart
+          test/quality/p2p_wallet_product_copy_guardrails_test.dart
+          --reporter=compact
+
+      - name: Full test suite
         run: flutter test --reporter=compact
 
       - name: Build debug APK

@@ -1,8 +1,17 @@
 part of 'arena_points_page.dart';
 
 class _ArenaPointsPageState extends ConsumerState<ArenaPointsPage> {
-  String _activeFilter = 'Táº¥t cáº£';
+  String _activeFilter = 'Tất cả';
   bool _claimedAll = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final initialFilter = widget.initialFilter;
+    if (initialFilter != null) {
+      _activeFilter = initialFilter;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +26,7 @@ class _ArenaPointsPageState extends ConsumerState<ArenaPointsPage> {
         MediaQuery.paddingOf(context).bottom;
     final visibleTasks = snapshot.tasks
         .where(
-          (task) =>
-              _activeFilter == 'Táº¥t cáº£' || task.filter == _activeFilter,
+          (task) => _activeFilter == 'Tất cả' || task.filter == _activeFilter,
         )
         .toList(growable: false);
 
@@ -30,8 +38,8 @@ class _ArenaPointsPageState extends ConsumerState<ArenaPointsPage> {
         child: Column(
           children: [
             VitHeader(
-              title: 'Trung tÃ¢m Pháº§n thÆ°á»Ÿng',
-              subtitle: 'Pháº§n thÆ°á»Ÿng Â· Rewards',
+              title: 'Trung tâm Phần thưởng',
+              subtitle: 'Phần thưởng · Rewards',
               showBack: true,
               onBack: () => _close(context),
             ),
@@ -136,14 +144,14 @@ class _RewardsHero extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Pháº§n thÆ°á»Ÿng',
+                      'Phần thưởng',
                       style: AppTextStyles.baseMedium.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
                     Text(
-                      'HoÃ n thÃ nh nhiá»‡m vá»¥ - nháº­n Arena Points',
+                      'Hoàn thành nhiệm vụ - nhận Arena Points',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
@@ -166,10 +174,10 @@ class _RewardsHero extends StatelessWidget {
             children: [
               Expanded(
                 child: _RewardMetricCard(
-                  label: 'Points Ä‘Ã£ nháº­n',
+                  label: 'Points đã nhận',
                   value: '${summary.bonusPointsClaimed} pts',
                   helper:
-                      '${summary.claimedCount} xong Â· ${summary.pendingCount} chá»',
+                      '${summary.claimedCount} xong · ${summary.pendingCount} chờ',
                   icon: Icons.redeem_outlined,
                   color: AppColors.warn,
                 ),
@@ -179,8 +187,7 @@ class _RewardsHero extends StatelessWidget {
                 child: _RewardMetricCard(
                   label: 'Arena Points',
                   value: '${formatArenaPoints(summary.currentBalance)} pts',
-                  helper:
-                      'Háº¡ng #${summary.rank} Â· Top ${summary.topPercent}%',
+                  helper: 'Hạng #${summary.rank} · Top ${summary.topPercent}%',
                   icon: Icons.bolt_outlined,
                   color: AppColors.accent,
                 ),
@@ -302,7 +309,7 @@ class _BalanceBreakdown extends StatelessWidget {
             Expanded(
               child: _TinyStat(
                 icon: Icons.lock_open_outlined,
-                label: 'Kháº£ dá»¥ng',
+                label: 'Khả dụng',
                 value: formatArenaPoints(available),
                 color: AppColors.buy,
               ),
@@ -310,7 +317,7 @@ class _BalanceBreakdown extends StatelessWidget {
             Expanded(
               child: _TinyStat(
                 icon: Icons.lock_outline_rounded,
-                label: 'Äang khÃ³a',
+                label: 'Đang khóa',
                 value: formatArenaPoints(locked),
                 color: AppColors.warn,
                 alignEnd: true,
@@ -366,7 +373,7 @@ class _PendingClaimBanner extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '+${summary.pendingBonusPoints} bonus pts Â· +${summary.pendingPoints} pts',
+                  '+${summary.pendingBonusPoints} bonus pts · +${summary.pendingPoints} pts',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
               ],
@@ -374,7 +381,7 @@ class _PendingClaimBanner extends StatelessWidget {
           ),
           if (!claimedAll)
             VitStatusPill(
-              label: 'Nháº­n táº¥t cáº£',
+              label: 'Nhận tất cả',
               status: VitStatusPillStatus.orange,
               size: VitStatusPillSize.md,
             ),
@@ -405,7 +412,7 @@ class _ExpiringBanner extends StatelessWidget {
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
-              '$count nhiá»‡m vá»¥ sáº¯p háº¿t háº¡n Â· Giao dá»‹ch 5 lá»‡nh Spot',
+              '$count nhiệm vụ sắp hết hạn · Giao dịch 5 lệnh Spot',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(color: AppColors.text2),
@@ -443,7 +450,7 @@ class _CategoryProgress extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                'Tiáº¿n Ä‘á»™ theo danh má»¥c',
+                'Tiến độ theo danh mục',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
                   fontWeight: AppTextStyles.bold,
@@ -468,11 +475,11 @@ class _CategoryProgress extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         Row(
           children: [
-            _Legend(label: 'ÄÃ£ nháº­n', color: AppColors.buy),
+            _Legend(label: 'Đã nhận', color: AppColors.buy),
             const SizedBox(width: AppSpacing.x3),
-            _Legend(label: 'Chá» nháº­n', color: AppColors.warn),
+            _Legend(label: 'Chờ nhận', color: AppColors.warn),
             const SizedBox(width: AppSpacing.x3),
-            _Legend(label: 'Äang lÃ m', color: AppColors.text3),
+            _Legend(label: 'Đang làm', color: AppColors.text3),
           ],
         ),
       ],

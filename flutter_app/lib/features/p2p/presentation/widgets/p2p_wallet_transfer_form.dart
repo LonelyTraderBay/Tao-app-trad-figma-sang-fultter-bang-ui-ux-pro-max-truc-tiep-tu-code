@@ -244,6 +244,9 @@ class _AssetTile extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.lgRadius,
         child: Container(
+          key: selected
+              ? P2PWalletTransferPage.activeAssetKey(asset.symbol)
+              : null,
           constraints: const BoxConstraints(minHeight: 80),
           padding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.x2,

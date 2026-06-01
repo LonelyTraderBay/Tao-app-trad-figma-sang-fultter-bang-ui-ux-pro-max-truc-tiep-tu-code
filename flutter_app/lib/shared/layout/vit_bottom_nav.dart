@@ -209,6 +209,9 @@ class _VitBottomNavButton extends StatelessWidget {
                 Positioned(
                   top: renderMode.usesVisualQaFrame ? -12 : -8,
                   child: Container(
+                    key: active
+                        ? Key('vit_bottom_nav_active_${item.destination.name}')
+                        : null,
                     width: renderMode.usesVisualQaFrame ? 52 : 48,
                     height: renderMode.usesVisualQaFrame ? 52 : 48,
                     decoration: BoxDecoration(

@@ -125,8 +125,11 @@ class _MarketNewsPageState extends ConsumerState<MarketNewsPage> {
                               _savedIds.add(id);
                             }
                           }),
-                          onTokenTap: (token) =>
-                              context.go('/pair/${token.toLowerCase()}usdt'),
+                          onTokenTap: (token) => context.go(
+                            AppRoutePaths.pairDetail(
+                              '${token.toLowerCase()}usdt',
+                            ),
+                          ),
                         ),
                     ],
                   ),

@@ -311,7 +311,7 @@ class _ScreensSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x4),
         Text(
-          '7 core screens Ä‘Ã£ Ä‘Æ°á»£c consolidate thÃ nh báº£n vFinal. Má»—i screen Ä‘Ã£ audit: trust-first, accessibility, states Ä‘áº§y Ä‘á»§.',
+          '7 core screens đã được consolidate thành bản vFinal. Mỗi screen đã audit: trust-first, accessibility, states đầy đủ.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
             height: 1.45,
@@ -423,7 +423,7 @@ class _StatesSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x4),
         Text(
-          'LÆ°á»›i states cho tá»«ng core screen. Chá»‰ hiá»ƒn thá»‹ states thá»±c sá»± Ã¡p dá»¥ng.',
+          'Lưới states cho từng core screen. Chỉ hiển thị states thực sự áp dụng.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
             height: 1.45,
@@ -493,7 +493,7 @@ class _FlowsSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x4),
         Text(
-          'CÃ¡c flow chÃ­nh cÃ³ prototype link tháº­t. Tap step Ä‘á»ƒ navigate báº±ng route canonical.',
+          'Các flow chính có prototype link thật. Tap step để navigate bằng route canonical.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
             height: 1.45,

@@ -56,7 +56,8 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                         onChanged: (value) => setState(() => _query = value),
                         onClear: () => setState(() => _query = ''),
                         onGuide: () => _go(AppRoutePaths.arenaGuide),
-                        onRewards: () => _go('/rewards?tab=arena'),
+                        onRewards: () =>
+                            _go('${AppRoutePaths.rewards}?tab=arena'),
                         onLeaderboard: () =>
                             _go(AppRoutePaths.arenaLeaderboard),
                         onMyArena: () => _go(AppRoutePaths.profileArena),

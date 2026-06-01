@@ -85,10 +85,10 @@ mixin _MockArenaRepositoryMethodsPart05 on _MockArenaRepositoryBase {
         ArenaFlowGroupDraft(
           id: 'core',
           title: 'Core Entry Points',
-          subtitle: '3 Ã„â€˜iÃ¡Â»Æ’m vÃƒÂ o chÃƒÂ­nh tÃ¡Â»Â« bottom nav',
+          subtitle: '3 điểm vào chính từ bottom nav',
           kind: ArenaFlowKind.core,
           connectionNote:
-              'Home quick action, Profile menu vÃƒÂ  Market banner Ã„â€˜Ã¡Â»Âu dÃ¡ÂºÂ«n vÃƒÂ o Arena.',
+              'Home quick action, Profile menu và Market banner đều dẫn vào Arena.',
           nodes: [
             ArenaFlowNodeDraft(
               label: 'HomePage_v2',
@@ -110,7 +110,7 @@ mixin _MockArenaRepositoryMethodsPart05 on _MockArenaRepositoryBase {
             ),
             ArenaFlowNodeDraft(
               label: 'ArenaHomePage',
-              sublabel: 'Hub chÃƒÂ­nh',
+              sublabel: 'Hub chính',
               kind: ArenaFlowKind.points,
               route: '/arena',
             ),
@@ -119,50 +119,50 @@ mixin _MockArenaRepositoryMethodsPart05 on _MockArenaRepositoryBase {
         ArenaFlowGroupDraft(
           id: 'discovery',
           title: 'Discovery Flow',
-          subtitle: 'KhÃƒÂ¡m phÃƒÂ¡ modes, challenges, creators',
+          subtitle: 'Khám phá modes, challenges, creators',
           kind: ArenaFlowKind.discovery,
           connectionNote:
-              'Arena Home mÃ¡Â»Å¸ Studio, Mode Detail, Challenge Detail, Creator, Leaderboard vÃƒÂ  Points.',
+              'Arena Home mở Studio, Mode Detail, Challenge Detail, Creator, Leaderboard và Points.',
           nodes: [
             ArenaFlowNodeDraft(
               label: 'ArenaHomePage',
-              sublabel: 'Hub chÃƒÂ­nh',
+              sublabel: 'Hub chính',
               kind: ArenaFlowKind.points,
               route: '/arena',
             ),
             ArenaFlowNodeDraft(
               label: 'ArenaStudioPage',
-              sublabel: 'TÃ¡ÂºÂ¡o challenge',
+              sublabel: 'Tạo challenge',
               kind: ArenaFlowKind.verified,
               route: '/arena/studio',
             ),
             ArenaFlowNodeDraft(
               label: 'ArenaModeDetailPage',
-              sublabel: 'Chi tiÃ¡ÂºÂ¿t mode',
+              sublabel: 'Chi tiết mode',
               kind: ArenaFlowKind.participant,
               route: '/arena/mode/mode001',
             ),
             ArenaFlowNodeDraft(
               label: 'ArenaChallengeDetail',
-              sublabel: 'Chi tiÃ¡ÂºÂ¿t challenge',
+              sublabel: 'Chi tiết challenge',
               kind: ArenaFlowKind.discovery,
               route: '/arena/challenge/ch003',
             ),
             ArenaFlowNodeDraft(
               label: 'ArenaCreatorPage',
-              sublabel: 'HÃ¡Â»â€œ sÃ†Â¡ creator',
+              sublabel: 'Hồ sơ creator',
               kind: ArenaFlowKind.points,
               route: '/arena/creator/cr001',
             ),
             ArenaFlowNodeDraft(
               label: 'ArenaLeaderboardPage',
-              sublabel: 'BÃ¡ÂºÂ£ng xÃ¡ÂºÂ¿p hÃ¡ÂºÂ¡ng',
+              sublabel: 'Bảng xếp hạng',
               kind: ArenaFlowKind.safety,
               route: '/arena/leaderboard',
             ),
             ArenaFlowNodeDraft(
               label: 'ArenaPointsPage',
-              sublabel: 'KiÃ¡ÂºÂ¿m Points',
+              sublabel: 'Kiếm Points',
               kind: ArenaFlowKind.points,
               route: '/arena/points',
             ),
@@ -174,26 +174,26 @@ mixin _MockArenaRepositoryMethodsPart05 on _MockArenaRepositoryBase {
           subtitle: '6-step wizard -> publish -> challenge live',
           kind: ArenaFlowKind.creator,
           connectionNote:
-              'Template, cÃ¡ÂºÂ¥u trÃƒÂºc, luÃ¡ÂºÂ­t chÃ†Â¡i, kÃ¡ÂºÂ¿t quÃ¡ÂºÂ£, points vÃƒÂ  review dÃ¡ÂºÂ«n tÃ¡Â»â€ºi publish.',
+              'Template, cấu trúc, luật chơi, kết quả, points và review dẫn tới publish.',
           nodes: [
             ArenaFlowNodeDraft(
               label: 'Step 1 - Template',
-              sublabel: 'ChÃ¡Â»Ân template',
+              sublabel: 'Chọn template',
               kind: ArenaFlowKind.verified,
               route: '/arena/studio',
             ),
             ArenaFlowNodeDraft(
-              label: 'Step 2 - CÃ¡ÂºÂ¥u trÃƒÂºc',
+              label: 'Step 2 - Cấu trúc',
               sublabel: 'Format, slots, join',
               kind: ArenaFlowKind.discovery,
             ),
             ArenaFlowNodeDraft(
-              label: 'Step 3 - LuÃ¡ÂºÂ­t chÃ†Â¡i',
-              sublabel: 'TÃƒÂªn, rules, win condition',
+              label: 'Step 3 - Luật chơi',
+              sublabel: 'Tên, rules, win condition',
               kind: ArenaFlowKind.points,
             ),
             ArenaFlowNodeDraft(
-              label: 'Step 4 - KÃ¡ÂºÂ¿t quÃ¡ÂºÂ£',
+              label: 'Step 4 - Kết quả',
               sublabel: 'Resolution method',
               kind: ArenaFlowKind.participant,
             ),
@@ -209,7 +209,7 @@ mixin _MockArenaRepositoryMethodsPart05 on _MockArenaRepositoryBase {
             ),
             ArenaFlowNodeDraft(
               label: 'Publish',
-              sublabel: 'KiÃ¡Â»Æ’m duyÃ¡Â»â€¡t tÃ¡Â»Â± Ã„â€˜Ã¡Â»â„¢ng',
+              sublabel: 'Kiểm duyệt tự động',
               kind: ArenaFlowKind.participant,
             ),
             ArenaFlowNodeDraft(
@@ -217,24 +217,24 @@ mixin _MockArenaRepositoryMethodsPart05 on _MockArenaRepositoryBase {
               sublabel: 'State: Open',
               kind: ArenaFlowKind.discovery,
               route: '/arena/challenge/ch003',
-              stateLabel: 'Ã„Âang mÃ¡Â»Å¸',
+              stateLabel: 'Đang mở',
             ),
           ],
         ),
         ArenaFlowGroupDraft(
           id: 'participant',
           title: 'Participant Flow',
-          subtitle: 'Tham gia challenge -> live -> kÃ¡ÂºÂ¿t quÃ¡ÂºÂ£',
+          subtitle: 'Tham gia challenge -> live -> kết quả',
           kind: ArenaFlowKind.points,
           connectionNote:
-              'Open detail, confirm join, live state, pending result vÃƒÂ  resolved state.',
+              'Open detail, confirm join, live state, pending result và resolved state.',
           nodes: [
             ArenaFlowNodeDraft(
               label: 'ChallengeDetail',
               sublabel: 'State: Open',
               kind: ArenaFlowKind.discovery,
               route: '/arena/challenge/ch003',
-              stateLabel: 'Ã„Âang mÃ¡Â»Å¸',
+              stateLabel: 'Đang mở',
             ),
             ArenaFlowNodeDraft(
               label: 'ArenaJoinPage',
@@ -246,30 +246,29 @@ mixin _MockArenaRepositoryMethodsPart05 on _MockArenaRepositoryBase {
               label: 'ChallengeDetail',
               sublabel: 'State: Live',
               kind: ArenaFlowKind.participant,
-              stateLabel: 'Ã„Âang diÃ¡Â»â€¦n ra',
+              stateLabel: 'Đang diễn ra',
             ),
             ArenaFlowNodeDraft(
               label: 'ChallengeDetail',
               sublabel: 'State: Pending Result',
               kind: ArenaFlowKind.verified,
-              stateLabel: 'ChÃ¡Â»Â kÃ¡ÂºÂ¿t quÃ¡ÂºÂ£',
+              stateLabel: 'Chờ kết quả',
             ),
             ArenaFlowNodeDraft(
               label: 'ChallengeDetail',
               sublabel: 'State: Resolved',
               kind: ArenaFlowKind.points,
-              stateLabel: 'Ã„ÂÃƒÂ£ xÃ¡Â»Â­ lÃƒÂ½',
+              stateLabel: 'Đã xử lý',
             ),
           ],
         ),
         ArenaFlowGroupDraft(
           id: 'owner',
           title: 'Owner Flow',
-          subtitle:
-              'QuÃ¡ÂºÂ£n lÃƒÂ½ phÃƒÂ²ng, modes Ã„â€˜ÃƒÂ£ tÃ¡ÂºÂ¡o, prefill studio',
+          subtitle: 'Quản lý phòng, modes đã tạo, prefill studio',
           kind: ArenaFlowKind.safety,
           connectionNote:
-              'My Arena quÃ¡ÂºÂ£n lÃƒÂ½ rooms, saved modes, drafts vÃƒÂ  mÃ¡Â»Å¸ lÃ¡ÂºÂ¡i studio prefill.',
+              'My Arena quản lý rooms, saved modes, drafts và mở lại studio prefill.',
           nodes: [
             ArenaFlowNodeDraft(
               label: 'MyArenaPage',
@@ -279,25 +278,25 @@ mixin _MockArenaRepositoryMethodsPart05 on _MockArenaRepositoryBase {
             ),
             ArenaFlowNodeDraft(
               label: 'ChallengeDetail',
-              sublabel: 'QuÃ¡ÂºÂ£n lÃƒÂ½ phÃƒÂ²ng',
+              sublabel: 'Quản lý phòng',
               kind: ArenaFlowKind.discovery,
               route: '/arena/challenge/ch003',
             ),
             ArenaFlowNodeDraft(
               label: 'ModeDetailPage',
-              sublabel: 'Mode Ã„â€˜ÃƒÂ£ tÃ¡ÂºÂ¡o/lÃ†Â°u',
+              sublabel: 'Mode đã tạo/lưu',
               kind: ArenaFlowKind.participant,
               route: '/arena/mode/mode001',
             ),
             ArenaFlowNodeDraft(
               label: 'ArenaCreatorPage',
-              sublabel: 'HÃ¡Â»â€œ sÃ†Â¡ creator',
+              sublabel: 'Hồ sơ creator',
               kind: ArenaFlowKind.points,
               route: '/arena/creator/cr001',
             ),
             ArenaFlowNodeDraft(
               label: 'ArenaStudioPage',
-              sublabel: 'Prefilled tÃ¡Â»Â« mode',
+              sublabel: 'Prefilled từ mode',
               kind: ArenaFlowKind.verified,
               route: '/arena/studio',
             ),
@@ -338,37 +337,37 @@ mixin _MockArenaRepositoryMethodsPart05 on _MockArenaRepositoryBase {
         ArenaFlowNoteDraft(
           title: 'Open Arena = Points-only',
           detail:
-              'ToÃƒÂ n bÃ¡Â»â„¢ module Open Arena sÃ¡Â»Â­ dÃ¡Â»Â¥ng Arena Points, khÃƒÂ´ng liÃƒÂªn quan vÃƒÂ­ tÃƒÂ i chÃƒÂ­nh vÃƒÂ  khÃƒÂ´ng cash-out.',
+              'Toàn bộ module Open Arena sử dụng Arena Points, không liên quan ví tài chính và không cash-out.',
           kind: ArenaFlowKind.points,
         ),
         ArenaFlowNoteDraft(
-          title: 'KhÃƒÂ´ng liÃƒÂªn quan Wallet tÃƒÂ i chÃƒÂ­nh',
+          title: 'Không liên quan Wallet tài chính',
           detail:
-              'Arena Points tÃƒÂ¡ch biÃ¡Â»â€¡t khÃ¡Â»Âi Spot Wallet vÃƒÂ  P2P Wallet; khÃƒÂ´ng cÃƒÂ³ flow deposit/withdraw crypto cho Arena.',
+              'Arena Points tách biệt khỏi Spot Wallet và P2P Wallet; không có flow deposit/withdraw crypto cho Arena.',
           kind: ArenaFlowKind.discovery,
         ),
         ArenaFlowNoteDraft(
-          title: 'Verified Challenges tÃƒÂ¡ch module riÃƒÂªng',
+          title: 'Verified Challenges tách module riêng',
           detail:
               'Verified Challenges is a release-gated local preview; compliance review and KYC gate are required before user availability.',
           kind: ArenaFlowKind.safety,
         ),
         ArenaFlowNoteDraft(
-          title: 'KhÃƒÂ´ng thÃƒÂªm item vÃƒÂ o bottom nav',
+          title: 'Không thêm item vào bottom nav',
           detail:
-              'Arena truy cÃ¡ÂºÂ­p qua Home quick action, Profile menu vÃƒÂ  Market banner; khÃƒÂ´ng chiÃ¡ÂºÂ¿m slot bottom navigation.',
+              'Arena truy cập qua Home quick action, Profile menu và Market banner; không chiếm slot bottom navigation.',
           kind: ArenaFlowKind.participant,
         ),
         ArenaFlowNoteDraft(
-          title: 'MÃ¡Â»Âi challenge bÃ¡ÂºÂ¯t buÃ¡Â»â„¢c cÃƒÂ³ Ã„â€˜Ã¡Â»Â§',
+          title: 'Mọi challenge bắt buộc có đủ',
           detail:
-              'Rules summary, resolution method, privacy setting vÃƒÂ  report/block functionality trÃ†Â°Ã¡Â»â€ºc publish.',
+              'Rules summary, resolution method, privacy setting và report/block functionality trước publish.',
           kind: ArenaFlowKind.verified,
         ),
         ArenaFlowNoteDraft(
           title: 'Moderation & Safety',
           detail:
-              'Report, block, community rules vÃƒÂ  offline banner phÃ¡ÂºÂ£i tÃƒÂ­ch hÃ¡Â»Â£p trÃƒÂªn cÃƒÂ¡c surface chÃƒÂ­nh.',
+              'Report, block, community rules và offline banner phải tích hợp trên các surface chính.',
           kind: ArenaFlowKind.safety,
         ),
       ],
@@ -376,7 +375,7 @@ mixin _MockArenaRepositoryMethodsPart05 on _MockArenaRepositoryBase {
         ArenaFlowQaDraft(
           id: 'qa01',
           category: 'Route Mapping',
-          label: 'ArenaHomePage - hub chÃƒÂ­nh',
+          label: 'ArenaHomePage - hub chính',
         ),
         ArenaFlowQaDraft(
           id: 'qa02',

@@ -29,6 +29,7 @@ class TradePage extends ConsumerStatefulWidget {
     super.key,
     this.pairId = 'btcusdt',
     this.chartVariant = TradeChartVariant.defaultRoute,
+    this.initialSide = TradeOrderSide.buy,
     this.shellRenderMode,
   });
 
@@ -51,6 +52,7 @@ class TradePage extends ConsumerStatefulWidget {
 
   final String pairId;
   final TradeChartVariant chartVariant;
+  final TradeOrderSide initialSide;
   final ShellRenderMode? shellRenderMode;
 
   @override

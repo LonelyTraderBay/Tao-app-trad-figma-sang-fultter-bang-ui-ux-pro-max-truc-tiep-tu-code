@@ -220,7 +220,9 @@ class _MarketMoversPageState extends ConsumerState<MarketMoversPage> {
                           movers: movers,
                           tab: _tab,
                           changeFor: _changeFor,
-                          onTap: (mover) => context.go('/pair/${mover.id}usdt'),
+                          onTap: (mover) => context.go(
+                            AppRoutePaths.pairDetail('${mover.id}usdt'),
+                          ),
                         ),
                       const _DataRefreshFooter(),
                     ],

@@ -338,6 +338,7 @@ class _SideSwitch extends StatelessWidget {
           Expanded(
             child: _SideButton(
               key: TradePage.buySideKey,
+              activeKey: const Key('sc048_trade_active_buy_side'),
               label: 'MUA',
               color: AppColors.buy,
               active: side == TradeOrderSide.buy,
@@ -347,6 +348,7 @@ class _SideSwitch extends StatelessWidget {
           Expanded(
             child: _SideButton(
               key: TradePage.sellSideKey,
+              activeKey: const Key('sc048_trade_active_sell_side'),
               label: 'BÁN',
               color: AppColors.sell,
               active: side == TradeOrderSide.sell,
@@ -362,12 +364,14 @@ class _SideSwitch extends StatelessWidget {
 class _SideButton extends StatelessWidget {
   const _SideButton({
     super.key,
+    required this.activeKey,
     required this.label,
     required this.color,
     required this.active,
     required this.onTap,
   });
 
+  final Key activeKey;
   final String label;
   final Color color;
   final bool active;
@@ -379,6 +383,7 @@ class _SideButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
       child: Container(
+        key: active ? activeKey : null,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active ? color : AppColors.transparent,

@@ -111,7 +111,7 @@ class _ArenaGuidePageState extends ConsumerState<ArenaGuidePage> {
           expandedIndex: _expandedFaq,
           onToggle: _toggleFaq,
         ),
-        _SupportCard(onPressed: () => context.go('/support')),
+        _SupportCard(onPressed: () => context.go(AppRoutePaths.support)),
       ],
     };
   }

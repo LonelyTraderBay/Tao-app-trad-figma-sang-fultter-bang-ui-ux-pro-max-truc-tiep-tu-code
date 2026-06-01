@@ -45,15 +45,15 @@ class DesignSystemInputSection extends StatelessWidget {
           ),
         const _InputWrapperDemo(
           caption: 'InputWrapper (dropdown-like)',
-          label: 'Chá»n máº¡ng',
+          label: 'Chọn mạng',
           value: 'BEP-20 (BSC)',
           icon: Icons.shield_outlined,
         ),
         const _InputWrapperDemo(
           caption: 'InputWrapper with error',
-          label: 'Chá»n phÆ°Æ¡ng thá»©c thanh toÃ¡n',
-          value: 'Chá»n...',
-          error: 'Vui lÃ²ng chá»n phÆ°Æ¡ng thá»©c thanh toÃ¡n',
+          label: 'Chọn phương thức thanh toán',
+          value: 'Chọn...',
+          error: 'Vui lòng chọn phương thức thanh toán',
         ),
       ],
     );

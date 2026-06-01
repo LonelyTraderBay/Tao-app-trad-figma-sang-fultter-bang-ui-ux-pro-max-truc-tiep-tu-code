@@ -1,13 +1,19 @@
 part of 'trade_page.dart';
 
 class _TradePageState extends ConsumerState<TradePage> {
-  TradeOrderSide _side = TradeOrderSide.buy;
+  late TradeOrderSide _side;
   TradeOrderType _orderType = TradeOrderType.limit;
   String _dataTab = 'chart';
   String _activeTab = 'order';
   final _priceController = TextEditingController(text: '67543.21');
   final _amountController = TextEditingController();
   bool _tpslEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _side = widget.initialSide;
+  }
 
   @override
   void dispose() {
@@ -246,14 +252,14 @@ class _QuickNavRow extends StatelessWidget {
             icon: Icons.work_outline_rounded,
             label: 'Vị thế',
             color: _tradePrimary,
-            onTap: () => context.go('/trade/positions'),
+            onTap: () => context.go(AppRoutePaths.tradePositions),
           ),
           _QuickNavChip(
             key: TradePage.quickNavKey('settings'),
             icon: Icons.settings_outlined,
             label: 'Cài đặt',
             color: AppColors.text3,
-            onTap: () => context.go('/trade/settings'),
+            onTap: () => context.go(AppRoutePaths.tradeSettings),
           ),
         ],
       ),

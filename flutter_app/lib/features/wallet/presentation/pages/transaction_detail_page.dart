@@ -74,7 +74,7 @@ class TransactionDetailPage extends ConsumerWidget {
                     : _TransactionDetailContent(
                         tx: snapshot.transaction!,
                         onCopy: (value) => _copyValue(context, value),
-                        onSupport: () => context.go('/support'),
+                        onSupport: () => context.go(AppRoutePaths.support),
                       ),
               ),
             ),

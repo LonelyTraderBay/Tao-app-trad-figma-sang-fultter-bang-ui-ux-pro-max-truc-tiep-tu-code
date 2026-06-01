@@ -145,8 +145,9 @@ class _MarketSectorsPageState extends ConsumerState<MarketSectorsPage> {
                                 selectedSector,
                                 snapshot,
                               ),
-                              onTap: (coin) =>
-                                  context.go('/pair/${coin.id}usdt'),
+                              onTap: (coin) => context.go(
+                                AppRoutePaths.pairDetail('${coin.id}usdt'),
+                              ),
                             ),
                             MarketSectorComparisonTable(
                               sectors: visibleSectors,

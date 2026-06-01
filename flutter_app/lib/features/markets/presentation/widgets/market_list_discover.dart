@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -31,7 +32,7 @@ class MarketListDiscoverMoreSection extends StatelessWidget {
                 subtitle: 'Dự đoán sự kiện · Xác suất · Vị thế',
                 badge: 'Real positions',
                 color: marketListPredictionAccent,
-                onTap: () => context.go('/markets/predictions'),
+                onTap: () => context.go(AppRoutePaths.marketsPredictions),
               ),
               const Divider(height: 1, thickness: 1, color: AppColors.divider),
               _DiscoverRow(
@@ -40,7 +41,7 @@ class MarketListDiscoverMoreSection extends StatelessWidget {
                 subtitle: 'Creator modes · Thách đấu · Arena Points',
                 badge: 'Points only',
                 color: marketListArenaAccent,
-                onTap: () => context.go('/arena'),
+                onTap: () => context.go(AppRoutePaths.arena),
               ),
             ],
           ),

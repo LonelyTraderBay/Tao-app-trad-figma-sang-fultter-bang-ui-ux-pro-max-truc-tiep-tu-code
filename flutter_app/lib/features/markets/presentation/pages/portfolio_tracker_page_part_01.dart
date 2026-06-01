@@ -69,8 +69,9 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
                         _TopHoldings(
                           holdings: overviewHoldings.take(4).toList(),
                           hidden: _hideBalance,
-                          onTap: (holding) =>
-                              context.go('/pair/${holding.id}usdt'),
+                          onTap: (holding) => context.go(
+                            AppRoutePaths.pairDetail('${holding.id}usdt'),
+                          ),
                         ),
                         _RiskCard(stats: snapshot.stats),
                       ] else if (_tab == 'assets') ...[
@@ -85,7 +86,9 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
                             key: PortfolioTrackerPage.holdingKey(holding.id),
                             holding: holding,
                             hidden: _hideBalance,
-                            onTap: () => context.go('/pair/${holding.id}usdt'),
+                            onTap: () => context.go(
+                              AppRoutePaths.pairDetail('${holding.id}usdt'),
+                            ),
                           ),
                       ] else ...[
                         _TimeFilterChips(

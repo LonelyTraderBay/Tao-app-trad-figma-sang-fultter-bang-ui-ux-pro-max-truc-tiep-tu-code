@@ -288,6 +288,7 @@ import 'package:vit_trade_flutter/features/support/presentation/pages/announceme
 import 'package:vit_trade_flutter/features/support/presentation/pages/help_center_page.dart';
 import 'package:vit_trade_flutter/features/support/presentation/pages/support_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/trade_page.dart';
+import 'package:vit_trade_flutter/features/trade/domain/entities/trade_entities.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/orders_history_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/order_receipt_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/ombudsman_referral_page.dart';

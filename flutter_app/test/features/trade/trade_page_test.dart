@@ -85,6 +85,32 @@ void main() {
     expect(find.text('10,200.00 USDT'), findsOneWidget);
   });
 
+  testWidgets('SC-049 side query preselects sell and invalid side falls back', (
+    tester,
+  ) async {
+    await pumpTrade(
+      tester,
+      initialLocation: '${AppRoutePaths.tradePair('btcusdt')}?side=sell',
+    );
+
+    expect(
+      find.byKey(const Key('sc048_trade_active_sell_side')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const Key('sc048_trade_active_buy_side')), findsNothing);
+
+    await pumpTrade(
+      tester,
+      initialLocation: '${AppRoutePaths.tradePair('btcusdt')}?side=short',
+    );
+
+    expect(
+      find.byKey(const Key('sc048_trade_active_buy_side')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const Key('sc048_trade_active_sell_side')), findsNothing);
+  });
+
   testWidgets('SC-048 renders trade form inside the Trade shell', (
     tester,
   ) async {

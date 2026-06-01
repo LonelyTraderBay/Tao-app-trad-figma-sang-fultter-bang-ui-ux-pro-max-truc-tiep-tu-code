@@ -69,23 +69,15 @@ void main() {
     expect(find.text('Release-gated Preview'), findsOneWidget);
     expect(find.text('Preview scope'), findsOneWidget);
     expect(
-      find.text(
-        'Challenge Ã„â€˜Ã†Â°Ã¡Â»Â£c verify bÃ¡Â»Å¸i hÃ¡Â»â€¡ thÃ¡Â»â€˜ng Oracle',
-      ),
+      find.text('Challenge được verify bởi hệ thống Oracle'),
       findsOneWidget,
     );
     expect(
       find.text('Points pool policy with release review gate'),
       findsOneWidget,
     );
-    expect(
-      find.text('Leaderboard riÃƒÂªng cho verified players'),
-      findsOneWidget,
-    );
-    expect(
-      find.text('Creator badges vÃƒÂ  trust score nÃƒÂ¢ng cao'),
-      findsOneWidget,
-    );
+    expect(find.text('Leaderboard riêng cho verified players'), findsOneWidget);
+    expect(find.text('Creator badges và trust score nâng cao'), findsOneWidget);
   });
 
   testWidgets('SC-195 uses a compact static preview state', (tester) async {

@@ -125,6 +125,23 @@ void main() {
     expect(find.text('Khả dụng: 0.12340000 BTC'), findsOneWidget);
   });
 
+  testWidgets('SC-261 invalid query params fall back to safe defaults', (
+    tester,
+  ) async {
+    await pumpP2PWalletTransfer(
+      tester,
+      initialLocation:
+          '${AppRoutePaths.p2pWalletTransfer}?asset=DOGE&type=unknown&direction=sideways',
+    );
+
+    expect(find.byType(P2PWalletTransferPage), findsOneWidget);
+    expect(
+      find.byKey(P2PWalletTransferPage.activeAssetKey('USDT')),
+      findsOneWidget,
+    );
+    expect(find.text('DOGE'), findsNothing);
+  });
+
   testWidgets('SC-261 quick percentage fills the amount field', (tester) async {
     await pumpP2PWalletTransfer(tester);
 

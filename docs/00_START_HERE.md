@@ -14,7 +14,9 @@ web screenshot baseline were removed on 2026-05-26.
 7. `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md`
 8. `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`
 9. `docs/03_DESIGN_SYSTEM/Guidelines.md`
-10. Screen- or module-specific references only when working on that area.
+10. `docs/02_FLUTTER_MIGRATION/Future-Feature-Onboarding-Checklist.md`
+11. `docs/02_FLUTTER_MIGRATION/Enterprise-PR-Review-Checklist.md`
+12. Screen- or module-specific references only when working on that area.
 
 ## Source Of Truth
 
@@ -45,7 +47,9 @@ Run from `flutter_app/`:
 
 ```bash
 flutter pub get
-dart format .
+dart format --output=none --set-exit-if-changed .
+dart run tool/route_coverage_audit.dart --check
+dart run tool/navigation_edge_audit.dart --check
 flutter analyze
 flutter test --reporter=compact
 ```
@@ -61,6 +65,8 @@ behavior changes.
 | `docs/01_AI_RULES/AI_EXECUTION_CONTRACT.md` | Execution rules after Flutter-only cleanup. |
 | `docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md` | Conflict resolution when docs disagree. |
 | `docs/02_FLUTTER_MIGRATION/` | Retained path for Flutter engineering, coverage, and QA docs. |
+| `docs/02_FLUTTER_MIGRATION/Future-Feature-Onboarding-Checklist.md` | Required checklist before adding a feature, route, high-risk flow, or large test surface. |
+| `docs/02_FLUTTER_MIGRATION/Enterprise-PR-Review-Checklist.md` | Pull request review gates for architecture, router, product safety, and tests. |
 | `docs/03_DESIGN_SYSTEM/Guidelines.md` | Product and design rules. |
 | `docs/05_ARCHITECTURE/VitTrade-Enterprise-Architecture-Report.md` | Architecture reference; Flutter source wins on conflict. |
 

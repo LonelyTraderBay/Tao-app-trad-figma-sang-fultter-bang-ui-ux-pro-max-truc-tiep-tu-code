@@ -41,7 +41,7 @@ void main() {
     expect(snapshot.project, isNull);
     expect(snapshot.contractRoute, '/launchpad/contract/sample');
     expect(snapshot.idoBridgeRoute, '/launchpad/idobridge/sample');
-    expect(snapshot.receiptRoute, '/launchpad/receipt/new');
+    expect(snapshot.receiptRoute, AppRoutePaths.launchpadReceiptSub001);
     expect(snapshot.stakingRoute, AppRoutePaths.launchpadStaking);
     expect(snapshot.contractNotes, contains('Flutter error state'));
     expect(

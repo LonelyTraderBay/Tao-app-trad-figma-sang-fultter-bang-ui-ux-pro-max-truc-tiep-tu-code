@@ -10,7 +10,10 @@ import 'package:vit_trade_flutter/features/rewards/presentation/pages/rewards_hu
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
-  Future<void> pumpRewards(WidgetTester tester) async {
+  Future<void> pumpRewards(
+    WidgetTester tester, {
+    String initialLocation = AppRoutePaths.rewards,
+  }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
@@ -19,7 +22,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         child: VitTradeApp(
-          routerConfig: createAppRouter(initialLocation: AppRoutePaths.rewards),
+          routerConfig: createAppRouter(initialLocation: initialLocation),
         ),
       ),
     );
@@ -89,6 +92,27 @@ void main() {
     expect(find.textContaining('Flash: Mua BTC'), findsOneWidget);
     expect(find.textContaining('Flash 3'), findsOneWidget);
     expect(find.textContaining('Volume tu'), findsNothing);
+  });
+
+  testWidgets('SC-319 tab query preselects Arena and invalid tab is safe', (
+    tester,
+  ) async {
+    await pumpRewards(
+      tester,
+      initialLocation: '${AppRoutePaths.rewards}?tab=arena',
+    );
+
+    expect(find.byKey(RewardsHubPage.activeFilterKey('Arena')), findsOneWidget);
+    expect(find.textContaining('Open Arena'), findsWidgets);
+
+    await pumpRewards(
+      tester,
+      initialLocation: '${AppRoutePaths.rewards}?tab=wallet',
+    );
+
+    expect(find.byType(RewardsHubPage), findsOneWidget);
+    expect(find.byKey(RewardsHubPage.activeFilterKey('Arena')), findsNothing);
+    expect(find.textContaining('Flash: Mua BTC'), findsOneWidget);
   });
 
   testWidgets('SC-319 referral and leaderboard links use resolved routes', (

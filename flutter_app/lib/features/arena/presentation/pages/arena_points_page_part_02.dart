@@ -294,6 +294,7 @@ class _FilterButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
         child: AnimatedContainer(
+          key: active ? ArenaPointsPage.activeFilterKey(label) : null,
           duration: const Duration(milliseconds: 160),
           padding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.x3,

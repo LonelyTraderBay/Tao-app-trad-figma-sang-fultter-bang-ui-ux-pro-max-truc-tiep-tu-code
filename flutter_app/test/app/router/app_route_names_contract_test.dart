@@ -364,5 +364,38 @@ void main() {
       AppRouteNames.sc263P2PWalletHistoryAlias,
       'sc263P2PWalletHistoryAlias',
     );
+    expect(AppRouteNames.sc402P2PKycVerify, 'sc402P2PKycVerify');
+    expect(AppRouteNames.sc403P2PKycFaceMatch, 'sc403P2PKycFaceMatch');
+    expect(AppRouteNames.sc404P2PWhitelistMode, 'sc404P2PWhitelistMode');
+    expect(
+      AppRouteNames.sc405SettingsSecurityBiometric,
+      'sc405SettingsSecurityBiometric',
+    );
+    expect(
+      AppRouteNames.sc406SettingsSecurityChangePassword,
+      'sc406SettingsSecurityChangePassword',
+    );
+    expect(AppRouteNames.sc407P2PTaxReportDetail, 'sc407P2PTaxReportDetail');
+    expect(AppRouteNames.sc408DcaRebalanceEdit, 'sc408DcaRebalanceEdit');
+    expect(AppRouteNames.sc409DcaRebalanceHistory, 'sc409DcaRebalanceHistory');
+    expect(AppRouteNames.sc410AdminSettings, 'sc410AdminSettings');
+    expect(AppRouteNames.sc411ClientOptUpRequest, 'sc411ClientOptUpRequest');
+    expect(
+      AppRouteNames.sc412TradeCopyRegulatoryDisclosuresAlias,
+      'sc412TradeCopyRegulatoryDisclosuresAlias',
+    );
+    expect(AppRouteNames.sc413SettingsSecurity, 'sc413SettingsSecurity');
+    expect(
+      AppRouteNames.sc414PredictionTournamentDetail,
+      'sc414PredictionTournamentDetail',
+    );
+    expect(
+      AppRouteNames.sc415TargetMarketDefinitionDetail,
+      'sc415TargetMarketDefinitionDetail',
+    );
+    expect(
+      AppRouteNames.sc416ComplaintTrackingDetail,
+      'sc416ComplaintTrackingDetail',
+    );
   });
 }

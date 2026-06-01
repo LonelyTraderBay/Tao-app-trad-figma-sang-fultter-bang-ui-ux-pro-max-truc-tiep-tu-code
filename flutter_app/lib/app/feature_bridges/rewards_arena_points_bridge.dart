@@ -10,6 +10,7 @@ class RewardsArenaPointsBridge extends StatelessWidget {
     super.key,
     required this.snapshot,
     this.shellRenderMode,
+    this.initialFilter,
   });
 
   static const contentKey = ArenaPointsPage.contentKey;
@@ -18,10 +19,13 @@ class RewardsArenaPointsBridge extends StatelessWidget {
   static const leaderboardKey = ArenaPointsPage.leaderboardKey;
 
   static Key filterKey(String label) => ArenaPointsPage.filterKey(label);
+  static Key activeFilterKey(String label) =>
+      ArenaPointsPage.activeFilterKey(label);
   static Key taskKey(String id) => ArenaPointsPage.taskKey(id);
 
   final RewardsHubSnapshot snapshot;
   final ShellRenderMode? shellRenderMode;
+  final String? initialFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +36,7 @@ class RewardsArenaPointsBridge extends StatelessWidget {
       backRoute: snapshot.backRoute,
       referralRoute: snapshot.referralRoute,
       leaderboardRoute: snapshot.leaderboardRoute,
+      initialFilter: initialFilter,
     );
   }
 }

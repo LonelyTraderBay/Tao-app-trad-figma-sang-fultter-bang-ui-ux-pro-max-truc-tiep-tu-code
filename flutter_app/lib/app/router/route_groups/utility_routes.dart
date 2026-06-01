@@ -5,7 +5,10 @@ List<RouteBase> _utilityRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.rewards,
       name: AppRouteNames.sc319RewardsHub,
-      builder: (_, _) => RewardsHubPage(shellRenderMode: shellRenderMode),
+      builder: (_, state) => RewardsHubPage(
+        shellRenderMode: shellRenderMode,
+        initialFilter: _rewardsFilterFromTab(state.uri.queryParameters['tab']),
+      ),
     ),
     GoRoute(
       path: AppRoutePaths.enterpriseStates,
@@ -65,6 +68,10 @@ List<RouteBase> _utilityRoutes(ShellRenderMode shellRenderMode) {
       builder: (_, _) => CopyTradingCardDemo(shellRenderMode: shellRenderMode),
     ),
   ];
+}
+
+String? _rewardsFilterFromTab(String? tab) {
+  return tab == 'arena' ? 'Arena' : null;
 }
 
 List<RouteBase> _discoveryAndReferralRoutes(ShellRenderMode shellRenderMode) {

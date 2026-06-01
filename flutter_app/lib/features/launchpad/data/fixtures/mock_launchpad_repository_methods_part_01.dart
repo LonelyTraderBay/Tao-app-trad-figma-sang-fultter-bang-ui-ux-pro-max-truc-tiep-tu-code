@@ -41,10 +41,10 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
       project: matchingProjects.isEmpty ? null : matchingProjects.first,
       contractRoute: '/launchpad/contract/$normalizedId',
       idoBridgeRoute: '/launchpad/idobridge/$normalizedId',
-      receiptRoute: '/launchpad/receipt/new',
+      receiptRoute: '/launchpad/receipt/sub001',
       stakingRoute: '/launchpad/staking',
       contractNotes:
-          'Launchpad detail returns launchpadProjects, subscriptions, claims, bridgeOrders, contracts, selected project detail, tokenomics, vesting, team audit data, eligibility gates, and screenState. Captured route sample intentionally has no matching project and preserves the Flutter error state; dynamic contract, IDO bridge, and new receipt routes remain safe placeholders until backend id semantics are confirmed.',
+          'Launchpad detail returns launchpadProjects, subscriptions, claims, bridgeOrders, contracts, selected project detail, tokenomics, vesting, team audit data, eligibility gates, and screenState. Captured route sample intentionally has no matching project and preserves the Flutter error state; dynamic contract and IDO bridge routes remain safe placeholders until backend id semantics are confirmed.',
       supportedStates: const {
         LaunchpadScreenState.loading,
         LaunchpadScreenState.empty,

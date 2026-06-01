@@ -212,7 +212,7 @@ class _CanonicalSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         Text(
-          '9 mÃ n hÃ¬nh vFinal chá»©a bridge integration tá»« 09A-09D. Má»—i mÃ n Ä‘Ã£ chá»n canonical version tá»‘t nháº¥t.',
+          '9 màn hình vFinal chứa bridge integration từ 09A-09D. Mỗi màn đã chọn canonical version tốt nhất.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
             height: 1.5,
@@ -348,7 +348,7 @@ class _CanonicalScreenCard extends StatelessWidget {
           if (screen.route != '/') ...[
             const SizedBox(height: AppSpacing.x2),
             _SmallTextAction(
-              label: 'Má»Ÿ trang',
+              label: 'Mở trang',
               icon: Icons.open_in_new_rounded,
               color: AppColors.primary,
               onTap: () => onRoute(screen.route),
@@ -376,7 +376,7 @@ class _StatesSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         Text(
-          '8 bridge-specific states. Má»—i state Ä‘á»‹nh nghÄ©a behavior, affected screens vÃ  fallback UI.',
+          '8 bridge-specific states. Mỗi state định nghĩa behavior, affected screens và fallback UI.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
             height: 1.5,
@@ -469,7 +469,7 @@ class _FlowsSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         Text(
-          '4 end-to-end flows káº¿t ná»‘i 2 module. Bridge steps Ä‘Æ°á»£c Ä‘Ã¡nh dáº¥u báº±ng link icon.',
+          '4 end-to-end flows kết nối 2 module. Bridge steps được đánh dấu bằng link icon.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
             height: 1.5,

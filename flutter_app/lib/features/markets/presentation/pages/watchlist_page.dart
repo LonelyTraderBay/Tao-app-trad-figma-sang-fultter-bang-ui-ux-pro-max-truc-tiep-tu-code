@@ -198,10 +198,12 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
                               for (var i = 0; i < items.length; i++) ...[
                                 _WatchlistCard(
                                   item: items[i],
-                                  onPairTap: () =>
-                                      context.go('/pair/${items[i].pair.id}'),
-                                  onTradeTap: () =>
-                                      context.go('/trade/${items[i].pair.id}'),
+                                  onPairTap: () => context.go(
+                                    AppRoutePaths.pairDetail(items[i].pair.id),
+                                  ),
+                                  onTradeTap: () => context.go(
+                                    AppRoutePaths.tradePair(items[i].pair.id),
+                                  ),
                                   onNoteTap: () => _editNote(items[i].entry),
                                   onRemoveTap: () =>
                                       _removeEntry(items[i].entry.id),

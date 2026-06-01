@@ -104,6 +104,7 @@ List<RouteBase> _predictionRoutes(ShellRenderMode shellRenderMode) {
     ),
     GoRoute(
       path: '/markets/predictions/tournament/:tournamentId',
+      name: AppRouteNames.sc414PredictionTournamentDetail,
       builder: (_, state) => PredictionTournamentDetailPage(
         tournamentId: state.pathParameters['tournamentId'] ?? 'tour1',
         shellRenderMode: shellRenderMode,

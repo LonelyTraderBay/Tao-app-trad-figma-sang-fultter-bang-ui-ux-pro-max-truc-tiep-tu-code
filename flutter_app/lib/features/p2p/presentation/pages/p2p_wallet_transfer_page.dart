@@ -40,6 +40,8 @@ class P2PWalletTransferPage extends ConsumerStatefulWidget {
 
   static Key assetKey(String symbol) =>
       Key('sc261_p2p_wallet_transfer_asset_$symbol');
+  static Key activeAssetKey(String symbol) =>
+      Key('sc261_p2p_wallet_transfer_active_asset_$symbol');
 
   static Key percentKey(int value) =>
       Key('sc261_p2p_wallet_transfer_percent_$value');

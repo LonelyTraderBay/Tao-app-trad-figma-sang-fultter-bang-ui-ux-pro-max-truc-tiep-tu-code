@@ -13,7 +13,10 @@ List<RouteBase> _tradeRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.trade,
       name: AppRouteNames.sc048Trade,
-      builder: (_, _) => TradePage(shellRenderMode: shellRenderMode),
+      builder: (_, state) => TradePage(
+        initialSide: _tradeSideFromQuery(state.uri.queryParameters['side']),
+        shellRenderMode: shellRenderMode,
+      ),
     ),
     GoRoute(
       path: AppRoutePaths.tradeConvert,
@@ -281,6 +284,7 @@ List<RouteBase> _tradeRoutes(ShellRenderMode shellRenderMode) {
     ),
     GoRoute(
       path: '${AppRoutePaths.tradeCopyTargetMarketDefinition}/:productId',
+      name: AppRouteNames.sc415TargetMarketDefinitionDetail,
       builder: (_, state) => TargetMarketDefinitionPage(
         productId: state.pathParameters['productId'] ?? 'prod-1',
         shellRenderMode: shellRenderMode,
@@ -357,6 +361,7 @@ List<RouteBase> _tradeRoutes(ShellRenderMode shellRenderMode) {
     ),
     GoRoute(
       path: '/trade/copy-trading/complaint-tracking/:complaintId',
+      name: AppRouteNames.sc416ComplaintTrackingDetail,
       builder: (_, state) => ComplaintTrackingPage(
         complaintId: state.pathParameters['complaintId'],
         shellRenderMode: shellRenderMode,
@@ -379,7 +384,17 @@ List<RouteBase> _tradeRoutes(ShellRenderMode shellRenderMode) {
       builder: (_, _) =>
           RegulatoryInspectionReadyPage(shellRenderMode: shellRenderMode),
     ),
-    ..._tradeCopyTradingOutgoingPlaceholders(shellRenderMode),
+    GoRoute(
+      path: AppRoutePaths.tradeCopyClientOptUpRequest,
+      name: AppRouteNames.sc411ClientOptUpRequest,
+      builder: (_, _) =>
+          ClientOptUpRequestPage(shellRenderMode: shellRenderMode),
+    ),
+    GoRoute(
+      path: AppRoutePaths.tradeCopyRegulatoryDisclosuresAlias,
+      name: AppRouteNames.sc412TradeCopyRegulatoryDisclosuresAlias,
+      redirect: (_, _) => AppRoutePaths.tradeCopyRegulatoryDisclosures,
+    ),
     GoRoute(
       path: AppRoutePaths.tradeMargin,
       name: AppRouteNames.sc085MarginTrading,
@@ -560,8 +575,13 @@ List<RouteBase> _tradeRoutes(ShellRenderMode shellRenderMode) {
       builder: (_, state) => TradePage(
         pairId: state.pathParameters['pairId'] ?? 'btcusdt',
         chartVariant: TradeChartVariant.pairRoute,
+        initialSide: _tradeSideFromQuery(state.uri.queryParameters['side']),
         shellRenderMode: shellRenderMode,
       ),
     ),
   ];
+}
+
+TradeOrderSide _tradeSideFromQuery(String? value) {
+  return value == 'sell' ? TradeOrderSide.sell : TradeOrderSide.buy;
 }

@@ -126,8 +126,9 @@ class _MarketHeatmapPageState extends ConsumerState<MarketHeatmapPage> {
                       if (selectedCoin != null)
                         MarketHeatmapSelectedCoinCard(
                           coin: selectedCoin,
-                          onDetail: () =>
-                              context.go('/pair/${selectedCoin.id}usdt'),
+                          onDetail: () => context.go(
+                            AppRoutePaths.pairDetail('${selectedCoin.id}usdt'),
+                          ),
                         ),
                       MarketHeatmapTrendPanels(
                         coins: visibleCoins,

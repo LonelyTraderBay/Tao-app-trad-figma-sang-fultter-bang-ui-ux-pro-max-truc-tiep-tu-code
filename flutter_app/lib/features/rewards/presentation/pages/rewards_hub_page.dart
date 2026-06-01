@@ -6,7 +6,7 @@ import 'package:vit_trade_flutter/app/providers/rewards_controller_providers.dar
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 
 class RewardsHubPage extends ConsumerWidget {
-  const RewardsHubPage({super.key, this.shellRenderMode});
+  const RewardsHubPage({super.key, this.shellRenderMode, this.initialFilter});
 
   static const contentKey = RewardsArenaPointsBridge.contentKey;
   static const claimAllKey = RewardsArenaPointsBridge.claimAllKey;
@@ -15,9 +15,12 @@ class RewardsHubPage extends ConsumerWidget {
 
   static Key filterKey(String label) =>
       RewardsArenaPointsBridge.filterKey(label);
+  static Key activeFilterKey(String label) =>
+      RewardsArenaPointsBridge.activeFilterKey(label);
   static Key taskKey(String id) => RewardsArenaPointsBridge.taskKey(id);
 
   final ShellRenderMode? shellRenderMode;
+  final String? initialFilter;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,6 +29,7 @@ class RewardsHubPage extends ConsumerWidget {
     return RewardsArenaPointsBridge(
       shellRenderMode: shellRenderMode,
       snapshot: snapshot,
+      initialFilter: initialFilter,
     );
   }
 }

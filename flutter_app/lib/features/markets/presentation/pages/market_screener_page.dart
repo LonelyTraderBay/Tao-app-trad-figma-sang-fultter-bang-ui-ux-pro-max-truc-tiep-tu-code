@@ -218,7 +218,8 @@ class _MarketScreenerPageState extends ConsumerState<MarketScreenerPage> {
                       else
                         _ScreenerResults(
                           pairs: snapshot.marketPairs,
-                          onPairTap: (pair) => context.go('/pair/${pair.id}'),
+                          onPairTap: (pair) =>
+                              context.go(AppRoutePaths.pairDetail(pair.id)),
                         ),
                     ],
                   ),

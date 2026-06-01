@@ -22,6 +22,10 @@ List<RouteBase> _adminRoutes(ShellRenderMode shellRenderMode) {
       name: AppRouteNames.sc183FunnelDashboard,
       builder: (_, _) => FunnelDashboard(shellRenderMode: shellRenderMode),
     ),
-    ..._adminOutgoingPlaceholders(shellRenderMode),
+    GoRoute(
+      path: AppRoutePaths.adminSettings,
+      name: AppRouteNames.sc410AdminSettings,
+      builder: (_, _) => AdminSettingsPage(shellRenderMode: shellRenderMode),
+    ),
   ];
 }

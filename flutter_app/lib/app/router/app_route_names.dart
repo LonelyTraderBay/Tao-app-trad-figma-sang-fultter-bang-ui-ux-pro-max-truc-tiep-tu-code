@@ -457,4 +457,25 @@ final class AppRouteNames {
   static const String sc396StakingDeveloperConsole =
       'sc396StakingDeveloperConsole';
   static const String sc397Onboarding = 'sc397Onboarding';
+  static const String sc402P2PKycVerify = 'sc402P2PKycVerify';
+  static const String sc403P2PKycFaceMatch = 'sc403P2PKycFaceMatch';
+  static const String sc404P2PWhitelistMode = 'sc404P2PWhitelistMode';
+  static const String sc405SettingsSecurityBiometric =
+      'sc405SettingsSecurityBiometric';
+  static const String sc406SettingsSecurityChangePassword =
+      'sc406SettingsSecurityChangePassword';
+  static const String sc407P2PTaxReportDetail = 'sc407P2PTaxReportDetail';
+  static const String sc408DcaRebalanceEdit = 'sc408DcaRebalanceEdit';
+  static const String sc409DcaRebalanceHistory = 'sc409DcaRebalanceHistory';
+  static const String sc410AdminSettings = 'sc410AdminSettings';
+  static const String sc411ClientOptUpRequest = 'sc411ClientOptUpRequest';
+  static const String sc412TradeCopyRegulatoryDisclosuresAlias =
+      'sc412TradeCopyRegulatoryDisclosuresAlias';
+  static const String sc413SettingsSecurity = 'sc413SettingsSecurity';
+  static const String sc414PredictionTournamentDetail =
+      'sc414PredictionTournamentDetail';
+  static const String sc415TargetMarketDefinitionDetail =
+      'sc415TargetMarketDefinitionDetail';
+  static const String sc416ComplaintTrackingDetail =
+      'sc416ComplaintTrackingDetail';
 }

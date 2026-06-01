@@ -148,7 +148,7 @@ List<RouteBase> _p2pRoutes(ShellRenderMode shellRenderMode) {
       path: AppRoutePaths.p2pEscrowBalance,
       name: AppRouteNames.sc245P2PEscrowBalance,
       builder: (_, state) => P2PEscrowBalancePage(
-        initialAsset: state.uri.queryParameters['asset'] ?? 'USDT',
+        initialAsset: _p2pAssetFromQuery(state.uri.queryParameters['asset']),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -184,11 +184,13 @@ List<RouteBase> _p2pRoutes(ShellRenderMode shellRenderMode) {
     ),
     GoRoute(
       path: AppRoutePaths.p2pKycVerify,
+      name: AppRouteNames.sc402P2PKycVerify,
       builder: (_, _) =>
           P2PIdentityVerificationPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: AppRoutePaths.p2pKycFaceMatch,
+      name: AppRouteNames.sc403P2PKycFaceMatch,
       builder: (_, _) =>
           P2PSelfieVerificationPage(shellRenderMode: shellRenderMode),
     ),
@@ -240,14 +242,17 @@ List<RouteBase> _p2pRoutes(ShellRenderMode shellRenderMode) {
     ),
     GoRoute(
       path: AppRoutePaths.p2pSecurityWhitelist,
+      name: AppRouteNames.sc404P2PWhitelistMode,
       builder: (_, _) => P2PWhitelistModePage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: AppRoutePaths.settingsSecurityBiometric,
+      name: AppRouteNames.sc405SettingsSecurityBiometric,
       builder: (_, _) => SecurityPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
       path: AppRoutePaths.settingsSecurityChangePassword,
+      name: AppRouteNames.sc406SettingsSecurityChangePassword,
       builder: (_, _) => SecurityPage(shellRenderMode: shellRenderMode),
     ),
     GoRoute(
@@ -401,15 +406,9 @@ List<RouteBase> _p2pRoutes(ShellRenderMode shellRenderMode) {
       name: AppRouteNames.sc261P2PWalletTransfer,
       builder: (_, state) {
         final query = state.uri.queryParameters;
-        final direction = query['direction'];
-        final inferredType = direction == 'to-main'
-            ? 'withdraw'
-            : direction == 'from-main'
-            ? 'deposit'
-            : query['type'];
         return P2PWalletTransferPage(
-          initialAsset: query['asset'],
-          initialType: inferredType,
+          initialAsset: _p2pAssetFromQuery(query['asset']),
+          initialType: _p2pWalletTransferTypeFromQuery(query),
           shellRenderMode: shellRenderMode,
         );
       },
@@ -496,6 +495,7 @@ List<RouteBase> _p2pRoutes(ShellRenderMode shellRenderMode) {
     ),
     GoRoute(
       path: '/p2p/tax-report/detailed/:year',
+      name: AppRouteNames.sc407P2PTaxReportDetail,
       builder: (_, state) => P2PTaxReportingPage(
         initialYear: int.tryParse(state.pathParameters['year'] ?? ''),
         shellRenderMode: shellRenderMode,
@@ -512,4 +512,20 @@ List<RouteBase> _p2pRoutes(ShellRenderMode shellRenderMode) {
       builder: (_, _) => P2PMyOrdersPage(shellRenderMode: shellRenderMode),
     ),
   ];
+}
+
+String _p2pAssetFromQuery(String? value) {
+  final asset = value?.toUpperCase();
+  return switch (asset) {
+    'BTC' || 'VND' || 'USDT' => asset!,
+    _ => 'USDT',
+  };
+}
+
+String _p2pWalletTransferTypeFromQuery(Map<String, String> query) {
+  return switch (query['direction']) {
+    'to-main' => 'withdraw',
+    'from-main' => 'deposit',
+    _ => query['type'] == 'withdraw' ? 'withdraw' : 'deposit',
+  };
 }

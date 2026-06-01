@@ -66,7 +66,7 @@ class ExecutionQualitySlippageTab extends StatelessWidget {
         : 'Warn only';
     return _ActionTab(
       description:
-          'Current settings: ${settings.tolerancePct.toStringAsFixed(1)}% tolerance Â· $reject',
+          'Current settings: ${settings.tolerancePct.toStringAsFixed(1)}% tolerance · $reject',
       buttonKey: executionQualitySlippageButtonKey,
       label: 'Configure Slippage Protection',
       icon: Icons.shield_rounded,

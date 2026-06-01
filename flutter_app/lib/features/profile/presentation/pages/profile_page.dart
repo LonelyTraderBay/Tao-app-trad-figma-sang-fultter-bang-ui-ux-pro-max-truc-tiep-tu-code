@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -80,7 +81,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               _ProfileHero(
                 user: snapshot.user,
                 copiedReferral: _copiedReferral,
-                onEdit: () => context.go('/profile/edit'),
+                onEdit: () => context.go(AppRoutePaths.profileEdit),
                 onCopyReferral: () {
                   Clipboard.setData(
                     ClipboardData(text: snapshot.user.referralCode),
@@ -98,12 +99,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               const SizedBox(height: 11),
               _PredictionCard(
                 prediction: snapshot.prediction,
-                onTap: () => context.go('/profile/predictions'),
+                onTap: () => context.go(AppRoutePaths.profilePredictions),
               ),
               const SizedBox(height: 14),
               _ArenaCard(
                 arena: snapshot.arena,
-                onTap: () => context.go('/profile/arena'),
+                onTap: () => context.go(AppRoutePaths.profileArena),
               ),
               const SizedBox(height: 25),
               for (final section in snapshot.sections) ...[
@@ -115,9 +116,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 _MenuSection(section: section),
                 const SizedBox(height: 25),
               ],
-              _ActivityButton(onTap: () => context.go('/profile/activity')),
+              _ActivityButton(
+                onTap: () => context.go(AppRoutePaths.profileActivity),
+              ),
               const SizedBox(height: 28),
-              _LogoutButton(onTap: () => context.go('/auth/login')),
+              _LogoutButton(onTap: () => context.go(AppRoutePaths.authLogin)),
               const SizedBox(height: 38),
               Text(
                 'VitTrade v2.4.1 \u2022 Tham gia t\u1EEB ${snapshot.user.joinDate}',
