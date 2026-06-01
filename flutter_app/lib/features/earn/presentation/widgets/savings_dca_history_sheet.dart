@@ -1,0 +1,180 @@
+part of '../pages/savings_dca_page.dart';
+
+class _HistoryList extends StatelessWidget {
+  const _HistoryList({required this.executions});
+
+  final List<SavingsDcaExecutionDraft> executions;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      key: SavingsDCAPage.historyListKey,
+      children: [
+        for (final execution in executions) ...[
+          _ExecutionCard(execution: execution),
+          if (execution != executions.last)
+            const SizedBox(height: AppSpacing.x3),
+        ],
+      ],
+    );
+  }
+}
+
+class _ExecutionCard extends StatelessWidget {
+  const _ExecutionCard({required this.execution});
+
+  final SavingsDcaExecutionDraft execution;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _executionColor(execution.status);
+
+    return VitCard(
+      key: SavingsDCAPage.executionKey(execution.id),
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Row(
+        children: [
+          DecoratedBox(
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: .12),
+              borderRadius: AppRadii.mdRadius,
+            ),
+            child: SizedBox(
+              width: AppSpacing.x7,
+              height: AppSpacing.x7,
+              child: Icon(_executionIcon(execution.status), color: color),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Wrap(
+                  spacing: AppSpacing.x2,
+                  runSpacing: AppSpacing.x1,
+                  children: [
+                    Text(execution.planName, style: _captionBold),
+                    _StatusPill(
+                      label: _executionLabel(execution.status),
+                      color: color,
+                    ),
+                  ],
+                ),
+                Text(
+                  '${execution.date} · APY ${execution.apyLabel}',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
+          ),
+          Text(
+            execution.amountLabel,
+            textAlign: TextAlign.end,
+            style: _captionBold.copyWith(
+              color: execution.status == SavingsDcaExecutionStatus.failed
+                  ? AppColors.sell
+                  : AppColors.text1,
+              decoration: execution.status == SavingsDcaExecutionStatus.failed
+                  ? TextDecoration.lineThrough
+                  : null,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CreatePlanSheet extends StatelessWidget {
+  const _CreatePlanSheet({required this.snapshot});
+
+  final SavingsDcaSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      top: false,
+      child: VitCard(
+        key: SavingsDCAPage.createSheetKey,
+        radius: VitCardRadius.lg,
+        padding: const EdgeInsets.all(AppSpacing.x5),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Text('Tạo kế hoạch DCA', style: AppTextStyles.baseMedium),
+                const Spacer(),
+                IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(Icons.close_rounded),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.x3),
+            Text(
+              'Chọn sản phẩm linh hoạt để tự động gửi tiết kiệm theo lịch.',
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            ),
+            const SizedBox(height: AppSpacing.x4),
+            for (final product in snapshot.products) ...[
+              _ProductRow(product: product),
+              if (product != snapshot.products.last)
+                const SizedBox(height: AppSpacing.x3),
+            ],
+            const SizedBox(height: AppSpacing.x5),
+            VitCtaButton(
+              variant: VitCtaButtonVariant.success,
+              onPressed: () => Navigator.of(context).pop(),
+              leading: const Icon(Icons.check_rounded),
+              child: const Text('Xem trước lịch DCA'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ProductRow extends StatelessWidget {
+  const _ProductRow({required this.product});
+
+  final SavingsDcaProductDraft product;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _assetColor(product.asset);
+
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      padding: const EdgeInsets.all(AppSpacing.x3),
+      child: Row(
+        children: [
+          _AssetBadge(asset: product.asset, color: color),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(product.name, style: _captionBold),
+                Text(
+                  'Khả dụng: ${product.balanceLabel}',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
+          ),
+          Text(
+            product.apyLabel,
+            style: _captionBold.copyWith(color: AppColors.buy),
+          ),
+        ],
+      ),
+    );
+  }
+}

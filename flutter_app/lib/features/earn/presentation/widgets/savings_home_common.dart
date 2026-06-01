@@ -1,0 +1,72 @@
+part of '../pages/savings_page.dart';
+
+List<SavingsProductDraft> _filteredProducts(
+  SavingsController controller,
+  _SavingsFilter filter,
+) {
+  return switch (filter) {
+    _SavingsFilter.all => controller.productsByType(null),
+    _SavingsFilter.flexible => controller.productsByType(
+      SavingsProductType.flexible,
+    ),
+    _SavingsFilter.locked => controller.productsByType(
+      SavingsProductType.locked,
+    ),
+  };
+}
+
+String _filterLabel(_SavingsFilter filter) {
+  return switch (filter) {
+    _SavingsFilter.all => 'Tất cả',
+    _SavingsFilter.flexible => 'Linh hoạt',
+    _SavingsFilter.locked => 'Cố định',
+  };
+}
+
+IconData _filterIcon(_SavingsFilter filter) {
+  return switch (filter) {
+    _SavingsFilter.all => Icons.bolt_rounded,
+    _SavingsFilter.flexible => Icons.lock_open_rounded,
+    _SavingsFilter.locked => Icons.lock_outline_rounded,
+  };
+}
+
+String _productSubtitle(SavingsProductDraft product) {
+  final duration = product.type == SavingsProductType.flexible
+      ? 'Linh hoạt'
+      : '${product.lockDays} ngày';
+  return '$duration - ${product.participants}';
+}
+
+Color _productAccent(SavingsProductDraft product) {
+  if (product.asset == 'BTC') return AppColors.warn;
+  if (product.asset == 'ETH') return AppColors.primary;
+  if (product.asset == 'SOL') return AppColors.primarySoft;
+  return product.type == SavingsProductType.flexible
+      ? AppColors.buy
+      : AppColors.sell;
+}
+
+Color _riskColor(EarnRiskLevel riskLevel) {
+  return switch (riskLevel) {
+    EarnRiskLevel.low => AppColors.buy,
+    EarnRiskLevel.medium => AppColors.warn,
+    EarnRiskLevel.high => AppColors.sell,
+  };
+}
+
+Color _riskTint(EarnRiskLevel riskLevel) {
+  return switch (riskLevel) {
+    EarnRiskLevel.low => AppColors.buy10,
+    EarnRiskLevel.medium => AppColors.warn10,
+    EarnRiskLevel.high => AppColors.primary12,
+  };
+}
+
+String _riskLabel(EarnRiskLevel riskLevel) {
+  return switch (riskLevel) {
+    EarnRiskLevel.low => 'Thấp',
+    EarnRiskLevel.medium => 'Trung bình',
+    EarnRiskLevel.high => 'Cao',
+  };
+}

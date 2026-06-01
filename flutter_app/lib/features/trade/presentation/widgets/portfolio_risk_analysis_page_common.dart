@@ -1,0 +1,157 @@
+part of '../pages/portfolio_risk_analysis_page.dart';
+
+class _PlaceholderPanel extends StatelessWidget {
+  const _PlaceholderPanel({required this.title, required this.description});
+
+  final String title;
+  final String description;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: _riskCard,
+        borderRadius: AppRadii.cardRadius,
+        border: Border.all(color: AppColors.cardBorder),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text1,
+              fontSize: 13,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            description,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text2,
+              fontSize: 11,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _VarPanel extends StatelessWidget {
+  const _VarPanel({required this.snapshot});
+
+  final TradePortfolioRiskAnalysisSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return _PlaceholderPanel(
+      title: 'Value at Risk',
+      description:
+          'VaR 95% ${_formatUsd(snapshot.var95.abs())}; VaR 99% ${_formatUsd(snapshot.var99.abs())}.',
+    );
+  }
+}
+
+class _StressScenarioPanel extends StatelessWidget {
+  const _StressScenarioPanel({required this.scenarios});
+
+  final List<TradeStressScenario> scenarios;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        for (final scenario in scenarios) ...[
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: _riskPanel,
+              borderRadius: AppRadii.inputRadius,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    scenario.name,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontSize: 12,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ),
+                Text(
+                  _formatSignedUsd(scenario.impact),
+                  style: AppTextStyles.caption.copyWith(
+                    color: scenario.impact >= 0
+                        ? AppColors.buy
+                        : AppColors.sell,
+                    fontSize: 14,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (scenario != scenarios.last) const SizedBox(height: 8),
+        ],
+      ],
+    );
+  }
+}
+
+class _ExposurePiePainter extends CustomPainter {
+  const _ExposurePiePainter(this.assets);
+
+  final List<TradeAssetExposure> assets;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rect = Offset.zero & size;
+    var start = 0.0;
+    for (final asset in assets) {
+      final sweep = -asset.percent / 100 * math.pi * 2;
+      final fill = Paint()
+        ..color = Color(asset.colorHex)
+        ..style = PaintingStyle.fill;
+      canvas.drawArc(rect, start, sweep, true, fill);
+      final stroke = Paint()
+        ..color = AppColors.onAccent
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1;
+      canvas.drawArc(rect, start, sweep, true, stroke);
+      start += sweep;
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _ExposurePiePainter oldDelegate) {
+    return oldDelegate.assets != assets;
+  }
+}
+
+String _formatUsd(double value) {
+  return '\$${_formatNumber(value.round())}';
+}
+
+String _formatSignedUsd(double value) {
+  final sign = value >= 0 ? '+' : '-';
+  return '$sign\$${_formatNumber(value.abs().round())}';
+}
+
+String _formatNumber(int value) {
+  final chars = value.toString().split('').reversed.toList();
+  final groups = <String>[];
+  for (var i = 0; i < chars.length; i += 3) {
+    groups.add(chars.skip(i).take(3).toList().reversed.join());
+  }
+  return groups.reversed.join(',');
+}
+
+String _formatPercent(double value) {
+  if (value == value.roundToDouble()) return value.toStringAsFixed(0);
+  return value.toStringAsFixed(1);
+}

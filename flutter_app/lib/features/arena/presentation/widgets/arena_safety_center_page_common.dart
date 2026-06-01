@@ -1,0 +1,141 @@
+part of '../pages/arena_safety_center_page.dart';
+
+class _QuickLinks extends StatelessWidget {
+  const _QuickLinks({required this.links});
+
+  final List<ArenaSafetyQuickLinkDraft> links;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        for (final link in links) ...[
+          VitCard(
+            key: link.route == AppRoutePaths.arenaBlocked
+                ? ArenaSafetyCenterPage.blockedLinkKey
+                : ArenaSafetyCenterPage.reportsLinkKey,
+            onTap: () {
+              HapticFeedback.selectionClick();
+              context.go(link.route);
+            },
+            padding: const EdgeInsets.all(AppSpacing.x4),
+            child: Row(
+              children: [
+                Icon(
+                  _kindIcon(link.kind),
+                  color: _kindColor(link.kind),
+                  size: AppSpacing.iconMd,
+                ),
+                const SizedBox(width: AppSpacing.x4),
+                Expanded(
+                  child: Text(
+                    link.title,
+                    style: AppTextStyles.body.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ),
+                const Icon(Icons.chevron_right_rounded, color: AppColors.text3),
+              ],
+            ),
+          ),
+          if (link != links.last) const SizedBox(height: AppSpacing.x3),
+        ],
+      ],
+    );
+  }
+}
+
+class _SafetyFooter extends StatelessWidget {
+  const _SafetyFooter({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.menu_book_outlined,
+            color: AppColors.primary,
+            size: 14,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.primary,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ToneIcon extends StatelessWidget {
+  const _ToneIcon({required this.icon, required this.color});
+
+  final IconData icon;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: .14),
+        borderRadius: AppRadii.mdRadius,
+        border: Border.all(color: color.withValues(alpha: .18)),
+      ),
+      child: Icon(icon, color: color, size: AppSpacing.iconMd),
+    );
+  }
+}
+
+IconData _kindIcon(ArenaSafetyKind kind) {
+  switch (kind) {
+    case ArenaSafetyKind.respect:
+      return Icons.balance_outlined;
+    case ArenaSafetyKind.offPlatform:
+      return Icons.block_rounded;
+    case ArenaSafetyKind.civil:
+      return Icons.menu_book_outlined;
+    case ArenaSafetyKind.privacy:
+      return Icons.shield_outlined;
+    case ArenaSafetyKind.report:
+      return Icons.outlined_flag_rounded;
+    case ArenaSafetyKind.block:
+      return Icons.do_not_disturb_on_outlined;
+    case ArenaSafetyKind.process:
+      return Icons.fact_check_outlined;
+    case ArenaSafetyKind.resolution:
+      return Icons.balance_outlined;
+    case ArenaSafetyKind.points:
+      return Icons.redeem_outlined;
+  }
+}
+
+Color _kindColor(ArenaSafetyKind kind) {
+  switch (kind) {
+    case ArenaSafetyKind.respect:
+    case ArenaSafetyKind.resolution:
+      return AppColors.primary;
+    case ArenaSafetyKind.offPlatform:
+    case ArenaSafetyKind.report:
+      return AppColors.sell;
+    case ArenaSafetyKind.civil:
+    case ArenaSafetyKind.points:
+      return AppColors.accent;
+    case ArenaSafetyKind.privacy:
+    case ArenaSafetyKind.process:
+      return AppColors.buy;
+    case ArenaSafetyKind.block:
+      return AppModuleAccents.arena;
+  }
+}

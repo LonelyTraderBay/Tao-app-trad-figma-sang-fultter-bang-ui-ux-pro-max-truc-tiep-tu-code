@@ -18,6 +18,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 
 part '../widgets/launchpad_home_header_widgets.dart';
+part '../widgets/launchpad_home_helpers.dart';
+part '../widgets/launchpad_home_shared_widgets.dart';
 part '../widgets/launchpad_home_project_widgets.dart';
 part '../widgets/launchpad_home_tool_widgets.dart';
 

@@ -1,0 +1,265 @@
+part of '../pages/staking_regulatory_framework_page.dart';
+
+class _ProtectionTab extends StatelessWidget {
+  const _ProtectionTab({required this.snapshot});
+
+  final StakingRegulatoryFrameworkSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      key: StakingRegulatoryFrameworkPage.protectionKey,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitPageSection(
+          label: 'Investor Protection Schemes',
+          accentColor: AppColors.primarySoft,
+          children: [
+            Column(
+              children: [
+                for (final scheme in snapshot.protectionSchemes) ...[
+                  _ProtectionCard(scheme: scheme),
+                  if (scheme != snapshot.protectionSchemes.last)
+                    const SizedBox(height: AppSpacing.x3),
+                ],
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.x3),
+        _WarningNote(text: snapshot.protectionWarning),
+      ],
+    );
+  }
+}
+
+class _ProtectionCard extends StatelessWidget {
+  const _ProtectionCard({required this.scheme});
+
+  final StakingProtectionSchemeDraft scheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _RoundIcon(icon: Icons.shield_outlined, color: AppColors.primary),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(scheme.jurisdiction, style: AppTextStyles.baseMedium),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      scheme.scheme,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Text(
+                scheme.coverage,
+                textAlign: TextAlign.end,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.buy,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          VitCard(
+            variant: VitCardVariant.inner,
+            padding: const EdgeInsets.all(AppSpacing.x3),
+            child: Text(
+              scheme.description,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text2,
+                height: 1.5,
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            'Eligibility: ${scheme.eligibility}',
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              height: 1.45,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ComplaintsTab extends StatelessWidget {
+  const _ComplaintsTab({required this.snapshot});
+
+  final StakingRegulatoryFrameworkSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      key: StakingRegulatoryFrameworkPage.complaintsKey,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitPageSection(
+          label: 'Complaint Handling Process',
+          accentColor: AppColors.primarySoft,
+          children: [
+            VitCard(
+              radius: VitCardRadius.lg,
+              padding: const EdgeInsets.all(AppSpacing.x4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'How to File a Complaint',
+                    style: AppTextStyles.baseMedium,
+                  ),
+                  const SizedBox(height: AppSpacing.x4),
+                  for (final step in snapshot.complaintSteps) ...[
+                    _ComplaintStep(step: step),
+                    if (step != snapshot.complaintSteps.last)
+                      const SizedBox(height: AppSpacing.x4),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.x3),
+        VitPageSection(
+          label: 'Regulatory Authority Contacts',
+          accentColor: AppColors.primarySoft,
+          children: [
+            VitCard(
+              radius: VitCardRadius.lg,
+              padding: const EdgeInsets.all(AppSpacing.x4),
+              child: Column(
+                children: [
+                  for (final contact in snapshot.authorityContacts) ...[
+                    _AuthorityContact(contact: contact),
+                    if (contact != snapshot.authorityContacts.last)
+                      const Divider(color: AppColors.divider, height: 24),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _ComplaintStep extends StatelessWidget {
+  const _ComplaintStep({required this.step});
+
+  final StakingComplaintStepDraft step;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        DecoratedBox(
+          decoration: const BoxDecoration(
+            color: AppColors.primary,
+            shape: BoxShape.circle,
+          ),
+          child: SizedBox(
+            width: AppSpacing.x7,
+            height: AppSpacing.x7,
+            child: Center(
+              child: Text(
+                '${step.step}',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.x3),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                step.title,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x1),
+              Text(
+                step.description,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text3,
+                  height: 1.45,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x1),
+              Text(
+                step.action,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.primary,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _AuthorityContact extends StatelessWidget {
+  const _AuthorityContact({required this.contact});
+
+  final StakingAuthorityContactDraft contact;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            contact.name,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            contact.email,
+            style: AppTextStyles.micro.copyWith(color: AppColors.primary),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            contact.phone,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -1,0 +1,336 @@
+part of '../pages/p2p_selfie_verification_page.dart';
+
+class _GuideStep extends StatelessWidget {
+  const _GuideStep({required this.snapshot, required this.onStart});
+
+  final P2PSelfieVerificationSnapshot snapshot;
+  final VoidCallback onStart;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _SelfieHero(snapshot: snapshot),
+        const SizedBox(height: AppSpacing.x5),
+        Text(
+          'Ví dụ mẫu',
+          style: AppTextStyles.baseMedium.copyWith(
+            fontWeight: AppTextStyles.bold,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        _SampleCard(snapshot: snapshot),
+        const SizedBox(height: AppSpacing.x5),
+        Text(
+          'Hướng dẫn chụp ảnh',
+          style: AppTextStyles.baseMedium.copyWith(
+            fontWeight: AppTextStyles.bold,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        _GuidelinesCard(snapshot: snapshot),
+        const SizedBox(height: AppSpacing.x5),
+        _TipsCard(snapshot: snapshot),
+        const SizedBox(height: AppSpacing.x5),
+        VitCtaButton(
+          key: P2PSelfieVerificationPage.startKey,
+          onPressed: onStart,
+          trailing: const Icon(Icons.photo_camera_outlined),
+          child: const Text('Bắt đầu chụp ảnh'),
+        ),
+      ],
+    );
+  }
+}
+
+class _SelfieHero extends StatelessWidget {
+  const _SelfieHero({required this.snapshot});
+
+  final P2PSelfieVerificationSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: P2PSelfieVerificationPage.heroKey,
+      radius: VitCardRadius.lg,
+      borderColor: AppColors.primary20,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: AppSpacing.inputHeight,
+            height: AppSpacing.inputHeight,
+            decoration: BoxDecoration(
+              color: AppColors.primary15,
+              borderRadius: AppRadii.lgRadius,
+              border: Border.all(color: AppColors.primary20),
+            ),
+            child: const Icon(
+              Icons.photo_camera_outlined,
+              color: AppModuleAccents.p2p,
+              size: AppSpacing.iconMd,
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x4),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  snapshot.heroTitle,
+                  style: AppTextStyles.sectionTitle.copyWith(
+                    color: AppModuleAccents.p2p,
+                    fontSize: 22,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  snapshot.heroBody,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    height: 1.45,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SampleCard extends StatelessWidget {
+  const _SampleCard({required this.snapshot});
+
+  final P2PSelfieVerificationSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: P2PSelfieVerificationPage.sampleKey,
+      radius: VitCardRadius.lg,
+      borderColor: AppColors.primary20,
+      padding: EdgeInsets.zero,
+      child: AspectRatio(
+        aspectRatio: 4 / 3,
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.primary12,
+            borderRadius: AppRadii.cardRadius,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.person_outline_rounded,
+                color: AppColors.text1,
+                size: 72,
+              ),
+              const SizedBox(height: AppSpacing.x5),
+              Text(
+                snapshot.sampleTitle,
+                style: AppTextStyles.baseMedium.copyWith(
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x2),
+              Text(
+                snapshot.sampleBody,
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _GuidelinesCard extends StatelessWidget {
+  const _GuidelinesCard({required this.snapshot});
+
+  final P2PSelfieVerificationSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: P2PSelfieVerificationPage.guidelinesKey,
+      radius: VitCardRadius.md,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        children: [
+          for (final guide in snapshot.guidelines) ...[
+            _ChecklistRow(text: guide, color: AppColors.buy),
+            if (guide != snapshot.guidelines.last)
+              const SizedBox(height: AppSpacing.x2),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _TipsCard extends StatelessWidget {
+  const _TipsCard({required this.snapshot});
+
+  final P2PSelfieVerificationSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: P2PSelfieVerificationPage.tipsKey,
+      radius: VitCardRadius.md,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const _SectionTitle(
+            icon: Icons.info_outline_rounded,
+            title: 'Mẹo để thành công',
+            color: AppModuleAccents.p2p,
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          for (final tip in snapshot.tips) ...[
+            _ChecklistRow(text: tip, color: AppColors.warn),
+            if (tip != snapshot.tips.last)
+              const SizedBox(height: AppSpacing.x2),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _CaptureStep extends StatelessWidget {
+  const _CaptureStep({required this.onCapture});
+
+  final VoidCallback onCapture;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: P2PSelfieVerificationPage.captureKey,
+      radius: VitCardRadius.lg,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.primary20,
+      padding: const EdgeInsets.all(AppSpacing.x6),
+      onTap: onCapture,
+      child: AspectRatio(
+        aspectRatio: 3 / 4,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: AppSpacing.buttonHero,
+              height: AppSpacing.buttonHero,
+              decoration: const BoxDecoration(
+                color: AppColors.primary15,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.photo_camera_outlined,
+                color: AppModuleAccents.p2p,
+                size: AppSpacing.iconLg,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.x5),
+            Text(
+              'Nhấn để chụp ảnh',
+              textAlign: TextAlign.center,
+              style: AppTextStyles.sectionTitle.copyWith(
+                color: AppModuleAccents.p2p,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.x3),
+            Text(
+              'Đảm bảo khuôn mặt và ID card rõ nét trong khung hình',
+              textAlign: TextAlign.center,
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LivenessStep extends StatelessWidget {
+  const _LivenessStep({
+    required this.snapshot,
+    required this.currentActionIndex,
+    required this.completedActions,
+    required this.onConfirmAction,
+  });
+
+  final P2PSelfieVerificationSnapshot snapshot;
+  final int currentActionIndex;
+  final Set<String> completedActions;
+  final VoidCallback onConfirmAction;
+
+  @override
+  Widget build(BuildContext context) {
+    final currentAction = snapshot.livenessActions[currentActionIndex];
+
+    return Column(
+      key: P2PSelfieVerificationPage.livenessKey,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _ProgressBar(
+          completed: completedActions.length,
+          total: snapshot.livenessActions.length,
+        ),
+        const SizedBox(height: AppSpacing.x5),
+        VitCard(
+          radius: VitCardRadius.lg,
+          padding: const EdgeInsets.all(AppSpacing.x6),
+          child: Column(
+            children: [
+              Icon(
+                _livenessIcon(currentAction.iconKey),
+                color: AppModuleAccents.p2p,
+                size: 64,
+              ),
+              const SizedBox(height: AppSpacing.x4),
+              Text(
+                currentAction.label,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.sectionTitle,
+              ),
+              const SizedBox(height: AppSpacing.x2),
+              Text(
+                'Làm theo hướng dẫn để tiếp tục',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x5),
+        GridView.count(
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisSpacing: AppSpacing.x3,
+          mainAxisSpacing: AppSpacing.x3,
+          childAspectRatio: 1.2,
+          children: [
+            for (final action in snapshot.livenessActions)
+              _LivenessActionTile(
+                action: action,
+                completed: completedActions.contains(action.id),
+              ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.x5),
+        VitCtaButton(
+          key: P2PSelfieVerificationPage.livenessActionKey,
+          onPressed: onConfirmAction,
+          child: const Text('Xác nhận thao tác'),
+        ),
+      ],
+    );
+  }
+}

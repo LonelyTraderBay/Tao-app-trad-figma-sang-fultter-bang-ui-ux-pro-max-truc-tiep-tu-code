@@ -1,0 +1,277 @@
+part of '../pages/bot_portfolio_dashboard_page.dart';
+
+class _HealthCard extends StatelessWidget {
+  const _HealthCard({required this.items});
+
+  final List<String> items;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
+      decoration: BoxDecoration(
+        color: _portfolioGreen.withValues(alpha: .10),
+        border: Border.all(color: _portfolioGreen.withValues(alpha: .30)),
+        borderRadius: AppRadii.cardRadius,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 13,
+                height: 13,
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  color: AppColors.successAccentSoft,
+                  shape: BoxShape.rectangle,
+                ),
+                child: const Icon(
+                  Icons.check_rounded,
+                  size: 11,
+                  color: AppColors.onAccent,
+                ),
+              ),
+              const SizedBox(width: 7),
+              Expanded(
+                child: Text(
+                  'Portfolio Health: Excellent',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: _portfolioGreen,
+                    fontSize: 13,
+                    fontWeight: AppTextStyles.bold,
+                    height: 1,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 15),
+          for (final item in items) ...[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 4,
+                  height: 4,
+                  margin: const EdgeInsets.only(top: 7),
+                  decoration: const BoxDecoration(
+                    color: AppColors.text3,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 11),
+                Expanded(
+                  child: Text(
+                    item,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                      fontSize: 11,
+                      height: 1.45,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            if (item != items.last) const SizedBox(height: 12),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _Card extends StatelessWidget {
+  const _Card({required this.child, required this.padding});
+
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: padding,
+      decoration: BoxDecoration(
+        color: _portfolioPanel,
+        border: Border.all(color: AppColors.cardBorder),
+        borderRadius: AppRadii.cardRadius,
+      ),
+      child: child,
+    );
+  }
+}
+
+class _SectionLabel extends StatelessWidget {
+  const _SectionLabel(this.label);
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 4,
+          height: 15,
+          decoration: BoxDecoration(
+            color: _portfolioPrimary,
+            borderRadius: BorderRadius.circular(3),
+          ),
+        ),
+        const SizedBox(width: 7),
+        Text(
+          label,
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text2,
+            fontSize: 12,
+            fontWeight: AppTextStyles.bold,
+            height: 1,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _EquityPainter extends CustomPainter {
+  const _EquityPainter(this.points);
+
+  final List<TradeBotPortfolioEquityPoint> points;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final chart = Rect.fromLTWH(66, 14, size.width - 90, size.height - 48);
+    final axisPaint = Paint()
+      ..color = _portfolioAxis
+      ..strokeWidth = 1;
+    canvas
+      ..drawLine(chart.bottomLeft, chart.bottomRight, axisPaint)
+      ..drawLine(chart.bottomLeft, chart.topLeft, axisPaint);
+
+    for (final value in [0, 850, 1700, 3400]) {
+      final y = chart.bottom - (value / 3400) * chart.height;
+      _paintText(
+        canvas,
+        '\$$value',
+        Offset(10, y - 6),
+        AppColors.text3,
+        10,
+        width: 48,
+        align: TextAlign.right,
+      );
+    }
+
+    for (var i = 0; i < points.length; i++) {
+      final x = chart.left + i / (points.length - 1) * chart.width;
+      _paintText(
+        canvas,
+        points[i].date,
+        Offset(x - 14, chart.bottom + 10),
+        AppColors.text3,
+        10,
+        width: 30,
+        align: TextAlign.center,
+      );
+    }
+
+    final path = Path();
+    for (var i = 0; i < points.length; i++) {
+      final x = chart.left + i / (points.length - 1) * chart.width;
+      final y = chart.bottom - (points[i].equity / 3400) * chart.height;
+      if (i == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
+    }
+    canvas.drawPath(
+      path,
+      Paint()
+        ..color = _portfolioGreen
+        ..strokeWidth = 3
+        ..style = PaintingStyle.stroke
+        ..strokeCap = StrokeCap.round,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _EquityPainter oldDelegate) =>
+      oldDelegate.points != points;
+}
+
+class _DonutPainter extends CustomPainter {
+  const _DonutPainter(this.allocations);
+
+  final List<TradeBotPortfolioAllocation> allocations;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    const outerRadius = 65.0;
+    const strokeWidth = 30.0;
+    final rect = Rect.fromCircle(center: center, radius: outerRadius);
+    final total = allocations.fold<double>(0, (sum, item) => sum + item.value);
+    var start = -math.pi / 2;
+
+    for (final item in allocations) {
+      final sweep = item.value / total * math.pi * 2;
+      canvas.drawArc(
+        rect,
+        start + .02,
+        sweep - .04,
+        false,
+        Paint()
+          ..color = Color(item.colorHex)
+          ..strokeWidth = strokeWidth
+          ..style = PaintingStyle.stroke
+          ..strokeCap = StrokeCap.butt,
+      );
+      start += sweep;
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _DonutPainter oldDelegate) =>
+      oldDelegate.allocations != allocations;
+}
+
+void _paintText(
+  Canvas canvas,
+  String text,
+  Offset offset,
+  Color color,
+  double fontSize, {
+  double width = 80,
+  TextAlign align = TextAlign.left,
+}) {
+  final painter = TextPainter(
+    text: TextSpan(
+      text: text,
+      style: TextStyle(
+        color: color,
+        fontSize: fontSize,
+        fontFamily: 'Roboto',
+        fontWeight: FontWeight.w500,
+        height: 1,
+        decoration: TextDecoration.none,
+      ),
+    ),
+    textDirection: TextDirection.ltr,
+    textAlign: align,
+  )..layout(maxWidth: width);
+  painter.paint(canvas, offset);
+}
+
+String _formatUsd(double value) {
+  final whole = value.round().toString();
+  final buffer = StringBuffer();
+  for (var i = 0; i < whole.length; i++) {
+    final remaining = whole.length - i;
+    buffer.write(whole[i]);
+    if (remaining > 1 && remaining % 3 == 1) buffer.write(',');
+  }
+  return '\$$buffer';
+}

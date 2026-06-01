@@ -19,6 +19,8 @@ import 'package:vit_trade_flutter/features/trade/presentation/widgets/convert_pa
 
 part 'convert_page_part_01.dart';
 part 'convert_page_part_02.dart';
+part '../widgets/convert_page_header_widgets.dart';
+part '../widgets/convert_page_amount_widgets.dart';
 
 const _tradePrimary = AppColors.primary;
 const _tradePrimaryDark = AppColors.primaryDark;

@@ -24,6 +24,16 @@ part 'prediction_event_detail_page_part_02.dart';
 part 'prediction_event_detail_page_part_03.dart';
 part 'prediction_event_detail_page_part_04.dart';
 part 'prediction_event_detail_page_part_05.dart';
+part '../widgets/prediction_event_detail_header.dart';
+part '../widgets/prediction_event_detail_stats_position.dart';
+part '../widgets/prediction_event_detail_chart.dart';
+part '../widgets/prediction_event_detail_order_book.dart';
+part '../widgets/prediction_event_detail_trade_panel.dart';
+part '../widgets/prediction_event_detail_trade_controls.dart';
+part '../widgets/prediction_event_detail_detail_tabs.dart';
+part '../widgets/prediction_event_detail_comments.dart';
+part '../widgets/prediction_event_detail_activity_holders.dart';
+part '../widgets/prediction_event_detail_related_arena.dart';
 
 const _predictionPrimary = AppColors.primary;
 const _predictionPurple = AppColors.accent;

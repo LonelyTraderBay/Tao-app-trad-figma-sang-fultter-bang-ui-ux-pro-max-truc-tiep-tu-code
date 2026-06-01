@@ -1,0 +1,376 @@
+part of '../pages/arena_join_page.dart';
+
+class _ChallengeSummaryCard extends StatelessWidget {
+  const _ChallengeSummaryCard({required this.challenge});
+
+  final ArenaChallengeDetailDraft challenge;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            challenge.title,
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Wrap(
+            spacing: AppSpacing.x2,
+            runSpacing: AppSpacing.x1,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Text(
+                challenge.modeName,
+                style: AppTextStyles.caption.copyWith(
+                  color: _arenaAccent,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              Text(
+                '·',
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+              ),
+              Text(
+                challenge.layoutLabel,
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RoomInfoCard extends StatelessWidget {
+  const _RoomInfoCard({required this.challenge});
+
+  final ArenaChallengeDetailDraft challenge;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        children: [
+          _InfoRow(
+            label: 'Quyền riêng tư',
+            value: challenge.privacyLabel,
+            icon: Icons.public_rounded,
+          ),
+          _InfoRow(
+            label: 'Người tham gia',
+            value: '${challenge.slotsFilled}/${challenge.slotsTotal}',
+          ),
+          _InfoRow(label: 'Kết thúc', value: challenge.countdownLabel),
+        ],
+      ),
+    );
+  }
+}
+
+class _InfoRow extends StatelessWidget {
+  const _InfoRow({required this.label, required this.value, this.icon});
+
+  final String label;
+  final String value;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              label,
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+            ),
+          ),
+          if (icon != null) ...[
+            Icon(icon, size: 16, color: AppColors.primary),
+            const SizedBox(width: AppSpacing.x1),
+          ],
+          Text(
+            value,
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CreatorCard extends StatelessWidget {
+  const _CreatorCard({required this.creator});
+
+  final ArenaChallengeCreatorDraft creator;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Row(
+        children: [
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              color: AppColors.surface2,
+              borderRadius: AppRadii.mdRadius,
+              border: Border.all(color: AppColors.border),
+            ),
+            child: const Icon(
+              Icons.workspace_premium_rounded,
+              color: _arenaAccent,
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  creator.name,
+                  style: AppTextStyles.body.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  creator.role,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RulesCard extends StatelessWidget {
+  const _RulesCard({required this.rules});
+
+  final List<String> rules;
+
+  @override
+  Widget build(BuildContext context) {
+    final visibleRules = rules.take(4).toList();
+    return VitCard(
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Tóm tắt luật',
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          for (var i = 0; i < visibleRules.length; i++) ...[
+            _RuleLine(index: i + 1, text: visibleRules[i]),
+            if (i != visibleRules.length - 1)
+              const SizedBox(height: AppSpacing.x2),
+          ],
+          if (rules.length > visibleRules.length) ...[
+            const SizedBox(height: AppSpacing.x2),
+            Text(
+              '+${rules.length - visibleRules.length} luật khác',
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _RuleLine extends StatelessWidget {
+  const _RuleLine({required this.index, required this.text});
+
+  final int index;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 24,
+          child: Text(
+            '$index.',
+            style: AppTextStyles.caption.copyWith(
+              color: _arenaAccent,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            text,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text2,
+              height: 1.45,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _BalanceCard extends StatelessWidget {
+  const _BalanceCard({
+    required this.currentBalance,
+    required this.entryPoints,
+    required this.remainingBalance,
+    required this.hasEnough,
+  });
+
+  final int currentBalance;
+  final int entryPoints;
+  final int remainingBalance;
+  final bool hasEnough;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        children: [
+          _BalanceRow(
+            label: 'Số dư Arena Points',
+            value: '${_formatPoints(currentBalance)} pts',
+            color: hasEnough ? AppColors.buy : AppColors.sell,
+          ),
+          const Divider(color: AppColors.divider, height: AppSpacing.x5),
+          _BalanceRow(
+            label: 'Entry Points',
+            value: '-${_formatPoints(entryPoints)} pts',
+            color: _arenaAccent,
+          ),
+          const Divider(color: AppColors.divider, height: AppSpacing.x5),
+          _BalanceRow(
+            label: 'Sau khi tham gia',
+            value: '${_formatPoints(remainingBalance)} pts',
+            color: AppColors.text1,
+            emphasized: true,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BalanceRow extends StatelessWidget {
+  const _BalanceRow({
+    required this.label,
+    required this.value,
+    required this.color,
+    this.emphasized = false,
+  });
+
+  final String label;
+  final String value;
+  final Color color;
+  final bool emphasized;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            label,
+            style: (emphasized ? AppTextStyles.body : AppTextStyles.caption)
+                .copyWith(
+                  color: emphasized ? AppColors.text1 : AppColors.text2,
+                  fontWeight: emphasized ? AppTextStyles.bold : null,
+                ),
+          ),
+        ),
+        Text(
+          value,
+          style: AppTextStyles.body.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            fontFeatures: const [FontFeature.tabularFigures()],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _NoticeCard extends StatelessWidget {
+  const _NoticeCard({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.info_outline_rounded,
+            size: 16,
+            color: AppColors.primary,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text3,
+                height: 1.45,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SafetyPolicyLink extends StatelessWidget {
+  const _SafetyPolicyLink({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: TextButton.icon(
+        key: ArenaJoinPage.safetyPolicyKey,
+        onPressed: onTap,
+        icon: const Icon(Icons.shield_outlined, size: 16),
+        label: Text(
+          'Xem chính sách hủy/void',
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.primary,
+            fontWeight: AppTextStyles.bold,
+          ),
+        ),
+      ),
+    );
+  }
+}

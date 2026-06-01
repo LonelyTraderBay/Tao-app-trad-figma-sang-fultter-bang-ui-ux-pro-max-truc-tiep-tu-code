@@ -1,0 +1,189 @@
+part of '../pages/prediction_event_calendar_page.dart';
+
+class _FilterButton extends StatelessWidget {
+  const _FilterButton({required this.active, required this.onTap});
+
+  final bool active;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 38,
+      height: 38,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: active ? _predictionPrimary : AppColors.surface3,
+          border: Border.all(color: AppColors.border),
+          borderRadius: AppRadii.mdRadius,
+        ),
+        child: IconButton(
+          key: PredictionEventCalendarPage.filterButtonKey,
+          onPressed: onTap,
+          padding: EdgeInsets.zero,
+          icon: const Icon(
+            Icons.filter_alt_outlined,
+            color: AppColors.text1,
+            size: 20,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _EventCalendarTabBar extends StatelessWidget {
+  const _EventCalendarTabBar({
+    required this.activeTab,
+    required this.onChanged,
+  });
+
+  final _CalendarTab activeTab;
+  final ValueChanged<_CalendarTab> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final tabs = [
+      (
+        key: PredictionEventCalendarPage.calendarTabKey,
+        tab: _CalendarTab.calendar,
+        label: 'Lich',
+      ),
+      (
+        key: PredictionEventCalendarPage.upcomingTabKey,
+        tab: _CalendarTab.upcoming,
+        label: 'Sap toi',
+      ),
+      (
+        key: PredictionEventCalendarPage.notificationsTabKey,
+        tab: _CalendarTab.notifications,
+        label: 'Thong bao',
+      ),
+    ];
+
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        color: AppColors.surface,
+        border: Border(bottom: BorderSide(color: AppColors.border)),
+      ),
+      child: SizedBox(
+        height: 54,
+        child: Row(
+          children: [
+            for (final item in tabs)
+              Expanded(
+                child: InkWell(
+                  key: item.key,
+                  onTap: () => onChanged(item.tab),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            item.label,
+                            style: AppTextStyles.caption.copyWith(
+                              color: activeTab == item.tab
+                                  ? _predictionPrimary
+                                  : AppColors.text3,
+                              fontWeight: AppTextStyles.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 160),
+                        height: 2,
+                        width: activeTab == item.tab ? 116 : 0,
+                        decoration: BoxDecoration(
+                          color: _predictionPrimary,
+                          borderRadius: BorderRadius.circular(1),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CategoryFilters extends StatelessWidget {
+  const _CategoryFilters({
+    required this.snapshot,
+    required this.selectedCategory,
+    required this.onChanged,
+  });
+
+  final PredictionEventCalendarSnapshot snapshot;
+  final String? selectedCategory;
+  final ValueChanged<String?> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        _CategoryChip(
+          label: 'Tat ca',
+          selected: selectedCategory == null,
+          onTap: () => onChanged(null),
+        ),
+        for (final category in snapshot.categories)
+          _CategoryChip(
+            key: PredictionEventCalendarPage.categoryKey(category),
+            label: category,
+            selected: selectedCategory == category,
+            onTap: () => onChanged(category),
+          ),
+      ],
+    );
+  }
+}
+
+class _CategoryChip extends StatelessWidget {
+  const _CategoryChip({
+    super.key,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: selected ? _predictionPrimary : AppColors.bg,
+      borderRadius: AppRadii.mdRadius,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.mdRadius,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: selected ? AppColors.transparent : AppColors.border,
+            ),
+            borderRadius: AppRadii.mdRadius,
+          ),
+          child: Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: selected ? AppColors.onAccent : AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+              fontSize: 12,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

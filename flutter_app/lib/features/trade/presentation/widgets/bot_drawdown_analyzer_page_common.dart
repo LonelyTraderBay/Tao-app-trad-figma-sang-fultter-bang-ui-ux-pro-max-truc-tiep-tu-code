@@ -1,0 +1,296 @@
+part of '../pages/bot_drawdown_analyzer_page.dart';
+
+class _AnalysisCard extends StatelessWidget {
+  const _AnalysisCard({required this.insights});
+
+  final List<TradeBotDrawdownInsight> insights;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 17, 16, 23),
+      decoration: BoxDecoration(
+        color: _drawdownPanel2,
+        borderRadius: AppRadii.cardRadius,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Drawdown Analysis',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text1,
+              fontSize: 12,
+              fontWeight: AppTextStyles.bold,
+              height: 1,
+            ),
+          ),
+          const SizedBox(height: 16),
+          for (final insight in insights) ...[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 12,
+                  child: insight.symbol == 'alert'
+                      ? Text(
+                          '!',
+                          textAlign: TextAlign.center,
+                          style: AppTextStyles.caption.copyWith(
+                            color: Color(insight.colorHex),
+                            fontSize: 15,
+                            height: 1,
+                          ),
+                        )
+                      : Icon(
+                          Icons.check_rounded,
+                          color: Color(insight.colorHex),
+                          size: 15,
+                        ),
+                ),
+                const SizedBox(width: 9),
+                Expanded(
+                  child: Text(
+                    insight.text,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                      fontSize: 11,
+                      height: 1.35,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            if (insight != insights.last) const SizedBox(height: 15),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _Card extends StatelessWidget {
+  const _Card({required this.child, required this.padding});
+
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: padding,
+      decoration: BoxDecoration(
+        color: _drawdownPanel,
+        border: Border.all(color: AppColors.cardBorder),
+        borderRadius: AppRadii.cardRadius,
+      ),
+      child: child,
+    );
+  }
+}
+
+class _SectionLabel extends StatelessWidget {
+  const _SectionLabel(this.label);
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 4,
+          height: 15,
+          decoration: BoxDecoration(
+            color: _drawdownPrimary,
+            borderRadius: BorderRadius.circular(3),
+          ),
+        ),
+        const SizedBox(width: 7),
+        Text(
+          label,
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text2,
+            fontSize: 12,
+            fontWeight: AppTextStyles.bold,
+            height: 1,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _UnderwaterPainter extends CustomPainter {
+  const _UnderwaterPainter(this.points);
+
+  final List<TradeBotUnderwaterPoint> points;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final chart = Rect.fromLTWH(66, 6, size.width - 88, size.height - 42);
+    final axisPaint = Paint()
+      ..color = _drawdownAxis
+      ..strokeWidth = 1;
+    canvas
+      ..drawLine(chart.bottomLeft, chart.bottomRight, axisPaint)
+      ..drawLine(chart.bottomLeft, chart.topLeft, axisPaint);
+
+    for (final value in [0, -3, -6, -9, -12]) {
+      final y = _scaleY(value.toDouble(), chart);
+      _paintText(
+        canvas,
+        '$value%',
+        Offset(12, y - 5),
+        AppColors.text3,
+        10,
+        width: 44,
+        align: TextAlign.right,
+      );
+    }
+
+    const tickIndices = [0, 2, 4, 6, 8, 10, 12, 14];
+    for (final index in tickIndices) {
+      final x = chart.left + index / (points.length - 1) * chart.width;
+      _paintText(
+        canvas,
+        points[index].monthLabel,
+        Offset(x - 14, chart.bottom + 10),
+        AppColors.text3,
+        10,
+        width: 30,
+        align: TextAlign.center,
+      );
+    }
+
+    final line = Path();
+    for (var i = 0; i < points.length; i++) {
+      final x = chart.left + i / (points.length - 1) * chart.width;
+      final y = _scaleY(points[i].underwaterPct, chart);
+      if (i == 0) {
+        line.moveTo(x, y);
+      } else {
+        line.lineTo(x, y);
+      }
+    }
+
+    final fill = Path.from(line)
+      ..lineTo(chart.right, chart.top)
+      ..lineTo(chart.left, chart.top)
+      ..close();
+    canvas.drawPath(
+      fill,
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [AppColors.sell33, AppColors.sell.withValues(alpha: 0)],
+        ).createShader(chart),
+    );
+    canvas.drawPath(
+      line,
+      Paint()
+        ..color = _drawdownRed
+        ..strokeWidth = 2.4
+        ..style = PaintingStyle.stroke
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round,
+    );
+  }
+
+  double _scaleY(double value, Rect chart) {
+    const min = -12.0;
+    const max = 0.0;
+    return chart.bottom - ((value - min) / (max - min)) * chart.height;
+  }
+
+  @override
+  bool shouldRepaint(covariant _UnderwaterPainter oldDelegate) =>
+      oldDelegate.points != points;
+}
+
+class _DurationPainter extends CustomPainter {
+  const _DurationPainter(this.buckets);
+
+  final List<TradeBotDrawdownDurationBucket> buckets;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final chart = Rect.fromLTWH(66, 6, size.width - 88, size.height - 36);
+    final axisPaint = Paint()
+      ..color = _drawdownAxis
+      ..strokeWidth = 1;
+    canvas
+      ..drawLine(chart.bottomLeft, chart.bottomRight, axisPaint)
+      ..drawLine(chart.bottomLeft, chart.topLeft, axisPaint);
+
+    for (final value in [8, 4, 2, 0]) {
+      final y = chart.bottom - value / 8 * chart.height;
+      _paintText(
+        canvas,
+        '$value',
+        Offset(22, y - 5),
+        AppColors.text3,
+        10,
+        width: 34,
+        align: TextAlign.right,
+      );
+    }
+
+    final barArea = chart.deflate(8);
+    final slot = barArea.width / buckets.length;
+    final barWidth = math.min(60.0, slot * .78);
+    final barPaint = Paint()..color = _drawdownAmber;
+    for (var i = 0; i < buckets.length; i++) {
+      final item = buckets[i];
+      final left = barArea.left + i * slot + (slot - barWidth) / 2;
+      final barTop = chart.bottom - item.count / 8 * chart.height;
+      final rect = RRect.fromRectAndCorners(
+        Rect.fromLTWH(left, barTop, barWidth, chart.bottom - barTop),
+        topLeft: const Radius.circular(4),
+        topRight: const Radius.circular(4),
+      );
+      canvas.drawRRect(rect, barPaint);
+      _paintText(
+        canvas,
+        item.range,
+        Offset(barArea.left + i * slot, chart.bottom + 9),
+        AppColors.text3,
+        10,
+        width: slot,
+        align: TextAlign.center,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _DurationPainter oldDelegate) =>
+      oldDelegate.buckets != buckets;
+}
+
+void _paintText(
+  Canvas canvas,
+  String text,
+  Offset offset,
+  Color color,
+  double fontSize, {
+  double width = 80,
+  TextAlign align = TextAlign.left,
+}) {
+  final painter = TextPainter(
+    text: TextSpan(
+      text: text,
+      style: TextStyle(
+        color: color,
+        fontSize: fontSize,
+        fontFamily: 'Roboto',
+        fontWeight: FontWeight.w500,
+        height: 1,
+        decoration: TextDecoration.none,
+      ),
+    ),
+    textDirection: TextDirection.ltr,
+    textAlign: align,
+  )..layout(maxWidth: width);
+  painter.paint(canvas, offset);
+}

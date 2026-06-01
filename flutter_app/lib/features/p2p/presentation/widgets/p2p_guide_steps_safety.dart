@@ -1,0 +1,329 @@
+part of '../pages/p2p_guide_page.dart';
+
+class _HowItWorksTab extends StatelessWidget {
+  const _HowItWorksTab({
+    required this.snapshot,
+    required this.mode,
+    required this.onModeChanged,
+  });
+
+  final P2PGuideSnapshot snapshot;
+  final String mode;
+  final ValueChanged<String> onModeChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final steps = mode == 'buy' ? snapshot.buySteps : snapshot.sellSteps;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitCard(
+          variant: VitCardVariant.inner,
+          padding: const EdgeInsets.all(AppSpacing.x1),
+          child: Row(
+            children: [
+              Expanded(
+                child: _ModeButton(
+                  key: P2PGuidePage.buyModeKey,
+                  label: 'Mua Crypto',
+                  icon: Icons.account_balance_wallet_outlined,
+                  selected: mode == 'buy',
+                  color: AppColors.buy,
+                  onTap: () => onModeChanged('buy'),
+                ),
+              ),
+              Expanded(
+                child: _ModeButton(
+                  key: P2PGuidePage.sellModeKey,
+                  label: 'Bán Crypto',
+                  icon: Icons.description_outlined,
+                  selected: mode == 'sell',
+                  color: AppColors.sell,
+                  onTap: () => onModeChanged('sell'),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        for (final step in steps) ...[
+          _StepRow(step: step),
+          if (step.id != steps.last.id) const SizedBox(height: AppSpacing.x2),
+        ],
+        const SizedBox(height: AppSpacing.x4),
+        VitCard(
+          radius: VitCardRadius.lg,
+          borderColor: AppColors.buy20,
+          padding: const EdgeInsets.all(AppSpacing.x4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  _RoundIcon(icon: Icons.bolt_rounded, color: AppColors.buy),
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Bắt đầu ngay!', style: AppTextStyles.baseMedium),
+                        Text(
+                          'Thực hiện giao dịch đầu tiên',
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.x4),
+              VitCtaButton(
+                key: P2PGuidePage.startKey,
+                variant: VitCtaButtonVariant.success,
+                onPressed: () => context.go(snapshot.marketRoute),
+                child: const Text('Mua crypto ngay'),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        _ConceptList(),
+      ],
+    );
+  }
+}
+
+class _ModeButton extends StatelessWidget {
+  const _ModeButton({
+    super.key,
+    required this.label,
+    required this.icon,
+    required this.selected,
+    required this.color,
+    required this.onTap,
+  });
+
+  final String label;
+  final IconData icon;
+  final bool selected;
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: selected ? color : AppColors.transparent,
+      borderRadius: AppRadii.inputRadius,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.inputRadius,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                color: selected ? AppColors.text1 : AppColors.text3,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: selected ? AppColors.text1 : AppColors.text3,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _StepRow extends StatelessWidget {
+  const _StepRow({required this.step});
+
+  final P2PGuideStepDraft step;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _toneColor(step.toneKey);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _NumberIcon(
+          step: step.step,
+          icon: _guideIcon(step.iconKey),
+          color: color,
+        ),
+        const SizedBox(width: AppSpacing.x4),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(top: AppSpacing.x1),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    _TonePill(label: 'Bước ${step.step}', color: color),
+                    const SizedBox(width: AppSpacing.x2),
+                    Expanded(
+                      child: Text(
+                        step.title,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  step.description,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    height: 1.55,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SafetyTab extends StatelessWidget {
+  const _SafetyTab({required this.snapshot});
+
+  final P2PGuideSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitCard(
+          radius: VitCardRadius.lg,
+          borderColor: AppColors.sell20,
+          padding: const EdgeInsets.all(AppSpacing.x4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.shield_outlined,
+                    color: AppColors.sell,
+                    size: AppSpacing.iconMd,
+                  ),
+                  const SizedBox(width: AppSpacing.x3),
+                  Text(
+                    'An toàn giao dịch',
+                    style: AppTextStyles.baseMedium.copyWith(
+                      color: AppColors.sell,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.x2),
+              Text(
+                'VitTrade bảo vệ giao dịch của bạn qua Escrow. Hãy luôn cẩn thận và tuân thủ các nguyên tắc an toàn.',
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        for (final tip in snapshot.safetyTips) ...[
+          _SafetyTipCard(tip: tip),
+          const SizedBox(height: AppSpacing.x3),
+        ],
+        VitCard(
+          radius: VitCardRadius.lg,
+          borderColor: AppColors.sell20,
+          padding: const EdgeInsets.all(AppSpacing.x4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.report_problem_outlined,
+                    color: AppColors.sell,
+                    size: AppSpacing.iconMd,
+                  ),
+                  const SizedBox(width: AppSpacing.x2),
+                  Text(
+                    'Nghi ngờ lừa đảo?',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.sell,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.x2),
+              Text(
+                'Nếu bạn nghi ngờ giao dịch có dấu hiệu lừa đảo, hãy mở tranh chấp ngay lập tức. Không giải phóng crypto cho đến khi đã nhận đủ tiền.',
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+              ),
+              const SizedBox(height: AppSpacing.x4),
+              VitCtaButton(
+                key: P2PGuidePage.supportKey,
+                variant: VitCtaButtonVariant.danger,
+                onPressed: () => context.go(snapshot.supportRoute),
+                child: const Text('Liên hệ hỗ trợ khẩn cấp'),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SafetyTipCard extends StatelessWidget {
+  const _SafetyTipCard({required this.tip});
+
+  final P2PGuideTipDraft tip;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _toneColor(tip.toneKey);
+    return VitCard(
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _RoundIcon(icon: _guideIcon(tip.iconKey), color: color),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(tip.title, style: AppTextStyles.baseMedium),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  tip.description,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    height: 1.55,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

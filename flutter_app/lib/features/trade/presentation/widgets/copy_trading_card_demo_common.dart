@@ -1,0 +1,221 @@
+part of '../pages/copy_trading_card_demo.dart';
+
+class _InfoPanel extends StatelessWidget {
+  const _InfoPanel({
+    super.key,
+    required this.icon,
+    required this.iconColor,
+    required this.borderColor,
+    required this.title,
+    required this.children,
+  });
+
+  final IconData icon;
+  final Color iconColor;
+  final Color borderColor;
+  final String title;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.standard,
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x5),
+      borderColor: borderColor,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: iconColor, size: 18),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  title,
+                  style: AppTextStyles.baseMedium.copyWith(
+                    color: iconColor,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x4),
+          ...children,
+        ],
+      ),
+    );
+  }
+}
+
+class _ScoreCard extends StatelessWidget {
+  const _ScoreCard({
+    required this.label,
+    required this.score,
+    required this.status,
+    this.selected = false,
+  });
+
+  final String label;
+  final int score;
+  final TradeCopyCardCompliance status;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _statusColor(status);
+    return Expanded(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: _statusTintColor(status),
+          border: selected ? Border.all(color: color) : null,
+          borderRadius: AppRadii.cardRadius,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.x3),
+          child: Column(
+            children: [
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x2),
+              Text(
+                '$score',
+                style: AppTextStyles.sectionTitle.copyWith(color: color),
+              ),
+              Text(
+                '/100',
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _HeaderCell extends StatelessWidget {
+  const _HeaderCell(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+      style: AppTextStyles.micro.copyWith(
+        color: AppColors.text2,
+        fontWeight: AppTextStyles.bold,
+      ),
+    );
+  }
+}
+
+class _ComplianceIcon extends StatelessWidget {
+  const _ComplianceIcon({required this.status});
+
+  final TradeCopyCardCompliance status;
+
+  @override
+  Widget build(BuildContext context) {
+    final icon = switch (status) {
+      TradeCopyCardCompliance.pass => Icons.check_circle_outline_rounded,
+      TradeCopyCardCompliance.warn => Icons.error_outline_rounded,
+      TradeCopyCardCompliance.fail => Icons.cancel_outlined,
+    };
+    return Center(child: Icon(icon, color: _statusColor(status), size: 17));
+  }
+}
+
+class _Legend extends StatelessWidget {
+  const _Legend({required this.status, required this.label});
+
+  final TradeCopyCardCompliance status;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _ComplianceIcon(status: status),
+        const SizedBox(width: AppSpacing.x1),
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+        ),
+      ],
+    );
+  }
+}
+
+class _BulletLine extends StatelessWidget {
+  const _BulletLine({required this.text, this.compact = false});
+
+  final String text;
+  final bool compact;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: compact ? AppSpacing.x1 : AppSpacing.x2),
+      child: Text(
+        '• $text',
+        style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+      ),
+    );
+  }
+}
+
+class _IconLine extends StatelessWidget {
+  const _IconLine({required this.icon, required this.text});
+
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: AppColors.buy, size: 15),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+Color _statusColor(TradeCopyCardCompliance status) {
+  return switch (status) {
+    TradeCopyCardCompliance.pass => AppColors.buy,
+    TradeCopyCardCompliance.warn => AppColors.warn,
+    TradeCopyCardCompliance.fail => AppColors.sell,
+  };
+}
+
+Color _statusTintColor(TradeCopyCardCompliance status) {
+  return switch (status) {
+    TradeCopyCardCompliance.pass => AppColors.buy15,
+    TradeCopyCardCompliance.warn => AppColors.warn15,
+    TradeCopyCardCompliance.fail => AppColors.sell15,
+  };
+}

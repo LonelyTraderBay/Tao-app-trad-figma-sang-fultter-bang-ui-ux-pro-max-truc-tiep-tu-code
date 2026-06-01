@@ -23,6 +23,16 @@ part 'arena_governance_gate_page_part_01.dart';
 part 'arena_governance_gate_page_part_02.dart';
 part 'arena_governance_gate_page_part_03.dart';
 part 'arena_governance_gate_page_part_04.dart';
+part '../widgets/arena_governance_gate_models.dart';
+part '../widgets/arena_governance_gate_stepper_title.dart';
+part '../widgets/arena_governance_gate_privacy_clarity.dart';
+part '../widgets/arena_governance_gate_setup_fields.dart';
+part '../widgets/arena_governance_gate_resolution_timing.dart';
+part '../widgets/arena_governance_gate_suggestions_eligibility.dart';
+part '../widgets/arena_governance_gate_summary_footer.dart';
+part '../widgets/arena_governance_gate_field_controls.dart';
+part '../widgets/arena_governance_gate_status_widgets.dart';
+part '../widgets/arena_governance_gate_helpers.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
 

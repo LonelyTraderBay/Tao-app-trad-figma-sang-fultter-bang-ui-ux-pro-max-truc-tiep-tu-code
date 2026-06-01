@@ -1,0 +1,198 @@
+part of '../pages/prediction_market_maker_page.dart';
+
+class _EarningsTab extends StatelessWidget {
+  const _EarningsTab({required this.snapshot});
+
+  final PredictionMarketMakerSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitPageSection(
+      label: 'Phan tich thu nhap',
+      accentColor: _predictionPrimary,
+      children: [
+        VitCard(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Fee Earnings Over Time',
+                style: AppTextStyles.body.copyWith(
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 160,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    for (final point in snapshot.earningsHistory)
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: _FeeBar(point: point),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        VitCard(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              _AnalysisRow(
+                label: 'Total Fees',
+                value: _formatMoney(snapshot.totalFees),
+                valueColor: AppColors.buy,
+                icon: Icons.local_activity_rounded,
+              ),
+              _AnalysisRow(
+                label: 'Avg Daily Fees',
+                value: _formatMoney(snapshot.totalFees / 60),
+                icon: Icons.bar_chart_rounded,
+              ),
+              _AnalysisRow(
+                label: 'Fee Yield (annualized)',
+                value: '${snapshot.averageApr.toStringAsFixed(1)}%',
+                icon: Icons.percent_rounded,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _FeeBar extends StatelessWidget {
+  const _FeeBar({required this.point});
+
+  final PredictionEarningsPointDraft point;
+
+  @override
+  Widget build(BuildContext context) {
+    final height = 36 + point.fees;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Container(
+          height: height,
+          decoration: const BoxDecoration(
+            color: _predictionPrimary,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          point.date,
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text3,
+            fontSize: 9,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _OverviewMetric extends StatelessWidget {
+  const _OverviewMetric({
+    required this.label,
+    required this.value,
+    this.valueColor = AppColors.text1,
+    this.small = false,
+  });
+
+  final String label;
+  final String value;
+  final Color valueColor;
+  final bool small;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text3,
+            fontSize: 11,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: (small ? AppTextStyles.caption : AppTextStyles.baseMedium)
+              .copyWith(
+                color: valueColor,
+                fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
+        ),
+      ],
+    );
+  }
+}
+
+class _AnalysisRow extends StatelessWidget {
+  const _AnalysisRow({
+    required this.label,
+    required this.value,
+    required this.icon,
+    this.valueColor = AppColors.text1,
+  });
+
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color valueColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          Icon(icon, color: AppColors.text3, size: 16),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              label,
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            ),
+          ),
+          Text(
+            value,
+            style: AppTextStyles.caption.copyWith(
+              color: valueColor,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+Key _spreadKey(int value) {
+  return switch (value) {
+    25 => PredictionMarketMakerPage.spread25Key,
+    50 => PredictionMarketMakerPage.spread50Key,
+    100 => PredictionMarketMakerPage.spread100Key,
+    200 => PredictionMarketMakerPage.spread200Key,
+    _ => Key('sc037_spread_$value'),
+  };
+}
+
+String _formatMoney(double value) => '\$${value.toStringAsFixed(2)}';
+
+String _formatInput(double value) {
+  if (value == value.roundToDouble()) return value.toStringAsFixed(0);
+  return value.toString();
+}

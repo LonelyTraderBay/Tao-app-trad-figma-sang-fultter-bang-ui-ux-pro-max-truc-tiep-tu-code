@@ -20,6 +20,8 @@ import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 part '../widgets/dca_performance_compare_tabs.dart';
 part '../widgets/dca_performance_compare_charts.dart';
 part '../widgets/dca_performance_compare_analysis.dart';
+part '../widgets/dca_performance_compare_primitives.dart';
+part '../widgets/dca_performance_compare_painters.dart';
 
 enum _CompareTab { compare, scenarios, analysis }
 

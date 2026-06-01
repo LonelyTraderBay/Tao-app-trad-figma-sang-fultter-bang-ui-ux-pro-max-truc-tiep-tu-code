@@ -1,0 +1,367 @@
+part of '../pages/staking_guide_page.dart';
+
+class _HeroBanner extends StatelessWidget {
+  const _HeroBanner({required this.snapshot});
+
+  final StakingGuideSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: StakingGuidePage.heroKey,
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.primary20,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.menu_book_outlined,
+            color: AppColors.primarySoft,
+            size: AppSpacing.iconMd,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(snapshot.heroTitle, style: AppTextStyles.baseMedium),
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  snapshot.heroBody,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DifficultyTabs extends StatelessWidget {
+  const _DifficultyTabs({required this.active, required this.onChanged});
+
+  final StakingGuideDifficulty active;
+  final ValueChanged<StakingGuideDifficulty> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: StakingGuidePage.tabsKey,
+      color: AppColors.surface,
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.contentPad,
+        AppSpacing.x4,
+        AppSpacing.contentPad,
+        0,
+      ),
+      child: VitTabBar(
+        variant: VitTabBarVariant.underline,
+        activeKey: active.name,
+        onChanged: (key) => onChanged(
+          StakingGuideDifficulty.values.firstWhere(
+            (difficulty) => difficulty.name == key,
+          ),
+        ),
+        tabs: [
+          for (final difficulty in StakingGuideDifficulty.values)
+            VitTabItem(
+              key: difficulty.name,
+              label: _difficultyTabLabel(difficulty),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TutorialCard extends StatelessWidget {
+  const _TutorialCard({required this.tutorial, required this.onTap});
+
+  final StakingGuideTutorialDraft tutorial;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: StakingGuidePage.tutorialKey(tutorial.id),
+      radius: VitCardRadius.lg,
+      padding: EdgeInsets.zero,
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.x4),
+        child: Row(
+          children: [
+            _RoundIcon(
+              icon: Icons.play_circle_outline_rounded,
+              color: AppColors.primarySoft,
+              size: AppSpacing.buttonStandard,
+            ),
+            const SizedBox(width: AppSpacing.x4),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(tutorial.title, style: AppTextStyles.baseMedium),
+                  const SizedBox(height: AppSpacing.x2),
+                  Wrap(
+                    spacing: AppSpacing.x2,
+                    runSpacing: AppSpacing.x1,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      _DifficultyPill(difficulty: tutorial.difficulty),
+                      Text(
+                        '${tutorial.duration} - ${tutorial.steps.length} bước',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.text3,
+              size: AppSpacing.iconMd,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _QuickTipsGrid extends StatelessWidget {
+  const _QuickTipsGrid({required this.snapshot});
+
+  final StakingGuideSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitPageSection(
+      key: StakingGuidePage.quickTipsKey,
+      label: 'Quick Tips',
+      accentColor: AppColors.primarySoft,
+      children: [
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final itemWidth = (constraints.maxWidth - AppSpacing.x3) / 2;
+            return Wrap(
+              spacing: AppSpacing.x3,
+              runSpacing: AppSpacing.x3,
+              children: [
+                for (final tip in snapshot.quickTips)
+                  SizedBox(
+                    width: itemWidth,
+                    child: _QuickTipCard(tip: tip),
+                  ),
+              ],
+            );
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _QuickTipCard extends StatelessWidget {
+  const _QuickTipCard({required this.tip});
+
+  final StakingGuideQuickTipDraft tip;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _toneColor(tip.tone);
+    return VitCard(
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x3),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _RoundIcon(icon: _guideIcon(tip.iconKey), color: color),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            tip.title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            tip.description,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CommonMistakes extends StatelessWidget {
+  const _CommonMistakes({required this.snapshot});
+
+  final StakingGuideSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitPageSection(
+      key: StakingGuidePage.mistakesKey,
+      label: 'Tránh sai lầm phổ biến',
+      accentColor: AppColors.primarySoft,
+      children: [
+        VitCard(
+          radius: VitCardRadius.lg,
+          padding: const EdgeInsets.all(AppSpacing.x4),
+          child: Column(
+            children: [
+              for (var i = 0; i < snapshot.mistakes.length; i++) ...[
+                if (i > 0) const SizedBox(height: AppSpacing.x3),
+                _MistakeRow(mistake: snapshot.mistakes[i]),
+              ],
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _MistakeRow extends StatelessWidget {
+  const _MistakeRow({required this.mistake});
+
+  final StakingGuideMistakeDraft mistake;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _toneColor(mistake.tone);
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x3),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            Icons.warning_amber_rounded,
+            color: color,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  mistake.title,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  mistake.correction,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StartStakingCard extends StatelessWidget {
+  const _StartStakingCard({required this.snapshot});
+
+  final StakingGuideSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: StakingGuidePage.ctaKey,
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.buy20,
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(snapshot.ctaTitle, style: AppTextStyles.baseMedium),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            snapshot.ctaBody,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+          ),
+          const SizedBox(height: AppSpacing.x4),
+          SizedBox(
+            width: AppSpacing.buttonHero * 1.55,
+            child: VitCtaButton(
+              onPressed: () {
+                HapticFeedback.selectionClick();
+                context.go(snapshot.stakingRoute);
+              },
+              trailing: const Icon(Icons.arrow_forward_rounded),
+              child: Text(snapshot.ctaLabel),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ProgressHeader extends StatelessWidget {
+  const _ProgressHeader({
+    required this.stepIndex,
+    required this.total,
+    required this.progress,
+  });
+
+  final int stepIndex;
+  final int total;
+  final double progress;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Text(
+              'Bước ${stepIndex + 1}/$total',
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+            ),
+            const Spacer(),
+            Text(
+              '${(progress * 100).round()}% hoàn thành',
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.x2),
+        ClipRRect(
+          borderRadius: AppRadii.xsRadius,
+          child: LinearProgressIndicator(
+            minHeight: 6,
+            value: progress,
+            backgroundColor: AppColors.borderSolid,
+            valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+          ),
+        ),
+      ],
+    );
+  }
+}

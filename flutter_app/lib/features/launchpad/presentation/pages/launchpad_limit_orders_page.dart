@@ -19,6 +19,9 @@ part '../widgets/launchpad_limit_orders_header_widgets.dart';
 part '../widgets/launchpad_limit_orders_active_widgets.dart';
 part '../widgets/launchpad_limit_orders_history_widgets.dart';
 part '../widgets/launchpad_limit_orders_create_widgets.dart';
+part '../widgets/launchpad_limit_orders_create_fields.dart';
+part '../widgets/launchpad_limit_orders_preview_widgets.dart';
+part '../widgets/launchpad_limit_orders_formatters.dart';
 
 enum _LimitOrderTab { active, history, create }
 

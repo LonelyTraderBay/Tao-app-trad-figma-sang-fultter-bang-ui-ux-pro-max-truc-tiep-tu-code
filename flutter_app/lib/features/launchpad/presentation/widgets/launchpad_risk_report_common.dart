@@ -1,0 +1,329 @@
+part of '../pages/launchpad_risk_analytics_page.dart';
+
+class _ReportTab extends StatelessWidget {
+  const _ReportTab({required this.snapshot});
+
+  final LaunchpadRiskAnalyticsSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: LaunchpadRiskAnalyticsPage.reportKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          VitPageSection(
+            label: 'So sanh du an',
+            accentColor: AppColors.primary,
+            children: [
+              for (final project in snapshot.comparisonProjects)
+                _ComparisonProjectCard(project: project),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x4),
+          _RiskDistributionCard(projects: snapshot.comparisonProjects),
+          const SizedBox(height: AppSpacing.x4),
+          VitPageSection(
+            label: 'Tai lieu tham khao',
+            accentColor: AppColors.primary,
+            children: [
+              for (final resource in snapshot.resources)
+                _ResourceRow(resource: resource),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x4),
+          Container(
+            padding: const EdgeInsets.all(AppSpacing.x3),
+            decoration: BoxDecoration(
+              color: AppColors.primary08,
+              border: Border.all(color: AppColors.primary20),
+              borderRadius: AppRadii.cardRadius,
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(
+                  Icons.info_outline_rounded,
+                  color: AppColors.primary,
+                  size: 16,
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Text(
+                    'Risk analysis is for reference only. Always do your own research before investing. Past performance does not guarantee future results.',
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      height: 1.55,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ComparisonProjectCard extends StatelessWidget {
+  const _ComparisonProjectCard({required this.project});
+
+  final LaunchpadRiskProjectDraft project;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _riskColor(project.level);
+    return VitCard(
+      key: LaunchpadRiskAnalyticsPage.projectKey(project.id),
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      project.name,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    Text(
+                      project.symbol,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    '${project.score.overall}',
+                    style: AppTextStyles.base.copyWith(
+                      color: color,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  _RiskPill(level: project.level, compact: true),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          _ScoreProgress(value: project.score.overall, color: color),
+        ],
+      ),
+    );
+  }
+}
+
+class _RiskDistributionCard extends StatelessWidget {
+  const _RiskDistributionCard({required this.projects});
+
+  final List<LaunchpadRiskProjectDraft> projects;
+
+  @override
+  Widget build(BuildContext context) {
+    final levels = LaunchpadRiskLevel.values;
+    return VitCard(
+      key: LaunchpadRiskAnalyticsPage.distributionKey,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Risk Distribution (Market)',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x4),
+          ClipRRect(
+            borderRadius: AppRadii.inputRadius,
+            child: SizedBox(
+              height: 22,
+              child: Row(
+                children: [
+                  for (final level in levels)
+                    Expanded(
+                      flex: projects.where((p) => p.level == level).length,
+                      child: ColoredBox(color: _riskColor(level)),
+                    ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          GridView.count(
+            crossAxisCount: 2,
+            mainAxisSpacing: AppSpacing.x2,
+            crossAxisSpacing: AppSpacing.x2,
+            childAspectRatio: 5.2,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            children: [
+              for (final level in levels)
+                Row(
+                  children: [
+                    Container(
+                      width: 12,
+                      height: 12,
+                      decoration: BoxDecoration(
+                        color: _riskColor(level),
+                        borderRadius: AppRadii.xsRadius,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.x2),
+                    Text(
+                      _riskLabel(level),
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ResourceRow extends StatelessWidget {
+  const _ResourceRow({required this.resource});
+
+  final LaunchpadRiskResourceDraft resource;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.x3),
+      decoration: BoxDecoration(
+        color: AppColors.bg,
+        border: Border.all(color: AppColors.cardBorder),
+        borderRadius: AppRadii.cardRadius,
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              resource.label,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.medium,
+              ),
+            ),
+          ),
+          const Icon(
+            Icons.open_in_new_rounded,
+            color: AppColors.text3,
+            size: 16,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ScoreProgress extends StatelessWidget {
+  const _ScoreProgress({required this.value, required this.color});
+
+  final int value;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth.isFinite
+            ? constraints.maxWidth
+            : 1.0;
+        final fillWidth = width * value.clamp(0, 100) / 100;
+        return Container(
+          height: 8,
+          decoration: BoxDecoration(
+            color: AppColors.bg,
+            borderRadius: AppRadii.inputRadius,
+          ),
+          alignment: Alignment.centerLeft,
+          child: Container(
+            width: fillWidth,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: AppRadii.inputRadius,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _RiskPill extends StatelessWidget {
+  const _RiskPill({required this.level, this.compact = false});
+
+  final LaunchpadRiskLevel level;
+  final bool compact;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _riskColor(level);
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: .12),
+        borderRadius: AppRadii.inputRadius,
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: compact ? AppSpacing.x2 : AppSpacing.x3,
+          vertical: compact ? 2 : AppSpacing.x1,
+        ),
+        child: Text(
+          compact
+              ? _riskLabel(level).toUpperCase()
+              : '${_riskLabel(level).toUpperCase()} RISK',
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            fontSize: compact ? 9 : 11,
+            height: 1.25,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+Color _riskColor(LaunchpadRiskLevel level) {
+  return switch (level) {
+    LaunchpadRiskLevel.low => AppColors.buy,
+    LaunchpadRiskLevel.medium => AppColors.warn,
+    LaunchpadRiskLevel.high => AppColors.sell,
+    LaunchpadRiskLevel.critical => AppColors.sell,
+  };
+}
+
+Color _scoreColor(int score) {
+  if (score >= 80) return AppColors.buy;
+  if (score >= 60) return AppColors.warn;
+  return AppColors.sell;
+}
+
+String _riskLabel(LaunchpadRiskLevel level) {
+  return switch (level) {
+    LaunchpadRiskLevel.low => 'Low',
+    LaunchpadRiskLevel.medium => 'Medium',
+    LaunchpadRiskLevel.high => 'High',
+    LaunchpadRiskLevel.critical => 'Critical',
+  };
+}

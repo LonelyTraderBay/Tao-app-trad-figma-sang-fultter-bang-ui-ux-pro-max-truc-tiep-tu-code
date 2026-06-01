@@ -17,6 +17,12 @@ part 'margin_trading_page_part_01.dart';
 part 'margin_trading_page_part_02.dart';
 part 'margin_trading_page_part_03.dart';
 part 'margin_trading_page_part_04.dart';
+part '../widgets/margin_trading_price_pair.dart';
+part '../widgets/margin_trading_order_controls.dart';
+part '../widgets/margin_trading_order_inputs.dart';
+part '../widgets/margin_trading_order_summary.dart';
+part '../widgets/margin_trading_risk_cards.dart';
+part '../widgets/margin_trading_positions_orders.dart';
 
 const _marginBackground = AppColors.bg;
 const _marginCard = AppColors.surface;

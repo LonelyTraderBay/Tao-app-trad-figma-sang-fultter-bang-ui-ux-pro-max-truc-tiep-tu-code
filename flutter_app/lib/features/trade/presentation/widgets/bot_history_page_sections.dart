@@ -1,0 +1,231 @@
+part of '../pages/bot_history_page.dart';
+
+class _HeaderExportButton extends StatelessWidget {
+  const _HeaderExportButton({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      key: BotHistoryPage.exportHeaderKey,
+      onTap: onTap,
+      borderRadius: AppRadii.mdRadius,
+      child: Container(
+        width: 36,
+        height: 36,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: _historyPanel2,
+          border: Border.all(color: AppColors.cardBorder),
+          borderRadius: AppRadii.mdRadius,
+        ),
+        child: const Icon(
+          Icons.download_rounded,
+          color: AppColors.text1,
+          size: 19,
+        ),
+      ),
+    );
+  }
+}
+
+class _StatsCard extends StatelessWidget {
+  const _StatsCard({
+    required this.totalTrades,
+    required this.totalPnL,
+    required this.totalFees,
+  });
+
+  final int totalTrades;
+  final double totalPnL;
+  final double totalFees;
+
+  @override
+  Widget build(BuildContext context) {
+    return _Card(
+      padding: const EdgeInsets.fromLTRB(16, 17, 16, 18),
+      child: Row(
+        children: [
+          Expanded(
+            child: _StatColumn(
+              label: 'Total Trades',
+              value: '$totalTrades',
+              color: AppColors.text1,
+            ),
+          ),
+          Expanded(
+            child: _StatColumn(
+              label: 'Total PnL',
+              value:
+                  '${totalPnL >= 0 ? '+' : ''}${totalPnL.toStringAsFixed(2)}',
+              color: totalPnL >= 0 ? _historyGreen : _historyRed,
+            ),
+          ),
+          Expanded(
+            child: _StatColumn(
+              label: 'Total Fees',
+              value: totalFees.toStringAsFixed(2),
+              color: AppColors.text1,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StatColumn extends StatelessWidget {
+  const _StatColumn({
+    required this.label,
+    required this.value,
+    required this.color,
+  });
+
+  final String label;
+  final String value;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text3,
+            fontSize: 10,
+            height: 1,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          value,
+          style: AppTextStyles.sectionTitle.copyWith(
+            color: color,
+            fontSize: 20,
+            height: 1,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SearchBox extends StatelessWidget {
+  const _SearchBox();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 46,
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        color: _historyPanel,
+        border: Border.all(color: AppColors.borderSolid),
+        borderRadius: AppRadii.lgRadius,
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.search_rounded, color: AppColors.text3, size: 19),
+          const SizedBox(width: 11),
+          Expanded(
+            child: Text(
+              'Search by bot name or pair...',
+              style: AppTextStyles.body.copyWith(
+                color: AppColors.text3,
+                fontSize: 14,
+                fontWeight: AppTextStyles.medium,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _FilterTabs extends StatelessWidget {
+  const _FilterTabs({
+    required this.filter,
+    required this.trades,
+    required this.onChanged,
+  });
+
+  final _HistoryFilter filter;
+  final List<TradeBotHistoryTrade> trades;
+  final ValueChanged<_HistoryFilter> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final tabs = [
+      (_HistoryFilter.all, 'All (${trades.length})'),
+      (
+        _HistoryFilter.buy,
+        'Buy (${trades.where((t) => t.side == TradeBotHistorySide.buy).length})',
+      ),
+      (
+        _HistoryFilter.sell,
+        'Sell (${trades.where((t) => t.side == TradeBotHistorySide.sell).length})',
+      ),
+    ];
+
+    return Row(
+      children: [
+        for (final tab in tabs) ...[
+          _FilterPill(
+            key: BotHistoryPage.filterKey(tab.$1.name),
+            label: tab.$2,
+            active: tab.$1 == filter,
+            onTap: () => onChanged(tab.$1),
+          ),
+          if (tab != tabs.last) const SizedBox(width: 10),
+        ],
+      ],
+    );
+  }
+}
+
+class _FilterPill extends StatelessWidget {
+  const _FilterPill({
+    super.key,
+    required this.label,
+    required this.active,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool active;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: AppRadii.cardRadius,
+      child: Container(
+        height: 36,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: active
+              ? _historyPrimary.withValues(alpha: .12)
+              : _historyPanel2,
+          border: active
+              ? Border.all(color: _historyPrimary.withValues(alpha: .55))
+              : null,
+          borderRadius: AppRadii.cardRadius,
+        ),
+        child: Text(
+          label,
+          style: AppTextStyles.caption.copyWith(
+            color: active ? _historyPrimary : AppColors.text3,
+            fontSize: 12,
+            fontWeight: AppTextStyles.bold,
+            height: 1,
+          ),
+        ),
+      ),
+    );
+  }
+}

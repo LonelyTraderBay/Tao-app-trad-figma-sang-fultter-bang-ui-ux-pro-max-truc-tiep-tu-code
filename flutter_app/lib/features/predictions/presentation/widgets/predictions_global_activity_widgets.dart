@@ -1,0 +1,243 @@
+part of '../pages/predictions_global_activity_page.dart';
+
+class _LiveStats extends StatelessWidget {
+  const _LiveStats({required this.snapshot});
+
+  final PredictionGlobalActivitySnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  const Icon(
+                    Icons.settings_input_antenna_rounded,
+                    color: AppColors.buy,
+                    size: 15,
+                  ),
+                  Positioned(
+                    right: -1,
+                    top: -1,
+                    child: Container(
+                      width: 7,
+                      height: 7,
+                      decoration: const BoxDecoration(
+                        color: AppColors.buy,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Live Feed',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.buy,
+                  fontSize: 12,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'Real-time market activity',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Row(
+            children: [
+              Expanded(
+                child: _StatBox(
+                  label: 'Volume (1h)',
+                  value: _formatVolume(snapshot.totalVolume),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _StatBox(
+                  label: 'Buys',
+                  value: '${snapshot.buyCount}',
+                  valueColor: AppColors.buy,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _StatBox(
+                  label: 'Sells',
+                  value: '${snapshot.sellCount}',
+                  valueColor: AppColors.sell,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StatBox extends StatelessWidget {
+  const _StatBox({
+    required this.label,
+    required this.value,
+    this.valueColor = AppColors.text1,
+  });
+
+  final String label;
+  final String value;
+  final Color valueColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 55,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: AppColors.surface2,
+        borderRadius: AppRadii.cardRadius,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            label,
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              fontSize: 10,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: AppTextStyles.caption.copyWith(
+              color: valueColor,
+              fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AmountFilters extends StatelessWidget {
+  const _AmountFilters({required this.active, required this.onSelected});
+
+  final double active;
+  final ValueChanged<double> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    const filters = [
+      (label: 'All', value: 0.0),
+      (label: '\$50+', value: 50.0),
+      (label: '\$100+', value: 100.0),
+      (label: '\$500+', value: 500.0),
+      (label: '\$1K+', value: 1000.0),
+    ];
+
+    return Row(
+      children: [
+        const Icon(Icons.filter_alt_outlined, color: AppColors.text3, size: 13),
+        const SizedBox(width: 8),
+        Text(
+          'Min amount:',
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text3,
+            fontSize: 11,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                for (final filter in filters) ...[
+                  _AmountChip(
+                    key: _amountFilterKey(filter.value),
+                    label: filter.label,
+                    active: active == filter.value,
+                    onTap: () => onSelected(filter.value),
+                  ),
+                  const SizedBox(width: 6),
+                ],
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _AmountChip extends StatelessWidget {
+  const _AmountChip({
+    super.key,
+    required this.label,
+    required this.active,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool active;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: AppRadii.mdRadius,
+      child: Container(
+        height: 28,
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: active
+              ? _predictionPrimary.withValues(alpha: .14)
+              : AppColors.surface2,
+          border: Border.all(
+            color: active
+                ? _predictionPrimary.withValues(alpha: .4)
+                : AppColors.transparent,
+          ),
+          borderRadius: AppRadii.mdRadius,
+        ),
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: active ? _predictionPrimary : AppColors.text3,
+            fontSize: 11,
+            fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+Key _amountFilterKey(double value) {
+  if (value == 0) return PredictionsGlobalActivityPage.allFilterKey;
+  if (value == 100) return PredictionsGlobalActivityPage.amount100FilterKey;
+  if (value == 500) return PredictionsGlobalActivityPage.amount500FilterKey;
+  return Key('sc034_filter_${value.toInt()}');
+}
+
+String _formatVolume(double value) {
+  if (value >= 1000000) return '\$${(value / 1000000).toStringAsFixed(1)}M';
+  if (value >= 1000) return '\$${(value / 1000).toStringAsFixed(0)}K';
+  return '\$${value.toStringAsFixed(0)}';
+}

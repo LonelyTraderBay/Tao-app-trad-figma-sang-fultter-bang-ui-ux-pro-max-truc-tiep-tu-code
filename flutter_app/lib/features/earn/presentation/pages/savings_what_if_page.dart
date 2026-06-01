@@ -21,6 +21,13 @@ part 'savings_what_if_page_part_01.dart';
 part 'savings_what_if_page_part_02.dart';
 part 'savings_what_if_page_part_03.dart';
 part 'savings_what_if_page_part_04.dart';
+part '../widgets/savings_what_if_results.dart';
+part '../widgets/savings_what_if_stress.dart';
+part '../widgets/savings_what_if_stress_components.dart';
+part '../widgets/savings_what_if_asset_impact.dart';
+part '../widgets/savings_what_if_common_widgets.dart';
+part '../widgets/savings_what_if_painters.dart';
+part '../widgets/savings_what_if_models.dart';
 
 TextStyle get _captionBold =>
     AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold);

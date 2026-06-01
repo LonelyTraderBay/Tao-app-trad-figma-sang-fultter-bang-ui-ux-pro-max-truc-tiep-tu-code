@@ -1,0 +1,344 @@
+part of '../pages/prediction_order_receipt_page.dart';
+
+class _MissingReceipt extends StatelessWidget {
+  const _MissingReceipt({required this.bottomInset});
+
+  final double bottomInset;
+
+  @override
+  Widget build(BuildContext context) {
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+      child: SingleChildScrollView(
+        key: PredictionOrderReceiptPage.missingReceiptKey,
+        padding: EdgeInsets.only(bottom: bottomInset),
+        child: const VitEmptyState(
+          title: 'Không tìm thấy',
+          message: 'Lệnh không tồn tại hoặc đã bị xoá',
+          icon: Icons.warning_amber_rounded,
+        ),
+      ),
+    );
+  }
+}
+
+class _ReceiptContent extends StatelessWidget {
+  const _ReceiptContent({required this.snapshot, required this.bottomInset});
+
+  final PredictionOrderReceiptSnapshot snapshot;
+  final double bottomInset;
+
+  @override
+  Widget build(BuildContext context) {
+    final receipt = snapshot.receipt!;
+
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+      child: SingleChildScrollView(
+        key: PredictionOrderReceiptPage.contentKey,
+        padding: EdgeInsets.only(bottom: bottomInset),
+        child: VitPageContent(
+          padding: VitContentPadding.relaxed,
+          customGap: 15,
+          children: [
+            _ReceiptHero(receipt: receipt),
+            _OrderSummary(receipt: receipt),
+            _TimelineCard(receipt: receipt),
+            _TimestampCard(receipt: receipt),
+            _ShareReceiptButton(receipt: receipt),
+            const _DisclosureCard(),
+            _ReceiptActions(receipt: receipt),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ReceiptHero extends StatelessWidget {
+  const _ReceiptHero({required this.receipt});
+
+  final PredictionPortfolioReceiptDraft receipt;
+
+  @override
+  Widget build(BuildContext context) {
+    final isBuy = receipt.side == 'buy';
+    final status = _statusConfig(receipt.status);
+
+    return VitCard(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            alignment: WrapAlignment.center,
+            children: [
+              _SoftPill(
+                label: isBuy ? '↑ Buy' : '↓ Sell',
+                color: isBuy ? AppColors.buy : AppColors.sell,
+                background: isBuy ? AppColors.buy10 : AppColors.sell10,
+              ),
+              _SoftPill(
+                label: status.label,
+                color: status.color,
+                background: status.background,
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            receipt.outcome,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.baseMedium.copyWith(
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            receipt.eventTitle,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OrderSummary extends StatelessWidget {
+  const _OrderSummary({required this.receipt});
+
+  final PredictionPortfolioReceiptDraft receipt;
+
+  @override
+  Widget build(BuildContext context) {
+    final fillPct = receipt.shares <= 0
+        ? 0
+        : ((receipt.filledShares / receipt.shares) * 100).round();
+
+    return VitPageSection(
+      label: 'Tổng quan lệnh',
+      accentColor: _predictionPrimary,
+      children: [
+        VitCard(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              _SummaryRow(
+                label: 'Loại lệnh',
+                value: receipt.orderType == 'market' ? 'Market' : 'Limit',
+              ),
+              _SummaryRow(label: 'Outcome', value: receipt.outcome),
+              _SummaryRow(
+                label: 'Shares',
+                value:
+                    '${_formatShares(receipt.filledShares)}/${_formatShares(receipt.shares)}',
+                mono: true,
+              ),
+              _SummaryRow(
+                label: 'Giá đặt',
+                value: _formatPrice(receipt.price),
+                mono: true,
+              ),
+              if (receipt.avgPrice > 0)
+                _SummaryRow(
+                  label: 'Giá khớp TB',
+                  value: _formatPrice(receipt.avgPrice),
+                  mono: true,
+                ),
+              _SummaryRow(
+                label: 'Tổng giá trị',
+                value: _formatMoney(receipt.total),
+                mono: true,
+              ),
+              _SummaryRow(
+                label: 'Phí (2%)',
+                value: _formatMoney(receipt.fee),
+                mono: true,
+              ),
+              if (receipt.status != 'canceled' && receipt.status != 'rejected')
+                _FillProgress(percent: fillPct),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _TimelineCard extends StatelessWidget {
+  const _TimelineCard({required this.receipt});
+
+  final PredictionPortfolioReceiptDraft receipt;
+
+  @override
+  Widget build(BuildContext context) {
+    final timeline = receipt.timeline.isEmpty
+        ? [
+            PredictionReceiptTimelineDraft(
+              label: 'Lệnh đã gửi',
+              date: receipt.createdAt,
+              done: true,
+            ),
+          ]
+        : receipt.timeline;
+
+    return VitPageSection(
+      label: 'Tiến trình',
+      accentColor: AppColors.buy,
+      children: [
+        VitCard(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              for (var i = 0; i < timeline.length; i++)
+                _TimelineStep(
+                  step: timeline[i],
+                  isLast: i == timeline.length - 1,
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _TimestampCard extends StatelessWidget {
+  const _TimestampCard({required this.receipt});
+
+  final PredictionPortfolioReceiptDraft receipt;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _SummaryRow(label: 'Tạo lúc', value: receipt.createdAt),
+          _SummaryRow(label: 'Cập nhật', value: receipt.updatedAt),
+          _SummaryRow(
+            label: 'Mã lệnh',
+            value: receipt.id.toUpperCase(),
+            valueColor: AppColors.accent,
+            mono: true,
+            trailingIcon: Icons.copy_rounded,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ShareReceiptButton extends StatelessWidget {
+  const _ShareReceiptButton({required this.receipt});
+
+  final PredictionPortfolioReceiptDraft receipt;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: 'Chia sẻ chi tiết lệnh ${receipt.id}',
+      child: Material(
+        color: AppColors.transparent,
+        borderRadius: AppRadii.inputRadius,
+        child: Ink(
+          decoration: BoxDecoration(
+            color: AppColors.primary12,
+            border: Border.all(color: AppColors.primary15, width: 1.5),
+            borderRadius: AppRadii.inputRadius,
+          ),
+          child: InkWell(
+            key: PredictionOrderReceiptPage.shareKey,
+            onTap: () {},
+            borderRadius: AppRadii.inputRadius,
+            child: SizedBox(
+              height: AppSpacing.inputHeight,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.ios_share_rounded,
+                    color: _predictionPrimary,
+                    size: 17,
+                  ),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      'Chia sẻ chi tiết lệnh',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.body.copyWith(
+                        color: _predictionPrimary,
+                        fontWeight: AppTextStyles.medium,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DisclosureCard extends StatelessWidget {
+  const _DisclosureCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: const EdgeInsets.all(12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(Icons.shield_outlined, color: AppColors.accent, size: 15),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              'Probability không phải certainty. Giá thị trường dự đoán phản ánh ước lượng cộng đồng và có thể thay đổi bất cứ lúc nào. Đây không phải lời khuyên đầu tư.',
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text3,
+                fontSize: 12,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ReceiptActions extends StatelessWidget {
+  const _ReceiptActions({required this.receipt});
+
+  final PredictionPortfolioReceiptDraft receipt;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        VitCtaButton(
+          key: PredictionOrderReceiptPage.viewEventKey,
+          onPressed: () =>
+              context.go(AppRoutePaths.marketsPredictionEvent(receipt.eventId)),
+          variant: VitCtaButtonVariant.auth,
+          child: const Text('Xem sự kiện'),
+        ),
+        const SizedBox(height: 12),
+        VitCtaButton(
+          key: PredictionOrderReceiptPage.viewPortfolioKey,
+          onPressed: () => context.go(AppRoutePaths.profilePredictions),
+          variant: VitCtaButtonVariant.secondary,
+          child: const Text('Xem danh mục'),
+        ),
+      ],
+    );
+  }
+}

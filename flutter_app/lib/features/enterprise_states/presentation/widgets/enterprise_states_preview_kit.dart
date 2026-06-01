@@ -1,0 +1,338 @@
+part of '../pages/enterprise_states_page.dart';
+
+class _StateKitSection extends StatelessWidget {
+  const _StateKitSection({
+    required this.snapshot,
+    required this.activeState,
+    required this.onStateChanged,
+    required this.onMarkets,
+    required this.onKyc,
+  });
+
+  final EnterpriseStatesSnapshot snapshot;
+  final EnterprisePreviewState activeState;
+  final ValueChanged<EnterprisePreviewState> onStateChanged;
+  final VoidCallback onMarkets;
+  final VoidCallback onKyc;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            '5 state pattern chuẩn enterprise, match 100% visual style hiện tại. Chọn state để xem preview.',
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.text2,
+              height: 1.55,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x5),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            child: Row(
+              children: [
+                for (final state in snapshot.previewStates) ...[
+                  _PreviewStateChip(
+                    state: state,
+                    active: state.state == activeState,
+                    onTap: () => onStateChanged(state.state),
+                  ),
+                  if (state != snapshot.previewStates.last)
+                    const SizedBox(width: AppSpacing.x3),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x6),
+          _PreviewFrame(
+            activeState: activeState,
+            onMarkets: onMarkets,
+            onKyc: onKyc,
+          ),
+          const SizedBox(height: AppSpacing.x6),
+          Text(
+            'Banner Variants',
+            style: AppTextStyles.baseMedium.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x4),
+          for (final banner in snapshot.banners) ...[
+            _ReferenceBanner(banner: banner),
+            if (banner != snapshot.banners.last)
+              const SizedBox(height: AppSpacing.x4),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _PreviewStateChip extends StatelessWidget {
+  const _PreviewStateChip({
+    required this.state,
+    required this.active,
+    required this.onTap,
+  });
+
+  final EnterprisePreviewStateDraft state;
+  final bool active;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitStatusPill(
+      key: EnterpriseStatesPage.stateKey(state.state),
+      label: state.label,
+      icon: _previewIcon(state.state),
+      status: _pillStatus(state.state),
+      size: VitStatusPillSize.lg,
+      outline: !active,
+      onTap: onTap,
+    );
+  }
+}
+
+class _PreviewFrame extends StatelessWidget {
+  const _PreviewFrame({
+    required this.activeState,
+    required this.onMarkets,
+    required this.onKyc,
+  });
+
+  final EnterprisePreviewState activeState;
+  final VoidCallback onMarkets;
+  final VoidCallback onKyc;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      radius: VitCardRadius.lg,
+      clip: true,
+      padding: EdgeInsets.zero,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.x4,
+              vertical: AppSpacing.x3,
+            ),
+            decoration: const BoxDecoration(
+              border: Border(bottom: BorderSide(color: AppColors.divider)),
+            ),
+            child: Row(
+              children: [
+                const VitSkeleton(
+                  width: AppSpacing.x6,
+                  height: AppSpacing.x6,
+                  borderRadius: AppRadii.cardRadius,
+                ),
+                Expanded(
+                  child: Text(
+                    'Preview — ${_previewLabel(activeState).toLowerCase()}',
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.baseMedium.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.x6),
+              ],
+            ),
+          ),
+          if (activeState == EnterprisePreviewState.loading)
+            const _SkeletonPreview()
+          else if (activeState == EnterprisePreviewState.empty)
+            _EmptyPreview(onMarkets: onMarkets)
+          else if (activeState == EnterprisePreviewState.error)
+            const _ErrorPreview()
+          else if (activeState == EnterprisePreviewState.offline)
+            const _OfflinePreview()
+          else
+            _GatePreview(onKyc: onKyc),
+        ],
+      ),
+    );
+  }
+}
+
+class _SkeletonPreview extends StatelessWidget {
+  const _SkeletonPreview();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const VitSkeleton(width: 150, height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x4),
+          Row(
+            children: const [
+              VitSkeleton(width: 76, height: AppSpacing.x5),
+              SizedBox(width: AppSpacing.x3),
+              VitSkeleton(width: 60, height: AppSpacing.x5),
+              SizedBox(width: AppSpacing.x3),
+              VitSkeleton(width: 68, height: AppSpacing.x5),
+              SizedBox(width: AppSpacing.x3),
+              VitSkeleton(width: 52, height: AppSpacing.x5),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x4),
+          for (var i = 0; i < 5; i++) ...[
+            const _SkeletonMarketRow(),
+            if (i < 4) const SizedBox(height: AppSpacing.x5),
+          ],
+          const SizedBox(height: AppSpacing.x4),
+          const VitSkeleton(width: double.infinity, height: AppSpacing.x6),
+        ],
+      ),
+    );
+  }
+}
+
+class _SkeletonMarketRow extends StatelessWidget {
+  const _SkeletonMarketRow();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: const [
+        VitSkeleton(
+          width: AppSpacing.inputHeight,
+          height: AppSpacing.inputHeight,
+          borderRadius: AppRadii.cardLargeRadius,
+        ),
+        SizedBox(width: AppSpacing.x4),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              VitSkeleton(width: 130, height: AppSpacing.x4),
+              SizedBox(height: AppSpacing.x3),
+              VitSkeleton(width: 82, height: AppSpacing.x3),
+            ],
+          ),
+        ),
+        SizedBox(width: AppSpacing.x4),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            VitSkeleton(width: 74, height: AppSpacing.x4),
+            SizedBox(height: AppSpacing.x3),
+            VitSkeleton(width: 52, height: AppSpacing.x4),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _EmptyPreview extends StatelessWidget {
+  const _EmptyPreview({required this.onMarkets});
+
+  final VoidCallback onMarkets;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(AppSpacing.x6),
+      child: VitEmptyState(
+        icon: Icons.star_border_rounded,
+        title: 'Bạn chưa theo dõi cặp nào',
+        message:
+            'Thêm cặp giao dịch vào danh sách theo dõi để không bỏ lỡ biến động giá.',
+        actionLabel: 'Thêm vào Watchlist',
+        actionKey: EnterpriseStatesPage.marketCtaKey,
+        onAction: onMarkets,
+      ),
+    );
+  }
+}
+
+class _ErrorPreview extends StatelessWidget {
+  const _ErrorPreview();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.all(AppSpacing.x6),
+      child: VitErrorState(
+        title: 'Có lỗi xảy ra',
+        message: 'Vui lòng thử lại. Nếu lỗi tiếp tục, hãy kiểm tra kết nối.',
+      ),
+    );
+  }
+}
+
+class _OfflinePreview extends StatelessWidget {
+  const _OfflinePreview();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.all(AppSpacing.x5),
+      child: Column(
+        children: [
+          VitOfflineBanner(message: 'Mất kết nối. Đang hiển thị dữ liệu cũ.'),
+          SizedBox(height: AppSpacing.x5),
+          Opacity(opacity: .55, child: VitSkeletonList(rows: 2)),
+        ],
+      ),
+    );
+  }
+}
+
+class _GatePreview extends StatelessWidget {
+  const _GatePreview({required this.onKyc});
+
+  final VoidCallback onKyc;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(AppSpacing.x5),
+      child: VitCard(
+        variant: VitCardVariant.inner,
+        padding: const EdgeInsets.all(AppSpacing.x5),
+        child: Column(
+          children: [
+            const Icon(
+              Icons.verified_user_outlined,
+              color: AppColors.warn,
+              size: AppSpacing.iconLg,
+            ),
+            const SizedBox(height: AppSpacing.x4),
+            Text(
+              'Cần KYC để tiếp tục',
+              style: AppTextStyles.baseMedium.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.x2),
+            Text(
+              'Hoàn tất xác minh danh tính để mở khóa tính năng này.',
+              textAlign: TextAlign.center,
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            ),
+            const SizedBox(height: AppSpacing.x5),
+            VitCtaButton(
+              key: EnterpriseStatesPage.kycCtaKey,
+              onPressed: onKyc,
+              leading: const Icon(Icons.arrow_forward_rounded),
+              child: const Text('Đi tới KYC'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

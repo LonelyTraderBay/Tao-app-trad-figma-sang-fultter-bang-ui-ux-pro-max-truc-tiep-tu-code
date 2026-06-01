@@ -15,8 +15,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 part '../widgets/profile_sub_account_summary.dart';
+part '../widgets/profile_sub_account_primitives.dart';
 part '../widgets/profile_sub_account_create.dart';
+part '../widgets/profile_sub_account_card_details.dart';
 part '../widgets/profile_sub_account_cards.dart';
+part '../widgets/profile_sub_account_formatters.dart';
 
 class SubAccountPage extends ConsumerStatefulWidget {
   const SubAccountPage({super.key, this.shellRenderMode});

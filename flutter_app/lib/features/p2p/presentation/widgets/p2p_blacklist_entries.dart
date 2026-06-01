@@ -1,0 +1,356 @@
+part of '../pages/p2p_blacklist_page.dart';
+
+class _EntryList extends StatelessWidget {
+  const _EntryList({
+    required this.snapshot,
+    required this.entries,
+    required this.expandedId,
+    required this.onToggle,
+    required this.onUnblock,
+  });
+
+  final P2PBlacklistSnapshot snapshot;
+  final List<P2PBlacklistEntryDraft> entries;
+  final String? expandedId;
+  final ValueChanged<String> onToggle;
+  final ValueChanged<String> onUnblock;
+
+  @override
+  Widget build(BuildContext context) {
+    if (entries.isEmpty) {
+      return VitCard(
+        padding: const EdgeInsets.all(AppSpacing.x5),
+        child: Column(
+          children: [
+            const Icon(
+              Icons.shield_outlined,
+              color: AppColors.text3,
+              size: AppSpacing.iconLg,
+            ),
+            const SizedBox(height: AppSpacing.x3),
+            Text(
+              snapshot.emptyTitle,
+              style: AppTextStyles.baseMedium.copyWith(
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        for (var index = 0; index < entries.length; index++) ...[
+          _EntryCard(
+            entry: entries[index],
+            reason: _findReason(snapshot.reasons, entries[index].reasonId),
+            expanded: expandedId == entries[index].id,
+            onToggle: () => onToggle(entries[index].id),
+            onUnblock: () => onUnblock(entries[index].id),
+          ),
+          if (index != entries.length - 1)
+            const SizedBox(height: AppSpacing.x3),
+        ],
+      ],
+    );
+  }
+}
+
+class _EntryCard extends StatelessWidget {
+  const _EntryCard({
+    required this.entry,
+    required this.reason,
+    required this.expanded,
+    required this.onToggle,
+    required this.onUnblock,
+  });
+
+  final P2PBlacklistEntryDraft entry;
+  final P2PBlacklistReasonDraft reason;
+  final bool expanded;
+  final VoidCallback onToggle;
+  final VoidCallback onUnblock;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _reasonColor(reason);
+    return VitCard(
+      key: P2PBlacklistPage.entryKey(entry.id),
+      radius: VitCardRadius.lg,
+      borderColor: expanded ? color.withValues(alpha: .38) : null,
+      clip: true,
+      child: Column(
+        children: [
+          InkWell(
+            onTap: onToggle,
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.x4),
+              child: Row(
+                children: [
+                  _Avatar(entry: entry, reason: reason),
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                entry.username,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.caption.copyWith(
+                                  fontWeight: AppTextStyles.bold,
+                                ),
+                              ),
+                            ),
+                            if (entry.isVerified) ...[
+                              const SizedBox(width: AppSpacing.x2),
+                              const Icon(
+                                Icons.verified_outlined,
+                                color: AppColors.primary,
+                                size: 11,
+                              ),
+                            ],
+                            if (entry.badge != null) ...[
+                              const SizedBox(width: AppSpacing.x2),
+                              VitStatusPill(
+                                label: entry.badge == 'elite' ? 'Elite' : 'Pro',
+                                status: VitStatusPillStatus.purple,
+                                size: VitStatusPillSize.sm,
+                              ),
+                            ],
+                          ],
+                        ),
+                        const SizedBox(height: AppSpacing.x2),
+                        Row(
+                          children: [
+                            _SmallReasonPill(reason: reason),
+                            const SizedBox(width: AppSpacing.x3),
+                            Text(
+                              _timeAgo(entry.blockedAt),
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(
+                    expanded
+                        ? Icons.keyboard_arrow_down_rounded
+                        : Icons.chevron_right_rounded,
+                    color: AppColors.text3,
+                    size: AppSpacing.iconMd,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          if (expanded)
+            _ExpandedEntry(entry: entry, reason: reason, onUnblock: onUnblock),
+        ],
+      ),
+    );
+  }
+}
+
+class _ExpandedEntry extends StatelessWidget {
+  const _ExpandedEntry({
+    required this.entry,
+    required this.reason,
+    required this.onUnblock,
+  });
+
+  final P2PBlacklistEntryDraft entry;
+  final P2PBlacklistReasonDraft reason;
+  final VoidCallback onUnblock;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _reasonColor(reason);
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(top: BorderSide(color: AppColors.divider)),
+      ),
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          VitCard(
+            variant: VitCardVariant.inner,
+            padding: const EdgeInsets.all(AppSpacing.x3),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(_reasonIcon(reason.iconKey), color: color, size: 14),
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Text(
+                    entry.reasonText,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      height: 1.45,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Row(
+            children: [
+              Expanded(
+                child: _TinyStat(
+                  value: '${entry.tradesBefore}',
+                  label: 'Đơn trước chặn',
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: _TinyStat(
+                  value: '${entry.completionRate.toStringAsFixed(1)}%',
+                  label: 'Tỷ lệ HT',
+                  color: entry.completionRate < 50
+                      ? AppColors.sell
+                      : AppColors.warn,
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: _TinyStat(
+                  value: _shortDate(entry.blockedAt),
+                  label: 'Ngày chặn',
+                ),
+              ),
+            ],
+          ),
+          if (entry.orderId != null) ...[
+            const SizedBox(height: AppSpacing.x3),
+            _OrderLink(orderId: entry.orderId!),
+          ],
+          const SizedBox(height: AppSpacing.x3),
+          Row(
+            children: [
+              Expanded(
+                child: VitCtaButton(
+                  key: P2PBlacklistPage.unblockKey(entry.id),
+                  variant: VitCtaButtonVariant.success,
+                  height: 40,
+                  onPressed: onUnblock,
+                  leading: const Icon(Icons.check_circle_outline_rounded),
+                  child: const Text('Bỏ chặn'),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: VitCtaButton(
+                  variant: VitCtaButtonVariant.ghost,
+                  height: 40,
+                  onPressed: () => HapticFeedback.selectionClick(),
+                  leading: const Icon(
+                    Icons.report_problem_outlined,
+                    color: AppColors.warn,
+                  ),
+                  child: const Text('Báo cáo'),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Avatar extends StatelessWidget {
+  const _Avatar({required this.entry, required this.reason});
+
+  final P2PBlacklistEntryDraft entry;
+  final P2PBlacklistReasonDraft reason;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _reasonColor(reason);
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: AppColors.sell10,
+            shape: BoxShape.circle,
+            border: Border.all(color: AppColors.sell20, width: 1.5),
+          ),
+          child: Center(
+            child: Text(
+              entry.username.characters.first.toUpperCase(),
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.sell,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          right: -2,
+          bottom: -2,
+          child: Container(
+            width: 16,
+            height: 16,
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+              border: Border.all(color: AppColors.surface, width: 2),
+            ),
+            child: Icon(
+              _reasonIcon(reason.iconKey),
+              color: AppColors.onAccent,
+              size: 8,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _OrderLink extends StatelessWidget {
+  const _OrderLink({required this.orderId});
+
+  final String orderId;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: const EdgeInsets.all(AppSpacing.x3),
+      child: Row(
+        children: [
+          const Icon(
+            Icons.info_outline_rounded,
+            color: AppColors.primary,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Text(
+              'Đơn liên quan: $orderId',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.primary,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

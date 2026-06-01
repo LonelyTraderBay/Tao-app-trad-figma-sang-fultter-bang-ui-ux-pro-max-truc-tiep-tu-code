@@ -21,6 +21,16 @@ part 'dca_portfolio_optimizer_page_part_01.dart';
 part 'dca_portfolio_optimizer_page_part_02.dart';
 part 'dca_portfolio_optimizer_page_part_03.dart';
 part 'dca_portfolio_optimizer_page_part_04.dart';
+part '../widgets/dca_portfolio_optimizer_header_drift.dart';
+part '../widgets/dca_portfolio_optimizer_comparison_hero.dart';
+part '../widgets/dca_portfolio_optimizer_tabs.dart';
+part '../widgets/dca_portfolio_optimizer_frontier.dart';
+part '../widgets/dca_portfolio_optimizer_tab_panels.dart';
+part '../widgets/dca_portfolio_optimizer_floating_actions.dart';
+part '../widgets/dca_portfolio_optimizer_common_widgets.dart';
+part '../widgets/dca_portfolio_optimizer_allocation_widgets.dart';
+part '../widgets/dca_portfolio_optimizer_stat_widgets.dart';
+part '../widgets/dca_portfolio_optimizer_frontier_painter.dart';
 
 enum _OptimizerTab { frontier, correlation, backtest, risk }
 

@@ -18,6 +18,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 part '../widgets/unified_search_shell.dart';
 part '../widgets/unified_search_results.dart';
+part '../widgets/unified_search_prediction_arena_cards.dart';
+part '../widgets/unified_search_entity_cards.dart';
 part '../widgets/unified_search_common.dart';
 
 class UnifiedSearchPage extends ConsumerStatefulWidget {
