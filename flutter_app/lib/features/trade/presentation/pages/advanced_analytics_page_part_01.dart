@@ -21,49 +21,52 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
       semanticLabel: 'SC-092 AdvancedAnalyticsPage',
       child: Material(
         color: _advancedBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Advanced Analytics',
-              subtitle: 'AI & Professional Tools',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeMargin),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: AdvancedAnalyticsPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _HeroCard(stats: snapshot.stats),
-                    const SizedBox(height: 16),
-                    _UnderlineTabs(
-                      activeId: _tab,
-                      onChanged: (id) => setState(() => _tab = id),
-                    ),
-                    const SizedBox(height: 16),
-                    if (_tab == 'ai')
-                      _AiSignalsTab(
-                        snapshot: snapshot,
-                        activeFilter: _filter,
-                        onFilterChanged: (id) => setState(() => _filter = id),
-                      )
-                    else if (_tab == 'risk')
-                      _RiskAnalysisTab(snapshot: snapshot)
-                    else if (_tab == 'journal')
-                      _TradeJournalTab(snapshot: snapshot)
-                    else
-                      _PositionSizingTab(snapshot: snapshot),
-                    const SizedBox(height: 12),
-                    _ModelInfoCard(),
-                    const SizedBox(height: 12),
-                    _FeaturesCard(features: snapshot.features),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Advanced Analytics',
+            subtitle: 'AI & Professional Tools',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeMargin),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: AdvancedAnalyticsPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _HeroCard(stats: snapshot.stats),
+                      const SizedBox(height: 16),
+                      _UnderlineTabs(
+                        activeId: _tab,
+                        onChanged: (id) => setState(() => _tab = id),
+                      ),
+                      const SizedBox(height: 16),
+                      if (_tab == 'ai')
+                        _AiSignalsTab(
+                          snapshot: snapshot,
+                          activeFilter: _filter,
+                          onFilterChanged: (id) => setState(() => _filter = id),
+                        )
+                      else if (_tab == 'risk')
+                        _RiskAnalysisTab(snapshot: snapshot)
+                      else if (_tab == 'journal')
+                        _TradeJournalTab(snapshot: snapshot)
+                      else
+                        _PositionSizingTab(snapshot: snapshot),
+                      const SizedBox(height: 12),
+                      _ModelInfoCard(),
+                      const SizedBox(height: 12),
+                      _FeaturesCard(features: snapshot.features),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

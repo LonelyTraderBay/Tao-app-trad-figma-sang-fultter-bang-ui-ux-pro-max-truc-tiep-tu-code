@@ -10,8 +10,11 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 
@@ -81,7 +84,11 @@ class _PairDetailPageState extends ConsumerState<PairDetailPage> {
             _PairHeader(
               pair: pair,
               favorite: _favorite,
-              onBack: () => context.go(AppRoutePaths.home),
+              onBack: () => goBackOrFallback(
+                context,
+                fallbackPath: AppRoutePaths.markets,
+                mode: BackNavigationMode.historyThenFallback,
+              ),
               onPairTap: () => context.go(AppRoutePaths.markets),
               onFavorite: () => setState(() => _favorite = !_favorite),
             ),

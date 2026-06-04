@@ -5,27 +5,47 @@ List<RouteBase> _adminRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.admin,
       name: AppRouteNames.sc180AdminHome,
-      builder: (_, _) => AdminHome(shellRenderMode: shellRenderMode),
+      builder: (_, _) => InternalSurfaceGate(
+        kind: InternalSurfaceKind.admin,
+        routePath: AppRoutePaths.admin,
+        child: AdminHome(shellRenderMode: shellRenderMode),
+      ),
     ),
     GoRoute(
       path: AppRoutePaths.adminAnalytics,
       name: AppRouteNames.sc181AnalyticsDashboard,
-      builder: (_, _) => AnalyticsDashboard(shellRenderMode: shellRenderMode),
+      builder: (_, _) => InternalSurfaceGate(
+        kind: InternalSurfaceKind.admin,
+        routePath: AppRoutePaths.adminAnalytics,
+        child: AnalyticsDashboard(shellRenderMode: shellRenderMode),
+      ),
     ),
     GoRoute(
       path: AppRoutePaths.adminAbtests,
       name: AppRouteNames.sc182AbTestDashboard,
-      builder: (_, _) => ABTestDashboard(shellRenderMode: shellRenderMode),
+      builder: (_, _) => InternalSurfaceGate(
+        kind: InternalSurfaceKind.admin,
+        routePath: AppRoutePaths.adminAbtests,
+        child: ABTestDashboard(shellRenderMode: shellRenderMode),
+      ),
     ),
     GoRoute(
       path: AppRoutePaths.adminFunnels,
       name: AppRouteNames.sc183FunnelDashboard,
-      builder: (_, _) => FunnelDashboard(shellRenderMode: shellRenderMode),
+      builder: (_, _) => InternalSurfaceGate(
+        kind: InternalSurfaceKind.admin,
+        routePath: AppRoutePaths.adminFunnels,
+        child: FunnelDashboard(shellRenderMode: shellRenderMode),
+      ),
     ),
     GoRoute(
       path: AppRoutePaths.adminSettings,
       name: AppRouteNames.sc410AdminSettings,
-      builder: (_, _) => AdminSettingsPage(shellRenderMode: shellRenderMode),
+      builder: (_, _) => InternalSurfaceGate(
+        kind: InternalSurfaceKind.admin,
+        routePath: AppRoutePaths.adminSettings,
+        child: AdminSettingsPage(shellRenderMode: shellRenderMode),
+      ),
     ),
   ];
 }

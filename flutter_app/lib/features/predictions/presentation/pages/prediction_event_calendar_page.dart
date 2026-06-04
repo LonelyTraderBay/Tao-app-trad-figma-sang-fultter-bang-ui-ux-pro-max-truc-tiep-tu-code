@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -67,61 +68,68 @@ class _PredictionEventCalendarPageState
       semanticLabel: 'SC-039 PredictionEventCalendarPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Event Calendar',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.marketsPredictions),
-              trailing: _FilterButton(
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Event Calendar',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.marketsPredictions),
+            actions: [
+              VitHeaderActionItem(
+                key: PredictionEventCalendarPage.filterButtonKey,
+                type: VitHeaderActionType.filter,
                 active: _showFilter,
-                onTap: () => setState(() => _showFilter = !_showFilter),
+                onPressed: () => setState(() => _showFilter = !_showFilter),
               ),
-            ),
-            _EventCalendarTabBar(
-              activeTab: _activeTab,
-              onChanged: (tab) => setState(() => _activeTab = tab),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: PredictionEventCalendarPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 16,
-                    children: [
-                      if (_showFilter)
-                        _CategoryFilters(
-                          snapshot: snapshot,
-                          selectedCategory: _category,
-                          onChanged: (category) =>
-                              setState(() => _category = category),
-                        ),
-                      ...switch (_activeTab) {
-                        _CalendarTab.calendar => [
-                          _StatsCard(snapshot: snapshot),
-                          for (final month in snapshot.months)
-                            _MonthSection(month: month),
-                        ],
-                        _CalendarTab.upcoming => [
-                          _UpcomingSection(snapshot: snapshot),
-                        ],
-                        _CalendarTab.notifications => [
-                          _NotificationSettings(),
-                          _WatchingSection(snapshot: snapshot),
-                          const _NotificationInfo(),
-                        ],
-                      },
-                    ],
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _EventCalendarTabBar(
+                activeTab: _activeTab,
+                onChanged: (tab) => setState(() => _activeTab = tab),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: PredictionEventCalendarPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 16,
+                      children: [
+                        if (_showFilter)
+                          _CategoryFilters(
+                            snapshot: snapshot,
+                            selectedCategory: _category,
+                            onChanged: (category) =>
+                                setState(() => _category = category),
+                          ),
+                        ...switch (_activeTab) {
+                          _CalendarTab.calendar => [
+                            _StatsCard(snapshot: snapshot),
+                            for (final month in snapshot.months)
+                              _MonthSection(month: month),
+                          ],
+                          _CalendarTab.upcoming => [
+                            _UpcomingSection(snapshot: snapshot),
+                          ],
+                          _CalendarTab.notifications => [
+                            _NotificationSettings(),
+                            _WatchingSection(snapshot: snapshot),
+                            const _NotificationInfo(),
+                          ],
+                        },
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

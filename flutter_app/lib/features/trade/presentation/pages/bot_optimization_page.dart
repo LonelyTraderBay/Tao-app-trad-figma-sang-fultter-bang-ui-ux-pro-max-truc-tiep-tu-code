@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -57,85 +58,90 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
       semanticLabel: 'SC-127 BotOptimizationPage',
       child: Material(
         color: _optimizationBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Parameter Optimization',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeBots),
-            ),
-            Expanded(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  final baseBodyHeight =
-                      DeviceMetrics.height - DeviceMetrics.safeTop;
-                  final visualExtra = mode.usesVisualQaFrame
-                      ? math.max(0.0, constraints.maxHeight - baseBodyHeight)
-                      : 0.0;
-                  final footerBottom =
-                      (mode.usesVisualQaFrame
-                          ? DeviceMetrics.bottomChrome - 14 + visualExtra * .90
-                          : DeviceMetrics.nativeBottomChrome) +
-                      MediaQuery.paddingOf(context).bottom;
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Parameter Optimization',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeBots),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final baseBodyHeight =
+                        DeviceMetrics.height - DeviceMetrics.safeTop;
+                    final visualExtra = mode.usesVisualQaFrame
+                        ? math.max(0.0, constraints.maxHeight - baseBodyHeight)
+                        : 0.0;
+                    final footerBottom =
+                        (mode.usesVisualQaFrame
+                            ? DeviceMetrics.bottomChrome -
+                                  14 +
+                                  visualExtra * .90
+                            : DeviceMetrics.nativeBottomChrome) +
+                        MediaQuery.paddingOf(context).bottom;
 
-                  return Stack(
-                    children: [
-                      Positioned.fill(
-                        child: SingleChildScrollView(
-                          key: BotOptimizationPage.contentKey,
-                          padding: EdgeInsets.fromLTRB(
-                            20,
-                            14,
-                            20,
-                            footerBottom + 74,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              const _IntroCard(),
-                              const SizedBox(height: 31),
-                              const _SectionLabel('Optimization Target'),
-                              const SizedBox(height: 10),
-                              _TargetCard(
-                                targets: snapshot.targets,
-                                selectedId: _selectedTarget,
-                                onChanged: (id) =>
-                                    setState(() => _selectedTarget = id),
-                              ),
-                              const SizedBox(height: 18),
-                              const _SectionLabel('Parameter Ranges'),
-                              const SizedBox(height: 10),
-                              _RangeCard(
-                                ranges: snapshot.parameterRanges,
-                                gridCount: _gridCount,
-                                gridRange: _gridRange,
-                                onGridCountChanged: (value) =>
-                                    setState(() => _gridCount = value),
-                                onGridRangeChanged: (value) =>
-                                    setState(() => _gridRange = value),
-                              ),
-                              const SizedBox(height: 18),
-                              _HowItWorksCard(steps: snapshot.steps),
-                              if (_lastResult != null) ...[
-                                const SizedBox(height: 12),
-                                _QueuedCard(result: _lastResult!),
+                    return Stack(
+                      children: [
+                        Positioned.fill(
+                          child: SingleChildScrollView(
+                            key: BotOptimizationPage.contentKey,
+                            padding: EdgeInsets.fromLTRB(
+                              20,
+                              14,
+                              20,
+                              footerBottom + 74,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const _IntroCard(),
+                                const SizedBox(height: 31),
+                                const _SectionLabel('Optimization Target'),
+                                const SizedBox(height: 10),
+                                _TargetCard(
+                                  targets: snapshot.targets,
+                                  selectedId: _selectedTarget,
+                                  onChanged: (id) =>
+                                      setState(() => _selectedTarget = id),
+                                ),
+                                const SizedBox(height: 18),
+                                const _SectionLabel('Parameter Ranges'),
+                                const SizedBox(height: 10),
+                                _RangeCard(
+                                  ranges: snapshot.parameterRanges,
+                                  gridCount: _gridCount,
+                                  gridRange: _gridRange,
+                                  onGridCountChanged: (value) =>
+                                      setState(() => _gridCount = value),
+                                  onGridRangeChanged: (value) =>
+                                      setState(() => _gridRange = value),
+                                ),
+                                const SizedBox(height: 18),
+                                _HowItWorksCard(steps: snapshot.steps),
+                                if (_lastResult != null) ...[
+                                  const SizedBox(height: 12),
+                                  _QueuedCard(result: _lastResult!),
+                                ],
                               ],
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: footerBottom,
-                        child: _StartFooter(onStart: () => _handleStart()),
-                      ),
-                    ],
-                  );
-                },
+                        Positioned(
+                          left: 0,
+                          right: 0,
+                          bottom: footerBottom,
+                          child: _StartFooter(onStart: () => _handleStart()),
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

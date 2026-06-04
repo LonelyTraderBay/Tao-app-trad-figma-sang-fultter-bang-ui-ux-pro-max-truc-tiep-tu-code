@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -49,59 +50,62 @@ class _P2PContributionHistoryPageState
       semanticLabel: 'SC-242 P2PContributionHistoryPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Lịch sử đóng góp',
-              subtitle: 'Bảo hiểm · P2P',
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _ContributionSummaryCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      VitCtaButton(
-                        key: P2PContributionHistoryPage.exportKey,
-                        variant: VitCtaButtonVariant.secondary,
-                        leading: const Icon(Icons.download_rounded),
-                        onPressed: () {
-                          HapticFeedback.selectionClick();
-                          setState(
-                            () => _feedback =
-                                'Đã chuẩn bị báo cáo CSV lịch sử đóng góp',
-                          );
-                        },
-                        child: const Text('Xuất CSV'),
-                      ),
-                      if (_feedback != null) ...[
-                        const SizedBox(height: AppSpacing.x4),
-                        _FeedbackBanner(message: _feedback!),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Lịch sử đóng góp',
+            subtitle: 'Bảo hiểm · P2P',
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _ContributionSummaryCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        VitCtaButton(
+                          key: P2PContributionHistoryPage.exportKey,
+                          variant: VitCtaButtonVariant.secondary,
+                          leading: const Icon(Icons.download_rounded),
+                          onPressed: () {
+                            HapticFeedback.selectionClick();
+                            setState(
+                              () => _feedback =
+                                  'Đã chuẩn bị báo cáo CSV lịch sử đóng góp',
+                            );
+                          },
+                          child: const Text('Xuất CSV'),
+                        ),
+                        if (_feedback != null) ...[
+                          const SizedBox(height: AppSpacing.x4),
+                          _FeedbackBanner(message: _feedback!),
+                        ],
+                        const SizedBox(height: AppSpacing.x5),
+                        _MonthlyContributionGroups(
+                          groups: snapshot.monthlyGroups,
+                        ),
                       ],
-                      const SizedBox(height: AppSpacing.x5),
-                      _MonthlyContributionGroups(
-                        groups: snapshot.monthlyGroups,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -113,122 +114,128 @@ class _ArenaSmartRuleBuilderPageState
       semanticLabel: 'SC-186 ArenaSmartRuleBuilderPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Arena Studio',
-              subtitle: 'Smart Rule Builder',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: ArenaSmartRuleBuilderPage.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  customGap: AppSpacing.x5,
-                  children: [
-                    _SmartStepper(steps: snapshot.steps, step: 3),
-                    _IntroSection(),
-                    _ClarityScoreCard(score: clarity.score),
-                    _GuidanceLink(onTap: _showGuidance),
-                    _TitleField(
-                      title: _title,
-                      suggestions: snapshot.titleSuggestions,
-                      onChanged: (value) => setState(() => _title = value),
-                    ),
-                    _DomainField(
-                      domain: _selectedDomain(snapshot),
-                      onTap: () => _selectDomain(snapshot, 'crypto'),
-                    ),
-                    _ChallengeTypeGrid(
-                      types: snapshot.challengeTypes,
-                      selectedId: _challengeTypeId,
-                      onSelected: (id) => setState(() => _challengeTypeId = id),
-                    ),
-                    _ConditionBuilder(
-                      subject: _subject,
-                      action: _action,
-                      metric: _metric,
-                      winType: _winType,
-                      deadlineContext: _deadlineContext,
-                      customWinCondition: _customWinCondition,
-                      onSubject: () =>
-                          setState(() => _subject = snapshot.subjects.first),
-                      onAction: () =>
-                          setState(() => _action = snapshot.actions.first),
-                      onMetric: () =>
-                          setState(() => _metric = snapshot.metrics.first),
-                      onWinType: () =>
-                          setState(() => _winType = snapshot.winTypes.first),
-                      onDeadlineContext: () => setState(
-                        () =>
-                            _deadlineContext = snapshot.deadlineContexts.first,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Arena Studio',
+            subtitle: 'Smart Rule Builder',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: ArenaSmartRuleBuilderPage.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    customGap: AppSpacing.x5,
+                    children: [
+                      _SmartStepper(steps: snapshot.steps, step: 3),
+                      _IntroSection(),
+                      _ClarityScoreCard(score: clarity.score),
+                      _GuidanceLink(onTap: _showGuidance),
+                      _TitleField(
+                        title: _title,
+                        suggestions: snapshot.titleSuggestions,
+                        onChanged: (value) => setState(() => _title = value),
                       ),
-                      onCustomWinChanged: (value) =>
-                          setState(() => _customWinCondition = value),
-                    ),
-                    _DescriptionField(
-                      value: _description,
-                      onChanged: (value) =>
-                          setState(() => _description = value),
-                    ),
-                    _QuickSuggestions(
-                      suggestions: _quickSuggestions(snapshot),
-                      onTap: (value) => setState(() {
-                        if (_title.isEmpty) {
-                          _title = value;
-                        } else {
-                          _customWinCondition = value;
-                        }
-                      }),
-                    ),
-                    _TimingRulesCard(
-                      snapshot: snapshot,
-                      endDate: _endDate,
-                      tieRule: _tieRule,
-                      voidRule: _voidRule,
-                      resultDeadline: _resultDeadline,
-                      rematchEnabled: _rematchEnabled,
-                      saveAsMode: _saveAsMode,
-                      onDate: (value) => setState(() => _endDate = value),
-                      onTieRule: () =>
-                          setState(() => _tieRule = snapshot.tieRules.first),
-                      onVoidRule: () =>
-                          setState(() => _voidRule = snapshot.voidRules.first),
-                      onResultDeadline: () => setState(
-                        () => _resultDeadline = snapshot.resultDeadlines.first,
+                      _DomainField(
+                        domain: _selectedDomain(snapshot),
+                        onTap: () => _selectDomain(snapshot, 'crypto'),
                       ),
-                      onRematch: () =>
-                          setState(() => _rematchEnabled = !_rematchEnabled),
-                      onSaveAsMode: () =>
-                          setState(() => _saveAsMode = !_saveAsMode),
-                    ),
-                    _RuleSummaryCard(
-                      domain: _selectedDomain(snapshot)?.label,
-                      challengeType: _selectedChallengeType(snapshot)?.label,
-                      winCondition: _generatedWinCondition,
-                      endDate: _endDate,
-                      tieRule: _tieRule,
-                      voidRule: _voidRule,
-                      resultDeadline: _resultDeadline,
-                    ),
-                    const _ModerationNote(),
-                    _FooterActions(
-                      canProceed: canProceed,
-                      clarityScore: clarity.score,
-                      statusLabel: _statusLabel,
-                      onBack: _close,
-                      onContinue: _continue,
-                      onSave: _saveDraft,
-                    ),
-                  ],
+                      _ChallengeTypeGrid(
+                        types: snapshot.challengeTypes,
+                        selectedId: _challengeTypeId,
+                        onSelected: (id) =>
+                            setState(() => _challengeTypeId = id),
+                      ),
+                      _ConditionBuilder(
+                        subject: _subject,
+                        action: _action,
+                        metric: _metric,
+                        winType: _winType,
+                        deadlineContext: _deadlineContext,
+                        customWinCondition: _customWinCondition,
+                        onSubject: () =>
+                            setState(() => _subject = snapshot.subjects.first),
+                        onAction: () =>
+                            setState(() => _action = snapshot.actions.first),
+                        onMetric: () =>
+                            setState(() => _metric = snapshot.metrics.first),
+                        onWinType: () =>
+                            setState(() => _winType = snapshot.winTypes.first),
+                        onDeadlineContext: () => setState(
+                          () => _deadlineContext =
+                              snapshot.deadlineContexts.first,
+                        ),
+                        onCustomWinChanged: (value) =>
+                            setState(() => _customWinCondition = value),
+                      ),
+                      _DescriptionField(
+                        value: _description,
+                        onChanged: (value) =>
+                            setState(() => _description = value),
+                      ),
+                      _QuickSuggestions(
+                        suggestions: _quickSuggestions(snapshot),
+                        onTap: (value) => setState(() {
+                          if (_title.isEmpty) {
+                            _title = value;
+                          } else {
+                            _customWinCondition = value;
+                          }
+                        }),
+                      ),
+                      _TimingRulesCard(
+                        snapshot: snapshot,
+                        endDate: _endDate,
+                        tieRule: _tieRule,
+                        voidRule: _voidRule,
+                        resultDeadline: _resultDeadline,
+                        rematchEnabled: _rematchEnabled,
+                        saveAsMode: _saveAsMode,
+                        onDate: (value) => setState(() => _endDate = value),
+                        onTieRule: () =>
+                            setState(() => _tieRule = snapshot.tieRules.first),
+                        onVoidRule: () => setState(
+                          () => _voidRule = snapshot.voidRules.first,
+                        ),
+                        onResultDeadline: () => setState(
+                          () =>
+                              _resultDeadline = snapshot.resultDeadlines.first,
+                        ),
+                        onRematch: () =>
+                            setState(() => _rematchEnabled = !_rematchEnabled),
+                        onSaveAsMode: () =>
+                            setState(() => _saveAsMode = !_saveAsMode),
+                      ),
+                      _RuleSummaryCard(
+                        domain: _selectedDomain(snapshot)?.label,
+                        challengeType: _selectedChallengeType(snapshot)?.label,
+                        winCondition: _generatedWinCondition,
+                        endDate: _endDate,
+                        tieRule: _tieRule,
+                        voidRule: _voidRule,
+                        resultDeadline: _resultDeadline,
+                      ),
+                      const _ModerationNote(),
+                      _FooterActions(
+                        canProceed: canProceed,
+                        clarityScore: clarity.score,
+                        statusLabel: _statusLabel,
+                        onBack: _close,
+                        onContinue: _continue,
+                        onSave: _saveDraft,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

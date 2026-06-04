@@ -7,10 +7,13 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
@@ -72,108 +75,110 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
       semanticLabel: 'SC-027 PredictionsHomePage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Prediction Markets',
-              subtitle: 'Thị trường dự đoán',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.markets),
-              trailing: SizedBox(
+        child: VitAutoHideHeaderScaffold(
+          header: VitTopChrome(
+            type: VitTopChromeType.rootModule,
+            title: 'Prediction Markets',
+            subtitle: 'Thị trường dự đoán',
+            showBack: true,
+            onBack: () => goBackOrFallback(
+              context,
+              fallbackPath: AppRoutePaths.markets,
+              mode: BackNavigationMode.historyThenFallback,
+            ),
+            actions: [
+              VitHeaderActionItem(
                 key: PredictionsHomePage.searchActionKey,
-                width: 36,
-                height: 36,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: AppColors.searchBg,
-                    border: Border.all(color: AppColors.border),
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                  child: IconButton(
-                    onPressed: () =>
-                        context.go(AppRoutePaths.marketsPredictionsSearch),
-                    padding: EdgeInsets.zero,
-                    icon: const Icon(
-                      Icons.search_rounded,
-                      color: AppColors.text1,
-                      size: 18,
+                type: VitHeaderActionType.search,
+                onPressed: () =>
+                    context.go(AppRoutePaths.marketsPredictionsSearch),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: PredictionsHomePage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 13,
+                      children: [
+                        _SearchField(
+                          value: _searchQuery,
+                          onChanged: (value) => setState(() {
+                            _searchQuery = value;
+                          }),
+                          onClear: () => setState(() {
+                            _searchQuery = '';
+                          }),
+                        ),
+                        _FilterTabs(
+                          active: _filter,
+                          onSelected: (value) => setState(() {
+                            _filter = value;
+                          }),
+                        ),
+                        _CategoryChips(
+                          categories: snapshot.categories,
+                          activeCategory: _category,
+                          onSelected: (value) => setState(() {
+                            _category = value;
+                          }),
+                        ),
+                        if (snapshot.highRiskContractId != null)
+                          VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Prediction market states active',
+                            message:
+                                'Event setup, risk preview, confirmation, receipt, portfolio and support use the shared high-risk flow contract.',
+                            contractId: snapshot.highRiskContractId,
+                          ),
+                        if (_searchQuery.isEmpty) ...[
+                          _PredictionCtaCard(
+                            key: PredictionsHomePage.myPredictionsKey,
+                            title: 'My Predictions',
+                            subtitle:
+                                '${snapshot.openPositionCount} open positions',
+                            color: AppColors.accent,
+                            icon: Icons.work_outline_rounded,
+                            onTap: () =>
+                                context.go(AppRoutePaths.profilePredictions),
+                          ),
+                          _BreakingMoversCard(
+                            snapshot: snapshot,
+                            onTap: () => context.go(
+                              AppRoutePaths.marketsPredictionsBreaking,
+                            ),
+                          ),
+                          _ArenaBridgeCard(
+                            onTap: () => context.go(AppRoutePaths.arena),
+                          ),
+                        ],
+                        if (snapshot.events.isEmpty)
+                          const _PredictionsEmptyState()
+                        else
+                          for (final event in snapshot.events)
+                            _PredictionEventCard(
+                              key: PredictionsHomePage.eventCardKey(event.id),
+                              event: event,
+                              onTap: () => context.go(
+                                AppRoutePaths.marketsPredictionEvent(event.id),
+                              ),
+                            ),
+                      ],
                     ),
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: PredictionsHomePage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 13,
-                    children: [
-                      _SearchField(
-                        value: _searchQuery,
-                        onChanged: (value) => setState(() {
-                          _searchQuery = value;
-                        }),
-                        onClear: () => setState(() {
-                          _searchQuery = '';
-                        }),
-                      ),
-                      _FilterTabs(
-                        active: _filter,
-                        onSelected: (value) => setState(() {
-                          _filter = value;
-                        }),
-                      ),
-                      _CategoryChips(
-                        categories: snapshot.categories,
-                        activeCategory: _category,
-                        onSelected: (value) => setState(() {
-                          _category = value;
-                        }),
-                      ),
-                      if (_searchQuery.isEmpty) ...[
-                        _PredictionCtaCard(
-                          key: PredictionsHomePage.myPredictionsKey,
-                          title: 'My Predictions',
-                          subtitle:
-                              '${snapshot.openPositionCount} open positions',
-                          color: AppColors.accent,
-                          icon: Icons.work_outline_rounded,
-                          onTap: () =>
-                              context.go(AppRoutePaths.profilePredictions),
-                        ),
-                        _BreakingMoversCard(
-                          snapshot: snapshot,
-                          onTap: () => context.go(
-                            AppRoutePaths.marketsPredictionsBreaking,
-                          ),
-                        ),
-                        _ArenaBridgeCard(
-                          onTap: () => context.go(AppRoutePaths.arena),
-                        ),
-                      ],
-                      if (snapshot.events.isEmpty)
-                        const _PredictionsEmptyState()
-                      else
-                        for (final event in snapshot.events)
-                          _PredictionEventCard(
-                            key: PredictionsHomePage.eventCardKey(event.id),
-                            event: event,
-                            onTap: () => context.go(
-                              AppRoutePaths.marketsPredictionEvent(event.id),
-                            ),
-                          ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -9,9 +9,11 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
 part '../widgets/copy_audit_log_controls.dart';
 part '../widgets/copy_audit_log_events.dart';
@@ -79,55 +81,62 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
       semanticLabel: 'SC-077 CopyAuditLogPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Audit Log',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.trade),
-              trailing: _ExportHeaderButton(
-                onTap: () => _showExportSheet(snapshot),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Audit Log',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.trade),
+            actions: [
+              VitHeaderActionItem(
+                key: CopyAuditLogPage.exportActionKey,
+                type: VitHeaderActionType.export,
+                onPressed: () => _showExportSheet(snapshot),
               ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: CopyAuditLogPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _ComplianceNotice(snapshot: snapshot),
-                    const SizedBox(height: 24),
-                    _AuditSearchField(
-                      controller: _searchController,
-                      onChanged: (_) => setState(() {}),
-                    ),
-                    const SizedBox(height: 25),
-                    _AuditFilterTabs(
-                      tabs: snapshot.tabs,
-                      activeId: _activeFilter,
-                      onChanged: (id) => setState(() => _activeFilter = id),
-                    ),
-                    const SizedBox(height: 24),
-                    if (events.isEmpty)
-                      _EmptyAuditState(
-                        searching: _searchController.text.isNotEmpty,
-                      )
-                    else
-                      for (final event in events) ...[
-                        _AuditEventCard(
-                          key: CopyAuditLogPage.eventKey(event.id),
-                          event: event,
-                        ),
-                        if (event != events.last) const SizedBox(height: 10),
-                      ],
-                    const SizedBox(height: 24),
-                    _SummarySection(events: snapshot.events),
-                  ],
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: CopyAuditLogPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _ComplianceNotice(snapshot: snapshot),
+                      const SizedBox(height: 24),
+                      _AuditSearchField(
+                        controller: _searchController,
+                        onChanged: (_) => setState(() {}),
+                      ),
+                      const SizedBox(height: 25),
+                      _AuditFilterTabs(
+                        tabs: snapshot.tabs,
+                        activeId: _activeFilter,
+                        onChanged: (id) => setState(() => _activeFilter = id),
+                      ),
+                      const SizedBox(height: 24),
+                      if (events.isEmpty)
+                        _EmptyAuditState(
+                          searching: _searchController.text.isNotEmpty,
+                        )
+                      else
+                        for (final event in events) ...[
+                          _AuditEventCard(
+                            key: CopyAuditLogPage.eventKey(event.id),
+                            event: event,
+                          ),
+                          if (event != events.last) const SizedBox(height: 10),
+                        ],
+                      const SizedBox(height: 24),
+                      _SummarySection(events: snapshot.events),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -156,7 +165,7 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
   }
 
   void _showExportSheet(TradeCopyAuditLogSnapshot snapshot) {
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.bg,
       barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .5),

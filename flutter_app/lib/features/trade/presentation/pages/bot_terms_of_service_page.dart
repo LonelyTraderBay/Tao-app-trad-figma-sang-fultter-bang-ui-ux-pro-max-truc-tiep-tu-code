@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -74,52 +75,55 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
       semanticLabel: 'SC-117 BotTermsOfServicePage',
       child: Material(
         color: _termsBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Trading Bots Terms',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeBots),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: BotTermsOfServicePage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _InfoBanner(snapshot: snapshot),
-                    const SizedBox(height: 18),
-                    _TermsCard(
-                      snapshot: snapshot,
-                      controller: _termsController,
-                    ),
-                    const SizedBox(height: 18),
-                    _SectionLabel(snapshot.acceptSectionLabel),
-                    const SizedBox(height: 12),
-                    if (!_readToEnd) ...[
-                      _ScrollWarning(snapshot: snapshot),
-                      const SizedBox(height: 20),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Trading Bots Terms',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeBots),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: BotTermsOfServicePage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _InfoBanner(snapshot: snapshot),
+                      const SizedBox(height: 18),
+                      _TermsCard(
+                        snapshot: snapshot,
+                        controller: _termsController,
+                      ),
+                      const SizedBox(height: 18),
+                      _SectionLabel(snapshot.acceptSectionLabel),
+                      const SizedBox(height: 12),
+                      if (!_readToEnd) ...[
+                        _ScrollWarning(snapshot: snapshot),
+                        const SizedBox(height: 20),
+                      ],
+                      _AgreementCard(
+                        snapshot: snapshot,
+                        enabled: _readToEnd,
+                        agreed: _agreed,
+                        onTap: _toggleAgreement,
+                      ),
+                      const SizedBox(height: 16),
+                      _TermsCta(
+                        snapshot: snapshot,
+                        agreed: _agreed,
+                        onPressed: _acceptTerms,
+                      ),
+                      const SizedBox(height: 16),
+                      _ComplianceNote(snapshot: snapshot),
                     ],
-                    _AgreementCard(
-                      snapshot: snapshot,
-                      enabled: _readToEnd,
-                      agreed: _agreed,
-                      onTap: _toggleAgreement,
-                    ),
-                    const SizedBox(height: 16),
-                    _TermsCta(
-                      snapshot: snapshot,
-                      agreed: _agreed,
-                      onPressed: _acceptTerms,
-                    ),
-                    const SizedBox(height: 16),
-                    _ComplianceNote(snapshot: snapshot),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -32,12 +32,14 @@ class VitBottomNav extends StatelessWidget {
     super.key,
     this.activeDestination = VitBottomNavDestination.home,
     this.onDestinationSelected,
+    this.homeNotificationBadgeCount,
     this.homeBadgeCount = 0,
     this.renderMode = ShellRenderMode.native,
   });
 
   final VitBottomNavDestination activeDestination;
   final ValueChanged<VitBottomNavDestination>? onDestinationSelected;
+  final int? homeNotificationBadgeCount;
   final int homeBadgeCount;
   final ShellRenderMode renderMode;
 
@@ -75,50 +77,56 @@ class VitBottomNav extends StatelessWidget {
     final height = renderMode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
+    final capsuleHeight = renderMode.usesVisualQaFrame ? 58.0 : 56.0;
+    final bottomGap = renderMode.usesVisualQaFrame ? 20.0 : 8.0;
+    final radius = BorderRadius.circular(capsuleHeight / 2);
 
     return SizedBox(
       height: height,
       child: Material(
         type: MaterialType.transparency,
         child: DecoratedBox(
-          decoration: const BoxDecoration(color: AppColors.navBg),
+          decoration: const BoxDecoration(color: AppColors.transparent),
           child: Stack(
             clipBehavior: Clip.none,
             children: [
               Positioned(
-                top: -24,
-                left: 0,
-                right: 0,
-                height: 24,
+                left: 20,
+                right: 20,
+                bottom: bottomGap,
+                height: capsuleHeight,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
+                    borderRadius: radius,
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        AppColors.transparent,
-                        AppColors.bg.withValues(alpha: 0.25),
-                        AppColors.navBg,
+                        AppColors.surface2.withValues(alpha: .98),
+                        AppColors.bg.withValues(alpha: .96),
                       ],
-                      stops: const [0, 0.5, 1],
                     ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                height: DeviceMetrics.tabBar,
-                child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    border: Border(top: BorderSide(color: AppColors.navBorder)),
+                    border: Border.all(
+                      color: AppColors.borderSolid.withValues(alpha: .46),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.bg.withValues(alpha: .45),
+                        blurRadius: 22,
+                        offset: const Offset(0, 10),
+                      ),
+                      BoxShadow(
+                        color: AppColors.primary.withValues(alpha: .12),
+                        blurRadius: 28,
+                        offset: const Offset(0, -1),
+                      ),
+                    ],
                   ),
                   child: LayoutBuilder(
                     builder: (context, constraints) {
-                      final horizontalPad = constraints.maxWidth < 380
-                          ? 4.0
-                          : 8.0;
+                      final horizontalPad = constraints.maxWidth < 340
+                          ? 3.0
+                          : 6.0;
                       return Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: horizontalPad,
@@ -134,7 +142,8 @@ class VitBottomNav extends StatelessWidget {
                                   badgeCount:
                                       item.destination ==
                                           VitBottomNavDestination.home
-                                      ? homeBadgeCount
+                                      ? homeNotificationBadgeCount ??
+                                            homeBadgeCount
                                       : 0,
                                   onTap: () => onDestinationSelected?.call(
                                     item.destination,
@@ -185,17 +194,24 @@ class _VitBottomNavButton extends StatelessWidget {
   final ShellRenderMode renderMode;
   final int badgeCount;
 
+  static const double _nativeCenterButtonTop = -18;
+  static const double _visualQaCenterButtonTop = -22;
+
   @override
   Widget build(BuildContext context) {
     const activeColor = AppColors.navActive;
     const activeShadow = AppColors.primary;
+    final semanticLabel =
+        item.destination == VitBottomNavDestination.home && badgeCount > 0
+        ? '${item.label}, $badgeCount unread notifications'
+        : item.label;
 
     if (item.isCenter) {
       return Semantics(
         key: Key('vit_bottom_nav_${item.destination.name}'),
         button: true,
         selected: active,
-        label: item.label,
+        label: semanticLabel,
         child: InkWell(
           onTap: onTap,
           borderRadius: AppRadii.cardRadius,
@@ -207,21 +223,26 @@ class _VitBottomNavButton extends StatelessWidget {
               alignment: Alignment.topCenter,
               children: [
                 Positioned(
-                  top: renderMode.usesVisualQaFrame ? -12 : -8,
+                  top: renderMode.usesVisualQaFrame
+                      ? _visualQaCenterButtonTop
+                      : _nativeCenterButtonTop,
                   child: Container(
                     key: active
                         ? Key('vit_bottom_nav_active_${item.destination.name}')
                         : null,
-                    width: renderMode.usesVisualQaFrame ? 52 : 48,
-                    height: renderMode.usesVisualQaFrame ? 52 : 48,
+                    width: renderMode.usesVisualQaFrame ? 54 : 50,
+                    height: renderMode.usesVisualQaFrame ? 54 : 50,
                     decoration: BoxDecoration(
                       gradient: AppGradients.navCenter,
-                      borderRadius: AppRadii.cardRadius,
+                      borderRadius: AppRadii.lgRadius,
+                      border: Border.all(
+                        color: AppColors.primarySoft.withValues(alpha: .20),
+                      ),
                       boxShadow: [
                         BoxShadow(
                           color: activeShadow.withValues(alpha: .40),
                           blurRadius: 16,
-                          offset: Offset(0, 4),
+                          offset: const Offset(0, 4),
                         ),
                         BoxShadow(
                           color: activeShadow.withValues(alpha: .20),
@@ -241,6 +262,9 @@ class _VitBottomNavButton extends StatelessWidget {
                   right: 0,
                   bottom: renderMode.usesVisualQaFrame ? 2 : 4,
                   child: Text(
+                    key: item.destination == VitBottomNavDestination.trade
+                        ? const Key('vit_bottom_nav_trade_label')
+                        : null,
                     item.label,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -262,13 +286,13 @@ class _VitBottomNavButton extends StatelessWidget {
       key: Key('vit_bottom_nav_${item.destination.name}'),
       button: true,
       selected: active,
-      label: item.label,
+      label: semanticLabel,
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: SizedBox(
           width: double.infinity,
-          height: 48,
+          height: 52,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

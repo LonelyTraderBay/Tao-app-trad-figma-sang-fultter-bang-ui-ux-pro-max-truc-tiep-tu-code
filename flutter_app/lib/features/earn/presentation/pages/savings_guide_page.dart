@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_gui
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_guide_tutorials.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -57,42 +58,45 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
       semanticLabel: 'SC-335 SavingsGuidePage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            SavingsGuideTabs(
-              tabs: snapshot.tabs,
-              active: _activeTab!,
-              onChanged: (tab) {
-                HapticFeedback.selectionClick();
-                setState(() => _activeTab = tab);
-              },
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.defaultPadding,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    if (_activeTab == 'tutorials')
-                      SavingsGuideTutorialsTab(
-                        snapshot: snapshot,
-                        completedTutorials: _completedTutorials,
-                        onTutorialTap: _openTutorialSheet,
-                      )
-                    else
-                      SavingsGuideGlossaryTab(snapshot: snapshot),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SavingsGuideTabs(
+                tabs: snapshot.tabs,
+                active: _activeTab!,
+                onChanged: (tab) {
+                  HapticFeedback.selectionClick();
+                  setState(() => _activeTab = tab);
+                },
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.defaultPadding,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      if (_activeTab == 'tutorials')
+                        SavingsGuideTutorialsTab(
+                          snapshot: snapshot,
+                          completedTutorials: _completedTutorials,
+                          onTutorialTap: _openTutorialSheet,
+                        )
+                      else
+                        SavingsGuideGlossaryTab(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -100,7 +104,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
 
   Future<void> _openTutorialSheet(SavingsGuideTutorialDraft tutorial) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,

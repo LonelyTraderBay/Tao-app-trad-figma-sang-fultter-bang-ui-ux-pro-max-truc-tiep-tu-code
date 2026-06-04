@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -55,42 +56,45 @@ class _PositionDashboardPageState extends ConsumerState<PositionDashboardPage> {
       semanticLabel: 'SC-053 PositionDashboardPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Vị thế đang mở',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.trade),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.only(bottom: bottomChrome + 30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SummaryCard(positions: snapshot.positions),
-                    _TypeTabs(
-                      active: _activeTab,
-                      positions: snapshot.positions,
-                      onChanged: (tab) => setState(() => _activeTab = tab),
-                    ),
-                    _SortChips(
-                      active: _sortBy,
-                      onChanged: (sort) => setState(() => _sortBy = sort),
-                    ),
-                    const SizedBox(height: 14),
-                    if (positions.isEmpty)
-                      const _EmptyPositions()
-                    else
-                      for (final position in positions) ...[
-                        _PositionTile(position: position),
-                        const SizedBox(height: 16),
-                      ],
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Vị thế đang mở',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.trade),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.only(bottom: bottomChrome + 30),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SummaryCard(positions: snapshot.positions),
+                      _TypeTabs(
+                        active: _activeTab,
+                        positions: snapshot.positions,
+                        onChanged: (tab) => setState(() => _activeTab = tab),
+                      ),
+                      _SortChips(
+                        active: _sortBy,
+                        onChanged: (sort) => setState(() => _sortBy = sort),
+                      ),
+                      const SizedBox(height: 14),
+                      if (positions.isEmpty)
+                        const _EmptyPositions()
+                      else
+                        for (final position in positions) ...[
+                          _PositionTile(position: position),
+                          const SizedBox(height: 16),
+                        ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
@@ -126,59 +127,65 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
       semanticLabel: 'SC-014 PriceAlertsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Cảnh báo giá',
-              subtitle: 'Cảnh báo · Markets',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.markets),
-            ),
-            _FilterTabs(
-              activeFilter: _filter,
-              onFilterSelected: (value) => setState(() => _filter = value),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: PriceAlertsPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 16, 20, bottomInset),
-                  child: Column(
-                    children: [
-                      _StatsSummary(
-                        total: _alerts.length,
-                        active: activeCount,
-                        triggered: triggeredCount,
-                      ),
-                      const SizedBox(height: 13),
-                      if (_filteredAlerts.isEmpty)
-                        const _EmptyAlertsCard()
-                      else
-                        for (final alert in _filteredAlerts) ...[
-                          _AlertCard(
-                            alert: alert,
-                            pair: _findPair(snapshot.marketPairs, alert.pairId),
-                            onToggle: () => _toggleAlert(alert.id),
-                            onDelete: () => _deleteAlert(alert.id),
-                          ),
-                          if (alert != _filteredAlerts.last)
-                            const SizedBox(height: 12),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Cảnh báo giá',
+            subtitle: 'Cảnh báo · Markets',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.markets),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _FilterTabs(
+                activeFilter: _filter,
+                onFilterSelected: (value) => setState(() => _filter = value),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: PriceAlertsPage.contentKey,
+                    padding: EdgeInsets.fromLTRB(20, 16, 20, bottomInset),
+                    child: Column(
+                      children: [
+                        _StatsSummary(
+                          total: _alerts.length,
+                          active: activeCount,
+                          triggered: triggeredCount,
+                        ),
+                        const SizedBox(height: 13),
+                        if (_filteredAlerts.isEmpty)
+                          const _EmptyAlertsCard()
+                        else
+                          for (final alert in _filteredAlerts) ...[
+                            _AlertCard(
+                              alert: alert,
+                              pair: _findPair(
+                                snapshot.marketPairs,
+                                alert.pairId,
+                              ),
+                              onToggle: () => _toggleAlert(alert.id),
+                              onDelete: () => _deleteAlert(alert.id),
+                            ),
+                            if (alert != _filteredAlerts.last)
+                              const SizedBox(height: 12),
+                          ],
+                        const SizedBox(height: 28),
+                        _AddAlertButton(onTap: _showAddPlaceholder),
+                        if (_showAddNotice) ...[
+                          const SizedBox(height: 10),
+                          const _AddAlertNotice(),
                         ],
-                      const SizedBox(height: 28),
-                      _AddAlertButton(onTap: _showAddPlaceholder),
-                      if (_showAddNotice) ...[
-                        const SizedBox(height: 10),
-                        const _AddAlertNotice(),
                       ],
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

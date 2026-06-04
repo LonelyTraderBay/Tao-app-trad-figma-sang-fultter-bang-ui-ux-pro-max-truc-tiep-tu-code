@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -68,72 +69,81 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
 
     return VitPageLayout(
       semanticLabel: 'SC-174 DCAPortfolioOptimizer',
-      child: Column(
-        children: [
-          VitHeader(
-            title: 'Portfolio Optimizer',
-            subtitle: 'Tối ưu · DCA',
-            showBack: true,
-            onBack: _close,
-            trailing: _HeaderShareButton(onPressed: _showExportNotice),
-          ),
-          Expanded(
-            child: Stack(
-              children: [
-                ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: DCAPortfolioOptimizer.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: contentBottom),
-                    child: VitPageContent(
-                      customGap: AppSpacing.x5,
-                      children: [
-                        if (_showDriftBanner)
-                          _DriftBanner(
-                            snapshot: snapshot,
-                            onDismiss: () {
-                              setState(() => _showDriftBanner = false);
+      child: VitAutoHideHeaderScaffold(
+        header: VitHeader(
+          title: 'Portfolio Optimizer',
+          subtitle: 'Tối ưu · DCA',
+          showBack: true,
+          onBack: _close,
+          actions: [
+            VitHeaderActionItem(
+              type: VitHeaderActionType.share,
+              onPressed: _showExportNotice,
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: DCAPortfolioOptimizer.contentKey,
+                      physics: const BouncingScrollPhysics(),
+                      padding: EdgeInsets.only(bottom: contentBottom),
+                      child: VitPageContent(
+                        customGap: AppSpacing.x5,
+                        children: [
+                          if (_showDriftBanner)
+                            _DriftBanner(
+                              snapshot: snapshot,
+                              onDismiss: () {
+                                setState(() => _showDriftBanner = false);
+                              },
+                              onSettings: _showDriftSettings,
+                            ),
+                          _ComparisonHero(snapshot: snapshot),
+                          _OptimizerTabs(
+                            activeTab: _activeTab,
+                            onChanged: (tab) {
+                              setState(() => _activeTab = tab);
                             },
-                            onSettings: _showDriftSettings,
                           ),
-                        _ComparisonHero(snapshot: snapshot),
-                        _OptimizerTabs(
-                          activeTab: _activeTab,
-                          onChanged: (tab) {
-                            setState(() => _activeTab = tab);
-                          },
-                        ),
-                        _TabContent(
-                          activeTab: _activeTab,
-                          snapshot: snapshot,
-                          showSuggestions: _showSuggestions,
-                          onToggleSuggestions: () {
-                            setState(
-                              () => _showSuggestions = !_showSuggestions,
-                            );
-                          },
-                        ),
-                      ],
+                          _TabContent(
+                            activeTab: _activeTab,
+                            snapshot: snapshot,
+                            showSuggestions: _showSuggestions,
+                            onToggleSuggestions: () {
+                              setState(
+                                () => _showSuggestions = !_showSuggestions,
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  left: AppSpacing.contentPad,
-                  right: AppSpacing.contentPad,
-                  bottom: floatingBottom,
-                  child: _FloatingActions(
-                    onShare: _showExportNotice,
-                    onSettings: _showDriftSettings,
-                    onApply: () => context.go(AppRoutePaths.dcaRebalanceConfig),
+                  Positioned(
+                    left: AppSpacing.contentPad,
+                    right: AppSpacing.contentPad,
+                    bottom: floatingBottom,
+                    child: _FloatingActions(
+                      onShare: _showExportNotice,
+                      onSettings: _showDriftSettings,
+                      onApply: () =>
+                          context.go(AppRoutePaths.dcaRebalanceConfig),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

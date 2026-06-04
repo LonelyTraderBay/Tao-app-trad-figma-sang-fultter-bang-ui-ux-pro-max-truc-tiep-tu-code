@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_not
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_notification_preferences_summary.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
@@ -81,82 +82,85 @@ class _SavingsNotificationPreferencesPageState
       semanticLabel: 'SC-345 SavingsNotificationPreferencesPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    SavingsNotificationMasterSummaryCard(
-                      masterEnabled: masterEnabled,
-                      enabledAlerts: enabledAlerts,
-                      totalAlerts: _alerts.length,
-                      onChanged: (value) {
-                        HapticFeedback.selectionClick();
-                        setState(() {
-                          _masterEnabled = value;
-                          if (!value) {
-                            _alerts = [
-                              for (final alert in _alerts)
-                                SavingsNotificationAlertDraft(
-                                  id: alert.id,
-                                  title: alert.title,
-                                  description: alert.description,
-                                  iconKey: alert.iconKey,
-                                  enabled: false,
-                                  category: alert.category,
-                                  severity: alert.severity,
-                                ),
-                            ];
-                          }
-                        });
-                      },
-                    ),
-                    SavingsNotificationQuickStats(
-                      enabledChannels: enabledChannels,
-                      totalChannels: _channels.length,
-                      digestFrequency: snapshot.digestFrequency,
-                      quietHours: snapshot.quietHours,
-                    ),
-                    SavingsNotificationTabs(
-                      tabs: snapshot.tabs,
-                      active: activeTab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (activeTab == 'events')
-                      SavingsNotificationEventsTab(
-                        alerts: _alerts,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      SavingsNotificationMasterSummaryCard(
                         masterEnabled: masterEnabled,
-                        onToggle: _toggleAlert,
-                      )
-                    else if (activeTab == 'products')
-                      SavingsNotificationProductsTab(
-                        products: snapshot.productAlerts,
-                      )
-                    else
-                      SavingsNotificationDeliveryTab(
-                        channels: _channels,
+                        enabledAlerts: enabledAlerts,
+                        totalAlerts: _alerts.length,
+                        onChanged: (value) {
+                          HapticFeedback.selectionClick();
+                          setState(() {
+                            _masterEnabled = value;
+                            if (!value) {
+                              _alerts = [
+                                for (final alert in _alerts)
+                                  SavingsNotificationAlertDraft(
+                                    id: alert.id,
+                                    title: alert.title,
+                                    description: alert.description,
+                                    iconKey: alert.iconKey,
+                                    enabled: false,
+                                    category: alert.category,
+                                    severity: alert.severity,
+                                  ),
+                              ];
+                            }
+                          });
+                        },
+                      ),
+                      SavingsNotificationQuickStats(
+                        enabledChannels: enabledChannels,
+                        totalChannels: _channels.length,
                         digestFrequency: snapshot.digestFrequency,
                         quietHours: snapshot.quietHours,
-                        onToggle: _toggleChannel,
                       ),
-                  ],
+                      SavingsNotificationTabs(
+                        tabs: snapshot.tabs,
+                        active: activeTab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                      ),
+                      if (activeTab == 'events')
+                        SavingsNotificationEventsTab(
+                          alerts: _alerts,
+                          masterEnabled: masterEnabled,
+                          onToggle: _toggleAlert,
+                        )
+                      else if (activeTab == 'products')
+                        SavingsNotificationProductsTab(
+                          products: snapshot.productAlerts,
+                        )
+                      else
+                        SavingsNotificationDeliveryTab(
+                          channels: _channels,
+                          digestFrequency: snapshot.digestFrequency,
+                          quietHours: snapshot.quietHours,
+                          onToggle: _toggleChannel,
+                        ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -73,77 +74,83 @@ class _P2PDeviceManagementPageState
       semanticLabel: 'SC-255 P2PDeviceManagementPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Quản lý thiết bị',
-              subtitle: 'Bảo mật · P2P',
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: RefreshIndicator(
-                color: AppModuleAccents.p2p,
-                backgroundColor: AppColors.surface2,
-                onRefresh: () async {
-                  HapticFeedback.selectionClick();
-                  await Future<void>.delayed(const Duration(milliseconds: 120));
-                },
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(
-                      parent: BouncingScrollPhysics(),
-                    ),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _DeviceStatsCard(
-                          total: _devices.length,
-                          trusted: trustedDevices.length,
-                          untrusted: otherDevices.length,
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        _TrustedDeviceNotice(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x6),
-                        _DeviceSection(
-                          key: P2PDeviceManagementPage.trustedSectionKey,
-                          title: 'Thiết bị tin cậy (${trustedDevices.length})',
-                          devices: trustedDevices,
-                          expandedDeviceId: _expandedDeviceId,
-                          onToggleExpanded: _toggleExpanded,
-                          onTrust: _trustDevice,
-                          onRevoke: _revokeTrust,
-                          onRemove: _removeDevice,
-                        ),
-                        const SizedBox(height: AppSpacing.x6),
-                        _DeviceSection(
-                          key: P2PDeviceManagementPage.otherSectionKey,
-                          title: 'Thiết bị khác (${otherDevices.length})',
-                          devices: otherDevices,
-                          expandedDeviceId: _expandedDeviceId,
-                          onToggleExpanded: _toggleExpanded,
-                          onTrust: _trustDevice,
-                          onRevoke: _revokeTrust,
-                          onRemove: _removeDevice,
-                        ),
-                        const SizedBox(height: AppSpacing.x6),
-                        _SecurityTips(tips: snapshot.securityTips),
-                      ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Quản lý thiết bị',
+            subtitle: 'Bảo mật · P2P',
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: RefreshIndicator(
+                  color: AppModuleAccents.p2p,
+                  backgroundColor: AppColors.surface2,
+                  onRefresh: () async {
+                    HapticFeedback.selectionClick();
+                    await Future<void>.delayed(
+                      const Duration(milliseconds: 120),
+                    );
+                  },
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(
+                        parent: BouncingScrollPhysics(),
+                      ),
+                      padding: EdgeInsets.fromLTRB(
+                        AppSpacing.contentPad,
+                        AppSpacing.x4,
+                        AppSpacing.contentPad,
+                        bottomInset,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _DeviceStatsCard(
+                            total: _devices.length,
+                            trusted: trustedDevices.length,
+                            untrusted: otherDevices.length,
+                          ),
+                          const SizedBox(height: AppSpacing.x4),
+                          _TrustedDeviceNotice(snapshot: snapshot),
+                          const SizedBox(height: AppSpacing.x6),
+                          _DeviceSection(
+                            key: P2PDeviceManagementPage.trustedSectionKey,
+                            title:
+                                'Thiết bị tin cậy (${trustedDevices.length})',
+                            devices: trustedDevices,
+                            expandedDeviceId: _expandedDeviceId,
+                            onToggleExpanded: _toggleExpanded,
+                            onTrust: _trustDevice,
+                            onRevoke: _revokeTrust,
+                            onRemove: _removeDevice,
+                          ),
+                          const SizedBox(height: AppSpacing.x6),
+                          _DeviceSection(
+                            key: P2PDeviceManagementPage.otherSectionKey,
+                            title: 'Thiết bị khác (${otherDevices.length})',
+                            devices: otherDevices,
+                            expandedDeviceId: _expandedDeviceId,
+                            onToggleExpanded: _toggleExpanded,
+                            onTrust: _trustDevice,
+                            onRevoke: _revokeTrust,
+                            onRemove: _removeDevice,
+                          ),
+                          const SizedBox(height: AppSpacing.x6),
+                          _SecurityTips(tips: snapshot.securityTips),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

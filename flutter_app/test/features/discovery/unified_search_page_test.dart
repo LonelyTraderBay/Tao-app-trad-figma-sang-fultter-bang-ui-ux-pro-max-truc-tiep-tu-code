@@ -11,7 +11,10 @@ import 'package:vit_trade_flutter/features/predictions/presentation/pages/predic
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
-  Future<void> pumpSearch(WidgetTester tester) async {
+  Future<void> pumpSearch(
+    WidgetTester tester, {
+    DiscoveryRepository? repository,
+  }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
@@ -19,6 +22,10 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          if (repository != null)
+            discoveryRepositoryProvider.overrideWithValue(repository),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(initialLocation: AppRoutePaths.search),
         ),
@@ -75,7 +82,7 @@ void main() {
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Tìm kiếm'), findsOneWidget);
     expect(find.byKey(UnifiedSearchPage.searchKey), findsOneWidget);
-    expect(find.byKey(UnifiedSearchPage.offlineKey), findsOneWidget);
+    expect(find.byKey(UnifiedSearchPage.offlineKey), findsNothing);
     expect(find.text('Trending'), findsOneWidget);
     expect(find.byKey(UnifiedSearchPage.trendingKey), findsOneWidget);
     expect(
@@ -91,6 +98,15 @@ void main() {
     expect(find.text('Prediction Markets'), findsOneWidget);
     expect(find.text('Open Arena'), findsOneWidget);
     expect(find.text('Topic Hub'), findsOneWidget);
+  });
+
+  testWidgets('SC-283 renders offline banner only for cached offline state', (
+    tester,
+  ) async {
+    await pumpSearch(tester, repository: const _OfflineDiscoveryRepository());
+
+    expect(find.byType(UnifiedSearchPage), findsOneWidget);
+    expect(find.byKey(UnifiedSearchPage.offlineKey), findsOneWidget);
   });
 
   testWidgets('SC-283 filters segmented results from query input', (
@@ -148,4 +164,27 @@ void main() {
 
     expect(find.byType(PairDetailPage), findsOneWidget);
   });
+}
+
+final class _OfflineDiscoveryRepository implements DiscoveryRepository {
+  const _OfflineDiscoveryRepository();
+
+  static const _base = MockDiscoveryRepository();
+
+  @override
+  UnifiedSearchSnapshot getUnifiedSearch({String query = ''}) {
+    return _base
+        .getUnifiedSearch(query: query)
+        .copyWith(currentState: DiscoveryScreenState.offline);
+  }
+
+  @override
+  TopicHubSnapshot getTopicHub({
+    String topicId = 'crypto',
+    bool detailEndpoint = false,
+  }) {
+    return _base
+        .getTopicHub(topicId: topicId, detailEndpoint: detailEndpoint)
+        .copyWith(currentState: DiscoveryScreenState.offline);
+  }
 }

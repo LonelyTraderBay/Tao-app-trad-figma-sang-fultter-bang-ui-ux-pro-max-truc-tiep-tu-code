@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
@@ -69,70 +70,73 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
       semanticLabel: 'SC-165 DeviceManagementPage',
       child: Material(
         color: _devicesBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Qu\u1EA3n l\u00FD thi\u1EBFt b\u1ECB',
-              subtitle: 'B\u1EA3o m\u1EADt \u00B7 Profile',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: DeviceManagementPage.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SecuritySummaryCard(
-                      totalDevices: _devices.length,
-                      trustedCount: _trustedCount,
-                      untrustedCount: _untrustedCount,
-                      activeCount: _activeCount,
-                    ),
-                    const SizedBox(height: 27),
-                    if (currentDevice != null) ...[
-                      const _SectionHeader(
-                        label: 'THI\u1EBET B\u1ECA HI\u1EC6N T\u1EA0I',
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Qu\u1EA3n l\u00FD thi\u1EBFt b\u1ECB',
+            subtitle: 'B\u1EA3o m\u1EADt \u00B7 Profile',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: DeviceManagementPage.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SecuritySummaryCard(
+                        totalDevices: _devices.length,
+                        trustedCount: _trustedCount,
+                        untrustedCount: _untrustedCount,
+                        activeCount: _activeCount,
+                      ),
+                      const SizedBox(height: 27),
+                      if (currentDevice != null) ...[
+                        const _SectionHeader(
+                          label: 'THI\u1EBET B\u1ECA HI\u1EC6N T\u1EA0I',
+                        ),
+                        const SizedBox(height: 10),
+                        _DeviceCard(
+                          device: currentDevice,
+                          showActions: false,
+                          onToggleTrust: () {},
+                          onLogout: () {},
+                        ),
+                        const SizedBox(height: 26),
+                      ],
+                      _OtherDevicesHeader(
+                        count: otherDevices.length,
+                        onLogoutAll: otherDevices.isEmpty ? null : _logoutAll,
                       ),
                       const SizedBox(height: 10),
-                      _DeviceCard(
-                        device: currentDevice,
-                        showActions: false,
-                        onToggleTrust: () {},
-                        onLogout: () {},
+                      for (final device in otherDevices) ...[
+                        _DeviceCard(
+                          device: device,
+                          showActions: true,
+                          onToggleTrust: () => _toggleTrust(device.id),
+                          onLogout: () => _logoutDevice(device.id),
+                        ),
+                        if (device != otherDevices.last)
+                          const SizedBox(height: 13),
+                      ],
+                      const SizedBox(height: 27),
+                      _SecuritySummaryCard(
+                        totalDevices: _devices.length,
+                        trustedCount: _trustedCount,
+                        untrustedCount: _untrustedCount,
+                        activeCount: _activeCount,
+                        compactBorder: true,
                       ),
-                      const SizedBox(height: 26),
                     ],
-                    _OtherDevicesHeader(
-                      count: otherDevices.length,
-                      onLogoutAll: otherDevices.isEmpty ? null : _logoutAll,
-                    ),
-                    const SizedBox(height: 10),
-                    for (final device in otherDevices) ...[
-                      _DeviceCard(
-                        device: device,
-                        showActions: true,
-                        onToggleTrust: () => _toggleTrust(device.id),
-                        onLogout: () => _logoutDevice(device.id),
-                      ),
-                      if (device != otherDevices.last)
-                        const SizedBox(height: 13),
-                    ],
-                    const SizedBox(height: 27),
-                    _SecuritySummaryCard(
-                      totalDevices: _devices.length,
-                      trustedCount: _trustedCount,
-                      untrustedCount: _untrustedCount,
-                      activeCount: _activeCount,
-                      compactBorder: true,
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

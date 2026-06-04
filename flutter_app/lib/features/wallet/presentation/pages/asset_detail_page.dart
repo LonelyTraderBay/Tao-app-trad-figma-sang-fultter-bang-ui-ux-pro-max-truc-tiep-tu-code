@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
@@ -60,43 +61,46 @@ class _AssetDetailPageState extends ConsumerState<AssetDetailPage> {
       semanticLabel: 'SC-147 AssetDetailPage',
       child: Material(
         color: _assetBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.symbol,
-              subtitle: 'Chi tiết · Wallet',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.wallet),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: AssetDetailPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _AssetHero(snapshot: snapshot),
-                    const SizedBox(height: 16),
-                    _AssetActionGrid(
-                      actions: snapshot.actions,
-                      onNavigate: (route) => context.go(route),
-                    ),
-                    const SizedBox(height: 16),
-                    _PriceChartCard(
-                      snapshot: snapshot,
-                      activePeriod: _period,
-                      onPeriod: (period) => setState(() => _period = period),
-                    ),
-                    const SizedBox(height: 19),
-                    _AssetTransactions(
-                      transactions: snapshot.transactions,
-                      onNavigate: (route) => context.go(route),
-                    ),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.symbol,
+            subtitle: 'Chi tiết · Wallet',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.wallet),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: AssetDetailPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _AssetHero(snapshot: snapshot),
+                      const SizedBox(height: 16),
+                      _AssetActionGrid(
+                        actions: snapshot.actions,
+                        onNavigate: (route) => context.go(route),
+                      ),
+                      const SizedBox(height: 16),
+                      _PriceChartCard(
+                        snapshot: snapshot,
+                        activePeriod: _period,
+                        onPeriod: (period) => setState(() => _period = period),
+                      ),
+                      const SizedBox(height: 19),
+                      _AssetTransactions(
+                        transactions: snapshot.transactions,
+                        onNavigate: (route) => context.go(route),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -119,7 +119,19 @@ void main() {
 
     await tester.enterText(find.byType(TextField).at(0), 'user_12345');
     await tester.enterText(find.byType(TextField).at(1), '10.50');
-    await tester.tap(find.byKey(StakingProofOfReservesPage.verifySubmitKey));
+    await tester.ensureVisible(
+      find.byKey(StakingProofOfReservesPage.verifySubmitKey),
+    );
+    await tester.pumpAndSettle();
+    await tester.drag(
+      find.byKey(StakingProofOfReservesPage.verifySheetKey),
+      const Offset(0, -160),
+    );
+    await tester.pumpAndSettle();
+    final submitTopLeft = tester.getTopLeft(
+      find.byKey(StakingProofOfReservesPage.verifySubmitKey),
+    );
+    await tester.tapAt(submitTopLeft + const Offset(24, 12));
     await tester.pumpAndSettle();
 
     expect(

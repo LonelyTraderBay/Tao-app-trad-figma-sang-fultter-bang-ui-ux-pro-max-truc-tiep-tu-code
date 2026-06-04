@@ -10,20 +10,24 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/product_flow/contextual_support_contract.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 part '../widgets/support_quick_contacts_tabs.dart';
+part '../widgets/support_context_card.dart';
 part '../widgets/support_tickets.dart';
 part '../widgets/support_faq_common.dart';
 
 class SupportPage extends ConsumerStatefulWidget {
-  const SupportPage({super.key, this.shellRenderMode});
+  const SupportPage({super.key, this.shellRenderMode, this.supportContext});
 
   static const contentKey = Key('sc294_support_content');
+  static const contextKey = Key('sc294_support_context');
   static const quickLinksKey = Key('sc294_support_quick_links');
   static const ticketsTabKey = Key('sc294_support_tickets_tab');
   static const faqTabKey = Key('sc294_support_faq_tab');
@@ -36,6 +40,7 @@ class SupportPage extends ConsumerStatefulWidget {
   static Key faqKey(int index) => Key('sc294_support_faq_$index');
 
   final ShellRenderMode? shellRenderMode;
+  final ProductSupportContext? supportContext;
 
   @override
   ConsumerState<SupportPage> createState() => _SupportPageState();
@@ -74,61 +79,75 @@ class _SupportPageState extends ConsumerState<SupportPage> {
       semanticLabel: 'SC-294 SupportPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(
+              widget.supportContext?.sourceRoute ?? snapshot.backRoute,
             ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: SupportPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    customGap: AppSpacing.x5,
-                    children: [
-                      _QuickContactGrid(snapshot: snapshot),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.contentPad,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: SupportPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      customGap: AppSpacing.x5,
+                      children: [
+                        if (widget.supportContext != null)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: AppSpacing.contentPad,
+                            ),
+                            child: _SupportContextCard(
+                              supportContext: widget.supportContext!,
+                            ),
+                          ),
+                        _QuickContactGrid(snapshot: snapshot),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.contentPad,
+                          ),
+                          child: _SupportTabs(
+                            ticketCount: snapshot.tickets.length,
+                            showFaq: _showFaq,
+                            onShowTickets: () => _setFaq(false),
+                            onShowFaq: () => _setFaq(true),
+                          ),
                         ),
-                        child: _SupportTabs(
-                          ticketCount: snapshot.tickets.length,
-                          showFaq: _showFaq,
-                          onShowTickets: () => _setFaq(false),
-                          onShowFaq: () => _setFaq(true),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.contentPad,
+                          ),
+                          child: _showFaq
+                              ? _FaqPanel(
+                                  items: snapshot.faqItems,
+                                  expandedIndex: _expandedFaqIndex,
+                                  onToggle: _toggleFaq,
+                                )
+                              : _TicketsPanel(
+                                  activeTickets: activeTickets,
+                                  doneTickets: doneTickets,
+                                ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.contentPad,
-                        ),
-                        child: _showFaq
-                            ? _FaqPanel(
-                                items: snapshot.faqItems,
-                                expandedIndex: _expandedFaqIndex,
-                                onToggle: _toggleFaq,
-                              )
-                            : _TicketsPanel(
-                                activeTickets: activeTickets,
-                                doneTickets: doneTickets,
-                              ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

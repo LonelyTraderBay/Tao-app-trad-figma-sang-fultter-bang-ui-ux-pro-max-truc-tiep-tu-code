@@ -9,9 +9,11 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
 part '../widgets/risk_management_overview.dart';
 part '../widgets/risk_management_tabs.dart';
@@ -70,49 +72,52 @@ class _RiskManagementDemoPageState
         children: [
           Material(
             type: MaterialType.transparency,
-            child: Column(
-              children: [
-                VitHeader(
-                  title: 'Risk Management',
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.trade),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: RiskManagementDemoPage.contentKey,
-                    padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const _IntroCard(),
-                        const SizedBox(height: 12),
-                        for (final feature in snapshot.features) ...[
-                          _FeatureCard(
-                            feature: feature,
-                            onTap: () => _onFeatureTap(feature),
-                          ),
+            child: VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Risk Management',
+                showBack: true,
+                onBack: () => context.go(AppRoutePaths.trade),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: RiskManagementDemoPage.contentKey,
+                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const _IntroCard(),
                           const SizedBox(height: 12),
+                          for (final feature in snapshot.features) ...[
+                            _FeatureCard(
+                              feature: feature,
+                              onTap: () => _onFeatureTap(feature),
+                            ),
+                            const SizedBox(height: 12),
+                          ],
+                          const _BenefitsCard(),
+                          const SizedBox(height: 12),
+                          _StatusCard(items: snapshot.statusItems),
+                          const SizedBox(height: 18),
+                          _RiskTabs(
+                            active: _tab,
+                            onChanged: (tab) => setState(() => _tab = tab),
+                          ),
+                          const SizedBox(height: 14),
+                          if (_tab == _RiskTab.oco)
+                            _OcoTab(onOpen: _openOcoSheet)
+                          else if (_tab == _RiskTab.positions)
+                            _PositionsTab(positions: snapshot.positions)
+                          else
+                            _CalculatorTab(onOpen: _openCalculatorSheet),
                         ],
-                        const _BenefitsCard(),
-                        const SizedBox(height: 12),
-                        _StatusCard(items: snapshot.statusItems),
-                        const SizedBox(height: 18),
-                        _RiskTabs(
-                          active: _tab,
-                          onChanged: (tab) => setState(() => _tab = tab),
-                        ),
-                        const SizedBox(height: 14),
-                        if (_tab == _RiskTab.oco)
-                          _OcoTab(onOpen: _openOcoSheet)
-                        else if (_tab == _RiskTab.positions)
-                          _PositionsTab(positions: snapshot.positions)
-                        else
-                          _CalculatorTab(onOpen: _openCalculatorSheet),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           if (_successMessage != null)
@@ -145,10 +150,9 @@ class _RiskManagementDemoPageState
   }
 
   Future<void> _openOcoSheet() async {
-    final submitted = await showModalBottomSheet<bool>(
+    final submitted = await showVitBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      useRootNavigator: true,
       backgroundColor: AppColors.transparent,
       builder: (context) => const _OcoSheet(),
     );
@@ -169,10 +173,9 @@ class _RiskManagementDemoPageState
   }
 
   Future<void> _openCalculatorSheet() async {
-    final applied = await showModalBottomSheet<bool>(
+    final applied = await showVitBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      useRootNavigator: true,
       backgroundColor: AppColors.transparent,
       builder: (context) => _CalculatorSheet(
         result: ref

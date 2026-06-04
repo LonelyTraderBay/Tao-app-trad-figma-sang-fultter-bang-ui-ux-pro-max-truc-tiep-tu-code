@@ -1,7 +1,9 @@
 export 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+export 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_empty_state.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
+export 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_icon_button.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_input.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_module_components.dart';

@@ -22,59 +22,62 @@ class _ArenaPredictionBridgeFoundationPageState
       semanticLabel: 'SC-207 ArenaPredictionBridgeFoundationPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Bridge Foundation',
-              subtitle: 'Kết nối · Prediction - Arena',
-              showBack: true,
-              onBack: () => _close(context),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ArenaPredictionBridgeFoundationPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    customGap: AppSpacing.x5,
-                    children: [
-                      const _BridgeHero(),
-                      _SectionTabs(
-                        active: _activeSection,
-                        onChanged: (section) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _activeSection = section);
-                        },
-                      ),
-                      _ActiveSection(
-                        section: _activeSection,
-                        snapshot: snapshot,
-                        selectedTopicId: _selectedTopicId,
-                        onTopicSelected: (id) {
-                          HapticFeedback.selectionClick();
-                          setState(() {
-                            _selectedTopicId = _selectedTopicId == id
-                                ? null
-                                : id;
-                          });
-                        },
-                        onPredictionTap: () =>
-                            _go(context, AppRoutePaths.profilePredictions),
-                        onArenaTap: () =>
-                            _go(context, AppRoutePaths.profileArena),
-                      ),
-                      _DisclosureFooter(text: snapshot.footerDisclosure),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Bridge Foundation',
+            subtitle: 'Kết nối · Prediction - Arena',
+            showBack: true,
+            onBack: () => _close(context),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ArenaPredictionBridgeFoundationPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      customGap: AppSpacing.x5,
+                      children: [
+                        const _BridgeHero(),
+                        _SectionTabs(
+                          active: _activeSection,
+                          onChanged: (section) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _activeSection = section);
+                          },
+                        ),
+                        _ActiveSection(
+                          section: _activeSection,
+                          snapshot: snapshot,
+                          selectedTopicId: _selectedTopicId,
+                          onTopicSelected: (id) {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              _selectedTopicId = _selectedTopicId == id
+                                  ? null
+                                  : id;
+                            });
+                          },
+                          onPredictionTap: () =>
+                              _go(context, AppRoutePaths.profilePredictions),
+                          onArenaTap: () =>
+                              _go(context, AppRoutePaths.profileArena),
+                        ),
+                        _DisclosureFooter(text: snapshot.footerDisclosure),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

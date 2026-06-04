@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -65,50 +66,54 @@ class _SlippageMonitoringPageState
         color: _slipBackground,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: 'Slippage Monitoring',
-                  subtitle: 'Real-time Tracking · Alerts',
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-                  trailing: IconButton(
+            VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Slippage Monitoring',
+                subtitle: 'Real-time Tracking · Alerts',
+                showBack: true,
+                onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+                actions: [
+                  VitHeaderActionItem(
+                    type: VitHeaderActionType.settings,
                     onPressed: () =>
                         setState(() => _notice = 'Alert settings opened'),
-                    icon: const Icon(Icons.settings_outlined, size: 19),
-                    color: AppColors.text1,
                   ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: SlippageMonitoringPage.contentKey,
-                    padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _CriticalAlert(summary: snapshot.summary),
-                        const SizedBox(height: 22),
-                        _StatsGrid(summary: snapshot.summary),
-                        const SizedBox(height: 24),
-                        _Tabs(
-                          activeId: _tab,
-                          summary: snapshot.summary,
-                          onChanged: (id) => setState(() => _tab = id),
-                        ),
-                        const SizedBox(height: 26),
-                        if (_tab == 'realtime')
-                          _RealtimeTab(events: snapshot.events)
-                        else if (_tab == 'providers')
-                          _ProvidersTab(providers: snapshot.providers)
-                        else if (_tab == 'history')
-                          _HistoryTab(history: snapshot.history)
-                        else
-                          const _AlertsTab(),
-                      ],
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: SlippageMonitoringPage.contentKey,
+                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _CriticalAlert(summary: snapshot.summary),
+                          const SizedBox(height: 22),
+                          _StatsGrid(summary: snapshot.summary),
+                          const SizedBox(height: 24),
+                          _Tabs(
+                            activeId: _tab,
+                            summary: snapshot.summary,
+                            onChanged: (id) => setState(() => _tab = id),
+                          ),
+                          const SizedBox(height: 26),
+                          if (_tab == 'realtime')
+                            _RealtimeTab(events: snapshot.events)
+                          else if (_tab == 'providers')
+                            _ProvidersTab(providers: snapshot.providers)
+                          else if (_tab == 'history')
+                            _HistoryTab(history: snapshot.history)
+                          else
+                            const _AlertsTab(),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_notice != null)
               _NoticePanel(

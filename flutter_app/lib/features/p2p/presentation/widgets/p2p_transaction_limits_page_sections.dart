@@ -1,29 +1,5 @@
 part of '../pages/p2p_transaction_limits_page.dart';
 
-class _HeaderChartButton extends StatelessWidget {
-  const _HeaderChartButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: AppColors.cardBorder),
-      ),
-      child: const SizedBox(
-        width: AppSpacing.inputHeight,
-        height: AppSpacing.inputHeight,
-        child: Icon(
-          Icons.bar_chart_rounded,
-          color: AppColors.text1,
-          size: AppSpacing.iconMd,
-        ),
-      ),
-    );
-  }
-}
-
 class _TierHero extends StatelessWidget {
   const _TierHero({required this.tier});
 

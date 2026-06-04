@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -66,28 +67,30 @@ class _PreCopyAssessmentPageState extends ConsumerState<PreCopyAssessmentPage> {
       semanticLabel: 'SC-071 PreCopyAssessmentPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: _started ? 'Câu hỏi đánh giá' : 'Đánh giá rủi ro',
-              showBack: true,
-              onBack: () => context.go(
-                AppRoutePaths.tradeCopyProvider(widget.providerId),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: _started ? 'Câu hỏi đánh giá' : 'Đánh giá rủi ro',
+            showBack: true,
+            onBack: () =>
+                context.go(AppRoutePaths.tradeCopyProvider(widget.providerId)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: PreCopyAssessmentPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 16, 20, bottomInset),
+                  child: _started
+                      ? _QuestionsSummary(snapshot: snapshot)
+                      : _WelcomeAssessment(
+                          snapshot: snapshot,
+                          onStart: () => setState(() => _started = true),
+                        ),
+                ),
               ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: PreCopyAssessmentPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 16, 20, bottomInset),
-                child: _started
-                    ? _QuestionsSummary(snapshot: snapshot)
-                    : _WelcomeAssessment(
-                        snapshot: snapshot,
-                        onStart: () => setState(() => _started = true),
-                      ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -97,98 +98,99 @@ class _LaunchpadAddressBookPageState
         type: MaterialType.transparency,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: snapshot.title,
-                  showBack: true,
-                  onBack: () => context.go(snapshot.backRoute),
-                  trailing: _AddButton(
-                    onTap: () => setState(() => _showAddSheet = true),
+            VitAutoHideHeaderScaffold(
+              bottomInset: bottomInset,
+              semanticLabel: 'SC-309 LaunchpadAddressBookPage scroll surface',
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+                actions: [
+                  VitHeaderActionItem(
+                    key: LaunchpadAddressBookPage.addKey,
+                    type: VitHeaderActionType.add,
+                    onPressed: () => setState(() => _showAddSheet = true),
                   ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: LaunchpadAddressBookPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
-                    child: VitPageContent(
-                      padding: VitContentPadding.defaultPadding,
-                      customGap: AppSpacing.x4,
-                      children: [
-                        _SearchField(
-                          controller: _searchController,
-                          query: _searchQuery,
-                          onChanged: (value) =>
-                              setState(() => _searchQuery = value),
-                          onClear: () => setState(() {
-                            _searchController.clear();
-                            _searchQuery = '';
-                          }),
-                        ),
-                        _ChainFilters(
-                          filters: snapshot.chainFilters,
-                          activeFilter: _chainFilter,
-                          onChanged: (value) =>
-                              setState(() => _chainFilter = value),
-                        ),
-                        _AddressStats(addresses: _addresses),
-                        if (favorites.isNotEmpty)
-                          VitPageSection(
-                            key: LaunchpadAddressBookPage.favoritesKey,
-                            label: 'Yeu thich',
-                            accentColor: AppColors.warn,
-                            children: [
-                              for (final address in favorites) ...[
-                                _AddressCard(
-                                  address: address,
-                                  expanded: _expandedId == address.id,
-                                  copied: _copiedId == address.id,
-                                  onCopy: () => _copyAddress(address),
-                                  onFavorite: () => _toggleFavorite(address.id),
-                                  onDefault: () => _setDefault(address.id),
-                                  onExpand: () => setState(() {
-                                    _expandedId = _expandedId == address.id
-                                        ? null
-                                        : address.id;
-                                  }),
-                                ),
-                                if (address != favorites.last)
-                                  const SizedBox(height: AppSpacing.x3),
-                              ],
-                            ],
-                          ),
-                        if (others.isNotEmpty)
-                          VitPageSection(
-                            key: LaunchpadAddressBookPage.allKey,
-                            label: 'Tat ca dia chi',
-                            accentColor: AppModuleAccents.launchpad,
-                            children: [
-                              for (final address in others) ...[
-                                _AddressCard(
-                                  address: address,
-                                  expanded: _expandedId == address.id,
-                                  copied: _copiedId == address.id,
-                                  onCopy: () => _copyAddress(address),
-                                  onFavorite: () => _toggleFavorite(address.id),
-                                  onDefault: () => _setDefault(address.id),
-                                  onExpand: () => setState(() {
-                                    _expandedId = _expandedId == address.id
-                                        ? null
-                                        : address.id;
-                                  }),
-                                ),
-                                if (address != others.last)
-                                  const SizedBox(height: AppSpacing.x3),
-                              ],
-                            ],
-                          ),
-                        const _InfoBanner(),
-                      ],
+                ],
+              ),
+              child: SingleChildScrollView(
+                key: LaunchpadAddressBookPage.contentKey,
+                physics: const BouncingScrollPhysics(),
+                child: VitPageContent(
+                  padding: VitContentPadding.defaultPadding,
+                  customGap: AppSpacing.x4,
+                  children: [
+                    _SearchField(
+                      controller: _searchController,
+                      query: _searchQuery,
+                      onChanged: (value) =>
+                          setState(() => _searchQuery = value),
+                      onClear: () => setState(() {
+                        _searchController.clear();
+                        _searchQuery = '';
+                      }),
                     ),
-                  ),
+                    _ChainFilters(
+                      filters: snapshot.chainFilters,
+                      activeFilter: _chainFilter,
+                      onChanged: (value) =>
+                          setState(() => _chainFilter = value),
+                    ),
+                    _AddressStats(addresses: _addresses),
+                    if (favorites.isNotEmpty)
+                      VitPageSection(
+                        key: LaunchpadAddressBookPage.favoritesKey,
+                        label: 'Yeu thich',
+                        accentColor: AppColors.warn,
+                        children: [
+                          for (final address in favorites) ...[
+                            _AddressCard(
+                              address: address,
+                              expanded: _expandedId == address.id,
+                              copied: _copiedId == address.id,
+                              onCopy: () => _copyAddress(address),
+                              onFavorite: () => _toggleFavorite(address.id),
+                              onDefault: () => _setDefault(address.id),
+                              onExpand: () => setState(() {
+                                _expandedId = _expandedId == address.id
+                                    ? null
+                                    : address.id;
+                              }),
+                            ),
+                            if (address != favorites.last)
+                              const SizedBox(height: AppSpacing.x3),
+                          ],
+                        ],
+                      ),
+                    if (others.isNotEmpty)
+                      VitPageSection(
+                        key: LaunchpadAddressBookPage.allKey,
+                        label: 'Tat ca dia chi',
+                        accentColor: AppModuleAccents.launchpad,
+                        children: [
+                          for (final address in others) ...[
+                            _AddressCard(
+                              address: address,
+                              expanded: _expandedId == address.id,
+                              copied: _copiedId == address.id,
+                              onCopy: () => _copyAddress(address),
+                              onFavorite: () => _toggleFavorite(address.id),
+                              onDefault: () => _setDefault(address.id),
+                              onExpand: () => setState(() {
+                                _expandedId = _expandedId == address.id
+                                    ? null
+                                    : address.id;
+                              }),
+                            ),
+                            if (address != others.last)
+                              const SizedBox(height: AppSpacing.x3),
+                          ],
+                        ],
+                      ),
+                    const _InfoBanner(),
+                  ],
                 ),
-              ],
+              ),
             ),
             if (_showAddSheet)
               Positioned.fill(

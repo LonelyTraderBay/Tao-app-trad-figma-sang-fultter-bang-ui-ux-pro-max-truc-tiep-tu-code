@@ -12,7 +12,10 @@ import 'package:vit_trade_flutter/features/predictions/presentation/pages/predic
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
-  Future<void> pumpTopics(WidgetTester tester) async {
+  Future<void> pumpTopics(
+    WidgetTester tester, {
+    DiscoveryRepository? repository,
+  }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
@@ -20,6 +23,10 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          if (repository != null)
+            discoveryRepositoryProvider.overrideWithValue(repository),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(initialLocation: AppRoutePaths.topics),
         ),
@@ -28,7 +35,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  Future<void> pumpTopicCrypto(WidgetTester tester) async {
+  Future<void> pumpTopicCrypto(
+    WidgetTester tester, {
+    DiscoveryRepository? repository,
+  }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
@@ -36,6 +46,10 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          if (repository != null)
+            discoveryRepositoryProvider.overrideWithValue(repository),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(
             initialLocation: AppRoutePaths.topicCrypto,
@@ -97,7 +111,7 @@ void main() {
     expect(find.byKey(TopicHubPage.searchActionKey), findsOneWidget);
     expect(find.byKey(TopicHubPage.topicRailKey), findsOneWidget);
     expect(find.byKey(TopicHubPage.topicKey('crypto')), findsOneWidget);
-    expect(find.byKey(TopicHubPage.offlineKey), findsOneWidget);
+    expect(find.byKey(TopicHubPage.offlineKey), findsNothing);
     expect(find.byKey(TopicHubPage.heroKey), findsOneWidget);
     expect(find.text('Crypto'), findsWidgets);
     expect(find.text('Bitcoin, Ethereum, altcoins, DeFi'), findsOneWidget);
@@ -114,6 +128,15 @@ void main() {
     expect(find.text('CryptoMaster_VN'), findsWidgets);
     expect(find.byKey(TopicHubPage.createRoomKey), findsOneWidget);
     expect(find.byKey(TopicHubPage.disclosureKey), findsOneWidget);
+  });
+
+  testWidgets('SC-284 renders offline banner only for cached offline topic', (
+    tester,
+  ) async {
+    await pumpTopics(tester, repository: const _OfflineDiscoveryRepository());
+
+    expect(find.byType(TopicHubPage), findsOneWidget);
+    expect(find.byKey(TopicHubPage.offlineKey), findsOneWidget);
   });
 
   testWidgets('SC-284 topic rail switches local topic state', (tester) async {
@@ -170,4 +193,27 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(UnifiedSearchPage), findsOneWidget);
   });
+}
+
+final class _OfflineDiscoveryRepository implements DiscoveryRepository {
+  const _OfflineDiscoveryRepository();
+
+  static const _base = MockDiscoveryRepository();
+
+  @override
+  UnifiedSearchSnapshot getUnifiedSearch({String query = ''}) {
+    return _base
+        .getUnifiedSearch(query: query)
+        .copyWith(currentState: DiscoveryScreenState.offline);
+  }
+
+  @override
+  TopicHubSnapshot getTopicHub({
+    String topicId = 'crypto',
+    bool detailEndpoint = false,
+  }) {
+    return _base
+        .getTopicHub(topicId: topicId, detailEndpoint: detailEndpoint)
+        .copyWith(currentState: DiscoveryScreenState.offline);
+  }
 }

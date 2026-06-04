@@ -223,4 +223,17 @@ void main() {
     expect(find.byType(LoginPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsNothing);
   });
+
+  testWidgets('SC-006 direct header back falls back to login', (tester) async {
+    _setPhoneViewport(tester);
+
+    await tester.pumpWidget(_app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(LoginPage), findsOneWidget);
+    expect(find.byType(ResetPasswordPage), findsNothing);
+  });
 }

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
@@ -82,89 +83,97 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
       semanticLabel: 'SC-144 AddressBookPage',
       child: Material(
         color: _bookBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Sổ địa chỉ',
-              subtitle: 'Quản lý · Wallet',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.wallet),
-              trailing: _AddAddressButton(
-                onTap: () => context.go(AppRoutePaths.walletAddressBookAdd),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Sổ địa chỉ',
+            subtitle: 'Quản lý · Wallet',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.wallet),
+            actions: [
+              VitHeaderActionItem(
+                key: AddressBookPage.addKey,
+                type: VitHeaderActionType.add,
+                tooltip: 'Thêm địa chỉ',
+                onPressed: () => context.go(AppRoutePaths.walletAddressBookAdd),
               ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: AddressBookPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SearchBox(
-                      controller: _searchController,
-                      onChanged: () => setState(() {}),
-                    ),
-                    const SizedBox(height: 17),
-                    _WhitelistModeCard(
-                      enabled: _whitelistOnly,
-                      onTap: () =>
-                          setState(() => _whitelistOnly = !_whitelistOnly),
-                    ),
-                    const SizedBox(height: 16),
-                    _NetworkFilterBar(
-                      filters: snapshot.networkFilters,
-                      active: _networkFilter,
-                      onChanged: (filter) =>
-                          setState(() => _networkFilter = filter),
-                    ),
-                    const SizedBox(height: 17),
-                    _AddressStats(addresses: _addresses),
-                    const SizedBox(height: 14),
-                    if (favorites.isNotEmpty) ...[
-                      const _SectionTitle(
-                        icon: Icons.star_rounded,
-                        iconColor: _bookAmber,
-                        label: 'Yêu thích',
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: AddressBookPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SearchBox(
+                        controller: _searchController,
+                        onChanged: () => setState(() {}),
                       ),
-                      const SizedBox(height: 9),
-                      for (final address in favorites) ...[
-                        _AddressCard(
-                          address: address,
-                          copied: _copiedId == address.id,
-                          onCopy: () => _copyAddress(address),
-                          onFavorite: () => _toggleFavorite(address.id),
-                          onDelete: () => _confirmDelete(address),
-                        ),
-                        const SizedBox(height: 10),
-                      ],
-                    ],
-                    if (others.isNotEmpty) ...[
-                      const SizedBox(height: 2),
-                      const _SectionTitle(label: 'Tất cả địa chỉ'),
-                      const SizedBox(height: 9),
-                      for (final address in others) ...[
-                        _AddressCard(
-                          address: address,
-                          copied: _copiedId == address.id,
-                          onCopy: () => _copyAddress(address),
-                          onFavorite: () => _toggleFavorite(address.id),
-                          onDelete: () => _confirmDelete(address),
-                        ),
-                        const SizedBox(height: 10),
-                      ],
-                    ],
-                    if (filtered.isEmpty)
-                      _EmptyAddressState(
-                        onAdd: () =>
-                            context.go(AppRoutePaths.walletAddressBookAdd),
+                      const SizedBox(height: 17),
+                      _WhitelistModeCard(
+                        enabled: _whitelistOnly,
+                        onTap: () =>
+                            setState(() => _whitelistOnly = !_whitelistOnly),
                       ),
-                    const SizedBox(height: 4),
-                    const _SecurityTip(),
-                  ],
+                      const SizedBox(height: 16),
+                      _NetworkFilterBar(
+                        filters: snapshot.networkFilters,
+                        active: _networkFilter,
+                        onChanged: (filter) =>
+                            setState(() => _networkFilter = filter),
+                      ),
+                      const SizedBox(height: 17),
+                      _AddressStats(addresses: _addresses),
+                      const SizedBox(height: 14),
+                      if (favorites.isNotEmpty) ...[
+                        const _SectionTitle(
+                          icon: Icons.star_rounded,
+                          iconColor: _bookAmber,
+                          label: 'Yêu thích',
+                        ),
+                        const SizedBox(height: 9),
+                        for (final address in favorites) ...[
+                          _AddressCard(
+                            address: address,
+                            copied: _copiedId == address.id,
+                            onCopy: () => _copyAddress(address),
+                            onFavorite: () => _toggleFavorite(address.id),
+                            onDelete: () => _confirmDelete(address),
+                          ),
+                          const SizedBox(height: 10),
+                        ],
+                      ],
+                      if (others.isNotEmpty) ...[
+                        const SizedBox(height: 2),
+                        const _SectionTitle(label: 'Tất cả địa chỉ'),
+                        const SizedBox(height: 9),
+                        for (final address in others) ...[
+                          _AddressCard(
+                            address: address,
+                            copied: _copiedId == address.id,
+                            onCopy: () => _copyAddress(address),
+                            onFavorite: () => _toggleFavorite(address.id),
+                            onDelete: () => _confirmDelete(address),
+                          ),
+                          const SizedBox(height: 10),
+                        ],
+                      ],
+                      if (filtered.isEmpty)
+                        _EmptyAddressState(
+                          onAdd: () =>
+                              context.go(AppRoutePaths.walletAddressBookAdd),
+                        ),
+                      const SizedBox(height: 4),
+                      const _SecurityTip(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -72,7 +72,13 @@ void main() {
     expect(find.text('Đơn hàng · P2P'), findsOneWidget);
     expect(find.byKey(P2PMyOrdersPage.dashboardKey), findsOneWidget);
     expect(find.byKey(P2PMyOrdersPage.statsKey), findsOneWidget);
-    expect(find.text('7'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(P2PMyOrdersPage.statsKey),
+        matching: find.text('7'),
+      ),
+      findsOneWidget,
+    );
     expect(find.text('3'), findsOneWidget);
     expect(find.text('114.86M'), findsOneWidget);
     expect(find.text('Đang xử lý'), findsOneWidget);

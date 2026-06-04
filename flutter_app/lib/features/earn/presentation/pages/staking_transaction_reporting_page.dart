@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -81,54 +82,57 @@ class _StakingTransactionReportingPageState
       semanticLabel: 'SC-378 StakingTransactionReportingPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _InfoBanner(snapshot: snapshot),
-                    _Selectors(
-                      snapshot: snapshot,
-                      year: _year,
-                      costBasis: _costBasis,
-                      onYearChanged: (year) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _year = year);
-                      },
-                      onOpenCostBasis: () => _openMethodSheet(snapshot),
-                    ),
-                    _ReportingTabs(
-                      active: _tab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (_tab == _ReportingTab.summary)
-                      _SummaryTab(snapshot: snapshot, costBasis: _costBasis)
-                    else if (_tab == _ReportingTab.transactions)
-                      _TransactionsTab(snapshot: snapshot)
-                    else
-                      _ExportTab(
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _InfoBanner(snapshot: snapshot),
+                      _Selectors(
                         snapshot: snapshot,
-                        onOpenExport: () => _openExportSheet(snapshot),
+                        year: _year,
+                        costBasis: _costBasis,
+                        onYearChanged: (year) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _year = year);
+                        },
+                        onOpenCostBasis: () => _openMethodSheet(snapshot),
                       ),
-                    _FooterNote(note: snapshot.footerNote),
-                  ],
+                      _ReportingTabs(
+                        active: _tab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                      ),
+                      if (_tab == _ReportingTab.summary)
+                        _SummaryTab(snapshot: snapshot, costBasis: _costBasis)
+                      else if (_tab == _ReportingTab.transactions)
+                        _TransactionsTab(snapshot: snapshot)
+                      else
+                        _ExportTab(
+                          snapshot: snapshot,
+                          onOpenExport: () => _openExportSheet(snapshot),
+                        ),
+                      _FooterNote(note: snapshot.footerNote),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -138,7 +142,7 @@ class _StakingTransactionReportingPageState
     StakingTransactionReportingSnapshot snapshot,
   ) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
@@ -159,7 +163,7 @@ class _StakingTransactionReportingPageState
     StakingTransactionReportingSnapshot snapshot,
   ) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,

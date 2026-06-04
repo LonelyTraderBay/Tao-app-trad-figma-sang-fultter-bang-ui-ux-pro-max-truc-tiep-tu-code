@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -52,51 +53,55 @@ class _StakingTermsPageState extends ConsumerState<StakingTermsPage> {
       semanticLabel: 'SC-353 StakingTermsPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _TermsHero(
-                      snapshot: snapshot,
-                      actionMessage: _actionMessage,
-                      onPrint: () =>
-                          _setAction('Đang chuẩn bị bản in trang điều khoản.'),
-                      onDownload: () => _setAction(
-                        'Tải PDF sẽ sớm ra mắt. Bạn có thể dùng In trang để lưu PDF.',
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _TermsHero(
+                        snapshot: snapshot,
+                        actionMessage: _actionMessage,
+                        onPrint: () => _setAction(
+                          'Đang chuẩn bị bản in trang điều khoản.',
+                        ),
+                        onDownload: () => _setAction(
+                          'Tải PDF sẽ sớm ra mắt. Bạn có thể dùng In trang để lưu PDF.',
+                        ),
                       ),
-                    ),
-                    for (final section in snapshot.sections) ...[
-                      _TermsSectionCard(
-                        section: section,
-                        expanded: _expandedSections.contains(section.id),
-                        onTap: () => _toggleSection(section.id),
+                      for (final section in snapshot.sections) ...[
+                        _TermsSectionCard(
+                          section: section,
+                          expanded: _expandedSections.contains(section.id),
+                          onTap: () => _toggleSection(section.id),
+                        ),
+                      ],
+                      _AcceptanceCard(
+                        accepted: _accepted,
+                        snapshot: snapshot,
+                        onTap: () {
+                          HapticFeedback.selectionClick();
+                          setState(() => _accepted = !_accepted);
+                        },
                       ),
+                      _FooterCard(text: snapshot.footer),
                     ],
-                    _AcceptanceCard(
-                      accepted: _accepted,
-                      snapshot: snapshot,
-                      onTap: () {
-                        HapticFeedback.selectionClick();
-                        setState(() => _accepted = !_accepted);
-                      },
-                    ),
-                    _FooterCard(text: snapshot.footer),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -53,43 +54,51 @@ class _AdminHomeState extends ConsumerState<AdminHome> {
 
     return VitPageLayout(
       semanticLabel: 'SC-180 AdminHome',
-      child: Column(
-        children: [
-          VitHeader(
-            title: 'Admin Dashboard',
-            subtitle: 'DCA Analytics & Monitoring',
-            trailing: _SettingsButton(
+      child: VitAutoHideHeaderScaffold(
+        header: VitHeader(
+          title: 'Admin Dashboard',
+          subtitle: 'DCA Analytics & Monitoring',
+          actions: [
+            VitHeaderActionItem(
+              key: AdminHome.settingsKey,
+              type: VitHeaderActionType.settings,
               onPressed: () => context.go(AppRoutePaths.adminSettings),
             ),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              key: AdminHome.contentKey,
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.only(bottom: scrollBottom),
-              child: VitPageContent(
-                customGap: AppSpacing.x5,
-                children: [
-                  AdminDashboardStateContent(
-                    status: controller.state.status,
-                    title: 'Admin dashboard',
-                    message: controller.state.message,
-                    children: [
-                      _MetricGrid(metrics: snapshot.quickStats),
-                      _RealTimeMetricsSection(
-                        snapshot: snapshot,
-                        isLive: _isLive,
-                        onToggleLive: () => setState(() => _isLive = !_isLive),
-                      ),
-                      _DashboardsSection(dashboards: snapshot.dashboards),
-                      _FooterCard(snapshot: snapshot),
-                    ],
-                  ),
-                ],
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                key: AdminHome.contentKey,
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.only(bottom: scrollBottom),
+                child: VitPageContent(
+                  customGap: AppSpacing.x5,
+                  children: [
+                    AdminDashboardStateContent(
+                      status: controller.state.status,
+                      title: 'Admin dashboard',
+                      message: controller.state.message,
+                      children: [
+                        _MetricGrid(metrics: snapshot.quickStats),
+                        _RealTimeMetricsSection(
+                          snapshot: snapshot,
+                          isLive: _isLive,
+                          onToggleLive: () =>
+                              setState(() => _isLive = !_isLive),
+                        ),
+                        _DashboardsSection(dashboards: snapshot.dashboards),
+                        _FooterCard(snapshot: snapshot),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

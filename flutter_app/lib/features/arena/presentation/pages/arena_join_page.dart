@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -73,61 +74,64 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
       semanticLabel: 'SC-191 ArenaJoinPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Tham gia challenge',
-              subtitle: 'Đăng ký · Open Arena',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: ArenaJoinPage.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    maxWidth: DeviceMetrics.width,
-                  ),
-                  child: VitPageContent(
-                    children: [
-                      _ChallengeSummaryCard(challenge: challenge),
-                      _RoomInfoCard(challenge: challenge),
-                      _CreatorCard(creator: snapshot.creator),
-                      _RulesCard(rules: snapshot.rules),
-                      _BalanceCard(
-                        currentBalance: snapshot.currentBalance,
-                        entryPoints: challenge.entryPoints,
-                        remainingBalance: remainingBalance,
-                        hasEnough: hasEnough,
-                      ),
-                      _NoticeCard(text: snapshot.refundNotice),
-                      _SafetyPolicyLink(
-                        onTap: () => _go(AppRoutePaths.arenaSafety),
-                      ),
-                      _AcknowledgementStack(
-                        readRules: _readRules,
-                        understandPoints: _understandPoints,
-                        onRules: () => _toggleRules(),
-                        onPoints: () => _togglePoints(),
-                      ),
-                      _ActionStack(
-                        entryPoints: challenge.entryPoints,
-                        canJoin: canJoin,
-                        onConfirm: _confirmJoin,
-                        onDecline: _decline,
-                      ),
-                      const SizedBox(
-                        height:
-                            DeviceMetrics.nativeBottomChrome + AppSpacing.x6,
-                      ),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Tham gia challenge',
+            subtitle: 'Đăng ký · Open Arena',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: ArenaJoinPage.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: DeviceMetrics.width,
+                    ),
+                    child: VitPageContent(
+                      children: [
+                        _ChallengeSummaryCard(challenge: challenge),
+                        _RoomInfoCard(challenge: challenge),
+                        _CreatorCard(creator: snapshot.creator),
+                        _RulesCard(rules: snapshot.rules),
+                        _BalanceCard(
+                          currentBalance: snapshot.currentBalance,
+                          entryPoints: challenge.entryPoints,
+                          remainingBalance: remainingBalance,
+                          hasEnough: hasEnough,
+                        ),
+                        _NoticeCard(text: snapshot.refundNotice),
+                        _SafetyPolicyLink(
+                          onTap: () => _go(AppRoutePaths.arenaSafety),
+                        ),
+                        _AcknowledgementStack(
+                          readRules: _readRules,
+                          understandPoints: _understandPoints,
+                          onRules: () => _toggleRules(),
+                          onPoints: () => _togglePoints(),
+                        ),
+                        _ActionStack(
+                          entryPoints: challenge.entryPoints,
+                          canJoin: canJoin,
+                          onConfirm: _confirmJoin,
+                          onDecline: _decline,
+                        ),
+                        const SizedBox(
+                          height:
+                              DeviceMetrics.nativeBottomChrome + AppSpacing.x6,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

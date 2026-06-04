@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -63,80 +64,83 @@ class _MarketNewsPageState extends ConsumerState<MarketNewsPage> {
       semanticLabel: 'SC-022 MarketNewsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Tin thị trường',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.markets),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: MarketNewsPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 14,
-                    children: [
-                      if (snapshot.breakingNews.isNotEmpty &&
-                          _category == 'all')
-                        _BreakingNewsCard(news: snapshot.breakingNews.first),
-                      _CategoryFilters(
-                        categories: snapshot.categories,
-                        activeCategory: _category,
-                        onSelected: (value) => setState(() {
-                          _category = value;
-                        }),
-                      ),
-                      _SentimentFilters(
-                        badges: snapshot.sentimentBadges,
-                        active: _sentimentFilter,
-                        onSelected: (value) => setState(() {
-                          _sentimentFilter = _sentimentFilter == value
-                              ? null
-                              : value;
-                        }),
-                      ),
-                      if (snapshot.news.isEmpty)
-                        _NewsEmptyState(
-                          onReset: () => setState(() {
-                            _category = 'all';
-                            _sentimentFilter = null;
-                          }),
-                        )
-                      else
-                        _NewsFeed(
-                          news: snapshot.news,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Tin thị trường',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.markets),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: MarketNewsPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 14,
+                      children: [
+                        if (snapshot.breakingNews.isNotEmpty &&
+                            _category == 'all')
+                          _BreakingNewsCard(news: snapshot.breakingNews.first),
+                        _CategoryFilters(
                           categories: snapshot.categories,
+                          activeCategory: _category,
+                          onSelected: (value) => setState(() {
+                            _category = value;
+                          }),
+                        ),
+                        _SentimentFilters(
                           badges: snapshot.sentimentBadges,
-                          savedIds: _savedIds,
-                          expandedId: _expandedId,
-                          onToggleExpanded: (id) => setState(() {
-                            _expandedId = _expandedId == id ? null : id;
+                          active: _sentimentFilter,
+                          onSelected: (value) => setState(() {
+                            _sentimentFilter = _sentimentFilter == value
+                                ? null
+                                : value;
                           }),
-                          onToggleSaved: (id) => setState(() {
-                            if (_savedIds.contains(id)) {
-                              _savedIds.remove(id);
-                            } else {
-                              _savedIds.add(id);
-                            }
-                          }),
-                          onTokenTap: (token) => context.go(
-                            AppRoutePaths.pairDetail(
-                              '${token.toLowerCase()}usdt',
+                        ),
+                        if (snapshot.news.isEmpty)
+                          _NewsEmptyState(
+                            onReset: () => setState(() {
+                              _category = 'all';
+                              _sentimentFilter = null;
+                            }),
+                          )
+                        else
+                          _NewsFeed(
+                            news: snapshot.news,
+                            categories: snapshot.categories,
+                            badges: snapshot.sentimentBadges,
+                            savedIds: _savedIds,
+                            expandedId: _expandedId,
+                            onToggleExpanded: (id) => setState(() {
+                              _expandedId = _expandedId == id ? null : id;
+                            }),
+                            onToggleSaved: (id) => setState(() {
+                              if (_savedIds.contains(id)) {
+                                _savedIds.remove(id);
+                              } else {
+                                _savedIds.add(id);
+                              }
+                            }),
+                            onTokenTap: (token) => context.go(
+                              AppRoutePaths.pairDetail(
+                                '${token.toLowerCase()}usdt',
+                              ),
                             ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

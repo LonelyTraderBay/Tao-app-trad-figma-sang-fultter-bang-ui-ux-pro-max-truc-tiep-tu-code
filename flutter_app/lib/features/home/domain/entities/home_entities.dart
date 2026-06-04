@@ -12,12 +12,54 @@ final class HomeQuickAction {
     required this.label,
     required this.routePath,
     required this.accentColor,
+    this.stateLabel,
   });
 
   final IconData icon;
   final String label;
   final String routePath;
   final Color accentColor;
+  final String? stateLabel;
+}
+
+final class HomeNextAction {
+  const HomeNextAction({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.routePath,
+    required this.ctaLabel,
+    required this.accentColor,
+    required this.stateLabel,
+  });
+
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final String routePath;
+  final String ctaLabel;
+  final Color accentColor;
+  final String stateLabel;
+}
+
+final class HomeRecentProduct {
+  const HomeRecentProduct({
+    required this.id,
+    required this.icon,
+    required this.label,
+    required this.contextLabel,
+    required this.routePath,
+    required this.accentColor,
+    required this.stateLabel,
+  });
+
+  final String id;
+  final IconData icon;
+  final String label;
+  final String contextLabel;
+  final String routePath;
+  final Color accentColor;
+  final String stateLabel;
 }
 
 final class HomeCryptoPair {
@@ -53,6 +95,8 @@ final class HomeSnapshot {
     required this.homeBadge,
     required this.announcements,
     required this.quickActions,
+    required this.nextAction,
+    required this.recentProducts,
     required this.pairs,
   });
 
@@ -63,5 +107,7 @@ final class HomeSnapshot {
   final int homeBadge;
   final List<HomeAnnouncement> announcements;
   final List<HomeQuickAction> quickActions;
+  final HomeNextAction nextAction;
+  final List<HomeRecentProduct> recentProducts;
   final List<HomeCryptoPair> pairs;
 }

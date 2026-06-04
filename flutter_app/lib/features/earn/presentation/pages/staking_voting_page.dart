@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -52,47 +53,51 @@ class _StakingVotingPageState extends ConsumerState<StakingVotingPage> {
       semanticLabel: 'SC-390 StakingVotingPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      gap: VitContentGap.relaxed,
-                      children: [
-                        _ProposalSummary(snapshot: snapshot),
-                        _ResultsSection(results: snapshot.results),
-                        _VoteSection(
-                          title: snapshot.voteTitle,
-                          options: snapshot.options,
-                          selectedVote: _selectedVote,
-                          onSelect: (id) => setState(() => _selectedVote = id),
-                        ),
-                        _VotingPowerNote(snapshot: snapshot),
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.x4),
-                    VitStickyFooter(
-                      child: VitCtaButton(
-                        key: StakingVotingPage.submitKey,
-                        onPressed: _selectedVote == null ? null : () {},
-                        child: Text(snapshot.submitLabel),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      VitPageContent(
+                        padding: VitContentPadding.relaxed,
+                        gap: VitContentGap.relaxed,
+                        children: [
+                          _ProposalSummary(snapshot: snapshot),
+                          _ResultsSection(results: snapshot.results),
+                          _VoteSection(
+                            title: snapshot.voteTitle,
+                            options: snapshot.options,
+                            selectedVote: _selectedVote,
+                            onSelect: (id) =>
+                                setState(() => _selectedVote = id),
+                          ),
+                          _VotingPowerNote(snapshot: snapshot),
+                        ],
                       ),
-                    ),
-                    SizedBox(height: bottomInset),
-                  ],
+                      const SizedBox(height: AppSpacing.x4),
+                      VitStickyFooter(
+                        child: VitCtaButton(
+                          key: StakingVotingPage.submitKey,
+                          onPressed: _selectedVote == null ? null : () {},
+                          child: Text(snapshot.submitLabel),
+                        ),
+                      ),
+                      SizedBox(height: bottomInset),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

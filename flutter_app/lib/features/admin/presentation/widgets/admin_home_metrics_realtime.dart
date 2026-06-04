@@ -1,37 +1,5 @@
 part of '../pages/admin_home.dart';
 
-class _SettingsButton extends StatelessWidget {
-  const _SettingsButton({required this.onPressed});
-
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      key: AdminHome.settingsKey,
-      width: AppSpacing.buttonCompact,
-      height: AppSpacing.buttonCompact,
-      child: DecoratedBox(
-        decoration: const BoxDecoration(
-          color: AppColors.surface2,
-          borderRadius: AppRadii.mdRadius,
-          border: Border.fromBorderSide(BorderSide(color: AppColors.border)),
-        ),
-        child: IconButton(
-          onPressed: onPressed,
-          padding: EdgeInsets.zero,
-          tooltip: 'Admin Settings',
-          icon: const Icon(
-            Icons.settings_outlined,
-            color: AppColors.text2,
-            size: 18,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _MetricGrid extends StatelessWidget {
   const _MetricGrid({required this.metrics});
 

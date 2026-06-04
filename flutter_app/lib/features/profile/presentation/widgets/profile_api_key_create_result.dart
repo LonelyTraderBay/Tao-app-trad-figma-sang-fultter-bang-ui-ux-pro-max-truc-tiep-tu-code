@@ -167,30 +167,33 @@ class _SimpleStepScaffold extends StatelessWidget {
       variant: VitPageVariant.flush,
       child: Material(
         color: _apiBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: title,
-              subtitle: subtitle,
-              showBack: showBack,
-              onBack: onBack,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.fromLTRB(20, 28, 20, bottomInset),
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    for (final child in children) ...[
-                      child,
-                      if (child != children.last) const SizedBox(height: 18),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: title,
+            subtitle: subtitle,
+            showBack: showBack,
+            onBack: onBack,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.fromLTRB(20, 28, 20, bottomInset),
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (final child in children) ...[
+                        child,
+                        if (child != children.last) const SizedBox(height: 18),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

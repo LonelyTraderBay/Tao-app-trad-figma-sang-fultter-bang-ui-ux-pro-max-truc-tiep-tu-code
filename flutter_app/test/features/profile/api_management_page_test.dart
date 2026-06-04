@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/pages/api_key_create_page.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/pages/api_management_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/profile_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -93,5 +94,17 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(ApiKeyCreatePage), findsOneWidget);
     expect(find.text('T\u1EA1o API Key m\u1EDBi'), findsOneWidget);
+  });
+
+  testWidgets('SC-163 direct header back returns to profile parent', (
+    tester,
+  ) async {
+    await pumpApiManagement(tester);
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ProfilePage), findsOneWidget);
+    expect(find.byType(ApiManagementPage), findsNothing);
   });
 }

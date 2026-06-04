@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -58,38 +59,41 @@ class _ClientMoneyProtectionPageState
       semanticLabel: 'SC-102 ClientMoneyProtectionPage',
       child: Material(
         color: _moneyBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Client Money Protection',
-              subtitle: 'CASS 7 Compliance',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: ClientMoneyProtectionPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const _ProtectionNotice(),
-                    const SizedBox(height: 34),
-                    _BalanceCard(snapshot: snapshot),
-                    const SizedBox(height: 24),
-                    _Tabs(activeId: _tab, onChanged: _setTab),
-                    const SizedBox(height: 26),
-                    if (_tab == 'overview')
-                      _Overview(snapshot: snapshot)
-                    else if (_tab == 'reconciliation')
-                      const _Reconciliation()
-                    else
-                      const _Documents(),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Client Money Protection',
+            subtitle: 'CASS 7 Compliance',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: ClientMoneyProtectionPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const _ProtectionNotice(),
+                      const SizedBox(height: 34),
+                      _BalanceCard(snapshot: snapshot),
+                      const SizedBox(height: 24),
+                      _Tabs(activeId: _tab, onChanged: _setTab),
+                      const SizedBox(height: 26),
+                      if (_tab == 'overview')
+                        _Overview(snapshot: snapshot)
+                      else if (_tab == 'reconciliation')
+                        const _Reconciliation()
+                      else
+                        const _Documents(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

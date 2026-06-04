@@ -29,90 +29,93 @@ class _AdvancedChartsPageState extends ConsumerState<AdvancedChartsPage> {
       semanticLabel: 'SC-023 AdvancedChartsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Phân tích kỹ thuật',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.markets),
-            ),
-            _AdvancedChartsTabs(
-              activeTab: _tab,
-              onChanged: (value) => setState(() => _tab = value),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: AdvancedChartsPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 12,
-                    children: [
-                      if (_tab == 'indicators') ...[
-                        _ActiveIndicatorSummary(
-                          activeCount: _activeIndicatorIds.length,
-                          onClearAll: _activeIndicatorIds.isEmpty
-                              ? null
-                              : () => setState(_activeIndicatorIds.clear),
-                        ),
-                        if (_activeIndicatorIds.isNotEmpty)
-                          _ActiveIndicatorChips(
-                            indicators: _activeIndicators(snapshot),
-                            onRemove: _toggleIndicator,
-                          ),
-                        _IndicatorCategoryFilter(
-                          categories: snapshot.indicatorCategories,
-                          activeCategory: _indicatorCategory,
-                          onSelected: (value) => setState(() {
-                            _indicatorCategory = value;
-                          }),
-                        ),
-                        _IndicatorList(
-                          indicators: snapshot.indicators,
-                          categories: snapshot.indicatorCategories,
-                          activeIndicatorIds: _activeIndicatorIds,
-                          expandedIndicatorId: _expandedIndicatorId,
-                          onToggleActive: _toggleIndicator,
-                          onToggleExpanded: (indicator) => setState(() {
-                            _expandedIndicatorId =
-                                _expandedIndicatorId == indicator.id
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Phân tích kỹ thuật',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.markets),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _AdvancedChartsTabs(
+                activeTab: _tab,
+                onChanged: (value) => setState(() => _tab = value),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: AdvancedChartsPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 12,
+                      children: [
+                        if (_tab == 'indicators') ...[
+                          _ActiveIndicatorSummary(
+                            activeCount: _activeIndicatorIds.length,
+                            onClearAll: _activeIndicatorIds.isEmpty
                                 ? null
-                                : indicator.id;
-                          }),
-                        ),
-                      ] else if (_tab == 'drawing') ...[
-                        const _DrawingInfoCard(),
-                        _DrawingCategoryFilter(
-                          categories: snapshot.drawingCategories,
-                          activeCategory: _drawingCategory,
-                          onSelected: (value) => setState(() {
-                            _drawingCategory = value;
-                          }),
-                        ),
-                        _DrawingToolsGrid(
-                          tools: snapshot.drawingTools,
-                          categories: snapshot.drawingCategories,
-                        ),
-                        const _SectionHeader(
-                          label: 'Mẹo sử dụng',
-                          accentColor: AppColors.warn,
-                        ),
-                        const _TipsCard(),
-                      ] else ...[
-                        const _SignalDisclaimerCard(),
-                        for (final signal in snapshot.signalSummaries)
-                          _SignalSummaryCard(signal: signal),
+                                : () => setState(_activeIndicatorIds.clear),
+                          ),
+                          if (_activeIndicatorIds.isNotEmpty)
+                            _ActiveIndicatorChips(
+                              indicators: _activeIndicators(snapshot),
+                              onRemove: _toggleIndicator,
+                            ),
+                          _IndicatorCategoryFilter(
+                            categories: snapshot.indicatorCategories,
+                            activeCategory: _indicatorCategory,
+                            onSelected: (value) => setState(() {
+                              _indicatorCategory = value;
+                            }),
+                          ),
+                          _IndicatorList(
+                            indicators: snapshot.indicators,
+                            categories: snapshot.indicatorCategories,
+                            activeIndicatorIds: _activeIndicatorIds,
+                            expandedIndicatorId: _expandedIndicatorId,
+                            onToggleActive: _toggleIndicator,
+                            onToggleExpanded: (indicator) => setState(() {
+                              _expandedIndicatorId =
+                                  _expandedIndicatorId == indicator.id
+                                  ? null
+                                  : indicator.id;
+                            }),
+                          ),
+                        ] else if (_tab == 'drawing') ...[
+                          const _DrawingInfoCard(),
+                          _DrawingCategoryFilter(
+                            categories: snapshot.drawingCategories,
+                            activeCategory: _drawingCategory,
+                            onSelected: (value) => setState(() {
+                              _drawingCategory = value;
+                            }),
+                          ),
+                          _DrawingToolsGrid(
+                            tools: snapshot.drawingTools,
+                            categories: snapshot.drawingCategories,
+                          ),
+                          const _SectionHeader(
+                            label: 'Mẹo sử dụng',
+                            accentColor: AppColors.warn,
+                          ),
+                          const _TipsCard(),
+                        ] else ...[
+                          const _SignalDisclaimerCard(),
+                          for (final signal in snapshot.signalSummaries)
+                            _SignalSummaryCard(signal: signal),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

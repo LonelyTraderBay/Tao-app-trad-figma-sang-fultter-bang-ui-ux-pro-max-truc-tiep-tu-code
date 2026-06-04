@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -72,54 +73,57 @@ class _HelpCenterPageState extends ConsumerState<HelpCenterPage> {
       semanticLabel: 'SC-292 HelpCenterPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: HelpCenterPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    gap: VitContentGap.relaxed,
-                    children: [
-                      _HelpHero(
-                        snapshot: snapshot,
-                        controller: _searchController,
-                        onChanged: _updateSearch,
-                      ),
-                      _QuickActions(
-                        chatRoute: snapshot.chatRoute,
-                        ticketRoute: snapshot.ticketRoute,
-                      ),
-                      if (_query.isEmpty)
-                        _CategorySection(
-                          categories: snapshot.categories,
-                          selectedCategoryId: _selectedCategoryId,
-                          onSelected: _selectCategory,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: HelpCenterPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      gap: VitContentGap.relaxed,
+                      children: [
+                        _HelpHero(
+                          snapshot: snapshot,
+                          controller: _searchController,
+                          onChanged: _updateSearch,
                         ),
-                      _ArticleSection(
-                        title: _sectionTitle(snapshot, articles.length),
-                        articles: articles,
-                        categories: snapshot.categories,
-                        expandedArticleId: _expandedArticleId,
-                        onToggle: _toggleArticle,
-                      ),
-                    ],
+                        _QuickActions(
+                          chatRoute: snapshot.chatRoute,
+                          ticketRoute: snapshot.ticketRoute,
+                        ),
+                        if (_query.isEmpty)
+                          _CategorySection(
+                            categories: snapshot.categories,
+                            selectedCategoryId: _selectedCategoryId,
+                            onSelected: _selectCategory,
+                          ),
+                        _ArticleSection(
+                          title: _sectionTitle(snapshot, articles.length),
+                          articles: articles,
+                          categories: snapshot.categories,
+                          expandedArticleId: _expandedArticleId,
+                          onToggle: _toggleArticle,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

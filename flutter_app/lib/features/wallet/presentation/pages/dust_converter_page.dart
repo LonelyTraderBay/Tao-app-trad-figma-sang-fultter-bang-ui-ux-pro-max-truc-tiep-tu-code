@@ -10,8 +10,10 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
 part '../widgets/wallet_dust_converter_hero.dart';
 part '../widgets/wallet_dust_converter_targets.dart';
@@ -74,109 +76,112 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
       semanticLabel: 'SC-154 DustConverterPage',
       child: Material(
         color: _dustBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Chuy\u1EC3n \u0111\u1ED5i s\u1ED1 d\u01B0 nh\u1ECF',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.wallet),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: DustConverterPage.contentKey,
-                padding: const EdgeInsets.fromLTRB(20, 14, 20, 16),
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (_converted) ...[
-                      _ConvertedBanner(targetSymbol: _targetSymbol),
-                      const SizedBox(height: 12),
-                    ],
-                    _DustHero(
-                      snapshot: snapshot,
-                      targetSymbol: _targetSymbol,
-                      foundCount: assets.length,
-                      selectedCount: _selectedIds.length,
-                      selectedValue: selectedTotal,
-                    ),
-                    const SizedBox(height: 18),
-                    const _SectionLabel(
-                      label: 'Chuy\u1EC3n \u0111\u1ED5i sang',
-                    ),
-                    const SizedBox(height: 10),
-                    _TargetSelector(
-                      targets: snapshot.targets,
-                      selected: _targetSymbol,
-                      onSelected: (symbol) => setState(() {
-                        _targetSymbol = symbol;
-                        _selectedIds.clear();
-                        _converted = false;
-                      }),
-                    ),
-                    const SizedBox(height: 18),
-                    _SectionLabel(
-                      label: 'S\u1ED1 d\u01B0 nh\u1ECF (${assets.length})',
-                    ),
-                    const SizedBox(height: 10),
-                    _SelectAllRow(
-                      selectedAll: _selectedIds.length == assets.length,
-                      selectedCount: _selectedIds.length,
-                      totalCount: assets.length,
-                      onTap: () => setState(() {
-                        _converted = false;
-                        if (_selectedIds.length == assets.length) {
-                          _selectedIds.clear();
-                        } else {
-                          _selectedIds
-                            ..clear()
-                            ..addAll(assets.map((asset) => asset.id));
-                        }
-                      }),
-                    ),
-                    const SizedBox(height: 16),
-                    for (final asset in assets) ...[
-                      _DustAssetRow(
-                        asset: asset,
-                        selected: _selectedIds.contains(asset.id),
-                        onTap: () => _toggleAsset(asset.id),
-                      ),
-                      if (asset != assets.last) const SizedBox(height: 8),
-                    ],
-                    if (inlineFooter) ...[
-                      _ConvertFooter(
-                        bottomSpace: 0,
-                        horizontalPadding: 0,
-                        selectedCount: _selectedIds.length,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Chuy\u1EC3n \u0111\u1ED5i s\u1ED1 d\u01B0 nh\u1ECF',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.wallet),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: DustConverterPage.contentKey,
+                  padding: const EdgeInsets.fromLTRB(20, 14, 20, 16),
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (_converted) ...[
+                        _ConvertedBanner(targetSymbol: _targetSymbol),
+                        const SizedBox(height: 12),
+                      ],
+                      _DustHero(
+                        snapshot: snapshot,
                         targetSymbol: _targetSymbol,
-                        enabled: _selectedIds.isNotEmpty,
-                        onTap: () => _showConfirmSheet(
-                          context,
-                          snapshot,
-                          selectedAssets,
-                          selectedTotal,
-                        ),
+                        foundCount: assets.length,
+                        selectedCount: _selectedIds.length,
+                        selectedValue: selectedTotal,
                       ),
-                      const SizedBox(height: DeviceMetrics.bottomChrome + 96),
+                      const SizedBox(height: 18),
+                      const _SectionLabel(
+                        label: 'Chuy\u1EC3n \u0111\u1ED5i sang',
+                      ),
+                      const SizedBox(height: 10),
+                      _TargetSelector(
+                        targets: snapshot.targets,
+                        selected: _targetSymbol,
+                        onSelected: (symbol) => setState(() {
+                          _targetSymbol = symbol;
+                          _selectedIds.clear();
+                          _converted = false;
+                        }),
+                      ),
+                      const SizedBox(height: 18),
+                      _SectionLabel(
+                        label: 'S\u1ED1 d\u01B0 nh\u1ECF (${assets.length})',
+                      ),
+                      const SizedBox(height: 10),
+                      _SelectAllRow(
+                        selectedAll: _selectedIds.length == assets.length,
+                        selectedCount: _selectedIds.length,
+                        totalCount: assets.length,
+                        onTap: () => setState(() {
+                          _converted = false;
+                          if (_selectedIds.length == assets.length) {
+                            _selectedIds.clear();
+                          } else {
+                            _selectedIds
+                              ..clear()
+                              ..addAll(assets.map((asset) => asset.id));
+                          }
+                        }),
+                      ),
+                      const SizedBox(height: 16),
+                      for (final asset in assets) ...[
+                        _DustAssetRow(
+                          asset: asset,
+                          selected: _selectedIds.contains(asset.id),
+                          onTap: () => _toggleAsset(asset.id),
+                        ),
+                        if (asset != assets.last) const SizedBox(height: 8),
+                      ],
+                      if (inlineFooter) ...[
+                        _ConvertFooter(
+                          bottomSpace: 0,
+                          horizontalPadding: 0,
+                          selectedCount: _selectedIds.length,
+                          targetSymbol: _targetSymbol,
+                          enabled: _selectedIds.isNotEmpty,
+                          onTap: () => _showConfirmSheet(
+                            context,
+                            snapshot,
+                            selectedAssets,
+                            selectedTotal,
+                          ),
+                        ),
+                        const SizedBox(height: DeviceMetrics.bottomChrome + 96),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
               ),
-            ),
-            if (!inlineFooter)
-              _ConvertFooter(
-                bottomSpace: bottomSpace,
-                selectedCount: _selectedIds.length,
-                targetSymbol: _targetSymbol,
-                enabled: _selectedIds.isNotEmpty,
-                onTap: () => _showConfirmSheet(
-                  context,
-                  snapshot,
-                  selectedAssets,
-                  selectedTotal,
+              if (!inlineFooter)
+                _ConvertFooter(
+                  bottomSpace: bottomSpace,
+                  selectedCount: _selectedIds.length,
+                  targetSymbol: _targetSymbol,
+                  enabled: _selectedIds.isNotEmpty,
+                  onTap: () => _showConfirmSheet(
+                    context,
+                    snapshot,
+                    selectedAssets,
+                    selectedTotal,
+                  ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -203,9 +208,8 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
     final fee = selectedTotal * snapshot.conversionFeePct / 100;
     final received = selectedTotal - fee;
 
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
-      useRootNavigator: true,
       backgroundColor: _dustPanel,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),

@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -66,49 +67,52 @@ class _StakingDeveloperConsolePageState
       semanticLabel: 'SC-396 StakingDeveloperConsolePage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.defaultPadding,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _ConsoleHero(snapshot: snapshot),
-                    _StatsCard(stats: snapshot.stats),
-                    VitCard(
-                      key: StakingDeveloperConsolePage.tabsKey,
-                      variant: VitCardVariant.inner,
-                      radius: VitCardRadius.sm,
-                      padding: EdgeInsets.zero,
-                      child: VitTabBar(
-                        tabs: [
-                          for (final tab in snapshot.tabs)
-                            VitTabItem(key: tab.id, label: tab.label),
-                        ],
-                        activeKey: _tab,
-                        onChanged: (tab) => setState(() => _tab = tab),
-                        variant: VitTabBarVariant.underline,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.defaultPadding,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _ConsoleHero(snapshot: snapshot),
+                      _StatsCard(stats: snapshot.stats),
+                      VitCard(
+                        key: StakingDeveloperConsolePage.tabsKey,
+                        variant: VitCardVariant.inner,
+                        radius: VitCardRadius.sm,
+                        padding: EdgeInsets.zero,
+                        child: VitTabBar(
+                          tabs: [
+                            for (final tab in snapshot.tabs)
+                              VitTabItem(key: tab.id, label: tab.label),
+                          ],
+                          activeKey: _tab,
+                          onChanged: (tab) => setState(() => _tab = tab),
+                          variant: VitTabBarVariant.underline,
+                        ),
                       ),
-                    ),
-                    if (_tab == 'keys')
-                      _ApiKeysTab(snapshot: snapshot)
-                    else if (_tab == 'logs')
-                      _LogsTab(snapshot: snapshot)
-                    else
-                      _DocsTab(snapshot: snapshot),
-                  ],
+                      if (_tab == 'keys')
+                        _ApiKeysTab(snapshot: snapshot)
+                      else if (_tab == 'logs')
+                        _LogsTab(snapshot: snapshot)
+                      else
+                        _DocsTab(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

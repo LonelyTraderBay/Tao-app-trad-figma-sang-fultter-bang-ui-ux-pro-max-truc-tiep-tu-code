@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -71,67 +72,70 @@ class _P2PDashboardPageState extends ConsumerState<P2PDashboardPage> {
       semanticLabel: 'SC-274 P2PDashboardPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x5,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _FilterRail(
-                        snapshot: snapshot,
-                        onChanged: (id) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _timeFilter = id);
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _VolumeHero(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _MetricsGrid(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _WeeklyVolumeCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _MonthlyOrdersCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _AssetDistributionCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _LevelCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _PlatformComparisonCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _ExtraStats(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _OrderBreakdownCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _TopMerchantsCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _RecentActivityCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _QuickNavigation(snapshot: snapshot),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x5,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _FilterRail(
+                          snapshot: snapshot,
+                          onChanged: (id) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _timeFilter = id);
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        _VolumeHero(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _MetricsGrid(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _WeeklyVolumeCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _MonthlyOrdersCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _AssetDistributionCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _LevelCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _PlatformComparisonCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _ExtraStats(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _OrderBreakdownCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _TopMerchantsCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _RecentActivityCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _QuickNavigation(snapshot: snapshot),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

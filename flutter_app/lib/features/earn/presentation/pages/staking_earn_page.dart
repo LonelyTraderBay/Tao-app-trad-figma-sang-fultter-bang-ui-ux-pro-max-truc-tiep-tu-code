@@ -9,9 +9,10 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 part '../widgets/staking_earn_hero_tabs.dart';
@@ -66,47 +67,59 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
           : 'SC-328 StakingEarnPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _EarnHero(snapshot: snapshot),
-                    _MainTabs(
-                      activeTab: _tab,
-                      positionCount: snapshot.positions.length,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (_tab == _EarnTab.products) ...[
-                      _FilterRow(
-                        activeFilter: _filter,
-                        onChanged: (filter) {
+        child: VitAutoHideHeaderScaffold(
+          header: VitTopChrome(
+            type: VitTopChromeType.rootModule,
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _EarnHero(snapshot: snapshot),
+                      if (snapshot.highRiskContractId != null)
+                        VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Yield risk states active',
+                          message:
+                              'Terms, validator setup, risk preview, confirmation, receipt, management and support are tracked as one Earn contract.',
+                          contractId: snapshot.highRiskContractId,
+                        ),
+                      _MainTabs(
+                        activeTab: _tab,
+                        positionCount: snapshot.positions.length,
+                        onChanged: (tab) {
                           HapticFeedback.selectionClick();
-                          setState(() => _filter = filter);
+                          setState(() => _tab = tab);
                         },
                       ),
-                      _ProductList(products: products),
-                    ] else
-                      _PositionsList(snapshot: snapshot),
-                  ],
+                      if (_tab == _EarnTab.products) ...[
+                        _FilterRow(
+                          activeFilter: _filter,
+                          onChanged: (filter) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _filter = filter);
+                          },
+                        ),
+                        _ProductList(products: products),
+                      ] else
+                        _PositionsList(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

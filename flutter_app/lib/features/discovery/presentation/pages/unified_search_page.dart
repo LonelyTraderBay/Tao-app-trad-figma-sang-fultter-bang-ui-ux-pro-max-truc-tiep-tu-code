@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
@@ -69,57 +70,61 @@ class _UnifiedSearchPageState extends ConsumerState<UnifiedSearchPage> {
       semanticLabel: 'SC-283 UnifiedSearchPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.home),
-            ),
-            _SearchBand(
-              controller: _searchController,
-              hint: snapshot.searchHint,
-              onChanged: () => setState(() {}),
-            ),
-            Padding(
-              key: UnifiedSearchPage.offlineKey,
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.contentPad,
-                AppSpacing.x4,
-                AppSpacing.contentPad,
-                AppSpacing.x2,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.home),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _SearchBand(
+                controller: _searchController,
+                hint: snapshot.searchHint,
+                onChanged: () => setState(() {}),
               ),
-              child: VitOfflineBanner(
-                message: snapshot.staleMessage,
-                detail: snapshot.staleDetail,
-              ),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: UnifiedSearchPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
+              if (snapshot.showOfflineBanner)
+                Padding(
+                  key: UnifiedSearchPage.offlineKey,
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x4,
                     AppSpacing.contentPad,
                     AppSpacing.x2,
-                    AppSpacing.contentPad,
-                    bottomInset,
                   ),
-                  child: snapshot.hasQuery
-                      ? _ResultsState(snapshot: snapshot)
-                      : _NoQueryState(
-                          snapshot: snapshot,
-                          onQuerySelected: (value) => setState(() {
-                            _searchController.text = value;
-                          }),
-                        ),
+                  child: VitOfflineBanner(
+                    message: snapshot.staleMessage,
+                    detail: snapshot.staleDetail,
+                  ),
+                ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: UnifiedSearchPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x2,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: snapshot.hasQuery
+                        ? _ResultsState(snapshot: snapshot)
+                        : _NoQueryState(
+                            snapshot: snapshot,
+                            onQuerySelected: (value) => setState(() {
+                              _searchController.text = value;
+                            }),
+                          ),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

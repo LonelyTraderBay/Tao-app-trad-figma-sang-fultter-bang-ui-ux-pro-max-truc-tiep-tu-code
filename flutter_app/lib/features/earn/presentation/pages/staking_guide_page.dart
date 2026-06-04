@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -61,49 +62,52 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
       semanticLabel: 'SC-369 StakingGuidePage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _HeroBanner(snapshot: snapshot),
-                    _DifficultyTabs(
-                      active: _difficulty,
-                      onChanged: (difficulty) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _difficulty = difficulty);
-                      },
-                    ),
-                    VitPageSection(
-                      key: StakingGuidePage.tutorialsKey,
-                      label: 'Tutorials',
-                      accentColor: AppColors.primarySoft,
-                      children: [
-                        for (final tutorial in tutorials)
-                          _TutorialCard(
-                            tutorial: tutorial,
-                            onTap: () => _openTutorialSheet(tutorial),
-                          ),
-                      ],
-                    ),
-                    _QuickTipsGrid(snapshot: snapshot),
-                    _CommonMistakes(snapshot: snapshot),
-                    _StartStakingCard(snapshot: snapshot),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _HeroBanner(snapshot: snapshot),
+                      _DifficultyTabs(
+                        active: _difficulty,
+                        onChanged: (difficulty) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _difficulty = difficulty);
+                        },
+                      ),
+                      VitPageSection(
+                        key: StakingGuidePage.tutorialsKey,
+                        label: 'Tutorials',
+                        accentColor: AppColors.primarySoft,
+                        children: [
+                          for (final tutorial in tutorials)
+                            _TutorialCard(
+                              tutorial: tutorial,
+                              onTap: () => _openTutorialSheet(tutorial),
+                            ),
+                        ],
+                      ),
+                      _QuickTipsGrid(snapshot: snapshot),
+                      _CommonMistakes(snapshot: snapshot),
+                      _StartStakingCard(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -111,7 +115,7 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
 
   Future<void> _openTutorialSheet(StakingGuideTutorialDraft tutorial) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,

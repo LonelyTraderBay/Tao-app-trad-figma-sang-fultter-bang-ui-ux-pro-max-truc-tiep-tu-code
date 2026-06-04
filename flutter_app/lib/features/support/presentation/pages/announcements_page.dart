@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -66,51 +67,54 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
       semanticLabel: 'SC-293 AnnouncementsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: AnnouncementsPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    gap: VitContentGap.relaxed,
-                    fullBleed: true,
-                    children: [
-                      _FilterRail(
-                        filters: snapshot.filters,
-                        activeFilterId: _activeFilterId,
-                        onChanged: _setFilter,
-                      ),
-                      if (pinned.isNotEmpty)
-                        _PinnedSection(
-                          announcements: pinned,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: AnnouncementsPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      gap: VitContentGap.relaxed,
+                      fullBleed: true,
+                      children: [
+                        _FilterRail(
+                          filters: snapshot.filters,
+                          activeFilterId: _activeFilterId,
+                          onChanged: _setFilter,
+                        ),
+                        if (pinned.isNotEmpty)
+                          _PinnedSection(
+                            announcements: pinned,
+                            expandedId: _expandedId,
+                            onToggle: _toggleExpanded,
+                          ),
+                        _AnnouncementList(
+                          announcements: regular,
+                          showEmpty: pinned.isEmpty && regular.isEmpty,
                           expandedId: _expandedId,
                           onToggle: _toggleExpanded,
                         ),
-                      _AnnouncementList(
-                        announcements: regular,
-                        showEmpty: pinned.isEmpty && regular.isEmpty,
-                        expandedId: _expandedId,
-                        onToggle: _toggleExpanded,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

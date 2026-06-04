@@ -12,7 +12,7 @@ final class DeviceMetrics {
   static const double safeBottom = 34;
   static const double tabBar = 56;
   static const double bottomChrome = 90;
-  static const double nativeBottomChrome = 56;
+  static const double nativeBottomChrome = 72;
   static const double contentPad = 20;
 
   static const double dynamicIslandWidth = 126;

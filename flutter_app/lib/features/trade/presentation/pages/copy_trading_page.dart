@@ -7,8 +7,10 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -56,49 +58,56 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
       semanticLabel: 'SC-063 CopyTradingPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Copy Trading',
-              subtitle: 'Sao chép · Trade',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.trade),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Copy Trading',
+            subtitle: 'Sao chép · Trade',
+            showBack: true,
+            onBack: () => goBackOrFallback(
+              context,
+              fallbackPath: AppRoutePaths.trade,
+              mode: BackNavigationMode.historyThenFallback,
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: CopyTradingPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _CopyHeroCard(snapshot: snapshot),
-                    const SizedBox(height: 20),
-                    _RiskWarningCard(
-                      title: snapshot.riskWarningTitle,
-                      message: snapshot.riskWarningText,
-                    ),
-                    const SizedBox(height: 20),
-                    _SortChips(
-                      options: snapshot.sortOptions,
-                      selected: _sortBy,
-                      onChanged: (value) => setState(() => _sortBy = value),
-                    ),
-                    const SizedBox(height: 20),
-                    for (final trader in traders) ...[
-                      _TraderCard(
-                        trader: trader,
-                        onOpen: () => context.go(
-                          AppRoutePaths.tradeCopyProvider(trader.id),
-                        ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: CopyTradingPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _CopyHeroCard(snapshot: snapshot),
+                      const SizedBox(height: 20),
+                      _RiskWarningCard(
+                        title: snapshot.riskWarningTitle,
+                        message: snapshot.riskWarningText,
                       ),
                       const SizedBox(height: 20),
+                      _SortChips(
+                        options: snapshot.sortOptions,
+                        selected: _sortBy,
+                        onChanged: (value) => setState(() => _sortBy = value),
+                      ),
+                      const SizedBox(height: 20),
+                      for (final trader in traders) ...[
+                        _TraderCard(
+                          trader: trader,
+                          onOpen: () => context.go(
+                            AppRoutePaths.tradeCopyProvider(trader.id),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                      _Disclaimer(text: snapshot.disclaimer),
                     ],
-                    _Disclaimer(text: snapshot.disclaimer),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

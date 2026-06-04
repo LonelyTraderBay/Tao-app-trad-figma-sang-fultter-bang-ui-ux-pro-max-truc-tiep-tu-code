@@ -31,42 +31,45 @@ class PredictionTournamentDetailPage extends ConsumerWidget {
       semanticLabel: 'SC-042 PredictionTournamentDetailPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: tournament?.name ?? 'Tournament',
-              showBack: true,
-              onBack: () =>
-                  context.go(AppRoutePaths.marketsPredictionsTournaments),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.relaxed,
-                  customGap: 16,
-                  children: [
-                    if (tournament == null)
-                      const _EmptyStateCard(
-                        key: missingKey,
-                        icon: Icons.emoji_events_outlined,
-                        title: 'Tournament not found',
-                        message: 'Return to the tournament list to continue.',
-                      )
-                    else ...[
-                      _TournamentDetailHero(tournament: tournament),
-                      _TournamentStatsGrid(tournament: tournament),
-                      const _TournamentInfoCard(),
-                      if (tournament.isJoined)
-                        _FinalLeaderboard(entries: snapshot.leaderboard),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: tournament?.name ?? 'Tournament',
+            showBack: true,
+            onBack: () =>
+                context.go(AppRoutePaths.marketsPredictionsTournaments),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.relaxed,
+                    customGap: 16,
+                    children: [
+                      if (tournament == null)
+                        const _EmptyStateCard(
+                          key: missingKey,
+                          icon: Icons.emoji_events_outlined,
+                          title: 'Tournament not found',
+                          message: 'Return to the tournament list to continue.',
+                        )
+                      else ...[
+                        _TournamentDetailHero(tournament: tournament),
+                        _TournamentStatsGrid(tournament: tournament),
+                        const _TournamentInfoCard(),
+                        if (tournament.isJoined)
+                          _FinalLeaderboard(entries: snapshot.leaderboard),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

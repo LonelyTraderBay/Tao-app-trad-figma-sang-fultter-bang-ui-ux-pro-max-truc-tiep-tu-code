@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -71,83 +72,86 @@ class _MarketCorrelationsPageState
       semanticLabel: 'SC-026 MarketCorrelationsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Tương quan thị trường',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.markets),
-            ),
-            _CorrelationTabs(
-              activeTab: _tab,
-              onChanged: (value) => setState(() => _tab = value),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: MarketCorrelationsPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 14,
-                    children: [
-                      _TimeframeChips(
-                        timeframe: _timeframe,
-                        onSelected: (value) =>
-                            setState(() => _timeframe = value),
-                      ),
-                      if (_tab == 'matrix') ...[
-                        _MatrixCard(snapshot: snapshot),
-                        const _CorrelationLegend(),
-                        const _MatrixInfoCard(),
-                        _QuickInsights(score: snapshot.diversificationScore),
-                        _RecommendationCard(
-                          recommendation:
-                              snapshot.diversificationScore.recommendation,
-                        ),
-                      ] else if (_tab == 'pairs') ...[
-                        _SortChips(
-                          sortOrder: _sortOrder,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Tương quan thị trường',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.markets),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _CorrelationTabs(
+                activeTab: _tab,
+                onChanged: (value) => setState(() => _tab = value),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: MarketCorrelationsPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 14,
+                      children: [
+                        _TimeframeChips(
+                          timeframe: _timeframe,
                           onSelected: (value) =>
-                              setState(() => _sortOrder = value),
+                              setState(() => _timeframe = value),
                         ),
-                        for (
-                          var index = 0;
-                          index < snapshot.pairs.length;
-                          index += 1
-                        )
-                          _PairCorrelationRow(
-                            key: MarketCorrelationsPage.pairKey(
-                              '${snapshot.pairs[index].assetA}-${snapshot.pairs[index].assetB}',
-                            ),
-                            rank: index + 1,
-                            pair: snapshot.pairs[index],
-                            timeframe: _timeframe,
-                            maxValue: _maxCorrelation(snapshot),
+                        if (_tab == 'matrix') ...[
+                          _MatrixCard(snapshot: snapshot),
+                          const _CorrelationLegend(),
+                          const _MatrixInfoCard(),
+                          _QuickInsights(score: snapshot.diversificationScore),
+                          _RecommendationCard(
+                            recommendation:
+                                snapshot.diversificationScore.recommendation,
                           ),
-                      ] else ...[
-                        _DiversificationHero(
-                          score: snapshot.diversificationScore,
-                        ),
-                        _DiversificationMetrics(
-                          score: snapshot.diversificationScore,
-                        ),
-                        const _SectionHeader(
-                          label: 'So sánh theo thời gian',
-                          accentColor: AppColors.accent,
-                        ),
-                        _TimeframeScoreCard(repo: repo),
-                        const _CorrelationDisclaimer(),
+                        ] else if (_tab == 'pairs') ...[
+                          _SortChips(
+                            sortOrder: _sortOrder,
+                            onSelected: (value) =>
+                                setState(() => _sortOrder = value),
+                          ),
+                          for (
+                            var index = 0;
+                            index < snapshot.pairs.length;
+                            index += 1
+                          )
+                            _PairCorrelationRow(
+                              key: MarketCorrelationsPage.pairKey(
+                                '${snapshot.pairs[index].assetA}-${snapshot.pairs[index].assetB}',
+                              ),
+                              rank: index + 1,
+                              pair: snapshot.pairs[index],
+                              timeframe: _timeframe,
+                              maxValue: _maxCorrelation(snapshot),
+                            ),
+                        ] else ...[
+                          _DiversificationHero(
+                            score: snapshot.diversificationScore,
+                          ),
+                          _DiversificationMetrics(
+                            score: snapshot.diversificationScore,
+                          ),
+                          const _SectionHeader(
+                            label: 'So sánh theo thời gian',
+                            accentColor: AppColors.accent,
+                          ),
+                          _TimeframeScoreCard(repo: repo),
+                          const _CorrelationDisclaimer(),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

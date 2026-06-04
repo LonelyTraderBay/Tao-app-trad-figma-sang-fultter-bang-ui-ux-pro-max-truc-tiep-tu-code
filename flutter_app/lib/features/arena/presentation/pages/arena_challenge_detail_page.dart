@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -76,93 +77,96 @@ class _ArenaChallengeDetailPageState
       semanticLabel: 'SC-190 ArenaChallengeDetailPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Chi tiết challenge',
-              subtitle: 'Thử thách · Open Arena',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ArenaChallengeDetailPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    customGap: AppSpacing.x5,
-                    children: [
-                      _ChallengeIntro(
-                        snapshot: snapshot,
-                        onMode: () => _go(
-                          AppRoutePaths.arenaMode(snapshot.challenge.modeId),
-                        ),
-                      ),
-                      _LiveStatusCard(challenge: snapshot.challenge),
-                      ArenaChallengePointsReviewCard(review: pointsReview),
-                      const _PoolFeeCard(),
-                      _RewardCard(tiers: snapshot.rewardTiers),
-                      _RefundCard(text: snapshot.challenge.refundPolicy),
-                      _TeamsSection(teams: snapshot.teams),
-                      _RuleSummaryCard(rows: snapshot.ruleRows),
-                      _GovernanceCard(
-                        challenge: snapshot.challenge,
-                        rows: snapshot.governanceRows,
-                      ),
-                      _ClarityCard(score: snapshot.challenge.clarityScore),
-                      _CreatorCard(
-                        creator: snapshot.creator,
-                        onTap: () => _go(
-                          AppRoutePaths.arenaCreator(snapshot.creator.id),
-                        ),
-                      ),
-                      _SafetyLinkCard(
-                        onTap: () => _go(AppRoutePaths.arenaSafety),
-                      ),
-                      _Tabs(
-                        active: _activeTab,
-                        onChanged: (tab) => setState(() => _activeTab = tab),
-                      ),
-                      _TabContent(snapshot: snapshot, active: _activeTab),
-                      _WarningStack(
-                        warnings: [
-                          'Arena Points chỉ dùng trong Open Arena, không phải tài sản tài chính.',
-                          'Không thỏa thuận giao dịch ngoài nền tảng.',
-                        ],
-                      ),
-                      _PredictionBridgeCard(
-                        contextDraft: snapshot.predictionContext,
-                        onTap: () => _go(
-                          AppRoutePaths.marketsPredictionEvent(
-                            snapshot.predictionContext.eventId,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Chi tiết challenge',
+            subtitle: 'Thử thách · Open Arena',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ArenaChallengeDetailPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      customGap: AppSpacing.x5,
+                      children: [
+                        _ChallengeIntro(
+                          snapshot: snapshot,
+                          onMode: () => _go(
+                            AppRoutePaths.arenaMode(snapshot.challenge.modeId),
                           ),
                         ),
-                      ),
-                      _SafetySnapshotCard(
-                        rows: snapshot.safetyRows,
-                        onSafety: () => _go(AppRoutePaths.arenaSafety),
-                      ),
-                      _ActionStack(
-                        onEvidence: _showEvidenceSheet,
-                        onReport: _showReportSheet,
-                        onBlock: _showBlockSheet,
-                        onLeave: _showLeaveSheet,
-                      ),
-                      _CommunityRulesLink(
-                        onTap: () => _go(AppRoutePaths.arenaSafety),
-                      ),
-                      const _ArenaFooterNotice(),
-                    ],
+                        _LiveStatusCard(challenge: snapshot.challenge),
+                        ArenaChallengePointsReviewCard(review: pointsReview),
+                        const _PoolFeeCard(),
+                        _RewardCard(tiers: snapshot.rewardTiers),
+                        _RefundCard(text: snapshot.challenge.refundPolicy),
+                        _TeamsSection(teams: snapshot.teams),
+                        _RuleSummaryCard(rows: snapshot.ruleRows),
+                        _GovernanceCard(
+                          challenge: snapshot.challenge,
+                          rows: snapshot.governanceRows,
+                        ),
+                        _ClarityCard(score: snapshot.challenge.clarityScore),
+                        _CreatorCard(
+                          creator: snapshot.creator,
+                          onTap: () => _go(
+                            AppRoutePaths.arenaCreator(snapshot.creator.id),
+                          ),
+                        ),
+                        _SafetyLinkCard(
+                          onTap: () => _go(AppRoutePaths.arenaSafety),
+                        ),
+                        _Tabs(
+                          active: _activeTab,
+                          onChanged: (tab) => setState(() => _activeTab = tab),
+                        ),
+                        _TabContent(snapshot: snapshot, active: _activeTab),
+                        _WarningStack(
+                          warnings: [
+                            'Arena Points chỉ dùng trong Open Arena, không phải tài sản tài chính.',
+                            'Không thỏa thuận giao dịch ngoài nền tảng.',
+                          ],
+                        ),
+                        _PredictionBridgeCard(
+                          contextDraft: snapshot.predictionContext,
+                          onTap: () => _go(
+                            AppRoutePaths.marketsPredictionEvent(
+                              snapshot.predictionContext.eventId,
+                            ),
+                          ),
+                        ),
+                        _SafetySnapshotCard(
+                          rows: snapshot.safetyRows,
+                          onSafety: () => _go(AppRoutePaths.arenaSafety),
+                        ),
+                        _ActionStack(
+                          onEvidence: _showEvidenceSheet,
+                          onReport: _showReportSheet,
+                          onBlock: _showBlockSheet,
+                          onLeave: _showLeaveSheet,
+                        ),
+                        _CommunityRulesLink(
+                          onTap: () => _go(AppRoutePaths.arenaSafety),
+                        ),
+                        const _ArenaFooterNotice(),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -215,7 +219,7 @@ class _ArenaChallengeDetailPageState
     required String body,
   }) {
     HapticFeedback.selectionClick();
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.surface,
       barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .55),

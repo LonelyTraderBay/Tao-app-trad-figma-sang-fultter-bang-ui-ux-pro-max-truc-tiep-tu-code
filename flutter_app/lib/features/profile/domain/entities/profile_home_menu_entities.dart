@@ -152,6 +152,24 @@ final class ProfileArenaBlock {
   final String creatorScoreLabel;
 }
 
+final class ProfileProductShortcut {
+  const ProfileProductShortcut({
+    required this.id,
+    required this.label,
+    required this.route,
+    required this.iconKey,
+    required this.stateLabel,
+    required this.accentHex,
+  });
+
+  final String id;
+  final String label;
+  final String route;
+  final String iconKey;
+  final String stateLabel;
+  final int accentHex;
+}
+
 final class ProfileMenuSection {
   const ProfileMenuSection({
     required this.id,

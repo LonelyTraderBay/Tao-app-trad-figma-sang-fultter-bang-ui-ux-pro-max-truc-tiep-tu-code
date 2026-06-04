@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -56,51 +57,54 @@ class _StakingValidatorHealthMonitorPageState
       semanticLabel: 'SC-383 StakingValidatorHealthMonitorPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _SummaryStats(snapshot: snapshot),
-                    VitPageSection(
-                      key: StakingValidatorHealthMonitorPage.validatorsKey,
-                      label: 'Active Validators',
-                      accentColor: AppColors.primarySoft,
-                      children: [
-                        for (final validator in snapshot.validators)
-                          _ValidatorCard(
-                            validator: validator,
-                            selected: _selectedValidatorId == validator.id,
-                            onTap: () {
-                              setState(() {
-                                _selectedValidatorId =
-                                    _selectedValidatorId == validator.id
-                                    ? null
-                                    : validator.id;
-                              });
-                            },
-                          ),
-                      ],
-                    ),
-                    _TrendSection(points: snapshot.uptimeHistory),
-                    if (snapshot.warningCount > 0)
-                      _ActionRequiredCard(snapshot: snapshot),
-                    _FooterNote(note: snapshot.footerNote),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _SummaryStats(snapshot: snapshot),
+                      VitPageSection(
+                        key: StakingValidatorHealthMonitorPage.validatorsKey,
+                        label: 'Active Validators',
+                        accentColor: AppColors.primarySoft,
+                        children: [
+                          for (final validator in snapshot.validators)
+                            _ValidatorCard(
+                              validator: validator,
+                              selected: _selectedValidatorId == validator.id,
+                              onTap: () {
+                                setState(() {
+                                  _selectedValidatorId =
+                                      _selectedValidatorId == validator.id
+                                      ? null
+                                      : validator.id;
+                                });
+                              },
+                            ),
+                        ],
+                      ),
+                      _TrendSection(points: snapshot.uptimeHistory),
+                      if (snapshot.warningCount > 0)
+                        _ActionRequiredCard(snapshot: snapshot),
+                      _FooterNote(note: snapshot.footerNote),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

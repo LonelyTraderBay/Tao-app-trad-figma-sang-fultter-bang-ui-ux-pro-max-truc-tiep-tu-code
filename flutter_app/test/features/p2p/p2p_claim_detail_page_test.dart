@@ -48,6 +48,9 @@ void main() {
     expect(snapshot.reasonShares.first.percent, 42);
     expect(snapshot.parentRoute, AppRoutePaths.p2pInsurance);
     expect(snapshot.orderRoute, AppRoutePaths.p2pOrder('78400'));
+    expect(snapshot.supportRoute, startsWith('/support?'));
+    expect(snapshot.supportRoute, contains('flow=p2p_order'));
+    expect(snapshot.supportRoute, contains('CLM-001'));
     expect(snapshot.contractNotes, contains('P2P requires escrow'));
     expect(
       snapshot.supportedStates,
@@ -139,6 +142,14 @@ void main() {
     await tester.tap(find.byKey(P2PClaimDetailPage.orderLinkKey));
     await tester.pumpAndSettle();
     expect(find.byType(P2POrderPage), findsOneWidget);
+
+    await pumpP2PClaimDetail(tester);
+    await tester.ensureVisible(find.byKey(P2PClaimDetailPage.supportLinkKey));
+    await tester.tap(find.byKey(P2PClaimDetailPage.supportLinkKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Hồ sơ hỗ trợ'), findsOneWidget);
+    expect(find.text('P2P claim support for CLM-001'), findsOneWidget);
+    expect(find.text('CLM-001'), findsWidgets);
 
     await pumpP2PClaimDetail(tester);
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));

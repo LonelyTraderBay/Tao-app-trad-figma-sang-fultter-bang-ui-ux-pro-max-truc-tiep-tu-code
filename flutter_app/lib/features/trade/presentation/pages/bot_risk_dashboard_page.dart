@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -56,58 +57,65 @@ class BotRiskDashboardPage extends ConsumerWidget {
       semanticLabel: 'SC-120 BotRiskDashboardPage',
       child: Material(
         color: _riskBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Risk Dashboard',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeBots),
-              trailing: _HeaderEmergencyButton(
-                onTap: () => context.go(snapshot.emergencyPath),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Risk Dashboard',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeBots),
+            actions: [
+              VitHeaderActionItem(
+                key: BotRiskDashboardPage.emergencyHeaderKey,
+                type: VitHeaderActionType.emergency,
+                onPressed: () => context.go(snapshot.emergencyPath),
               ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: BotRiskDashboardPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _RiskScoreCard(snapshot: snapshot),
-                    const SizedBox(height: 16),
-                    const _SectionLabel('Critical Metrics'),
-                    const SizedBox(height: 8),
-                    _CriticalMetricsGrid(snapshot: snapshot),
-                    const SizedBox(height: 14),
-                    const _SectionLabel('Drawdown Trend (24h)'),
-                    const SizedBox(height: 12),
-                    _DrawdownChartCard(points: snapshot.drawdownPoints),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Exposure by Asset'),
-                    const SizedBox(height: 12),
-                    _ExposureCard(exposures: snapshot.exposures),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('VaR Trend (7 days)'),
-                    const SizedBox(height: 12),
-                    _VarChartCard(points: snapshot.varHistory),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Safety Controls'),
-                    const SizedBox(height: 12),
-                    _SafetyControlsCard(controls: snapshot.safetyControls),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Emergency Actions'),
-                    const SizedBox(height: 12),
-                    _EmergencyActionCard(
-                      runningBots: snapshot.runningBots,
-                      onTap: () => context.go(snapshot.emergencyPath),
-                    ),
-                    const SizedBox(height: 18),
-                    const _RiskExplanationCard(),
-                  ],
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: BotRiskDashboardPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _RiskScoreCard(snapshot: snapshot),
+                      const SizedBox(height: 16),
+                      const _SectionLabel('Critical Metrics'),
+                      const SizedBox(height: 8),
+                      _CriticalMetricsGrid(snapshot: snapshot),
+                      const SizedBox(height: 14),
+                      const _SectionLabel('Drawdown Trend (24h)'),
+                      const SizedBox(height: 12),
+                      _DrawdownChartCard(points: snapshot.drawdownPoints),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Exposure by Asset'),
+                      const SizedBox(height: 12),
+                      _ExposureCard(exposures: snapshot.exposures),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('VaR Trend (7 days)'),
+                      const SizedBox(height: 12),
+                      _VarChartCard(points: snapshot.varHistory),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Safety Controls'),
+                      const SizedBox(height: 12),
+                      _SafetyControlsCard(controls: snapshot.safetyControls),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Emergency Actions'),
+                      const SizedBox(height: 12),
+                      _EmergencyActionCard(
+                        runningBots: snapshot.runningBots,
+                        onTap: () => context.go(snapshot.emergencyPath),
+                      ),
+                      const SizedBox(height: 18),
+                      const _RiskExplanationCard(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

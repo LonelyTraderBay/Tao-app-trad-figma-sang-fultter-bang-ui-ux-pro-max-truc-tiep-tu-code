@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -86,53 +87,56 @@ class _P2PAntiPhishingCodePageState
       semanticLabel: 'SC-256 P2PAntiPhishingCodePage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Anti-Phishing Code',
-              subtitle: 'Bảo mật · P2P',
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _StatusCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      _ExplainerCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x6),
-                      _SectionTitle(
-                        _editing ? 'Thiết lập code' : 'Code hiện tại',
-                      ),
-                      const SizedBox(height: AppSpacing.x3),
-                      _editing
-                          ? _editCodeCard()
-                          : _currentCodeCard(code: _code),
-                      const SizedBox(height: AppSpacing.x6),
-                      const _SectionTitle('Ví dụ email'),
-                      const SizedBox(height: AppSpacing.x3),
-                      _EmailExamples(examples: snapshot.examples),
-                      const SizedBox(height: AppSpacing.x6),
-                      _WarningCard(snapshot: snapshot),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Anti-Phishing Code',
+            subtitle: 'Bảo mật · P2P',
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _StatusCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        _ExplainerCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x6),
+                        _SectionTitle(
+                          _editing ? 'Thiết lập code' : 'Code hiện tại',
+                        ),
+                        const SizedBox(height: AppSpacing.x3),
+                        _editing
+                            ? _editCodeCard()
+                            : _currentCodeCard(code: _code),
+                        const SizedBox(height: AppSpacing.x6),
+                        const _SectionTitle('Ví dụ email'),
+                        const SizedBox(height: AppSpacing.x3),
+                        _EmailExamples(examples: snapshot.examples),
+                        const SizedBox(height: AppSpacing.x6),
+                        _WarningCard(snapshot: snapshot),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -73,57 +74,60 @@ class _ArmIntegrationStatusPageState
       semanticLabel: 'SC-095 ARMIntegrationStatusPage',
       child: Material(
         color: _armBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'ARM Integration',
-              subtitle: 'Connection Health · Monitoring',
-              showBack: true,
-              onBack: () =>
-                  context.go(AppRoutePaths.tradeCopyRegulatoryReportsDashboard),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: ArmIntegrationStatusPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const _OperationalAlert(),
-                    const SizedBox(height: 35),
-                    const _SectionLabel('ARM Providers'),
-                    const SizedBox(height: 12),
-                    for (final connection in snapshot.connections) ...[
-                      _ArmProviderCard(
-                        connection: connection,
-                        isTesting: _testingId == connection.id,
-                        onTest: () => _testConnection(connection.id),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'ARM Integration',
+            subtitle: 'Connection Health · Monitoring',
+            showBack: true,
+            onBack: () =>
+                context.go(AppRoutePaths.tradeCopyRegulatoryReportsDashboard),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: ArmIntegrationStatusPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const _OperationalAlert(),
+                      const SizedBox(height: 35),
+                      const _SectionLabel('ARM Providers'),
+                      const SizedBox(height: 12),
+                      for (final connection in snapshot.connections) ...[
+                        _ArmProviderCard(
+                          connection: connection,
+                          isTesting: _testingId == connection.id,
+                          onTest: () => _testConnection(connection.id),
+                        ),
+                        if (connection != snapshot.connections.last)
+                          const SizedBox(height: 13),
+                      ],
+                      const SizedBox(height: 26),
+                      const _SectionLabel('Latency Monitoring (Last 15 min)'),
+                      const SizedBox(height: 12),
+                      _LatencyCard(points: snapshot.latencyHistory),
+                      const SizedBox(height: 26),
+                      const _SectionLabel('SLA Compliance'),
+                      const SizedBox(height: 12),
+                      _SlaCard(sla: snapshot.sla),
+                      const SizedBox(height: 26),
+                      _QuickActions(
+                        onQueue: () => context.go(
+                          AppRoutePaths.tradeCopyTransactionReporting,
+                        ),
+                        onDashboard: () => context.go(
+                          AppRoutePaths.tradeCopyRegulatoryReportsDashboard,
+                        ),
                       ),
-                      if (connection != snapshot.connections.last)
-                        const SizedBox(height: 13),
                     ],
-                    const SizedBox(height: 26),
-                    const _SectionLabel('Latency Monitoring (Last 15 min)'),
-                    const SizedBox(height: 12),
-                    _LatencyCard(points: snapshot.latencyHistory),
-                    const SizedBox(height: 26),
-                    const _SectionLabel('SLA Compliance'),
-                    const SizedBox(height: 12),
-                    _SlaCard(sla: snapshot.sla),
-                    const SizedBox(height: 26),
-                    _QuickActions(
-                      onQueue: () => context.go(
-                        AppRoutePaths.tradeCopyTransactionReporting,
-                      ),
-                      onDashboard: () => context.go(
-                        AppRoutePaths.tradeCopyRegulatoryReportsDashboard,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

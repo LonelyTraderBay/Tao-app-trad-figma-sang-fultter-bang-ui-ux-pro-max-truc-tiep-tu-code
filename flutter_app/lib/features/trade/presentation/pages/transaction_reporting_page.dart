@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/features/trade/presentation/widgets/transactio
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/transaction_reporting_stats.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
 class TransactionReportingPage extends ConsumerStatefulWidget {
@@ -62,69 +63,75 @@ class _TransactionReportingPageState
         color: transactionReportBackground,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: 'Transaction Reporting',
-                  subtitle: 'MiFID II - EMIR Compliance',
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: TransactionReportingPage.contentKey,
-                    padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const TransactionReportingComplianceNotice(),
-                        const SizedBox(height: 14),
-                        TransactionReportingStatsGrid(stats: snapshot.stats),
-                        const SizedBox(height: 14),
-                        TransactionReportingSearchField(
-                          query: _query,
-                          onChanged: (value) => setState(() => _query = value),
-                        ),
-                        const SizedBox(height: 14),
-                        TransactionReportingTabs(
-                          activeId: _tab,
-                          stats: snapshot.stats,
-                          onChanged: (id) => setState(() => _tab = id),
-                        ),
-                        const SizedBox(height: 16),
-                        if (_tab == 'stats')
-                          TransactionReportingStatsTab(stats: snapshot.stats)
-                        else
-                          TransactionReportsSection(
-                            reports: reports,
+            VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Transaction Reporting',
+                subtitle: 'MiFID II - EMIR Compliance',
+                showBack: true,
+                onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: TransactionReportingPage.contentKey,
+                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const TransactionReportingComplianceNotice(),
+                          const SizedBox(height: 14),
+                          TransactionReportingStatsGrid(stats: snapshot.stats),
+                          const SizedBox(height: 14),
+                          TransactionReportingSearchField(
                             query: _query,
-                            onViewXml: (report) => setState(() {
-                              _notice = 'ISO 20022 XML: ${report.id}';
-                            }),
-                            onRetry: (report) => setState(() {
-                              _notice = 'Retry queued: ${report.id}';
-                            }),
-                            onCopy: (report) {
-                              final messageId = report.messageId;
-                              if (messageId == null) return;
-                              Clipboard.setData(ClipboardData(text: messageId));
-                              setState(() => _notice = 'Message ID copied');
-                            },
+                            onChanged: (value) =>
+                                setState(() => _query = value),
                           ),
-                        const SizedBox(height: 14),
-                        TransactionReportingQuickActions(
-                          onDashboard: () => context.go(
-                            AppRoutePaths.tradeCopyRegulatoryReportsDashboard,
+                          const SizedBox(height: 14),
+                          TransactionReportingTabs(
+                            activeId: _tab,
+                            stats: snapshot.stats,
+                            onChanged: (id) => setState(() => _tab = id),
                           ),
-                          onArmStatus: () => context.go(
-                            AppRoutePaths.tradeCopyArmIntegrationStatus,
+                          const SizedBox(height: 16),
+                          if (_tab == 'stats')
+                            TransactionReportingStatsTab(stats: snapshot.stats)
+                          else
+                            TransactionReportsSection(
+                              reports: reports,
+                              query: _query,
+                              onViewXml: (report) => setState(() {
+                                _notice = 'ISO 20022 XML: ${report.id}';
+                              }),
+                              onRetry: (report) => setState(() {
+                                _notice = 'Retry queued: ${report.id}';
+                              }),
+                              onCopy: (report) {
+                                final messageId = report.messageId;
+                                if (messageId == null) return;
+                                Clipboard.setData(
+                                  ClipboardData(text: messageId),
+                                );
+                                setState(() => _notice = 'Message ID copied');
+                              },
+                            ),
+                          const SizedBox(height: 14),
+                          TransactionReportingQuickActions(
+                            onDashboard: () => context.go(
+                              AppRoutePaths.tradeCopyRegulatoryReportsDashboard,
+                            ),
+                            onArmStatus: () => context.go(
+                              AppRoutePaths.tradeCopyArmIntegrationStatus,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_notice != null)
               TransactionReportingNoticePanel(

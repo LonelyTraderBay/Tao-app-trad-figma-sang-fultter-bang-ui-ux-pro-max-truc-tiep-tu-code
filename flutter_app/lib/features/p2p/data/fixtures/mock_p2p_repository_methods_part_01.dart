@@ -53,6 +53,7 @@ mixin _MockP2PRepositoryMethodsPart01 on _MockP2PRepositoryBase {
       emptyTitle: 'Không tìm thấy offer',
       emptySubtitle: 'Thử thay đổi bộ lọc hoặc tài sản.',
       contractNotes: 'P2P requires escrow, fraud, KYC, payment-state clarity.',
+      highRiskContractId: HighRiskFlowContractIds.p2pEscrowOrder,
     );
   }
 
@@ -148,6 +149,7 @@ mixin _MockP2PRepositoryMethodsPart01 on _MockP2PRepositoryBase {
       warningNote:
           'Chỉ bấm xác nhận khi bạn đã sẵn sàng thanh toán. Hủy đơn nhiều lần sẽ ảnh hưởng đến uy tín.',
       contractNotes: 'P2P requires escrow, fraud, KYC, payment-state clarity.',
+      highRiskContractId: HighRiskFlowContractIds.p2pEscrowOrder,
     );
   }
 
@@ -177,6 +179,7 @@ mixin _MockP2PRepositoryMethodsPart01 on _MockP2PRepositoryBase {
       emptyTitle: 'No timeline events',
       emptySubtitle: 'Order activity will appear here when escrow changes.',
       contractNotes: 'P2P requires escrow, fraud, KYC, payment-state clarity.',
+      highRiskContractId: HighRiskFlowContractIds.p2pEscrowOrder,
     );
   }
 
@@ -333,6 +336,7 @@ mixin _MockP2PRepositoryMethodsPart01 on _MockP2PRepositoryBase {
       emptyTitle: 'Không tìm thấy đơn hàng',
       emptySubtitle: 'Không thể hiển thị chi tiết khi thiếu thông tin escrow.',
       contractNotes: 'P2P requires escrow, fraud, KYC, payment-state clarity.',
+      highRiskContractId: HighRiskFlowContractIds.p2pEscrowOrder,
     );
   }
 

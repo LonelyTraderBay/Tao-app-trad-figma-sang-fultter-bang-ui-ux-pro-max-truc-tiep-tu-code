@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/pages/kyc_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/profile_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -91,5 +92,16 @@ void main() {
     expect(find.text('Tính năng mở khóa:'), findsOneWidget);
     expect(find.text('OTC Trading'), findsOneWidget);
     expect(find.text('API Access'), findsOneWidget);
+  });
+  testWidgets('SC-159 direct header back returns to profile parent', (
+    tester,
+  ) async {
+    await pumpKyc(tester);
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ProfilePage), findsOneWidget);
+    expect(find.byType(KYCPage), findsNothing);
   });
 }

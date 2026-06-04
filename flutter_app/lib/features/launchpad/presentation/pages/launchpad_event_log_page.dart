@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -97,95 +98,90 @@ class _LaunchpadEventLogPageState extends ConsumerState<LaunchpadEventLogPage> {
         type: MaterialType.transparency,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: snapshot.title,
-                  showBack: true,
-                  onBack: () => context.go(snapshot.backRoute),
-                ),
-                Expanded(
-                  child: ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(
-                      context,
-                    ).copyWith(scrollbars: false),
-                    child: SingleChildScrollView(
-                      key: LaunchpadEventLogPage.contentKey,
-                      physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(bottom: bottomInset),
-                      child: VitPageContent(
-                        padding: VitContentPadding.defaultPadding,
-                        customGap: AppSpacing.x4,
-                        children: [
-                          _SearchField(
-                            controller: _searchController,
-                            query: _searchQuery,
-                            onChanged: (value) => setState(() {
-                              _searchQuery = value;
-                              _selectedEventIds.clear();
-                            }),
-                            onClear: () => setState(() {
-                              _searchController.clear();
-                              _searchQuery = '';
-                              _selectedEventIds.clear();
-                            }),
-                          ),
-                          _LevelFilterBar(
-                            events: snapshot.events,
-                            activeValue: _levelFilter,
-                            onChanged: (value) => setState(() {
-                              _levelFilter = value;
-                              _selectedEventIds.clear();
-                            }),
-                          ),
-                          _ActionBar(
-                            sourceLabel: _sourceFilter == 'all'
-                                ? 'Nguon'
-                                : _sourceFilter,
-                            sourceOpen: _showSourceFilters,
-                            selectedAll:
-                                filteredEvents.isNotEmpty &&
-                                _selectedEventIds.length ==
-                                    filteredEvents.length,
-                            exportCount: exportEvents.length,
-                            onToggleSources: () => setState(
-                              () => _showSourceFilters = !_showSourceFilters,
-                            ),
-                            onToggleSelectAll: () =>
-                                _toggleSelectAll(filteredEvents),
-                            onExport: () =>
-                                setState(() => _showExportSheet = true),
-                          ),
-                          if (_showSourceFilters)
-                            _SourceFilterCard(
-                              sources: sources,
-                              activeValue: _sourceFilter,
-                              onChanged: (value) => setState(() {
-                                _sourceFilter = value;
-                                _showSourceFilters = false;
-                                _selectedEventIds.clear();
-                              }),
-                            ),
-                          if (filteredEvents.isEmpty)
-                            const _EmptyEvents()
-                          else
-                            _EventList(
-                              events: filteredEvents,
-                              selectedIds: _selectedEventIds,
-                              expandedId: _expandedEventId,
-                              onSelect: _toggleEventSelection,
-                              onExpand: (id) => setState(() {
-                                _expandedEventId = _expandedEventId == id
-                                    ? null
-                                    : id;
-                              }),
-                            ),
-                        ],
+            VitAutoHideHeaderScaffold(
+              bottomInset: bottomInset,
+              semanticLabel: 'SC-307 LaunchpadEventLogPage scroll surface',
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(
+                  context,
+                ).copyWith(scrollbars: false),
+                child: SingleChildScrollView(
+                  key: LaunchpadEventLogPage.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  child: VitPageContent(
+                    padding: VitContentPadding.defaultPadding,
+                    customGap: AppSpacing.x4,
+                    children: [
+                      _SearchField(
+                        controller: _searchController,
+                        query: _searchQuery,
+                        onChanged: (value) => setState(() {
+                          _searchQuery = value;
+                          _selectedEventIds.clear();
+                        }),
+                        onClear: () => setState(() {
+                          _searchController.clear();
+                          _searchQuery = '';
+                          _selectedEventIds.clear();
+                        }),
                       ),
-                    ),
+                      _LevelFilterBar(
+                        events: snapshot.events,
+                        activeValue: _levelFilter,
+                        onChanged: (value) => setState(() {
+                          _levelFilter = value;
+                          _selectedEventIds.clear();
+                        }),
+                      ),
+                      _ActionBar(
+                        sourceLabel: _sourceFilter == 'all'
+                            ? 'Nguon'
+                            : _sourceFilter,
+                        sourceOpen: _showSourceFilters,
+                        selectedAll:
+                            filteredEvents.isNotEmpty &&
+                            _selectedEventIds.length == filteredEvents.length,
+                        exportCount: exportEvents.length,
+                        onToggleSources: () => setState(
+                          () => _showSourceFilters = !_showSourceFilters,
+                        ),
+                        onToggleSelectAll: () =>
+                            _toggleSelectAll(filteredEvents),
+                        onExport: () => setState(() => _showExportSheet = true),
+                      ),
+                      if (_showSourceFilters)
+                        _SourceFilterCard(
+                          sources: sources,
+                          activeValue: _sourceFilter,
+                          onChanged: (value) => setState(() {
+                            _sourceFilter = value;
+                            _showSourceFilters = false;
+                            _selectedEventIds.clear();
+                          }),
+                        ),
+                      if (filteredEvents.isEmpty)
+                        const _EmptyEvents()
+                      else
+                        _EventList(
+                          events: filteredEvents,
+                          selectedIds: _selectedEventIds,
+                          expandedId: _expandedEventId,
+                          onSelect: _toggleEventSelection,
+                          onExpand: (id) => setState(() {
+                            _expandedEventId = _expandedEventId == id
+                                ? null
+                                : id;
+                          }),
+                        ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
             if (_showExportSheet)
               Positioned.fill(

@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/market_list_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/market_depth_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/pair_detail_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/token_info_page.dart';
@@ -107,11 +107,35 @@ void main() {
     expect(find.byType(MarketDepthPage), findsOneWidget);
   });
 
-  testWidgets('SC-044 back button returns to Home', (tester) async {
+  testWidgets('SC-044 header actions use canonical catalog controls', (
+    tester,
+  ) async {
+    await pumpPairDetail(tester);
+
+    expect(find.byIcon(Icons.star_rounded), findsOneWidget);
+    expect(find.byIcon(Icons.share_outlined), findsOneWidget);
+    expect(
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is Semantics &&
+            (widget.properties.label?.startsWith('Chọn') ?? false) &&
+            (widget.properties.label?.contains('BTC/USDT') ?? false) &&
+            widget.properties.button == true,
+      ),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.byIcon(Icons.star_rounded));
+    await tester.pumpAndSettle();
+
+    expect(find.byIcon(Icons.star_border_rounded), findsOneWidget);
+  });
+
+  testWidgets('SC-044 back button returns to Markets parent', (tester) async {
     await pumpPairDetail(tester);
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded).first);
     await tester.pumpAndSettle();
-    expect(find.byType(HomePage), findsOneWidget);
+    expect(find.byType(MarketListPage), findsOneWidget);
   });
 }

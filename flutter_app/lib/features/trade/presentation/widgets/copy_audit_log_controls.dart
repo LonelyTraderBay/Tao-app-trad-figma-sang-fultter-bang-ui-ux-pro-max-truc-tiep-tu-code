@@ -1,34 +1,5 @@
 part of '../pages/copy_audit_log_page.dart';
 
-class _ExportHeaderButton extends StatelessWidget {
-  const _ExportHeaderButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      key: CopyAuditLogPage.exportActionKey,
-      onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        width: 38,
-        height: 38,
-        decoration: BoxDecoration(
-          color: _auditChip,
-          borderRadius: AppRadii.mdRadius,
-          border: Border.all(color: AppColors.cardBorder),
-        ),
-        child: const Icon(
-          Icons.file_download_outlined,
-          color: AppColors.text1,
-          size: 21,
-        ),
-      ),
-    );
-  }
-}
-
 class _ComplianceNotice extends StatelessWidget {
   const _ComplianceNotice({required this.snapshot});
 

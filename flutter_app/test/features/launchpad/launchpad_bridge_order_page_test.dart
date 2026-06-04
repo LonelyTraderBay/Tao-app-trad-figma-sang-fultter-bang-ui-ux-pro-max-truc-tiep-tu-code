@@ -40,6 +40,9 @@ void main() {
     );
     expect(snapshot.title, 'Chi tiet Bridge');
     expect(snapshot.backRoute, AppRoutePaths.launchpadIdoBridgeSample);
+    expect(snapshot.supportRoute, startsWith('/support?'));
+    expect(snapshot.supportRoute, contains('flow=launchpad'));
+    expect(snapshot.supportRoute, contains('tx001'));
     expect(snapshot.txId, 'tx001');
     expect(snapshot.order.id, 'btx1');
     expect(snapshot.order.projectName, 'MetaVerse Land');
@@ -80,6 +83,23 @@ void main() {
     expect(find.byKey(LaunchpadBridgeOrderPage.eventLogKey), findsOneWidget);
     expect(find.byKey(LaunchpadBridgeOrderPage.detailsKey), findsOneWidget);
     expect(find.text('MetaVerse Land'), findsOneWidget);
+  });
+
+  testWidgets('SC-303 support opens contextual launchpad support', (
+    tester,
+  ) async {
+    await pumpBridgeOrder(tester);
+
+    await tester.scrollUntilVisible(
+      find.byKey(LaunchpadBridgeOrderPage.supportKey),
+      220,
+    );
+    await tester.tap(find.byKey(LaunchpadBridgeOrderPage.supportKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Hồ sơ hỗ trợ'), findsOneWidget);
+    expect(find.text('Launchpad bridge order support'), findsOneWidget);
+    expect(find.text('tx001'), findsOneWidget);
   });
 
   testWidgets('SC-303 event log expands basic websocket state', (tester) async {

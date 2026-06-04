@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -70,64 +71,68 @@ class _BotStrategyComparePageState
       semanticLabel: 'SC-126 BotStrategyComparePage',
       child: Material(
         color: _compareBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Strategy Compare',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeBots),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: BotStrategyComparePage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const _SectionLabel('Select Strategies (2-4)'),
-                    const SizedBox(height: 10),
-                    _StrategySelectionGrid(
-                      strategies: snapshot.strategies,
-                      selectedIds: _selected,
-                      onToggle: _toggleStrategy,
-                    ),
-                    const SizedBox(height: 18),
-                    _BestStrategyCard(strategy: best),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Equity Curves Comparison'),
-                    const SizedBox(height: 12),
-                    _EquityChartCard(
-                      points: snapshot.equityPoints,
-                      strategies: selectedStrategies,
-                    ),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Performance Radar'),
-                    const SizedBox(height: 12),
-                    _RadarCard(strategies: selectedStrategies),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Detailed Metrics'),
-                    const SizedBox(height: 12),
-                    _MetricsTable(strategies: selectedStrategies),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Which Strategy to Choose?'),
-                    const SizedBox(height: 12),
-                    for (final recommendation in snapshot.recommendations) ...[
-                      _RecommendationCard(
-                        recommendation: recommendation,
-                        strategy: snapshot.strategies.firstWhere(
-                          (item) => item.id == recommendation.strategyId,
-                        ),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Strategy Compare',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeBots),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: BotStrategyComparePage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const _SectionLabel('Select Strategies (2-4)'),
+                      const SizedBox(height: 10),
+                      _StrategySelectionGrid(
+                        strategies: snapshot.strategies,
+                        selectedIds: _selected,
+                        onToggle: _toggleStrategy,
                       ),
-                      if (recommendation != snapshot.recommendations.last)
-                        const SizedBox(height: 12),
+                      const SizedBox(height: 18),
+                      _BestStrategyCard(strategy: best),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Equity Curves Comparison'),
+                      const SizedBox(height: 12),
+                      _EquityChartCard(
+                        points: snapshot.equityPoints,
+                        strategies: selectedStrategies,
+                      ),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Performance Radar'),
+                      const SizedBox(height: 12),
+                      _RadarCard(strategies: selectedStrategies),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Detailed Metrics'),
+                      const SizedBox(height: 12),
+                      _MetricsTable(strategies: selectedStrategies),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Which Strategy to Choose?'),
+                      const SizedBox(height: 12),
+                      for (final recommendation
+                          in snapshot.recommendations) ...[
+                        _RecommendationCard(
+                          recommendation: recommendation,
+                          strategy: snapshot.strategies.firstWhere(
+                            (item) => item.id == recommendation.strategyId,
+                          ),
+                        ),
+                        if (recommendation != snapshot.recommendations.last)
+                          const SizedBox(height: 12),
+                      ],
+                      const SizedBox(height: 18),
+                      _AnalysisPeriodCard(text: snapshot.analysisPeriod),
                     ],
-                    const SizedBox(height: 18),
-                    _AnalysisPeriodCard(text: snapshot.analysisPeriod),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

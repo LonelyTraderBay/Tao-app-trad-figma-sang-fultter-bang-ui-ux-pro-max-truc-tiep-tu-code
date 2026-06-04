@@ -4,8 +4,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/active_copies_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/copy_confirmation_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/copy_configuration_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/copy_provider_detail_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -14,6 +16,7 @@ void main() {
   Future<void> pumpCopyConfiguration(
     WidgetTester tester, {
     String providerId = 'provider001',
+    String? initialLocation,
   }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
@@ -24,9 +27,9 @@ void main() {
       ProviderScope(
         child: VitTradeApp(
           routerConfig: createAppRouter(
-            initialLocation: AppRoutePaths.tradeCopyProviderConfiguration(
-              providerId,
-            ),
+            initialLocation:
+                initialLocation ??
+                AppRoutePaths.tradeCopyProviderConfiguration(providerId),
           ),
         ),
       ),
@@ -105,5 +108,42 @@ void main() {
     expect(find.byType(CopyConfigurationPage), findsNothing);
     expect(find.byType(CopyConfirmationPage), findsOneWidget);
     expect(find.text('Xác nhận Copy'), findsOneWidget);
+  });
+  testWidgets('SC-072 valid back query returns to encoded source route', (
+    tester,
+  ) async {
+    await pumpCopyConfiguration(
+      tester,
+      providerId: 'ct001',
+      initialLocation: AppRoutePaths.tradeCopyProviderConfiguration(
+        'ct001',
+        backPath: AppRoutePaths.tradeCopyActive,
+      ),
+    );
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ActiveCopiesPage), findsOneWidget);
+    expect(find.byType(CopyConfigurationPage), findsNothing);
+  });
+
+  testWidgets('SC-072 invalid back query falls back to provider detail', (
+    tester,
+  ) async {
+    await pumpCopyConfiguration(
+      tester,
+      providerId: 'ct001',
+      initialLocation: AppRoutePaths.tradeCopyProviderConfiguration(
+        'ct001',
+        backPath: '/wallet',
+      ),
+    );
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(CopyProviderDetailPage), findsOneWidget);
+    expect(find.byType(CopyConfigurationPage), findsNothing);
   });
 }

@@ -28,107 +28,110 @@ class _SocialSignalsPageState extends ConsumerState<SocialSignalsPage> {
       semanticLabel: 'SC-025 SocialSignalsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Tín hiệu giao dịch',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.markets),
-            ),
-            _SocialSignalsTabs(
-              activeTab: _tab,
-              onChanged: (value) => setState(() => _tab = value),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: SocialSignalsPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 12,
-                    children: [
-                      const _RiskDisclaimerCard(),
-                      if (_tab == 'signals') ...[
-                        _StatusFilterChips(
-                          statusFilter: _statusFilter,
-                          statusConfigs: snapshot.statusConfigs,
-                          onSelected: (value) => setState(() {
-                            _statusFilter = value;
-                          }),
-                        ),
-                        _CategoryFilterChips(
-                          categoryFilter: _categoryFilter,
-                          onSelected: (value) => setState(() {
-                            _categoryFilter = value;
-                          }),
-                        ),
-                        if (snapshot.signals.isEmpty)
-                          const _SignalsEmptyState()
-                        else
-                          for (final signal in snapshot.signals)
-                            _SignalCard(
-                              key: SocialSignalsPage.signalCardKey(signal.id),
-                              signal: signal,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Tín hiệu giao dịch',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.markets),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _SocialSignalsTabs(
+                activeTab: _tab,
+                onChanged: (value) => setState(() => _tab = value),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: SocialSignalsPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 12,
+                      children: [
+                        const _RiskDisclaimerCard(),
+                        if (_tab == 'signals') ...[
+                          _StatusFilterChips(
+                            statusFilter: _statusFilter,
+                            statusConfigs: snapshot.statusConfigs,
+                            onSelected: (value) => setState(() {
+                              _statusFilter = value;
+                            }),
+                          ),
+                          _CategoryFilterChips(
+                            categoryFilter: _categoryFilter,
+                            onSelected: (value) => setState(() {
+                              _categoryFilter = value;
+                            }),
+                          ),
+                          if (snapshot.signals.isEmpty)
+                            const _SignalsEmptyState()
+                          else
+                            for (final signal in snapshot.signals)
+                              _SignalCard(
+                                key: SocialSignalsPage.signalCardKey(signal.id),
+                                signal: signal,
+                                tierConfig:
+                                    snapshot.tierConfigs[signal.providerTier]!,
+                                statusConfig:
+                                    snapshot.statusConfigs[signal.status]!,
+                                expanded: _expandedId == signal.id,
+                                onTap: () => setState(() {
+                                  _expandedId = _expandedId == signal.id
+                                      ? null
+                                      : signal.id;
+                                }),
+                              ),
+                        ] else if (_tab == 'providers') ...[
+                          for (
+                            var index = 0;
+                            index < allSnapshot.providers.length;
+                            index += 1
+                          )
+                            _ProviderCard(
+                              key: SocialSignalsPage.providerCardKey(
+                                allSnapshot.providers[index].name,
+                              ),
+                              rank: index + 1,
+                              provider: allSnapshot.providers[index],
                               tierConfig:
-                                  snapshot.tierConfigs[signal.providerTier]!,
+                                  allSnapshot.tierConfigs[allSnapshot
+                                      .providers[index]
+                                      .tier]!,
+                            ),
+                        ] else ...[
+                          _PerformanceSummary(snapshot: allSnapshot),
+                          _StatusBreakdown(snapshot: allSnapshot),
+                          const _SectionHeader(
+                            label: 'Kết quả tín hiệu',
+                            accentColor: _marketPrimary,
+                          ),
+                          for (final signal
+                              in allSnapshot.signals
+                                  .where(
+                                    (signal) =>
+                                        signal.status !=
+                                        TradingSignalStatus.active,
+                                  )
+                                  .toList()
+                                ..sort((a, b) => b.pnlPct.compareTo(a.pnlPct)))
+                            _SignalResultRow(
+                              signal: signal,
                               statusConfig:
-                                  snapshot.statusConfigs[signal.status]!,
-                              expanded: _expandedId == signal.id,
-                              onTap: () => setState(() {
-                                _expandedId = _expandedId == signal.id
-                                    ? null
-                                    : signal.id;
-                              }),
+                                  allSnapshot.statusConfigs[signal.status]!,
                             ),
-                      ] else if (_tab == 'providers') ...[
-                        for (
-                          var index = 0;
-                          index < allSnapshot.providers.length;
-                          index += 1
-                        )
-                          _ProviderCard(
-                            key: SocialSignalsPage.providerCardKey(
-                              allSnapshot.providers[index].name,
-                            ),
-                            rank: index + 1,
-                            provider: allSnapshot.providers[index],
-                            tierConfig:
-                                allSnapshot.tierConfigs[allSnapshot
-                                    .providers[index]
-                                    .tier]!,
-                          ),
-                      ] else ...[
-                        _PerformanceSummary(snapshot: allSnapshot),
-                        _StatusBreakdown(snapshot: allSnapshot),
-                        const _SectionHeader(
-                          label: 'Kết quả tín hiệu',
-                          accentColor: _marketPrimary,
-                        ),
-                        for (final signal
-                            in allSnapshot.signals
-                                .where(
-                                  (signal) =>
-                                      signal.status !=
-                                      TradingSignalStatus.active,
-                                )
-                                .toList()
-                              ..sort((a, b) => b.pnlPct.compareTo(a.pnlPct)))
-                          _SignalResultRow(
-                            signal: signal,
-                            statusConfig:
-                                allSnapshot.statusConfigs[signal.status]!,
-                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

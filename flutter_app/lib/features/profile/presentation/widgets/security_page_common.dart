@@ -119,6 +119,79 @@ class _AntiPhishingCard extends StatelessWidget {
   }
 }
 
+class _SecuritySupportCard extends StatelessWidget {
+  const _SecuritySupportCard({required this.supportRoute});
+
+  final String supportRoute;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      key: SecurityPage.supportKey,
+      onTap: () => context.go(supportRoute),
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        height: 68,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: _cardDecoration(radius: 16),
+        child: Row(
+          children: [
+            Container(
+              width: 38,
+              height: 38,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: _securityPrimary.withValues(alpha: .13),
+                borderRadius: AppRadii.lgRadius,
+              ),
+              child: const Icon(
+                Icons.support_agent_rounded,
+                color: _securityPrimary,
+                size: 20,
+              ),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Hỗ trợ bảo mật',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w900,
+                      height: 1,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Mở hồ sơ hỗ trợ kèm ngữ cảnh tài khoản',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(
+                      color: _securityMuted,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.text3,
+              size: 19,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 BoxDecoration _cardDecoration({required double radius}) {
   return BoxDecoration(
     color: _securityPanel,

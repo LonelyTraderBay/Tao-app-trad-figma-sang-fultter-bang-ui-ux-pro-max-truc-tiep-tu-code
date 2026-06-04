@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
@@ -65,25 +66,28 @@ class _WalletGasOptimizerPageState
       semanticLabel: 'SC-149 WalletGasOptimizerPage',
       child: Material(
         color: _gasBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Gas Optimizer',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.wallet),
-            ),
-            _GasTabs(
-              activeTab: _tab,
-              onChanged: (tab) => setState(() => _tab = tab),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: WalletGasOptimizerPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-                child: _contentForTab(snapshot),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Gas Optimizer',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.wallet),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _GasTabs(
+                activeTab: _tab,
+                onChanged: (tab) => setState(() => _tab = tab),
               ),
-            ),
-          ],
+              Expanded(
+                child: SingleChildScrollView(
+                  key: WalletGasOptimizerPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  child: _contentForTab(snapshot),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

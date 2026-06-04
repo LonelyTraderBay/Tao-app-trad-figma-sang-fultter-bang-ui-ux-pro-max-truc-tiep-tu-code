@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -59,55 +60,63 @@ class _P2PSuspiciousActivityPageState
       semanticLabel: 'SC-258 P2PSuspiciousActivityPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Suspicious Activity',
-              subtitle: 'An toàn · P2P',
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: RefreshIndicator(
-                color: AppModuleAccents.p2p,
-                backgroundColor: AppColors.surface2,
-                onRefresh: () async {
-                  HapticFeedback.selectionClick();
-                  await Future<void>.delayed(const Duration(milliseconds: 120));
-                },
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(
-                      parent: BouncingScrollPhysics(),
-                    ),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _SummaryCard(
-                          unreviewedCount: unreviewedCount,
-                          subtitle: snapshot.summarySubtitle,
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        if (_alerts.isEmpty)
-                          _EmptyState(snapshot: snapshot)
-                        else
-                          _AlertList(alerts: _alerts, onDismiss: _markReviewed),
-                      ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Suspicious Activity',
+            subtitle: 'An toàn · P2P',
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: RefreshIndicator(
+                  color: AppModuleAccents.p2p,
+                  backgroundColor: AppColors.surface2,
+                  onRefresh: () async {
+                    HapticFeedback.selectionClick();
+                    await Future<void>.delayed(
+                      const Duration(milliseconds: 120),
+                    );
+                  },
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(
+                        parent: BouncingScrollPhysics(),
+                      ),
+                      padding: EdgeInsets.fromLTRB(
+                        AppSpacing.contentPad,
+                        AppSpacing.x4,
+                        AppSpacing.contentPad,
+                        bottomInset,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _SummaryCard(
+                            unreviewedCount: unreviewedCount,
+                            subtitle: snapshot.summarySubtitle,
+                          ),
+                          const SizedBox(height: AppSpacing.x4),
+                          if (_alerts.isEmpty)
+                            _EmptyState(snapshot: snapshot)
+                          else
+                            _AlertList(
+                              alerts: _alerts,
+                              onDismiss: _markReviewed,
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

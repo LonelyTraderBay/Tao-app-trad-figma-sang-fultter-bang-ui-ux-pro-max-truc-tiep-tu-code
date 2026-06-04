@@ -8,7 +8,9 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -66,11 +68,11 @@ class _TwoFASetupPageState extends ConsumerState<TwoFASetupPage> {
   String get _code => _codeController.text;
 
   void _goBack() {
-    if (context.canPop()) {
-      context.pop();
-      return;
-    }
-    context.go(AppRoutePaths.authOtp);
+    goBackOrFallback(
+      context,
+      fallbackPath: AppRoutePaths.authOtp,
+      mode: BackNavigationMode.historyThenFallback,
+    );
   }
 
   Future<void> _copySecret() async {
@@ -191,62 +193,66 @@ class _TwoFASetupPageState extends ConsumerState<TwoFASetupPage> {
   Widget build(BuildContext context) {
     return VitPageLayout(
       semanticLabel: 'SC-004 TwoFASetupPage',
-      child: Column(
-        children: [
-          VitHeader(
-            title: 'Thiết lập 2FA',
-            subtitle: 'Xác thực · Bảo mật',
-            showBack: true,
-            onBack: _goBack,
-          ),
-          _TwoFaStepper(step: _step),
-          Expanded(
-            child: SingleChildScrollView(
-              key: TwoFASetupPage.contentKey,
-              padding: const EdgeInsets.only(bottom: AppSpacing.x6),
-              child: VitPageContent(
-                padding: VitContentPadding.relaxed,
-                customGap: 20,
-                children: [
-                  if (_step == 1) _QrStep(onCopy: _copySecret, copied: _copied),
-                  if (_step == 2)
-                    _VerifyStep(
-                      controller: _codeController,
-                      focusNode: _codeFocusNode,
-                      error: _error,
-                      onChanged: _handleCodeChanged,
+      child: VitAutoHideHeaderScaffold(
+        header: VitHeader(
+          title: 'Thiết lập 2FA',
+          subtitle: 'Xác thực · Bảo mật',
+          showBack: true,
+          onBack: _goBack,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _TwoFaStepper(step: _step),
+            Expanded(
+              child: SingleChildScrollView(
+                key: TwoFASetupPage.contentKey,
+                padding: const EdgeInsets.only(bottom: AppSpacing.x6),
+                child: VitPageContent(
+                  padding: VitContentPadding.relaxed,
+                  customGap: 20,
+                  children: [
+                    if (_step == 1)
+                      _QrStep(onCopy: _copySecret, copied: _copied),
+                    if (_step == 2)
+                      _VerifyStep(
+                        controller: _codeController,
+                        focusNode: _codeFocusNode,
+                        error: _error,
+                        onChanged: _handleCodeChanged,
+                      ),
+                    if (_step == 3)
+                      _BackupCodesStep(
+                        saved: _backupCodesSaved,
+                        error: _error,
+                        onSavedChanged: () {
+                          setState(() {
+                            _backupCodesSaved = !_backupCodesSaved;
+                            _error = '';
+                          });
+                        },
+                      ),
+                    VitCtaButton(
+                      key: TwoFASetupPage.submitKey,
+                      onPressed: _primaryAction,
+                      loading: _submitting,
+                      variant: _step == 3
+                          ? VitCtaButtonVariant.success
+                          : VitCtaButtonVariant.auth,
+                      trailing: _step == 1
+                          ? const Icon(Icons.chevron_right_rounded)
+                          : null,
+                      leading: _step == 3
+                          ? const Icon(Icons.check_rounded)
+                          : null,
+                      child: Text(_buttonLabel),
                     ),
-                  if (_step == 3)
-                    _BackupCodesStep(
-                      saved: _backupCodesSaved,
-                      error: _error,
-                      onSavedChanged: () {
-                        setState(() {
-                          _backupCodesSaved = !_backupCodesSaved;
-                          _error = '';
-                        });
-                      },
-                    ),
-                  VitCtaButton(
-                    key: TwoFASetupPage.submitKey,
-                    onPressed: _primaryAction,
-                    loading: _submitting,
-                    variant: _step == 3
-                        ? VitCtaButtonVariant.success
-                        : VitCtaButtonVariant.auth,
-                    trailing: _step == 1
-                        ? const Icon(Icons.chevron_right_rounded)
-                        : null,
-                    leading: _step == 3
-                        ? const Icon(Icons.check_rounded)
-                        : null,
-                    child: Text(_buttonLabel),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

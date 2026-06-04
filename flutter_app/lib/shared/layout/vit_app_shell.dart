@@ -13,6 +13,7 @@ class VitAppShell extends StatefulWidget {
     this.onDestinationSelected,
     this.showBottomNav = true,
     this.statusBarTime,
+    this.notificationBadgeCount,
     this.homeBadgeCount = 0,
     this.renderMode = ShellRenderMode.native,
     this.currentPath,
@@ -25,6 +26,7 @@ class VitAppShell extends StatefulWidget {
   final ValueChanged<VitBottomNavDestination>? onDestinationSelected;
   final bool showBottomNav;
   final String? statusBarTime;
+  final int? notificationBadgeCount;
   final int homeBadgeCount;
   final ShellRenderMode renderMode;
   final String? currentPath;
@@ -148,7 +150,8 @@ class _VitAppShellState extends State<VitAppShell> {
     final nav = VitBottomNav(
       activeDestination: widget.activeDestination,
       onDestinationSelected: widget.onDestinationSelected,
-      homeBadgeCount: widget.homeBadgeCount,
+      homeNotificationBadgeCount:
+          widget.notificationBadgeCount ?? widget.homeBadgeCount,
       renderMode: widget.renderMode,
     );
 

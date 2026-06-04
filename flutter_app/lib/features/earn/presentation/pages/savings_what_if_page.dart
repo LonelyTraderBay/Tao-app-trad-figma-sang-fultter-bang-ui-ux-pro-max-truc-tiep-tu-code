@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -90,58 +91,61 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
       semanticLabel: 'SC-352 SavingsWhatIfPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _WhatIfHero(
-                      snapshot: snapshot,
-                      totalValue: totalValue,
-                      weightedApy: weightedApy,
-                      selectedScenario: scenario,
-                      assetCount: snapshot.portfolio.length,
-                    ),
-                    _WhatIfTabs(
-                      tabs: snapshot.tabs,
-                      active: activeTab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (activeTab == 'scenarios')
-                      ..._buildScenariosTab(
-                        snapshot,
-                        scenario,
-                        multiplier,
-                        volatility,
-                      )
-                    else if (activeTab == 'results')
-                      _ResultsTab(
-                        result: result,
-                        scenario: scenario,
-                        hasRun: _hasRun,
-                        onRun: () => _runScenario(snapshot),
-                        onReset: _resetScenario,
-                      )
-                    else
-                      _StressTab(snapshot: snapshot),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _WhatIfHero(
+                        snapshot: snapshot,
+                        totalValue: totalValue,
+                        weightedApy: weightedApy,
+                        selectedScenario: scenario,
+                        assetCount: snapshot.portfolio.length,
+                      ),
+                      _WhatIfTabs(
+                        tabs: snapshot.tabs,
+                        active: activeTab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                      ),
+                      if (activeTab == 'scenarios')
+                        ..._buildScenariosTab(
+                          snapshot,
+                          scenario,
+                          multiplier,
+                          volatility,
+                        )
+                      else if (activeTab == 'results')
+                        _ResultsTab(
+                          result: result,
+                          scenario: scenario,
+                          hasRun: _hasRun,
+                          onRun: () => _runScenario(snapshot),
+                          onReset: _resetScenario,
+                        )
+                      else
+                        _StressTab(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

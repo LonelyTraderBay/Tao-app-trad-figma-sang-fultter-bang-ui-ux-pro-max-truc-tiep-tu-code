@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -61,40 +62,43 @@ class _CassReconciliationPageState
       semanticLabel: 'SC-103 CASSReconciliationPage',
       child: Material(
         color: _cassBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'CASS Reconciliation',
-              subtitle: 'Daily Client Money Matching',
-              showBack: true,
-              onBack: () =>
-                  context.go(AppRoutePaths.tradeCopyClientMoneyProtection),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: CassReconciliationPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SummaryGrid(snapshot: snapshot),
-                    const SizedBox(height: 25),
-                    _Tabs(activeId: _tab, onChanged: _setTab),
-                    const SizedBox(height: 24),
-                    const _SectionLabel('Reconciliation Records'),
-                    const SizedBox(height: 12),
-                    for (final record in snapshot.records) ...[
-                      _RecordCard(record: record),
-                      if (record != snapshot.records.last)
-                        const SizedBox(height: 12),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'CASS Reconciliation',
+            subtitle: 'Daily Client Money Matching',
+            showBack: true,
+            onBack: () =>
+                context.go(AppRoutePaths.tradeCopyClientMoneyProtection),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: CassReconciliationPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SummaryGrid(snapshot: snapshot),
+                      const SizedBox(height: 25),
+                      _Tabs(activeId: _tab, onChanged: _setTab),
+                      const SizedBox(height: 24),
+                      const _SectionLabel('Reconciliation Records'),
+                      const SizedBox(height: 12),
+                      for (final record in snapshot.records) ...[
+                        _RecordCard(record: record),
+                        if (record != snapshot.records.last)
+                          const SizedBox(height: 12),
+                      ],
+                      const SizedBox(height: 23),
+                      const _ExportButton(),
                     ],
-                    const SizedBox(height: 23),
-                    const _ExportButton(),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

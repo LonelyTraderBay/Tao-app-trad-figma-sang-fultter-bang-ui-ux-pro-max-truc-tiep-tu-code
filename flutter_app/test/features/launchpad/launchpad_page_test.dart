@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.dart';
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_page.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
@@ -88,6 +89,45 @@ void main() {
     expect(find.text('GreenChain Eco'), findsOneWidget);
     expect(find.text('NexaAI Protocol'), findsNothing);
     expect(find.text('Xem chi tiết'), findsOneWidget);
+  });
+
+  testWidgets('SC-295 header filter action shows active projects', (
+    tester,
+  ) async {
+    await pumpLaunchpad(tester);
+
+    await tester.tap(find.byKey(LaunchpadPage.filterActionKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('NexaAI Protocol'), findsOneWidget);
+    expect(find.text('MetaVerse Land'), findsOneWidget);
+    expect(find.text('GreenChain Eco'), findsNothing);
+  });
+
+  testWidgets('SC-295 auto-hides header on launchpad scroll', (tester) async {
+    await pumpLaunchpad(tester);
+
+    double headerHeight() {
+      return tester
+          .getSize(find.byKey(VitAutoHideHeaderScaffold.headerHostKey))
+          .height;
+    }
+
+    expect(headerHeight(), greaterThan(0));
+
+    await tester.drag(
+      find.byKey(LaunchpadPage.contentKey),
+      const Offset(0, -320),
+    );
+    await tester.pumpAndSettle(const Duration(milliseconds: 220));
+    expect(headerHeight(), 0);
+
+    await tester.drag(
+      find.byKey(LaunchpadPage.contentKey),
+      const Offset(0, 160),
+    );
+    await tester.pumpAndSettle(const Duration(milliseconds: 220));
+    expect(headerHeight(), greaterThan(0));
   });
 
   testWidgets('SC-295 visible launchpad shortcuts navigate safely', (

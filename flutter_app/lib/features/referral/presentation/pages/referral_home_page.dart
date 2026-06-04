@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -65,91 +66,97 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
       semanticLabel: 'SC-290 ReferralHomePage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ReferralHomePage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    children: [
-                      _CampaignBanner(campaign: snapshot.campaign),
-                      const _SafetyNotice(),
-                      _PendingKycBanner(
-                        count:
-                            snapshot.stats.totalFriends -
-                            snapshot.stats.kycCompleted,
-                        bonus: snapshot.currentTier.kycBonus,
-                        onTap: () => context.go(AppRoutePaths.referralHistory),
-                      ),
-                      _ReferralHero(
-                        snapshot: snapshot,
-                        copied: _copiedLink,
-                        onCopyCode: () => _copy(snapshot.referralCode),
-                        onCopyLink: () => _copy(snapshot.referralLink),
-                        onShare: () => _showShareSheet(context, snapshot),
-                      ),
-                      _SocialProofRail(items: snapshot.socialProof),
-                      _MilestoneSection(
-                        stats: snapshot.stats,
-                        milestones: snapshot.milestones,
-                      ),
-                      _TierProgress(
-                        stats: snapshot.stats,
-                        currentTier: snapshot.currentTier,
-                        nextTier: snapshot.nextTier,
-                      ),
-                      _EarningCalculator(
-                        friends: _calculatorFriends,
-                        currentTier: snapshot.currentTier,
-                        onChanged: (value) =>
-                            setState(() => _calculatorFriends = value),
-                      ),
-                      if (snapshot.pendingCommissions.isNotEmpty)
-                        _PendingCommissionSection(
-                          items: snapshot.pendingCommissions,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ReferralHomePage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      children: [
+                        _CampaignBanner(campaign: snapshot.campaign),
+                        const _SafetyNotice(),
+                        _PendingKycBanner(
+                          count:
+                              snapshot.stats.totalFriends -
+                              snapshot.stats.kycCompleted,
+                          bonus: snapshot.currentTier.kycBonus,
+                          onTap: () =>
+                              context.go(AppRoutePaths.referralHistory),
                         ),
-                      _RewardHighlights(
-                        currentTier: snapshot.currentTier,
-                        campaign: snapshot.campaign,
-                      ),
-                      _LeaderboardSection(items: snapshot.leaderboard),
-                      _TransparencyNote(
-                        commissionPercent:
-                            snapshot.currentTier.commissionPercent,
-                      ),
-                      _DetailLinks(
-                        links: snapshot.detailLinks,
-                        onOpen: (route) => context.go(route),
-                      ),
-                      _HowItWorksSection(steps: snapshot.howItWorks),
-                      _MonthStats(stats: snapshot.stats),
-                      _CampaignHistorySection(items: snapshot.campaignHistory),
-                      VitCtaButton(
-                        key: ReferralHomePage.inviteKey,
-                        onPressed: () => _showShareSheet(context, snapshot),
-                        leading: const Icon(Icons.group_add_rounded),
-                        trailing: const Icon(Icons.chevron_right_rounded),
-                        child: const Text('Mời bạn bè ngay'),
-                      ),
-                    ],
+                        _ReferralHero(
+                          snapshot: snapshot,
+                          copied: _copiedLink,
+                          onCopyCode: () => _copy(snapshot.referralCode),
+                          onCopyLink: () => _copy(snapshot.referralLink),
+                          onShare: () => _showShareSheet(context, snapshot),
+                        ),
+                        _SocialProofRail(items: snapshot.socialProof),
+                        _MilestoneSection(
+                          stats: snapshot.stats,
+                          milestones: snapshot.milestones,
+                        ),
+                        _TierProgress(
+                          stats: snapshot.stats,
+                          currentTier: snapshot.currentTier,
+                          nextTier: snapshot.nextTier,
+                        ),
+                        _EarningCalculator(
+                          friends: _calculatorFriends,
+                          currentTier: snapshot.currentTier,
+                          onChanged: (value) =>
+                              setState(() => _calculatorFriends = value),
+                        ),
+                        if (snapshot.pendingCommissions.isNotEmpty)
+                          _PendingCommissionSection(
+                            items: snapshot.pendingCommissions,
+                          ),
+                        _RewardHighlights(
+                          currentTier: snapshot.currentTier,
+                          campaign: snapshot.campaign,
+                        ),
+                        _LeaderboardSection(items: snapshot.leaderboard),
+                        _TransparencyNote(
+                          commissionPercent:
+                              snapshot.currentTier.commissionPercent,
+                        ),
+                        _DetailLinks(
+                          links: snapshot.detailLinks,
+                          onOpen: (route) => context.go(route),
+                        ),
+                        _HowItWorksSection(steps: snapshot.howItWorks),
+                        _MonthStats(stats: snapshot.stats),
+                        _CampaignHistorySection(
+                          items: snapshot.campaignHistory,
+                        ),
+                        VitCtaButton(
+                          key: ReferralHomePage.inviteKey,
+                          onPressed: () => _showShareSheet(context, snapshot),
+                          leading: const Icon(Icons.group_add_rounded),
+                          trailing: const Icon(Icons.chevron_right_rounded),
+                          child: const Text('Mời bạn bè ngay'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -163,7 +170,7 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
 
   void _showShareSheet(BuildContext context, ReferralHomeSnapshot snapshot) {
     HapticFeedback.selectionClick();
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.surface,
       shape: const RoundedRectangleBorder(

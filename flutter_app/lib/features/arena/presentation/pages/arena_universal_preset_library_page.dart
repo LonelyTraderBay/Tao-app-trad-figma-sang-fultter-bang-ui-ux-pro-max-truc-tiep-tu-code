@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -68,67 +69,72 @@ class _ArenaUniversalPresetLibraryPageState
       semanticLabel: 'SC-187 ArenaUniversalPresetLibraryPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Universal Rule Presets',
-              subtitle: '10B — Preset Library',
-              showBack: true,
-              onBack: _close,
-            ),
-            _SectionTabs(
-              sections: snapshot.sections,
-              activeId: _activeSection,
-              onChanged: _selectSection,
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ArenaUniversalPresetLibraryPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset + AppSpacing.x6),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    customGap: AppSpacing.x4,
-                    children: [
-                      if (_activeSection == 'domains')
-                        _DomainPacksSection(
-                          packs: snapshot.domainPacks,
-                          expandedId: _expandedDomainId,
-                          onToggle: _toggleDomain,
-                        )
-                      else if (_activeSection == 'suggestions')
-                        _SuggestionsSection(
-                          packs: snapshot.domainPacks,
-                          suggestionsByDomain: snapshot.suggestionsByDomain,
-                          activeDomainId: _suggestionDomainId,
-                          selectedSuggestion: _selectedSuggestion,
-                          onDomainChanged: _selectSuggestionDomain,
-                          onSuggestionSelected: _selectSuggestion,
-                        )
-                      else if (_activeSection == 'dropdowns')
-                        _DropdownsSection(groups: snapshot.dropdownGroups)
-                      else if (_activeSection == 'demo_flows')
-                        _DemoFlowsSection(
-                          flows: snapshot.demoFlows,
-                          activeIndex: _activeDemoIndex,
-                          onChanged: _selectDemo,
-                        )
-                      else
-                        _TitlesSection(
-                          titles: snapshot.titleSuggestions,
-                          selectedTitle: _selectedTitle,
-                          onSelected: _selectTitle,
-                        ),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Universal Rule Presets',
+            subtitle: '10B — Preset Library',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _SectionTabs(
+                sections: snapshot.sections,
+                activeId: _activeSection,
+                onChanged: _selectSection,
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ArenaUniversalPresetLibraryPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(
+                      bottom: bottomInset + AppSpacing.x6,
+                    ),
+                    child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      customGap: AppSpacing.x4,
+                      children: [
+                        if (_activeSection == 'domains')
+                          _DomainPacksSection(
+                            packs: snapshot.domainPacks,
+                            expandedId: _expandedDomainId,
+                            onToggle: _toggleDomain,
+                          )
+                        else if (_activeSection == 'suggestions')
+                          _SuggestionsSection(
+                            packs: snapshot.domainPacks,
+                            suggestionsByDomain: snapshot.suggestionsByDomain,
+                            activeDomainId: _suggestionDomainId,
+                            selectedSuggestion: _selectedSuggestion,
+                            onDomainChanged: _selectSuggestionDomain,
+                            onSuggestionSelected: _selectSuggestion,
+                          )
+                        else if (_activeSection == 'dropdowns')
+                          _DropdownsSection(groups: snapshot.dropdownGroups)
+                        else if (_activeSection == 'demo_flows')
+                          _DemoFlowsSection(
+                            flows: snapshot.demoFlows,
+                            activeIndex: _activeDemoIndex,
+                            onChanged: _selectDemo,
+                          )
+                        else
+                          _TitlesSection(
+                            titles: snapshot.titleSuggestions,
+                            selectedTitle: _selectedTitle,
+                            onSelected: _selectTitle,
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

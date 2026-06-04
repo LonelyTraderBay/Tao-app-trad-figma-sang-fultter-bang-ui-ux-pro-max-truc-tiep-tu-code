@@ -6,10 +6,13 @@ import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_sections.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
 const _addressBackground = AppColors.bg;
 const _addressPanel = AppColors.surface;
@@ -77,7 +80,10 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
       return AddressSavedState(
         label: _labelController.text.trim(),
         whitelist: _whitelist,
-        onBack: () => context.go(AppRoutePaths.walletAddressBook),
+        onBack: () => goBackOrFallback(
+          context,
+          fallbackPath: AppRoutePaths.walletAddressBook,
+        ),
       );
     }
 
@@ -91,45 +97,51 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
             final footerTop = _footerTop(context, constraints, mode);
             return Stack(
               children: [
-                Column(
-                  children: [
-                    VitHeader(
-                      title: 'Thêm địa chỉ mới',
-                      subtitle: 'Sổ địa chỉ · Wallet',
-                      showBack: true,
-                      onBack: () => context.go(AppRoutePaths.walletAddressBook),
+                VitAutoHideHeaderScaffold(
+                  header: VitHeader(
+                    title: 'Thêm địa chỉ mới',
+                    subtitle: 'Sổ địa chỉ · Wallet',
+                    showBack: true,
+                    onBack: () => goBackOrFallback(
+                      context,
+                      fallbackPath: AppRoutePaths.walletAddressBook,
                     ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        key: AddressAddPage.contentKey,
-                        padding: EdgeInsets.fromLTRB(
-                          20,
-                          14,
-                          20,
-                          _scrollBottomInset(context, mode),
-                        ),
-                        child: AddressAddForm(
-                          snapshot: snapshot,
-                          selectedNetworkId: _networkId,
-                          selectedAsset: _asset,
-                          labelController: _labelController,
-                          addressController: _addressController,
-                          memoController: _memoController,
-                          whitelist: _whitelist,
-                          agreed: _agreed,
-                          onNetworkChanged: (id) =>
-                              setState(() => _networkId = id),
-                          onAssetChanged: (asset) =>
-                              setState(() => _asset = asset),
-                          onWhitelistChanged: () =>
-                              setState(() => _whitelist = !_whitelist),
-                          onAgreementChanged: () =>
-                              setState(() => _agreed = !_agreed),
-                          onInputChanged: () => setState(() {}),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: SingleChildScrollView(
+                          key: AddressAddPage.contentKey,
+                          padding: EdgeInsets.fromLTRB(
+                            20,
+                            14,
+                            20,
+                            _scrollBottomInset(context, mode),
+                          ),
+                          child: AddressAddForm(
+                            snapshot: snapshot,
+                            selectedNetworkId: _networkId,
+                            selectedAsset: _asset,
+                            labelController: _labelController,
+                            addressController: _addressController,
+                            memoController: _memoController,
+                            whitelist: _whitelist,
+                            agreed: _agreed,
+                            onNetworkChanged: (id) =>
+                                setState(() => _networkId = id),
+                            onAssetChanged: (asset) =>
+                                setState(() => _asset = asset),
+                            onWhitelistChanged: () =>
+                                setState(() => _whitelist = !_whitelist),
+                            onAgreementChanged: () =>
+                                setState(() => _agreed = !_agreed),
+                            onInputChanged: () => setState(() {}),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Positioned(
                   top: footerTop,
@@ -185,7 +197,7 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
       selectedAsset: _asset,
       whitelist: _whitelist,
     );
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: _addressPanel,
       shape: const RoundedRectangleBorder(

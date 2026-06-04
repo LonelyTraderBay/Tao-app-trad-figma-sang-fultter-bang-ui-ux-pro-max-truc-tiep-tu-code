@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -87,67 +88,70 @@ class _StakingRiskScoreCalculatorPageState
       semanticLabel: 'SC-384 StakingRiskScoreCalculatorPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _ScenarioInputs(
-                      snapshot: snapshot,
-                      amountController: _amountController,
-                      asset: _asset,
-                      duration: _duration,
-                      validators: _validators,
-                      onAmountChanged: (_) => setState(() {}),
-                      onAssetChanged: (value) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _asset = value);
-                      },
-                      onDurationChanged: (value) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _duration = value);
-                      },
-                      onValidatorsChanged: (value) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _validators = value);
-                      },
-                    ),
-                    _RiskScoreCard(
-                      score: riskScore,
-                      label: _riskLabel(riskScore),
-                      color: riskColor,
-                      axes: _radarAxes,
-                    ),
-                    _RecommendationsSection(
-                      recommendations: _activeRecommendations(snapshot),
-                    ),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _ScenarioInputs(
+                        snapshot: snapshot,
+                        amountController: _amountController,
+                        asset: _asset,
+                        duration: _duration,
+                        validators: _validators,
+                        onAmountChanged: (_) => setState(() {}),
+                        onAssetChanged: (value) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _asset = value);
+                        },
+                        onDurationChanged: (value) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _duration = value);
+                        },
+                        onValidatorsChanged: (value) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _validators = value);
+                        },
+                      ),
+                      _RiskScoreCard(
+                        score: riskScore,
+                        label: _riskLabel(riskScore),
+                        color: riskColor,
+                        axes: _radarAxes,
+                      ),
+                      _RecommendationsSection(
+                        recommendations: _activeRecommendations(snapshot),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: footerBottomInset),
-              child: VitStickyFooter(
-                backgroundColor: AppColors.bg,
-                child: VitCtaButton(
-                  key: StakingRiskScoreCalculatorPage.footerButtonKey,
-                  height: AppSpacing.ctaHeight,
-                  onPressed: () {},
-                  child: Text(snapshot.proceedLabel),
+              Padding(
+                padding: EdgeInsets.only(bottom: footerBottomInset),
+                child: VitStickyFooter(
+                  backgroundColor: AppColors.bg,
+                  child: VitCtaButton(
+                    key: StakingRiskScoreCalculatorPage.footerButtonKey,
+                    height: AppSpacing.ctaHeight,
+                    onPressed: () {},
+                    child: Text(snapshot.proceedLabel),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

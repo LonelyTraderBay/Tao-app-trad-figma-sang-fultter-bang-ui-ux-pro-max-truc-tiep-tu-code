@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
@@ -59,59 +60,62 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
       semanticLabel: 'SC-166 SubAccountPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'T\u00E0i kho\u1EA3n ph\u1EE5',
-              subtitle: 'T\u00E0i kho\u1EA3n \u00B7 Profile',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: SubAccountPage.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SubAccountSummaryCard(
-                      snapshot: snapshot,
-                      isBalanceHidden: _isBalanceHidden,
-                      onToggleBalance: _toggleBalance,
-                    ),
-                    const SizedBox(height: 26),
-                    _CreateSubAccountButton(
-                      isOpen: _showCreate,
-                      onTap: _toggleCreateForm,
-                    ),
-                    if (_showCreate) ...[
-                      const SizedBox(height: 13),
-                      const _CreateSubAccountForm(),
-                    ],
-                    const SizedBox(height: 24),
-                    _SectionHeader(
-                      label:
-                          'T\u00C0I KHO\u1EA2N (${snapshot.accounts.length})',
-                    ),
-                    const SizedBox(height: 10),
-                    for (final account in snapshot.accounts) ...[
-                      _SubAccountCard(
-                        account: account,
-                        isExpanded: _expandedId == account.id,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'T\u00E0i kho\u1EA3n ph\u1EE5',
+            subtitle: 'T\u00E0i kho\u1EA3n \u00B7 Profile',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: SubAccountPage.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SubAccountSummaryCard(
+                        snapshot: snapshot,
                         isBalanceHidden: _isBalanceHidden,
-                        onTap: () => _toggleExpanded(account.id),
+                        onToggleBalance: _toggleBalance,
                       ),
-                      if (account != snapshot.accounts.last)
+                      const SizedBox(height: 26),
+                      _CreateSubAccountButton(
+                        isOpen: _showCreate,
+                        onTap: _toggleCreateForm,
+                      ),
+                      if (_showCreate) ...[
                         const SizedBox(height: 13),
+                        const _CreateSubAccountForm(),
+                      ],
+                      const SizedBox(height: 24),
+                      _SectionHeader(
+                        label:
+                            'T\u00C0I KHO\u1EA2N (${snapshot.accounts.length})',
+                      ),
+                      const SizedBox(height: 10),
+                      for (final account in snapshot.accounts) ...[
+                        _SubAccountCard(
+                          account: account,
+                          isExpanded: _expandedId == account.id,
+                          isBalanceHidden: _isBalanceHidden,
+                          onTap: () => _toggleExpanded(account.id),
+                        ),
+                        if (account != snapshot.accounts.last)
+                          const SizedBox(height: 13),
+                      ],
+                      const SizedBox(height: 25),
+                      const _SubAccountInfoNote(),
                     ],
-                    const SizedBox(height: 25),
-                    const _SubAccountInfoNote(),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

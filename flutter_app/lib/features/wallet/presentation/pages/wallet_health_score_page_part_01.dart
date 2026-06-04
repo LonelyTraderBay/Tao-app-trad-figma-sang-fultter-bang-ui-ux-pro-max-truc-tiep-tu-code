@@ -18,26 +18,29 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
       semanticLabel: 'SC-151 WalletHealthScorePage',
       child: Material(
         color: _healthBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Wallet Health',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.wallet),
-            ),
-            _HealthTabs(
-              activeTab: _tab,
-              onChanged: (tab) => setState(() => _tab = tab),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: WalletHealthScorePage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
-                physics: const BouncingScrollPhysics(),
-                child: _buildTab(snapshot),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Wallet Health',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.wallet),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _HealthTabs(
+                activeTab: _tab,
+                onChanged: (tab) => setState(() => _tab = tab),
               ),
-            ),
-          ],
+              Expanded(
+                child: SingleChildScrollView(
+                  key: WalletHealthScorePage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
+                  physics: const BouncingScrollPhysics(),
+                  child: _buildTab(snapshot),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -55,7 +58,7 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
   }
 
   void _showRecommendationSheet(WalletHealthRecommendation recommendation) {
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: _healthPanel,
       shape: const RoundedRectangleBorder(

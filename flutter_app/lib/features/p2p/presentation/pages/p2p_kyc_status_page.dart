@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -45,58 +46,63 @@ class P2PKycStatusPage extends ConsumerWidget {
       semanticLabel: 'SC-248 P2PKycStatusPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'KYC Status',
-              subtitle: 'KYC · P2P',
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: RefreshIndicator(
-                color: AppModuleAccents.p2p,
-                backgroundColor: AppColors.surface2,
-                onRefresh: () async {
-                  HapticFeedback.selectionClick();
-                  await Future<void>.delayed(const Duration(milliseconds: 120));
-                },
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(
-                      parent: BouncingScrollPhysics(),
-                    ),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _OverallStatusCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
-                        Text(
-                          'Chi tiết các bước',
-                          style: AppTextStyles.baseMedium.copyWith(
-                            fontWeight: AppTextStyles.bold,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'KYC Status',
+            subtitle: 'KYC · P2P',
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: RefreshIndicator(
+                  color: AppModuleAccents.p2p,
+                  backgroundColor: AppColors.surface2,
+                  onRefresh: () async {
+                    HapticFeedback.selectionClick();
+                    await Future<void>.delayed(
+                      const Duration(milliseconds: 120),
+                    );
+                  },
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(
+                        parent: BouncingScrollPhysics(),
+                      ),
+                      padding: EdgeInsets.fromLTRB(
+                        AppSpacing.contentPad,
+                        AppSpacing.x4,
+                        AppSpacing.contentPad,
+                        bottomInset,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _OverallStatusCard(snapshot: snapshot),
+                          const SizedBox(height: AppSpacing.x5),
+                          Text(
+                            'Chi tiết các bước',
+                            style: AppTextStyles.baseMedium.copyWith(
+                              fontWeight: AppTextStyles.bold,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        _StatusTimeline(steps: snapshot.steps),
-                        const SizedBox(height: AppSpacing.x5),
-                        _SupportCard(snapshot: snapshot),
-                      ],
+                          const SizedBox(height: AppSpacing.x4),
+                          _StatusTimeline(steps: snapshot.steps),
+                          const SizedBox(height: AppSpacing.x5),
+                          _SupportCard(snapshot: snapshot),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

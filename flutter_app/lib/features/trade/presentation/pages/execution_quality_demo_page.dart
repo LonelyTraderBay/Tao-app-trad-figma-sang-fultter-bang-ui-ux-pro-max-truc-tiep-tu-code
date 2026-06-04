@@ -13,7 +13,9 @@ import 'package:vit_trade_flutter/features/trade/presentation/widgets/execution_
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/execution_quality_tabs.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
 class ExecutionQualityDemoPage extends ConsumerStatefulWidget {
   const ExecutionQualityDemoPage({super.key, this.shellRenderMode});
@@ -72,60 +74,63 @@ class _ExecutionQualityDemoPageState
         children: [
           Material(
             type: MaterialType.transparency,
-            child: Column(
-              children: [
-                VitHeader(
-                  title: 'Execution Quality',
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.trade),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: ExecutionQualityDemoPage.contentKey,
-                    padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const ExecutionQualityIntroCard(),
-                        const SizedBox(height: 12),
-                        for (final feature in snapshot.features) ...[
-                          ExecutionQualityFeatureCard(
-                            feature: feature,
-                            onTap: () => _onFeatureTap(feature),
+            child: VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Execution Quality',
+                showBack: true,
+                onBack: () => context.go(AppRoutePaths.trade),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: ExecutionQualityDemoPage.contentKey,
+                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const ExecutionQualityIntroCard(),
+                          const SizedBox(height: 12),
+                          for (final feature in snapshot.features) ...[
+                            ExecutionQualityFeatureCard(
+                              feature: feature,
+                              onTap: () => _onFeatureTap(feature),
+                            ),
+                            const SizedBox(height: 12),
+                          ],
+                          const ExecutionQualityBenefitsCard(),
+                          const SizedBox(height: 12),
+                          ExecutionQualityProgressCard(
+                            items: snapshot.statusItems,
                           ),
                           const SizedBox(height: 12),
-                        ],
-                        const ExecutionQualityBenefitsCard(),
-                        const SizedBox(height: 12),
-                        ExecutionQualityProgressCard(
-                          items: snapshot.statusItems,
-                        ),
-                        const SizedBox(height: 12),
-                        const ExecutionQualityParityCard(),
-                        const SizedBox(height: 18),
-                        ExecutionQualityTabs(
-                          active: _tab,
-                          onChanged: (tab) => setState(() => _tab = tab),
-                        ),
-                        const SizedBox(height: 14),
-                        if (_tab == ExecutionQualityTab.slippage)
-                          ExecutionQualitySlippageTab(
-                            settings: _settings,
-                            onOpen: _openSlippageSheet,
-                          )
-                        else if (_tab == ExecutionQualityTab.execution)
-                          ExecutionQualityExecutionTab(
-                            onOpen: _openExecutionSheet,
-                          )
-                        else
-                          ExecutionQualityAmendmentTab(
-                            onOpen: _openAmendmentSheet,
+                          const ExecutionQualityParityCard(),
+                          const SizedBox(height: 18),
+                          ExecutionQualityTabs(
+                            active: _tab,
+                            onChanged: (tab) => setState(() => _tab = tab),
                           ),
-                      ],
+                          const SizedBox(height: 14),
+                          if (_tab == ExecutionQualityTab.slippage)
+                            ExecutionQualitySlippageTab(
+                              settings: _settings,
+                              onOpen: _openSlippageSheet,
+                            )
+                          else if (_tab == ExecutionQualityTab.execution)
+                            ExecutionQualityExecutionTab(
+                              onOpen: _openExecutionSheet,
+                            )
+                          else
+                            ExecutionQualityAmendmentTab(
+                              onOpen: _openAmendmentSheet,
+                            ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           if (_successMessage != null)
@@ -159,10 +164,9 @@ class _ExecutionQualityDemoPageState
   }
 
   Future<void> _openSlippageSheet() async {
-    final updated = await showModalBottomSheet<TradeSlippageSettings>(
+    final updated = await showVitBottomSheet<TradeSlippageSettings>(
       context: context,
       isScrollControlled: true,
-      useRootNavigator: true,
       backgroundColor: AppColors.transparent,
       builder: (context) => ExecutionQualitySlippageSheet(settings: _settings),
     );
@@ -178,10 +182,9 @@ class _ExecutionQualityDemoPageState
   }
 
   Future<void> _openExecutionSheet() async {
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      useRootNavigator: true,
       backgroundColor: AppColors.transparent,
       builder: (context) => ExecutionQualityExecutionSheet(
         report: ref
@@ -197,10 +200,9 @@ class _ExecutionQualityDemoPageState
         .read(tradeReadModelControllerProvider)
         .getExecutionQuality()
         .openOrder;
-    final amended = await showModalBottomSheet<bool>(
+    final amended = await showVitBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      useRootNavigator: true,
       backgroundColor: AppColors.transparent,
       builder: (context) => ExecutionQualityAmendmentSheet(order: order),
     );

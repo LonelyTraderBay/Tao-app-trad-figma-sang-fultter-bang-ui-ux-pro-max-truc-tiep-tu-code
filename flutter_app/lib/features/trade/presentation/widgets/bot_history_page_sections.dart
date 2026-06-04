@@ -1,35 +1,5 @@
 part of '../pages/bot_history_page.dart';
 
-class _HeaderExportButton extends StatelessWidget {
-  const _HeaderExportButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      key: BotHistoryPage.exportHeaderKey,
-      onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        width: 36,
-        height: 36,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: _historyPanel2,
-          border: Border.all(color: AppColors.cardBorder),
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: const Icon(
-          Icons.download_rounded,
-          color: AppColors.text1,
-          size: 19,
-        ),
-      ),
-    );
-  }
-}
-
 class _StatsCard extends StatelessWidget {
   const _StatsCard({
     required this.totalTrades,

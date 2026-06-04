@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
@@ -182,5 +183,43 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(PairDetailPage), findsOneWidget);
+  });
+
+  testWidgets('SC-046 invalid constructor backPath falls back to pair detail', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    final router = GoRouter(
+      initialLocation: '/custom-depth',
+      routes: [
+        GoRoute(
+          path: '/custom-depth',
+          builder: (_, _) => const MarketDepthPage(
+            pairId: 'btcusdt',
+            backPath: 'https://evil.example/depth',
+          ),
+        ),
+        GoRoute(
+          path: '/pair/:pairId',
+          builder: (_, _) => const Scaffold(body: Text('Safe pair detail')),
+        ),
+      ],
+    );
+    addTearDown(router.dispose);
+
+    await tester.pumpWidget(
+      ProviderScope(child: MaterialApp.router(routerConfig: router)),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Safe pair detail'), findsOneWidget);
+    expect(find.byType(MarketDepthPage), findsNothing);
   });
 }

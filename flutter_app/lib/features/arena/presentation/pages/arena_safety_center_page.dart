@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -48,88 +49,93 @@ class ArenaSafetyCenterPage extends ConsumerWidget {
       semanticLabel: 'SC-198 ArenaSafetyCenterPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'An toàn & Quy tắc Arena',
-              subtitle: 'Trung tâm an toàn · Open Arena',
-              showBack: true,
-              onBack: () => _close(context),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    customGap: AppSpacing.x5,
-                    children: [
-                      _SafetyHero(snapshot: snapshot),
-                      _SafetySection(
-                        title: 'Quy tắc cộng đồng',
-                        accentColor: AppColors.primary,
-                        children: [
-                          for (final rule in snapshot.communityRules)
-                            _RuleCard(rule: rule),
-                        ],
-                      ),
-                      _SafetySection(
-                        title: 'Nội dung bị cấm',
-                        accentColor: AppColors.sell,
-                        children: [
-                          _BannedContentCard(items: snapshot.bannedContent),
-                        ],
-                      ),
-                      _SafetySection(
-                        title: 'Cách báo cáo và chặn',
-                        accentColor: AppColors.warn,
-                        children: [
-                          for (final action in snapshot.reportActions)
-                            _RuleCard(rule: action),
-                        ],
-                      ),
-                      _SafetySection(
-                        title: 'Quy trình xử lý vi phạm',
-                        accentColor: AppColors.buy,
-                        children: [
-                          _ViolationProcessCard(
-                            items: snapshot.violationProcess,
-                          ),
-                        ],
-                      ),
-                      _SafetySection(
-                        title: 'Cách chốt kết quả',
-                        accentColor: AppColors.primary,
-                        children: [_InfoCard(info: snapshot.resolution)],
-                      ),
-                      _SafetySection(
-                        title: 'Không giao dịch ngoài nền tảng',
-                        accentColor: AppColors.sell,
-                        children: [_InfoCard(info: snapshot.offPlatform)],
-                      ),
-                      _SafetySection(
-                        title: 'Về Arena Points',
-                        accentColor: AppColors.accent,
-                        children: [_InfoCard(info: snapshot.pointsDisclaimer)],
-                      ),
-                      _QuickLinks(links: snapshot.quickLinks),
-                      VitCtaButton(
-                        key: acknowledgeKey,
-                        onPressed: () => _acknowledge(context),
-                        child: Text(snapshot.ctaLabel),
-                      ),
-                      _SafetyFooter(label: snapshot.footerLabel),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'An toàn & Quy tắc Arena',
+            subtitle: 'Trung tâm an toàn · Open Arena',
+            showBack: true,
+            onBack: () => _close(context),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      customGap: AppSpacing.x5,
+                      children: [
+                        _SafetyHero(snapshot: snapshot),
+                        _SafetySection(
+                          title: 'Quy tắc cộng đồng',
+                          accentColor: AppColors.primary,
+                          children: [
+                            for (final rule in snapshot.communityRules)
+                              _RuleCard(rule: rule),
+                          ],
+                        ),
+                        _SafetySection(
+                          title: 'Nội dung bị cấm',
+                          accentColor: AppColors.sell,
+                          children: [
+                            _BannedContentCard(items: snapshot.bannedContent),
+                          ],
+                        ),
+                        _SafetySection(
+                          title: 'Cách báo cáo và chặn',
+                          accentColor: AppColors.warn,
+                          children: [
+                            for (final action in snapshot.reportActions)
+                              _RuleCard(rule: action),
+                          ],
+                        ),
+                        _SafetySection(
+                          title: 'Quy trình xử lý vi phạm',
+                          accentColor: AppColors.buy,
+                          children: [
+                            _ViolationProcessCard(
+                              items: snapshot.violationProcess,
+                            ),
+                          ],
+                        ),
+                        _SafetySection(
+                          title: 'Cách chốt kết quả',
+                          accentColor: AppColors.primary,
+                          children: [_InfoCard(info: snapshot.resolution)],
+                        ),
+                        _SafetySection(
+                          title: 'Không giao dịch ngoài nền tảng',
+                          accentColor: AppColors.sell,
+                          children: [_InfoCard(info: snapshot.offPlatform)],
+                        ),
+                        _SafetySection(
+                          title: 'Về Arena Points',
+                          accentColor: AppColors.accent,
+                          children: [
+                            _InfoCard(info: snapshot.pointsDisclaimer),
+                          ],
+                        ),
+                        _QuickLinks(links: snapshot.quickLinks),
+                        VitCtaButton(
+                          key: acknowledgeKey,
+                          onPressed: () => _acknowledge(context),
+                          child: Text(snapshot.ctaLabel),
+                        ),
+                        _SafetyFooter(label: snapshot.footerLabel),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

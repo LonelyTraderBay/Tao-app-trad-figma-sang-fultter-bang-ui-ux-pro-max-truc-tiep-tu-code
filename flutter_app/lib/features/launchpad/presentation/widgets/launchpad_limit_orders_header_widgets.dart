@@ -1,32 +1,5 @@
 part of '../pages/launchpad_limit_orders_page.dart';
 
-class _HeaderCreateButton extends StatelessWidget {
-  const _HeaderCreateButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 36,
-      height: 36,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: AppColors.searchBg,
-          border: Border.all(color: AppColors.border),
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: IconButton(
-          key: LaunchpadLimitOrdersPage.headerCreateKey,
-          onPressed: onTap,
-          padding: EdgeInsets.zero,
-          icon: const Icon(Icons.add_rounded, color: AppColors.text1, size: 20),
-        ),
-      ),
-    );
-  }
-}
-
 class _Tabs extends StatelessWidget {
   const _Tabs({required this.activeTab, required this.onChanged});
 

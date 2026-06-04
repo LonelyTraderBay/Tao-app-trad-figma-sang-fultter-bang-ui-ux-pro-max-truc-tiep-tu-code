@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -57,76 +58,86 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
       semanticLabel: 'SC-400 DCAOverviewDemo',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-              trailing: _LoadingToggle(
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+            actions: [
+              VitHeaderActionItem(
+                key: DCAOverviewDemo.loadingToggleKey,
+                type: VitHeaderActionType.help,
+                tooltip: 'Loading demo',
                 active: _showLoading,
-                onTap: () {
+                onPressed: () {
                   HapticFeedback.selectionClick();
                   setState(() => _showLoading = !_showLoading);
                 },
               ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: DCAOverviewDemo.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  gap: VitContentGap.loose,
-                  children: [
-                    if (_showLoading)
-                      _DemoSection(
-                        key: DCAOverviewDemo.loadingSectionKey,
-                        title: 'Loading State (Skeleton Shimmer)',
-                        description: 'Hiệu ứng shimmer khi data đang tải.',
-                        child: _DcaOverviewCardPreview(
-                          scenario: snapshot.scenarios.first,
-                          isLoading: true,
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: DCAOverviewDemo.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    gap: VitContentGap.loose,
+                    children: [
+                      if (_showLoading)
+                        _DemoSection(
+                          key: DCAOverviewDemo.loadingSectionKey,
+                          title: 'Loading State (Skeleton Shimmer)',
+                          description: 'Hiệu ứng shimmer khi data đang tải.',
+                          child: _DcaOverviewCardPreview(
+                            scenario: snapshot.scenarios.first,
+                            isLoading: true,
+                          ),
                         ),
-                      ),
-                    for (final scenario in snapshot.scenarios)
+                      for (final scenario in snapshot.scenarios)
+                        _DemoSection(
+                          key: DCAOverviewDemo.scenarioKey(scenario.id),
+                          title: scenario.title,
+                          description: scenario.description,
+                          child: _DcaOverviewCardPreview(scenario: scenario),
+                        ),
                       _DemoSection(
-                        key: DCAOverviewDemo.scenarioKey(scenario.id),
-                        title: scenario.title,
-                        description: scenario.description,
-                        child: _DcaOverviewCardPreview(scenario: scenario),
-                      ),
-                    _DemoSection(
-                      key: DCAOverviewDemo.mobilePreviewKey,
-                      title: snapshot.mobilePreview.title,
-                      description: snapshot.mobilePreview.description,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 360),
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.borderSolid),
-                              borderRadius: AppRadii.cardLargeRadius,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(AppSpacing.x2),
-                              child: _DcaOverviewCardPreview(
-                                scenario: snapshot.mobilePreview,
-                                compact: true,
+                        key: DCAOverviewDemo.mobilePreviewKey,
+                        title: snapshot.mobilePreview.title,
+                        description: snapshot.mobilePreview.description,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 360),
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColors.borderSolid,
+                                ),
+                                borderRadius: AppRadii.cardLargeRadius,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(AppSpacing.x2),
+                                child: _DcaOverviewCardPreview(
+                                  scenario: snapshot.mobilePreview,
+                                  compact: true,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    _DemoFooter(snapshot: snapshot),
-                  ],
+                      _DemoFooter(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

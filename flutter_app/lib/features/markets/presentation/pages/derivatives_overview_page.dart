@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
@@ -58,83 +59,86 @@ class _DerivativesOverviewPageState
       semanticLabel: 'SC-018 DerivativesOverviewPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Phái sinh',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.markets),
-            ),
-            MarketDerivativesTabs(
-              activeTab: _tab,
-              onChanged: (value) => setState(() => _tab = value),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: DerivativesOverviewPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 10,
-                    children: [
-                      if (_tab == 'overview') ...[
-                        MarketDerivativesOpenInterestHero(
-                          stats: snapshot.globalStats,
-                        ),
-                        MarketDerivativesOverviewStatGrid(
-                          stats: snapshot.globalStats,
-                        ),
-                        MarketDerivativesSectionHeader(
-                          label: 'Thanh lý theo thời gian (24h)',
-                          accentColor: AppColors.sell,
-                        ),
-                        MarketDerivativesLiquidationTimeline(
-                          history: snapshot.liquidationHistory,
-                          pairs: snapshot.pairs,
-                        ),
-                        MarketDerivativesSectionHeader(
-                          label: 'Top Open Interest',
-                          accentColor: marketDerivativesPrimary,
-                        ),
-                        MarketDerivativesTopOpenInterestList(
-                          pairs: snapshot.pairs.take(5).toList(),
-                        ),
-                      ] else if (_tab == 'perpetual') ...[
-                        MarketDerivativesSortChips(
-                          active: _sortBy,
-                          onSelected: (value) => setState(() {
-                            _sortBy = value;
-                          }),
-                        ),
-                        for (final pair in snapshot.pairs)
-                          MarketDerivativesPerpetualPairCard(pair: pair),
-                      ] else ...[
-                        MarketDerivativesLiquidationSummary(
-                          stats: snapshot.globalStats,
-                        ),
-                        MarketDerivativesSectionHeader(
-                          label: 'Thanh lý theo cặp',
-                          accentColor: AppColors.sell,
-                        ),
-                        for (final pair
-                            in [...snapshot.pairs]..sort(
-                              (a, b) => b.totalLiquidations24h.compareTo(
-                                a.totalLiquidations24h,
-                              ),
-                            ))
-                          MarketDerivativesLiquidationPairCard(pair: pair),
-                        const MarketDerivativesRiskWarningCard(),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Phái sinh',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.markets),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              MarketDerivativesTabs(
+                activeTab: _tab,
+                onChanged: (value) => setState(() => _tab = value),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: DerivativesOverviewPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 10,
+                      children: [
+                        if (_tab == 'overview') ...[
+                          MarketDerivativesOpenInterestHero(
+                            stats: snapshot.globalStats,
+                          ),
+                          MarketDerivativesOverviewStatGrid(
+                            stats: snapshot.globalStats,
+                          ),
+                          MarketDerivativesSectionHeader(
+                            label: 'Thanh lý theo thời gian (24h)',
+                            accentColor: AppColors.sell,
+                          ),
+                          MarketDerivativesLiquidationTimeline(
+                            history: snapshot.liquidationHistory,
+                            pairs: snapshot.pairs,
+                          ),
+                          MarketDerivativesSectionHeader(
+                            label: 'Top Open Interest',
+                            accentColor: marketDerivativesPrimary,
+                          ),
+                          MarketDerivativesTopOpenInterestList(
+                            pairs: snapshot.pairs.take(5).toList(),
+                          ),
+                        ] else if (_tab == 'perpetual') ...[
+                          MarketDerivativesSortChips(
+                            active: _sortBy,
+                            onSelected: (value) => setState(() {
+                              _sortBy = value;
+                            }),
+                          ),
+                          for (final pair in snapshot.pairs)
+                            MarketDerivativesPerpetualPairCard(pair: pair),
+                        ] else ...[
+                          MarketDerivativesLiquidationSummary(
+                            stats: snapshot.globalStats,
+                          ),
+                          MarketDerivativesSectionHeader(
+                            label: 'Thanh lý theo cặp',
+                            accentColor: AppColors.sell,
+                          ),
+                          for (final pair
+                              in [...snapshot.pairs]..sort(
+                                (a, b) => b.totalLiquidations24h.compareTo(
+                                  a.totalLiquidations24h,
+                                ),
+                              ))
+                            MarketDerivativesLiquidationPairCard(pair: pair),
+                          const MarketDerivativesRiskWarningCard(),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

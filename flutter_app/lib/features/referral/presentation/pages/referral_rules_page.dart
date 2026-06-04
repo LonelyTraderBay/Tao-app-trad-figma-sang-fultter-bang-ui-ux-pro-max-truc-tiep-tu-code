@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/referral_controller_providers.dart';
@@ -57,78 +58,81 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
       semanticLabel: 'SC-288 ReferralRulesPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ReferralRulesPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const _SectionTitle(
-                        title: 'Hệ thống hạng',
-                        subtitle: 'Mời càng nhiều, thưởng càng lớn',
-                        color: AppColors.warn,
-                      ),
-                      const SizedBox(height: AppSpacing.x3),
-                      _TierTable(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      const _SectionTitle(
-                        title: 'Các loại thưởng',
-                        color: AppModuleAccents.trade,
-                      ),
-                      const SizedBox(height: AppSpacing.x3),
-                      _RewardTypes(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      const _SectionTitle(
-                        title: 'Điều khoản chương trình',
-                        color: AppColors.text2,
-                      ),
-                      const SizedBox(height: AppSpacing.x3),
-                      _TermsList(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      const _SectionTitle(
-                        title: 'Câu hỏi thường gặp',
-                        color: AppColors.accent,
-                      ),
-                      const SizedBox(height: AppSpacing.x3),
-                      _FaqList(
-                        snapshot: snapshot,
-                        openIndex: _openFaqIndex,
-                        onToggle: (index) {
-                          HapticFeedback.selectionClick();
-                          setState(() {
-                            _openFaqIndex = _openFaqIndex == index
-                                ? null
-                                : index;
-                          });
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _Disclaimer(snapshot: snapshot),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ReferralRulesPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const _SectionTitle(
+                          title: 'Hệ thống hạng',
+                          subtitle: 'Mời càng nhiều, thưởng càng lớn',
+                          color: AppColors.warn,
+                        ),
+                        const SizedBox(height: AppSpacing.x3),
+                        _TierTable(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        const _SectionTitle(
+                          title: 'Các loại thưởng',
+                          color: AppModuleAccents.trade,
+                        ),
+                        const SizedBox(height: AppSpacing.x3),
+                        _RewardTypes(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        const _SectionTitle(
+                          title: 'Điều khoản chương trình',
+                          color: AppColors.text2,
+                        ),
+                        const SizedBox(height: AppSpacing.x3),
+                        _TermsList(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        const _SectionTitle(
+                          title: 'Câu hỏi thường gặp',
+                          color: AppColors.accent,
+                        ),
+                        const SizedBox(height: AppSpacing.x3),
+                        _FaqList(
+                          snapshot: snapshot,
+                          openIndex: _openFaqIndex,
+                          onToggle: (index) {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              _openFaqIndex = _openFaqIndex == index
+                                  ? null
+                                  : index;
+                            });
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        _Disclaimer(snapshot: snapshot),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -56,60 +57,63 @@ class _RouteCheckerState extends ConsumerState<RouteChecker> {
       semanticLabel: 'SC-325 RouteChecker',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: RouteChecker.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _IntroBlock(snapshot: snapshot),
-                    _ProgressCard(
-                      testedCount: _testedRoutes.length,
-                      totalCount: snapshot.totalRoutes,
-                    ),
-                    _PhaseFilters(
-                      snapshot: snapshot,
-                      activePhase: _activePhase,
-                      onChanged: (phase) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _activePhase = phase);
-                      },
-                    ),
-                    _RouteList(
-                      routes: filteredRoutes,
-                      testedRoutes: _testedRoutes,
-                      onTapRoute: (route) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _testedRoutes.add(route.path));
-                      },
-                    ),
-                    _ActionsRow(
-                      testedCount: _testedRoutes.length,
-                      totalCount: snapshot.totalRoutes,
-                      onReset: () {
-                        HapticFeedback.selectionClick();
-                        setState(_testedRoutes.clear);
-                      },
-                    ),
-                    _PhaseStats(
-                      snapshot: snapshot,
-                      testedRoutes: _testedRoutes,
-                    ),
-                    _InternalNotice(text: snapshot.contractNotes),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: RouteChecker.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _IntroBlock(snapshot: snapshot),
+                      _ProgressCard(
+                        testedCount: _testedRoutes.length,
+                        totalCount: snapshot.totalRoutes,
+                      ),
+                      _PhaseFilters(
+                        snapshot: snapshot,
+                        activePhase: _activePhase,
+                        onChanged: (phase) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _activePhase = phase);
+                        },
+                      ),
+                      _RouteList(
+                        routes: filteredRoutes,
+                        testedRoutes: _testedRoutes,
+                        onTapRoute: (route) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _testedRoutes.add(route.path));
+                        },
+                      ),
+                      _ActionsRow(
+                        testedCount: _testedRoutes.length,
+                        totalCount: snapshot.totalRoutes,
+                        onReset: () {
+                          HapticFeedback.selectionClick();
+                          setState(_testedRoutes.clear);
+                        },
+                      ),
+                      _PhaseStats(
+                        snapshot: snapshot,
+                        testedRoutes: _testedRoutes,
+                      ),
+                      _InternalNotice(text: snapshot.contractNotes),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -242,6 +242,70 @@ class WithdrawWarning extends StatelessWidget {
   }
 }
 
+class WithdrawSupportLink extends StatelessWidget {
+  const WithdrawSupportLink({required this.onTap, super.key});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: 'Open contextual withdrawal support',
+      child: GestureDetector(
+        key: withdrawSupportKey,
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          height: 44,
+          padding: const EdgeInsets.symmetric(horizontal: 14),
+          decoration: BoxDecoration(
+            color: withdrawPanel,
+            border: Border.all(color: withdrawPrimary.withValues(alpha: .22)),
+            borderRadius: AppRadii.inputRadius,
+          ),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.support_agent_rounded,
+                color: withdrawPrimary,
+                size: 18,
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'Cần hỗ trợ rút tiền?',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w800,
+                    height: 1,
+                  ),
+                ),
+              ),
+              Text(
+                'Mở hồ sơ',
+                style: AppTextStyles.micro.copyWith(
+                  color: withdrawPrimary,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w800,
+                  height: 1,
+                ),
+              ),
+              const SizedBox(width: 6),
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: withdrawPrimary,
+                size: 18,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class WithdrawNextButton extends StatelessWidget {
   const WithdrawNextButton({required this.onTap, super.key});
 

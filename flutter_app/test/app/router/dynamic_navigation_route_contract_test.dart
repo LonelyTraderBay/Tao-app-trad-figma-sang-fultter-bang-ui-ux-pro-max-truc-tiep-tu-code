@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
+import 'package:vit_trade_flutter/core/navigation/navigation_intent_contract.dart';
 
 void main() {
   group('data-driven navigation route contracts', () {
@@ -10,6 +12,13 @@ void main() {
       'earn',
       'launchpad',
       'arena',
+      'discovery',
+      'cross_module',
+    ];
+    const explainabilityModules = [
+      'p2p',
+      'earn',
+      'launchpad',
       'discovery',
       'cross_module',
     ];
@@ -63,6 +72,147 @@ void main() {
         reason:
             'Data-driven route query keys are part of the navigation contract '
             'and must be reviewed before use.',
+      );
+    });
+
+    test('route-bearing data has typed intent contracts', () {
+      final missing = <String>[];
+      final weakLines = <String>[];
+
+      for (final module in explainabilityModules) {
+        final routes = _routeLiteralsForModule(module);
+        for (final route in routes) {
+          final contract = DynamicNavigationIntentContracts.findByRoute(
+            route.value,
+            module: module,
+          );
+          if (contract == null) {
+            missing.add('${route.source}: ${route.value}');
+            continue;
+          }
+          final line = contract.humanReadableLine;
+          final requiredParts = [
+            contract.productArea,
+            contract.technicalModule,
+            contract.capability,
+            contract.flow,
+            contract.screenName,
+            contract.routePattern,
+            contract.lifecycleStage.label,
+            contract.surface,
+          ];
+          if (requiredParts.any((part) => !line.contains(part))) {
+            weakLines.add('${contract.contractId}: $line');
+          }
+        }
+      }
+
+      expect(
+        missing,
+        isEmpty,
+        reason:
+            'P1 dynamic route explainability requires every route-bearing '
+            'mock/domain data route to map to a typed RouteContractIntent.',
+      );
+      expect(
+        weakLines,
+        isEmpty,
+        reason:
+            'RouteContractIntent.humanReadableLine must expose '
+            'Product Area > Module > Capability > Flow > Screen/Route.',
+      );
+    });
+
+    test('typed intent contracts resolve to router paths', () {
+      final router = createAppRouter();
+      addTearDown(router.dispose);
+      final missing = <String>[];
+
+      for (final contract in DynamicNavigationIntentContracts.contracts) {
+        final match = router.configuration.findMatch(
+          Uri.parse(contract.resolve()),
+        );
+        if (match.isError) {
+          missing.add(
+            '${contract.contractId}: ${contract.routePattern} sampled as '
+            '${contract.resolve()}',
+          );
+        }
+      }
+
+      expect(
+        missing,
+        isEmpty,
+        reason:
+            'Typed dynamic NavigationIntent contracts must resolve to declared '
+            'router paths so QA, support, and route-bearing mock data use the '
+            'same map.',
+      );
+    });
+
+    test('dynamic copy-trading back query is encoded and safety resolved', () {
+      final providerRoute = AppRoutePaths.tradeCopyProvider(
+        'ct001',
+        backPath: AppRoutePaths.tradeCopyTradingV2,
+      );
+      final configurationRoute = AppRoutePaths.tradeCopyProviderConfiguration(
+        'ct001',
+        backPath: AppRoutePaths.tradeCopyActive,
+      );
+
+      expect(
+        Uri.parse(providerRoute).queryParameters['back'],
+        AppRoutePaths.tradeCopyTradingV2,
+      );
+      expect(
+        Uri.parse(configurationRoute).queryParameters['back'],
+        AppRoutePaths.tradeCopyActive,
+      );
+      expect(
+        resolveSafeBackPath(
+          candidate: Uri.parse(providerRoute).queryParameters['back'],
+          fallbackPath: AppRoutePaths.tradeCopyTrading,
+          allowedPrefixes: const [AppRoutePaths.trade],
+        ),
+        AppRoutePaths.tradeCopyTradingV2,
+      );
+      expect(
+        resolveSafeBackPath(
+          candidate: 'https://evil.example/phish',
+          fallbackPath: AppRoutePaths.tradeCopyTrading,
+          allowedPrefixes: const [AppRoutePaths.trade],
+        ),
+        AppRoutePaths.tradeCopyTrading,
+      );
+      expect(
+        resolveSafeBackPath(
+          candidate: '/wallet',
+          fallbackPath: AppRoutePaths.tradeCopyProvider('ct001'),
+          allowedPrefixes: const [AppRoutePaths.trade],
+        ),
+        AppRoutePaths.tradeCopyProvider('ct001'),
+      );
+    });
+
+    test('each target module exposes a human-readable flow map', () {
+      final missing = <String>[];
+
+      for (final module in explainabilityModules) {
+        final lines = DynamicNavigationIntentContracts.humanReadableFlowMap(
+          module: module,
+        );
+        if (lines.isEmpty ||
+            lines.any((line) => line.split(' > ').length < 8)) {
+          missing.add(module);
+        }
+      }
+
+      expect(
+        missing,
+        isEmpty,
+        reason:
+            'P1 dynamic route explainability requires human-readable flow maps '
+            'for P2P, Earn, Launchpad, Discovery, and cross-module data.',
       );
     });
   });

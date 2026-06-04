@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -88,73 +89,77 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
       semanticLabel: 'SC-106 RIYCalculatorPage',
       child: Material(
         color: _riyBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'RIY Calculator',
-              subtitle: 'Cost Impact Analysis',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyExAnteCosts),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: RIYCalculatorPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 15, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const _SectionLabel('Investment Parameters'),
-                    const SizedBox(height: 12),
-                    _InputCard(
-                      investment: _investment,
-                      expectedReturn: _expectedReturn,
-                      totalCosts: _totalCosts,
-                      years: _years,
-                      onInvestmentChanged: (value) =>
-                          setState(() => _investment = value),
-                      onExpectedReturnChanged: (value) =>
-                          setState(() => _expectedReturn = value),
-                      onTotalCostsChanged: (value) =>
-                          setState(() => _totalCosts = value),
-                      onYearsChanged: (value) => setState(() => _years = value),
-                    ),
-                    const SizedBox(height: 25),
-                    const _SectionLabel('Impact Analysis'),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _ResultMetric(
-                            label: 'Without Costs',
-                            value: _formatEur(finalWithoutCosts),
-                            color: _riyGreen,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'RIY Calculator',
+            subtitle: 'Cost Impact Analysis',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyExAnteCosts),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: RIYCalculatorPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 15, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const _SectionLabel('Investment Parameters'),
+                      const SizedBox(height: 12),
+                      _InputCard(
+                        investment: _investment,
+                        expectedReturn: _expectedReturn,
+                        totalCosts: _totalCosts,
+                        years: _years,
+                        onInvestmentChanged: (value) =>
+                            setState(() => _investment = value),
+                        onExpectedReturnChanged: (value) =>
+                            setState(() => _expectedReturn = value),
+                        onTotalCostsChanged: (value) =>
+                            setState(() => _totalCosts = value),
+                        onYearsChanged: (value) =>
+                            setState(() => _years = value),
+                      ),
+                      const SizedBox(height: 25),
+                      const _SectionLabel('Impact Analysis'),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _ResultMetric(
+                              label: 'Without Costs',
+                              value: _formatEur(finalWithoutCosts),
+                              color: _riyGreen,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _ResultMetric(
-                            label: 'With Costs',
-                            value: _formatEur(finalWithCosts),
-                            color: _riyRed,
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: _ResultMetric(
+                              label: 'With Costs',
+                              value: _formatEur(finalWithCosts),
+                              color: _riyRed,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    _CostImpactCard(
-                      years: _years,
-                      difference: difference,
-                      lossPct: lossPct,
-                    ),
-                    const SizedBox(height: 25),
-                    const _SectionLabel('Growth Comparison'),
-                    const SizedBox(height: 12),
-                    _ChartCard(projections: projections),
-                  ],
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      _CostImpactCard(
+                        years: _years,
+                        difference: difference,
+                        lossPct: lossPct,
+                      ),
+                      const SizedBox(height: 25),
+                      const _SectionLabel('Growth Comparison'),
+                      const SizedBox(height: 12),
+                      _ChartCard(projections: projections),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

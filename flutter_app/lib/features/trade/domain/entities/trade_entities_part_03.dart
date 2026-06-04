@@ -283,6 +283,7 @@ final class TradeCopyTradingSnapshot {
     required this.disclaimer,
     required this.supportedStates,
     required this.lastUpdatedLabel,
+    this.highRiskContractId,
   });
 
   final TradeScreenSnapshot trade;
@@ -296,6 +297,7 @@ final class TradeCopyTradingSnapshot {
   final String disclaimer;
   final List<TradeScreenState> supportedStates;
   final String lastUpdatedLabel;
+  final String? highRiskContractId;
 }
 
 final class TradeCopyTradingV2Snapshot {

@@ -15,12 +15,15 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
       semanticLabel: 'SC-397 OnboardingFlow',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            _buildHeader(snapshot),
-            Expanded(child: _buildBody(snapshot)),
-            _buildFooter(snapshot),
-          ],
+        child: VitAutoHideHeaderScaffold(
+          header: _buildHeader(snapshot),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(child: _buildBody(snapshot)),
+              _buildFooter(snapshot),
+            ],
+          ),
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -11,11 +12,12 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 
 part '../widgets/launchpad_home_header_widgets.dart';
 part '../widgets/launchpad_home_helpers.dart';
@@ -70,53 +72,73 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
       semanticLabel: 'SC-295 LaunchpadPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-              trailing: _HeaderActions(snapshot: snapshot),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: LaunchpadPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.defaultPadding,
-                    customGap: AppSpacing.x4,
-                    children: [
-                      _HeroCard(activeCount: activeCount),
-                      _LaunchpadTabs(
-                        activeTab: _activeTab,
-                        onChanged: (tab) => setState(() => _activeTab = tab),
-                      ),
-                      for (final project in projects)
-                        _ProjectCard(project: project),
-                      _StakingEntry(route: snapshot.stakingRoute),
-                      _ToolSection(
-                        key: LaunchpadPage.advancedToolsKey,
-                        title: 'Công cụ nâng cao',
-                        tools: snapshot.advancedTools,
-                      ),
-                      _ToolSection(
-                        key: LaunchpadPage.riskToolsKey,
-                        title: 'Trading & Risk Management',
-                        tools: snapshot.riskTools,
-                      ),
-                      const _SafetyWarning(),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          bottomInset: bottomInset,
+          semanticLabel: 'SC-295 LaunchpadPage scroll surface',
+          header: VitTopChrome(
+            type: VitTopChromeType.rootModule,
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+            actions: [
+              VitHeaderActionItem(
+                key: LaunchpadPage.filterActionKey,
+                type: VitHeaderActionType.filter,
+                tooltip: 'Bá»™ lá»c',
+                onPressed: () {
+                  HapticFeedback.selectionClick();
+                  setState(() => _activeTab = _LaunchpadTab.active);
+                },
+              ),
+              VitHeaderActionItem(
+                key: LaunchpadPage.performanceActionKey,
+                type: VitHeaderActionType.analytics,
+                tooltip: 'Hiá»‡u suáº¥t',
+                onPressed: () => context.go(snapshot.performanceRoute),
+              ),
+              VitHeaderActionItem(
+                key: LaunchpadPage.portfolioActionKey,
+                type: VitHeaderActionType.portfolio,
+                tooltip: 'Portfolio',
+                onPressed: () => context.go(snapshot.portfolioRoute),
+              ),
+            ],
+          ),
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(
+              context,
+            ).copyWith(scrollbars: false),
+            child: SingleChildScrollView(
+              key: LaunchpadPage.contentKey,
+              physics: const BouncingScrollPhysics(),
+              child: VitPageContent(
+                padding: VitContentPadding.defaultPadding,
+                customGap: AppSpacing.x4,
+                children: [
+                  _HeroCard(activeCount: activeCount),
+                  _LaunchpadTabs(
+                    activeTab: _activeTab,
+                    onChanged: (tab) => setState(() => _activeTab = tab),
                   ),
-                ),
+                  for (final project in projects)
+                    _ProjectCard(project: project),
+                  _StakingEntry(route: snapshot.stakingRoute),
+                  _ToolSection(
+                    key: LaunchpadPage.advancedToolsKey,
+                    title: 'C\u00F4ng c\u1EE5 n\u00E2ng cao',
+                    tools: snapshot.advancedTools,
+                  ),
+                  _ToolSection(
+                    key: LaunchpadPage.riskToolsKey,
+                    title: 'Trading & Risk Management',
+                    tools: snapshot.riskTools,
+                  ),
+                  const _SafetyWarning(),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

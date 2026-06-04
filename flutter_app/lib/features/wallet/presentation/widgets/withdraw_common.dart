@@ -16,6 +16,7 @@ const withdrawAddressFieldKey = Key('sc139_withdraw_address_field');
 const withdrawAmountFieldKey = Key('sc139_withdraw_amount_field');
 const withdrawAllAmountKey = Key('sc139_withdraw_all_amount');
 const withdrawNextKey = Key('sc139_withdraw_next');
+const withdrawSupportKey = Key('sc139_withdraw_support');
 const withdrawCancelConfirmKey = Key('sc139_withdraw_cancel_confirm');
 const withdrawConfirmWithdrawKey = Key('sc139_withdraw_confirm_withdraw');
 

@@ -41,32 +41,39 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
 
     return VitPageLayout(
       semanticLabel: 'SC-177 DCAMultiAssetPage',
-      child: Column(
-        children: [
-          VitHeader(title: 'Multi-Asset DCA', showBack: true, onBack: _close),
-          _TopTabs(
-            activeTab: _activeTab,
-            onChanged: (tab) => setState(() => _activeTab = tab),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              key: DCAMultiAssetPage.contentKey,
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.only(bottom: scrollBottom),
-              child: VitPageContent(
-                customGap: AppSpacing.x4,
-                children: [
-                  if (_activeTab == _MultiAssetTab.setup)
-                    ..._buildSetup(snapshot),
-                  if (_activeTab == _MultiAssetTab.assets)
-                    ..._buildAssets(snapshot),
-                  if (_activeTab == _MultiAssetTab.performance)
-                    ..._buildPerformance(snapshot),
-                ],
+      child: VitAutoHideHeaderScaffold(
+        header: VitHeader(
+          title: 'Multi-Asset DCA',
+          showBack: true,
+          onBack: _close,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _TopTabs(
+              activeTab: _activeTab,
+              onChanged: (tab) => setState(() => _activeTab = tab),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                key: DCAMultiAssetPage.contentKey,
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.only(bottom: scrollBottom),
+                child: VitPageContent(
+                  customGap: AppSpacing.x4,
+                  children: [
+                    if (_activeTab == _MultiAssetTab.setup)
+                      ..._buildSetup(snapshot),
+                    if (_activeTab == _MultiAssetTab.assets)
+                      ..._buildAssets(snapshot),
+                    if (_activeTab == _MultiAssetTab.performance)
+                      ..._buildPerformance(snapshot),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

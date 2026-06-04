@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -64,70 +65,73 @@ class _PredictionTournamentsPageState
       semanticLabel: 'SC-042 PredictionTournamentsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Tournaments',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.marketsPredictions),
-            ),
-            _TournamentTabBar(
-              activeTab: _activeTab,
-              onChanged: (tab) => setState(() => _activeTab = tab),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: PredictionTournamentsPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 16,
-                    children: switch (_activeTab) {
-                      _TournamentTab.active => [
-                        for (final tournament
-                            in snapshot.activeTournaments.where(
-                              (item) => item.featured,
-                            ))
-                          _FeaturedTournamentBlock(tournament: tournament),
-                        _TournamentSection(
-                          label: 'Tat ca giai dau',
-                          tournaments: snapshot.activeTournaments
-                              .where((item) => !item.featured)
-                              .toList(),
-                        ),
-                        _TournamentSection(
-                          label: 'Sap dien ra',
-                          tournaments: snapshot.upcomingTournaments,
-                        ),
-                        const _TournamentInfoCard(),
-                      ],
-                      _TournamentTab.mine => [
-                        _MyTournamentStats(snapshot: snapshot),
-                        _TournamentSection(
-                          label: 'Giai dau dang tham gia',
-                          tournaments: snapshot.myTournaments,
-                          empty: const _EmptyTournamentsCard(),
-                        ),
-                      ],
-                      _TournamentTab.ended => [
-                        _TournamentSection(
-                          label: 'Giai dau da ket thuc',
-                          tournaments: snapshot.pastTournaments,
-                          empty: const _NoPastTournamentsCard(),
-                        ),
-                        if (snapshot.pastTournaments.isNotEmpty)
-                          _FinalLeaderboard(entries: snapshot.leaderboard),
-                      ],
-                    },
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Tournaments',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.marketsPredictions),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _TournamentTabBar(
+                activeTab: _activeTab,
+                onChanged: (tab) => setState(() => _activeTab = tab),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: PredictionTournamentsPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 16,
+                      children: switch (_activeTab) {
+                        _TournamentTab.active => [
+                          for (final tournament
+                              in snapshot.activeTournaments.where(
+                                (item) => item.featured,
+                              ))
+                            _FeaturedTournamentBlock(tournament: tournament),
+                          _TournamentSection(
+                            label: 'Tat ca giai dau',
+                            tournaments: snapshot.activeTournaments
+                                .where((item) => !item.featured)
+                                .toList(),
+                          ),
+                          _TournamentSection(
+                            label: 'Sap dien ra',
+                            tournaments: snapshot.upcomingTournaments,
+                          ),
+                          const _TournamentInfoCard(),
+                        ],
+                        _TournamentTab.mine => [
+                          _MyTournamentStats(snapshot: snapshot),
+                          _TournamentSection(
+                            label: 'Giai dau dang tham gia',
+                            tournaments: snapshot.myTournaments,
+                            empty: const _EmptyTournamentsCard(),
+                          ),
+                        ],
+                        _TournamentTab.ended => [
+                          _TournamentSection(
+                            label: 'Giai dau da ket thuc',
+                            tournaments: snapshot.pastTournaments,
+                            empty: const _NoPastTournamentsCard(),
+                          ),
+                          if (snapshot.pastTournaments.isNotEmpty)
+                            _FinalLeaderboard(entries: snapshot.leaderboard),
+                        ],
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

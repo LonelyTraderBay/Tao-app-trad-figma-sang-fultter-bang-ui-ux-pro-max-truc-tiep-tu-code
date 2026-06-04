@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -50,36 +51,38 @@ class TargetMarketDefinitionPage extends ConsumerWidget {
       semanticLabel: 'SC-101 TargetMarketDefinitionPage',
       child: Material(
         color: _targetBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Target Market Definition',
-              subtitle: snapshot.product.name,
-              showBack: true,
-              onBack: () =>
-                  context.go(AppRoutePaths.tradeCopyProductGovernance),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SummaryCard(snapshot: snapshot),
-                    const SizedBox(height: 23),
-                    const _SectionLabel('Target Market Criteria'),
-                    const SizedBox(height: 9),
-                    for (final dimension in snapshot.dimensions) ...[
-                      _DimensionCard(dimension: dimension),
-                      if (dimension != snapshot.dimensions.last)
-                        const SizedBox(height: 12),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Target Market Definition',
+            subtitle: snapshot.product.name,
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyProductGovernance),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SummaryCard(snapshot: snapshot),
+                      const SizedBox(height: 23),
+                      const _SectionLabel('Target Market Criteria'),
+                      const SizedBox(height: 9),
+                      for (final dimension in snapshot.dimensions) ...[
+                        _DimensionCard(dimension: dimension),
+                        if (dimension != snapshot.dimensions.last)
+                          const SizedBox(height: 12),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

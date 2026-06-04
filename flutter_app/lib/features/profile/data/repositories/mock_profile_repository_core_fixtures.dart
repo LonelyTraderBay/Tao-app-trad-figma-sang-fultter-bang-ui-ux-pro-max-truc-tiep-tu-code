@@ -32,6 +32,73 @@ const ProfileArenaBlock _profileArena = ProfileArenaBlock(
   creatorScoreLabel: '87%',
 );
 
+const List<ProfileProductShortcut> _profileProductShortcuts = [
+  ProfileProductShortcut(
+    id: 'wallet',
+    label: 'V\u00ED',
+    route: '/wallet',
+    iconKey: 'wallet',
+    stateLabel: 'Treasury',
+    accentHex: 0xFFF5A524,
+  ),
+  ProfileProductShortcut(
+    id: 'p2p',
+    label: 'P2P',
+    route: '/p2p',
+    iconKey: 'users',
+    stateLabel: 'Escrow',
+    accentHex: 0xFFF5A524,
+  ),
+  ProfileProductShortcut(
+    id: 'earn',
+    label: 'Earn',
+    route: '/earn/staking',
+    iconKey: 'zap',
+    stateLabel: 'Yield',
+    accentHex: 0xFFF5A524,
+  ),
+  ProfileProductShortcut(
+    id: 'launchpad',
+    label: 'Launchpad',
+    route: '/launchpad',
+    iconKey: 'rocket',
+    stateLabel: 'Token',
+    accentHex: 0xFFE58A00,
+  ),
+  ProfileProductShortcut(
+    id: 'bots',
+    label: 'Bot',
+    route: '/trade/bots',
+    iconKey: 'bot',
+    stateLabel: 'Auto',
+    accentHex: 0xFFE58A00,
+  ),
+  ProfileProductShortcut(
+    id: 'copy',
+    label: 'Copy',
+    route: '/trade/copy-trading',
+    iconKey: 'copy',
+    stateLabel: 'Social',
+    accentHex: 0xFFE58A00,
+  ),
+  ProfileProductShortcut(
+    id: 'support',
+    label: 'H\u1ED7 tr\u1EE3',
+    route: '/support',
+    iconKey: 'help',
+    stateLabel: 'Help',
+    accentHex: 0xFFE58A00,
+  ),
+  ProfileProductShortcut(
+    id: 'referral',
+    label: 'Gi\u1EDBi thi\u1EC7u',
+    route: '/referral',
+    iconKey: 'users',
+    stateLabel: 'Growth',
+    accentHex: 0xFFE58A00,
+  ),
+];
+
 const List<ProfileMenuSection> _profileSections = [
   ProfileMenuSection(
     id: 'account',

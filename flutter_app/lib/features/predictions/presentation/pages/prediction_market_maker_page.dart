@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -103,49 +104,52 @@ class _PredictionMarketMakerPageState
       semanticLabel: 'SC-037 PredictionMarketMakerPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Market Maker',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.marketsPredictions),
-            ),
-            _MarketMakerTabBar(
-              activeTab: _activeTab,
-              onChanged: (tab) => setState(() => _activeTab = tab),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: PredictionMarketMakerPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 16,
-                    children: _activeTab == _MarketMakerTab.provide
-                        ? [
-                            _LiquidityOverview(snapshot: snapshot),
-                            _AddLiquidityForm(
-                              eventController: _eventController,
-                              amountController: _amountController,
-                              minDepthController: _minDepthController,
-                              spreadBps: _spreadBps,
-                              onSpreadChanged: (value) =>
-                                  setState(() => _spreadBps = value),
-                            ),
-                            const _LiquidityWarning(),
-                          ]
-                        : _activeTab == _MarketMakerTab.positions
-                        ? [_PositionsTab(snapshot: snapshot)]
-                        : [_EarningsTab(snapshot: snapshot)],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Market Maker',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.marketsPredictions),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _MarketMakerTabBar(
+                activeTab: _activeTab,
+                onChanged: (tab) => setState(() => _activeTab = tab),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: PredictionMarketMakerPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 16,
+                      children: _activeTab == _MarketMakerTab.provide
+                          ? [
+                              _LiquidityOverview(snapshot: snapshot),
+                              _AddLiquidityForm(
+                                eventController: _eventController,
+                                amountController: _amountController,
+                                minDepthController: _minDepthController,
+                                spreadBps: _spreadBps,
+                                onSpreadChanged: (value) =>
+                                    setState(() => _spreadBps = value),
+                              ),
+                              const _LiquidityWarning(),
+                            ]
+                          : _activeTab == _MarketMakerTab.positions
+                          ? [_PositionsTab(snapshot: snapshot)]
+                          : [_EarningsTab(snapshot: snapshot)],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

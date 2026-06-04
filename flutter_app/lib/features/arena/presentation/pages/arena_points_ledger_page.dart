@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -60,69 +61,72 @@ class _ArenaPointsLedgerPageState extends ConsumerState<ArenaPointsLedgerPage> {
       semanticLabel: 'SC-201 ArenaPointsLedgerPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Lịch sử Arena Points',
-              subtitle: 'Sổ điểm · Open Arena',
-              showBack: true,
-              onBack: () => _close(context),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ArenaPointsLedgerPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.defaultPadding,
-                    children: [
-                      _BalanceSummary(summary: snapshot.summary),
-                      VitSearchBar(
-                        key: ArenaPointsLedgerPage.searchKey,
-                        placeholder: 'Tìm theo tên challenge, lý do...',
-                        onChanged: (value) {
-                          setState(() => _searchQuery = value);
-                        },
-                      ),
-                      _FilterRail(
-                        filters: snapshot.filters,
-                        activeFilter: _activeFilter,
-                        onChanged: (id) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _activeFilter = id);
-                        },
-                      ),
-                      Text(
-                        '${entries.length} bản ghi',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Lịch sử Arena Points',
+            subtitle: 'Sổ điểm · Open Arena',
+            showBack: true,
+            onBack: () => _close(context),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ArenaPointsLedgerPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.defaultPadding,
+                      children: [
+                        _BalanceSummary(summary: snapshot.summary),
+                        VitSearchBar(
+                          key: ArenaPointsLedgerPage.searchKey,
+                          placeholder: 'Tìm theo tên challenge, lý do...',
+                          onChanged: (value) {
+                            setState(() => _searchQuery = value);
+                          },
                         ),
-                      ),
-                      if (entries.isEmpty)
-                        VitEmptyState(
-                          icon: Icons.receipt_long_outlined,
-                          title: snapshot.emptyTitle,
-                          message: snapshot.emptySubtitle,
-                        )
-                      else
-                        _LedgerList(entries: entries),
-                      _AuditNotice(disclaimer: snapshot.disclaimer),
-                      _CommunityRulesButton(
-                        onTap: () {
-                          HapticFeedback.selectionClick();
-                          context.go(AppRoutePaths.arenaSafety);
-                        },
-                      ),
-                    ],
+                        _FilterRail(
+                          filters: snapshot.filters,
+                          activeFilter: _activeFilter,
+                          onChanged: (id) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _activeFilter = id);
+                          },
+                        ),
+                        Text(
+                          '${entries.length} bản ghi',
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                          ),
+                        ),
+                        if (entries.isEmpty)
+                          VitEmptyState(
+                            icon: Icons.receipt_long_outlined,
+                            title: snapshot.emptyTitle,
+                            message: snapshot.emptySubtitle,
+                          )
+                        else
+                          _LedgerList(entries: entries),
+                        _AuditNotice(disclaimer: snapshot.disclaimer),
+                        _CommunityRulesButton(
+                          onTap: () {
+                            HapticFeedback.selectionClick();
+                            context.go(AppRoutePaths.arenaSafety);
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

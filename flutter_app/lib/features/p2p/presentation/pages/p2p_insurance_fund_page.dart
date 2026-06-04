@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -63,77 +64,81 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
           semanticLabel: 'SC-238 P2PInsuranceFundPage',
           child: Material(
             type: MaterialType.transparency,
-            child: Column(
-              children: [
-                VitHeader(
-                  title: 'Quỹ bảo hiểm',
-                  subtitle: 'Bảo hiểm · P2P',
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.p2p),
-                  trailing: VitIconButton(
-                    icon: Icons.help_outline_rounded,
+            child: VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Quỹ bảo hiểm',
+                subtitle: 'Bảo hiểm · P2P',
+                showBack: true,
+                onBack: () => context.go(AppRoutePaths.p2p),
+                actions: [
+                  VitHeaderActionItem(
+                    type: VitHeaderActionType.help,
                     tooltip: 'Hướng dẫn sử dụng',
-                    size: VitIconButtonSize.md,
-                    variant: VitIconButtonVariant.primary,
+                    tone: VitHeaderActionTone.primary,
                     onPressed: () {
                       HapticFeedback.selectionClick();
                       setState(() => _showTour = true);
                     },
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x3,
-                    AppSpacing.contentPad,
-                    AppSpacing.x2,
-                  ),
-                  child: VitTabBar(
-                    variant: VitTabBarVariant.segment,
-                    activeKey: _tab.name,
-                    onChanged: (key) {
-                      HapticFeedback.selectionClick();
-                      setState(() {
-                        _tab = key == _InsuranceTab.claims.name
-                            ? _InsuranceTab.claims
-                            : _InsuranceTab.overview;
-                      });
-                    },
-                    tabs: const [
-                      VitTabItem(
-                        key: 'overview',
-                        label: 'Tổng quan',
-                        icon: Icons.shield_outlined,
-                      ),
-                      VitTabItem(
-                        key: 'claims',
-                        label: 'Yêu cầu của tôi',
-                        icon: Icons.receipt_long_rounded,
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(
-                      context,
-                    ).copyWith(scrollbars: false),
-                    child: SingleChildScrollView(
-                      key: P2PInsuranceFundPage.contentKey,
-                      physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.fromLTRB(
-                        AppSpacing.contentPad,
-                        AppSpacing.x3,
-                        AppSpacing.contentPad,
-                        bottomInset,
-                      ),
-                      child: _tab == _InsuranceTab.overview
-                          ? _OverviewContent(snapshot: snapshot)
-                          : _ClaimsContent(snapshot: snapshot),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x3,
+                      AppSpacing.contentPad,
+                      AppSpacing.x2,
+                    ),
+                    child: VitTabBar(
+                      variant: VitTabBarVariant.segment,
+                      activeKey: _tab.name,
+                      onChanged: (key) {
+                        HapticFeedback.selectionClick();
+                        setState(() {
+                          _tab = key == _InsuranceTab.claims.name
+                              ? _InsuranceTab.claims
+                              : _InsuranceTab.overview;
+                        });
+                      },
+                      tabs: const [
+                        VitTabItem(
+                          key: 'overview',
+                          label: 'Tổng quan',
+                          icon: Icons.shield_outlined,
+                        ),
+                        VitTabItem(
+                          key: 'claims',
+                          label: 'Yêu cầu của tôi',
+                          icon: Icons.receipt_long_rounded,
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: P2PInsuranceFundPage.contentKey,
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.fromLTRB(
+                          AppSpacing.contentPad,
+                          AppSpacing.x3,
+                          AppSpacing.contentPad,
+                          bottomInset,
+                        ),
+                        child: _tab == _InsuranceTab.overview
+                            ? _OverviewContent(snapshot: snapshot)
+                            : _ClaimsContent(snapshot: snapshot),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -1,43 +1,5 @@
 part of '../pages/launchpad_page.dart';
 
-class _HeaderActions extends StatelessWidget {
-  const _HeaderActions({required this.snapshot});
-
-  final LaunchpadHomeSnapshot snapshot;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        VitIconButton(
-          key: LaunchpadPage.filterActionKey,
-          icon: Icons.tune_rounded,
-          tooltip: 'Bộ lọc',
-          size: VitIconButtonSize.md,
-          onPressed: HapticFeedback.selectionClick,
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        VitIconButton(
-          key: LaunchpadPage.performanceActionKey,
-          icon: Icons.bar_chart_rounded,
-          tooltip: 'Hiệu suất',
-          size: VitIconButtonSize.md,
-          onPressed: () => context.go(snapshot.performanceRoute),
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        VitIconButton(
-          key: LaunchpadPage.portfolioActionKey,
-          icon: Icons.business_center_outlined,
-          tooltip: 'Portfolio',
-          size: VitIconButtonSize.md,
-          onPressed: () => context.go(snapshot.portfolioRoute),
-        ),
-      ],
-    );
-  }
-}
-
 class _HeroCard extends StatelessWidget {
   const _HeroCard({required this.activeCount});
 

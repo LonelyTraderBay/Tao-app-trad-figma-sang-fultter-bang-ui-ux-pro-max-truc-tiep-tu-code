@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -76,87 +77,90 @@ class _TradeHistoryExportPageState
       semanticLabel: 'SC-054 TradeHistoryExportPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Xuất lịch sử giao dịch',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.trade),
-            ),
-            Expanded(
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: SingleChildScrollView(
-                      padding: EdgeInsets.fromLTRB(
-                        20,
-                        14,
-                        20,
-                        bottomChrome + 126,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          _SummaryCard(stats: snapshot.stats),
-                          const SizedBox(height: 24),
-                          _Section(
-                            title: 'Định dạng file',
-                            child: _FormatSelector(
-                              formats: snapshot.formats,
-                              activeFormat: _format,
-                              onChanged: (format) {
-                                setState(() {
-                                  _format = format;
-                                  _result = null;
-                                });
-                              },
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Xuất lịch sử giao dịch',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.trade),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: SingleChildScrollView(
+                        padding: EdgeInsets.fromLTRB(
+                          20,
+                          14,
+                          20,
+                          bottomChrome + 126,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            _SummaryCard(stats: snapshot.stats),
+                            const SizedBox(height: 24),
+                            _Section(
+                              title: 'Định dạng file',
+                              child: _FormatSelector(
+                                formats: snapshot.formats,
+                                activeFormat: _format,
+                                onChanged: (format) {
+                                  setState(() {
+                                    _format = format;
+                                    _result = null;
+                                  });
+                                },
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 26),
-                          _Section(
-                            title: 'Khoảng thời gian',
-                            child: _PeriodSelector(
-                              periods: snapshot.periods,
-                              activePeriod: _period,
-                              onChanged: (period) {
-                                setState(() {
-                                  _period = period;
-                                  _result = null;
-                                });
-                              },
+                            const SizedBox(height: 26),
+                            _Section(
+                              title: 'Khoảng thời gian',
+                              child: _PeriodSelector(
+                                periods: snapshot.periods,
+                                activePeriod: _period,
+                                onChanged: (period) {
+                                  setState(() {
+                                    _period = period;
+                                    _result = null;
+                                  });
+                                },
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 26),
-                          _Section(
-                            title: 'Bao gồm dữ liệu',
-                            child: _IncludeList(
-                              includes: _includes,
-                              onToggle: _toggleInclude,
+                            const SizedBox(height: 26),
+                            _Section(
+                              title: 'Bao gồm dữ liệu',
+                              child: _IncludeList(
+                                includes: _includes,
+                                onToggle: _toggleInclude,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 18),
-                          const _TaxNote(),
-                        ],
+                            const SizedBox(height: 18),
+                            const _TaxNote(),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: bottomChrome,
-                    child: _ExportFooter(
-                      format: _format,
-                      period: _period,
-                      isExporting: _isExporting,
-                      result: _result,
-                      onExport: _handleExport,
-                      onNewExport: () => setState(() => _result = null),
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: bottomChrome,
+                      child: _ExportFooter(
+                        format: _format,
+                        period: _period,
+                        isExporting: _isExporting,
+                        result: _result,
+                        onExport: _handleExport,
+                        onNewExport: () => setState(() => _result = null),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

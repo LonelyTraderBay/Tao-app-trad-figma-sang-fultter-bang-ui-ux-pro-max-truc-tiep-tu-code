@@ -1,33 +1,5 @@
 part of '../pages/p2p_blacklist_page.dart';
 
-class _AddButton extends StatelessWidget {
-  const _AddButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      key: P2PBlacklistPage.addKey,
-      width: 36,
-      height: 36,
-      child: Material(
-        color: AppColors.sell10,
-        borderRadius: AppRadii.cardRadius,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.cardRadius,
-          child: const Icon(
-            Icons.person_add_alt_1_rounded,
-            color: AppColors.sell,
-            size: 18,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _SummaryCard extends StatelessWidget {
   const _SummaryCard({required this.snapshot, required this.entries});
 

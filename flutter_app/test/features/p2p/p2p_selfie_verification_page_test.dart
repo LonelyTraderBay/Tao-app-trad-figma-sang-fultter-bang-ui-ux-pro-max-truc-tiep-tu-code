@@ -40,7 +40,9 @@ void main() {
     expect(snapshot.livenessActions, hasLength(4));
     expect(snapshot.parentRoute, AppRoutePaths.p2pKycStatus);
     expect(snapshot.statusRoute, AppRoutePaths.p2pKycStatus);
-    expect(snapshot.supportRoute, '/support');
+    expect(snapshot.supportRoute, startsWith('/support?'));
+    expect(snapshot.supportRoute, contains('flow=kyc'));
+    expect(snapshot.supportRoute, contains('p2p-kyc-selfie'));
     expect(snapshot.contractNotes, contains('P2P requires escrow'));
     expect(
       snapshot.supportedStates,
@@ -101,6 +103,28 @@ void main() {
     await tester.tap(find.byKey(P2PSelfieVerificationPage.completeKey));
     await tester.pumpAndSettle();
     expect(find.byType(P2PKycStatusPage), findsOneWidget);
+  });
+
+  testWidgets('SC-251 support opens contextual KYC support', (tester) async {
+    await pumpSelfieVerification(tester);
+
+    await tester.ensureVisible(find.byKey(P2PSelfieVerificationPage.startKey));
+    await tester.tap(find.byKey(P2PSelfieVerificationPage.startKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(P2PSelfieVerificationPage.captureKey));
+    await tester.pumpAndSettle();
+
+    for (var i = 0; i < 4; i += 1) {
+      await tester.tap(find.byKey(P2PSelfieVerificationPage.livenessActionKey));
+      await tester.pumpAndSettle();
+    }
+
+    await tester.tap(find.text('Liên hệ hỗ trợ'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Hồ sơ hỗ trợ'), findsOneWidget);
+    expect(find.text('P2P selfie verification support'), findsOneWidget);
+    expect(find.text('p2p-kyc-selfie'), findsOneWidget);
   });
 
   testWidgets('SC-251 back returns to KYC status page', (tester) async {

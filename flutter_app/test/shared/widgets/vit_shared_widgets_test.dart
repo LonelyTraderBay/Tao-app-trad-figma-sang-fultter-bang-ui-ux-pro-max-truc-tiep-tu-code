@@ -16,6 +16,52 @@ Widget _wrap(Widget child) {
 }
 
 void main() {
+  testWidgets('showVitBottomSheet opens and returns a typed value', (
+    tester,
+  ) async {
+    Future<String?>? result;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Builder(
+            builder: (context) {
+              return ElevatedButton(
+                onPressed: () {
+                  result = showVitBottomSheet<String>(
+                    context: context,
+                    builder: (sheetContext) {
+                      return SafeArea(
+                        top: false,
+                        child: TextButton(
+                          onPressed: () =>
+                              Navigator.of(sheetContext).pop('selected'),
+                          child: const Text('Choose value'),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: const Text('Open sheet'),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Open sheet'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Choose value'), findsOneWidget);
+
+    await tester.tap(find.text('Choose value'));
+    await tester.pumpAndSettle();
+
+    expect(await result, 'selected');
+    expect(find.text('Choose value'), findsNothing);
+  });
+
   testWidgets('VitCard supports tap and visual variants', (tester) async {
     var taps = 0;
 

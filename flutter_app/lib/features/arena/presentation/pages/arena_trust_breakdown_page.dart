@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -49,52 +50,55 @@ class ArenaTrustBreakdownPage extends ConsumerWidget {
       semanticLabel: 'SC-199 ArenaTrustBreakdownPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Trust Score',
-              subtitle: 'Độ tin cậy · Open Arena',
-              showBack: true,
-              onBack: () => _close(context),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: snapshot.creator == null
-                      ? VitPageContent(
-                          padding: VitContentPadding.none,
-                          children: [
-                            VitEmptyState(
-                              icon: Icons.warning_amber_rounded,
-                              title: snapshot.emptyTitle,
-                              message: snapshot.emptySubtitle,
-                            ),
-                          ],
-                        )
-                      : VitPageContent(
-                          padding: VitContentPadding.compact,
-                          customGap: AppSpacing.x5,
-                          children: [
-                            _TrustBreakdownCard(snapshot: snapshot),
-                            _CreatorProfileLink(snapshot: snapshot),
-                            _SafetyLink(snapshot: snapshot),
-                            VitCtaButton(
-                              key: closeKey,
-                              onPressed: () => _close(context),
-                              child: const Text('Đóng'),
-                            ),
-                          ],
-                        ),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Trust Score',
+            subtitle: 'Độ tin cậy · Open Arena',
+            showBack: true,
+            onBack: () => _close(context),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: snapshot.creator == null
+                        ? VitPageContent(
+                            padding: VitContentPadding.none,
+                            children: [
+                              VitEmptyState(
+                                icon: Icons.warning_amber_rounded,
+                                title: snapshot.emptyTitle,
+                                message: snapshot.emptySubtitle,
+                              ),
+                            ],
+                          )
+                        : VitPageContent(
+                            padding: VitContentPadding.compact,
+                            customGap: AppSpacing.x5,
+                            children: [
+                              _TrustBreakdownCard(snapshot: snapshot),
+                              _CreatorProfileLink(snapshot: snapshot),
+                              _SafetyLink(snapshot: snapshot),
+                              VitCtaButton(
+                                key: closeKey,
+                                onPressed: () => _close(context),
+                                child: const Text('Đóng'),
+                              ),
+                            ],
+                          ),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

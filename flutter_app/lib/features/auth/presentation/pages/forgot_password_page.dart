@@ -8,7 +8,9 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -82,11 +84,11 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
   }
 
   void _goBack() {
-    if (context.canPop()) {
-      context.pop();
-      return;
-    }
-    context.go(AppRoutePaths.authLogin);
+    goBackOrFallback(
+      context,
+      fallbackPath: AppRoutePaths.authLogin,
+      mode: BackNavigationMode.historyThenFallback,
+    );
   }
 
   void _clearEmailError() {
@@ -229,64 +231,67 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return VitPageLayout(
       semanticLabel: 'SC-005 ForgotPasswordPage',
-      child: Column(
-        children: [
-          VitHeader(
-            title: 'Quên mật khẩu',
-            subtitle: 'Xác thực · Bảo mật',
-            showBack: true,
-            onBack: _goBack,
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              key: ForgotPasswordPage.contentKey,
-              padding: const EdgeInsets.only(bottom: AppSpacing.x6),
-              child: VitPageContent(
-                padding: VitContentPadding.relaxed,
-                gap: VitContentGap.relaxed,
-                children: [
-                  if (_step == _ForgotPasswordStep.input)
-                    _EmailStep(
-                      controller: _emailController,
-                      error: _emailError,
-                      onChanged: _clearEmailError,
+      child: VitAutoHideHeaderScaffold(
+        header: VitHeader(
+          title: 'Quên mật khẩu',
+          subtitle: 'Xác thực · Bảo mật',
+          showBack: true,
+          onBack: _goBack,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                key: ForgotPasswordPage.contentKey,
+                padding: const EdgeInsets.only(bottom: AppSpacing.x6),
+                child: VitPageContent(
+                  padding: VitContentPadding.relaxed,
+                  gap: VitContentGap.relaxed,
+                  children: [
+                    if (_step == _ForgotPasswordStep.input)
+                      _EmailStep(
+                        controller: _emailController,
+                        error: _emailError,
+                        onChanged: _clearEmailError,
+                      ),
+                    if (_step == _ForgotPasswordStep.otp)
+                      _OtpStep(
+                        controller: _otpController,
+                        email: _email,
+                        error: _otpError,
+                        onChanged: _handleOtpChanged,
+                      ),
+                    if (_step == _ForgotPasswordStep.reset)
+                      _ResetStep(
+                        newPasswordController: _newPasswordController,
+                        confirmPasswordController: _confirmPasswordController,
+                        showPassword: _showPassword,
+                        error: _passwordError,
+                        onChanged: _clearPasswordError,
+                        onTogglePassword: () {
+                          setState(() => _showPassword = !_showPassword);
+                        },
+                      ),
+                    if (_step == _ForgotPasswordStep.success)
+                      const _SuccessStep(),
+                    VitCtaButton(
+                      key: _step == _ForgotPasswordStep.success
+                          ? ForgotPasswordPage.loginKey
+                          : ForgotPasswordPage.submitKey,
+                      onPressed: _canSubmit ? _handlePrimaryAction : null,
+                      loading: _submitting,
+                      variant: _step == _ForgotPasswordStep.success
+                          ? VitCtaButtonVariant.auth
+                          : VitCtaButtonVariant.auth,
+                      child: Text(_buttonLabel),
                     ),
-                  if (_step == _ForgotPasswordStep.otp)
-                    _OtpStep(
-                      controller: _otpController,
-                      email: _email,
-                      error: _otpError,
-                      onChanged: _handleOtpChanged,
-                    ),
-                  if (_step == _ForgotPasswordStep.reset)
-                    _ResetStep(
-                      newPasswordController: _newPasswordController,
-                      confirmPasswordController: _confirmPasswordController,
-                      showPassword: _showPassword,
-                      error: _passwordError,
-                      onChanged: _clearPasswordError,
-                      onTogglePassword: () {
-                        setState(() => _showPassword = !_showPassword);
-                      },
-                    ),
-                  if (_step == _ForgotPasswordStep.success)
-                    const _SuccessStep(),
-                  VitCtaButton(
-                    key: _step == _ForgotPasswordStep.success
-                        ? ForgotPasswordPage.loginKey
-                        : ForgotPasswordPage.submitKey,
-                    onPressed: _canSubmit ? _handlePrimaryAction : null,
-                    loading: _submitting,
-                    variant: _step == _ForgotPasswordStep.success
-                        ? VitCtaButtonVariant.auth
-                        : VitCtaButtonVariant.auth,
-                    child: Text(_buttonLabel),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

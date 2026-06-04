@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/referral_controller_providers.dart';
@@ -74,85 +75,88 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
       semanticLabel: 'SC-286 ReferralHistoryPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ReferralHistoryPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _StatsRow(stats: snapshot.stats),
-                      const SizedBox(height: AppSpacing.x4),
-                      VitSearchBar(
-                        key: ReferralHistoryPage.searchKey,
-                        controller: _searchController,
-                        placeholder: snapshot.searchHint,
-                        variant: VitSearchBarVariant.compact,
-                        onChanged: (_) => setState(() {}),
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _FilterRail(
-                        filters: snapshot.filters,
-                        active: snapshot.filter,
-                        onChanged: (value) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _filter = value);
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _SortRail(
-                        options: snapshot.sortOptions,
-                        active: snapshot.sort,
-                        onChanged: (value) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _sort = value);
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      if (snapshot.friends.isEmpty)
-                        const VitEmptyState(
-                          key: ReferralHistoryPage.emptyKey,
-                          title: 'Không tìm thấy',
-                          message: 'Thử thay đổi bộ lọc hoặc từ khóa',
-                          icon: Icons.search_rounded,
-                        )
-                      else
-                        for (final friend in snapshot.friends) ...[
-                          _FriendCard(
-                            friend: friend,
-                            reminded: _remindedFriend == friend.id,
-                            onOpen: () => context.go(friend.route),
-                            onRemind: () {
-                              HapticFeedback.selectionClick();
-                              setState(() => _remindedFriend = friend.id);
-                            },
-                          ),
-                          const SizedBox(height: AppSpacing.x3),
-                        ],
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ReferralHistoryPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _StatsRow(stats: snapshot.stats),
+                        const SizedBox(height: AppSpacing.x4),
+                        VitSearchBar(
+                          key: ReferralHistoryPage.searchKey,
+                          controller: _searchController,
+                          placeholder: snapshot.searchHint,
+                          variant: VitSearchBarVariant.compact,
+                          onChanged: (_) => setState(() {}),
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        _FilterRail(
+                          filters: snapshot.filters,
+                          active: snapshot.filter,
+                          onChanged: (value) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _filter = value);
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        _SortRail(
+                          options: snapshot.sortOptions,
+                          active: snapshot.sort,
+                          onChanged: (value) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _sort = value);
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        if (snapshot.friends.isEmpty)
+                          const VitEmptyState(
+                            key: ReferralHistoryPage.emptyKey,
+                            title: 'Không tìm thấy',
+                            message: 'Thử thay đổi bộ lọc hoặc từ khóa',
+                            icon: Icons.search_rounded,
+                          )
+                        else
+                          for (final friend in snapshot.friends) ...[
+                            _FriendCard(
+                              friend: friend,
+                              reminded: _remindedFriend == friend.id,
+                              onOpen: () => context.go(friend.route),
+                              onRemind: () {
+                                HapticFeedback.selectionClick();
+                                setState(() => _remindedFriend = friend.id);
+                              },
+                            ),
+                            const SizedBox(height: AppSpacing.x3),
+                          ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

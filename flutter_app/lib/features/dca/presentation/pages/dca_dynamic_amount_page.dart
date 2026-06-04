@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -57,74 +58,83 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
 
     return VitPageLayout(
       semanticLabel: 'SC-175 DCADynamicAmount',
-      child: Column(
-        children: [
-          VitHeader(
-            title: 'Dynamic Amount',
-            subtitle: 'Số tiền · DCA',
-            showBack: true,
-            onBack: _close,
-            trailing: _HeaderSettingsButton(onPressed: _showSettingsNotice),
-          ),
-          Expanded(
-            child: Stack(
-              children: [
-                ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: DCADynamicAmount.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: contentBottom),
-                    child: VitPageContent(
-                      customGap: AppSpacing.x5,
-                      children: [
-                        _DynamicHero(
-                          option: activeOption,
-                          adjustment: adjustment,
-                          onChangeStrategy: _showStrategyNotice,
-                        ),
-                        _StrategyStrip(
-                          strategies: snapshot.strategies,
-                          activeStrategy: _activeStrategy,
-                          onChanged: (strategy) {
-                            setState(() => _activeStrategy = strategy);
-                          },
-                        ),
-                        _StrategyVisualization(
-                          strategy: _activeStrategy,
-                          option: activeOption,
-                          volatilityHistory: snapshot.volatilityHistory,
-                        ),
-                        _AmountHistoryCard(entries: snapshot.amountHistory),
-                        _RecentDetailsCard(entries: snapshot.amountHistory),
-                        _ConfigSection(
-                          option: activeOption,
-                          items:
-                              _activeStrategy == DcaDynamicStrategy.volatility
-                              ? snapshot.configItems
-                              : _configItemsFor(_activeStrategy),
-                        ),
-                        _StrategyExplainer(option: activeOption),
-                        const _DynamicDisclaimer(),
-                      ],
+      child: VitAutoHideHeaderScaffold(
+        header: VitHeader(
+          title: 'Dynamic Amount',
+          subtitle: 'Số tiền · DCA',
+          showBack: true,
+          onBack: _close,
+          actions: [
+            VitHeaderActionItem(
+              key: DCADynamicAmount.settingsKey,
+              type: VitHeaderActionType.settings,
+              onPressed: _showSettingsNotice,
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: DCADynamicAmount.contentKey,
+                      physics: const BouncingScrollPhysics(),
+                      padding: EdgeInsets.only(bottom: contentBottom),
+                      child: VitPageContent(
+                        customGap: AppSpacing.x5,
+                        children: [
+                          _DynamicHero(
+                            option: activeOption,
+                            adjustment: adjustment,
+                            onChangeStrategy: _showStrategyNotice,
+                          ),
+                          _StrategyStrip(
+                            strategies: snapshot.strategies,
+                            activeStrategy: _activeStrategy,
+                            onChanged: (strategy) {
+                              setState(() => _activeStrategy = strategy);
+                            },
+                          ),
+                          _StrategyVisualization(
+                            strategy: _activeStrategy,
+                            option: activeOption,
+                            volatilityHistory: snapshot.volatilityHistory,
+                          ),
+                          _AmountHistoryCard(entries: snapshot.amountHistory),
+                          _RecentDetailsCard(entries: snapshot.amountHistory),
+                          _ConfigSection(
+                            option: activeOption,
+                            items:
+                                _activeStrategy == DcaDynamicStrategy.volatility
+                                ? snapshot.configItems
+                                : _configItemsFor(_activeStrategy),
+                          ),
+                          _StrategyExplainer(option: activeOption),
+                          const _DynamicDisclaimer(),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  left: AppSpacing.contentPad,
-                  right: AppSpacing.contentPad,
-                  bottom: floatingBottom,
-                  child: _FloatingActions(
-                    onSettings: _showSettingsNotice,
-                    onApply: () => context.go(AppRoutePaths.dca),
+                  Positioned(
+                    left: AppSpacing.contentPad,
+                    right: AppSpacing.contentPad,
+                    bottom: floatingBottom,
+                    child: _FloatingActions(
+                      onSettings: _showSettingsNotice,
+                      onApply: () => context.go(AppRoutePaths.dca),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

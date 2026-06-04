@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -105,71 +106,77 @@ class _LaunchpadSwapAggregatorPageState
         type: MaterialType.transparency,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: snapshot.title,
-                  showBack: true,
-                  onBack: () => context.go(snapshot.backRoute),
-                ),
-                _Tabs(
-                  activeTab: _activeTab,
-                  onChanged: (tab) => setState(() => _activeTab = tab),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: LaunchpadSwapAggregatorPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
-                    child: VitPageContent(
-                      padding: VitContentPadding.defaultPadding,
-                      customGap: AppSpacing.x4,
-                      children: [
-                        if (_activeTab == _SwapTab.compare) ...[
-                          _SwapInputCard(
-                            fromToken: _fromToken,
-                            toToken: _toToken,
-                            amountController: _amountController,
-                            output: output,
-                            bestPrice: bestDex.price,
-                            onFlip: () {
-                              setState(() {
-                                final previous = _fromToken;
-                                _fromToken = _toToken;
-                                _toToken = previous;
-                              });
-                            },
-                            onAmountChanged: (_) => setState(() {}),
-                          ),
-                          _BestRouteAlert(bestDex: bestDex, savings: savings),
-                          _DexList(
-                            quotes: snapshot.dexQuotes,
-                            amount: amount,
-                            expandedDexId: _expandedDexId,
-                            onToggle: (id) => setState(() {
-                              _expandedDexId = _expandedDexId == id ? null : id;
-                            }),
-                          ),
-                          _SwapWarning(slippage: _slippage),
-                          if (_swapPreview != null)
-                            _SwapPreview(message: _swapPreview!),
-                        ] else if (_activeTab == _SwapTab.history) ...[
-                          _HistorySection(history: snapshot.history),
-                        ] else ...[
-                          _SettingsSection(
-                            slippage: _slippage,
-                            autoRefresh: _autoRefresh,
-                            onSlippageChanged: (value) =>
-                                setState(() => _slippage = value),
-                            onAutoRefreshChanged: (value) =>
-                                setState(() => _autoRefresh = value),
-                          ),
+            VitAutoHideHeaderScaffold(
+              bottomInset: bottomInset,
+              semanticLabel:
+                  'SC-314 LaunchpadSwapAggregatorPage scroll surface',
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: Column(
+                children: [
+                  _Tabs(
+                    activeTab: _activeTab,
+                    onChanged: (tab) => setState(() => _activeTab = tab),
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: LaunchpadSwapAggregatorPage.contentKey,
+                      physics: const BouncingScrollPhysics(),
+                      child: VitPageContent(
+                        padding: VitContentPadding.defaultPadding,
+                        customGap: AppSpacing.x4,
+                        children: [
+                          if (_activeTab == _SwapTab.compare) ...[
+                            _SwapInputCard(
+                              fromToken: _fromToken,
+                              toToken: _toToken,
+                              amountController: _amountController,
+                              output: output,
+                              bestPrice: bestDex.price,
+                              onFlip: () {
+                                setState(() {
+                                  final previous = _fromToken;
+                                  _fromToken = _toToken;
+                                  _toToken = previous;
+                                });
+                              },
+                              onAmountChanged: (_) => setState(() {}),
+                            ),
+                            _BestRouteAlert(bestDex: bestDex, savings: savings),
+                            _DexList(
+                              quotes: snapshot.dexQuotes,
+                              amount: amount,
+                              expandedDexId: _expandedDexId,
+                              onToggle: (id) => setState(() {
+                                _expandedDexId = _expandedDexId == id
+                                    ? null
+                                    : id;
+                              }),
+                            ),
+                            _SwapWarning(slippage: _slippage),
+                            if (_swapPreview != null)
+                              _SwapPreview(message: _swapPreview!),
+                          ] else if (_activeTab == _SwapTab.history) ...[
+                            _HistorySection(history: snapshot.history),
+                          ] else ...[
+                            _SettingsSection(
+                              slippage: _slippage,
+                              autoRefresh: _autoRefresh,
+                              onSlippageChanged: (value) =>
+                                  setState(() => _slippage = value),
+                              onAutoRefreshChanged: (value) =>
+                                  setState(() => _autoRefresh = value),
+                            ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_activeTab == _SwapTab.compare)
               Positioned(

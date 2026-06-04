@@ -1,3 +1,4 @@
+import 'package:vit_trade_flutter/core/product_flow/high_risk_flow_contract.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/repositories/wallet_repository.dart';
 

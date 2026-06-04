@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/auth/presentation/pages/forgot_passwo
 import 'package:vit_trade_flutter/features/auth/presentation/pages/two_fa_setup_page.dart';
 import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/pages/activity_log_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/profile_page.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/pages/security_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -52,6 +53,9 @@ void main() {
     ]);
     expect(snapshot.devices, hasLength(3));
     expect(snapshot.devices.first.name, 'iPhone 14 Pro');
+    expect(snapshot.supportRoute, startsWith('/support?'));
+    expect(snapshot.supportRoute, contains('flow=security'));
+    expect(snapshot.supportRoute, contains('profile-security'));
     expect(
       snapshot.supportedStates,
       containsAll([
@@ -70,6 +74,7 @@ void main() {
 
     expect(find.byType(SecurityPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byKey(SecurityPage.supportKey), findsOneWidget);
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_profile')), findsOneWidget);
@@ -138,5 +143,31 @@ void main() {
     expect(find.text('...'), findsOneWidget);
     await tester.pumpAndSettle(const Duration(milliseconds: 320));
     expect(find.byType(SecurityPage), findsOneWidget);
+  });
+
+  testWidgets('SC-158 support opens contextual security support', (
+    tester,
+  ) async {
+    await pumpSecurity(tester);
+
+    await tester.ensureVisible(find.byKey(SecurityPage.supportKey));
+    await tester.tap(find.byKey(SecurityPage.supportKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Hồ sơ hỗ trợ'), findsOneWidget);
+    expect(find.text('Account security support'), findsOneWidget);
+    expect(find.text('profile-security'), findsOneWidget);
+  });
+
+  testWidgets('SC-158 direct header back returns to profile parent', (
+    tester,
+  ) async {
+    await pumpSecurity(tester);
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ProfilePage), findsOneWidget);
+    expect(find.byType(SecurityPage), findsNothing);
   });
 }

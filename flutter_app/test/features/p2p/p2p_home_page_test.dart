@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
@@ -69,7 +70,7 @@ void main() {
     expect(find.byType(P2PHomePage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.byKey(P2PHomePage.offlineKey), findsOneWidget);
+    expect(find.byKey(P2PHomePage.offlineKey), findsNothing);
     expect(find.text('P2P'), findsOneWidget);
     expect(find.text('Lv.3 · P2P Trading'), findsOneWidget);
     expect(find.byKey(P2PHomePage.quickHubKey), findsOneWidget);
@@ -95,6 +96,44 @@ void main() {
       find.text('Merchant mới - kiểm tra kỹ trước khi giao dịch'),
       findsOneWidget,
     );
+  });
+
+  testWidgets('SC-282 shows cached-data banner below header when offline', (
+    tester,
+  ) async {
+    final offlineSnapshot = const MockP2PRepository().getHome().copyWith(
+      currentState: P2PScreenState.offline,
+      lastUpdatedLabel: '2 ph\u00FAt tr\u01B0\u1EDBc',
+    );
+
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          p2pHomeProvider.overrideWith((ref, request) => offlineSnapshot),
+        ],
+        child: VitTradeApp(
+          routerConfig: createAppRouter(initialLocation: AppRoutePaths.p2p),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(P2PHomePage.offlineKey), findsOneWidget);
+    expect(
+      find.text(
+        'M\u1EA5t k\u1EBFt n\u1ED1i. \u0110ang hi\u1EC3n th\u1ECB d\u1EEF li\u1EC7u g\u1EA7n nh\u1EA5t.',
+      ),
+      findsOneWidget,
+    );
+
+    final headerBottom = tester.getBottomLeft(find.text('P2P').first).dy;
+    final bannerTop = tester.getTopLeft(find.byKey(P2PHomePage.offlineKey)).dy;
+    expect(bannerTop, greaterThan(headerBottom));
   });
 
   testWidgets('SC-282 search, sell tab, and filters update locally', (

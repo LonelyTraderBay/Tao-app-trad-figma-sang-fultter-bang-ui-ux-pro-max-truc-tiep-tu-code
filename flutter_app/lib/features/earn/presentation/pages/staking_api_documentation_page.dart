@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_api
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_api_documentation_overview.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
@@ -81,76 +82,81 @@ class _StakingApiDocumentationPageState
       semanticLabel: 'SC-379 StakingAPIDocumentationPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    StakingApiDocumentationInfoBanner(snapshot: snapshot),
-                    StakingApiDocumentationQuickStats(stats: snapshot.stats),
-                    StakingApiDocumentationTabs(
-                      active: _tab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (_tab == StakingApiDocumentationTab.endpoints)
-                      StakingApiDocumentationEndpointsTab(
-                        snapshot: snapshot,
-                        selectedIndex: _selectedEndpoint,
-                        responseCopied: _responseCopied,
-                        onSelect: (index) {
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      StakingApiDocumentationInfoBanner(snapshot: snapshot),
+                      StakingApiDocumentationQuickStats(stats: snapshot.stats),
+                      StakingApiDocumentationTabs(
+                        active: _tab,
+                        onChanged: (tab) {
                           HapticFeedback.selectionClick();
-                          setState(() {
-                            _selectedEndpoint = index;
-                            _responseCopied = false;
-                          });
+                          setState(() => _tab = tab);
                         },
-                        onCopyResponse: () {
-                          _copy(
-                            snapshot.endpoints[_selectedEndpoint].responseJson,
-                          );
-                          setState(() => _responseCopied = true);
-                        },
-                      )
-                    else if (_tab == StakingApiDocumentationTab.examples)
-                      StakingApiDocumentationExamplesTab(
-                        snapshot: snapshot,
-                        language: _language,
-                        copied: _exampleCopied,
-                        onLanguageChanged: (language) {
-                          HapticFeedback.selectionClick();
-                          setState(() {
-                            _language = language;
-                            _exampleCopied = false;
-                          });
-                        },
-                        onCopy: (source) {
-                          _copy(source);
-                          setState(() => _exampleCopied = true);
-                        },
-                      )
-                    else
-                      StakingApiDocumentationAuthTab(snapshot: snapshot),
-                    StakingApiDocumentationFooterNote(
-                      note: snapshot.footerNote,
-                    ),
-                  ],
+                      ),
+                      if (_tab == StakingApiDocumentationTab.endpoints)
+                        StakingApiDocumentationEndpointsTab(
+                          snapshot: snapshot,
+                          selectedIndex: _selectedEndpoint,
+                          responseCopied: _responseCopied,
+                          onSelect: (index) {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              _selectedEndpoint = index;
+                              _responseCopied = false;
+                            });
+                          },
+                          onCopyResponse: () {
+                            _copy(
+                              snapshot
+                                  .endpoints[_selectedEndpoint]
+                                  .responseJson,
+                            );
+                            setState(() => _responseCopied = true);
+                          },
+                        )
+                      else if (_tab == StakingApiDocumentationTab.examples)
+                        StakingApiDocumentationExamplesTab(
+                          snapshot: snapshot,
+                          language: _language,
+                          copied: _exampleCopied,
+                          onLanguageChanged: (language) {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              _language = language;
+                              _exampleCopied = false;
+                            });
+                          },
+                          onCopy: (source) {
+                            _copy(source);
+                            setState(() => _exampleCopied = true);
+                          },
+                        )
+                      else
+                        StakingApiDocumentationAuthTab(snapshot: snapshot),
+                      StakingApiDocumentationFooterNote(
+                        note: snapshot.footerNote,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

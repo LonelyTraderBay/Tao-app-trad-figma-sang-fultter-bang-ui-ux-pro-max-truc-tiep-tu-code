@@ -32,6 +32,9 @@ void main() {
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));
     expect(snapshot.title, 'FAQ');
     expect(snapshot.backRoute, AppRoutePaths.earnStaking);
+    expect(snapshot.supportRoute, startsWith('/support?'));
+    expect(snapshot.supportRoute, contains('flow=staking'));
+    expect(snapshot.supportRoute, contains('staking-faq'));
     expect(snapshot.searchPlaceholder, 'Tìm câu hỏi...');
     expect(snapshot.items, hasLength(20));
     expect(
@@ -117,5 +120,19 @@ void main() {
 
     expect(find.byType(StakingEarnPage), findsOneWidget);
     expect(find.text('Staking & Earn'), findsOneWidget);
+  });
+
+  testWidgets('SC-370 support opens contextual staking support', (
+    tester,
+  ) async {
+    await pumpFAQ(tester);
+
+    await tester.ensureVisible(find.byKey(StakingFAQPage.supportKey));
+    await tester.tap(find.text('Live Chat'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Hồ sơ hỗ trợ'), findsOneWidget);
+    expect(find.text('Staking FAQ support'), findsOneWidget);
+    expect(find.text('staking-faq'), findsOneWidget);
   });
 }

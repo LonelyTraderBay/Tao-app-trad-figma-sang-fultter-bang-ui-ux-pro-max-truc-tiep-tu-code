@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
@@ -16,7 +17,6 @@ part '../widgets/transaction_history_page_sections.dart';
 part '../widgets/transaction_history_page_common.dart';
 
 const _historyBackground = AppColors.bg;
-const _historyPanel2 = AppColors.surface2;
 const _historyPrimary = AppColors.primary;
 const _historyGreen = AppColors.buy;
 const _historyRed = AppColors.sell;
@@ -58,47 +58,55 @@ class _TransactionHistoryPageState
       semanticLabel: 'SC-136 TxHistoryPage',
       child: Material(
         color: _historyBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Lịch sử giao dịch',
-              subtitle: 'Lịch sử · Wallet',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.wallet),
-              trailing: _HeaderExportButton(
-                onTap: () => _showExportNotice(transactions.length),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Lịch sử giao dịch',
+            subtitle: 'Lịch sử · Wallet',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.wallet),
+            actions: [
+              VitHeaderActionItem(
+                type: VitHeaderActionType.export,
+                tooltip: 'Xuất lịch sử',
+                onPressed: () => _showExportNotice(transactions.length),
               ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: TransactionHistoryPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _ExportBar(
-                      count: transactions.length,
-                      onExport: () => _showExportNotice(transactions.length),
-                    ),
-                    const SizedBox(height: 24),
-                    _FilterTabs(
-                      filters: snapshot.filters,
-                      active: _filter,
-                      onChanged: (id) => setState(() => _filter = id),
-                    ),
-                    const SizedBox(height: 22),
-                    for (final group in grouped)
-                      _TransactionGroup(
-                        group: group,
-                        onTransactionTap: (tx) =>
-                            context.go(AppRoutePaths.walletTransaction(tx.id)),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: TransactionHistoryPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _ExportBar(
+                        count: transactions.length,
+                        onExport: () => _showExportNotice(transactions.length),
                       ),
-                    if (transactions.isNotEmpty) const _EndOfList(),
-                  ],
+                      const SizedBox(height: 24),
+                      _FilterTabs(
+                        filters: snapshot.filters,
+                        active: _filter,
+                        onChanged: (id) => setState(() => _filter = id),
+                      ),
+                      const SizedBox(height: 22),
+                      for (final group in grouped)
+                        _TransactionGroup(
+                          group: group,
+                          onTransactionTap: (tx) => context.go(
+                            AppRoutePaths.walletTransaction(tx.id),
+                          ),
+                        ),
+                      if (transactions.isNotEmpty) const _EndOfList(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

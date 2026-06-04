@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_multi_manager_sections.dart';
@@ -58,25 +59,28 @@ class _WalletMultiManagerPageState
       semanticLabel: 'SC-148 WalletMultiManagerPage',
       child: Material(
         color: _managerBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Multi-Wallet Manager',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.wallet),
-            ),
-            WalletManagerTabs(
-              activeTab: _tab,
-              onChanged: (tab) => setState(() => _tab = tab),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: WalletMultiManagerPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
-                child: _contentForTab(snapshot),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Multi-Wallet Manager',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.wallet),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              WalletManagerTabs(
+                activeTab: _tab,
+                onChanged: (tab) => setState(() => _tab = tab),
               ),
-            ),
-          ],
+              Expanded(
+                child: SingleChildScrollView(
+                  key: WalletMultiManagerPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
+                  child: _contentForTab(snapshot),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

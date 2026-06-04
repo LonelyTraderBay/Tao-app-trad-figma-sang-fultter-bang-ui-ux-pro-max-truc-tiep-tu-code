@@ -28,6 +28,7 @@ final class TradeScreenSnapshot {
     required this.balances,
     required this.supportedStates,
     required this.lastUpdatedLabel,
+    this.highRiskContractId,
   });
 
   final TradePair pair;
@@ -41,6 +42,7 @@ final class TradeScreenSnapshot {
   final TradeBalances balances;
   final List<TradeScreenState> supportedStates;
   final String lastUpdatedLabel;
+  final String? highRiskContractId;
 }
 
 final class TradePair {
@@ -142,14 +144,18 @@ final class TradeOrderReceiptSnapshot {
   const TradeOrderReceiptSnapshot({
     required this.trade,
     required this.receipt,
+    required this.supportRoute,
     required this.supportedStates,
     required this.lastUpdatedLabel,
+    this.highRiskContractId,
   });
 
   final TradeScreenSnapshot trade;
   final TradeOrderReceiptDetails receipt;
+  final String supportRoute;
   final List<TradeScreenState> supportedStates;
   final String lastUpdatedLabel;
+  final String? highRiskContractId;
 }
 
 final class TradeOrderReceiptDetails {

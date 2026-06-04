@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/copy_provider_detail_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/copy_trading_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/copy_trading_v2_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/pre_copy_assessment_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -15,6 +16,7 @@ void main() {
   Future<void> pumpCopyProviderDetail(
     WidgetTester tester, {
     String providerId = 'provider001',
+    String? initialLocation,
   }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
@@ -25,7 +27,8 @@ void main() {
       ProviderScope(
         child: VitTradeApp(
           routerConfig: createAppRouter(
-            initialLocation: AppRoutePaths.tradeCopyProvider(providerId),
+            initialLocation:
+                initialLocation ?? AppRoutePaths.tradeCopyProvider(providerId),
           ),
         ),
       ),
@@ -69,6 +72,44 @@ void main() {
 
   testWidgets('SC-070 back returns to SC-063 CopyTradingPage', (tester) async {
     await pumpCopyProviderDetail(tester);
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(CopyTradingPage), findsOneWidget);
+    expect(find.byType(CopyProviderDetailPage), findsNothing);
+  });
+
+  testWidgets('SC-070 valid back query returns to the encoded source route', (
+    tester,
+  ) async {
+    await pumpCopyProviderDetail(
+      tester,
+      providerId: 'ct001',
+      initialLocation: AppRoutePaths.tradeCopyProvider(
+        'ct001',
+        backPath: AppRoutePaths.tradeCopyTradingV2,
+      ),
+    );
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(CopyTradingV2Page), findsOneWidget);
+    expect(find.byType(CopyProviderDetailPage), findsNothing);
+  });
+
+  testWidgets('SC-070 invalid back query falls back to copy trading parent', (
+    tester,
+  ) async {
+    await pumpCopyProviderDetail(
+      tester,
+      providerId: 'ct001',
+      initialLocation: AppRoutePaths.tradeCopyProvider(
+        'ct001',
+        backPath: 'https://evil.example/phish',
+      ),
+    );
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));
     await tester.pumpAndSettle();

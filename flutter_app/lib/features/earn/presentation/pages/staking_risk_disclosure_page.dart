@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -60,53 +61,56 @@ class _StakingRiskDisclosurePageState
       semanticLabel: 'SC-354 StakingRiskDisclosurePage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _WarningBanner(snapshot: snapshot),
-                    _RiskTabs(
-                      tabs: snapshot.tabs,
-                      active: activeTab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _activeTab = tab);
-                      },
-                    ),
-                    if (activeTab == 'overview')
-                      _OverviewTab(snapshot: snapshot)
-                    else if (activeTab == 'categories')
-                      _CategoriesTab(
-                        snapshot: snapshot,
-                        expandedRisk: _expandedRisk,
-                        onToggle: (id) {
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _WarningBanner(snapshot: snapshot),
+                      _RiskTabs(
+                        tabs: snapshot.tabs,
+                        active: activeTab,
+                        onChanged: (tab) {
                           HapticFeedback.selectionClick();
-                          setState(() {
-                            _expandedRisk = _expandedRisk == id ? null : id;
-                          });
+                          setState(() => _activeTab = tab);
                         },
-                      )
-                    else
-                      _AssessmentTab(
-                        snapshot: snapshot,
-                        onStart: () => context.go(snapshot.assessmentRoute),
                       ),
-                  ],
+                      if (activeTab == 'overview')
+                        _OverviewTab(snapshot: snapshot)
+                      else if (activeTab == 'categories')
+                        _CategoriesTab(
+                          snapshot: snapshot,
+                          expandedRisk: _expandedRisk,
+                          onToggle: (id) {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              _expandedRisk = _expandedRisk == id ? null : id;
+                            });
+                          },
+                        )
+                      else
+                        _AssessmentTab(
+                          snapshot: snapshot,
+                          onStart: () => context.go(snapshot.assessmentRoute),
+                        ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -49,95 +50,101 @@ class P2PSecurityCenterPage extends ConsumerWidget {
       semanticLabel: 'SC-253 P2PSecurityCenterPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Security Center',
-              subtitle: 'Bảo mật · P2P',
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-              trailing: _HeaderSettingsButton(
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Security Center',
+            subtitle: 'Bảo mật · P2P',
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+            actions: [
+              VitHeaderActionItem(
+                type: VitHeaderActionType.settings,
                 onPressed: () {
                   HapticFeedback.selectionClick();
                   context.go(snapshot.settingsRoute);
                 },
               ),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _SecurityScoreCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      _SecurityFeatures(
-                        features: snapshot.features,
-                        onOpen: (route) {
-                          HapticFeedback.selectionClick();
-                          context.go(route);
-                        },
-                      ),
-                      _QuickActions(
-                        actions: snapshot.quickActions,
-                        onOpen: (route) {
-                          HapticFeedback.selectionClick();
-                          context.go(route);
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x6),
-                      _RecentEvents(events: snapshot.recentEvents),
-                      const SizedBox(height: AppSpacing.x3),
-                      VitCard(
-                        key: P2PSecurityCenterPage.viewAllKey,
-                        radius: VitCardRadius.lg,
-                        variant: VitCardVariant.inner,
-                        padding: EdgeInsets.zero,
-                        onTap: () {
-                          HapticFeedback.selectionClick();
-                          context.go(snapshot.loginHistoryRoute);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: AppSpacing.x3,
-                            horizontal: AppSpacing.x4,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Xem tất cả hoạt động',
-                                style: AppTextStyles.baseMedium.copyWith(
-                                  color: AppColors.text2,
-                                  fontWeight: AppTextStyles.bold,
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _SecurityScoreCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        _SecurityFeatures(
+                          features: snapshot.features,
+                          onOpen: (route) {
+                            HapticFeedback.selectionClick();
+                            context.go(route);
+                          },
+                        ),
+                        _QuickActions(
+                          actions: snapshot.quickActions,
+                          onOpen: (route) {
+                            HapticFeedback.selectionClick();
+                            context.go(route);
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x6),
+                        _RecentEvents(events: snapshot.recentEvents),
+                        const SizedBox(height: AppSpacing.x3),
+                        VitCard(
+                          key: P2PSecurityCenterPage.viewAllKey,
+                          radius: VitCardRadius.lg,
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.zero,
+                          onTap: () {
+                            HapticFeedback.selectionClick();
+                            context.go(snapshot.loginHistoryRoute);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: AppSpacing.x3,
+                              horizontal: AppSpacing.x4,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Xem tất cả hoạt động',
+                                  style: AppTextStyles.baseMedium.copyWith(
+                                    color: AppColors.text2,
+                                    fontWeight: AppTextStyles.bold,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: AppSpacing.x1),
-                              const Icon(
-                                Icons.chevron_right_rounded,
-                                color: AppColors.text3,
-                                size: AppSpacing.iconSm,
-                              ),
-                            ],
+                                const SizedBox(width: AppSpacing.x1),
+                                const Icon(
+                                  Icons.chevron_right_rounded,
+                                  color: AppColors.text3,
+                                  size: AppSpacing.iconSm,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -174,90 +181,93 @@ class P2PWhitelistModePage extends ConsumerWidget {
       semanticLabel: 'SC-253 P2PWhitelistModePage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Whitelist Mode',
-              subtitle: 'Security Center · P2P',
-              showBack: true,
-              onBack: () => context.go('/p2p/security/center'),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.fromLTRB(
-                  AppSpacing.contentPad,
-                  AppSpacing.x4,
-                  AppSpacing.contentPad,
-                  bottomInset,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    VitCard(
-                      radius: VitCardRadius.lg,
-                      padding: const EdgeInsets.all(AppSpacing.x5),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const _IconBadge(
-                            icon: Icons.shield_outlined,
-                            color: AppModuleAccents.p2p,
-                          ),
-                          const SizedBox(height: AppSpacing.x4),
-                          Text(
-                            'Trusted device whitelist',
-                            style: AppTextStyles.sectionTitle,
-                          ),
-                          const SizedBox(height: AppSpacing.x2),
-                          Text(
-                            'Only reviewed devices and protected payment sessions can continue sensitive P2P actions.',
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text2,
-                              height: 1.45,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Whitelist Mode',
+            subtitle: 'Security Center · P2P',
+            showBack: true,
+            onBack: () => context.go('/p2p/security/center'),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x4,
+                    AppSpacing.contentPad,
+                    bottomInset,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      VitCard(
+                        radius: VitCardRadius.lg,
+                        padding: const EdgeInsets.all(AppSpacing.x5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const _IconBadge(
+                              icon: Icons.shield_outlined,
+                              color: AppModuleAccents.p2p,
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: AppSpacing.x4),
+                            Text(
+                              'Trusted device whitelist',
+                              style: AppTextStyles.sectionTitle,
+                            ),
+                            const SizedBox(height: AppSpacing.x2),
+                            Text(
+                              'Only reviewed devices and protected payment sessions can continue sensitive P2P actions.',
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.text2,
+                                height: 1.45,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: AppSpacing.x4),
-                    _WhitelistAction(
-                      key: devicesKey,
-                      icon: Icons.desktop_windows_rounded,
-                      title: 'Review trusted devices',
-                      body:
-                          'Check recent devices before enabling stricter P2P allow-lists.',
-                      onTap: () {
-                        HapticFeedback.selectionClick();
-                        context.go(trustedDevicesRoute);
-                      },
-                    ),
-                    const SizedBox(height: AppSpacing.x3),
-                    _WhitelistAction(
-                      key: antiPhishingKey,
-                      icon: Icons.gpp_good_outlined,
-                      title: 'Confirm anti-phishing code',
-                      body:
-                          'Keep payment and escrow messages recognizable before changing whitelist rules.',
-                      onTap: () {
-                        HapticFeedback.selectionClick();
-                        context.go(antiPhishingRoute);
-                      },
-                    ),
-                    const SizedBox(height: AppSpacing.x5),
-                    VitCtaButton(
-                      onPressed: () {
-                        HapticFeedback.selectionClick();
-                        context.go('/p2p/security/center');
-                      },
-                      child: const Text('Back to Security Center'),
-                    ),
-                  ],
+                      const SizedBox(height: AppSpacing.x4),
+                      _WhitelistAction(
+                        key: devicesKey,
+                        icon: Icons.desktop_windows_rounded,
+                        title: 'Review trusted devices',
+                        body:
+                            'Check recent devices before enabling stricter P2P allow-lists.',
+                        onTap: () {
+                          HapticFeedback.selectionClick();
+                          context.go(trustedDevicesRoute);
+                        },
+                      ),
+                      const SizedBox(height: AppSpacing.x3),
+                      _WhitelistAction(
+                        key: antiPhishingKey,
+                        icon: Icons.gpp_good_outlined,
+                        title: 'Confirm anti-phishing code',
+                        body:
+                            'Keep payment and escrow messages recognizable before changing whitelist rules.',
+                        onTap: () {
+                          HapticFeedback.selectionClick();
+                          context.go(antiPhishingRoute);
+                        },
+                      ),
+                      const SizedBox(height: AppSpacing.x5),
+                      VitCtaButton(
+                        onPressed: () {
+                          HapticFeedback.selectionClick();
+                          context.go('/p2p/security/center');
+                        },
+                        child: const Text('Back to Security Center'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

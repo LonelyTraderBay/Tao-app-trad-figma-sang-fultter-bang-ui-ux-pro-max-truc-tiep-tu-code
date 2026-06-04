@@ -21,44 +21,47 @@ class _StakingProofOfReservesPageState
       semanticLabel: 'SC-380 StakingProofOfReservesPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _InfoBanner(snapshot: snapshot),
-                    _ReserveTabs(
-                      active: _tab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (_tab == _ReserveTab.overview)
-                      _OverviewTab(snapshot: snapshot)
-                    else if (_tab == _ReserveTab.assets)
-                      _AssetsTab(snapshot: snapshot)
-                    else
-                      _VerifyTab(
-                        snapshot: snapshot,
-                        onVerify: () => _openVerifySheet(snapshot),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _InfoBanner(snapshot: snapshot),
+                      _ReserveTabs(
+                        active: _tab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
                       ),
-                    _FooterNote(note: snapshot.footerNote),
-                  ],
+                      if (_tab == _ReserveTab.overview)
+                        _OverviewTab(snapshot: snapshot)
+                      else if (_tab == _ReserveTab.assets)
+                        _AssetsTab(snapshot: snapshot)
+                      else
+                        _VerifyTab(
+                          snapshot: snapshot,
+                          onVerify: () => _openVerifySheet(snapshot),
+                        ),
+                      _FooterNote(note: snapshot.footerNote),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -66,7 +69,7 @@ class _StakingProofOfReservesPageState
 
   Future<void> _openVerifySheet(StakingProofOfReservesSnapshot snapshot) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,

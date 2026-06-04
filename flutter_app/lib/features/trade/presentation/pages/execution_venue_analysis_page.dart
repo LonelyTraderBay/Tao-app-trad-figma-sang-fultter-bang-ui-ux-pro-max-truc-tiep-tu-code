@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -67,53 +68,57 @@ class _ExecutionVenueAnalysisPageState
         color: _venueBackground,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: 'Execution Venue Analysis',
-                  subtitle: 'Detailed Comparison',
-                  showBack: true,
-                  onBack: () =>
-                      context.go(AppRoutePaths.tradeCopyBestExecutionReports),
-                  trailing: IconButton(
+            VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Execution Venue Analysis',
+                subtitle: 'Detailed Comparison',
+                showBack: true,
+                onBack: () =>
+                    context.go(AppRoutePaths.tradeCopyBestExecutionReports),
+                actions: [
+                  VitHeaderActionItem(
+                    type: VitHeaderActionType.export,
                     onPressed: () =>
                         setState(() => _notice = 'Analysis export queued'),
-                    icon: const Icon(Icons.download_rounded, size: 19),
-                    color: AppColors.text1,
                   ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: ExecutionVenueAnalysisPage.contentKey,
-                    padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _SummaryGrid(summary: snapshot.summary),
-                        const SizedBox(height: 25),
-                        _SortSelector(
-                          activeId: _sort,
-                          onChanged: (id) => setState(() => _sort = id),
-                        ),
-                        const SizedBox(height: 25),
-                        _Tabs(
-                          activeId: _tab,
-                          onChanged: (id) => setState(() => _tab = id),
-                        ),
-                        const SizedBox(height: 26),
-                        if (_tab == 'comparison')
-                          _ComparisonTab(venues: venues)
-                        else if (_tab == 'costs')
-                          _CostsTab(venues: venues)
-                        else if (_tab == 'speed')
-                          _SpeedTab(venues: venues)
-                        else
-                          _TrendsTab(trends: snapshot.costTrends),
-                      ],
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: ExecutionVenueAnalysisPage.contentKey,
+                      padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _SummaryGrid(summary: snapshot.summary),
+                          const SizedBox(height: 25),
+                          _SortSelector(
+                            activeId: _sort,
+                            onChanged: (id) => setState(() => _sort = id),
+                          ),
+                          const SizedBox(height: 25),
+                          _Tabs(
+                            activeId: _tab,
+                            onChanged: (id) => setState(() => _tab = id),
+                          ),
+                          const SizedBox(height: 26),
+                          if (_tab == 'comparison')
+                            _ComparisonTab(venues: venues)
+                          else if (_tab == 'costs')
+                            _CostsTab(venues: venues)
+                          else if (_tab == 'speed')
+                            _SpeedTab(venues: venues)
+                          else
+                            _TrendsTab(trends: snapshot.costTrends),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_notice != null)
               _NoticePanel(

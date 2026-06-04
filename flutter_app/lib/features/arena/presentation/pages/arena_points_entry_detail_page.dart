@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -63,66 +64,69 @@ class _ArenaPointsEntryDetailPageState
       semanticLabel: 'SC-200 ArenaPointsEntryDetailPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Chi tiết giao dịch điểm',
-              subtitle: 'Arena Points · Open Arena',
-              showBack: true,
-              onBack: () => _close(context),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ArenaPointsEntryDetailPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: snapshot.entry == null
-                      ? VitPageContent(
-                          padding: VitContentPadding.none,
-                          children: [
-                            VitEmptyState(
-                              icon: Icons.warning_amber_rounded,
-                              title: snapshot.emptyTitle,
-                              message: snapshot.emptySubtitle,
-                            ),
-                          ],
-                        )
-                      : VitPageContent(
-                          padding: VitContentPadding.compact,
-                          customGap: AppSpacing.x5,
-                          children: [
-                            _AmountHero(entry: snapshot.entry!),
-                            _EntryDetails(entry: snapshot.entry!),
-                            _BalanceCard(entry: snapshot.entry!),
-                            _ReferenceCard(
-                              entry: snapshot.entry!,
-                              copied: _copied,
-                              onCopy: () => _copyReference(snapshot.entry!),
-                            ),
-                            _AuditNotice(disclaimer: snapshot.disclaimer),
-                            if (_supportOpened)
-                              const VitStatusPill(
-                                label: 'Hỗ trợ đã nhận yêu cầu',
-                                status: VitStatusPillStatus.info,
-                                size: VitStatusPillSize.md,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Chi tiết giao dịch điểm',
+            subtitle: 'Arena Points · Open Arena',
+            showBack: true,
+            onBack: () => _close(context),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ArenaPointsEntryDetailPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: snapshot.entry == null
+                        ? VitPageContent(
+                            padding: VitContentPadding.none,
+                            children: [
+                              VitEmptyState(
+                                icon: Icons.warning_amber_rounded,
+                                title: snapshot.emptyTitle,
+                                message: snapshot.emptySubtitle,
                               ),
-                            _EntryActions(
-                              entry: snapshot.entry!,
-                              onSupport: () {
-                                HapticFeedback.selectionClick();
-                                setState(() => _supportOpened = true);
-                              },
-                            ),
-                          ],
-                        ),
+                            ],
+                          )
+                        : VitPageContent(
+                            padding: VitContentPadding.compact,
+                            customGap: AppSpacing.x5,
+                            children: [
+                              _AmountHero(entry: snapshot.entry!),
+                              _EntryDetails(entry: snapshot.entry!),
+                              _BalanceCard(entry: snapshot.entry!),
+                              _ReferenceCard(
+                                entry: snapshot.entry!,
+                                copied: _copied,
+                                onCopy: () => _copyReference(snapshot.entry!),
+                              ),
+                              _AuditNotice(disclaimer: snapshot.disclaimer),
+                              if (_supportOpened)
+                                const VitStatusPill(
+                                  label: 'Hỗ trợ đã nhận yêu cầu',
+                                  status: VitStatusPillStatus.info,
+                                  size: VitStatusPillSize.md,
+                                ),
+                              _EntryActions(
+                                entry: snapshot.entry!,
+                                onSupport: () {
+                                  HapticFeedback.selectionClick();
+                                  setState(() => _supportOpened = true);
+                                },
+                              ),
+                            ],
+                          ),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

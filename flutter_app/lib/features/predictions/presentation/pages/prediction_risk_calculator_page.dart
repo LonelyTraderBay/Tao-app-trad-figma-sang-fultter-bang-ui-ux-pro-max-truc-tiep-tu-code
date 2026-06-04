@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -129,56 +130,59 @@ class _PredictionRiskCalculatorPageState
       semanticLabel: 'SC-036 PredictionRiskCalculatorPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Risk Calculator',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.marketsPredictions),
-            ),
-            _RiskTabBar(
-              activeTab: _activeTab,
-              onChanged: (tab) => setState(() => _activeTab = tab),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: PredictionRiskCalculatorPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 16,
-                    children: _activeTab == _RiskTab.calculator
-                        ? [
-                            _PositionInfoCard(
-                              eventController: _eventController,
-                              sharesController: _sharesController,
-                              entryPriceController: _entryPriceController,
-                              currentPriceController: _currentPriceController,
-                              riskBudgetController: _riskBudgetController,
-                              outcome: _outcome,
-                              onOutcomeChanged: (value) =>
-                                  setState(() => _outcome = value),
-                            ),
-                            _PositionSummary(inputs: inputs),
-                            _RiskAnalysis(metrics: metrics),
-                            _KellyRecommendation(
-                              metrics: metrics,
-                              riskBudget: inputs.riskBudget,
-                            ),
-                            const _RiskWarning(),
-                          ]
-                        : _activeTab == _RiskTab.scenarios
-                        ? [_ScenariosTab(inputs: inputs, metrics: metrics)]
-                        : const [_GuideTab()],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Risk Calculator',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.marketsPredictions),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _RiskTabBar(
+                activeTab: _activeTab,
+                onChanged: (tab) => setState(() => _activeTab = tab),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: PredictionRiskCalculatorPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 16,
+                      children: _activeTab == _RiskTab.calculator
+                          ? [
+                              _PositionInfoCard(
+                                eventController: _eventController,
+                                sharesController: _sharesController,
+                                entryPriceController: _entryPriceController,
+                                currentPriceController: _currentPriceController,
+                                riskBudgetController: _riskBudgetController,
+                                outcome: _outcome,
+                                onOutcomeChanged: (value) =>
+                                    setState(() => _outcome = value),
+                              ),
+                              _PositionSummary(inputs: inputs),
+                              _RiskAnalysis(metrics: metrics),
+                              _KellyRecommendation(
+                                metrics: metrics,
+                                riskBudget: inputs.riskBudget,
+                              ),
+                              const _RiskWarning(),
+                            ]
+                          : _activeTab == _RiskTab.scenarios
+                          ? [_ScenariosTab(inputs: inputs, metrics: metrics)]
+                          : const [_GuideTab()],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

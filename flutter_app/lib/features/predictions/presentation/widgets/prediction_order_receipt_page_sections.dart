@@ -42,6 +42,14 @@ class _ReceiptContent extends StatelessWidget {
           customGap: 15,
           children: [
             _ReceiptHero(receipt: receipt),
+            if (snapshot.highRiskContractId != null)
+              VitHighRiskStatePanel(
+                state: VitHighRiskUiState.success,
+                title: 'Prediction receipt state tracked',
+                message:
+                    'Submitted status, receipt detail, portfolio history and support recovery stay bound to the shared prediction contract.',
+                contractId: snapshot.highRiskContractId,
+              ),
             _OrderSummary(receipt: receipt),
             _TimelineCard(receipt: receipt),
             _TimestampCard(receipt: receipt),

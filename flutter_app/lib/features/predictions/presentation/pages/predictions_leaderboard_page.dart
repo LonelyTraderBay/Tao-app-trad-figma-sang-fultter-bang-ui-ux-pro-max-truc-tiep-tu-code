@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -68,55 +69,58 @@ class _PredictionsLeaderboardPageState
       semanticLabel: 'SC-033 PredictionsLeaderboardPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Leaderboard',
-              subtitle: 'Bảng xếp hạng · Prediction',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.marketsPredictions),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: PredictionsLeaderboardPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 16,
-                    children: [
-                      _TimeFilters(
-                        active: _timeFilter,
-                        onSelected: (value) => setState(() {
-                          _timeFilter = value;
-                        }),
-                      ),
-                      _MetricTabs(
-                        active: _metric,
-                        onSelected: (value) => setState(() {
-                          _metric = value;
-                        }),
-                        onInfoTap: () => _showPnlInfo(context),
-                      ),
-                      _Podium(traders: snapshot.traders.take(3).toList()),
-                      _Rankings(snapshot: snapshot),
-                      _BiggestWins(snapshot: snapshot),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Leaderboard',
+            subtitle: 'Bảng xếp hạng · Prediction',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.marketsPredictions),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: PredictionsLeaderboardPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 16,
+                      children: [
+                        _TimeFilters(
+                          active: _timeFilter,
+                          onSelected: (value) => setState(() {
+                            _timeFilter = value;
+                          }),
+                        ),
+                        _MetricTabs(
+                          active: _metric,
+                          onSelected: (value) => setState(() {
+                            _metric = value;
+                          }),
+                          onInfoTap: () => _showPnlInfo(context),
+                        ),
+                        _Podium(traders: snapshot.traders.take(3).toList()),
+                        _Rankings(snapshot: snapshot),
+                        _BiggestWins(snapshot: snapshot),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
   void _showPnlInfo(BuildContext context) {
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.surface,
       shape: const RoundedRectangleBorder(

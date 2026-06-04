@@ -25,109 +25,113 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
       semanticLabel: 'SC-216 P2POrderPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Chi tiết đơn hàng',
-              subtitle: 'Đơn hàng - P2P',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.p2p),
-            ),
-            _StatusBanner(
-              label: _step == _P2POrderUiStep.payment
-                  ? order.statusLabel
-                  : paidPreview.statusLabel,
-              countdown: _step == _P2POrderUiStep.payment
-                  ? order.countdownLabel
-                  : paidPreview.countdownLabel,
-              color: _step == _P2POrderUiStep.payment
-                  ? AppColors.warn
-                  : AppColors.primary,
-            ),
-            _OrderStepper(step: _step),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2POrderPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(
-                    left: AppSpacing.contentPad,
-                    right: AppSpacing.contentPad,
-                    bottom: bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _SafetyBanner(
-                        title: snapshot.safetyTitle,
-                        bullets: snapshot.safetyBullets,
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _EscrowBanner(
-                        order: order,
-                        onTap: () =>
-                            context.go(AppRoutePaths.p2pEscrow(order.id)),
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _OrderInfoCard(order: order),
-                      if (_step == _P2POrderUiStep.payment) ...[
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Chi tiết đơn hàng',
+            subtitle: 'Đơn hàng - P2P',
+            showBack: true,
+            onBack: () =>
+                goBackOrFallback(context, fallbackPath: AppRoutePaths.p2p),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _StatusBanner(
+                label: _step == _P2POrderUiStep.payment
+                    ? order.statusLabel
+                    : paidPreview.statusLabel,
+                countdown: _step == _P2POrderUiStep.payment
+                    ? order.countdownLabel
+                    : paidPreview.countdownLabel,
+                color: _step == _P2POrderUiStep.payment
+                    ? AppColors.warn
+                    : AppColors.primary,
+              ),
+              _OrderStepper(step: _step),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2POrderPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(
+                      left: AppSpacing.contentPad,
+                      right: AppSpacing.contentPad,
+                      bottom: bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _SafetyBanner(
+                          title: snapshot.safetyTitle,
+                          bullets: snapshot.safetyBullets,
+                        ),
                         const SizedBox(height: AppSpacing.x4),
-                        _PaymentInfoCard(
+                        _EscrowBanner(
                           order: order,
-                          fields: snapshot.paymentFields,
-                          showQr: _showQr,
-                          copiedField: _copiedField,
-                          warningTitle: snapshot.transferWarningTitle,
-                          warning: snapshot.transferWarning,
-                          onToggleQr: () {
-                            HapticFeedback.selectionClick();
-                            setState(() => _showQr = !_showQr);
-                          },
-                          onCopyAll: () => _markCopied('all'),
-                          onCopy: _markCopied,
+                          onTap: () =>
+                              context.go(AppRoutePaths.p2pEscrow(order.id)),
                         ),
-                      ],
-                      const SizedBox(height: AppSpacing.x4),
-                      _ProofCard(
-                        step: _step,
-                        onUpload: () =>
-                            context.go(AppRoutePaths.p2pOrderProof(order.id)),
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _TimelineCard(timeline: snapshot.timeline),
-                      const SizedBox(height: AppSpacing.x4),
-                      _PaymentWarning(message: snapshot.paymentWarning),
-                      const SizedBox(height: AppSpacing.x4),
-                      _PrimaryActions(
-                        step: _step,
-                        onChat: () =>
-                            context.go(AppRoutePaths.p2pChat(order.id)),
-                        onPaid: _markPaid,
-                      ),
-                      if (_step == _P2POrderUiStep.payment) ...[
-                        const SizedBox(height: AppSpacing.x3),
-                        _TextActionButton(
-                          key: P2POrderPage.cancelKey,
-                          onPressed: () => context.go(
-                            AppRoutePaths.p2pOrderCancel(order.id),
+                        const SizedBox(height: AppSpacing.x4),
+                        _OrderInfoCard(order: order),
+                        if (_step == _P2POrderUiStep.payment) ...[
+                          const SizedBox(height: AppSpacing.x4),
+                          _PaymentInfoCard(
+                            order: order,
+                            fields: snapshot.paymentFields,
+                            showQr: _showQr,
+                            copiedField: _copiedField,
+                            warningTitle: snapshot.transferWarningTitle,
+                            warning: snapshot.transferWarning,
+                            onToggleQr: () {
+                              HapticFeedback.selectionClick();
+                              setState(() => _showQr = !_showQr);
+                            },
+                            onCopyAll: () => _markCopied('all'),
+                            onCopy: _markCopied,
                           ),
-                          icon: const Icon(Icons.close_rounded, size: 16),
-                          label: 'Hủy đơn hàng',
-                          color: AppColors.sell,
+                        ],
+                        const SizedBox(height: AppSpacing.x4),
+                        _ProofCard(
+                          step: _step,
+                          onUpload: () =>
+                              context.go(AppRoutePaths.p2pOrderProof(order.id)),
                         ),
+                        const SizedBox(height: AppSpacing.x4),
+                        _TimelineCard(timeline: snapshot.timeline),
+                        const SizedBox(height: AppSpacing.x4),
+                        _PaymentWarning(message: snapshot.paymentWarning),
+                        const SizedBox(height: AppSpacing.x4),
+                        _PrimaryActions(
+                          step: _step,
+                          onChat: () =>
+                              context.go(AppRoutePaths.p2pChat(order.id)),
+                          onPaid: _markPaid,
+                        ),
+                        if (_step == _P2POrderUiStep.payment) ...[
+                          const SizedBox(height: AppSpacing.x3),
+                          _TextActionButton(
+                            key: P2POrderPage.cancelKey,
+                            onPressed: () => context.go(
+                              AppRoutePaths.p2pOrderCancel(order.id),
+                            ),
+                            icon: const Icon(Icons.close_rounded, size: 16),
+                            label: 'Hủy đơn hàng',
+                            color: AppColors.sell,
+                          ),
+                        ],
+                        const SizedBox(height: AppSpacing.x4),
+                        _QuickActions(actions: snapshot.quickActions),
+                        const SizedBox(height: AppSpacing.x5),
                       ],
-                      const SizedBox(height: AppSpacing.x4),
-                      _QuickActions(actions: snapshot.quickActions),
-                      const SizedBox(height: AppSpacing.x5),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

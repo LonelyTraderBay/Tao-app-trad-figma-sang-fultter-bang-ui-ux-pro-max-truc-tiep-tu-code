@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -81,69 +82,64 @@ class _LaunchpadBatchClaimPageState
         type: MaterialType.transparency,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: _step == _BatchClaimStep.success
-                      ? 'Hoàn tất'
-                      : snapshot.title,
-                  showBack: true,
-                  onBack: () => context.go(snapshot.backRoute),
+            VitAutoHideHeaderScaffold(
+              bottomInset: bottomInset,
+              semanticLabel: 'SC-304 LaunchpadBatchClaimPage scroll surface',
+              header: VitHeader(
+                title: _step == _BatchClaimStep.success
+                    ? 'Hoàn tất'
+                    : snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: SingleChildScrollView(
+                key: LaunchpadBatchClaimPage.contentKey,
+                physics: const BouncingScrollPhysics(),
+                child: VitPageContent(
+                  padding: VitContentPadding.defaultPadding,
+                  customGap: AppSpacing.x4,
+                  children: [
+                    if (_step == _BatchClaimStep.select) ...[
+                      _BatchSummaryHero(summary: selectedSummary),
+                      _GasSavingsBanner(summary: selectedSummary),
+                      _SelectionHeader(
+                        selected: _selectedIds.length,
+                        total: snapshot.positions.length,
+                        onSelectAll: () => setState(() {
+                          _selectedIds = snapshot.positions
+                              .map((position) => position.positionId)
+                              .toSet();
+                        }),
+                        onClear: () => setState(_selectedIds.clear),
+                      ),
+                      for (final position in snapshot.positions)
+                        _BatchPositionCard(
+                          position: position,
+                          selected: _selectedIds.contains(position.positionId),
+                          onToggle: () => _toggle(position.positionId),
+                          onDetail: () =>
+                              context.go(snapshot.claimReceiptRoute),
+                        ),
+                      if (selectedSummary.chains.length > 1)
+                        _ChainWarning(summary: selectedSummary),
+                    ] else if (_step == _BatchClaimStep.review)
+                      _ReviewStep(
+                        positions: selectedPositions,
+                        summary: selectedSummary,
+                        onBack: () =>
+                            setState(() => _step = _BatchClaimStep.select),
+                        onConfirm: () =>
+                            setState(() => _step = _BatchClaimStep.success),
+                      )
+                    else
+                      _SuccessStep(
+                        positions: selectedPositions,
+                        summary: selectedSummary,
+                        onDone: () => context.go(snapshot.backRoute),
+                      ),
+                  ],
                 ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: LaunchpadBatchClaimPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
-                    child: VitPageContent(
-                      padding: VitContentPadding.defaultPadding,
-                      customGap: AppSpacing.x4,
-                      children: [
-                        if (_step == _BatchClaimStep.select) ...[
-                          _BatchSummaryHero(summary: selectedSummary),
-                          _GasSavingsBanner(summary: selectedSummary),
-                          _SelectionHeader(
-                            selected: _selectedIds.length,
-                            total: snapshot.positions.length,
-                            onSelectAll: () => setState(() {
-                              _selectedIds = snapshot.positions
-                                  .map((position) => position.positionId)
-                                  .toSet();
-                            }),
-                            onClear: () => setState(_selectedIds.clear),
-                          ),
-                          for (final position in snapshot.positions)
-                            _BatchPositionCard(
-                              position: position,
-                              selected: _selectedIds.contains(
-                                position.positionId,
-                              ),
-                              onToggle: () => _toggle(position.positionId),
-                              onDetail: () =>
-                                  context.go(snapshot.claimReceiptRoute),
-                            ),
-                          if (selectedSummary.chains.length > 1)
-                            _ChainWarning(summary: selectedSummary),
-                        ] else if (_step == _BatchClaimStep.review)
-                          _ReviewStep(
-                            positions: selectedPositions,
-                            summary: selectedSummary,
-                            onBack: () =>
-                                setState(() => _step = _BatchClaimStep.select),
-                            onConfirm: () =>
-                                setState(() => _step = _BatchClaimStep.success),
-                          )
-                        else
-                          _SuccessStep(
-                            positions: selectedPositions,
-                            summary: selectedSummary,
-                            onDone: () => context.go(snapshot.backRoute),
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
             if (_step == _BatchClaimStep.select && _selectedIds.isNotEmpty)
               Positioned(

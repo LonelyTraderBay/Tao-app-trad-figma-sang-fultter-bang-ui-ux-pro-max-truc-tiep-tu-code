@@ -1,36 +1,5 @@
 part of '../pages/ex_post_costs_report_page.dart';
 
-class _DownloadAction extends StatelessWidget {
-  const _DownloadAction({required this.onPressed});
-
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 36,
-      height: 36,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: _reportPanel2,
-          border: Border.all(color: _reportBorder.withValues(alpha: .72)),
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: IconButton(
-          key: ExPostCostsReportPage.downloadKey,
-          onPressed: onPressed,
-          padding: EdgeInsets.zero,
-          icon: const Icon(
-            Icons.download_rounded,
-            color: AppColors.text1,
-            size: 18,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _ComplianceNotice extends StatelessWidget {
   const _ComplianceNotice({required this.year});
 

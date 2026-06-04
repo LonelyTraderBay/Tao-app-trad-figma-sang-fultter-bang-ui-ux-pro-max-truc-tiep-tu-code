@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -50,61 +51,64 @@ class _P2PVideoVerificationPageState
       semanticLabel: 'SC-252 P2PVideoVerificationPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Video Verification',
-              subtitle: 'KYC · P2P',
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _VideoHero(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _PreparationCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      _SlotPicker(
-                        slots: snapshot.timeSlots,
-                        selectedSlotId: _selectedSlotId,
-                        onSelected: (slot) {
-                          if (!slot.available) return;
-                          HapticFeedback.selectionClick();
-                          setState(() => _selectedSlotId = slot.id);
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      VitCtaButton(
-                        key: P2PVideoVerificationPage.submitKey,
-                        onPressed: _selectedSlotId == null
-                            ? null
-                            : () {
-                                HapticFeedback.selectionClick();
-                                context.go(snapshot.statusRoute);
-                              },
-                        trailing: const Icon(Icons.chevron_right_rounded),
-                        child: const Text('Đặt lịch'),
-                      ),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Video Verification',
+            subtitle: 'KYC · P2P',
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _VideoHero(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _PreparationCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        _SlotPicker(
+                          slots: snapshot.timeSlots,
+                          selectedSlotId: _selectedSlotId,
+                          onSelected: (slot) {
+                            if (!slot.available) return;
+                            HapticFeedback.selectionClick();
+                            setState(() => _selectedSlotId = slot.id);
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        VitCtaButton(
+                          key: P2PVideoVerificationPage.submitKey,
+                          onPressed: _selectedSlotId == null
+                              ? null
+                              : () {
+                                  HapticFeedback.selectionClick();
+                                  context.go(snapshot.statusRoute);
+                                },
+                          trailing: const Icon(Icons.chevron_right_rounded),
+                          child: const Text('Đặt lịch'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

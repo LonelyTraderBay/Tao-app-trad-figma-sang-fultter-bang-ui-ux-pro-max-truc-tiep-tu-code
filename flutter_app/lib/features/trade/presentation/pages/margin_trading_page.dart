@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -97,90 +97,99 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
         color: _marginBackground,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: 'Margin Trading',
-                  subtitle: 'Ký quỹ · Giao dịch',
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.trade),
+            VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Margin Trading',
+                subtitle: 'Ký quỹ · Giao dịch',
+                showBack: true,
+                onBack: () => goBackOrFallback(
+                  context,
+                  fallbackPath: AppRoutePaths.trade,
+                  mode: BackNavigationMode.historyThenFallback,
                 ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: MarginTradingPage.contentKey,
-                    padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _ClientCategoryCard(category: snapshot.clientCategory),
-                        const SizedBox(height: 18),
-                        _SegmentedTabs(
-                          tabs: snapshot.modeTabs,
-                          activeId: _mode,
-                          activeColor: _marginPrimary,
-                          height: 50,
-                          onChanged: (id) => setState(() => _mode = id),
-                          keyBuilder: MarginTradingPage.modeKey,
-                        ),
-                        const SizedBox(height: 16),
-                        _AccountHero(
-                          account: snapshot.account,
-                          totalPnl: totalPnl,
-                        ),
-                        const SizedBox(height: 18),
-                        _SegmentedTabs(
-                          tabs: [
-                            for (final tab in snapshot.contentTabs)
-                              TradeMarginTab(
-                                id: tab.id,
-                                label: tab.id == 'positions'
-                                    ? '${tab.label} (${modePositions.length})'
-                                    : tab.label,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: MarginTradingPage.contentKey,
+                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _ClientCategoryCard(
+                            category: snapshot.clientCategory,
+                          ),
+                          const SizedBox(height: 18),
+                          _SegmentedTabs(
+                            tabs: snapshot.modeTabs,
+                            activeId: _mode,
+                            activeColor: _marginPrimary,
+                            height: 50,
+                            onChanged: (id) => setState(() => _mode = id),
+                            keyBuilder: MarginTradingPage.modeKey,
+                          ),
+                          const SizedBox(height: 16),
+                          _AccountHero(
+                            account: snapshot.account,
+                            totalPnl: totalPnl,
+                          ),
+                          const SizedBox(height: 18),
+                          _SegmentedTabs(
+                            tabs: [
+                              for (final tab in snapshot.contentTabs)
+                                TradeMarginTab(
+                                  id: tab.id,
+                                  label: tab.id == 'positions'
+                                      ? '${tab.label} (${modePositions.length})'
+                                      : tab.label,
+                                ),
+                            ],
+                            activeId: _tab,
+                            activeColor: _marginPrimary,
+                            height: 46,
+                            onChanged: (id) => setState(() => _tab = id),
+                            keyBuilder: MarginTradingPage.tabKey,
+                          ),
+                          const SizedBox(height: 16),
+                          if (_tab == 'trade')
+                            _TradeTab(
+                              snapshot: snapshot,
+                              side: _side,
+                              leverage: _leverage,
+                              orderType: _orderType,
+                              amount: _amount,
+                              showLeverageSheet: _showLeverageSheet,
+                              onSideChanged: (side) =>
+                                  setState(() => _side = side),
+                              onLeverageToggle: () => setState(
+                                () => _showLeverageSheet = !_showLeverageSheet,
                               ),
-                          ],
-                          activeId: _tab,
-                          activeColor: _marginPrimary,
-                          height: 46,
-                          onChanged: (id) => setState(() => _tab = id),
-                          keyBuilder: MarginTradingPage.tabKey,
-                        ),
-                        const SizedBox(height: 16),
-                        if (_tab == 'trade')
-                          _TradeTab(
-                            snapshot: snapshot,
-                            side: _side,
-                            leverage: _leverage,
-                            orderType: _orderType,
-                            amount: _amount,
-                            showLeverageSheet: _showLeverageSheet,
-                            onSideChanged: (side) =>
-                                setState(() => _side = side),
-                            onLeverageToggle: () => setState(
-                              () => _showLeverageSheet = !_showLeverageSheet,
-                            ),
-                            onLeverageChanged: (leverage) => setState(() {
-                              _leverage = leverage;
-                              _showLeverageSheet = false;
-                            }),
-                            onOrderTypeChanged: (type) =>
-                                setState(() => _orderType = type),
-                            onMaxAmount: () => setState(() {
-                              _amount = controller.maxAmountFor(
-                                leverage: _leverage,
-                              );
-                            }),
-                            onNotice: (notice) =>
-                                setState(() => _notice = notice),
-                          )
-                        else if (_tab == 'positions')
-                          _PositionsTab(positions: modePositions)
-                        else
-                          const _OrdersTab(),
-                      ],
+                              onLeverageChanged: (leverage) => setState(() {
+                                _leverage = leverage;
+                                _showLeverageSheet = false;
+                              }),
+                              onOrderTypeChanged: (type) =>
+                                  setState(() => _orderType = type),
+                              onMaxAmount: () => setState(() {
+                                _amount = controller.maxAmountFor(
+                                  leverage: _leverage,
+                                );
+                              }),
+                              onNotice: (notice) =>
+                                  setState(() => _notice = notice),
+                            )
+                          else if (_tab == 'positions')
+                            _PositionsTab(positions: modePositions)
+                          else
+                            const _OrdersTab(),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_notice != null)
               _NoticeSheet(

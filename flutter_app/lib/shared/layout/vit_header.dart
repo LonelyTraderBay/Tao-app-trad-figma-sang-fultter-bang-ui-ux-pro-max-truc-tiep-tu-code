@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/app_top_header_tokens.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
+
+export 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
 
 enum VitHeaderVariant { page, standard, custom }
 
@@ -16,9 +19,11 @@ class VitHeader extends StatelessWidget {
     this.subtitle,
     this.showBack = false,
     this.trailing,
+    this.actions = const [],
     this.action = VitHeaderAction.none,
     this.badgeCount = 0,
     this.transparent = false,
+    this.backKey,
     this.onBack,
     this.onAction,
     this.child,
@@ -29,15 +34,26 @@ class VitHeader extends StatelessWidget {
   final String? subtitle;
   final bool showBack;
   final Widget? trailing;
+  final List<VitHeaderActionItem> actions;
   final VitHeaderAction action;
   final int badgeCount;
   final bool transparent;
+  final Key? backKey;
   final VoidCallback? onBack;
   final VoidCallback? onAction;
   final Widget? child;
 
   @override
   Widget build(BuildContext context) {
+    assert(
+      actions.length <= 3,
+      'VitHeader.actions supports up to 3 actions. Use more overflow.',
+    );
+    assert(
+      variant == VitHeaderVariant.custom || !showBack || onBack != null,
+      'VitHeader.showBack requires onBack so visible back buttons are actionable.',
+    );
+
     if (variant == VitHeaderVariant.custom) {
       return child ?? const SizedBox.shrink();
     }
@@ -45,17 +61,25 @@ class VitHeader extends StatelessWidget {
     final hasSubtitle = subtitle != null && subtitle!.isNotEmpty;
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: transparent ? AppColors.transparent : AppColors.navBg,
+        color: transparent
+            ? AppTopHeaderTokens.transparentSurfaceColor
+            : AppTopHeaderTokens.surfaceColor,
         border: transparent
             ? null
-            : const Border(bottom: BorderSide(color: AppColors.border)),
+            : const Border(
+                bottom: BorderSide(color: AppTopHeaderTokens.dividerColor),
+              ),
       ),
       child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: 52),
+        constraints: const BoxConstraints(
+          minHeight: AppTopHeaderTokens.detailMinHeight,
+        ),
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: AppSpacing.contentPad,
-            vertical: hasSubtitle ? 8 : 0,
+            horizontal: AppTopHeaderTokens.horizontalPadding,
+            vertical: hasSubtitle
+                ? AppTopHeaderTokens.detailVerticalPaddingWithSubtitle
+                : 0,
           ),
           child: variant == VitHeaderVariant.standard
               ? _StandardHeaderContent(header: this, hasSubtitle: hasSubtitle)
@@ -80,8 +104,8 @@ class _PageHeaderContent extends StatelessWidget {
           : CrossAxisAlignment.center,
       children: [
         if (header.showBack) ...[
-          _BackButton(onPressed: header.onBack),
-          const SizedBox(width: 12),
+          _BackButton(buttonKey: header.backKey, onPressed: header.onBack!),
+          const SizedBox(width: AppTopHeaderTokens.leadingGap),
         ],
         Expanded(child: _TitleBlock(header: header, alignCenter: false)),
         _HeaderTrailing(header: header, isPageVariant: true),
@@ -110,8 +134,13 @@ class _StandardHeaderContent extends StatelessWidget {
           child: Align(
             alignment: Alignment.centerLeft,
             child: header.showBack
-                ? _BackButton(onPressed: header.onBack)
-                : const SizedBox(width: 36),
+                ? _BackButton(
+                    buttonKey: header.backKey,
+                    onPressed: header.onBack!,
+                  )
+                : const SizedBox(
+                    width: AppTopHeaderTokens.standardEmptyBackWidth,
+                  ),
           ),
         ),
         Expanded(
@@ -139,6 +168,10 @@ class _TitleBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     final title = header.title;
     final subtitle = header.subtitle;
+    final showTitleBadge =
+        header.badgeCount > 0 &&
+        header.action == VitHeaderAction.none &&
+        header.actions.isEmpty;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: alignCenter
@@ -154,13 +187,13 @@ class _TitleBlock extends StatelessWidget {
                   title,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.baseMedium.copyWith(
-                    fontSize: 17,
-                    height: 1.3,
+                    fontSize: AppTopHeaderTokens.detailTitleSize,
+                    height: AppTopHeaderTokens.detailTitleLineHeight,
                   ),
                 ),
               ),
-              if (header.badgeCount > 0) ...[
-                const SizedBox(width: 6),
+              if (showTitleBadge) ...[
+                const SizedBox(width: AppTopHeaderTokens.titleBadgeGap),
                 _CountBadge(count: header.badgeCount),
               ],
             ],
@@ -169,7 +202,10 @@ class _TitleBlock extends StatelessWidget {
           Text(
             subtitle,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(fontSize: 12, height: 1.3),
+            style: AppTextStyles.caption.copyWith(
+              fontSize: AppTopHeaderTokens.subtitleSize,
+              height: AppTopHeaderTokens.detailSubtitleLineHeight,
+            ),
           ),
       ],
     );
@@ -177,24 +213,18 @@ class _TitleBlock extends StatelessWidget {
 }
 
 class _BackButton extends StatelessWidget {
-  const _BackButton({this.onPressed});
+  const _BackButton({this.buttonKey, required this.onPressed});
 
-  final VoidCallback? onPressed;
+  final Key? buttonKey;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 36,
-      height: 36,
-      child: IconButton(
-        onPressed: onPressed ?? () {},
-        padding: EdgeInsets.zero,
-        icon: const Icon(
-          Icons.chevron_left_rounded,
-          color: AppColors.text1,
-          size: 28,
-        ),
-      ),
+    return VitHeaderActionButton(
+      key: buttonKey,
+      type: VitHeaderActionType.back,
+      tone: VitHeaderActionTone.transparent,
+      onPressed: onPressed,
     );
   }
 }
@@ -208,47 +238,45 @@ class _HeaderTrailing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (header.trailing != null) return header.trailing!;
+    if (header.actions.isNotEmpty) {
+      return _HeaderActionRow(actions: header.actions);
+    }
     if (header.action == VitHeaderAction.none) {
       return isPageVariant
           ? const SizedBox.shrink()
-          : const SizedBox(width: 36);
+          : const SizedBox(width: AppTopHeaderTokens.standardEmptyActionWidth);
     }
 
-    final icon = switch (header.action) {
-      VitHeaderAction.bell => Icons.notifications_none_rounded,
-      VitHeaderAction.search => Icons.search_rounded,
-      VitHeaderAction.more => Icons.more_vert_rounded,
-      VitHeaderAction.none => Icons.more_vert_rounded,
+    final type = switch (header.action) {
+      VitHeaderAction.bell => VitHeaderActionType.notifications,
+      VitHeaderAction.search => VitHeaderActionType.search,
+      VitHeaderAction.more => VitHeaderActionType.more,
+      VitHeaderAction.none => VitHeaderActionType.more,
     };
 
-    return SizedBox(
-      width: 36,
-      height: 36,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: AppColors.searchBg,
-          border: Border.all(color: AppColors.border),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Positioned.fill(
-              child: IconButton(
-                onPressed: header.onAction,
-                padding: EdgeInsets.zero,
-                icon: Icon(icon, color: AppColors.text1, size: 18),
-              ),
-            ),
-            if (header.badgeCount > 0)
-              Positioned(
-                top: -5,
-                right: -5,
-                child: _CountBadge(count: header.badgeCount),
-              ),
-          ],
-        ),
-      ),
+    return VitHeaderActionButton(
+      type: type,
+      badgeCount: header.action == VitHeaderAction.bell ? header.badgeCount : 0,
+      onPressed: header.onAction,
+    );
+  }
+}
+
+class _HeaderActionRow extends StatelessWidget {
+  const _HeaderActionRow({required this.actions});
+
+  final List<VitHeaderActionItem> actions;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (var index = 0; index < actions.length; index++) ...[
+          if (index > 0) const SizedBox(width: AppTopHeaderTokens.actionGap),
+          VitHeaderActionButton.fromItem(actions[index]),
+        ],
+      ],
     );
   }
 }
@@ -261,12 +289,18 @@ class _CountBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minWidth: 16),
-      height: 16,
-      padding: const EdgeInsets.symmetric(horizontal: 4),
+      constraints: const BoxConstraints(
+        minWidth: AppTopHeaderTokens.badgeMinSize,
+      ),
+      height: AppTopHeaderTokens.badgeHeight,
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppTopHeaderTokens.badgeHorizontalPadding,
+      ),
       decoration: BoxDecoration(
         color: AppColors.sell,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(
+          AppTopHeaderTokens.titleBadgeRadius,
+        ),
         boxShadow: const [
           BoxShadow(
             color: AppColors.sell20,
@@ -280,7 +314,7 @@ class _CountBadge extends StatelessWidget {
         count > 99 ? '99+' : '$count',
         style: AppTextStyles.micro.copyWith(
           color: AppColors.onAccent,
-          fontSize: 9,
+          fontSize: AppTopHeaderTokens.titleBadgeFontSize,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),

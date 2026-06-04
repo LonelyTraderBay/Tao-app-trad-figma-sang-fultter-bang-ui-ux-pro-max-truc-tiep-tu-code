@@ -54,92 +54,95 @@ class _StakingAutoCompoundPageState
         color: AppColors.bg,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: snapshot.title,
-                  showBack: true,
-                  onBack: () => context.go(snapshot.backRoute),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
-                    child: VitPageContent(
-                      padding: VitContentPadding.compact,
-                      gap: VitContentGap.defaultGap,
-                      children: [
-                        _InfoBanner(snapshot: snapshot),
-                        _SummaryCard(
-                          positions: positions,
-                          frequency: _frequency,
-                          threshold: threshold,
-                        ),
-                        VitPageSection(
-                          label: 'Cài đặt Auto-Compound',
-                          accentColor: AppColors.primary,
-                          children: [
-                            _SettingsCard(
-                              key: StakingAutoCompoundPage.settingsKey,
-                              snapshot: snapshot,
-                              frequency: _frequency,
-                              thresholdController: _thresholdController,
-                              gasOptimization: _gasOptimization,
-                              onFrequencyChanged: (frequency) {
-                                HapticFeedback.selectionClick();
-                                setState(() => _frequency = frequency);
-                              },
-                              onThresholdChanged: (_) => setState(() {}),
-                              onGasOptimizationChanged: () {
-                                HapticFeedback.selectionClick();
-                                setState(() {
-                                  _gasOptimization = !_gasOptimization;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                        VitPageSection(
-                          label: 'Vị thế Auto-Compound',
-                          accentColor: AppColors.primary,
-                          children: [
-                            for (final position in positions)
-                              _PositionCard(
-                                position: position,
+            VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: EdgeInsets.only(bottom: bottomInset),
+                      child: VitPageContent(
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          _InfoBanner(snapshot: snapshot),
+                          _SummaryCard(
+                            positions: positions,
+                            frequency: _frequency,
+                            threshold: threshold,
+                          ),
+                          VitPageSection(
+                            label: 'Cài đặt Auto-Compound',
+                            accentColor: AppColors.primary,
+                            children: [
+                              _SettingsCard(
+                                key: StakingAutoCompoundPage.settingsKey,
+                                snapshot: snapshot,
                                 frequency: _frequency,
-                                onToggle: () => _toggle(position),
+                                thresholdController: _thresholdController,
+                                gasOptimization: _gasOptimization,
+                                onFrequencyChanged: (frequency) {
+                                  HapticFeedback.selectionClick();
+                                  setState(() => _frequency = frequency);
+                                },
+                                onThresholdChanged: (_) => setState(() {}),
+                                onGasOptimizationChanged: () {
+                                  HapticFeedback.selectionClick();
+                                  setState(() {
+                                    _gasOptimization = !_gasOptimization;
+                                  });
+                                },
                               ),
-                          ],
-                        ),
-                        VitPageSection(
-                          label: 'Mô phỏng Lợi nhuận Kép',
-                          accentColor: AppColors.primary,
-                          children: [
-                            _SimulationCard(
-                              controllerPrincipal: _principalController,
-                              controllerApy: _apyController,
-                              controllerMonths: _monthsController,
-                              simulation: simulation,
-                              onChanged: (_) => setState(() {}),
-                            ),
-                          ],
-                        ),
-                        VitCtaButton(
-                          key: StakingAutoCompoundPage.saveButtonKey,
-                          variant: VitCtaButtonVariant.primary,
-                          leading: const Icon(Icons.settings_outlined),
-                          onPressed: () {
-                            HapticFeedback.lightImpact();
-                            setState(() => _showSuccess = true);
-                          },
-                          child: const Text('Lưu cài đặt'),
-                        ),
-                        _FooterNote(snapshot: snapshot),
-                      ],
+                            ],
+                          ),
+                          VitPageSection(
+                            label: 'Vị thế Auto-Compound',
+                            accentColor: AppColors.primary,
+                            children: [
+                              for (final position in positions)
+                                _PositionCard(
+                                  position: position,
+                                  frequency: _frequency,
+                                  onToggle: () => _toggle(position),
+                                ),
+                            ],
+                          ),
+                          VitPageSection(
+                            label: 'Mô phỏng Lợi nhuận Kép',
+                            accentColor: AppColors.primary,
+                            children: [
+                              _SimulationCard(
+                                controllerPrincipal: _principalController,
+                                controllerApy: _apyController,
+                                controllerMonths: _monthsController,
+                                simulation: simulation,
+                                onChanged: (_) => setState(() {}),
+                              ),
+                            ],
+                          ),
+                          VitCtaButton(
+                            key: StakingAutoCompoundPage.saveButtonKey,
+                            variant: VitCtaButtonVariant.primary,
+                            leading: const Icon(Icons.settings_outlined),
+                            onPressed: () {
+                              HapticFeedback.lightImpact();
+                              setState(() => _showSuccess = true);
+                            },
+                            child: const Text('Lưu cài đặt'),
+                          ),
+                          _FooterNote(snapshot: snapshot),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_showSuccess)
               Positioned(

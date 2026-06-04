@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -32,6 +33,7 @@ class LaunchpadBridgeOrderPage extends ConsumerStatefulWidget {
   static const eventLogKey = Key('sc303_launchpad_bridge_order_event_log');
   static const detailsKey = Key('sc303_launchpad_bridge_order_details');
   static const safetyKey = Key('sc303_launchpad_bridge_order_safety');
+  static const supportKey = Key('sc303_launchpad_bridge_order_support');
 
   static Key stepKey(String id) => Key('sc303_launchpad_bridge_step_$id');
   static Key eventKey(String id) => Key('sc303_launchpad_bridge_event_$id');
@@ -65,38 +67,43 @@ class _LaunchpadBridgeOrderPageState
       semanticLabel: 'SC-303 LaunchpadBridgeOrderPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: LaunchpadBridgeOrderPage.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.defaultPadding,
-                  customGap: AppSpacing.x4,
-                  children: [
-                    _BridgeStatusHero(order: snapshot.order),
-                    _BridgeTimeline(order: snapshot.order),
-                    _BridgeEventLog(
-                      order: snapshot.order,
-                      events: snapshot.events,
-                      expanded: _logExpanded,
-                      onToggle: () =>
-                          setState(() => _logExpanded = !_logExpanded),
-                    ),
-                    _BridgeDetails(order: snapshot.order),
-                    const _SimulationDisclosure(),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          bottomInset: bottomInset,
+          semanticLabel: 'SC-303 LaunchpadBridgeOrderPage scroll surface',
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: SingleChildScrollView(
+            key: LaunchpadBridgeOrderPage.contentKey,
+            physics: const BouncingScrollPhysics(),
+            child: VitPageContent(
+              padding: VitContentPadding.defaultPadding,
+              customGap: AppSpacing.x4,
+              children: [
+                _BridgeStatusHero(order: snapshot.order),
+                if (snapshot.highRiskContractId != null)
+                  VitHighRiskStatePanel(
+                    state: VitHighRiskUiState.success,
+                    title: 'Bridge order state tracked',
+                    message:
+                        'Eligibility, contract preview, confirmation, submitted status, receipt and support are bound to the Launchpad high-risk contract.',
+                    contractId: snapshot.highRiskContractId,
+                  ),
+                _BridgeTimeline(order: snapshot.order),
+                _BridgeEventLog(
+                  order: snapshot.order,
+                  events: snapshot.events,
+                  expanded: _logExpanded,
+                  onToggle: () => setState(() => _logExpanded = !_logExpanded),
                 ),
-              ),
+                _BridgeDetails(order: snapshot.order),
+                const _SimulationDisclosure(),
+                _BridgeSupportAction(supportRoute: snapshot.supportRoute),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_cus
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_custody_overview.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
@@ -53,40 +54,43 @@ class _StakingCustodyPageState extends ConsumerState<StakingCustodyPage> {
       semanticLabel: 'SC-375 StakingCustodyPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    StakingCustodyHeroCard(snapshot: snapshot),
-                    if (_feedback != null)
-                      StakingCustodyFeedbackNote(text: _feedback!),
-                    StakingCustodyCustodianSection(
-                      custodian: snapshot.custodian,
-                    ),
-                    StakingCustodySegregationSection(snapshot: snapshot),
-                    StakingCustodyHotColdSection(snapshot: snapshot),
-                    StakingCustodyReconciliationSection(
-                      snapshot: snapshot,
-                      onAuditTrail: _openAuditTrail,
-                    ),
-                    StakingCustodyTransparencySection(snapshot: snapshot),
-                    StakingCustodyFooterNote(text: snapshot.footerNote),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      StakingCustodyHeroCard(snapshot: snapshot),
+                      if (_feedback != null)
+                        StakingCustodyFeedbackNote(text: _feedback!),
+                      StakingCustodyCustodianSection(
+                        custodian: snapshot.custodian,
+                      ),
+                      StakingCustodySegregationSection(snapshot: snapshot),
+                      StakingCustodyHotColdSection(snapshot: snapshot),
+                      StakingCustodyReconciliationSection(
+                        snapshot: snapshot,
+                        onAuditTrail: _openAuditTrail,
+                      ),
+                      StakingCustodyTransparencySection(snapshot: snapshot),
+                      StakingCustodyFooterNote(text: snapshot.footerNote),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

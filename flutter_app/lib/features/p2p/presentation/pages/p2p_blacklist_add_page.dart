@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -71,72 +72,75 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
       semanticLabel: 'SC-276 P2PBlacklistAddPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _Hero(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      VitInput(
-                        controller: _usernameController,
-                        fieldKey: P2PBlacklistAddPage.usernameKey,
-                        label: snapshot.usernameLabel,
-                        hintText: snapshot.usernameHint,
-                        textInputAction: TextInputAction.next,
-                        onChanged: (_) => setState(() {}),
-                      ),
-                      const SizedBox(height: AppSpacing.x2),
-                      _ReasonSelector(
-                        reasons: snapshot.reasons,
-                        selectedReasonId: _reasonId,
-                        onChanged: (id) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _reasonId = id);
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x2),
-                      _NoteField(
-                        controller: _noteController,
-                        label: snapshot.noteLabel,
-                        hint: snapshot.noteHint,
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _WarningCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x3),
-                      VitCtaButton(
-                        key: P2PBlacklistAddPage.submitKey,
-                        variant: VitCtaButtonVariant.danger,
-                        loading: _isSubmitting,
-                        onPressed: canSubmit ? () => _submit(snapshot) : null,
-                        leading: const Icon(Icons.block_rounded),
-                        child: Text(snapshot.submitLabel),
-                      ),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _Hero(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        VitInput(
+                          controller: _usernameController,
+                          fieldKey: P2PBlacklistAddPage.usernameKey,
+                          label: snapshot.usernameLabel,
+                          hintText: snapshot.usernameHint,
+                          textInputAction: TextInputAction.next,
+                          onChanged: (_) => setState(() {}),
+                        ),
+                        const SizedBox(height: AppSpacing.x2),
+                        _ReasonSelector(
+                          reasons: snapshot.reasons,
+                          selectedReasonId: _reasonId,
+                          onChanged: (id) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _reasonId = id);
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x2),
+                        _NoteField(
+                          controller: _noteController,
+                          label: snapshot.noteLabel,
+                          hint: snapshot.noteHint,
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        _WarningCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x3),
+                        VitCtaButton(
+                          key: P2PBlacklistAddPage.submitKey,
+                          variant: VitCtaButtonVariant.danger,
+                          loading: _isSubmitting,
+                          onPressed: canSubmit ? () => _submit(snapshot) : null,
+                          leading: const Icon(Icons.block_rounded),
+                          child: Text(snapshot.submitLabel),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

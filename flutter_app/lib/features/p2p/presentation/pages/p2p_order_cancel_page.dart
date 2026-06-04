@@ -9,8 +9,10 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -55,51 +57,54 @@ class _P2POrderCancelPageState extends ConsumerState<P2POrderCancelPage> {
       semanticLabel: 'SC-214 P2POrderCancelPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Hủy đơn hàng',
-              subtitle: 'Đơn hàng - P2P',
-              showBack: true,
-              onBack: () => _close(context),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2POrderCancelPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: AppSpacing.x6,
-                    children: [
-                      const _CancelHero(),
-                      _OrderSummary(order: snapshot.order),
-                      _ReasonSelector(
-                        reasons: snapshot.reasons,
-                        selectedReason: _cancelReason,
-                        onSelected: _setReason,
-                      ),
-                      _CancelWarning(
-                        title: snapshot.warningTitle,
-                        message: snapshot.warningMessage,
-                      ),
-                      _ActionRow(
-                        enabled: _cancelReason.isNotEmpty,
-                        loading: _isSubmitting,
-                        onBack: () => _close(context),
-                        onConfirm: () =>
-                            _confirmCancel(context, snapshot.order),
-                      ),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Hủy đơn hàng',
+            subtitle: 'Đơn hàng - P2P',
+            showBack: true,
+            onBack: () => _close(context),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2POrderCancelPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: AppSpacing.x6,
+                      children: [
+                        const _CancelHero(),
+                        _OrderSummary(order: snapshot.order),
+                        _ReasonSelector(
+                          reasons: snapshot.reasons,
+                          selectedReason: _cancelReason,
+                          onSelected: _setReason,
+                        ),
+                        _CancelWarning(
+                          title: snapshot.warningTitle,
+                          message: snapshot.warningMessage,
+                        ),
+                        _ActionRow(
+                          enabled: _cancelReason.isNotEmpty,
+                          loading: _isSubmitting,
+                          onBack: () => _close(context),
+                          onConfirm: () =>
+                              _confirmCancel(context, snapshot.order),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -124,11 +129,11 @@ class _P2POrderCancelPageState extends ConsumerState<P2POrderCancelPage> {
 
   void _close(BuildContext context) {
     HapticFeedback.selectionClick();
-    if (context.canPop()) {
-      context.pop();
-      return;
-    }
-    context.go(AppRoutePaths.p2pOrder(widget.orderId));
+    goBackOrFallback(
+      context,
+      fallbackPath: AppRoutePaths.p2pOrder(widget.orderId),
+      mode: BackNavigationMode.historyThenFallback,
+    );
   }
 }
 

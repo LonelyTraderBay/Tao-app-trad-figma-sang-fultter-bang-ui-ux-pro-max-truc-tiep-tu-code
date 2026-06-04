@@ -93,6 +93,10 @@ void main() {
       find.byKey(ArenaGovernanceGatePage.titleKey),
       'BTC Weekly Predict — Tuần 10',
     );
+    await tester.ensureVisible(
+      find.byKey(ArenaGovernanceGatePage.domainKey('crypto')),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(ArenaGovernanceGatePage.domainKey('crypto')));
     await tester.pumpAndSettle();
     await tester.ensureVisible(

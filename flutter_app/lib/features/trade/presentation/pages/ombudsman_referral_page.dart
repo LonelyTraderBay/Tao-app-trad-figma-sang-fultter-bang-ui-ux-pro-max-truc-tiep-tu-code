@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -46,46 +47,48 @@ class OmbudsmanReferralPage extends ConsumerWidget {
       semanticLabel: 'SC-114 OmbudsmanReferralPage',
       child: Material(
         color: _ombudsmanBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Financial Ombudsman',
-              subtitle: 'Independent Dispute Resolution',
-              showBack: true,
-              onBack: () =>
-                  context.go(AppRoutePaths.tradeCopyComplaintsHandling),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _IntroCard(snapshot: snapshot),
-                    const SizedBox(height: 27),
-                    const _SectionLabel('When Can You Refer?'),
-                    const SizedBox(height: 12),
-                    _EligibilityCard(items: snapshot.eligibility),
-                    const SizedBox(height: 27),
-                    const _SectionLabel('Contact Information'),
-                    const SizedBox(height: 12),
-                    _ContactCard(contacts: snapshot.contacts),
-                    const SizedBox(height: 27),
-                    const _SectionLabel('How It Works'),
-                    const SizedBox(height: 12),
-                    for (final step in snapshot.processSteps) ...[
-                      _ProcessStepCard(step: step),
-                      if (step != snapshot.processSteps.last)
-                        const SizedBox(height: 13),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Financial Ombudsman',
+            subtitle: 'Independent Dispute Resolution',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyComplaintsHandling),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _IntroCard(snapshot: snapshot),
+                      const SizedBox(height: 27),
+                      const _SectionLabel('When Can You Refer?'),
+                      const SizedBox(height: 12),
+                      _EligibilityCard(items: snapshot.eligibility),
+                      const SizedBox(height: 27),
+                      const _SectionLabel('Contact Information'),
+                      const SizedBox(height: 12),
+                      _ContactCard(contacts: snapshot.contacts),
+                      const SizedBox(height: 27),
+                      const _SectionLabel('How It Works'),
+                      const SizedBox(height: 12),
+                      for (final step in snapshot.processSteps) ...[
+                        _ProcessStepCard(step: step),
+                        if (step != snapshot.processSteps.last)
+                          const SizedBox(height: 13),
+                      ],
+                      const SizedBox(height: 24),
+                      _VisitButton(snapshot: snapshot),
                     ],
-                    const SizedBox(height: 24),
-                    _VisitButton(snapshot: snapshot),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

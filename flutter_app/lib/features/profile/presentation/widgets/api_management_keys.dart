@@ -1,31 +1,5 @@
 part of '../pages/api_management_page.dart';
 
-class _CreateButton extends StatelessWidget {
-  const _CreateButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      key: ApiManagementPage.createKey,
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          color: _apiPrimary.withValues(alpha: .15),
-          borderRadius: AppRadii.lgRadius,
-          border: Border.all(color: _apiPrimary.withValues(alpha: .28)),
-        ),
-        alignment: Alignment.center,
-        child: const Icon(Icons.add_rounded, color: _apiPrimary, size: 24),
-      ),
-    );
-  }
-}
-
 class _ApiKeyCard extends StatelessWidget {
   const _ApiKeyCard({
     required this.apiKey,

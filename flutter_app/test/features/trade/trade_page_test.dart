@@ -122,6 +122,9 @@ void main() {
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('BTC/USDT'), findsOneWidget);
+    expect(find.byKey(TradePage.quickNavKey('spot')), findsOneWidget);
+    expect(find.byKey(TradePage.quickNavKey('convert')), findsOneWidget);
+    expect(find.byKey(TradePage.quickNavKey('futures')), findsOneWidget);
     expect(find.text('67,543.21'), findsOneWidget);
     expect(find.text('Chart'), findsOneWidget);
     expect(find.text('Đặt lệnh'), findsOneWidget);
@@ -168,5 +171,40 @@ void main() {
 
     expect(find.byType(ConvertPage), findsOneWidget);
     expect(find.text('Convert / Swap'), findsOneWidget);
+  });
+
+  testWidgets('SC-048 product hub follows enterprise product order', (
+    tester,
+  ) async {
+    await pumpTrade(tester);
+
+    expect(find.text('Core'), findsWidgets);
+
+    for (final id in const [
+      'spot',
+      'convert',
+      'futures',
+      'margin',
+      'bots',
+      'copy',
+      'dca',
+      'wallet',
+      'p2p',
+      'earn',
+      'launchpad',
+      'predictions',
+      'arena',
+      'rewards',
+      'support',
+    ]) {
+      await tester.scrollUntilVisible(
+        find.byKey(TradePage.quickNavKey(id)),
+        80,
+        scrollable: find.byType(Scrollable).first,
+      );
+      expect(find.byKey(TradePage.quickNavKey(id)), findsOneWidget);
+    }
+
+    expect(find.text('Help'), findsOneWidget);
   });
 }

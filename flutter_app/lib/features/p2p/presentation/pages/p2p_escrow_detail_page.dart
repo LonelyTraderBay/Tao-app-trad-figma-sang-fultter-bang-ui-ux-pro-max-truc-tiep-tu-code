@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -68,73 +69,80 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
       semanticLabel: 'SC-246 P2PEscrowDetailPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Chi tiết Escrow',
-              subtitle: 'Escrow · P2P',
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _EscrowStatusHero(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _EscrowAddressCard(
-                        snapshot: snapshot,
-                        showFullAddress: _showFullAddress,
-                        onReveal: () {
-                          HapticFeedback.selectionClick();
-                          setState(() => _showFullAddress = !_showFullAddress);
-                        },
-                        onCopy: () {
-                          HapticFeedback.selectionClick();
-                          Clipboard.setData(
-                            ClipboardData(text: snapshot.escrowAddress),
-                          );
-                          setState(() => _feedback = 'Đã copy địa chỉ escrow');
-                        },
-                        onExplorer: () {
-                          HapticFeedback.selectionClick();
-                          setState(
-                            () => _feedback = 'Đã mở Blockchain Explorer',
-                          );
-                        },
-                      ),
-                      if (_feedback != null) ...[
-                        const SizedBox(height: AppSpacing.x3),
-                        _FeedbackBanner(message: _feedback!),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Chi tiết Escrow',
+            subtitle: 'Escrow · P2P',
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _EscrowStatusHero(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _EscrowAddressCard(
+                          snapshot: snapshot,
+                          showFullAddress: _showFullAddress,
+                          onReveal: () {
+                            HapticFeedback.selectionClick();
+                            setState(
+                              () => _showFullAddress = !_showFullAddress,
+                            );
+                          },
+                          onCopy: () {
+                            HapticFeedback.selectionClick();
+                            Clipboard.setData(
+                              ClipboardData(text: snapshot.escrowAddress),
+                            );
+                            setState(
+                              () => _feedback = 'Đã copy địa chỉ escrow',
+                            );
+                          },
+                          onExplorer: () {
+                            HapticFeedback.selectionClick();
+                            setState(
+                              () => _feedback = 'Đã mở Blockchain Explorer',
+                            );
+                          },
+                        ),
+                        if (_feedback != null) ...[
+                          const SizedBox(height: AppSpacing.x3),
+                          _FeedbackBanner(message: _feedback!),
+                        ],
+                        const SizedBox(height: AppSpacing.x4),
+                        _MultiSigCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _OrderInfoCard(order: order),
+                        const SizedBox(height: AppSpacing.x4),
+                        _EscrowTimelineCard(events: snapshot.timeline),
+                        const SizedBox(height: AppSpacing.x4),
+                        _SecurityNotice(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _OrderLink(orderId: widget.orderId),
                       ],
-                      const SizedBox(height: AppSpacing.x4),
-                      _MultiSigCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _OrderInfoCard(order: order),
-                      const SizedBox(height: AppSpacing.x4),
-                      _EscrowTimelineCard(events: snapshot.timeline),
-                      const SizedBox(height: AppSpacing.x4),
-                      _SecurityNotice(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _OrderLink(orderId: widget.orderId),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

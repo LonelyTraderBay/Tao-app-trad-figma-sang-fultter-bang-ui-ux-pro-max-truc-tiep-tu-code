@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -46,35 +47,38 @@ class StakingWebhooksPage extends ConsumerWidget {
       semanticLabel: 'SC-393 StakingWebhooksPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.defaultPadding,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _WebhooksHero(snapshot: snapshot),
-                    VitCtaButton(
-                      key: createKey,
-                      onPressed: () => _showCreateSheet(context, snapshot),
-                      leading: const Icon(Icons.add_rounded),
-                      child: Text(snapshot.createLabel),
-                    ),
-                    _ActiveWebhooks(snapshot: snapshot),
-                    _AvailableEvents(snapshot: snapshot),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.defaultPadding,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _WebhooksHero(snapshot: snapshot),
+                      VitCtaButton(
+                        key: createKey,
+                        onPressed: () => _showCreateSheet(context, snapshot),
+                        leading: const Icon(Icons.add_rounded),
+                        child: Text(snapshot.createLabel),
+                      ),
+                      _ActiveWebhooks(snapshot: snapshot),
+                      _AvailableEvents(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -84,7 +88,7 @@ class StakingWebhooksPage extends ConsumerWidget {
     BuildContext context,
     StakingWebhooksSnapshot snapshot,
   ) {
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,

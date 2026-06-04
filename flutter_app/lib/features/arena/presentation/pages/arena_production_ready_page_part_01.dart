@@ -1,4 +1,4 @@
-﻿part of 'arena_production_ready_page.dart';
+part of 'arena_production_ready_page.dart';
 
 class _ArenaProductionReadyPageState
     extends ConsumerState<ArenaProductionReadyPage> {
@@ -21,47 +21,50 @@ class _ArenaProductionReadyPageState
       semanticLabel: 'SC-206 ArenaProductionReadyPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Release Readiness',
-              subtitle: 'Internal handoff - Open Arena',
-              showBack: true,
-              onBack: () => _close(context),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ArenaProductionReadyPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    customGap: AppSpacing.x5,
-                    children: [
-                      _ProductionHero(),
-                      _SectionTabs(
-                        active: _activeSection,
-                        onChanged: (section) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _activeSection = section);
-                        },
-                      ),
-                      _ActiveSection(
-                        section: _activeSection,
-                        snapshot: snapshot,
-                        onRoute: (route) => _go(context, route),
-                      ),
-                      _InternalOnlyFooter(text: snapshot.disclaimer),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Release Readiness',
+            subtitle: 'Internal handoff - Open Arena',
+            showBack: true,
+            onBack: () => _close(context),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ArenaProductionReadyPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      customGap: AppSpacing.x5,
+                      children: [
+                        _ProductionHero(),
+                        _SectionTabs(
+                          active: _activeSection,
+                          onChanged: (section) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _activeSection = section);
+                          },
+                        ),
+                        _ActiveSection(
+                          section: _activeSection,
+                          snapshot: snapshot,
+                          onRoute: (route) => _go(context, route),
+                        ),
+                        _InternalOnlyFooter(text: snapshot.disclaimer),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

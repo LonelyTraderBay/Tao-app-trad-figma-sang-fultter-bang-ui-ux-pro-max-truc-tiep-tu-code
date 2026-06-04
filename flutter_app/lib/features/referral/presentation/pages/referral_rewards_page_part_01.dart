@@ -21,77 +21,80 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
       semanticLabel: 'SC-287 ReferralRewardsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ReferralRewardsPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _RewardHero(
-                        snapshot: snapshot,
-                        onExport: () => _showExportSheet(context, snapshot),
-                        onDisputes: () =>
-                            _showDisputeHistorySheet(context, snapshot),
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      _SectionTitle(
-                        title: 'Hoa hồng theo tháng',
-                        trailing:
-                            '+${_formatUsd(snapshot.thisMonthCommission)} tháng này',
-                      ),
-                      const SizedBox(height: AppSpacing.x3),
-                      _RewardChart(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      _RewardTabs(
-                        filters: snapshot.filters,
-                        active: snapshot.filter,
-                        onChanged: (value) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _filter = value);
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _SortRail(
-                        options: snapshot.sortOptions,
-                        active: snapshot.sort,
-                        onChanged: (value) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _sort = value);
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _RewardLedger(
-                        snapshot: snapshot,
-                        onReport: (record) =>
-                            _showReportSheet(context, snapshot, record),
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      const _DisputeInfo(),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ReferralRewardsPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _RewardHero(
+                          snapshot: snapshot,
+                          onExport: () => _showExportSheet(context, snapshot),
+                          onDisputes: () =>
+                              _showDisputeHistorySheet(context, snapshot),
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        _SectionTitle(
+                          title: 'Hoa hồng theo tháng',
+                          trailing:
+                              '+${_formatUsd(snapshot.thisMonthCommission)} tháng này',
+                        ),
+                        const SizedBox(height: AppSpacing.x3),
+                        _RewardChart(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        _RewardTabs(
+                          filters: snapshot.filters,
+                          active: snapshot.filter,
+                          onChanged: (value) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _filter = value);
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        _SortRail(
+                          options: snapshot.sortOptions,
+                          active: snapshot.sort,
+                          onChanged: (value) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _sort = value);
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        _RewardLedger(
+                          snapshot: snapshot,
+                          onReport: (record) =>
+                              _showReportSheet(context, snapshot, record),
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        const _DisputeInfo(),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -101,7 +104,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
     BuildContext context,
     ReferralRewardsSnapshot snapshot,
   ) {
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.surface,
       shape: const RoundedRectangleBorder(
@@ -160,7 +163,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
     ReferralRewardsSnapshot snapshot,
     ReferralRewardRecordDraft record,
   ) {
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.surface,
       shape: const RoundedRectangleBorder(
@@ -212,7 +215,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
     BuildContext context,
     ReferralRewardsSnapshot snapshot,
   ) {
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.surface,
       shape: const RoundedRectangleBorder(

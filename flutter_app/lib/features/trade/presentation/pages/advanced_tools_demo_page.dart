@@ -9,9 +9,11 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
 part '../widgets/advanced_tools_overview.dart';
 part '../widgets/advanced_tools_tabs_sheets.dart';
@@ -70,81 +72,85 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
         children: [
           Material(
             type: MaterialType.transparency,
-            child: Column(
-              children: [
-                VitHeader(
-                  title: 'Advanced Trading Tools',
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.trade),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: AdvancedToolsDemoPage.contentKey,
-                    padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const _IntroCard(),
-                        const SizedBox(height: 12),
-                        for (final feature in snapshot.features) ...[
-                          _FeatureCard(
-                            feature: feature,
-                            onTap: () => _onFeatureTap(feature),
-                          ),
+            child: VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Advanced Trading Tools',
+                showBack: true,
+                onBack: () => context.go(AppRoutePaths.trade),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: AdvancedToolsDemoPage.contentKey,
+                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const _IntroCard(),
                           const SizedBox(height: 12),
-                        ],
-                        const _SpeedCard(),
-                        const SizedBox(height: 12),
-                        const _BenefitsCard(),
-                        const SizedBox(height: 12),
-                        _ProgressCard(items: snapshot.statusItems),
-                        const SizedBox(height: 18),
-                        _ToolsTabs(
-                          active: _tab,
-                          onChanged: (tab) => setState(() => _tab = tab),
-                        ),
-                        const SizedBox(height: 14),
-                        if (_tab == _ToolsTab.ladder)
-                          _ActionTab(
-                            description:
-                                'Click any price level on the order book to place instant orders',
-                            buttonKey: AdvancedToolsDemoPage.ladderButtonKey,
-                            label: 'Open Ladder Trading',
-                            icon: Icons.track_changes_rounded,
-                            colors: const [AppColors.buy, AppColors.buyDark],
-                            onOpen: _openLadderSheet,
-                          )
-                        else if (_tab == _ToolsTab.bulk)
-                          _ActionTab(
-                            description:
-                                'Select multiple orders and perform batch actions',
-                            buttonKey: AdvancedToolsDemoPage.bulkButtonKey,
-                            label: 'Open Bulk Operations',
-                            icon: Icons.check_box_rounded,
-                            colors: const [
-                              AppColors.caution,
-                              AppColors.medalBronzeMuted,
-                            ],
-                            onOpen: _openBulkSheet,
-                          )
-                        else
-                          _ActionTab(
-                            description:
-                                'View all keyboard shortcuts and customize key bindings',
-                            buttonKey: AdvancedToolsDemoPage.shortcutsButtonKey,
-                            label: 'View Shortcuts Reference',
-                            icon: Icons.keyboard_rounded,
-                            colors: const [
-                              AppColors.accent,
-                              AppColors.accentDark,
-                            ],
-                            onOpen: _openShortcutsSheet,
+                          for (final feature in snapshot.features) ...[
+                            _FeatureCard(
+                              feature: feature,
+                              onTap: () => _onFeatureTap(feature),
+                            ),
+                            const SizedBox(height: 12),
+                          ],
+                          const _SpeedCard(),
+                          const SizedBox(height: 12),
+                          const _BenefitsCard(),
+                          const SizedBox(height: 12),
+                          _ProgressCard(items: snapshot.statusItems),
+                          const SizedBox(height: 18),
+                          _ToolsTabs(
+                            active: _tab,
+                            onChanged: (tab) => setState(() => _tab = tab),
                           ),
-                      ],
+                          const SizedBox(height: 14),
+                          if (_tab == _ToolsTab.ladder)
+                            _ActionTab(
+                              description:
+                                  'Click any price level on the order book to place instant orders',
+                              buttonKey: AdvancedToolsDemoPage.ladderButtonKey,
+                              label: 'Open Ladder Trading',
+                              icon: Icons.track_changes_rounded,
+                              colors: const [AppColors.buy, AppColors.buyDark],
+                              onOpen: _openLadderSheet,
+                            )
+                          else if (_tab == _ToolsTab.bulk)
+                            _ActionTab(
+                              description:
+                                  'Select multiple orders and perform batch actions',
+                              buttonKey: AdvancedToolsDemoPage.bulkButtonKey,
+                              label: 'Open Bulk Operations',
+                              icon: Icons.check_box_rounded,
+                              colors: const [
+                                AppColors.caution,
+                                AppColors.medalBronzeMuted,
+                              ],
+                              onOpen: _openBulkSheet,
+                            )
+                          else
+                            _ActionTab(
+                              description:
+                                  'View all keyboard shortcuts and customize key bindings',
+                              buttonKey:
+                                  AdvancedToolsDemoPage.shortcutsButtonKey,
+                              label: 'View Shortcuts Reference',
+                              icon: Icons.keyboard_rounded,
+                              colors: const [
+                                AppColors.accent,
+                                AppColors.accentDark,
+                              ],
+                              onOpen: _openShortcutsSheet,
+                            ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           if (_successMessage != null)
@@ -179,10 +185,9 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
 
   Future<void> _openLadderSheet() async {
     final controller = ref.read(tradeAdvancedToolsControllerProvider);
-    final placed = await showModalBottomSheet<bool>(
+    final placed = await showVitBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      useRootNavigator: true,
       backgroundColor: AppColors.transparent,
       builder: (context) =>
           _LadderSheet(orders: controller.state.snapshot.ladderOrders),
@@ -202,10 +207,9 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
     final orderIds = controller.state.snapshot.bulkOrders
         .map((order) => order.id)
         .toList(growable: false);
-    final cancelled = await showModalBottomSheet<bool>(
+    final cancelled = await showVitBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      useRootNavigator: true,
       backgroundColor: AppColors.transparent,
       builder: (context) =>
           _BulkSheet(orders: controller.state.snapshot.bulkOrders),
@@ -225,10 +229,9 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
 
   Future<void> _openShortcutsSheet() async {
     final controller = ref.read(tradeAdvancedToolsControllerProvider);
-    final triggered = await showModalBottomSheet<bool>(
+    final triggered = await showVitBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      useRootNavigator: true,
       backgroundColor: AppColors.transparent,
       builder: (context) =>
           _ShortcutsSheet(shortcuts: controller.state.snapshot.shortcuts),

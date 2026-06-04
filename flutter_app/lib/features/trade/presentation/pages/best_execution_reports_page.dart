@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -66,55 +67,59 @@ class _BestExecutionReportsPageState
         color: _bestBackground,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: 'Best Execution Reports',
-                  subtitle: 'RTS 27 / RTS 28 Compliance',
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-                  trailing: IconButton(
+            VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Best Execution Reports',
+                subtitle: 'RTS 27 / RTS 28 Compliance',
+                showBack: true,
+                onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+                actions: [
+                  VitHeaderActionItem(
+                    type: VitHeaderActionType.export,
                     onPressed: () =>
                         setState(() => _notice = 'PDF export queued'),
-                    icon: const Icon(Icons.download_rounded, size: 19),
-                    color: AppColors.text1,
                   ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: BestExecutionReportsPage.contentKey,
-                    padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const _ComplianceNotice(),
-                        const SizedBox(height: 22),
-                        _SummaryGrid(summary: snapshot.summary),
-                        const SizedBox(height: 26),
-                        _Tabs(activeId: _tab, onChanged: _setTab),
-                        const SizedBox(height: 26),
-                        if (_tab == 'current')
-                          _CurrentReport(
-                            venues: snapshot.venues,
-                            onAnalysis: () => context.go(
-                              AppRoutePaths.tradeCopyExecutionVenueAnalysis,
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: BestExecutionReportsPage.contentKey,
+                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const _ComplianceNotice(),
+                          const SizedBox(height: 22),
+                          _SummaryGrid(summary: snapshot.summary),
+                          const SizedBox(height: 26),
+                          _Tabs(activeId: _tab, onChanged: _setTab),
+                          const SizedBox(height: 26),
+                          if (_tab == 'current')
+                            _CurrentReport(
+                              venues: snapshot.venues,
+                              onAnalysis: () => context.go(
+                                AppRoutePaths.tradeCopyExecutionVenueAnalysis,
+                              ),
+                              onExport: () =>
+                                  setState(() => _notice = 'PDF export queued'),
+                              onPublish: () =>
+                                  setState(() => _notice = 'Report submitted'),
+                            )
+                          else
+                            _ArchiveReport(
+                              reports: snapshot.archive,
+                              onExport: (id) =>
+                                  setState(() => _notice = '$id PDF queued'),
                             ),
-                            onExport: () =>
-                                setState(() => _notice = 'PDF export queued'),
-                            onPublish: () =>
-                                setState(() => _notice = 'Report submitted'),
-                          )
-                        else
-                          _ArchiveReport(
-                            reports: snapshot.archive,
-                            onExport: (id) =>
-                                setState(() => _notice = '$id PDF queued'),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_notice != null)
               _NoticePanel(

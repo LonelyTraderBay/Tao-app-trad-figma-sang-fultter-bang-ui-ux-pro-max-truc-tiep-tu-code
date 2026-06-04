@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -98,76 +99,80 @@ class _LaunchpadGasTrackerPageState
         type: MaterialType.transparency,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: snapshot.title,
-                  showBack: true,
-                  onBack: () => context.go(snapshot.backRoute),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x3,
-                    AppSpacing.contentPad,
-                    AppSpacing.x2,
+            VitAutoHideHeaderScaffold(
+              bottomInset: bottomInset,
+              semanticLabel: 'SC-311 LaunchpadGasTrackerPage scroll surface',
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x3,
+                      AppSpacing.contentPad,
+                      AppSpacing.x2,
+                    ),
+                    child: _FeaturedGasCard(price: selectedGas),
                   ),
-                  child: _FeaturedGasCard(price: selectedGas),
-                ),
-                Container(
-                  key: LaunchpadGasTrackerPage.tabsKey,
-                  decoration: const BoxDecoration(
-                    color: AppColors.surface,
-                    border: Border(
-                      top: BorderSide(color: AppColors.divider),
-                      bottom: BorderSide(color: AppColors.divider),
+                  Container(
+                    key: LaunchpadGasTrackerPage.tabsKey,
+                    decoration: const BoxDecoration(
+                      color: AppColors.surface,
+                      border: Border(
+                        top: BorderSide(color: AppColors.divider),
+                        bottom: BorderSide(color: AppColors.divider),
+                      ),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.contentPad,
+                    ),
+                    child: _GasTabs(
+                      activeTab: _activeTab,
+                      onChanged: (tab) => setState(() => _activeTab = tab),
                     ),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.contentPad,
-                  ),
-                  child: _GasTabs(
-                    activeTab: _activeTab,
-                    onChanged: (tab) => setState(() => _activeTab = tab),
-                  ),
-                ),
-                Expanded(
-                  child: ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(
-                      context,
-                    ).copyWith(scrollbars: false),
-                    child: SingleChildScrollView(
-                      key: LaunchpadGasTrackerPage.contentKey,
-                      physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(bottom: bottomInset),
-                      child: VitPageContent(
-                        padding: VitContentPadding.defaultPadding,
-                        customGap: AppSpacing.x4,
-                        children: [
-                          switch (_activeTab) {
-                            _GasTab.prices => _PricesTab(
-                              prices: snapshot.prices,
-                              selectedGas: selectedGas,
-                              selectedChain: _selectedChain,
-                              onSelected: (chain) =>
-                                  setState(() => _selectedChain = chain),
-                            ),
-                            _GasTab.estimator => _EstimatorTab(
-                              estimates: snapshot.estimates,
-                            ),
-                            _GasTab.alerts => _AlertsTab(
-                              alerts: _alerts,
-                              onAdd: () => setState(() => _showAddAlert = true),
-                              onToggle: _toggleAlert,
-                              onDelete: _deleteAlert,
-                            ),
-                          },
-                        ],
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: LaunchpadGasTrackerPage.contentKey,
+                        physics: const BouncingScrollPhysics(),
+                        child: VitPageContent(
+                          padding: VitContentPadding.defaultPadding,
+                          customGap: AppSpacing.x4,
+                          children: [
+                            switch (_activeTab) {
+                              _GasTab.prices => _PricesTab(
+                                prices: snapshot.prices,
+                                selectedGas: selectedGas,
+                                selectedChain: _selectedChain,
+                                onSelected: (chain) =>
+                                    setState(() => _selectedChain = chain),
+                              ),
+                              _GasTab.estimator => _EstimatorTab(
+                                estimates: snapshot.estimates,
+                              ),
+                              _GasTab.alerts => _AlertsTab(
+                                alerts: _alerts,
+                                onAdd: () =>
+                                    setState(() => _showAddAlert = true),
+                                onToggle: _toggleAlert,
+                                onDelete: _deleteAlert,
+                              ),
+                            },
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_showAddAlert)
               Positioned.fill(

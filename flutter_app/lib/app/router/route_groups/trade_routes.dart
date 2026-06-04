@@ -463,10 +463,15 @@ List<RouteBase> _tradeRoutes(ShellRenderMode shellRenderMode) {
       path: '/trade/copy-provider/:providerId/configuration',
       name: AppRouteNames.sc072CopyConfiguration,
       builder: (_, state) {
-        final backPath = state.uri.queryParameters['back'];
+        final providerId = state.pathParameters['providerId'] ?? '';
+        final backPath = resolveSafeBackPath(
+          candidate: state.uri.queryParameters['back'],
+          fallbackPath: AppRoutePaths.tradeCopyProvider(providerId),
+          allowedPrefixes: const [AppRoutePaths.trade],
+        );
         return CopyConfigurationPage(
-          providerId: state.pathParameters['providerId'] ?? '',
-          backPath: backPath == null || backPath.isEmpty ? null : backPath,
+          providerId: providerId,
+          backPath: backPath,
           shellRenderMode: shellRenderMode,
         );
       },
@@ -486,12 +491,14 @@ List<RouteBase> _tradeRoutes(ShellRenderMode shellRenderMode) {
       path: '/trade/copy-provider/:providerId',
       name: AppRouteNames.sc070CopyProviderDetail,
       builder: (_, state) {
-        final backPath = state.uri.queryParameters['back'];
+        final backPath = resolveSafeBackPath(
+          candidate: state.uri.queryParameters['back'],
+          fallbackPath: AppRoutePaths.tradeCopyTrading,
+          allowedPrefixes: const [AppRoutePaths.trade],
+        );
         return CopyProviderDetailPage(
           providerId: state.pathParameters['providerId'] ?? 'provider001',
-          backPath: backPath == null || backPath.isEmpty
-              ? AppRoutePaths.tradeCopyTrading
-              : backPath,
+          backPath: backPath,
           shellRenderMode: shellRenderMode,
         );
       },

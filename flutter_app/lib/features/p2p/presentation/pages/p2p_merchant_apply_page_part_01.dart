@@ -42,56 +42,60 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
       semanticLabel: 'SC-227 P2PMerchantApplyPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Đăng ký Merchant',
-              subtitle: 'Merchant · P2P',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.p2p),
-            ),
-            if (!_submitted) _ProgressHeader(steps: _steps, currentStep: _step),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2PMerchantApplyPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x5,
-                    AppSpacing.contentPad,
-                    bottomInset,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Đăng ký Merchant',
+            subtitle: 'Merchant · P2P',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.p2p),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (!_submitted)
+                _ProgressHeader(steps: _steps, currentStep: _step),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2PMerchantApplyPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x5,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: _submitted
+                        ? _SuccessState(
+                            reviewSteps: snapshot.reviewSteps,
+                            onBackToP2P: () => context.go(AppRoutePaths.p2p),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 180),
+                                child: _stepContent(snapshot),
+                              ),
+                              const SizedBox(height: AppSpacing.x6),
+                              _NavigationButtons(
+                                step: _step,
+                                canProceed: _canProceed(snapshot),
+                                submitting: _submitting,
+                                onPrevious: _previous,
+                                onNext: _next,
+                                onSubmit: () => _submit(snapshot),
+                              ),
+                            ],
+                          ),
                   ),
-                  child: _submitted
-                      ? _SuccessState(
-                          reviewSteps: snapshot.reviewSteps,
-                          onBackToP2P: () => context.go(AppRoutePaths.p2p),
-                        )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 180),
-                              child: _stepContent(snapshot),
-                            ),
-                            const SizedBox(height: AppSpacing.x6),
-                            _NavigationButtons(
-                              step: _step,
-                              canProceed: _canProceed(snapshot),
-                              submitting: _submitting,
-                              onPrevious: _previous,
-                              onNext: _next,
-                              onSubmit: () => _submit(snapshot),
-                            ),
-                          ],
-                        ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -9,8 +9,10 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
@@ -84,62 +86,65 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
       semanticLabel: 'SC-162 ApiKeyCreatePage',
       child: Material(
         color: _apiBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'T\u1EA1o API Key m\u1EDBi',
-              subtitle: 'API \u00B7 Profile',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.fromLTRB(20, 17, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _NameSection(
-                      controller: _nameController,
-                      onChanged: () => setState(() {}),
-                    ),
-                    const SizedBox(height: 26),
-                    _PermissionsSection(
-                      permissions: snapshot.permissions,
-                      selected: _permissions,
-                      onToggle: _togglePermission,
-                    ),
-                    const SizedBox(height: 27),
-                    _IpWhitelistSection(
-                      controller: _ipController,
-                      ips: _ips,
-                      onAdd: _addIp,
-                      onRemove: (ip) => setState(() => _ips.remove(ip)),
-                    ),
-                    const SizedBox(height: 28),
-                    _ExpirySection(
-                      options: snapshot.expiryOptions,
-                      selected: _expiry,
-                      onSelect: (id) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _expiry = id);
-                      },
-                    ),
-                    const SizedBox(height: 24),
-                    _SecurityTips(tips: snapshot.securityTips),
-                    const SizedBox(height: 10),
-                    _PrimaryCta(
-                      key: ApiKeyCreatePage.continueKey,
-                      label: 'Ti\u1EBFp t\u1EE5c',
-                      enabled: _canProceed,
-                      onTap: () =>
-                          setState(() => _step = _ApiCreateStep.confirm),
-                    ),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'T\u1EA1o API Key m\u1EDBi',
+            subtitle: 'API \u00B7 Profile',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(20, 17, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _NameSection(
+                        controller: _nameController,
+                        onChanged: () => setState(() {}),
+                      ),
+                      const SizedBox(height: 26),
+                      _PermissionsSection(
+                        permissions: snapshot.permissions,
+                        selected: _permissions,
+                        onToggle: _togglePermission,
+                      ),
+                      const SizedBox(height: 27),
+                      _IpWhitelistSection(
+                        controller: _ipController,
+                        ips: _ips,
+                        onAdd: _addIp,
+                        onRemove: (ip) => setState(() => _ips.remove(ip)),
+                      ),
+                      const SizedBox(height: 28),
+                      _ExpirySection(
+                        options: snapshot.expiryOptions,
+                        selected: _expiry,
+                        onSelect: (id) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _expiry = id);
+                        },
+                      ),
+                      const SizedBox(height: 24),
+                      _SecurityTips(tips: snapshot.securityTips),
+                      const SizedBox(height: 10),
+                      _PrimaryCta(
+                        key: ApiKeyCreatePage.continueKey,
+                        label: 'Ti\u1EBFp t\u1EE5c',
+                        enabled: _canProceed,
+                        onTap: () =>
+                            setState(() => _step = _ApiCreateStep.confirm),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -256,10 +261,6 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
   }
 
   void _close() {
-    if (context.canPop()) {
-      context.pop();
-      return;
-    }
-    context.go(AppRoutePaths.profileApi);
+    goBackOrFallback(context, fallbackPath: AppRoutePaths.profileApi);
   }
 }

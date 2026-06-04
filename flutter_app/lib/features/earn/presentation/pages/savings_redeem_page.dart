@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -35,23 +36,26 @@ class SavingsRedeemPage extends ConsumerWidget {
       semanticLabel: 'SC-331 SavingsRedeemPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            VitPageContent(
-              grow: true,
-              padding: VitContentPadding.compact,
-              children: [
-                const SizedBox(height: AppSpacing.x7 + AppSpacing.x6),
-                _MissingPositionState(snapshot: snapshot),
-                const Spacer(),
-              ],
-            ),
-          ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              VitPageContent(
+                grow: true,
+                padding: VitContentPadding.compact,
+                children: [
+                  const SizedBox(height: AppSpacing.x7 + AppSpacing.x6),
+                  _MissingPositionState(snapshot: snapshot),
+                  const Spacer(),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

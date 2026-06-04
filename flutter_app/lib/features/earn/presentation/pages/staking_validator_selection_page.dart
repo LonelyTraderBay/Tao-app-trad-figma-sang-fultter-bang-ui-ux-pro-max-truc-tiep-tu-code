@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
@@ -72,81 +73,84 @@ class _StakingValidatorSelectionPageState
       semanticLabel: 'SC-362 StakingValidatorSelectionPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    StakingValidatorSelectionInfoBanner(snapshot: snapshot),
-                    StakingValidatorSelectionStatsSummary(snapshot: snapshot),
-                    StakingValidatorSelectionSearchAndFilter(
-                      controller: _searchController,
-                      filterActive:
-                          _showFilters ||
-                          _tierFilter != null ||
-                          _sort != StakingValidatorSort.apy,
-                      onQueryChanged: (query) => setState(() {
-                        _query = query;
-                        _selected = null;
-                      }),
-                      onFilter: () {
-                        HapticFeedback.selectionClick();
-                        setState(() => _showFilters = !_showFilters);
-                      },
-                    ),
-                    if (_showFilters)
-                      StakingValidatorSelectionFilterPanel(
-                        key: StakingValidatorSelectionPage.filterPanelKey,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      StakingValidatorSelectionInfoBanner(snapshot: snapshot),
+                      StakingValidatorSelectionStatsSummary(snapshot: snapshot),
+                      StakingValidatorSelectionSearchAndFilter(
+                        controller: _searchController,
+                        filterActive:
+                            _showFilters ||
+                            _tierFilter != null ||
+                            _sort != StakingValidatorSort.apy,
+                        onQueryChanged: (query) => setState(() {
+                          _query = query;
+                          _selected = null;
+                        }),
+                        onFilter: () {
+                          HapticFeedback.selectionClick();
+                          setState(() => _showFilters = !_showFilters);
+                        },
+                      ),
+                      if (_showFilters)
+                        StakingValidatorSelectionFilterPanel(
+                          key: StakingValidatorSelectionPage.filterPanelKey,
+                          sort: _sort,
+                          tier: _tierFilter,
+                          onSortChanged: (sort) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _sort = sort);
+                          },
+                          onTierChanged: (tier) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _tierFilter = tier);
+                          },
+                          onClear: _clearFilters,
+                        ),
+                      StakingValidatorSelectionResultsHeader(
+                        count: validators.length,
+                        total: snapshot.validators.length,
+                        filtered:
+                            validators.length != snapshot.validators.length ||
+                            _query.isNotEmpty,
                         sort: _sort,
-                        tier: _tierFilter,
-                        onSortChanged: (sort) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _sort = sort);
-                        },
-                        onTierChanged: (tier) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tierFilter = tier);
-                        },
                         onClear: _clearFilters,
                       ),
-                    StakingValidatorSelectionResultsHeader(
-                      count: validators.length,
-                      total: snapshot.validators.length,
-                      filtered:
-                          validators.length != snapshot.validators.length ||
-                          _query.isNotEmpty,
-                      sort: _sort,
-                      onClear: _clearFilters,
-                    ),
-                    if (_selected != null)
-                      StakingValidatorSelectionDetailCard(
-                        key: StakingValidatorSelectionPage.detailKey,
-                        validator: _selected!,
-                        onClose: () => setState(() => _selected = null),
+                      if (_selected != null)
+                        StakingValidatorSelectionDetailCard(
+                          key: StakingValidatorSelectionPage.detailKey,
+                          validator: _selected!,
+                          onClose: () => setState(() => _selected = null),
+                        ),
+                      StakingValidatorSelectionValidatorList(
+                        validators: validators,
+                        onTap: (validator) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _selected = validator);
+                        },
                       ),
-                    StakingValidatorSelectionValidatorList(
-                      validators: validators,
-                      onTap: (validator) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _selected = validator);
-                      },
-                    ),
-                    StakingValidatorSelectionFooterNote(snapshot: snapshot),
-                  ],
+                      StakingValidatorSelectionFooterNote(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

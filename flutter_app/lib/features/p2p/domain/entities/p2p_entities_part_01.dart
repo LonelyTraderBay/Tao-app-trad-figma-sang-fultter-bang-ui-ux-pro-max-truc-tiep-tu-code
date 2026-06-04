@@ -54,6 +54,9 @@ final class P2PHomeSnapshot {
     required this.emptyTitle,
     required this.emptySubtitle,
     required this.contractNotes,
+    this.highRiskContractId,
+    this.currentState = P2PScreenState.realtimeRefresh,
+    this.lastUpdatedLabel = '',
   });
 
   final String endpoint;
@@ -78,6 +81,43 @@ final class P2PHomeSnapshot {
   final String emptyTitle;
   final String emptySubtitle;
   final String contractNotes;
+  final String? highRiskContractId;
+  final P2PScreenState currentState;
+  final String lastUpdatedLabel;
+
+  P2PHomeSnapshot copyWith({
+    P2PScreenState? currentState,
+    String? lastUpdatedLabel,
+    List<P2PAdDraft>? ads,
+  }) {
+    return P2PHomeSnapshot(
+      endpoint: endpoint,
+      actionDraft: actionDraft,
+      supportedStates: supportedStates,
+      title: title,
+      subtitle: subtitle,
+      defaultTradeType: defaultTradeType,
+      selectedTradeType: selectedTradeType,
+      selectedAsset: selectedAsset,
+      selectedFiat: selectedFiat,
+      assets: assets,
+      fiatCurrencies: fiatCurrencies,
+      searchHint: searchHint,
+      quickActions: quickActions,
+      platformStats: platformStats,
+      ads: ads ?? this.ads,
+      expressRoute: expressRoute,
+      createRoute: createRoute,
+      myOrdersRoute: myOrdersRoute,
+      tradingLevelRoute: tradingLevelRoute,
+      emptyTitle: emptyTitle,
+      emptySubtitle: emptySubtitle,
+      contractNotes: contractNotes,
+      highRiskContractId: highRiskContractId,
+      currentState: currentState ?? this.currentState,
+      lastUpdatedLabel: lastUpdatedLabel ?? this.lastUpdatedLabel,
+    );
+  }
 }
 
 final class P2PHomeQuickActionDraft {
@@ -135,6 +175,7 @@ final class P2PExpressConfirmSnapshot {
     required this.escrowNote,
     required this.warningNote,
     required this.contractNotes,
+    this.highRiskContractId,
   });
 
   final String endpoint;
@@ -150,6 +191,7 @@ final class P2PExpressConfirmSnapshot {
   final String escrowNote;
   final String warningNote;
   final String contractNotes;
+  final String? highRiskContractId;
 
   bool get isBuy => tradeType == P2PTradeType.buy;
 }
@@ -247,6 +289,7 @@ final class P2POrderTimelineSnapshot {
     required this.emptyTitle,
     required this.emptySubtitle,
     required this.contractNotes,
+    this.highRiskContractId,
   });
 
   final String endpoint;
@@ -257,6 +300,7 @@ final class P2POrderTimelineSnapshot {
   final String emptyTitle;
   final String emptySubtitle;
   final String contractNotes;
+  final String? highRiskContractId;
 }
 
 final class P2POrderRateSnapshot {
@@ -358,6 +402,7 @@ final class P2POrderSnapshot {
     required this.emptyTitle,
     required this.emptySubtitle,
     required this.contractNotes,
+    this.highRiskContractId,
   });
 
   final String endpoint;
@@ -375,6 +420,7 @@ final class P2POrderSnapshot {
   final String emptyTitle;
   final String emptySubtitle;
   final String contractNotes;
+  final String? highRiskContractId;
 }
 
 final class P2PChatSnapshot {

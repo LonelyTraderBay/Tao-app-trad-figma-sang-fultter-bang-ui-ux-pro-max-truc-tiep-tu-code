@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -66,39 +67,43 @@ class _RegulatoryDisclosuresPageState
         color: _legalBackground,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: 'Regulatory Disclosures',
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.trade),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: RegulatoryDisclosuresPage.contentKey,
-                    padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _LegalHero(snapshot: snapshot),
-                        const SizedBox(height: 24),
-                        _LegalTabs(
-                          tabs: snapshot.tabs,
-                          activeId: _activeTabId!,
-                          onChanged: (id) => setState(() => _activeTabId = id),
-                        ),
-                        const SizedBox(height: 27),
-                        _LegalTabBody(
-                          snapshot: snapshot,
-                          activeTabId: _activeTabId!,
-                          onNotice: (notice) =>
-                              setState(() => _notice = notice),
-                        ),
-                      ],
+            VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Regulatory Disclosures',
+                showBack: true,
+                onBack: () => context.go(AppRoutePaths.trade),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: RegulatoryDisclosuresPage.contentKey,
+                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _LegalHero(snapshot: snapshot),
+                          const SizedBox(height: 24),
+                          _LegalTabs(
+                            tabs: snapshot.tabs,
+                            activeId: _activeTabId!,
+                            onChanged: (id) =>
+                                setState(() => _activeTabId = id),
+                          ),
+                          const SizedBox(height: 27),
+                          _LegalTabBody(
+                            snapshot: snapshot,
+                            activeTabId: _activeTabId!,
+                            onNotice: (notice) =>
+                                setState(() => _notice = notice),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_notice != null)
               _RegulatoryNoticePanel(

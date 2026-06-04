@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -60,63 +61,66 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
       semanticLabel: 'SC-118 BotRiskDisclosurePage',
       child: Material(
         color: _botRiskBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Risk Disclosure',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeBots),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: BotRiskDisclosurePage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _HighRiskBanner(snapshot: snapshot),
-                    const SizedBox(height: 18),
-                    _PastPerformanceCard(snapshot: snapshot),
-                    const SizedBox(height: 22),
-                    _SectionLabel(snapshot.riskSectionLabel),
-                    const SizedBox(height: 12),
-                    for (final category in snapshot.categories) ...[
-                      _RiskCategoryCard(category: category),
-                      if (category != snapshot.categories.last)
-                        const SizedBox(height: 12),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Risk Disclosure',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeBots),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: BotRiskDisclosurePage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _HighRiskBanner(snapshot: snapshot),
+                      const SizedBox(height: 18),
+                      _PastPerformanceCard(snapshot: snapshot),
+                      const SizedBox(height: 22),
+                      _SectionLabel(snapshot.riskSectionLabel),
+                      const SizedBox(height: 12),
+                      for (final category in snapshot.categories) ...[
+                        _RiskCategoryCard(category: category),
+                        if (category != snapshot.categories.last)
+                          const SizedBox(height: 12),
+                      ],
+                      const SizedBox(height: 22),
+                      _SectionLabel(snapshot.additionalWarningsLabel),
+                      const SizedBox(height: 12),
+                      _AdditionalWarningsCard(
+                        warnings: snapshot.additionalWarnings,
+                      ),
+                      const SizedBox(height: 22),
+                      _SectionLabel(snapshot.regulatoryNoticeLabel),
+                      const SizedBox(height: 12),
+                      _RegulatoryNoticeCard(snapshot: snapshot),
+                      const SizedBox(height: 22),
+                      _SectionLabel(snapshot.acknowledgmentLabel),
+                      const SizedBox(height: 12),
+                      _AcknowledgmentCard(
+                        snapshot: snapshot,
+                        acknowledged: _acknowledged,
+                        onTap: () =>
+                            setState(() => _acknowledged = !_acknowledged),
+                      ),
+                      const SizedBox(height: 16),
+                      _RiskCta(
+                        snapshot: snapshot,
+                        acknowledged: _acknowledged,
+                        onPressed: () => context.go(snapshot.nextPath),
+                      ),
+                      const SizedBox(height: 16),
+                      _HelpCard(snapshot: snapshot),
                     ],
-                    const SizedBox(height: 22),
-                    _SectionLabel(snapshot.additionalWarningsLabel),
-                    const SizedBox(height: 12),
-                    _AdditionalWarningsCard(
-                      warnings: snapshot.additionalWarnings,
-                    ),
-                    const SizedBox(height: 22),
-                    _SectionLabel(snapshot.regulatoryNoticeLabel),
-                    const SizedBox(height: 12),
-                    _RegulatoryNoticeCard(snapshot: snapshot),
-                    const SizedBox(height: 22),
-                    _SectionLabel(snapshot.acknowledgmentLabel),
-                    const SizedBox(height: 12),
-                    _AcknowledgmentCard(
-                      snapshot: snapshot,
-                      acknowledged: _acknowledged,
-                      onTap: () =>
-                          setState(() => _acknowledged = !_acknowledged),
-                    ),
-                    const SizedBox(height: 16),
-                    _RiskCta(
-                      snapshot: snapshot,
-                      acknowledged: _acknowledged,
-                      onPressed: () => context.go(snapshot.nextPath),
-                    ),
-                    const SizedBox(height: 16),
-                    _HelpCard(snapshot: snapshot),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

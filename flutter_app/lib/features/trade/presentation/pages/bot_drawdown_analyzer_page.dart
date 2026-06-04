@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -51,40 +52,43 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
       semanticLabel: 'SC-129 BotDrawdownAnalyzerPage',
       child: Material(
         color: _drawdownBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Drawdown Analyzer',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeBots),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _MetricGrid(summary: snapshot.summary),
-                    const SizedBox(height: 17),
-                    const _SectionLabel('Underwater Equity'),
-                    const SizedBox(height: 10),
-                    _UnderwaterCard(points: snapshot.underwaterPoints),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Drawdown Duration Distribution'),
-                    const SizedBox(height: 10),
-                    _DurationCard(buckets: snapshot.durationBuckets),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Major Drawdown Events'),
-                    const SizedBox(height: 10),
-                    _EventsList(events: snapshot.events),
-                    const SizedBox(height: 18),
-                    _AnalysisCard(insights: snapshot.insights),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Drawdown Analyzer',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeBots),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _MetricGrid(summary: snapshot.summary),
+                      const SizedBox(height: 17),
+                      const _SectionLabel('Underwater Equity'),
+                      const SizedBox(height: 10),
+                      _UnderwaterCard(points: snapshot.underwaterPoints),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Drawdown Duration Distribution'),
+                      const SizedBox(height: 10),
+                      _DurationCard(buckets: snapshot.durationBuckets),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Major Drawdown Events'),
+                      const SizedBox(height: 10),
+                      _EventsList(events: snapshot.events),
+                      const SizedBox(height: 18),
+                      _AnalysisCard(insights: snapshot.insights),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

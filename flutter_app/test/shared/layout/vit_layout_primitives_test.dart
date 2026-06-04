@@ -47,7 +47,7 @@ void main() {
                 child: VitPageLayout(
                   child: Column(
                     children: [
-                      VitHeader(title: 'Shell', showBack: true),
+                      VitHeader(title: 'Shell', showBack: true, onBack: _noop),
                       VitPageContent(
                         children: [
                           VitPageSection(
@@ -90,6 +90,26 @@ void main() {
     final navs = find.byType(VitBottomNav);
     expect(tester.getSize(navs.first).height, DeviceMetrics.nativeBottomChrome);
     expect(tester.getSize(navs.last).height, DeviceMetrics.bottomChrome);
+  });
+
+  testWidgets('VitBottomNav renders stable notification badge states', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Column(
+          children: [
+            VitBottomNav(homeNotificationBadgeCount: 7),
+            VitBottomNav(homeNotificationBadgeCount: 0),
+            VitBottomNav(homeNotificationBadgeCount: 125),
+          ],
+        ),
+      ),
+    );
+
+    expect(find.text('7'), findsOneWidget);
+    expect(find.text('99+'), findsOneWidget);
+    expect(find.text('0'), findsNothing);
   });
 
   testWidgets('VitAppShell native bottom nav hides and restores on scroll', (
@@ -150,6 +170,8 @@ void main() {
 }
 
 const _shellScrollKey = Key('vit_app_shell_scroll_test');
+
+void _noop() {}
 
 Offset _nativeBottomNavOffset(WidgetTester tester) {
   return tester

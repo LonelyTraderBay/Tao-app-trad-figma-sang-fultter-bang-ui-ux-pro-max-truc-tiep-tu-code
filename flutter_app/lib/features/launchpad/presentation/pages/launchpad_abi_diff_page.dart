@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -79,77 +80,73 @@ class _LaunchpadAbiDiffPageState extends ConsumerState<LaunchpadAbiDiffPage> {
       semanticLabel: 'SC-308 LaunchpadABIDiffPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: LaunchpadAbiDiffPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.defaultPadding,
-                    customGap: AppSpacing.x4,
+        child: VitAutoHideHeaderScaffold(
+          bottomInset: bottomInset,
+          semanticLabel: 'SC-308 LaunchpadABIDiffPage scroll surface',
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(
+              context,
+            ).copyWith(scrollbars: false),
+            child: SingleChildScrollView(
+              key: LaunchpadAbiDiffPage.contentKey,
+              physics: const BouncingScrollPhysics(),
+              child: VitPageContent(
+                padding: VitContentPadding.defaultPadding,
+                customGap: AppSpacing.x4,
+                children: [
+                  _RiskHero(diff: diff),
+                  _SummaryStats(
+                    diff: diff,
+                    activeFilter: _filter,
+                    onChanged: (filter) => setState(() {
+                      _filter = _filter == filter ? null : filter;
+                    }),
+                  ),
+                  _UpgradeMetadata(
+                    diff: diff,
+                    copiedField: _copiedField,
+                    onCopy: _copyField,
+                  ),
+                  _FilterRow(
+                    active: _functionsOnly,
+                    count: entries.length,
+                    onChanged: () =>
+                        setState(() => _functionsOnly = !_functionsOnly),
+                  ),
+                  VitPageSection(
+                    label: 'ABI Changes',
+                    accentColor: AppColors.accent,
                     children: [
-                      _RiskHero(diff: diff),
-                      _SummaryStats(
-                        diff: diff,
-                        activeFilter: _filter,
-                        onChanged: (filter) => setState(() {
-                          _filter = _filter == filter ? null : filter;
-                        }),
-                      ),
-                      _UpgradeMetadata(
-                        diff: diff,
-                        copiedField: _copiedField,
-                        onCopy: _copyField,
-                      ),
-                      _FilterRow(
-                        active: _functionsOnly,
-                        count: entries.length,
-                        onChanged: () =>
-                            setState(() => _functionsOnly = !_functionsOnly),
-                      ),
-                      VitPageSection(
-                        label: 'ABI Changes',
-                        accentColor: AppColors.accent,
+                      Column(
+                        key: LaunchpadAbiDiffPage.entriesKey,
                         children: [
-                          Column(
-                            key: LaunchpadAbiDiffPage.entriesKey,
-                            children: [
-                              for (final entry in entries) ...[
-                                _AbiEntryCard(
-                                  entry: entry,
-                                  expanded: _expandedEntry == entry.name,
-                                  onToggle: () => setState(() {
-                                    _expandedEntry =
-                                        _expandedEntry == entry.name
-                                        ? null
-                                        : entry.name;
-                                  }),
-                                ),
-                                if (entry != entries.last)
-                                  const SizedBox(height: AppSpacing.x3),
-                              ],
-                            ],
-                          ),
+                          for (final entry in entries) ...[
+                            _AbiEntryCard(
+                              entry: entry,
+                              expanded: _expandedEntry == entry.name,
+                              onToggle: () => setState(() {
+                                _expandedEntry = _expandedEntry == entry.name
+                                    ? null
+                                    : entry.name;
+                              }),
+                            ),
+                            if (entry != entries.last)
+                              const SizedBox(height: AppSpacing.x3),
+                          ],
                         ],
                       ),
-                      const _RiskWarning(),
                     ],
                   ),
-                ),
+                  const _RiskWarning(),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

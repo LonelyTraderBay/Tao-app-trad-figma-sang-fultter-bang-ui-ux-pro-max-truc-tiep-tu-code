@@ -7,49 +7,19 @@ class _ConvertHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 44,
-      child: Row(
-        children: [
-          InkWell(
-            key: ConvertPage.backKey,
-            onTap: onBack,
-            borderRadius: AppRadii.cardRadius,
-            child: const SizedBox(
-              width: 36,
-              height: 36,
-              child: Icon(
-                Icons.chevron_left_rounded,
-                color: AppColors.text1,
-                size: 27,
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              'Convert / Swap',
-              style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
-            ),
-          ),
-          Container(
-            width: 38,
-            height: 38,
-            decoration: BoxDecoration(
-              color: _chipBackground,
-              border: Border.all(
-                color: AppColors.onAccent.withValues(alpha: .06),
-              ),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: const Icon(
-              Icons.notifications_none_rounded,
-              color: AppColors.text1,
-              size: 20,
-            ),
-          ),
-        ],
-      ),
+    return VitTopChrome(
+      type: VitTopChromeType.detail,
+      title: 'Convert / Swap',
+      showBack: true,
+      backKey: ConvertPage.backKey,
+      onBack: onBack,
+      actions: [
+        VitHeaderActionItem(
+          type: VitHeaderActionType.notifications,
+          tooltip: 'Thông báo Convert',
+          onPressed: () {},
+        ),
+      ],
     );
   }
 }

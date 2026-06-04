@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -73,57 +74,60 @@ class _P2PEscrowBalancePageState extends ConsumerState<P2PEscrowBalancePage> {
       semanticLabel: 'SC-245 P2PEscrowBalancePage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _EscrowHeroCard(balance: selectedBalance),
-                      const SizedBox(height: AppSpacing.x4),
-                      _EscrowInfoCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      _AssetTabs(
-                        assets: snapshot.assets,
-                        selectedAsset: selectedAsset,
-                        onChanged: (asset) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _asset = asset);
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      if (orders.isEmpty)
-                        _EscrowEmptyState(snapshot: snapshot)
-                      else
-                        _OrdersList(orders: orders),
-                      if (orders.isNotEmpty) ...[
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _EscrowHeroCard(balance: selectedBalance),
+                        const SizedBox(height: AppSpacing.x4),
+                        _EscrowInfoCard(snapshot: snapshot),
                         const SizedBox(height: AppSpacing.x5),
-                        _EscrowHelpCard(snapshot: snapshot),
+                        _AssetTabs(
+                          assets: snapshot.assets,
+                          selectedAsset: selectedAsset,
+                          onChanged: (asset) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _asset = asset);
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        if (orders.isEmpty)
+                          _EscrowEmptyState(snapshot: snapshot)
+                        else
+                          _OrdersList(orders: orders),
+                        if (orders.isNotEmpty) ...[
+                          const SizedBox(height: AppSpacing.x5),
+                          _EscrowHelpCard(snapshot: snapshot),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

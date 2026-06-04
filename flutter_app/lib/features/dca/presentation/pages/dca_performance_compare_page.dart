@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -56,32 +57,39 @@ class _DCAPerformanceComparePageState
 
     return VitPageLayout(
       semanticLabel: 'SC-178 DCAPerformanceComparePage',
-      child: Column(
-        children: [
-          VitHeader(title: 'DCA vs Lump Sum', showBack: true, onBack: _close),
-          _TopTabs(
-            activeTab: _activeTab,
-            onChanged: (tab) => setState(() => _activeTab = tab),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              key: DCAPerformanceComparePage.contentKey,
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.only(bottom: scrollBottom),
-              child: VitPageContent(
-                customGap: AppSpacing.x5,
-                children: [
-                  if (_activeTab == _CompareTab.compare)
-                    ..._buildCompare(snapshot),
-                  if (_activeTab == _CompareTab.scenarios)
-                    ..._buildScenarios(snapshot),
-                  if (_activeTab == _CompareTab.analysis)
-                    ..._buildAnalysis(snapshot),
-                ],
+      child: VitAutoHideHeaderScaffold(
+        header: VitHeader(
+          title: 'DCA vs Lump Sum',
+          showBack: true,
+          onBack: _close,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _TopTabs(
+              activeTab: _activeTab,
+              onChanged: (tab) => setState(() => _activeTab = tab),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                key: DCAPerformanceComparePage.contentKey,
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.only(bottom: scrollBottom),
+                child: VitPageContent(
+                  customGap: AppSpacing.x5,
+                  children: [
+                    if (_activeTab == _CompareTab.compare)
+                      ..._buildCompare(snapshot),
+                    if (_activeTab == _CompareTab.scenarios)
+                      ..._buildScenarios(snapshot),
+                    if (_activeTab == _CompareTab.analysis)
+                      ..._buildAnalysis(snapshot),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

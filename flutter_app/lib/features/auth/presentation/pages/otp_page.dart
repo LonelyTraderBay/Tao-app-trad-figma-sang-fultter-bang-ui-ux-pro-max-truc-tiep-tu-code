@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -220,60 +221,67 @@ class _OTPPageState extends ConsumerState<OTPPage> {
 
     return VitPageLayout(
       semanticLabel: 'SC-003 OTPPage',
-      child: Column(
-        children: [
-          VitHeader(
-            title: 'Xác minh OTP',
-            subtitle: 'Xác thực · Bảo mật',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.authLogin),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              key: OTPPage.contentKey,
-              padding: const EdgeInsets.only(bottom: AppSpacing.x6),
-              child: VitPageContent(
-                padding: VitContentPadding.relaxed,
-                gap: VitContentGap.relaxed,
-                children: [
-                  const _ShieldHero(),
-                  _OtpIntro(contact: widget.contact),
-                  _OtpDigitRow(
-                    controllers: _controllers,
-                    focusNodes: _focusNodes,
-                    hasError: _error.isNotEmpty,
-                    onChanged: _handleChanged,
-                    onKey: _handleKey,
-                  ),
-                  _OtpProgress(filled: filled),
-                  if (_error.isNotEmpty) _OtpErrorBanner(error: _error),
-                  VitCtaButton(
-                    key: OTPPage.submitKey,
-                    onPressed: filled < 6 || _submitting ? null : _handleVerify,
-                    loading: _submitting,
-                    variant: VitCtaButtonVariant.auth,
-                    child: Text(_submitting ? 'Đang xác minh...' : 'Xác nhận'),
-                  ),
-                  _ResendControl(
-                    canResend: _canResend,
-                    countdown: _countdown,
-                    onResend: _handleResend,
-                  ),
-                  Text(
-                    'Không nhận được? Kiểm tra thư mục Spam hoặc\n'
-                    'đảm bảo email / SĐT chính xác.',
-                    textAlign: TextAlign.center,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 12,
-                      height: 1.5,
+      child: VitAutoHideHeaderScaffold(
+        header: VitHeader(
+          title: 'Xác minh OTP',
+          subtitle: 'Xác thực · Bảo mật',
+          showBack: true,
+          onBack: () => context.go(AppRoutePaths.authLogin),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                key: OTPPage.contentKey,
+                padding: const EdgeInsets.only(bottom: AppSpacing.x6),
+                child: VitPageContent(
+                  padding: VitContentPadding.relaxed,
+                  gap: VitContentGap.relaxed,
+                  children: [
+                    const _ShieldHero(),
+                    _OtpIntro(contact: widget.contact),
+                    _OtpDigitRow(
+                      controllers: _controllers,
+                      focusNodes: _focusNodes,
+                      hasError: _error.isNotEmpty,
+                      onChanged: _handleChanged,
+                      onKey: _handleKey,
                     ),
-                  ),
-                ],
+                    _OtpProgress(filled: filled),
+                    if (_error.isNotEmpty) _OtpErrorBanner(error: _error),
+                    VitCtaButton(
+                      key: OTPPage.submitKey,
+                      onPressed: filled < 6 || _submitting
+                          ? null
+                          : _handleVerify,
+                      loading: _submitting,
+                      variant: VitCtaButtonVariant.auth,
+                      child: Text(
+                        _submitting ? 'Đang xác minh...' : 'Xác nhận',
+                      ),
+                    ),
+                    _ResendControl(
+                      canResend: _canResend,
+                      countdown: _countdown,
+                      onResend: _handleResend,
+                    ),
+                    Text(
+                      'Không nhận được? Kiểm tra thư mục Spam hoặc\n'
+                      'đảm bảo email / SĐT chính xác.',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text3,
+                        fontSize: 12,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

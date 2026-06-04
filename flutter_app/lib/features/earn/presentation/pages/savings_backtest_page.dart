@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -95,67 +96,70 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
       semanticLabel: 'SC-349 SavingsBacktestPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _BacktestHero(
-                      snapshot: snapshot,
-                      amountUsd: _amountUsd,
-                      preset: preset,
-                      period: period,
-                      weightedApy: weightedApy,
-                      hasRun: _hasRun,
-                      result: snapshot.result,
-                    ),
-                    _BacktestTabs(
-                      tabs: snapshot.tabs,
-                      active: activeTab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (activeTab == 'setup')
-                      ..._buildSetup(
-                        snapshot,
-                        preset,
-                        selectedPeriod,
-                        weightedApy,
-                      )
-                    else if (activeTab == 'results')
-                      if (_hasRun)
-                        _ResultsTab(
-                          snapshot: snapshot,
-                          amountUsd: _amountUsd,
-                          period: period,
-                          preset: preset,
-                          onReset: _reset,
-                          onApply: () =>
-                              context.go(snapshot.recommendationsRoute),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _BacktestHero(
+                        snapshot: snapshot,
+                        amountUsd: _amountUsd,
+                        preset: preset,
+                        period: period,
+                        weightedApy: weightedApy,
+                        hasRun: _hasRun,
+                        result: snapshot.result,
+                      ),
+                      _BacktestTabs(
+                        tabs: snapshot.tabs,
+                        active: activeTab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                      ),
+                      if (activeTab == 'setup')
+                        ..._buildSetup(
+                          snapshot,
+                          preset,
+                          selectedPeriod,
+                          weightedApy,
                         )
+                      else if (activeTab == 'results')
+                        if (_hasRun)
+                          _ResultsTab(
+                            snapshot: snapshot,
+                            amountUsd: _amountUsd,
+                            period: period,
+                            preset: preset,
+                            onReset: _reset,
+                            onApply: () =>
+                                context.go(snapshot.recommendationsRoute),
+                          )
+                        else
+                          _NoResults(
+                            onSetup: () => setState(() => _tab = 'setup'),
+                          )
                       else
-                        _NoResults(
-                          onSetup: () => setState(() => _tab = 'setup'),
-                        )
-                    else
-                      _CompareTab(snapshot: snapshot, amountUsd: _amountUsd),
-                  ],
+                        _CompareTab(snapshot: snapshot, amountUsd: _amountUsd),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

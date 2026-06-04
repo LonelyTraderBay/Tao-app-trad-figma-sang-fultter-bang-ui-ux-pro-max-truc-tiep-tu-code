@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -45,47 +46,50 @@ class P2PE2EInfoPage extends ConsumerWidget {
       semanticLabel: 'SC-259 P2PE2EInfoPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Mã hóa đầu cuối',
-              subtitle: 'Bảo mật · P2P',
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _Hero(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      _EncryptionDiagram(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x3),
-                      _InfoItems(items: snapshot.infoItems),
-                      const SizedBox(height: AppSpacing.x3),
-                      _FingerprintCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x3),
-                      _HowItWorks(steps: snapshot.steps),
-                      const SizedBox(height: AppSpacing.x3),
-                      _ServerInfo(snapshot: snapshot),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Mã hóa đầu cuối',
+            subtitle: 'Bảo mật · P2P',
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _Hero(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        _EncryptionDiagram(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x3),
+                        _InfoItems(items: snapshot.infoItems),
+                        const SizedBox(height: AppSpacing.x3),
+                        _FingerprintCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x3),
+                        _HowItWorks(steps: snapshot.steps),
+                        const SizedBox(height: AppSpacing.x3),
+                        _ServerInfo(snapshot: snapshot),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -60,49 +61,52 @@ class _LaunchpadPerformancePageState
       semanticLabel: 'SC-297 LaunchpadPerformancePage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            _PerformanceTabs(
-              activeTab: _activeTab,
-              onChanged: (tab) => setState(() => _activeTab = tab),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: LaunchpadPerformancePage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.defaultPadding,
-                    customGap: AppSpacing.x4,
-                    children: [
-                      switch (_activeTab) {
-                        _PerformanceTab.overview => _OverviewTab(
-                          snapshot: snapshot,
-                        ),
-                        _PerformanceTab.projects => _ProjectsTab(
-                          projects: snapshot.projects,
-                        ),
-                        _PerformanceTab.chart => _ChartTab(
-                          points: snapshot.chartPoints,
-                        ),
-                      },
-                      const _PerformanceDisclaimer(),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          bottomInset: bottomInset,
+          semanticLabel: 'SC-297 LaunchpadPerformancePage scroll surface',
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            children: [
+              _PerformanceTabs(
+                activeTab: _activeTab,
+                onChanged: (tab) => setState(() => _activeTab = tab),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: LaunchpadPerformancePage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    child: VitPageContent(
+                      padding: VitContentPadding.defaultPadding,
+                      customGap: AppSpacing.x4,
+                      children: [
+                        switch (_activeTab) {
+                          _PerformanceTab.overview => _OverviewTab(
+                            snapshot: snapshot,
+                          ),
+                          _PerformanceTab.projects => _ProjectsTab(
+                            projects: snapshot.projects,
+                          ),
+                          _PerformanceTab.chart => _ChartTab(
+                            points: snapshot.chartPoints,
+                          ),
+                        },
+                        const _PerformanceDisclaimer(),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

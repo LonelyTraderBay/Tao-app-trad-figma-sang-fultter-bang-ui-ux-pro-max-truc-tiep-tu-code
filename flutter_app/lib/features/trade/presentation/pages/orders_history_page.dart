@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -58,46 +59,49 @@ class _OrdersHistoryPageState extends ConsumerState<OrdersHistoryPage> {
       semanticLabel: 'SC-050 OrdersHistoryPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Lịch sử lệnh',
-              subtitle: 'Lệnh · Trade',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.trade),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _OrderTopTabs(
-                      active: _activeTab,
-                      openCount: snapshot.openOrders.length,
-                      historyCount: snapshot.historyOrders.length,
-                      onChanged: (tab) => setState(() => _activeTab = tab),
-                    ),
-                    _FilterRow(
-                      active: _filter,
-                      onChanged: (filter) => setState(() => _filter = filter),
-                    ),
-                    if (orders.isEmpty)
-                      _EmptyState(activeTab: _activeTab)
-                    else
-                      for (var i = 0; i < orders.length; i++)
-                        _OrderHistoryTile(
-                          order: orders[i],
-                          actionKey: i == 0
-                              ? OrdersHistoryPage.cancelFirstOrderKey
-                              : null,
-                          onCancel: () => _cancelOrder(orders[i].id),
-                        ),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Lịch sử lệnh',
+            subtitle: 'Lệnh · Trade',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.trade),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _OrderTopTabs(
+                        active: _activeTab,
+                        openCount: snapshot.openOrders.length,
+                        historyCount: snapshot.historyOrders.length,
+                        onChanged: (tab) => setState(() => _activeTab = tab),
+                      ),
+                      _FilterRow(
+                        active: _filter,
+                        onChanged: (filter) => setState(() => _filter = filter),
+                      ),
+                      if (orders.isEmpty)
+                        _EmptyState(activeTab: _activeTab)
+                      else
+                        for (var i = 0; i < orders.length; i++)
+                          _OrderHistoryTile(
+                            order: orders[i],
+                            actionKey: i == 0
+                                ? OrdersHistoryPage.cancelFirstOrderKey
+                                : null,
+                            onCancel: () => _cancelOrder(orders[i].id),
+                          ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

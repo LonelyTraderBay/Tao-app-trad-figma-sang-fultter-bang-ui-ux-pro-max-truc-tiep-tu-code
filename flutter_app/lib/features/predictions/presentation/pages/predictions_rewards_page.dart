@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -83,63 +84,66 @@ class _PredictionsRewardsPageState
       semanticLabel: 'SC-032 PredictionsRewardsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Daily Rewards',
-              subtitle: 'Phần thưởng · Prediction',
-              showBack: true,
-              onBack: () =>
-                  context.go(AppRoutePaths.marketsPredictionEvent('pred-1')),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: PredictionsRewardsPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 16,
-                    children: [
-                      _RewardsHero(snapshot: snapshot),
-                      const _HowItWorksNote(),
-                      _CategoryFilters(
-                        categories: ['All', ...snapshot.categories],
-                        activeCategory: _category,
-                        favoritesOnly: _favoritesOnly,
-                        onCategoryChanged: (value) => setState(() {
-                          _category = value;
-                        }),
-                        onFavoritesToggle: () => setState(() {
-                          _favoritesOnly = !_favoritesOnly;
-                        }),
-                      ),
-                      _RewardsTable(
-                        snapshot: snapshot,
-                        rewards: rewards,
-                        favorites: _favorites,
-                        onFavoriteToggle: (id) => setState(() {
-                          if (!_favorites.add(id)) _favorites.remove(id);
-                        }),
-                      ),
-                      _RiskLink(onTap: () => _showRiskSheet(context)),
-                      _ArenaRooms(snapshot: snapshot),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Daily Rewards',
+            subtitle: 'Phần thưởng · Prediction',
+            showBack: true,
+            onBack: () =>
+                context.go(AppRoutePaths.marketsPredictionEvent('pred-1')),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: PredictionsRewardsPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 16,
+                      children: [
+                        _RewardsHero(snapshot: snapshot),
+                        const _HowItWorksNote(),
+                        _CategoryFilters(
+                          categories: ['All', ...snapshot.categories],
+                          activeCategory: _category,
+                          favoritesOnly: _favoritesOnly,
+                          onCategoryChanged: (value) => setState(() {
+                            _category = value;
+                          }),
+                          onFavoritesToggle: () => setState(() {
+                            _favoritesOnly = !_favoritesOnly;
+                          }),
+                        ),
+                        _RewardsTable(
+                          snapshot: snapshot,
+                          rewards: rewards,
+                          favorites: _favorites,
+                          onFavoriteToggle: (id) => setState(() {
+                            if (!_favorites.add(id)) _favorites.remove(id);
+                          }),
+                        ),
+                        _RiskLink(onTap: () => _showRiskSheet(context)),
+                        _ArenaRooms(snapshot: snapshot),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
   void _showRiskSheet(BuildContext context) {
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.surface,
       shape: const RoundedRectangleBorder(

@@ -56,36 +56,6 @@ class _WhitelistAction extends StatelessWidget {
   }
 }
 
-class _HeaderSettingsButton extends StatelessWidget {
-  const _HeaderSettingsButton({required this.onPressed});
-
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 36,
-      height: 36,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: AppColors.searchBg,
-          border: Border.all(color: AppColors.border),
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: IconButton(
-          onPressed: onPressed,
-          padding: EdgeInsets.zero,
-          icon: const Icon(
-            Icons.settings_outlined,
-            color: AppColors.text1,
-            size: 18,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _SecurityScoreCard extends StatelessWidget {
   const _SecurityScoreCard({required this.snapshot});
 

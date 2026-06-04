@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -75,90 +76,98 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
         type: MaterialType.transparency,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: 'Copy đang chạy',
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-                  trailing: _HeaderAddButton(
-                    onTap: () => context.go(AppRoutePaths.tradeCopyTrading),
+            VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Copy đang chạy',
+                showBack: true,
+                onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+                actions: [
+                  VitHeaderActionItem(
+                    key: ActiveCopiesPage.addCopyKey,
+                    type: VitHeaderActionType.add,
+                    onPressed: () => context.go(AppRoutePaths.tradeCopyTrading),
                   ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: ActiveCopiesPage.contentKey,
-                    padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _PortfolioOverview(snapshot: snapshot.portfolio),
-                        const SizedBox(height: 26),
-                        _SegmentedTabs(
-                          tabs: snapshot.tabs,
-                          activeTab: _activeTab,
-                          onChanged: (id) => setState(() {
-                            _activeTab = id;
-                            _expandedCopyId = null;
-                          }),
-                        ),
-                        const SizedBox(height: 24),
-                        if (copies.isEmpty)
-                          _EmptyCopiesState(
-                            history: _activeTab == 'history',
-                            onExplore: () =>
-                                context.go(AppRoutePaths.tradeCopyTrading),
-                          )
-                        else
-                          for (final copy in copies) ...[
-                            _ActiveCopyCard(
-                              key: ActiveCopiesPage.copyKey(copy.id),
-                              copy: copy,
-                              expanded: _expandedCopyId == copy.id,
-                              onToggle: () => setState(() {
-                                _expandedCopyId = _expandedCopyId == copy.id
-                                    ? null
-                                    : copy.id;
-                              }),
-                              onViewDetails: () => context.go(
-                                AppRoutePaths.tradeCopyProvider(
-                                  copy.providerId,
-                                  backPath: AppRoutePaths.tradeCopyActive,
-                                ),
-                              ),
-                              onConfigure: () => context.go(
-                                AppRoutePaths.tradeCopyProviderConfiguration(
-                                  copy.providerId,
-                                  backPath: AppRoutePaths.tradeCopyActive,
-                                ),
-                              ),
-                              onStop:
-                                  copy.status ==
-                                      TradeActiveCopyStatus.coolingOff
-                                  ? null
-                                  : () => setState(() {
-                                      _pendingStopCopy = copy;
-                                      _confirmText = '';
-                                    }),
-                            ),
-                            if (copy != copies.last) const SizedBox(height: 12),
-                          ],
-                        if (_actionStatus != null) ...[
-                          const SizedBox(height: 14),
-                          _ActionStatusBanner(text: _actionStatus!),
-                        ],
-                        if (controller.hasRiskAlert(snapshot.copies)) ...[
-                          const SizedBox(height: 14),
-                          _RiskAlert(
-                            onViewDetails: () =>
-                                setState(() => _activeTab = 'active'),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: ActiveCopiesPage.contentKey,
+                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _PortfolioOverview(snapshot: snapshot.portfolio),
+                          const SizedBox(height: 26),
+                          _SegmentedTabs(
+                            tabs: snapshot.tabs,
+                            activeTab: _activeTab,
+                            onChanged: (id) => setState(() {
+                              _activeTab = id;
+                              _expandedCopyId = null;
+                            }),
                           ),
+                          const SizedBox(height: 24),
+                          if (copies.isEmpty)
+                            _EmptyCopiesState(
+                              history: _activeTab == 'history',
+                              onExplore: () =>
+                                  context.go(AppRoutePaths.tradeCopyTrading),
+                            )
+                          else
+                            for (final copy in copies) ...[
+                              _ActiveCopyCard(
+                                key: ActiveCopiesPage.copyKey(copy.id),
+                                copy: copy,
+                                expanded: _expandedCopyId == copy.id,
+                                onToggle: () => setState(() {
+                                  _expandedCopyId = _expandedCopyId == copy.id
+                                      ? null
+                                      : copy.id;
+                                }),
+                                onViewDetails: () => context.go(
+                                  AppRoutePaths.tradeCopyProvider(
+                                    copy.providerId,
+                                    backPath: AppRoutePaths.tradeCopyActive,
+                                  ),
+                                ),
+                                onConfigure: () => context.go(
+                                  AppRoutePaths.tradeCopyProviderConfiguration(
+                                    copy.providerId,
+                                    backPath: AppRoutePaths.tradeCopyActive,
+                                  ),
+                                ),
+                                onStop:
+                                    copy.status ==
+                                        TradeActiveCopyStatus.coolingOff
+                                    ? null
+                                    : () => setState(() {
+                                        _pendingStopCopy = copy;
+                                        _confirmText = '';
+                                      }),
+                              ),
+                              if (copy != copies.last)
+                                const SizedBox(height: 12),
+                            ],
+                          if (_actionStatus != null) ...[
+                            const SizedBox(height: 14),
+                            _ActionStatusBanner(text: _actionStatus!),
+                          ],
+                          if (controller.hasRiskAlert(snapshot.copies)) ...[
+                            const SizedBox(height: 14),
+                            _RiskAlert(
+                              onViewDetails: () =>
+                                  setState(() => _activeTab = 'active'),
+                            ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_pendingStopCopy != null)
               _StopCopyModal(

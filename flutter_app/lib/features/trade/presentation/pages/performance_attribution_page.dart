@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -68,41 +69,45 @@ class _PerformanceAttributionPageState
       semanticLabel: 'SC-075 PerformanceAttributionPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Phân tích hiệu suất',
-              showBack: true,
-              onBack: () =>
-                  context.go(AppRoutePaths.tradeCopyPerformance(widget.copyId)),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: PerformanceAttributionPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SummaryGrid(snapshot: snapshot),
-                    const SizedBox(height: 24),
-                    _AttributionTabs(
-                      activeTab: _activeTab,
-                      onChanged: (value) => setState(() => _activeTab = value),
-                    ),
-                    const SizedBox(height: 22),
-                    if (_activeTab == 'attribution')
-                      _AttributionTab(snapshot: snapshot)
-                    else if (_activeTab == 'drawdown')
-                      _DrawdownTab(snapshot: snapshot)
-                    else if (_activeTab == 'projection')
-                      _ProjectionTab(snapshot: snapshot)
-                    else
-                      _CorrelationTab(snapshot: snapshot),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Phân tích hiệu suất',
+            showBack: true,
+            onBack: () =>
+                context.go(AppRoutePaths.tradeCopyPerformance(widget.copyId)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: PerformanceAttributionPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SummaryGrid(snapshot: snapshot),
+                      const SizedBox(height: 24),
+                      _AttributionTabs(
+                        activeTab: _activeTab,
+                        onChanged: (value) =>
+                            setState(() => _activeTab = value),
+                      ),
+                      const SizedBox(height: 22),
+                      if (_activeTab == 'attribution')
+                        _AttributionTab(snapshot: snapshot)
+                      else if (_activeTab == 'drawdown')
+                        _DrawdownTab(snapshot: snapshot)
+                      else if (_activeTab == 'projection')
+                        _ProjectionTab(snapshot: snapshot)
+                      else
+                        _CorrelationTab(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

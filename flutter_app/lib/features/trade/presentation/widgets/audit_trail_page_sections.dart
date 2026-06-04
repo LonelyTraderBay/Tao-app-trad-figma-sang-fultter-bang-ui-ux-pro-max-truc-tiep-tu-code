@@ -1,33 +1,5 @@
 part of '../pages/audit_trail_page.dart';
 
-class _HeaderDownloadButton extends StatelessWidget {
-  const _HeaderDownloadButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 36,
-      height: 36,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: _auditPanel2,
-          border: Border.all(color: _auditBorder.withValues(alpha: .65)),
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: IconButton(
-          onPressed: () {},
-          padding: EdgeInsets.zero,
-          icon: const Icon(
-            Icons.download_rounded,
-            color: AppColors.text1,
-            size: 19,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _ComplianceNotice extends StatelessWidget {
   const _ComplianceNotice({required this.snapshot});
 

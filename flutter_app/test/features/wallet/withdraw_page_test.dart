@@ -97,6 +97,7 @@ void main() {
     expect(find.text('Rút tiền · Wallet'), findsOneWidget);
     expect(find.text('Số dư khả dụng'), findsOneWidget);
     expect(find.text('10,200.00 USDT'), findsOneWidget);
+    expect(find.byKey(WithdrawPage.supportKey), findsOneWidget);
     expect(find.text('TRC20 (TRON)'), findsOneWidget);
     expect(find.text('Địa chỉ ví nhận'), findsOneWidget);
     expect(find.text('Ví lạnh cá nhân'), findsOneWidget);
@@ -116,6 +117,19 @@ void main() {
     await tester.tap(find.byKey(WithdrawPage.allAmountKey));
     await tester.pumpAndSettle();
     expect(find.text('10,200.00'), findsOneWidget);
+  });
+
+  testWidgets('SC-139 support opens contextual withdrawal support', (
+    tester,
+  ) async {
+    await pumpWithdraw(tester);
+
+    await tester.tap(find.byKey(WithdrawPage.supportKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Hồ sơ hỗ trợ'), findsOneWidget);
+    expect(find.text('Withdrawal support for USDT'), findsOneWidget);
+    expect(find.text('withdraw-usdt'), findsOneWidget);
   });
 
   testWidgets('SC-140 renders asset-scoped withdraw route in Wallet shell', (

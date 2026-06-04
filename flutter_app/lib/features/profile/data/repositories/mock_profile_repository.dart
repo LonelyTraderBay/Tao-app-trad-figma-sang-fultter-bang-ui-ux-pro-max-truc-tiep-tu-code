@@ -1,3 +1,4 @@
+import 'package:vit_trade_flutter/core/product_flow/contextual_support_contract.dart';
 import 'package:vit_trade_flutter/features/profile/domain/entities/profile_entities.dart';
 import 'package:vit_trade_flutter/features/profile/domain/repositories/profile_repository.dart';
 
@@ -15,6 +16,7 @@ final class MockProfileRepository implements ProfileRepository {
       vip: _profileVip,
       prediction: _profilePrediction,
       arena: _profileArena,
+      productShortcuts: _profileProductShortcuts,
       sections: _profileSections,
       endpoint: '/api/mobile/profile/profile',
       actionDraft: 'read-only + local navigation actions',
@@ -46,16 +48,22 @@ final class MockProfileRepository implements ProfileRepository {
 
   @override
   ProfileSecuritySnapshot getSecurity() {
-    return const ProfileSecuritySnapshot(
+    return ProfileSecuritySnapshot(
       score: 3,
       scoreLabel: 'Cao',
       scoreColorHex: 0xFF10B981,
       items: _securityItems,
       devices: _securityDevices,
+      supportRoute: ContextualSupportContracts.supportRouteFor(
+        ContextualSupportFlow.security,
+        referenceId: 'profile-security',
+        sourceRoute: '/profile/security',
+        issueLabel: 'Account security support',
+      ),
       endpoint: '/api/mobile/profile/profile-security',
       actionDraft:
           'PATCH /user/settings + local navigation to auth and activity routes',
-      supportedStates: [
+      supportedStates: const [
         ProfileScreenState.loading,
         ProfileScreenState.empty,
         ProfileScreenState.error,

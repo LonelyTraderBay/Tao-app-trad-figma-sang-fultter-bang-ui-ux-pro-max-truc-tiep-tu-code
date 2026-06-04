@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -63,37 +64,40 @@ class _VIPPageState extends ConsumerState<VIPPage> {
       semanticLabel: 'SC-164 VIPPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'VIP Program',
-              subtitle: 'VIP \u00B7 Profile',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: VIPPage.contentKey,
-                physics: const BouncingScrollPhysics(),
-                child: VitPageContent(
-                  padding: VitContentPadding.relaxed,
-                  customGap: AppSpacing.x5,
-                  children: [
-                    _VipHero(snapshot: snapshot),
-                    _VipTabs(
-                      active: _selectedTab,
-                      onChanged: (tab) => setState(() => _selectedTab = tab),
-                    ),
-                    AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 180),
-                      child: _tabContent(snapshot),
-                    ),
-                    SizedBox(height: bottomInset),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'VIP Program',
+            subtitle: 'VIP \u00B7 Profile',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: VIPPage.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  child: VitPageContent(
+                    padding: VitContentPadding.relaxed,
+                    customGap: AppSpacing.x5,
+                    children: [
+                      _VipHero(snapshot: snapshot),
+                      _VipTabs(
+                        active: _selectedTab,
+                        onChanged: (tab) => setState(() => _selectedTab = tab),
+                      ),
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 180),
+                        child: _tabContent(snapshot),
+                      ),
+                      SizedBox(height: bottomInset),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

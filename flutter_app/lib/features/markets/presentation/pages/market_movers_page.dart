@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -138,99 +139,102 @@ class _MarketMoversPageState extends ConsumerState<MarketMoversPage> {
       semanticLabel: 'SC-010 MarketMoversPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Biến động thị trường',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.markets),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: MarketMoversPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.defaultPadding,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _MoverTabs(
-                        tabs: snapshot.tabs,
-                        activeTab: _tab,
-                        onSelected: _setTab,
-                      ),
-                      if (_tab != 'Mới niêm yết')
-                        _TimeframeSelector(
-                          timeframes: snapshot.timeframes,
-                          activeTimeframe: _timeframe,
-                          onSelected: (value) {
-                            setState(() => _timeframe = value);
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Biến động thị trường',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.markets),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: MarketMoversPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.defaultPadding,
+                      gap: VitContentGap.defaultGap,
+                      children: [
+                        _MoverTabs(
+                          tabs: snapshot.tabs,
+                          activeTab: _tab,
+                          onSelected: _setTab,
+                        ),
+                        if (_tab != 'Mới niêm yết')
+                          _TimeframeSelector(
+                            timeframes: snapshot.timeframes,
+                            activeTimeframe: _timeframe,
+                            onSelected: (value) {
+                              setState(() => _timeframe = value);
+                            },
+                          ),
+                        _CategoryDropdown(
+                          category: _category,
+                          expanded: _showCategories,
+                          onTap: () {
+                            setState(() => _showCategories = !_showCategories);
                           },
                         ),
-                      _CategoryDropdown(
-                        category: _category,
-                        expanded: _showCategories,
-                        onTap: () {
-                          setState(() => _showCategories = !_showCategories);
-                        },
-                      ),
-                      if (_showCategories)
-                        _CategoryPicker(
-                          categories: snapshot.screenFilters.categories,
-                          activeCategory: _category,
-                          onSelected: _setCategory,
-                        ),
-                      _SortSelector(
-                        options: snapshot.screenFilters.sortOptions,
-                        activeSort: _sort,
-                        onSelected: (value) {
-                          setState(() {
-                            _sort = value;
-                            _showCategories = false;
-                          });
-                        },
-                      ),
-                      _ResultSummary(
-                        count: movers.length,
-                        sortLabel: _sortLabel,
-                        timeframe: _timeframe,
-                      ),
-                      if (movers.isEmpty)
-                        VitEmptyState(
-                          icon: Icons.trending_flat_rounded,
-                          title: 'Không có kết quả',
-                          message:
-                              'Thử đổi tab, danh mục hoặc khung thời gian khác',
-                          actionLabel: 'Xóa bộ lọc',
-                          onAction: () {
+                        if (_showCategories)
+                          _CategoryPicker(
+                            categories: snapshot.screenFilters.categories,
+                            activeCategory: _category,
+                            onSelected: _setCategory,
+                          ),
+                        _SortSelector(
+                          options: snapshot.screenFilters.sortOptions,
+                          activeSort: _sort,
+                          onSelected: (value) {
                             setState(() {
-                              _tab = 'Tăng mạnh';
-                              _timeframe = '24h';
-                              _category = 'Tất cả';
-                              _sort = 'change';
+                              _sort = value;
                               _showCategories = false;
                             });
                           },
-                        )
-                      else
-                        _MoverListCard(
-                          movers: movers,
-                          tab: _tab,
-                          changeFor: _changeFor,
-                          onTap: (mover) => context.go(
-                            AppRoutePaths.pairDetail('${mover.id}usdt'),
-                          ),
                         ),
-                      const _DataRefreshFooter(),
-                    ],
+                        _ResultSummary(
+                          count: movers.length,
+                          sortLabel: _sortLabel,
+                          timeframe: _timeframe,
+                        ),
+                        if (movers.isEmpty)
+                          VitEmptyState(
+                            icon: Icons.trending_flat_rounded,
+                            title: 'Không có kết quả',
+                            message:
+                                'Thử đổi tab, danh mục hoặc khung thời gian khác',
+                            actionLabel: 'Xóa bộ lọc',
+                            onAction: () {
+                              setState(() {
+                                _tab = 'Tăng mạnh';
+                                _timeframe = '24h';
+                                _category = 'Tất cả';
+                                _sort = 'change';
+                                _showCategories = false;
+                              });
+                            },
+                          )
+                        else
+                          _MoverListCard(
+                            movers: movers,
+                            tab: _tab,
+                            changeFor: _changeFor,
+                            onTap: (mover) => context.go(
+                              AppRoutePaths.pairDetail('${mover.id}usdt'),
+                            ),
+                          ),
+                        const _DataRefreshFooter(),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -292,6 +292,7 @@ final class P2PClaimDetailSnapshot {
     required this.supportRoute,
     required this.emptyTitle,
     required this.contractNotes,
+    this.highRiskContractId,
   });
 
   final String endpoint;
@@ -305,6 +306,7 @@ final class P2PClaimDetailSnapshot {
   final String supportRoute;
   final String emptyTitle;
   final String contractNotes;
+  final String? highRiskContractId;
 }
 
 final class P2PClaimDetailDraft {

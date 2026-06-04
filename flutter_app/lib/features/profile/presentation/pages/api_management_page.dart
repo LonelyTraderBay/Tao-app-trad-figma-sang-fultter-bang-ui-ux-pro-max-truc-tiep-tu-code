@@ -8,8 +8,10 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
@@ -66,42 +68,52 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
       semanticLabel: 'SC-163 ApiManagementPage',
       child: Material(
         color: _apiBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Qu\u1EA3n l\u00FD API',
-              subtitle: 'API \u00B7 Profile',
-              showBack: true,
-              onBack: _close,
-              trailing: _CreateButton(onTap: _createApiKey),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: ApiManagementPage.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    for (final apiKey in _keys) ...[
-                      _ApiKeyCard(
-                        apiKey: apiKey,
-                        showSecret: _showSecretId == apiKey.id,
-                        copiedId: _copiedId,
-                        onToggle: () => _toggleKey(apiKey.id),
-                        onReveal: () => _toggleSecret(apiKey.id),
-                        onCopy: _copyText,
-                        onDelete: () => _confirmDelete(apiKey),
-                      ),
-                      if (apiKey != _keys.last) const SizedBox(height: 18),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Qu\u1EA3n l\u00FD API',
+            subtitle: 'API \u00B7 Profile',
+            showBack: true,
+            onBack: _close,
+            actions: [
+              VitHeaderActionItem(
+                key: ApiManagementPage.createKey,
+                type: VitHeaderActionType.add,
+                tooltip: 'Tạo API key',
+                onPressed: _createApiKey,
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: ApiManagementPage.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (final apiKey in _keys) ...[
+                        _ApiKeyCard(
+                          apiKey: apiKey,
+                          showSecret: _showSecretId == apiKey.id,
+                          copiedId: _copiedId,
+                          onToggle: () => _toggleKey(apiKey.id),
+                          onReveal: () => _toggleSecret(apiKey.id),
+                          onCopy: _copyText,
+                          onDelete: () => _confirmDelete(apiKey),
+                        ),
+                        if (apiKey != _keys.last) const SizedBox(height: 18),
+                      ],
+                      const SizedBox(height: 18),
+                      const _ApiDocsCard(),
                     ],
-                    const SizedBox(height: 18),
-                    const _ApiDocsCard(),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -176,10 +188,6 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
   }
 
   void _close() {
-    if (context.canPop()) {
-      context.pop();
-      return;
-    }
-    context.go(AppRoutePaths.profile);
+    goBackOrFallback(context, fallbackPath: AppRoutePaths.profile);
   }
 }

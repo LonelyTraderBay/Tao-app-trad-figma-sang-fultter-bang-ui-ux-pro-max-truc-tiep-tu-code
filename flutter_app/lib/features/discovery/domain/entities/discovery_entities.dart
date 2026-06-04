@@ -1,4 +1,4 @@
-enum DiscoveryScreenState { loading, empty, error, offline }
+enum DiscoveryScreenState { onlineLive, loading, empty, error, offline }
 
 enum DiscoveryModuleKind { prediction, arena, topic }
 
@@ -18,6 +18,7 @@ final class UnifiedSearchSnapshot {
     required this.query,
     required this.contractNotes,
     required this.supportedStates,
+    this.currentState = DiscoveryScreenState.onlineLive,
   });
 
   final String endpoint;
@@ -32,8 +33,33 @@ final class UnifiedSearchSnapshot {
   final String query;
   final String contractNotes;
   final Set<DiscoveryScreenState> supportedStates;
+  final DiscoveryScreenState currentState;
 
   bool get hasQuery => query.trim().isNotEmpty;
+  bool get hasCachedContent =>
+      trendingQueries.isNotEmpty ||
+      modules.isNotEmpty ||
+      results.totalCount > 0;
+  bool get showOfflineBanner =>
+      currentState == DiscoveryScreenState.offline && hasCachedContent;
+
+  UnifiedSearchSnapshot copyWith({DiscoveryScreenState? currentState}) {
+    return UnifiedSearchSnapshot(
+      endpoint: endpoint,
+      actionDraft: actionDraft,
+      title: title,
+      searchHint: searchHint,
+      staleMessage: staleMessage,
+      staleDetail: staleDetail,
+      trendingQueries: trendingQueries,
+      modules: modules,
+      results: results,
+      query: query,
+      contractNotes: contractNotes,
+      supportedStates: supportedStates,
+      currentState: currentState ?? this.currentState,
+    );
+  }
 }
 
 final class DiscoverySearchResults {
@@ -80,6 +106,7 @@ final class TopicHubSnapshot {
     required this.creators,
     required this.contractNotes,
     required this.supportedStates,
+    this.currentState = DiscoveryScreenState.onlineLive,
   });
 
   final String endpoint;
@@ -99,9 +126,35 @@ final class TopicHubSnapshot {
   final List<DiscoveryCreatorDraft> creators;
   final String contractNotes;
   final Set<DiscoveryScreenState> supportedStates;
+  final DiscoveryScreenState currentState;
 
   bool get hasContent =>
       predictions.isNotEmpty || arenaRooms.isNotEmpty || arenaModes.isNotEmpty;
+  bool get showOfflineBanner =>
+      currentState == DiscoveryScreenState.offline && hasContent;
+
+  TopicHubSnapshot copyWith({DiscoveryScreenState? currentState}) {
+    return TopicHubSnapshot(
+      endpoint: endpoint,
+      actionDraft: actionDraft,
+      title: title,
+      searchRoute: searchRoute,
+      predictionsRoute: predictionsRoute,
+      arenaRoute: arenaRoute,
+      createArenaRoute: createArenaRoute,
+      staleMessage: staleMessage,
+      staleDetail: staleDetail,
+      topics: topics,
+      selectedTopic: selectedTopic,
+      predictions: predictions,
+      arenaRooms: arenaRooms,
+      arenaModes: arenaModes,
+      creators: creators,
+      contractNotes: contractNotes,
+      supportedStates: supportedStates,
+      currentState: currentState ?? this.currentState,
+    );
+  }
 }
 
 final class DiscoveryTrendingQueryDraft {

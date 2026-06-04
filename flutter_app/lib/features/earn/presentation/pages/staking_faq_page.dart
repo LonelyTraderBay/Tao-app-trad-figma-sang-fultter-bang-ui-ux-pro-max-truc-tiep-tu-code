@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -54,60 +55,65 @@ class _StakingFAQPageState extends ConsumerState<StakingFAQPage> {
       semanticLabel: 'SC-370 StakingFAQPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _SearchField(
-                      placeholder: snapshot.searchPlaceholder,
-                      onChanged: (value) => setState(() => _query = value),
-                    ),
-                    _CategoryTabs(
-                      active: _category,
-                      onChanged: (category) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _category = category);
-                      },
-                    ),
-                    if (_query.trim().isNotEmpty)
-                      Text(
-                        'Tìm thấy ${filtered.length} kết quả',
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text2,
-                        ),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _SearchField(
+                        placeholder: snapshot.searchPlaceholder,
+                        onChanged: (value) => setState(() => _query = value),
                       ),
-                    if (filtered.isEmpty)
-                      _EmptyResults(onReset: () => setState(() => _query = ''))
-                    else
-                      _FAQList(
-                        items: filtered,
-                        expandedIds: _expandedIds,
-                        onToggle: (id) {
+                      _CategoryTabs(
+                        active: _category,
+                        onChanged: (category) {
                           HapticFeedback.selectionClick();
-                          setState(() {
-                            if (!_expandedIds.add(id)) {
-                              _expandedIds.remove(id);
-                            }
-                          });
+                          setState(() => _category = category);
                         },
                       ),
-                    _SupportPanel(snapshot: snapshot),
-                  ],
+                      if (_query.trim().isNotEmpty)
+                        Text(
+                          'Tìm thấy ${filtered.length} kết quả',
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text2,
+                          ),
+                        ),
+                      if (filtered.isEmpty)
+                        _EmptyResults(
+                          onReset: () => setState(() => _query = ''),
+                        )
+                      else
+                        _FAQList(
+                          items: filtered,
+                          expandedIds: _expandedIds,
+                          onToggle: (id) {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              if (!_expandedIds.add(id)) {
+                                _expandedIds.remove(id);
+                              }
+                            });
+                          },
+                        ),
+                      _SupportPanel(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -369,7 +375,10 @@ class _SupportPanel extends StatelessWidget {
             children: [
               Expanded(
                 child: VitCtaButton(
-                  onPressed: HapticFeedback.selectionClick,
+                  onPressed: () {
+                    HapticFeedback.selectionClick();
+                    context.go(snapshot.supportRoute);
+                  },
                   child: const Text('Live Chat'),
                 ),
               ),
@@ -377,7 +386,10 @@ class _SupportPanel extends StatelessWidget {
               Expanded(
                 child: VitCtaButton(
                   variant: VitCtaButtonVariant.secondary,
-                  onPressed: HapticFeedback.selectionClick,
+                  onPressed: () {
+                    HapticFeedback.selectionClick();
+                    context.go(snapshot.supportRoute);
+                  },
                   child: const Text('Email Support'),
                 ),
               ),

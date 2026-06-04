@@ -137,6 +137,7 @@ final class MockStakingEarnRepository implements StakingEarnRepository {
       ],
       contractNotes:
           'Match screenshot first; wire BE after visual parity. Include earnProducts, stakingPositions, savingsPositions, validators, rewards, and riskData.',
+      highRiskContractId: HighRiskFlowContractIds.earnSavingsStaking,
       supportedStates: {
         EarnScreenState.loading,
         EarnScreenState.empty,

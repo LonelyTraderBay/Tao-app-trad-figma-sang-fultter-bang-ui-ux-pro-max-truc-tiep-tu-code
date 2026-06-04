@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -66,58 +67,63 @@ class _BotPerformanceAnalyticsPageState
       semanticLabel: 'SC-124 BotPerformanceAnalyticsPage',
       child: Material(
         color: _analyticsBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Performance Analytics',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeBots),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: BotPerformanceAnalyticsPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _KeyMetricsCard(metrics: snapshot.metrics),
-                    const SizedBox(height: 16),
-                    _TimeframeTabs(
-                      active: _timeframe,
-                      onChanged: (timeframe) =>
-                          setState(() => _timeframe = timeframe),
-                    ),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Cumulative PnL'),
-                    const SizedBox(height: 12),
-                    _PnlChartCard(points: snapshot.pnlPoints),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Win/Loss Distribution'),
-                    const SizedBox(height: 12),
-                    _WinLossChartCard(points: snapshot.winLossPoints),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Performance by Strategy'),
-                    const SizedBox(height: 12),
-                    _StrategyPerformanceCard(
-                      strategies: snapshot.strategyPerformance,
-                    ),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Advanced Metrics'),
-                    const SizedBox(height: 12),
-                    _AdvancedMetricsGrid(metrics: snapshot.metrics),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Trade Duration Distribution'),
-                    const SizedBox(height: 12),
-                    _DurationCard(distribution: snapshot.durationDistribution),
-                    const SizedBox(height: 18),
-                    _PerformanceSummaryCard(metrics: snapshot.metrics),
-                    const SizedBox(height: 18),
-                    const _RatingCard(),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Performance Analytics',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeBots),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: BotPerformanceAnalyticsPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _KeyMetricsCard(metrics: snapshot.metrics),
+                      const SizedBox(height: 16),
+                      _TimeframeTabs(
+                        active: _timeframe,
+                        onChanged: (timeframe) =>
+                            setState(() => _timeframe = timeframe),
+                      ),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Cumulative PnL'),
+                      const SizedBox(height: 12),
+                      _PnlChartCard(points: snapshot.pnlPoints),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Win/Loss Distribution'),
+                      const SizedBox(height: 12),
+                      _WinLossChartCard(points: snapshot.winLossPoints),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Performance by Strategy'),
+                      const SizedBox(height: 12),
+                      _StrategyPerformanceCard(
+                        strategies: snapshot.strategyPerformance,
+                      ),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Advanced Metrics'),
+                      const SizedBox(height: 12),
+                      _AdvancedMetricsGrid(metrics: snapshot.metrics),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Trade Duration Distribution'),
+                      const SizedBox(height: 12),
+                      _DurationCard(
+                        distribution: snapshot.durationDistribution,
+                      ),
+                      const SizedBox(height: 18),
+                      _PerformanceSummaryCard(metrics: snapshot.metrics),
+                      const SizedBox(height: 18),
+                      const _RatingCard(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -72,79 +73,83 @@ class _StakingHistoryPageState extends ConsumerState<StakingHistoryPage> {
       semanticLabel: 'SC-360 StakingHistoryPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _SummaryCard(snapshot: snapshot),
-                    _SearchAndActions(
-                      controller: _searchController,
-                      placeholder: snapshot.searchPlaceholder,
-                      filtersActive:
-                          _typeFilter != _HistoryTypeFilter.all ||
-                          _statusFilter != _HistoryStatusFilter.all,
-                      onQueryChanged: (query) {
-                        setState(() => _query = query);
-                      },
-                      onFilter: () {
-                        HapticFeedback.selectionClick();
-                        setState(() => _showFilters = !_showFilters);
-                      },
-                      onExport: _export,
-                    ),
-                    if (_showFilters)
-                      _FilterPanel(
-                        key: StakingHistoryPage.filterPanelKey,
-                        typeFilter: _typeFilter,
-                        statusFilter: _statusFilter,
-                        onTypeChanged: (filter) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _typeFilter = filter);
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _SummaryCard(snapshot: snapshot),
+                      _SearchAndActions(
+                        controller: _searchController,
+                        placeholder: snapshot.searchPlaceholder,
+                        filtersActive:
+                            _typeFilter != _HistoryTypeFilter.all ||
+                            _statusFilter != _HistoryStatusFilter.all,
+                        onQueryChanged: (query) {
+                          setState(() => _query = query);
                         },
-                        onStatusChanged: (filter) {
+                        onFilter: () {
                           HapticFeedback.selectionClick();
-                          setState(() => _statusFilter = filter);
+                          setState(() => _showFilters = !_showFilters);
                         },
+                        onExport: _export,
+                      ),
+                      if (_showFilters)
+                        _FilterPanel(
+                          key: StakingHistoryPage.filterPanelKey,
+                          typeFilter: _typeFilter,
+                          statusFilter: _statusFilter,
+                          onTypeChanged: (filter) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _typeFilter = filter);
+                          },
+                          onStatusChanged: (filter) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _statusFilter = filter);
+                          },
+                          onClear: _clearFilters,
+                        ),
+                      _ResultsHeader(
+                        count: transactions.length,
+                        filtered:
+                            transactions.length !=
+                                snapshot.transactions.length ||
+                            _query.isNotEmpty,
+                        total: snapshot.transactions.length,
                         onClear: _clearFilters,
                       ),
-                    _ResultsHeader(
-                      count: transactions.length,
-                      filtered:
-                          transactions.length != snapshot.transactions.length ||
-                          _query.isNotEmpty,
-                      total: snapshot.transactions.length,
-                      onClear: _clearFilters,
-                    ),
-                    if (_selected != null)
-                      _TransactionDetailCard(
-                        key: StakingHistoryPage.detailKey,
-                        tx: _selected!,
-                        onClose: () => setState(() => _selected = null),
+                      if (_selected != null)
+                        _TransactionDetailCard(
+                          key: StakingHistoryPage.detailKey,
+                          tx: _selected!,
+                          onClose: () => setState(() => _selected = null),
+                        ),
+                      _TransactionList(
+                        transactions: transactions,
+                        onTap: (tx) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _selected = tx);
+                        },
                       ),
-                    _TransactionList(
-                      transactions: transactions,
-                      onTap: (tx) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _selected = tx);
-                      },
-                    ),
-                    _FooterNote(note: snapshot.footerNote),
-                  ],
+                      _FooterNote(note: snapshot.footerNote),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

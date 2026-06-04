@@ -10,7 +10,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_buy_crypto_sections.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
 const _buyBackground = AppColors.bg;
 const _buyPanel = AppColors.surface;
@@ -82,51 +84,54 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
       semanticLabel: 'SC-145 BuyCryptoPage',
       child: Material(
         color: _buyBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: _confirming ? 'Xác nhận mua' : 'Mua Crypto',
-              subtitle: 'Giao dịch · Wallet',
-              showBack: true,
-              onBack: () => _confirming
-                  ? setState(() => _confirming = false)
-                  : context.go(AppRoutePaths.wallet),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: BuyCryptoPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: _confirming
-                    ? BuyConfirmContent(
-                        crypto: crypto,
-                        payment: payment,
-                        amountVnd: _amountVnd,
-                        receiveAmount: receiveAmount,
-                        onConfirm: () => setState(() => _success = true),
-                        onBack: () => setState(() => _confirming = false),
-                      )
-                    : BuyInputContent(
-                        snapshot: snapshot,
-                        selectedCrypto: crypto,
-                        selectedPaymentId: _selectedPayment,
-                        amountController: _amountController,
-                        amountVnd: _amountVnd,
-                        receiveAmount: receiveAmount,
-                        onAmountChanged: () => setState(() {}),
-                        onPreset: (amount) {
-                          _amountController.text = amount.toString();
-                          setState(() {});
-                        },
-                        onCryptoTap: () => _showCryptoPicker(snapshot),
-                        onPaymentChanged: (id) =>
-                            setState(() => _selectedPayment = id),
-                        onBuy: _canBuy(crypto)
-                            ? () => setState(() => _confirming = true)
-                            : null,
-                      ),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: _confirming ? 'Xác nhận mua' : 'Mua Crypto',
+            subtitle: 'Giao dịch · Wallet',
+            showBack: true,
+            onBack: () => _confirming
+                ? setState(() => _confirming = false)
+                : context.go(AppRoutePaths.wallet),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: BuyCryptoPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: _confirming
+                      ? BuyConfirmContent(
+                          crypto: crypto,
+                          payment: payment,
+                          amountVnd: _amountVnd,
+                          receiveAmount: receiveAmount,
+                          onConfirm: () => setState(() => _success = true),
+                          onBack: () => setState(() => _confirming = false),
+                        )
+                      : BuyInputContent(
+                          snapshot: snapshot,
+                          selectedCrypto: crypto,
+                          selectedPaymentId: _selectedPayment,
+                          amountController: _amountController,
+                          amountVnd: _amountVnd,
+                          receiveAmount: receiveAmount,
+                          onAmountChanged: () => setState(() {}),
+                          onPreset: (amount) {
+                            _amountController.text = amount.toString();
+                            setState(() {});
+                          },
+                          onCryptoTap: () => _showCryptoPicker(snapshot),
+                          onPaymentChanged: (id) =>
+                              setState(() => _selectedPayment = id),
+                          onBuy: _canBuy(crypto)
+                              ? () => setState(() => _confirming = true)
+                              : null,
+                        ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -151,7 +156,7 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
   }
 
   void _showCryptoPicker(WalletBuyCryptoSnapshot snapshot) {
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: _buyPanel,
       shape: const RoundedRectangleBorder(

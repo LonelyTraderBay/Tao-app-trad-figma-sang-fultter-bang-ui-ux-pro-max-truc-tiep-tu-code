@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -75,62 +76,65 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
       semanticLabel: 'SC-210 P2PExpressConfirmPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: controller.confirmationTitle,
-              subtitle: 'Express - P2P',
-              showBack: true,
-              onBack: () => _close(context),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2PExpressConfirmPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x3,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _Hero(snapshot: snapshot, accent: accent),
-                      const SizedBox(height: AppSpacing.x4),
-                      _SummaryCard(snapshot: snapshot, accent: accent),
-                      const SizedBox(height: AppSpacing.x4),
-                      _MerchantCard(ad: snapshot.ad),
-                      const SizedBox(height: AppSpacing.x3),
-                      _NoticeCard(
-                        icon: Icons.lock_outline,
-                        text:
-                            '${_formatAmount(snapshot.cryptoAmount)} ${snapshot.asset} ${snapshot.escrowNote}',
-                        color: AppColors.buy,
-                      ),
-                      const SizedBox(height: AppSpacing.x3),
-                      _NoticeCard(
-                        icon: Icons.warning_amber_outlined,
-                        text: snapshot.warningNote,
-                        color: AppColors.warn,
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      _ActionRow(
-                        processing: _processing,
-                        isBuy: snapshot.isBuy,
-                        onCancel: () => _close(context),
-                        onConfirm: () => _confirm(context, controller),
-                      ),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: controller.confirmationTitle,
+            subtitle: 'Express - P2P',
+            showBack: true,
+            onBack: () => _close(context),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2PExpressConfirmPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x3,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _Hero(snapshot: snapshot, accent: accent),
+                        const SizedBox(height: AppSpacing.x4),
+                        _SummaryCard(snapshot: snapshot, accent: accent),
+                        const SizedBox(height: AppSpacing.x4),
+                        _MerchantCard(ad: snapshot.ad),
+                        const SizedBox(height: AppSpacing.x3),
+                        _NoticeCard(
+                          icon: Icons.lock_outline,
+                          text:
+                              '${_formatAmount(snapshot.cryptoAmount)} ${snapshot.asset} ${snapshot.escrowNote}',
+                          color: AppColors.buy,
+                        ),
+                        const SizedBox(height: AppSpacing.x3),
+                        _NoticeCard(
+                          icon: Icons.warning_amber_outlined,
+                          text: snapshot.warningNote,
+                          color: AppColors.warn,
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        _ActionRow(
+                          processing: _processing,
+                          isBuy: snapshot.isBuy,
+                          onCancel: () => _close(context),
+                          onConfirm: () => _confirm(context, controller),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

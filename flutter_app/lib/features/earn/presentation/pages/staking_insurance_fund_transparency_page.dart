@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_ins
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_insurance_fund_overview.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
@@ -61,41 +62,44 @@ class _StakingInsuranceFundTransparencyPageState
       semanticLabel: 'SC-377 StakingInsuranceFundTransparencyPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    StakingInsuranceFundInfoBanner(snapshot: snapshot),
-                    StakingInsuranceFundTabs(
-                      active: _tab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (_tab == StakingInsuranceFundTab.overview)
-                      StakingInsuranceFundOverviewTab(snapshot: snapshot)
-                    else if (_tab == StakingInsuranceFundTab.claims)
-                      StakingInsuranceFundClaimsTab(snapshot: snapshot)
-                    else
-                      StakingInsuranceFundHistoryTab(snapshot: snapshot),
-                    StakingInsuranceFundFooterNote(note: snapshot.footerNote),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      StakingInsuranceFundInfoBanner(snapshot: snapshot),
+                      StakingInsuranceFundTabs(
+                        active: _tab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                      ),
+                      if (_tab == StakingInsuranceFundTab.overview)
+                        StakingInsuranceFundOverviewTab(snapshot: snapshot)
+                      else if (_tab == StakingInsuranceFundTab.claims)
+                        StakingInsuranceFundClaimsTab(snapshot: snapshot)
+                      else
+                        StakingInsuranceFundHistoryTab(snapshot: snapshot),
+                      StakingInsuranceFundFooterNote(note: snapshot.footerNote),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

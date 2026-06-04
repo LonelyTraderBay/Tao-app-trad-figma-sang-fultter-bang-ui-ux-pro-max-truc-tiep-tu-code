@@ -175,7 +175,7 @@ class _RiskDropdown extends StatelessWidget {
   }
 
   void _showOptions(BuildContext context) {
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.surface,
       barrierColor: AppColors.bg.withValues(alpha: 0.72),

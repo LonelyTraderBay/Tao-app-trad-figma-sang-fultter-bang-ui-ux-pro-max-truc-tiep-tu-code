@@ -45,113 +45,122 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
       semanticLabel: 'SC-211 P2PExpressPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Express Trade',
-              subtitle: 'Mua bán nhanh',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.p2p),
-              trailing: _MarketplaceButton(
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Express Trade',
+            subtitle: 'Mua bán nhanh',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.p2p),
+            actions: [
+              VitHeaderActionItem(
+                key: P2PExpressPage.marketplaceKey,
+                type: VitHeaderActionType.portfolio,
+                tooltip: 'Marketplace',
                 onPressed: () => context.go(AppRoutePaths.p2p),
               ),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2PExpressPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _TradeToggle(
-                        tradeType: _tradeType,
-                        onChanged: _setTradeType,
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _AssetCard(
-                        tradeType: _tradeType,
-                        selectedAsset: selectedAsset,
-                        assets: snapshot.assets,
-                        onAssetChanged: _setAsset,
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _AmountCard(
-                        controller: _amountController,
-                        tradeType: _tradeType,
-                        amount: _fiatAmount,
-                        bestAd: bestAd,
-                        cryptoAmount: cryptoAmount,
-                        quickAmounts: snapshot.quickAmountsVnd,
-                        onChanged: () => setState(() {}),
-                        onQuickAmount: _setAmount,
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _PaymentCard(
-                        selectedPayment: _paymentMethod,
-                        paymentMethods: snapshot.paymentMethods,
-                        onChanged: _setPayment,
-                      ),
-                      if (_fiatAmount > 0 && bestAd != null) ...[
-                        const SizedBox(height: AppSpacing.x4),
-                        _BestOfferCard(
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2PExpressPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _TradeToggle(
                           tradeType: _tradeType,
-                          ad: bestAd,
-                          topOfferCount: topAds.length,
-                          marketPrice: selectedAsset.marketPriceVnd,
-                          cryptoAmount: cryptoAmount,
-                          onMerchant: () =>
-                              context.go('/p2p/merchant/${bestAd.merchantId}'),
-                          onMarketplace: () => context.go(AppRoutePaths.p2p),
+                          onChanged: _setTradeType,
                         ),
-                      ],
-                      if (_fiatAmount > 0 && bestAd == null) ...[
                         const SizedBox(height: AppSpacing.x4),
-                        const _NoOfferCard(),
-                      ],
-                      const SizedBox(height: AppSpacing.x4),
-                      _EscrowCard(
-                        title: snapshot.escrowTitle,
-                        note: _tradeType == P2PTradeType.buy
-                            ? snapshot.escrowBuyNote
-                            : snapshot.escrowSellNote,
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _HowItWorksCard(steps: snapshot.steps),
-                      const SizedBox(height: AppSpacing.x5),
-                      VitCtaButton(
-                        key: P2PExpressPage.ctaKey,
-                        onPressed: bestAd == null
-                            ? null
-                            : () => _openConfirm(
-                                context,
-                                selectedAsset.symbol,
-                                bestAd,
-                                cryptoAmount,
-                              ),
-                        variant: _tradeType == P2PTradeType.buy
-                            ? VitCtaButtonVariant.success
-                            : VitCtaButtonVariant.danger,
-                        leading: const Icon(Icons.bolt_outlined),
-                        child: Text(
-                          '${_tradeType == P2PTradeType.buy ? 'Mua nhanh' : 'Bán nhanh'} ${selectedAsset.symbol}',
+                        _AssetCard(
+                          tradeType: _tradeType,
+                          selectedAsset: selectedAsset,
+                          assets: snapshot.assets,
+                          onAssetChanged: _setAsset,
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: AppSpacing.x4),
+                        _AmountCard(
+                          controller: _amountController,
+                          tradeType: _tradeType,
+                          amount: _fiatAmount,
+                          bestAd: bestAd,
+                          cryptoAmount: cryptoAmount,
+                          quickAmounts: snapshot.quickAmountsVnd,
+                          onChanged: () => setState(() {}),
+                          onQuickAmount: _setAmount,
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        _PaymentCard(
+                          selectedPayment: _paymentMethod,
+                          paymentMethods: snapshot.paymentMethods,
+                          onChanged: _setPayment,
+                        ),
+                        if (_fiatAmount > 0 && bestAd != null) ...[
+                          const SizedBox(height: AppSpacing.x4),
+                          _BestOfferCard(
+                            tradeType: _tradeType,
+                            ad: bestAd,
+                            topOfferCount: topAds.length,
+                            marketPrice: selectedAsset.marketPriceVnd,
+                            cryptoAmount: cryptoAmount,
+                            onMerchant: () => context.go(
+                              '/p2p/merchant/${bestAd.merchantId}',
+                            ),
+                            onMarketplace: () => context.go(AppRoutePaths.p2p),
+                          ),
+                        ],
+                        if (_fiatAmount > 0 && bestAd == null) ...[
+                          const SizedBox(height: AppSpacing.x4),
+                          const _NoOfferCard(),
+                        ],
+                        const SizedBox(height: AppSpacing.x4),
+                        _EscrowCard(
+                          title: snapshot.escrowTitle,
+                          note: _tradeType == P2PTradeType.buy
+                              ? snapshot.escrowBuyNote
+                              : snapshot.escrowSellNote,
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        _HowItWorksCard(steps: snapshot.steps),
+                        const SizedBox(height: AppSpacing.x5),
+                        VitCtaButton(
+                          key: P2PExpressPage.ctaKey,
+                          onPressed: bestAd == null
+                              ? null
+                              : () => _openConfirm(
+                                  context,
+                                  selectedAsset.symbol,
+                                  bestAd,
+                                  cryptoAmount,
+                                ),
+                          variant: _tradeType == P2PTradeType.buy
+                              ? VitCtaButtonVariant.success
+                              : VitCtaButtonVariant.danger,
+                          leading: const Icon(Icons.bolt_outlined),
+                          child: Text(
+                            '${_tradeType == P2PTradeType.buy ? 'Mua nhanh' : 'Bán nhanh'} ${selectedAsset.symbol}',
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -204,52 +213,6 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
       },
     ).query;
     context.go('${AppRoutePaths.p2pExpressConfirm}?$params');
-  }
-}
-
-class _MarketplaceButton extends StatelessWidget {
-  const _MarketplaceButton({required this.onPressed});
-
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      key: P2PExpressPage.marketplaceKey,
-      onTap: onPressed,
-      borderRadius: AppRadii.inputRadius,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: AppColors.surface2,
-          border: Border.all(color: AppColors.borderSolid),
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Marketplace',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x1),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: AppColors.text3,
-                size: AppSpacing.iconSm,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
 

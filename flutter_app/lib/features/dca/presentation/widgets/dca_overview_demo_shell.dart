@@ -1,43 +1,5 @@
 part of '../pages/dca_overview_demo.dart';
 
-class _LoadingToggle extends StatelessWidget {
-  const _LoadingToggle({required this.active, required this.onTap});
-
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      key: DCAOverviewDemo.loadingToggleKey,
-      onTap: onTap,
-      borderRadius: AppRadii.xlRadius,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: active ? AppColors.sell15 : AppColors.primary15,
-          borderRadius: AppRadii.xlRadius,
-          border: Border.all(
-            color: active ? AppColors.sell20 : AppColors.primary20,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x2,
-          ),
-          child: Text(
-            active ? 'Hide Loading' : 'Show Loading',
-            style: AppTextStyles.caption.copyWith(
-              color: active ? AppColors.sell : AppColors.primary,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _DemoSection extends StatelessWidget {
   const _DemoSection({
     super.key,

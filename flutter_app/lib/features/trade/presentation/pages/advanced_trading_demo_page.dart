@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -62,48 +63,51 @@ class _AdvancedTradingDemoPageState
         type: MaterialType.transparency,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: 'Advanced Trading',
-                  subtitle: 'Position & Order Controls',
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.tradeMargin),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: AdvancedTradingDemoPage.contentKey,
-                    padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _PositionModeCard(
-                          activeMode: _positionMode,
-                          onChanged: (mode) =>
-                              setState(() => _positionMode = mode),
-                        ),
-                        const SizedBox(height: 18),
-                        _UnderlineTabs(
-                          activeId: _tab,
-                          onChanged: (id) => setState(() => _tab = id),
-                        ),
-                        const SizedBox(height: 16),
-                        if (_tab == 'position')
-                          _PositionTab(
-                            snapshot: snapshot,
-                            onAction: (action) => setState(
-                              () => _activeSheetTitle = action.label,
-                            ),
-                          )
-                        else if (_tab == 'orders')
-                          _OrdersTab(snapshot: snapshot)
-                        else
-                          _AnalyticsTab(snapshot: snapshot),
-                      ],
+            VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Advanced Trading',
+                subtitle: 'Position & Order Controls',
+                showBack: true,
+                onBack: () => context.go(AppRoutePaths.tradeMargin),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: AdvancedTradingDemoPage.contentKey,
+                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _PositionModeCard(
+                            activeMode: _positionMode,
+                            onChanged: (mode) =>
+                                setState(() => _positionMode = mode),
+                          ),
+                          const SizedBox(height: 18),
+                          _UnderlineTabs(
+                            activeId: _tab,
+                            onChanged: (id) => setState(() => _tab = id),
+                          ),
+                          const SizedBox(height: 16),
+                          if (_tab == 'position')
+                            _PositionTab(
+                              snapshot: snapshot,
+                              onAction: (action) => setState(
+                                () => _activeSheetTitle = action.label,
+                              ),
+                            )
+                          else if (_tab == 'orders')
+                            _OrdersTab(snapshot: snapshot)
+                          else
+                            _AnalyticsTab(snapshot: snapshot),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_activeSheetTitle != null)
               _DemoSheet(

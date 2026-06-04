@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -63,49 +64,52 @@ class _SavingsDCAPageState extends ConsumerState<SavingsDCAPage> {
       semanticLabel: 'SC-346 SavingsDCAPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _DcaSummaryCard(
-                      snapshot: snapshot,
-                      onCreate: () => _openCreateSheet(snapshot),
-                      onPlans: () => setState(() => _tab = 'plans'),
-                      onHistory: () => setState(() => _tab = 'history'),
-                    ),
-                    _InfoBanner(text: snapshot.infoText),
-                    _DcaTabs(
-                      tabs: snapshot.tabs,
-                      active: activeTab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (activeTab == 'plans')
-                      _PlansList(
-                        plans: snapshot.plans,
-                        locallyPaused: _locallyPaused,
-                        onToggle: _togglePlan,
-                      )
-                    else
-                      _HistoryList(executions: snapshot.executions),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _DcaSummaryCard(
+                        snapshot: snapshot,
+                        onCreate: () => _openCreateSheet(snapshot),
+                        onPlans: () => setState(() => _tab = 'plans'),
+                        onHistory: () => setState(() => _tab = 'history'),
+                      ),
+                      _InfoBanner(text: snapshot.infoText),
+                      _DcaTabs(
+                        tabs: snapshot.tabs,
+                        active: activeTab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                      ),
+                      if (activeTab == 'plans')
+                        _PlansList(
+                          plans: snapshot.plans,
+                          locallyPaused: _locallyPaused,
+                          onToggle: _togglePlan,
+                        )
+                      else
+                        _HistoryList(executions: snapshot.executions),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -124,7 +128,7 @@ class _SavingsDCAPageState extends ConsumerState<SavingsDCAPage> {
 
   Future<void> _openCreateSheet(SavingsDcaSnapshot snapshot) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,

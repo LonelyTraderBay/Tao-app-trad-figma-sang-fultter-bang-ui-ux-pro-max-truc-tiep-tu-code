@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/uni
 import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/unified_portfolio_tabs.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
@@ -52,44 +53,47 @@ class _UnifiedPortfolioDashboardState
       semanticLabel: 'SC-321 UnifiedPortfolioDashboard',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            UnifiedPortfolioTabs(
-              tabs: snapshot.tabs,
-              active: _activeTab,
-              tabKey: UnifiedPortfolioDashboard.tabKey,
-              onChanged: _changeTab,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: UnifiedPortfolioDashboard.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    if (_activeTab == UnifiedPortfolioTab.overview)
-                      UnifiedPortfolioOverview(
-                        snapshot: snapshot,
-                        refreshKey: UnifiedPortfolioDashboard.refreshKey,
-                        moduleKey: UnifiedPortfolioDashboard.moduleKey,
-                        onRefresh: () => HapticFeedback.lightImpact(),
-                        onOpenRoute: (route) => context.go(route),
-                      )
-                    else if (_activeTab == UnifiedPortfolioTab.analysis)
-                      UnifiedPortfolioAnalysis(snapshot: snapshot)
-                    else
-                      UnifiedPortfolioHistory(snapshot: snapshot),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              UnifiedPortfolioTabs(
+                tabs: snapshot.tabs,
+                active: _activeTab,
+                tabKey: UnifiedPortfolioDashboard.tabKey,
+                onChanged: _changeTab,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  key: UnifiedPortfolioDashboard.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      if (_activeTab == UnifiedPortfolioTab.overview)
+                        UnifiedPortfolioOverview(
+                          snapshot: snapshot,
+                          refreshKey: UnifiedPortfolioDashboard.refreshKey,
+                          moduleKey: UnifiedPortfolioDashboard.moduleKey,
+                          onRefresh: () => HapticFeedback.lightImpact(),
+                          onOpenRoute: (route) => context.go(route),
+                        )
+                      else if (_activeTab == UnifiedPortfolioTab.analysis)
+                        UnifiedPortfolioAnalysis(snapshot: snapshot)
+                      else
+                        UnifiedPortfolioHistory(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

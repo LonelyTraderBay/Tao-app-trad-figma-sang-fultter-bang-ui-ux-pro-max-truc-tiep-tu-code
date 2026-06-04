@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -64,55 +65,58 @@ class _LaunchpadRiskAnalyticsPageState
       semanticLabel: 'SC-317 LaunchpadRiskAnalyticsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            _Tabs(
-              activeTab: _activeTab,
-              onChanged: (tab) => setState(() => _activeTab = tab),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: LaunchpadRiskAnalyticsPage.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.defaultPadding,
-                  customGap: AppSpacing.x4,
-                  children: [
-                    if (_activeTab == _RiskAnalyticsTab.overview) ...[
-                      _OverallRiskCard(project: snapshot.project),
-                      _RiskBreakdownCard(metrics: snapshot.metrics),
-                      _QuickChecksSection(project: snapshot.project),
-                      _SignalSection(
-                        sectionKey: LaunchpadRiskAnalyticsPage.warningsKey,
-                        label: 'Canh bao',
-                        accent: AppColors.sell,
-                        icon: Icons.warning_amber_rounded,
-                        messages: snapshot.project.warnings,
-                      ),
-                      _SignalSection(
-                        sectionKey: LaunchpadRiskAnalyticsPage.strengthsKey,
-                        label: 'Diem manh',
-                        accent: AppColors.buy,
-                        icon: Icons.check_circle_outline_rounded,
-                        messages: snapshot.project.strengths,
-                      ),
-                    ] else if (_activeTab ==
-                        _RiskAnalyticsTab.dueDiligence) ...[
-                      _DueDiligenceTab(snapshot: snapshot),
-                    ] else ...[
-                      _ReportTab(snapshot: snapshot),
+        child: VitAutoHideHeaderScaffold(
+          bottomInset: bottomInset,
+          semanticLabel: 'SC-317 LaunchpadRiskAnalyticsPage scroll surface',
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            children: [
+              _Tabs(
+                activeTab: _activeTab,
+                onChanged: (tab) => setState(() => _activeTab = tab),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  key: LaunchpadRiskAnalyticsPage.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  child: VitPageContent(
+                    padding: VitContentPadding.defaultPadding,
+                    customGap: AppSpacing.x4,
+                    children: [
+                      if (_activeTab == _RiskAnalyticsTab.overview) ...[
+                        _OverallRiskCard(project: snapshot.project),
+                        _RiskBreakdownCard(metrics: snapshot.metrics),
+                        _QuickChecksSection(project: snapshot.project),
+                        _SignalSection(
+                          sectionKey: LaunchpadRiskAnalyticsPage.warningsKey,
+                          label: 'Canh bao',
+                          accent: AppColors.sell,
+                          icon: Icons.warning_amber_rounded,
+                          messages: snapshot.project.warnings,
+                        ),
+                        _SignalSection(
+                          sectionKey: LaunchpadRiskAnalyticsPage.strengthsKey,
+                          label: 'Diem manh',
+                          accent: AppColors.buy,
+                          icon: Icons.check_circle_outline_rounded,
+                          messages: snapshot.project.strengths,
+                        ),
+                      ] else if (_activeTab ==
+                          _RiskAnalyticsTab.dueDiligence) ...[
+                        _DueDiligenceTab(snapshot: snapshot),
+                      ] else ...[
+                        _ReportTab(snapshot: snapshot),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

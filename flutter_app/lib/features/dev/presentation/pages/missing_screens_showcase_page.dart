@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -57,50 +58,53 @@ class _MissingScreensShowcasePageState
       semanticLabel: 'SC-398 MissingScreensShowcasePage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              variant: VitHeaderVariant.custom,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.contentPad,
-                  AppSpacing.x4,
-                  AppSpacing.contentPad,
-                  AppSpacing.x3,
-                ),
-                child: _ShowcaseTitle(snapshot: snapshot),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            variant: VitHeaderVariant.custom,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.contentPad,
+                AppSpacing.x4,
+                AppSpacing.contentPad,
+                AppSpacing.x3,
               ),
+              child: _ShowcaseTitle(snapshot: snapshot),
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: MissingScreensShowcasePage.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    VitTabBar(
-                      key: MissingScreensShowcasePage.tabsKey,
-                      tabs: [
-                        for (final tab in snapshot.tabs)
-                          VitTabItem(key: tab.id, label: tab.label),
-                      ],
-                      activeKey: _activeTab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _activeTab = tab);
-                      },
-                      variant: VitTabBarVariant.segment,
-                    ),
-                    if (_activeTab == 'new')
-                      _NewScreensSection(snapshot: snapshot)
-                    else
-                      _V2ScreensSection(snapshot: snapshot),
-                  ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: MissingScreensShowcasePage.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      VitTabBar(
+                        key: MissingScreensShowcasePage.tabsKey,
+                        tabs: [
+                          for (final tab in snapshot.tabs)
+                            VitTabItem(key: tab.id, label: tab.label),
+                        ],
+                        activeKey: _activeTab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _activeTab = tab);
+                        },
+                        variant: VitTabBarVariant.segment,
+                      ),
+                      if (_activeTab == 'new')
+                        _NewScreensSection(snapshot: snapshot)
+                      else
+                        _V2ScreensSection(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

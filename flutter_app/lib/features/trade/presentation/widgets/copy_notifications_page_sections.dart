@@ -1,34 +1,5 @@
 part of '../pages/copy_notifications_page.dart';
 
-class _SettingsAction extends StatelessWidget {
-  const _SettingsAction({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      key: CopyNotificationsPage.settingsKey,
-      onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        width: 38,
-        height: 38,
-        decoration: BoxDecoration(
-          color: _notificationChip,
-          borderRadius: AppRadii.mdRadius,
-          border: Border.all(color: AppColors.cardBorder),
-        ),
-        child: const Icon(
-          Icons.settings_outlined,
-          color: AppColors.text1,
-          size: 21,
-        ),
-      ),
-    );
-  }
-}
-
 class _UnreadSummary extends StatelessWidget {
   const _UnreadSummary({
     required this.unreadCount,

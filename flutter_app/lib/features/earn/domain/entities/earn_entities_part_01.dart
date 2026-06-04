@@ -213,6 +213,7 @@ final class StakingEarnSnapshot {
     required this.estimatedIncome,
     required this.contractNotes,
     required this.supportedStates,
+    this.highRiskContractId,
   });
 
   final String endpoint;
@@ -230,6 +231,7 @@ final class StakingEarnSnapshot {
   final List<EarnIncomeEstimateDraft> estimatedIncome;
   final String contractNotes;
   final Set<EarnScreenState> supportedStates;
+  final String? highRiskContractId;
 }
 
 final class EarnProductDraft {

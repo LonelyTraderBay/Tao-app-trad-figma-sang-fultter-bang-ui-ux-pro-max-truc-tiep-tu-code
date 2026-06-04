@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -78,87 +79,90 @@ class _P2PLargeTransactionJustificationPageState
       semanticLabel: 'SC-270 P2PLargeTransactionJustificationPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _LargeTransactionHero(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      Text(
-                        snapshot.purposeTitle,
-                        style: AppTextStyles.baseMedium.copyWith(
-                          fontWeight: AppTextStyles.bold,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _LargeTransactionHero(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        Text(
+                          snapshot.purposeTitle,
+                          style: AppTextStyles.baseMedium.copyWith(
+                            fontWeight: AppTextStyles.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: AppSpacing.x3),
-                      _PurposeList(
-                        purposes: snapshot.purposes,
-                        selectedPurpose: _purpose,
-                        onSelected: (purpose) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _purpose = purpose);
-                        },
-                      ),
-                      if (needsCustomPurpose) ...[
+                        const SizedBox(height: AppSpacing.x3),
+                        _PurposeList(
+                          purposes: snapshot.purposes,
+                          selectedPurpose: _purpose,
+                          onSelected: (purpose) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _purpose = purpose);
+                          },
+                        ),
+                        if (needsCustomPurpose) ...[
+                          const SizedBox(height: AppSpacing.x5),
+                          VitInput(
+                            controller: _customPurposeController,
+                            fieldKey: P2PLargeTransactionJustificationPage
+                                .customPurposeInputKey,
+                            label: snapshot.customPurposeLabel,
+                            hintText: snapshot.customPurposePlaceholder,
+                            textInputAction: TextInputAction.next,
+                            onChanged: (_) => setState(() {}),
+                          ),
+                        ],
                         const SizedBox(height: AppSpacing.x5),
                         VitInput(
-                          controller: _customPurposeController,
+                          controller: _detailsController,
                           fieldKey: P2PLargeTransactionJustificationPage
-                              .customPurposeInputKey,
-                          label: snapshot.customPurposeLabel,
-                          hintText: snapshot.customPurposePlaceholder,
-                          textInputAction: TextInputAction.next,
+                              .detailsInputKey,
+                          label: snapshot.detailsLabel,
+                          hintText: snapshot.detailsPlaceholder,
+                          textInputAction: TextInputAction.done,
                           onChanged: (_) => setState(() {}),
                         ),
+                        const SizedBox(height: AppSpacing.x5),
+                        VitCtaButton(
+                          key: P2PLargeTransactionJustificationPage.ctaKey,
+                          onPressed: canSubmit
+                              ? () {
+                                  HapticFeedback.mediumImpact();
+                                  context.go(snapshot.successRoute);
+                                }
+                              : null,
+                          trailing: const Icon(Icons.chevron_right_rounded),
+                          child: Text(snapshot.ctaLabel),
+                        ),
                       ],
-                      const SizedBox(height: AppSpacing.x5),
-                      VitInput(
-                        controller: _detailsController,
-                        fieldKey: P2PLargeTransactionJustificationPage
-                            .detailsInputKey,
-                        label: snapshot.detailsLabel,
-                        hintText: snapshot.detailsPlaceholder,
-                        textInputAction: TextInputAction.done,
-                        onChanged: (_) => setState(() {}),
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      VitCtaButton(
-                        key: P2PLargeTransactionJustificationPage.ctaKey,
-                        onPressed: canSubmit
-                            ? () {
-                                HapticFeedback.mediumImpact();
-                                context.go(snapshot.successRoute);
-                              }
-                            : null,
-                        trailing: const Icon(Icons.chevron_right_rounded),
-                        child: Text(snapshot.ctaLabel),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

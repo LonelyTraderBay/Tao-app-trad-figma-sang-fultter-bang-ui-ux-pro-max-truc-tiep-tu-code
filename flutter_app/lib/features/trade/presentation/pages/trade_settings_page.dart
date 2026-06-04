@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -68,59 +69,62 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
       semanticLabel: 'SC-052 TradeSettingsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Cài đặt giao dịch',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.trade),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomChrome + 32),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SettingsSection(
-                      title: 'Mặc định lệnh',
-                      child: _OrderDefaultsCard(
-                        settings: _settings,
-                        onChanged: _updateSettings,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Cài đặt giao dịch',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.trade),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomChrome + 32),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SettingsSection(
+                        title: 'Mặc định lệnh',
+                        child: _OrderDefaultsCard(
+                          settings: _settings,
+                          onChanged: _updateSettings,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 26),
-                    _SettingsSection(
-                      title: 'Xác nhận lệnh',
-                      child: _ConfirmationCard(
-                        settings: _settings,
-                        onChanged: _updateSettings,
+                      const SizedBox(height: 26),
+                      _SettingsSection(
+                        title: 'Xác nhận lệnh',
+                        child: _ConfirmationCard(
+                          settings: _settings,
+                          onChanged: _updateSettings,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 26),
-                    _SettingsSection(
-                      title: 'Phản hồi',
-                      child: _FeedbackCard(
-                        settings: _settings,
-                        onChanged: _updateSettings,
+                      const SizedBox(height: 26),
+                      _SettingsSection(
+                        title: 'Phản hồi',
+                        child: _FeedbackCard(
+                          settings: _settings,
+                          onChanged: _updateSettings,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 26),
-                    _SettingsSection(
-                      title: 'Hiển thị',
-                      child: _DisplayCard(
-                        settings: _settings,
-                        onChanged: _updateSettings,
+                      const SizedBox(height: 26),
+                      _SettingsSection(
+                        title: 'Hiển thị',
+                        child: _DisplayCard(
+                          settings: _settings,
+                          onChanged: _updateSettings,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 26),
-                    _ResetButton(onReset: _resetSettings),
-                    const SizedBox(height: 24),
-                    const _InfoNote(),
-                  ],
+                      const SizedBox(height: 26),
+                      _ResetButton(onReset: _resetSettings),
+                      const SizedBox(height: 24),
+                      const _InfoNote(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

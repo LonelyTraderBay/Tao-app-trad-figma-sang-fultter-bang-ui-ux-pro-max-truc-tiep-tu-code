@@ -272,6 +272,7 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
       faqs: _walletLimitFaqs,
       endpoint: '/api/mobile/wallet/wallet-limits',
       actionDraft: 'read-only + local navigation to /profile/kyc',
+      highRiskContractId: HighRiskFlowContractIds.walletMoneyMovement,
       supportedStates: [
         WalletScreenState.loading,
         WalletScreenState.empty,
@@ -357,6 +358,7 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
           : '/api/mobile/wallet/wallet-withdraw',
       actionDraft:
           'POST /wallet/withdraw-preview + POST /wallet/withdraw-confirm',
+      highRiskContractId: HighRiskFlowContractIds.walletMoneyMovement,
       supportedStates: const [
         WalletScreenState.loading,
         WalletScreenState.empty,

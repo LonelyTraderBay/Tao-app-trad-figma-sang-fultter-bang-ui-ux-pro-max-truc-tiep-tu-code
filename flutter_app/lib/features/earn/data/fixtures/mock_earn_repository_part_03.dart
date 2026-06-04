@@ -256,17 +256,22 @@ final class MockSavingsFAQRepository implements SavingsFAQRepository {
 
   @override
   SavingsFAQSnapshot getFAQ() {
-    return const SavingsFAQSnapshot(
+    return SavingsFAQSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-faq',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
       title: 'FAQ Tiết kiệm',
       backRoute: '/earn/savings',
-      supportRoute: '/support',
+      supportRoute: ContextualSupportContracts.supportRouteFor(
+        ContextualSupportFlow.staking,
+        referenceId: 'savings-faq',
+        sourceRoute: '/earn/savings/faq',
+        issueLabel: 'Savings FAQ support',
+      ),
       heroTitle: 'Câu hỏi thường gặp',
       heroSubtitle:
           'Tìm câu trả lời cho các thắc mắc phổ biến về Tiết kiệm Crypto. Không tìm thấy? Liên hệ hỗ trợ bất kỳ lúc nào.',
       searchPlaceholder: 'Tìm câu hỏi...',
-      categories: [
+      categories: const [
         SavingsFAQCategoryDraft(id: 'all', label: 'Tất cả', category: null),
         SavingsFAQCategoryDraft(
           id: 'general',
@@ -294,7 +299,7 @@ final class MockSavingsFAQRepository implements SavingsFAQRepository {
           category: SavingsFAQCategory.risks,
         ),
       ],
-      items: [
+      items: const [
         SavingsFAQItemDraft(
           id: 'g1',
           category: SavingsFAQCategory.general,
@@ -435,7 +440,7 @@ final class MockSavingsFAQRepository implements SavingsFAQRepository {
           'Thông tin FAQ mang tính giáo dục và giải thích chung. Điều khoản chi tiết của từng sản phẩm có thể khác nhau - luôn đọc kỹ trước khi gửi tiết kiệm.',
       contractNotes:
           'Match screenshot first; wire BE after visual parity. Include earnProducts, stakingPositions, savingsPositions, validators, rewards, and riskData.',
-      supportedStates: {
+      supportedStates: const {
         EarnScreenState.loading,
         EarnScreenState.empty,
         EarnScreenState.error,

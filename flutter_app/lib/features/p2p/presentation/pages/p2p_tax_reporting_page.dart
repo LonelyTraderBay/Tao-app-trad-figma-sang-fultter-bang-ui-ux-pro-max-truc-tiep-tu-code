@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -75,70 +76,73 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
       semanticLabel: 'SC-272 P2PTaxReportingPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _TaxHero(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      _YearSelector(
-                        years: snapshot.years,
-                        selectedYear: _selectedYear,
-                        onChanged: (year) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _selectedYear = year);
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      _JurisdictionSelector(
-                        jurisdictions: snapshot.jurisdictions,
-                        selectedCode: _jurisdiction,
-                        onChanged: (code) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _jurisdiction = code);
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x6),
-                      _TaxSummary(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x6),
-                      _TaxDocuments(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      _TaxDisclaimer(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      VitCtaButton(
-                        key: P2PTaxReportingPage.detailCtaKey,
-                        onPressed: () {
-                          HapticFeedback.selectionClick();
-                          context.go(snapshot.detailRoute);
-                        },
-                        child: const Text('View Detailed Tax Report'),
-                      ),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _TaxHero(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        _YearSelector(
+                          years: snapshot.years,
+                          selectedYear: _selectedYear,
+                          onChanged: (year) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _selectedYear = year);
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        _JurisdictionSelector(
+                          jurisdictions: snapshot.jurisdictions,
+                          selectedCode: _jurisdiction,
+                          onChanged: (code) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _jurisdiction = code);
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x6),
+                        _TaxSummary(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x6),
+                        _TaxDocuments(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        _TaxDisclaimer(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        VitCtaButton(
+                          key: P2PTaxReportingPage.detailCtaKey,
+                          onPressed: () {
+                            HapticFeedback.selectionClick();
+                            context.go(snapshot.detailRoute);
+                          },
+                          child: const Text('View Detailed Tax Report'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

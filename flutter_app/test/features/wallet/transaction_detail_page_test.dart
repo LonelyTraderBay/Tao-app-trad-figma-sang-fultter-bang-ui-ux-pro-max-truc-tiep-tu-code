@@ -81,5 +81,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Liên hệ · Hỗ trợ'), findsOneWidget);
+    expect(find.text('Hồ sơ hỗ trợ'), findsOneWidget);
+    expect(find.text('Wallet transaction support'), findsOneWidget);
+    expect(find.text('tx001'), findsOneWidget);
   });
 }

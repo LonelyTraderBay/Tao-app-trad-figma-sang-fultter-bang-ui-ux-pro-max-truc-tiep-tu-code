@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_das
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_dashboard_summary.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
@@ -58,74 +59,77 @@ class _StakingDashboardPageState extends ConsumerState<StakingDashboardPage> {
       semanticLabel: 'SC-358 StakingDashboardPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    StakingDashboardSummaryCard(
-                      key: StakingDashboardPage.summaryKey,
-                      snapshot: snapshot,
-                      isRefreshing: _isRefreshing,
-                      onRefresh: _refresh,
-                      onExport: _exportReport,
-                    ),
-                    VitPageSection(
-                      label: 'Biểu đồ Hiệu suất (6 tháng)',
-                      accentColor: AppColors.primary,
-                      children: [
-                        StakingPerformanceCard(
-                          key: StakingDashboardPage.performanceKey,
-                          points: snapshot.performance,
-                        ),
-                      ],
-                    ),
-                    VitPageSection(
-                      label: 'Phân bổ Tài sản',
-                      accentColor: AppColors.primary,
-                      children: [
-                        StakingAllocationCard(
-                          key: StakingDashboardPage.allocationKey,
-                          allocations: snapshot.allocations,
-                          total: snapshot.totalStakedUsd,
-                        ),
-                      ],
-                    ),
-                    StakingPositionsSection(
-                      sectionKey: StakingDashboardPage.positionsKey,
-                      positionKey: StakingDashboardPage.positionKey,
-                      positions: snapshot.positions,
-                    ),
-                    StakingDashboardQuickActions(
-                      stakeMoreKey: StakingDashboardPage.stakeMoreKey,
-                      analyticsKey: StakingDashboardPage.analyticsKey,
-                      snapshot: snapshot,
-                    ),
-                    StakingDashboardNavigationCards(
-                      historyKey: StakingDashboardPage.historyKey,
-                      calendarKey: StakingDashboardPage.calendarKey,
-                      snapshot: snapshot,
-                    ),
-                    if (snapshot.maturingSoon > 0)
-                      StakingMaturityAlert(
-                        key: StakingDashboardPage.alertKey,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      StakingDashboardSummaryCard(
+                        key: StakingDashboardPage.summaryKey,
+                        snapshot: snapshot,
+                        isRefreshing: _isRefreshing,
+                        onRefresh: _refresh,
+                        onExport: _exportReport,
+                      ),
+                      VitPageSection(
+                        label: 'Biểu đồ Hiệu suất (6 tháng)',
+                        accentColor: AppColors.primary,
+                        children: [
+                          StakingPerformanceCard(
+                            key: StakingDashboardPage.performanceKey,
+                            points: snapshot.performance,
+                          ),
+                        ],
+                      ),
+                      VitPageSection(
+                        label: 'Phân bổ Tài sản',
+                        accentColor: AppColors.primary,
+                        children: [
+                          StakingAllocationCard(
+                            key: StakingDashboardPage.allocationKey,
+                            allocations: snapshot.allocations,
+                            total: snapshot.totalStakedUsd,
+                          ),
+                        ],
+                      ),
+                      StakingPositionsSection(
+                        sectionKey: StakingDashboardPage.positionsKey,
+                        positionKey: StakingDashboardPage.positionKey,
+                        positions: snapshot.positions,
+                      ),
+                      StakingDashboardQuickActions(
+                        stakeMoreKey: StakingDashboardPage.stakeMoreKey,
+                        analyticsKey: StakingDashboardPage.analyticsKey,
                         snapshot: snapshot,
                       ),
-                  ],
+                      StakingDashboardNavigationCards(
+                        historyKey: StakingDashboardPage.historyKey,
+                        calendarKey: StakingDashboardPage.calendarKey,
+                        snapshot: snapshot,
+                      ),
+                      if (snapshot.maturingSoon > 0)
+                        StakingMaturityAlert(
+                          key: StakingDashboardPage.alertKey,
+                          snapshot: snapshot,
+                        ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

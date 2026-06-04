@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -44,62 +45,60 @@ class ProviderComparisonPage extends ConsumerWidget {
       semanticLabel: 'SC-076 ProviderComparisonPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'So sánh Providers',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-              trailing: IconButton(
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'So sánh Providers',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+            actions: [
+              VitHeaderActionItem(
                 key: addProviderActionKey,
+                type: VitHeaderActionType.add,
                 onPressed: () => context.go(AppRoutePaths.tradeCopyTrading),
-                style: IconButton.styleFrom(
-                  backgroundColor: AppColors.surface3,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadii.inputRadius,
-                  ),
-                  fixedSize: const Size(40, 40),
-                ),
-                icon: const Icon(Icons.add, color: AppColors.text1),
               ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: contentKey,
-                padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _WarningBanner(text: snapshot.disclaimer),
-                    const SizedBox(height: 26),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Đang so sánh ${snapshot.selectedCount}/${snapshot.maxProviders} providers',
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text2,
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _WarningBanner(text: snapshot.disclaimer),
+                      const SizedBox(height: 26),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Đang so sánh ${snapshot.selectedCount}/${snapshot.maxProviders} providers',
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.text2,
+                              ),
                             ),
                           ),
-                        ),
-                        if (snapshot.selectedCount < snapshot.maxProviders)
-                          TextButton(
-                            key: addProviderLinkKey,
-                            onPressed: () =>
-                                context.go(AppRoutePaths.tradeCopyTrading),
-                            child: const Text('+ Thêm provider'),
-                          ),
-                      ],
-                    ),
-                    const SizedBox(height: 38),
-                    _ComparisonTable(snapshot: snapshot),
-                    const SizedBox(height: 22),
-                    _LegendPanel(text: snapshot.legend),
-                  ],
+                          if (snapshot.selectedCount < snapshot.maxProviders)
+                            TextButton(
+                              key: addProviderLinkKey,
+                              onPressed: () =>
+                                  context.go(AppRoutePaths.tradeCopyTrading),
+                              child: const Text('+ Thêm provider'),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 38),
+                      _ComparisonTable(snapshot: snapshot),
+                      const SizedBox(height: 22),
+                      _LegendPanel(text: snapshot.legend),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -1,6 +1,7 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/providers/notifications_controller_providers.dart';
 import 'package:vit_trade_flutter/features/notifications/data/repositories/mock_notifications_repository.dart';
-import 'package:vit_trade_flutter/features/notifications/presentation/controllers/notifications_controller.dart';
 
 void main() {
   group('NotificationsController', () {
@@ -23,6 +24,37 @@ void main() {
           NotificationsScreenState.offline,
         ]),
       );
+    });
+
+    test('global state exposes unread count and idempotent mutations', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+
+      expect(container.read(notificationUnreadCountProvider), 7);
+
+      container.read(notificationsStateProvider.notifier).markRead('notif001');
+      expect(container.read(notificationUnreadCountProvider), 6);
+
+      container.read(notificationsStateProvider.notifier).markRead('notif001');
+      expect(container.read(notificationUnreadCountProvider), 6);
+
+      container
+          .read(notificationsStateProvider.notifier)
+          .deleteNotification('notif002');
+      expect(container.read(notificationUnreadCountProvider), 5);
+      expect(
+        container
+            .read(notificationsStateProvider)
+            .notifications
+            .where((item) => item.id == 'notif002'),
+        isEmpty,
+      );
+
+      container.read(notificationsStateProvider.notifier).markAllRead();
+      expect(container.read(notificationUnreadCountProvider), 0);
+
+      container.read(notificationsStateProvider.notifier).resetFromRepository();
+      expect(container.read(notificationUnreadCountProvider), 7);
     });
   });
 }

@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -80,81 +81,84 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
       semanticLabel: 'SC-073 CopyConfirmationPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Xác nhận Copy',
-              showBack: true,
-              onBack: () => context.go(
-                AppRoutePaths.tradeCopyProviderConfiguration(widget.providerId),
-              ),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Xác nhận Copy',
+            showBack: true,
+            onBack: () => context.go(
+              AppRoutePaths.tradeCopyProviderConfiguration(widget.providerId),
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: CopyConfirmationPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 16, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _CriticalWarning(snapshot: snapshot),
-                    const SizedBox(height: 16),
-                    _ProviderSummary(provider: snapshot.provider!),
-                    const SizedBox(height: 16),
-                    _SuitabilityReviewCard(snapshot: snapshot),
-                    const SizedBox(height: 16),
-                    _ConfigurationSummary(snapshot: snapshot),
-                    const SizedBox(height: 16),
-                    _FeeBreakdown(snapshot: snapshot),
-                    const SizedBox(height: 16),
-                    _ScenarioSection(scenarios: snapshot.scenarios),
-                    const SizedBox(height: 16),
-                    _MaxLossCard(snapshot: snapshot),
-                    const SizedBox(height: 16),
-                    _ConsentSection(
-                      items: snapshot.consentItems,
-                      acceptedIds: _acceptedConsentIds,
-                      onToggle: _toggleConsent,
-                    ),
-                    const SizedBox(height: 16),
-                    _CoolingOffCard(hours: snapshot.coolingOffHours),
-                    const SizedBox(height: 16),
-                    _NextStepsCard(snapshot: snapshot),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: bottomChrome + MediaQuery.paddingOf(context).bottom,
-              ),
-              child: VitStickyFooter(
-                child: Column(
-                  children: [
-                    VitCtaButton(
-                      key: CopyConfirmationPage.submitKey,
-                      onPressed: allRequiredAccepted && !_submitting
-                          ? () => _submit(context, controller)
-                          : null,
-                      loading: _submitting,
-                      variant: VitCtaButtonVariant.danger,
-                      leading: const Icon(Icons.shield_outlined),
-                      child: const Text('Xác nhận & Bắt đầu Copy'),
-                    ),
-                    if (!allRequiredAccepted) ...[
-                      const SizedBox(height: 8),
-                      Text(
-                        'Bạn cần đồng ý với tất cả điều khoản để tiếp tục',
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                        ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: CopyConfirmationPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 16, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _CriticalWarning(snapshot: snapshot),
+                      const SizedBox(height: 16),
+                      _ProviderSummary(provider: snapshot.provider!),
+                      const SizedBox(height: 16),
+                      _SuitabilityReviewCard(snapshot: snapshot),
+                      const SizedBox(height: 16),
+                      _ConfigurationSummary(snapshot: snapshot),
+                      const SizedBox(height: 16),
+                      _FeeBreakdown(snapshot: snapshot),
+                      const SizedBox(height: 16),
+                      _ScenarioSection(scenarios: snapshot.scenarios),
+                      const SizedBox(height: 16),
+                      _MaxLossCard(snapshot: snapshot),
+                      const SizedBox(height: 16),
+                      _ConsentSection(
+                        items: snapshot.consentItems,
+                        acceptedIds: _acceptedConsentIds,
+                        onToggle: _toggleConsent,
                       ),
+                      const SizedBox(height: 16),
+                      _CoolingOffCard(hours: snapshot.coolingOffHours),
+                      const SizedBox(height: 16),
+                      _NextStepsCard(snapshot: snapshot),
                     ],
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: bottomChrome + MediaQuery.paddingOf(context).bottom,
+                ),
+                child: VitStickyFooter(
+                  child: Column(
+                    children: [
+                      VitCtaButton(
+                        key: CopyConfirmationPage.submitKey,
+                        onPressed: allRequiredAccepted && !_submitting
+                            ? () => _submit(context, controller)
+                            : null,
+                        loading: _submitting,
+                        variant: VitCtaButtonVariant.danger,
+                        leading: const Icon(Icons.shield_outlined),
+                        child: const Text('Xác nhận & Bắt đầu Copy'),
+                      ),
+                      if (!allRequiredAccepted) ...[
+                        const SizedBox(height: 8),
+                        Text(
+                          'Bạn cần đồng ý với tất cả điều khoản để tiếp tục',
+                          textAlign: TextAlign.center,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

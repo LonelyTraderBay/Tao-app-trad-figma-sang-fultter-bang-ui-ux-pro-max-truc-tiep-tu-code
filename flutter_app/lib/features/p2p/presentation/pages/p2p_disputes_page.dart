@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -41,52 +42,55 @@ class P2PDisputesPage extends ConsumerWidget {
       semanticLabel: 'SC-222 P2PDisputesPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Tranh chấp P2P',
-              subtitle: 'Tranh chấp · P2P',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.p2p),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2PDisputesPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x5,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _StatsRow(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _SafetyNotice(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      _ListHeader(activeCount: snapshot.activeCount),
-                      const SizedBox(height: AppSpacing.x3),
-                      if (snapshot.disputes.isEmpty)
-                        _EmptyDisputes(snapshot: snapshot)
-                      else
-                        for (final dispute in snapshot.disputes) ...[
-                          _DisputeListTile(dispute: dispute),
-                          const SizedBox(height: AppSpacing.x3),
-                        ],
-                      const SizedBox(height: AppSpacing.x2),
-                      _GuideCard(snapshot: snapshot),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Tranh chấp P2P',
+            subtitle: 'Tranh chấp · P2P',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.p2p),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2PDisputesPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x5,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _StatsRow(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _SafetyNotice(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        _ListHeader(activeCount: snapshot.activeCount),
+                        const SizedBox(height: AppSpacing.x3),
+                        if (snapshot.disputes.isEmpty)
+                          _EmptyDisputes(snapshot: snapshot)
+                        else
+                          for (final dispute in snapshot.disputes) ...[
+                            _DisputeListTile(dispute: dispute),
+                            const SizedBox(height: AppSpacing.x3),
+                          ],
+                        const SizedBox(height: AppSpacing.x2),
+                        _GuideCard(snapshot: snapshot),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

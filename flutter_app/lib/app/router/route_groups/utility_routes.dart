@@ -39,33 +39,56 @@ List<RouteBase> _utilityRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.routeChecker,
       name: AppRouteNames.sc325RouteChecker,
-      builder: (_, _) => RouteChecker(shellRenderMode: shellRenderMode),
+      builder: (_, _) => InternalSurfaceGate(
+        kind: InternalSurfaceKind.developer,
+        routePath: AppRoutePaths.routeChecker,
+        child: RouteChecker(shellRenderMode: shellRenderMode),
+      ),
     ),
     GoRoute(
       path: AppRoutePaths.performanceMonitor,
       name: AppRouteNames.sc326PerformanceMonitor,
-      builder: (_, _) => PerformanceMonitor(shellRenderMode: shellRenderMode),
+      builder: (_, _) => InternalSurfaceGate(
+        kind: InternalSurfaceKind.developer,
+        routePath: AppRoutePaths.performanceMonitor,
+        child: PerformanceMonitor(shellRenderMode: shellRenderMode),
+      ),
     ),
     GoRoute(
       path: AppRoutePaths.devShowcase,
       name: AppRouteNames.sc398MissingScreensShowcase,
-      builder: (_, _) =>
-          MissingScreensShowcasePage(shellRenderMode: shellRenderMode),
+      builder: (_, _) => InternalSurfaceGate(
+        kind: InternalSurfaceKind.developer,
+        routePath: AppRoutePaths.devShowcase,
+        child: MissingScreensShowcasePage(shellRenderMode: shellRenderMode),
+      ),
     ),
     GoRoute(
       path: AppRoutePaths.devDesignSystem,
       name: AppRouteNames.sc399DesignSystem,
-      builder: (_, _) => DesignSystemPage(shellRenderMode: shellRenderMode),
+      builder: (_, _) => InternalSurfaceGate(
+        kind: InternalSurfaceKind.developer,
+        routePath: AppRoutePaths.devDesignSystem,
+        child: DesignSystemPage(shellRenderMode: shellRenderMode),
+      ),
     ),
     GoRoute(
       path: AppRoutePaths.devDcaOverview,
       name: AppRouteNames.sc400DcaOverviewDemo,
-      builder: (_, _) => DCAOverviewDemo(shellRenderMode: shellRenderMode),
+      builder: (_, _) => InternalSurfaceGate(
+        kind: InternalSurfaceKind.developer,
+        routePath: AppRoutePaths.devDcaOverview,
+        child: DCAOverviewDemo(shellRenderMode: shellRenderMode),
+      ),
     ),
     GoRoute(
       path: AppRoutePaths.demoCopyCard,
       name: AppRouteNames.sc401CopyTradingCardDemo,
-      builder: (_, _) => CopyTradingCardDemo(shellRenderMode: shellRenderMode),
+      builder: (_, _) => InternalSurfaceGate(
+        kind: InternalSurfaceKind.qaDemo,
+        routePath: AppRoutePaths.demoCopyCard,
+        child: CopyTradingCardDemo(shellRenderMode: shellRenderMode),
+      ),
     ),
   ];
 }

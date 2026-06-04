@@ -20,79 +20,83 @@ class _DCAPageState extends ConsumerState<DCAPage> {
       semanticLabel: 'SC-169 DCAPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Mua tự động (DCA)',
-              subtitle: 'Tự động mua crypto định kỳ',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: Stack(
-                children: [
-                  ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(
-                      context,
-                    ).copyWith(scrollbars: false),
-                    child: SingleChildScrollView(
-                      key: DCAPage.contentKey,
-                      physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(bottom: bottomInset),
-                      child: VitPageContent(
-                        padding: VitContentPadding.relaxed,
-                        customGap: AppSpacing.x5,
-                        children: [
-                          _DcaOverviewCard(
-                            snapshot: snapshot,
-                            onCreate: _openCreateSheet,
-                            onPauseAll: _showPausedState,
-                            onChart: () =>
-                                setState(() => _activeTab = _DcaTab.history),
-                            onHistory: () =>
-                                setState(() => _activeTab = _DcaTab.history),
-                          ),
-                          _AdvancedTools(tools: snapshot.tools, onOpen: _go),
-                          _DcaTabs(
-                            active: _activeTab,
-                            planCount: snapshot.plans.length,
-                            onChanged: (tab) =>
-                                setState(() => _activeTab = tab),
-                          ),
-                          AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 180),
-                            child: _activeTab == _DcaTab.plans
-                                ? _PlansList(
-                                    key: const ValueKey('plans'),
-                                    plans: snapshot.plans,
-                                    onPause: _showPausedState,
-                                  )
-                                : _HistoryPanel(
-                                    key: const ValueKey('history'),
-                                    snapshot: snapshot,
-                                  ),
-                          ),
-                        ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitTopChrome(
+            type: VitTopChromeType.rootModule,
+            title: 'Mua tự động (DCA)',
+            subtitle: 'Tự động mua crypto định kỳ',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: Stack(
+                  children: [
+                    ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: DCAPage.contentKey,
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.only(bottom: bottomInset),
+                        child: VitPageContent(
+                          padding: VitContentPadding.relaxed,
+                          customGap: AppSpacing.x5,
+                          children: [
+                            _DcaOverviewCard(
+                              snapshot: snapshot,
+                              onCreate: _openCreateSheet,
+                              onPauseAll: _showPausedState,
+                              onChart: () =>
+                                  setState(() => _activeTab = _DcaTab.history),
+                              onHistory: () =>
+                                  setState(() => _activeTab = _DcaTab.history),
+                            ),
+                            _AdvancedTools(tools: snapshot.tools, onOpen: _go),
+                            _DcaTabs(
+                              active: _activeTab,
+                              planCount: snapshot.plans.length,
+                              onChanged: (tab) =>
+                                  setState(() => _activeTab = tab),
+                            ),
+                            AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 180),
+                              child: _activeTab == _DcaTab.plans
+                                  ? _PlansList(
+                                      key: const ValueKey('plans'),
+                                      plans: snapshot.plans,
+                                      onPause: _showPausedState,
+                                    )
+                                  : _HistoryPanel(
+                                      key: const ValueKey('history'),
+                                      snapshot: snapshot,
+                                    ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    left: 60,
-                    right: 60,
-                    bottom: stickyBottom,
-                    child: VitCtaButton(
-                      key: DCAPage.createPlanKey,
-                      onPressed: _openCreateSheet,
-                      leading: const Icon(Icons.add_rounded),
-                      child: const Text('Tạo kế hoạch mới'),
+                    Positioned(
+                      left: 60,
+                      right: 60,
+                      bottom: stickyBottom,
+                      child: VitCtaButton(
+                        key: DCAPage.createPlanKey,
+                        onPressed: _openCreateSheet,
+                        leading: const Icon(Icons.add_rounded),
+                        child: const Text('Tạo kế hoạch mới'),
+                      ),
                     ),
-                  ),
-                  if (_createSheetOpen)
-                    _CreatePlanSheet(onClose: _closeCreateSheet),
-                ],
+                    if (_createSheetOpen)
+                      _CreatePlanSheet(onClose: _closeCreateSheet),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -119,11 +123,11 @@ class _DCAPageState extends ConsumerState<DCAPage> {
   }
 
   void _close() {
-    if (context.canPop()) {
-      context.pop();
-      return;
-    }
-    context.go(AppRoutePaths.trade);
+    goBackOrFallback(
+      context,
+      fallbackPath: AppRoutePaths.trade,
+      mode: BackNavigationMode.historyThenFallback,
+    );
   }
 }
 

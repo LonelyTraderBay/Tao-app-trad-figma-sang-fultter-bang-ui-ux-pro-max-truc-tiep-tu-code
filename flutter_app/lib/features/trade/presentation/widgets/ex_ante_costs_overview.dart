@@ -1,27 +1,5 @@
 part of '../pages/ex_ante_costs_page.dart';
 
-class _DownloadAction extends StatelessWidget {
-  const _DownloadAction();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 36,
-      height: 36,
-      decoration: BoxDecoration(
-        color: _costPanel2,
-        border: Border.all(color: _costBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: const Icon(
-        Icons.download_rounded,
-        color: AppColors.text1,
-        size: 18,
-      ),
-    );
-  }
-}
-
 class _RegulatoryNotice extends StatelessWidget {
   const _RegulatoryNotice();
 

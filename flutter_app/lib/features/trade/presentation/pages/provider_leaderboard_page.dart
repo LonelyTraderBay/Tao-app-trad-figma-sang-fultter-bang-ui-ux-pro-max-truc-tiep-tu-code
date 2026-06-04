@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -74,71 +75,74 @@ class _ProviderLeaderboardPageState
       semanticLabel: 'SC-079 ProviderLeaderboardPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Leaderboard',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: ProviderLeaderboardPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SurvivorshipWarning(snapshot: snapshot),
-                    const SizedBox(height: 23),
-                    _SortTabs(
-                      options: snapshot.sortOptions,
-                      activeId: _sortId,
-                      onChanged: (id) => setState(() => _sortId = id),
-                    ),
-                    const SizedBox(height: 25),
-                    _RiskFilters(
-                      filters: snapshot.riskFilters,
-                      activeId: _riskFilterId,
-                      onChanged: (id) => setState(() => _riskFilterId = id),
-                    ),
-                    const SizedBox(height: 12),
-                    _VerifiedToggle(
-                      label: snapshot.verifiedOnlyLabel,
-                      checked: _verifiedOnly,
-                      onChanged: (value) =>
-                          setState(() => _verifiedOnly = value),
-                    ),
-                    const SizedBox(height: 27),
-                    Text(
-                      'Hiển thị ${providers.length} providers',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                        fontSize: 11,
-                        height: 1,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Leaderboard',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: ProviderLeaderboardPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SurvivorshipWarning(snapshot: snapshot),
+                      const SizedBox(height: 23),
+                      _SortTabs(
+                        options: snapshot.sortOptions,
+                        activeId: _sortId,
+                        onChanged: (id) => setState(() => _sortId = id),
                       ),
-                    ),
-                    const SizedBox(height: 28),
-                    for (final entry in providers.indexed) ...[
-                      _ProviderRankCard(
-                        rank: entry.$1 + 1,
-                        provider: entry.$2,
-                        onOpen: () => context.go(
-                          AppRoutePaths.tradeCopyProvider(
-                            entry.$2.id,
-                            backPath: AppRoutePaths.tradeCopyLeaderboard,
-                          ),
+                      const SizedBox(height: 25),
+                      _RiskFilters(
+                        filters: snapshot.riskFilters,
+                        activeId: _riskFilterId,
+                        onChanged: (id) => setState(() => _riskFilterId = id),
+                      ),
+                      const SizedBox(height: 12),
+                      _VerifiedToggle(
+                        label: snapshot.verifiedOnlyLabel,
+                        checked: _verifiedOnly,
+                        onChanged: (value) =>
+                            setState(() => _verifiedOnly = value),
+                      ),
+                      const SizedBox(height: 27),
+                      Text(
+                        'Hiển thị ${providers.length} providers',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                          fontSize: 11,
+                          height: 1,
                         ),
                       ),
-                      if (entry.$2 != providers.last)
-                        const SizedBox(height: 13),
+                      const SizedBox(height: 28),
+                      for (final entry in providers.indexed) ...[
+                        _ProviderRankCard(
+                          rank: entry.$1 + 1,
+                          provider: entry.$2,
+                          onOpen: () => context.go(
+                            AppRoutePaths.tradeCopyProvider(
+                              entry.$2.id,
+                              backPath: AppRoutePaths.tradeCopyLeaderboard,
+                            ),
+                          ),
+                        ),
+                        if (entry.$2 != providers.last)
+                          const SizedBox(height: 13),
+                      ],
+                      const SizedBox(height: 34),
+                      _Disclaimer(text: snapshot.disclaimer),
                     ],
-                    const SizedBox(height: 34),
-                    _Disclaimer(text: snapshot.disclaimer),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

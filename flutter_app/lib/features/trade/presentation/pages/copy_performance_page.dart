@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -64,40 +65,44 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
       semanticLabel: 'SC-074 CopyPerformancePage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Phân tích hiệu suất',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.trade),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: CopyPerformancePage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _PerformanceSummary(snapshot: snapshot),
-                    const SizedBox(height: 24),
-                    _PerformanceTabs(
-                      activeTab: _activeTab,
-                      onChanged: (value) => setState(() => _activeTab = value),
-                    ),
-                    const SizedBox(height: 22),
-                    if (_activeTab == 'overview')
-                      _OverviewTab(snapshot: snapshot)
-                    else if (_activeTab == 'trades')
-                      _TradesTab(snapshot: snapshot)
-                    else if (_activeTab == 'costs')
-                      _CostsTab(snapshot: snapshot)
-                    else
-                      _MetricsTab(snapshot: snapshot),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Phân tích hiệu suất',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.trade),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: CopyPerformancePage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _PerformanceSummary(snapshot: snapshot),
+                      const SizedBox(height: 24),
+                      _PerformanceTabs(
+                        activeTab: _activeTab,
+                        onChanged: (value) =>
+                            setState(() => _activeTab = value),
+                      ),
+                      const SizedBox(height: 22),
+                      if (_activeTab == 'overview')
+                        _OverviewTab(snapshot: snapshot)
+                      else if (_activeTab == 'trades')
+                        _TradesTab(snapshot: snapshot)
+                      else if (_activeTab == 'costs')
+                        _CostsTab(snapshot: snapshot)
+                      else
+                        _MetricsTab(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

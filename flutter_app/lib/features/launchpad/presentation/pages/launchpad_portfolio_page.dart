@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -62,47 +63,44 @@ class _LaunchpadPortfolioPageState
       semanticLabel: 'SC-296 LaunchpadPortfolioPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: LaunchpadPortfolioPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.defaultPadding,
-                    customGap: AppSpacing.x4,
-                    children: [
-                      _PortfolioHero(subscriptions: snapshot.subscriptions),
-                      _PortfolioTabs(
-                        activeTab: _activeTab,
-                        onChanged: (tab) => setState(() => _activeTab = tab),
-                      ),
-                      if (subscriptions.isEmpty)
-                        _EmptyPortfolio(route: snapshot.launchpadRoute)
-                      else
-                        for (final subscription in subscriptions)
-                          _SubscriptionCard(
-                            subscription: subscription,
-                            receiptRoute: snapshot.receiptRoute,
-                          ),
-                      const _PortfolioDisclaimer(),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          bottomInset: bottomInset,
+          semanticLabel: 'SC-296 LaunchpadPortfolioPage scroll surface',
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(
+              context,
+            ).copyWith(scrollbars: false),
+            child: SingleChildScrollView(
+              key: LaunchpadPortfolioPage.contentKey,
+              physics: const BouncingScrollPhysics(),
+              child: VitPageContent(
+                padding: VitContentPadding.defaultPadding,
+                customGap: AppSpacing.x4,
+                children: [
+                  _PortfolioHero(subscriptions: snapshot.subscriptions),
+                  _PortfolioTabs(
+                    activeTab: _activeTab,
+                    onChanged: (tab) => setState(() => _activeTab = tab),
                   ),
-                ),
+                  if (subscriptions.isEmpty)
+                    _EmptyPortfolio(route: snapshot.launchpadRoute)
+                  else
+                    for (final subscription in subscriptions)
+                      _SubscriptionCard(
+                        subscription: subscription,
+                        receiptRoute: snapshot.receiptRoute,
+                      ),
+                  const _PortfolioDisclaimer(),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

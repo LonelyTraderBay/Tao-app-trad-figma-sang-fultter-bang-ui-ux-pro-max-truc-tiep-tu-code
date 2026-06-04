@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -122,116 +123,124 @@ class _PredictionEventDetailPageState
       semanticLabel: 'SC-030 PredictionEventDetailPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Event Detail',
-              subtitle: 'Chi tiết · Prediction',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.marketsPredictions),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _HeaderIconButton(
-                    key: PredictionEventDetailPage.favoriteKey,
-                    icon: _isFavorite
-                        ? Icons.favorite_rounded
-                        : Icons.favorite_border_rounded,
-                    color: _isFavorite ? AppColors.sell : AppColors.text2,
-                    onTap: () => setState(() {
-                      _isFavorite = !_isFavorite;
-                    }),
-                  ),
-                  const SizedBox(width: 6),
-                  _HeaderIconButton(
-                    key: PredictionEventDetailPage.shareKey,
-                    icon: Icons.ios_share_rounded,
-                    color: AppColors.text2,
-                    onTap: () {},
-                  ),
-                ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Event Detail',
+            subtitle: 'Chi tiết · Prediction',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.marketsPredictions),
+            actions: [
+              VitHeaderActionItem(
+                key: PredictionEventDetailPage.favoriteKey,
+                type: _isFavorite
+                    ? VitHeaderActionType.favoriteOn
+                    : VitHeaderActionType.favoriteOff,
+                onPressed: () => setState(() {
+                  _isFavorite = !_isFavorite;
+                }),
               ),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: PredictionEventDetailPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 15,
-                    children: [
-                      _EventHeader(
-                        event: event,
-                        selectedOutcome: _selectedOutcome,
-                        onOutcomeSelected: (value) => setState(() {
-                          _selectedOutcome = value;
-                        }),
-                      ),
-                      _StatsGrid(event: event),
-                      if (snapshot.position != null)
-                        _PositionBanner(position: snapshot.position!),
-                      _ChartSection(snapshot: snapshot),
-                      _OrderBookSection(
-                        snapshot: snapshot,
-                        expanded: _showOrderBook,
-                        onToggle: () => setState(() {
-                          _showOrderBook = !_showOrderBook;
-                        }),
-                      ),
-                      if (event.status == PredictionEventStatus.active) ...[
-                        _TradeSection(
+              const VitHeaderActionItem(
+                key: PredictionEventDetailPage.shareKey,
+                type: VitHeaderActionType.share,
+                onPressed: _noop,
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: PredictionEventDetailPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 15,
+                      children: [
+                        _EventHeader(
                           event: event,
-                          preview: orderPreview,
                           selectedOutcome: _selectedOutcome,
-                          isBuy: _isBuy,
-                          isMarket: _isMarket,
-                          amount: _amount,
-                          onSideChanged: (value) => setState(() {
-                            _isBuy = value;
-                          }),
-                          onOrderTypeChanged: (value) => setState(() {
-                            _isMarket = value;
-                          }),
-                          onAmountChanged: (value) => setState(() {
-                            _amount = value;
-                          }),
-                          onOutcomeChanged: (value) => setState(() {
+                          onOutcomeSelected: (value) => setState(() {
                             _selectedOutcome = value;
                           }),
                         ),
-                        _RiskLink(onTap: () {}),
-                      ],
-                      _DetailTabs(
-                        activeTab: _activeTab,
-                        onChanged: (value) => setState(() {
-                          _activeTab = value;
-                        }),
-                      ),
-                      _TabCard(snapshot: snapshot, activeTab: _activeTab),
-                      _RelatedMarketsSection(snapshot: snapshot),
-                      _ArenaBridgeSection(
-                        snapshot: snapshot,
-                        onCreate: () => context.go(AppRoutePaths.arenaStudio),
-                      ),
-                      _QuickLinks(
-                        onRewards: () =>
-                            context.go(AppRoutePaths.marketsPredictionsRewards),
-                        onActivity: () => context.go(
-                          AppRoutePaths.marketsPredictionsActivity,
+                        if (snapshot.highRiskContractId != null)
+                          VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Order risk states active',
+                            message:
+                                'Rules, amount setup, probability preview, confirmation, submitted receipt and recovery are tracked in one prediction contract.',
+                            contractId: snapshot.highRiskContractId,
+                          ),
+                        _StatsGrid(event: event),
+                        if (snapshot.position != null)
+                          _PositionBanner(position: snapshot.position!),
+                        _ChartSection(snapshot: snapshot),
+                        _OrderBookSection(
+                          snapshot: snapshot,
+                          expanded: _showOrderBook,
+                          onToggle: () => setState(() {
+                            _showOrderBook = !_showOrderBook;
+                          }),
                         ),
-                      ),
-                    ],
+                        if (event.status == PredictionEventStatus.active) ...[
+                          _TradeSection(
+                            event: event,
+                            preview: orderPreview,
+                            selectedOutcome: _selectedOutcome,
+                            isBuy: _isBuy,
+                            isMarket: _isMarket,
+                            amount: _amount,
+                            onSideChanged: (value) => setState(() {
+                              _isBuy = value;
+                            }),
+                            onOrderTypeChanged: (value) => setState(() {
+                              _isMarket = value;
+                            }),
+                            onAmountChanged: (value) => setState(() {
+                              _amount = value;
+                            }),
+                            onOutcomeChanged: (value) => setState(() {
+                              _selectedOutcome = value;
+                            }),
+                          ),
+                          _RiskLink(onTap: () {}),
+                        ],
+                        _DetailTabs(
+                          activeTab: _activeTab,
+                          onChanged: (value) => setState(() {
+                            _activeTab = value;
+                          }),
+                        ),
+                        _TabCard(snapshot: snapshot, activeTab: _activeTab),
+                        _RelatedMarketsSection(snapshot: snapshot),
+                        _ArenaBridgeSection(
+                          snapshot: snapshot,
+                          onCreate: () => context.go(AppRoutePaths.arenaStudio),
+                        ),
+                        _QuickLinks(
+                          onRewards: () => context.go(
+                            AppRoutePaths.marketsPredictionsRewards,
+                          ),
+                          onActivity: () => context.go(
+                            AppRoutePaths.marketsPredictionsActivity,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
+void _noop() {}

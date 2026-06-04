@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -61,55 +62,60 @@ class _P2PGuidePageState extends ConsumerState<P2PGuidePage> {
       semanticLabel: 'SC-280 P2PGuidePage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            _GuideTabs(
-              tabs: snapshot.tabs,
-              active: _tab,
-              onChanged: (value) {
-                HapticFeedback.selectionClick();
-                setState(() => _tab = value);
-              },
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: _GuideBody(
-                    snapshot: snapshot,
-                    activeTab: _tab,
-                    mode: _mode,
-                    expandedFaqId: _expandedFaqId,
-                    onModeChanged: (value) {
-                      HapticFeedback.selectionClick();
-                      setState(() => _mode = value);
-                    },
-                    onFaqToggle: (faqId) {
-                      HapticFeedback.selectionClick();
-                      setState(() {
-                        _expandedFaqId = _expandedFaqId == faqId ? null : faqId;
-                      });
-                    },
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _GuideTabs(
+                tabs: snapshot.tabs,
+                active: _tab,
+                onChanged: (value) {
+                  HapticFeedback.selectionClick();
+                  setState(() => _tab = value);
+                },
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: _GuideBody(
+                      snapshot: snapshot,
+                      activeTab: _tab,
+                      mode: _mode,
+                      expandedFaqId: _expandedFaqId,
+                      onModeChanged: (value) {
+                        HapticFeedback.selectionClick();
+                        setState(() => _mode = value);
+                      },
+                      onFaqToggle: (faqId) {
+                        HapticFeedback.selectionClick();
+                        setState(() {
+                          _expandedFaqId = _expandedFaqId == faqId
+                              ? null
+                              : faqId;
+                        });
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

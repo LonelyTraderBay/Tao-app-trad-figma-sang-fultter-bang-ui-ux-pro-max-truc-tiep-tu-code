@@ -7,20 +7,11 @@ class _AddAddressButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitHeaderActionButton(
       key: AddressBookPage.addKey,
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          color: AppColors.primary15,
-          borderRadius: AppRadii.lgRadius,
-          border: Border.all(color: AppColors.primary20),
-        ),
-        child: const Icon(Icons.add_rounded, color: _bookPrimary, size: 24),
-      ),
+      type: VitHeaderActionType.add,
+      tooltip: 'Thêm địa chỉ',
+      onPressed: onTap,
     );
   }
 }

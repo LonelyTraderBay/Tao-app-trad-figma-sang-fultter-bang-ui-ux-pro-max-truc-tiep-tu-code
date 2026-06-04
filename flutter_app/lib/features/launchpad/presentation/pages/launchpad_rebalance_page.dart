@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/launch
 import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/launchpad_rebalance_suggestions.dart';
 import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/launchpad_rebalance_summary.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -101,68 +102,65 @@ class _LaunchpadRebalancePageState
         type: MaterialType.transparency,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: snapshot.title,
-                  showBack: true,
-                  onBack: () => context.go(snapshot.backRoute),
-                ),
-                Expanded(
-                  child: ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(
-                      context,
-                    ).copyWith(scrollbars: false),
-                    child: SingleChildScrollView(
-                      key: LaunchpadRebalancePage.contentKey,
-                      physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(bottom: bottomInset),
-                      child: VitPageContent(
-                        padding: VitContentPadding.defaultPadding,
-                        customGap: AppSpacing.x4,
-                        children: [
-                          LaunchpadRebalanceHero(
-                            key: LaunchpadRebalancePage.heroKey,
-                            totalValue: totalValue,
-                            assetCount: assets.length,
-                            totalDeviation: totalDeviation,
-                          ),
-                          LaunchpadRebalanceStrategySection(
-                            sectionKey: LaunchpadRebalancePage.strategyKey,
-                            strategies: snapshot.strategies,
-                            activeId: _strategyId,
-                            strategyButtonKey:
-                                LaunchpadRebalancePage.strategyButtonKey,
-                            onChanged: (id) => setState(() => _strategyId = id),
-                          ),
-                          LaunchpadRebalanceAllocationCard(
-                            key: LaunchpadRebalancePage.allocationKey,
-                            assets: assets,
-                          ),
-                          LaunchpadRebalanceDeviationCard(
-                            key: LaunchpadRebalancePage.deviationKey,
-                            assets: assets,
-                          ),
-                          LaunchpadRebalanceSuggestionsSection(
-                            sectionKey: LaunchpadRebalancePage.suggestionsKey,
-                            suggestionKey: LaunchpadRebalancePage.suggestionKey,
-                            suggestions: suggestions,
-                          ),
-                          LaunchpadRebalanceSummaryCard(
-                            key: LaunchpadRebalancePage.summaryKey,
-                            txCount: txCount,
-                            totalGas: totalGas,
-                            strategy: strategy,
-                          ),
-                          const LaunchpadRebalanceWarningBanner(
-                            key: LaunchpadRebalancePage.warningKey,
-                          ),
-                        ],
+            VitAutoHideHeaderScaffold(
+              bottomInset: bottomInset,
+              semanticLabel: 'SC-312 LaunchpadRebalancePage scroll surface',
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(
+                  context,
+                ).copyWith(scrollbars: false),
+                child: SingleChildScrollView(
+                  key: LaunchpadRebalancePage.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  child: VitPageContent(
+                    padding: VitContentPadding.defaultPadding,
+                    customGap: AppSpacing.x4,
+                    children: [
+                      LaunchpadRebalanceHero(
+                        key: LaunchpadRebalancePage.heroKey,
+                        totalValue: totalValue,
+                        assetCount: assets.length,
+                        totalDeviation: totalDeviation,
                       ),
-                    ),
+                      LaunchpadRebalanceStrategySection(
+                        sectionKey: LaunchpadRebalancePage.strategyKey,
+                        strategies: snapshot.strategies,
+                        activeId: _strategyId,
+                        strategyButtonKey:
+                            LaunchpadRebalancePage.strategyButtonKey,
+                        onChanged: (id) => setState(() => _strategyId = id),
+                      ),
+                      LaunchpadRebalanceAllocationCard(
+                        key: LaunchpadRebalancePage.allocationKey,
+                        assets: assets,
+                      ),
+                      LaunchpadRebalanceDeviationCard(
+                        key: LaunchpadRebalancePage.deviationKey,
+                        assets: assets,
+                      ),
+                      LaunchpadRebalanceSuggestionsSection(
+                        sectionKey: LaunchpadRebalancePage.suggestionsKey,
+                        suggestionKey: LaunchpadRebalancePage.suggestionKey,
+                        suggestions: suggestions,
+                      ),
+                      LaunchpadRebalanceSummaryCard(
+                        key: LaunchpadRebalancePage.summaryKey,
+                        txCount: txCount,
+                        totalGas: totalGas,
+                        strategy: strategy,
+                      ),
+                      const LaunchpadRebalanceWarningBanner(
+                        key: LaunchpadRebalancePage.warningKey,
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
             Positioned(
               left: 0,
@@ -185,6 +183,7 @@ class _LaunchpadRebalancePageState
                   cancelKey: LaunchpadRebalancePage.cancelKey,
                   suggestions: suggestions,
                   totalGas: totalGas,
+                  bottomInset: navInset,
                   onClose: () => setState(() => _showConfirm = false),
                 ),
               ),

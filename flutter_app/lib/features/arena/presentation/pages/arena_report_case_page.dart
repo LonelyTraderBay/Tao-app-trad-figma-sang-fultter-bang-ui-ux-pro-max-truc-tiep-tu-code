@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -70,97 +71,105 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
       semanticLabel: 'SC-202 ArenaReportCasePage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Chi tiết báo cáo',
-              subtitle: 'An toàn · Open Arena',
-              showBack: true,
-              onBack: () => _close(context),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ArenaReportCasePage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: snapshot.reportCase == null
-                      ? VitPageContent(
-                          key: ArenaReportCasePage.emptyKey,
-                          padding: VitContentPadding.none,
-                          children: [
-                            VitEmptyState(
-                              icon: Icons.warning_amber_rounded,
-                              title: snapshot.emptyTitle,
-                              message: snapshot.emptySubtitle,
-                            ),
-                          ],
-                        )
-                      : VitPageContent(
-                          padding: VitContentPadding.compact,
-                          customGap: AppSpacing.x5,
-                          children: [
-                            ArenaReportReviewStateCard(state: reviewState),
-                            _CaseSummaryCard(reportCase: snapshot.reportCase!),
-                            _ReportReasonCard(reportCase: snapshot.reportCase!),
-                            _TimelineCard(reportCase: snapshot.reportCase!),
-                            if (snapshot.reportCase!.actionTaken != null)
-                              _ActionTakenCard(
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Chi tiết báo cáo',
+            subtitle: 'An toàn · Open Arena',
+            showBack: true,
+            onBack: () => _close(context),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ArenaReportCasePage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: snapshot.reportCase == null
+                        ? VitPageContent(
+                            key: ArenaReportCasePage.emptyKey,
+                            padding: VitContentPadding.none,
+                            children: [
+                              VitEmptyState(
+                                icon: Icons.warning_amber_rounded,
+                                title: snapshot.emptyTitle,
+                                message: snapshot.emptySubtitle,
+                              ),
+                            ],
+                          )
+                        : VitPageContent(
+                            padding: VitContentPadding.compact,
+                            customGap: AppSpacing.x5,
+                            children: [
+                              ArenaReportReviewStateCard(state: reviewState),
+                              _CaseSummaryCard(
                                 reportCase: snapshot.reportCase!,
                               ),
-                            if (snapshot.reportCase!.actionTaken == null &&
-                                snapshot.reportCase!.systemNote != null)
-                              _SystemNoteCard(
-                                note: snapshot.reportCase!.systemNote!,
+                              _ReportReasonCard(
+                                reportCase: snapshot.reportCase!,
                               ),
-                            if (snapshot.reportCase!.relatedChallengeId != null)
+                              _TimelineCard(reportCase: snapshot.reportCase!),
+                              if (snapshot.reportCase!.actionTaken != null)
+                                _ActionTakenCard(
+                                  reportCase: snapshot.reportCase!,
+                                ),
+                              if (snapshot.reportCase!.actionTaken == null &&
+                                  snapshot.reportCase!.systemNote != null)
+                                _SystemNoteCard(
+                                  note: snapshot.reportCase!.systemNote!,
+                                ),
+                              if (snapshot.reportCase!.relatedChallengeId !=
+                                  null)
+                                _LinkedActionRow(
+                                  key: ArenaReportCasePage.relatedChallengeKey,
+                                  icon: Icons.emoji_events_outlined,
+                                  title: 'Xem challenge liên quan',
+                                  accentColor: AppColors.accent,
+                                  onTap: () => _openChallenge(
+                                    context,
+                                    snapshot.reportCase!,
+                                  ),
+                                ),
+                              if (snapshot.reportCase!.status ==
+                                  ArenaReportCaseStatus.actionTaken)
+                                _AppealNotice(
+                                  state: reviewState,
+                                  onAppeal: _markAppealSubmitted,
+                                ),
                               _LinkedActionRow(
-                                key: ArenaReportCasePage.relatedChallengeKey,
-                                icon: Icons.emoji_events_outlined,
-                                title: 'Xem challenge liên quan',
-                                accentColor: AppColors.accent,
-                                onTap: () => _openChallenge(
+                                key: ArenaReportCasePage.myReportsKey,
+                                icon: Icons.flag_outlined,
+                                title: 'Xem tất cả báo cáo',
+                                accentColor: AppColors.text3,
+                                onTap: () {
+                                  HapticFeedback.selectionClick();
+                                  context.go(AppRoutePaths.arenaMyReports);
+                                },
+                              ),
+                              _RelatedReports(reports: relatedReports),
+                              _DisclaimerCard(disclaimer: snapshot.disclaimer),
+                              VitCtaButton(
+                                key: ArenaReportCasePage.primaryCtaKey,
+                                onPressed: () => _handlePrimaryCta(
                                   context,
                                   snapshot.reportCase!,
                                 ),
+                                child: Text(
+                                  _primaryCtaLabel(snapshot.reportCase!),
+                                ),
                               ),
-                            if (snapshot.reportCase!.status ==
-                                ArenaReportCaseStatus.actionTaken)
-                              _AppealNotice(
-                                state: reviewState,
-                                onAppeal: _markAppealSubmitted,
-                              ),
-                            _LinkedActionRow(
-                              key: ArenaReportCasePage.myReportsKey,
-                              icon: Icons.flag_outlined,
-                              title: 'Xem tất cả báo cáo',
-                              accentColor: AppColors.text3,
-                              onTap: () {
-                                HapticFeedback.selectionClick();
-                                context.go(AppRoutePaths.arenaMyReports);
-                              },
-                            ),
-                            _RelatedReports(reports: relatedReports),
-                            _DisclaimerCard(disclaimer: snapshot.disclaimer),
-                            VitCtaButton(
-                              key: ArenaReportCasePage.primaryCtaKey,
-                              onPressed: () => _handlePrimaryCta(
-                                context,
-                                snapshot.reportCase!,
-                              ),
-                              child: Text(
-                                _primaryCtaLabel(snapshot.reportCase!),
-                              ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

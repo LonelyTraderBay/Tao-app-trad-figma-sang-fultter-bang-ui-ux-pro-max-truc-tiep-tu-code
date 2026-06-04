@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -66,50 +67,53 @@ class _StakingAuditReportsPageState
       semanticLabel: 'SC-374 StakingAuditReportsPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _HeroCard(snapshot: snapshot),
-                    _StatsSummary(stats: snapshot.stats),
-                    _Tabs(
-                      tabs: snapshot.tabs,
-                      activeTab: _activeTab!,
-                      onChanged: (id) {
-                        HapticFeedback.selectionClick();
-                        setState(() {
-                          _activeTab = id;
-                          _feedback = null;
-                        });
-                      },
-                    ),
-                    if (_feedback != null) _FeedbackNote(text: _feedback!),
-                    _ReportList(
-                      reports: reports,
-                      onDownload: _downloadReport,
-                      onView: _viewReport,
-                    ),
-                    _BugBountySection(
-                      bugBounty: snapshot.bugBounty,
-                      onOpen: _openBugBounty,
-                    ),
-                    _FooterNote(text: snapshot.footerNote),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _HeroCard(snapshot: snapshot),
+                      _StatsSummary(stats: snapshot.stats),
+                      _Tabs(
+                        tabs: snapshot.tabs,
+                        activeTab: _activeTab!,
+                        onChanged: (id) {
+                          HapticFeedback.selectionClick();
+                          setState(() {
+                            _activeTab = id;
+                            _feedback = null;
+                          });
+                        },
+                      ),
+                      if (_feedback != null) _FeedbackNote(text: _feedback!),
+                      _ReportList(
+                        reports: reports,
+                        onDownload: _downloadReport,
+                        onView: _viewReport,
+                      ),
+                      _BugBountySection(
+                        bugBounty: snapshot.bugBounty,
+                        onOpen: _openBugBounty,
+                      ),
+                      _FooterNote(text: snapshot.footerNote),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

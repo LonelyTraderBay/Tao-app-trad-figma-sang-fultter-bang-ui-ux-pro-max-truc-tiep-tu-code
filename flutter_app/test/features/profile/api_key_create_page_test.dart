@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/pages/api_key_create_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/api_management_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -131,5 +132,17 @@ void main() {
     await tester.tap(find.text('\u0110\u00E3 l\u01B0u, quay l\u1EA1i'));
     await tester.pumpAndSettle();
     expect(find.text('Qu\u1EA3n l\u00FD API'), findsOneWidget);
+  });
+
+  testWidgets('SC-162 direct header back returns to API management parent', (
+    tester,
+  ) async {
+    await pumpApiCreate(tester);
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ApiManagementPage), findsOneWidget);
+    expect(find.byType(ApiKeyCreatePage), findsNothing);
   });
 }

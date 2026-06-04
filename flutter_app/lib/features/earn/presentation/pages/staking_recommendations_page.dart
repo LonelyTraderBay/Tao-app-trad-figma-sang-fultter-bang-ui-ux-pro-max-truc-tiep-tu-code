@@ -14,8 +14,10 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_rec
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_recommendations_strategy.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
 class StakingRecommendationsPage extends ConsumerStatefulWidget {
   const StakingRecommendationsPage({super.key, this.shellRenderMode});
@@ -60,76 +62,81 @@ class _StakingRecommendationsPageState
       semanticLabel: 'SC-372 StakingRecommendationsPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    StakingRecommendationsHeroCard(snapshot: snapshot),
-                    StakingRecommendationsProfileCard(snapshot: snapshot),
-                    StakingRecommendationsAmountSimulator(
-                      amountText: _amountText,
-                      onAmountChanged: (value) =>
-                          setState(() => _amountText = value),
-                    ),
-                    VitPageSection(
-                      label: 'Chiến lược được Đề xuất',
-                      accentColor: AppColors.primarySoft,
-                      children: [
-                        Column(
-                          key: StakingRecommendationsKeys.strategyList,
-                          children: [
-                            for (final strategy in snapshot.strategies) ...[
-                              StakingRecommendationsStrategyCard(
-                                key: StakingRecommendationsKeys.strategy(
-                                  strategy.id,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      StakingRecommendationsHeroCard(snapshot: snapshot),
+                      StakingRecommendationsProfileCard(snapshot: snapshot),
+                      StakingRecommendationsAmountSimulator(
+                        amountText: _amountText,
+                        onAmountChanged: (value) =>
+                            setState(() => _amountText = value),
+                      ),
+                      VitPageSection(
+                        label: 'Chiến lược được Đề xuất',
+                        accentColor: AppColors.primarySoft,
+                        children: [
+                          Column(
+                            key: StakingRecommendationsKeys.strategyList,
+                            children: [
+                              for (final strategy in snapshot.strategies) ...[
+                                StakingRecommendationsStrategyCard(
+                                  key: StakingRecommendationsKeys.strategy(
+                                    strategy.id,
+                                  ),
+                                  strategy: strategy,
+                                  amount: _amount,
+                                  onTap: () => _openStrategySheet(
+                                    strategy,
+                                    snapshot.stakingRoute,
+                                  ),
                                 ),
-                                strategy: strategy,
-                                amount: _amount,
-                                onTap: () => _openStrategySheet(
-                                  strategy,
-                                  snapshot.stakingRoute,
-                                ),
-                              ),
-                              if (strategy != snapshot.strategies.last)
-                                const SizedBox(height: AppSpacing.x3),
+                                if (strategy != snapshot.strategies.last)
+                                  const SizedBox(height: AppSpacing.x3),
+                              ],
                             ],
-                          ],
-                        ),
-                      ],
-                    ),
-                    VitPageSection(
-                      key: StakingRecommendationsKeys.tips,
-                      label: 'Tips Cá nhân hóa',
-                      accentColor: AppColors.primarySoft,
-                      children: [
-                        Column(
-                          children: [
-                            for (final tip in snapshot.tips) ...[
-                              StakingRecommendationsTipCard(tip: tip),
-                              if (tip != snapshot.tips.last)
-                                const SizedBox(height: AppSpacing.x3),
+                          ),
+                        ],
+                      ),
+                      VitPageSection(
+                        key: StakingRecommendationsKeys.tips,
+                        label: 'Tips Cá nhân hóa',
+                        accentColor: AppColors.primarySoft,
+                        children: [
+                          Column(
+                            children: [
+                              for (final tip in snapshot.tips) ...[
+                                StakingRecommendationsTipCard(tip: tip),
+                                if (tip != snapshot.tips.last)
+                                  const SizedBox(height: AppSpacing.x3),
+                              ],
                             ],
-                          ],
-                        ),
-                      ],
-                    ),
-                    StakingRecommendationsDisclaimer(text: snapshot.disclaimer),
-                  ],
+                          ),
+                        ],
+                      ),
+                      StakingRecommendationsDisclaimer(
+                        text: snapshot.disclaimer,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -140,7 +147,7 @@ class _StakingRecommendationsPageState
     String stakingRoute,
   ) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,

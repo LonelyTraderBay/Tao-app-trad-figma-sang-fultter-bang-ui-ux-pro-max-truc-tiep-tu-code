@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -69,55 +70,62 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
       semanticLabel: 'SC-068 CopyNotificationsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Thông báo',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-              trailing: _SettingsAction(
-                onTap: () => context.go(AppRoutePaths.tradeCopySettings),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Thông báo',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+            actions: [
+              VitHeaderActionItem(
+                key: CopyNotificationsPage.settingsKey,
+                type: VitHeaderActionType.settings,
+                onPressed: () => context.go(AppRoutePaths.tradeCopySettings),
               ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: CopyNotificationsPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (unreadCount > 0) ...[
-                      _UnreadSummary(
-                        unreadCount: unreadCount,
-                        onMarkAllRead: _markAllRead,
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: CopyNotificationsPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (unreadCount > 0) ...[
+                        _UnreadSummary(
+                          unreadCount: unreadCount,
+                          onMarkAllRead: _markAllRead,
+                        ),
+                        const SizedBox(height: 24),
+                      ],
+                      _FilterTabs(
+                        tabs: tabs,
+                        activeTab: activeTab,
+                        onChanged: (id) => setState(() => _activeTab = id),
                       ),
                       const SizedBox(height: 24),
-                    ],
-                    _FilterTabs(
-                      tabs: tabs,
-                      activeTab: activeTab,
-                      onChanged: (id) => setState(() => _activeTab = id),
-                    ),
-                    const SizedBox(height: 24),
-                    if (filteredNotifications.isEmpty)
-                      _EmptyNotifications(activeTab: activeTab)
-                    else
-                      for (final notification in filteredNotifications) ...[
-                        _NotificationCard(
-                          key: CopyNotificationsPage.notificationKey(
-                            notification.id,
+                      if (filteredNotifications.isEmpty)
+                        _EmptyNotifications(activeTab: activeTab)
+                      else
+                        for (final notification in filteredNotifications) ...[
+                          _NotificationCard(
+                            key: CopyNotificationsPage.notificationKey(
+                              notification.id,
+                            ),
+                            notification: notification,
+                            onTap: () => _handleNotificationTap(notification),
                           ),
-                          notification: notification,
-                          onTap: () => _handleNotificationTap(notification),
-                        ),
-                        if (notification != filteredNotifications.last)
-                          const SizedBox(height: 10),
-                      ],
-                  ],
+                          if (notification != filteredNotifications.last)
+                            const SizedBox(height: 10),
+                        ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

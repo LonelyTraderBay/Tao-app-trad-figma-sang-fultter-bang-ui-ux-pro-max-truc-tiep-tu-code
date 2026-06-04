@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -76,248 +77,252 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
       semanticLabel: 'SC-067 CopySettingsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Cài đặt Copy Trading',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: CopySettingsPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SettingsSection(
-                      label: 'Cài đặt mặc định',
-                      accent: _settingsPrimary,
-                      showAccent: false,
-                      children: [
-                        _ModeCard(
-                          selected: settings.defaultCopyMode,
-                          onChanged: (value) => _update(
-                            settings.copyWith(defaultCopyMode: value),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Cài đặt Copy Trading',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: CopySettingsPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SettingsSection(
+                        label: 'Cài đặt mặc định',
+                        accent: _settingsPrimary,
+                        showAccent: false,
+                        children: [
+                          _ModeCard(
+                            selected: settings.defaultCopyMode,
+                            onChanged: (value) => _update(
+                              settings.copyWith(defaultCopyMode: value),
+                            ),
                           ),
-                        ),
-                        if (settings.defaultCopyMode ==
-                            TradeCopySettingsMode.fixed)
+                          if (settings.defaultCopyMode ==
+                              TradeCopySettingsMode.fixed)
+                            _SliderCard(
+                              title: 'Copy Ratio mặc định',
+                              valueLabel:
+                                  '${settings.defaultCopyRatio.toStringAsFixed(0)}%',
+                              caption:
+                                  'Copy ${settings.defaultCopyRatio.toStringAsFixed(0)}% position size của provider',
+                              value: settings.defaultCopyRatio,
+                              min: 10,
+                              max: 100,
+                              divisions: 18,
+                              color: _settingsPrimary,
+                              onChanged: (value) => _update(
+                                settings.copyWith(defaultCopyRatio: value),
+                              ),
+                            ),
                           _SliderCard(
-                            title: 'Copy Ratio mặc định',
+                            title: 'Stop-Loss mặc định',
                             valueLabel:
-                                '${settings.defaultCopyRatio.toStringAsFixed(0)}%',
-                            caption:
-                                'Copy ${settings.defaultCopyRatio.toStringAsFixed(0)}% position size của provider',
-                            value: settings.defaultCopyRatio,
+                                '-${settings.defaultStopLoss.toStringAsFixed(0)}%',
+                            value: settings.defaultStopLoss,
+                            min: 5,
+                            max: 50,
+                            divisions: 9,
+                            color: AppColors.sell,
+                            onChanged: (value) => _update(
+                              settings.copyWith(defaultStopLoss: value),
+                            ),
+                          ),
+                          _SliderCard(
+                            title: 'Take-Profit mặc định',
+                            valueLabel:
+                                '+${settings.defaultTakeProfit.toStringAsFixed(0)}%',
+                            value: settings.defaultTakeProfit,
                             min: 10,
                             max: 100,
                             divisions: 18,
+                            color: AppColors.buy,
+                            onChanged: (value) => _update(
+                              settings.copyWith(defaultTakeProfit: value),
+                            ),
+                          ),
+                        ],
+                      ),
+                      _SettingsSection(
+                        label: 'Giới hạn rủi ro',
+                        accent: AppColors.sell,
+                        children: [
+                          _SliderCard(
+                            title: 'Max allocation per provider',
+                            subtitle:
+                                'Không copy quá X% tổng portfolio vào 1 provider',
+                            valueLabel:
+                                '${settings.maxPortfolioAllocation.toStringAsFixed(0)}%',
+                            value: settings.maxPortfolioAllocation,
+                            min: 5,
+                            max: 50,
+                            divisions: 9,
                             color: _settingsPrimary,
                             onChanged: (value) => _update(
-                              settings.copyWith(defaultCopyRatio: value),
+                              settings.copyWith(maxPortfolioAllocation: value),
                             ),
                           ),
-                        _SliderCard(
-                          title: 'Stop-Loss mặc định',
-                          valueLabel:
-                              '-${settings.defaultStopLoss.toStringAsFixed(0)}%',
-                          value: settings.defaultStopLoss,
-                          min: 5,
-                          max: 50,
-                          divisions: 9,
-                          color: AppColors.sell,
-                          onChanged: (value) => _update(
-                            settings.copyWith(defaultStopLoss: value),
-                          ),
-                        ),
-                        _SliderCard(
-                          title: 'Take-Profit mặc định',
-                          valueLabel:
-                              '+${settings.defaultTakeProfit.toStringAsFixed(0)}%',
-                          value: settings.defaultTakeProfit,
-                          min: 10,
-                          max: 100,
-                          divisions: 18,
-                          color: AppColors.buy,
-                          onChanged: (value) => _update(
-                            settings.copyWith(defaultTakeProfit: value),
-                          ),
-                        ),
-                      ],
-                    ),
-                    _SettingsSection(
-                      label: 'Giới hạn rủi ro',
-                      accent: AppColors.sell,
-                      children: [
-                        _SliderCard(
-                          title: 'Max allocation per provider',
-                          subtitle:
-                              'Không copy quá X% tổng portfolio vào 1 provider',
-                          valueLabel:
-                              '${settings.maxPortfolioAllocation.toStringAsFixed(0)}%',
-                          value: settings.maxPortfolioAllocation,
-                          min: 5,
-                          max: 50,
-                          divisions: 9,
-                          color: _settingsPrimary,
-                          onChanged: (value) => _update(
-                            settings.copyWith(maxPortfolioAllocation: value),
-                          ),
-                        ),
-                        _SliderCard(
-                          title: 'Max số copy đồng thời',
-                          subtitle:
-                              'Giới hạn số provider bạn có thể copy cùng lúc',
-                          valueLabel: '${settings.maxCopiesActive}',
-                          value: settings.maxCopiesActive.toDouble(),
-                          min: 1,
-                          max: 10,
-                          divisions: 9,
-                          color: _settingsPrimary,
-                          onChanged: (value) => _update(
-                            settings.copyWith(maxCopiesActive: value.round()),
-                          ),
-                        ),
-                        _CircuitBreakerCard(
-                          enabled: settings.enableCircuitBreaker,
-                          threshold: settings.circuitBreakerThreshold,
-                          onToggle: () => _update(
-                            settings.copyWith(
-                              enableCircuitBreaker:
-                                  !settings.enableCircuitBreaker,
+                          _SliderCard(
+                            title: 'Max số copy đồng thời',
+                            subtitle:
+                                'Giới hạn số provider bạn có thể copy cùng lúc',
+                            valueLabel: '${settings.maxCopiesActive}',
+                            value: settings.maxCopiesActive.toDouble(),
+                            min: 1,
+                            max: 10,
+                            divisions: 9,
+                            color: _settingsPrimary,
+                            onChanged: (value) => _update(
+                              settings.copyWith(maxCopiesActive: value.round()),
                             ),
                           ),
-                          onThresholdChanged: (value) => _update(
-                            settings.copyWith(circuitBreakerThreshold: value),
+                          _CircuitBreakerCard(
+                            enabled: settings.enableCircuitBreaker,
+                            threshold: settings.circuitBreakerThreshold,
+                            onToggle: () => _update(
+                              settings.copyWith(
+                                enableCircuitBreaker:
+                                    !settings.enableCircuitBreaker,
+                              ),
+                            ),
+                            onThresholdChanged: (value) => _update(
+                              settings.copyWith(circuitBreakerThreshold: value),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    _SettingsSection(
-                      label: 'Thông báo',
-                      accent: _settingsPrimary,
-                      children: [
-                        _NotificationRow(
-                          id: 'newTrades',
-                          label: 'Trades mới',
-                          description:
-                              'Thông báo mỗi khi provider mở/đóng lệnh',
-                          value: settings.notifyNewTrades,
-                          onChanged: (value) => _update(
-                            settings.copyWith(notifyNewTrades: value),
+                        ],
+                      ),
+                      _SettingsSection(
+                        label: 'Thông báo',
+                        accent: _settingsPrimary,
+                        children: [
+                          _NotificationRow(
+                            id: 'newTrades',
+                            label: 'Trades mới',
+                            description:
+                                'Thông báo mỗi khi provider mở/đóng lệnh',
+                            value: settings.notifyNewTrades,
+                            onChanged: (value) => _update(
+                              settings.copyWith(notifyNewTrades: value),
+                            ),
                           ),
-                        ),
-                        _NotificationRow(
-                          id: 'pnlChanges',
-                          label: 'Thay đổi P/L',
-                          description: 'Cảnh báo khi P/L thay đổi >5%',
-                          value: settings.notifyPnlChanges,
-                          onChanged: (value) => _update(
-                            settings.copyWith(notifyPnlChanges: value),
+                          _NotificationRow(
+                            id: 'pnlChanges',
+                            label: 'Thay đổi P/L',
+                            description: 'Cảnh báo khi P/L thay đổi >5%',
+                            value: settings.notifyPnlChanges,
+                            onChanged: (value) => _update(
+                              settings.copyWith(notifyPnlChanges: value),
+                            ),
                           ),
-                        ),
-                        _NotificationRow(
-                          id: 'riskAlerts',
-                          label: 'Cảnh báo rủi ro',
-                          description:
-                              'Provider gần stop-loss hoặc có drawdown lớn',
-                          value: settings.notifyRiskAlerts,
-                          onChanged: (value) => _update(
-                            settings.copyWith(notifyRiskAlerts: value),
+                          _NotificationRow(
+                            id: 'riskAlerts',
+                            label: 'Cảnh báo rủi ro',
+                            description:
+                                'Provider gần stop-loss hoặc có drawdown lớn',
+                            value: settings.notifyRiskAlerts,
+                            onChanged: (value) => _update(
+                              settings.copyWith(notifyRiskAlerts: value),
+                            ),
                           ),
-                        ),
-                        _NotificationRow(
-                          id: 'providerUpdates',
-                          label: 'Cập nhật provider',
-                          description:
-                              'Thông báo khi provider thay đổi chiến lược',
-                          value: settings.notifyProviderUpdates,
-                          onChanged: (value) => _update(
-                            settings.copyWith(notifyProviderUpdates: value),
+                          _NotificationRow(
+                            id: 'providerUpdates',
+                            label: 'Cập nhật provider',
+                            description:
+                                'Thông báo khi provider thay đổi chiến lược',
+                            value: settings.notifyProviderUpdates,
+                            onChanged: (value) => _update(
+                              settings.copyWith(notifyProviderUpdates: value),
+                            ),
                           ),
-                        ),
-                        const _SectionDivider(),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: _ChannelButton(
-                                key: CopySettingsPage.emailChannelKey,
-                                icon: Icons.mail_outline_rounded,
-                                label: 'Email',
-                                active: settings.emailNotifications,
-                                onTap: () => _update(
-                                  settings.copyWith(
-                                    emailNotifications:
-                                        !settings.emailNotifications,
+                          const _SectionDivider(),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _ChannelButton(
+                                  key: CopySettingsPage.emailChannelKey,
+                                  icon: Icons.mail_outline_rounded,
+                                  label: 'Email',
+                                  active: settings.emailNotifications,
+                                  onTap: () => _update(
+                                    settings.copyWith(
+                                      emailNotifications:
+                                          !settings.emailNotifications,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: _ChannelButton(
-                                key: CopySettingsPage.pushChannelKey,
-                                icon: Icons.notifications_none_rounded,
-                                label: 'Push',
-                                active: settings.pushNotifications,
-                                onTap: () => _update(
-                                  settings.copyWith(
-                                    pushNotifications:
-                                        !settings.pushNotifications,
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: _ChannelButton(
+                                  key: CopySettingsPage.pushChannelKey,
+                                  icon: Icons.notifications_none_rounded,
+                                  label: 'Push',
+                                  active: settings.pushNotifications,
+                                  onTap: () => _update(
+                                    settings.copyWith(
+                                      pushNotifications:
+                                          !settings.pushNotifications,
+                                    ),
                                   ),
                                 ),
                               ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      _SettingsSection(
+                        label: 'Liên hệ khẩn cấp',
+                        accent: AppColors.warn,
+                        children: [
+                          _EmergencyContactCard(
+                            email: settings.emergencyContact,
+                            phone: settings.emergencyPhone,
+                            onEmailChanged: (value) => _update(
+                              settings.copyWith(emergencyContact: value),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    _SettingsSection(
-                      label: 'Liên hệ khẩn cấp',
-                      accent: AppColors.warn,
-                      children: [
-                        _EmergencyContactCard(
-                          email: settings.emergencyContact,
-                          phone: settings.emergencyPhone,
-                          onEmailChanged: (value) => _update(
-                            settings.copyWith(emergencyContact: value),
+                            onPhoneChanged: (value) => _update(
+                              settings.copyWith(emergencyPhone: value),
+                            ),
                           ),
-                          onPhoneChanged: (value) =>
-                              _update(settings.copyWith(emergencyPhone: value)),
-                        ),
-                      ],
-                    ),
-                    _SettingsSection(
-                      label: 'Quyền riêng tư',
-                      accent: AppColors.text3,
-                      children: [
-                        _PrivacyCard(
-                          active: settings.showPortfolioPublic,
-                          onChanged: (value) => _update(
-                            settings.copyWith(showPortfolioPublic: value),
+                        ],
+                      ),
+                      _SettingsSection(
+                        label: 'Quyền riêng tư',
+                        accent: AppColors.text3,
+                        children: [
+                          _PrivacyCard(
+                            active: settings.showPortfolioPublic,
+                            onChanged: (value) => _update(
+                              settings.copyWith(showPortfolioPublic: value),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    _SaveButton(
-                      saved: _saved,
-                      onTap: () {
-                        final result = controller.save(settings);
-                        _update(result.settings);
-                        setState(() => _saved = result.status == 'saved');
-                        _savedTimer?.cancel();
-                        _savedTimer = Timer(const Duration(seconds: 2), () {
-                          if (mounted) setState(() => _saved = false);
-                        });
-                      },
-                    ),
-                  ],
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      _SaveButton(
+                        saved: _saved,
+                        onTap: () {
+                          final result = controller.save(settings);
+                          _update(result.settings);
+                          setState(() => _saved = result.status == 'saved');
+                          _savedTimer?.cancel();
+                          _savedTimer = Timer(const Duration(seconds: 2), () {
+                            if (mounted) setState(() => _saved = false);
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

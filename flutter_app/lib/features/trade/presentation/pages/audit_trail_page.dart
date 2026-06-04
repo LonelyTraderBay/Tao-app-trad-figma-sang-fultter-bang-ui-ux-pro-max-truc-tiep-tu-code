@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -62,50 +63,58 @@ class _AuditTrailPageState extends ConsumerState<AuditTrailPage> {
       semanticLabel: 'SC-115 AuditTrailPage',
       child: Material(
         color: _auditBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Audit Trail',
-              subtitle: 'MiFID II Record-Keeping',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-              trailing: const _HeaderDownloadButton(),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: AuditTrailPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 26, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _ComplianceNotice(snapshot: snapshot),
-                    const SizedBox(height: 39),
-                    _StatsRow(stats: snapshot.stats),
-                    const SizedBox(height: 26),
-                    _SearchAndFilter(
-                      placeholder: snapshot.searchPlaceholder,
-                      onChanged: (value) => setState(() => _query = value),
-                    ),
-                    const SizedBox(height: 24),
-                    _AuditTabs(
-                      tabs: snapshot.tabs,
-                      activeId: _activeTab,
-                      onChanged: (id) => setState(() => _activeTab = id),
-                    ),
-                    const SizedBox(height: 27),
-                    const _SectionLabel('Audit Log'),
-                    const SizedBox(height: 11),
-                    for (final entry in entries) ...[
-                      _AuditEntryCard(entry: entry),
-                      if (entry != entries.last) const SizedBox(height: 10),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Audit Trail',
+            subtitle: 'MiFID II Record-Keeping',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+            actions: const [
+              VitHeaderActionItem(
+                type: VitHeaderActionType.export,
+                onPressed: null,
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: AuditTrailPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 26, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _ComplianceNotice(snapshot: snapshot),
+                      const SizedBox(height: 39),
+                      _StatsRow(stats: snapshot.stats),
+                      const SizedBox(height: 26),
+                      _SearchAndFilter(
+                        placeholder: snapshot.searchPlaceholder,
+                        onChanged: (value) => setState(() => _query = value),
+                      ),
+                      const SizedBox(height: 24),
+                      _AuditTabs(
+                        tabs: snapshot.tabs,
+                        activeId: _activeTab,
+                        onChanged: (id) => setState(() => _activeTab = id),
+                      ),
+                      const SizedBox(height: 27),
+                      const _SectionLabel('Audit Log'),
+                      const SizedBox(height: 11),
+                      for (final entry in entries) ...[
+                        _AuditEntryCard(entry: entry),
+                        if (entry != entries.last) const SizedBox(height: 10),
+                      ],
+                      const SizedBox(height: 24),
+                      _ExportActions(formats: snapshot.exportFormats),
                     ],
-                    const SizedBox(height: 24),
-                    _ExportActions(formats: snapshot.exportFormats),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -60,40 +61,43 @@ class _InvestorCompensationPageState
       semanticLabel: 'SC-104 InvestorCompensationPage',
       child: Material(
         color: _compBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Investor Compensation',
-              subtitle: 'FSCS Protection',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: InvestorCompensationPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _ProtectionCard(snapshot: snapshot),
-                    const SizedBox(height: 39),
-                    _InfoNotice(snapshot: snapshot),
-                    const SizedBox(height: 35),
-                    _Tabs(activeId: _tab, onChanged: _setTab),
-                    const SizedBox(height: 27),
-                    if (_tab == 'overview')
-                      _Overview(snapshot: snapshot)
-                    else if (_tab == 'eligibility')
-                      _Eligibility(snapshot: snapshot)
-                    else
-                      _ClaimGuide(snapshot: snapshot),
-                    const SizedBox(height: 24),
-                    const _FaqButton(),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Investor Compensation',
+            subtitle: 'FSCS Protection',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: InvestorCompensationPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _ProtectionCard(snapshot: snapshot),
+                      const SizedBox(height: 39),
+                      _InfoNotice(snapshot: snapshot),
+                      const SizedBox(height: 35),
+                      _Tabs(activeId: _tab, onChanged: _setTab),
+                      const SizedBox(height: 27),
+                      if (_tab == 'overview')
+                        _Overview(snapshot: snapshot)
+                      else if (_tab == 'eligibility')
+                        _Eligibility(snapshot: snapshot)
+                      else
+                        _ClaimGuide(snapshot: snapshot),
+                      const SizedBox(height: 24),
+                      const _FaqButton(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

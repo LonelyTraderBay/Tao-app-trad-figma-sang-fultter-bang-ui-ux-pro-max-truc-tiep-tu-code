@@ -1,30 +1,5 @@
 part of 'active_copies_page.dart';
 
-class _HeaderAddButton extends StatelessWidget {
-  const _HeaderAddButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      key: ActiveCopiesPage.addCopyKey,
-      onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: Container(
-        width: 36,
-        height: 36,
-        decoration: BoxDecoration(
-          color: _copySegmentBackground,
-          border: Border.all(color: AppColors.cardBorder),
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: const Icon(Icons.add_rounded, color: AppColors.text1, size: 22),
-      ),
-    );
-  }
-}
-
 class _PortfolioOverview extends StatelessWidget {
   const _PortfolioOverview({required this.snapshot});
 

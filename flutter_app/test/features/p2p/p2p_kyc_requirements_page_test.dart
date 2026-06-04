@@ -41,7 +41,9 @@ void main() {
     expect(snapshot.tiers.first.status, P2PKycTierStatus.current);
     expect(snapshot.tiers[1].status, P2PKycTierStatus.available);
     expect(snapshot.verifyRouteFor(2), '/p2p/kyc/verify?tier=2');
-    expect(snapshot.supportRoute, '/support');
+    expect(snapshot.supportRoute, startsWith('/support?'));
+    expect(snapshot.supportRoute, contains('flow=kyc'));
+    expect(snapshot.supportRoute, contains('p2p-kyc-requirements'));
     expect(snapshot.contractNotes, contains('P2P requires escrow'));
     expect(
       snapshot.supportedStates,
@@ -109,6 +111,8 @@ void main() {
     await tester.ensureVisible(find.byKey(P2PKycRequirementsPage.supportKey));
     await tester.tap(find.text('Liên hệ Support'));
     await tester.pumpAndSettle();
-    expect(find.text('Liên hệ · Hỗ trợ'), findsOneWidget);
+    expect(find.text('Hồ sơ hỗ trợ'), findsOneWidget);
+    expect(find.text('P2P KYC verification support'), findsOneWidget);
+    expect(find.text('p2p-kyc-requirements'), findsOneWidget);
   });
 }

@@ -24,70 +24,73 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
       semanticLabel: 'SC-342 SavingsGoalPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _GoalSummaryCard(goals: snapshot.goals),
-                    VitCtaButton(
-                      key: SavingsGoalPage.createButtonKey,
-                      leading: const Icon(Icons.add_rounded),
-                      onPressed: () => _openCreateSheet(snapshot),
-                      child: const Text('Tạo mục tiêu mới'),
-                    ),
-                    VitPageSection(
-                      label: 'Đang thực hiện',
-                      accentColor: AppColors.primary,
-                      children: [
-                        for (final goal in activeGoals) ...[
-                          _GoalCard(
-                            goal: goal,
-                            onTap: () => _openGoalDetail(goal),
-                          ),
-                          if (goal != activeGoals.last)
-                            const SizedBox(height: AppSpacing.x3),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _GoalSummaryCard(goals: snapshot.goals),
+                      VitCtaButton(
+                        key: SavingsGoalPage.createButtonKey,
+                        leading: const Icon(Icons.add_rounded),
+                        onPressed: () => _openCreateSheet(snapshot),
+                        child: const Text('Tạo mục tiêu mới'),
+                      ),
+                      VitPageSection(
+                        label: 'Đang thực hiện',
+                        accentColor: AppColors.primary,
+                        children: [
+                          for (final goal in activeGoals) ...[
+                            _GoalCard(
+                              goal: goal,
+                              onTap: () => _openGoalDetail(goal),
+                            ),
+                            if (goal != activeGoals.last)
+                              const SizedBox(height: AppSpacing.x3),
+                          ],
                         ],
-                      ],
-                    ),
-                    VitPageSection(
-                      label: 'Đã hoàn thành',
-                      accentColor: AppColors.buy,
-                      children: [
-                        for (final goal in completedGoals)
-                          _GoalCard(
-                            goal: goal,
-                            onTap: () => _openGoalDetail(goal),
-                          ),
-                      ],
-                    ),
-                    VitPageSection(
-                      label: 'Mẹo tiết kiệm',
-                      accentColor: AppColors.accent,
-                      children: [
-                        for (final tip in snapshot.tips) ...[
-                          _TipCard(tip: tip),
-                          if (tip != snapshot.tips.last)
-                            const SizedBox(height: AppSpacing.x3),
+                      ),
+                      VitPageSection(
+                        label: 'Đã hoàn thành',
+                        accentColor: AppColors.buy,
+                        children: [
+                          for (final goal in completedGoals)
+                            _GoalCard(
+                              goal: goal,
+                              onTap: () => _openGoalDetail(goal),
+                            ),
                         ],
-                      ],
-                    ),
-                  ],
+                      ),
+                      VitPageSection(
+                        label: 'Mẹo tiết kiệm',
+                        accentColor: AppColors.accent,
+                        children: [
+                          for (final tip in snapshot.tips) ...[
+                            _TipCard(tip: tip),
+                            if (tip != snapshot.tips.last)
+                              const SizedBox(height: AppSpacing.x3),
+                          ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -95,7 +98,7 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
 
   Future<void> _openCreateSheet(SavingsGoalsSnapshot snapshot) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
@@ -120,7 +123,7 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
 
   Future<void> _openGoalDetail(SavingsGoalDraft goal) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,

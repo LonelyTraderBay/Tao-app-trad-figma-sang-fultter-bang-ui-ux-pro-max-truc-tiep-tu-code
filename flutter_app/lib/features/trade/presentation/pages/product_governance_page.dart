@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -62,41 +63,44 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
       semanticLabel: 'SC-100 ProductGovernancePage',
       child: Material(
         color: _govBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Product Governance',
-              subtitle: 'MiFID II Oversight',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: ProductGovernancePage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 25, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _ComplianceNotice(snapshot: snapshot),
-                    const SizedBox(height: 36),
-                    _Stats(products: snapshot.products),
-                    const SizedBox(height: 25),
-                    _Tabs(
-                      activeId: _tab!,
-                      onChanged: (id) => setState(() => _tab = id),
-                    ),
-                    const SizedBox(height: 25),
-                    if (_tab == 'products')
-                      _ProductsTab(products: snapshot.products)
-                    else if (_tab == 'reviews')
-                      _ReviewsTab(products: snapshot.products)
-                    else
-                      _DistributionTab(products: snapshot.products),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Product Governance',
+            subtitle: 'MiFID II Oversight',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: ProductGovernancePage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 25, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _ComplianceNotice(snapshot: snapshot),
+                      const SizedBox(height: 36),
+                      _Stats(products: snapshot.products),
+                      const SizedBox(height: 25),
+                      _Tabs(
+                        activeId: _tab!,
+                        onChanged: (id) => setState(() => _tab = id),
+                      ),
+                      const SizedBox(height: 25),
+                      if (_tab == 'products')
+                        _ProductsTab(products: snapshot.products)
+                      else if (_tab == 'reviews')
+                        _ReviewsTab(products: snapshot.products)
+                      else
+                        _DistributionTab(products: snapshot.products),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -69,52 +70,60 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
       semanticLabel: 'SC-123 BotHistoryPage',
       child: Material(
         color: _historyBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Trade History',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeBots),
-              trailing: _HeaderExportButton(onTap: _handleExport),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: BotHistoryPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _StatsCard(
-                      totalTrades: filteredTrades.length,
-                      totalPnL: totalPnL,
-                      totalFees: totalFees,
-                    ),
-                    const SizedBox(height: 16),
-                    const _SearchBox(),
-                    const SizedBox(height: 16),
-                    _FilterTabs(
-                      filter: _filter,
-                      trades: snapshot.trades,
-                      onChanged: (filter) => setState(() => _filter = filter),
-                    ),
-                    const SizedBox(height: 18),
-                    _SectionLabel('Trades (${filteredTrades.length})'),
-                    const SizedBox(height: 10),
-                    if (filteredTrades.isEmpty)
-                      const _EmptyHistory()
-                    else
-                      for (final trade in filteredTrades) ...[
-                        _TradeCard(trade: trade),
-                        if (trade != filteredTrades.last)
-                          const SizedBox(height: 10),
-                      ],
-                    const SizedBox(height: 18),
-                    _ExportNote(onTap: _handleExport),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Trade History',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeBots),
+            actions: [
+              VitHeaderActionItem(
+                type: VitHeaderActionType.export,
+                onPressed: _handleExport,
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: BotHistoryPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _StatsCard(
+                        totalTrades: filteredTrades.length,
+                        totalPnL: totalPnL,
+                        totalFees: totalFees,
+                      ),
+                      const SizedBox(height: 16),
+                      const _SearchBox(),
+                      const SizedBox(height: 16),
+                      _FilterTabs(
+                        filter: _filter,
+                        trades: snapshot.trades,
+                        onChanged: (filter) => setState(() => _filter = filter),
+                      ),
+                      const SizedBox(height: 18),
+                      _SectionLabel('Trades (${filteredTrades.length})'),
+                      const SizedBox(height: 10),
+                      if (filteredTrades.isEmpty)
+                        const _EmptyHistory()
+                      else
+                        for (final trade in filteredTrades) ...[
+                          _TradeCard(trade: trade),
+                          if (trade != filteredTrades.last)
+                            const SizedBox(height: 10),
+                        ],
+                      const SizedBox(height: 18),
+                      _ExportNote(onTap: _handleExport),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -68,49 +69,52 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
       semanticLabel: 'SC-087 TraderProfilePage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Trader Profile',
-              subtitle: 'Hồ sơ · Trade',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.trade),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: TraderProfilePage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _ProfileHero(
-                      trader: trader,
-                      isFollowing: _isFollowing,
-                      onToggleFollow: () =>
-                          setState(() => _isFollowing = !_isFollowing),
-                    ),
-                    const SizedBox(height: 16),
-                    _SegmentTabs(
-                      activeId: _tab,
-                      tabs: const [
-                        _TraderTab(id: 'overview', label: 'Tổng quan'),
-                        _TraderTab(id: 'trades', label: 'Giao dịch'),
-                        _TraderTab(id: 'stats', label: 'Thống kê'),
-                      ],
-                      onChanged: (id) => setState(() => _tab = id),
-                    ),
-                    const SizedBox(height: 16),
-                    if (_tab == 'overview')
-                      _OverviewTab(snapshot: snapshot)
-                    else if (_tab == 'trades')
-                      _TradesTab(trades: snapshot.recentTrades)
-                    else
-                      _StatsTab(trader: trader),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Trader Profile',
+            subtitle: 'Hồ sơ · Trade',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.trade),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: TraderProfilePage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _ProfileHero(
+                        trader: trader,
+                        isFollowing: _isFollowing,
+                        onToggleFollow: () =>
+                            setState(() => _isFollowing = !_isFollowing),
+                      ),
+                      const SizedBox(height: 16),
+                      _SegmentTabs(
+                        activeId: _tab,
+                        tabs: const [
+                          _TraderTab(id: 'overview', label: 'Tổng quan'),
+                          _TraderTab(id: 'trades', label: 'Giao dịch'),
+                          _TraderTab(id: 'stats', label: 'Thống kê'),
+                        ],
+                        onChanged: (id) => setState(() => _tab = id),
+                      ),
+                      const SizedBox(height: 16),
+                      if (_tab == 'overview')
+                        _OverviewTab(snapshot: snapshot)
+                      else if (_tab == 'trades')
+                        _TradesTab(trades: snapshot.recentTrades)
+                      else
+                        _StatsTab(trader: trader),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

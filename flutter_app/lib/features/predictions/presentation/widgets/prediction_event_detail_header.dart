@@ -1,38 +1,5 @@
 part of '../pages/prediction_event_detail_page.dart';
 
-class _HeaderIconButton extends StatelessWidget {
-  const _HeaderIconButton({
-    super.key,
-    required this.icon,
-    required this.color,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 36,
-      height: 36,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: AppColors.searchBg,
-          border: Border.all(color: AppColors.border),
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: IconButton(
-          onPressed: onTap,
-          padding: EdgeInsets.zero,
-          icon: Icon(icon, color: color, size: 17),
-        ),
-      ),
-    );
-  }
-}
-
 class _EventHeader extends StatelessWidget {
   const _EventHeader({
     required this.event,

@@ -28,82 +28,85 @@ class _TokenUnlocksPageState extends ConsumerState<TokenUnlocksPage> {
       semanticLabel: 'SC-024 TokenUnlocksPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Token Unlock',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.markets),
-            ),
-            _UnlockTabs(
-              activeTab: _tab,
-              onChanged: (value) => setState(() => _tab = value),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: TokenUnlocksPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 12,
-                    children: [
-                      if (_tab == 'upcoming') ...[
-                        _UnlockHero(snapshot: allSnapshot),
-                        _UnlockFilters(
-                          sortBy: _sortBy,
-                          impactFilter: _impactFilter,
-                          impactConfigs: snapshot.impactConfigs,
-                          onSortSelected: (value) =>
-                              setState(() => _sortBy = value),
-                          onImpactSelected: (value) => setState(() {
-                            _impactFilter = _impactFilter == value
-                                ? null
-                                : value;
-                          }),
-                          onAllImpacts: () => setState(() {
-                            _impactFilter = null;
-                          }),
-                        ),
-                        if (snapshot.unlocks.isEmpty)
-                          const _UnlockEmptyState()
-                        else
-                          _UnlockList(
-                            unlocks: snapshot.unlocks,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Token Unlock',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.markets),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _UnlockTabs(
+                activeTab: _tab,
+                onChanged: (value) => setState(() => _tab = value),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: TokenUnlocksPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 12,
+                      children: [
+                        if (_tab == 'upcoming') ...[
+                          _UnlockHero(snapshot: allSnapshot),
+                          _UnlockFilters(
+                            sortBy: _sortBy,
+                            impactFilter: _impactFilter,
                             impactConfigs: snapshot.impactConfigs,
-                            categoryConfigs: snapshot.categoryConfigs,
-                            expandedId: _expandedId,
-                            onToggleExpanded: (unlock) => setState(() {
-                              _expandedId = _expandedId == unlock.id
+                            onSortSelected: (value) =>
+                                setState(() => _sortBy = value),
+                            onImpactSelected: (value) => setState(() {
+                              _impactFilter = _impactFilter == value
                                   ? null
-                                  : unlock.id;
+                                  : value;
+                            }),
+                            onAllImpacts: () => setState(() {
+                              _impactFilter = null;
                             }),
                           ),
-                      ] else if (_tab == 'analysis') ...[
-                        _ImpactOverview(snapshot: allSnapshot),
-                        const _SectionHeader(
-                          label: 'Theo loại',
-                          accentColor: AppColors.accent,
-                        ),
-                        _CategoryBreakdown(snapshot: allSnapshot),
-                        const _SectionHeader(
-                          label: 'Rủi ro pha loãng cao nhất',
-                          accentColor: AppColors.sell,
-                        ),
-                        _DilutionRanking(snapshot: allSnapshot),
-                        const _UnlockWarningCard(),
-                      ] else ...[
-                        _ScheduleList(snapshot: allSnapshot),
+                          if (snapshot.unlocks.isEmpty)
+                            const _UnlockEmptyState()
+                          else
+                            _UnlockList(
+                              unlocks: snapshot.unlocks,
+                              impactConfigs: snapshot.impactConfigs,
+                              categoryConfigs: snapshot.categoryConfigs,
+                              expandedId: _expandedId,
+                              onToggleExpanded: (unlock) => setState(() {
+                                _expandedId = _expandedId == unlock.id
+                                    ? null
+                                    : unlock.id;
+                              }),
+                            ),
+                        ] else if (_tab == 'analysis') ...[
+                          _ImpactOverview(snapshot: allSnapshot),
+                          const _SectionHeader(
+                            label: 'Theo loại',
+                            accentColor: AppColors.accent,
+                          ),
+                          _CategoryBreakdown(snapshot: allSnapshot),
+                          const _SectionHeader(
+                            label: 'Rủi ro pha loãng cao nhất',
+                            accentColor: AppColors.sell,
+                          ),
+                          _DilutionRanking(snapshot: allSnapshot),
+                          const _UnlockWarningCard(),
+                        ] else ...[
+                          _ScheduleList(snapshot: allSnapshot),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

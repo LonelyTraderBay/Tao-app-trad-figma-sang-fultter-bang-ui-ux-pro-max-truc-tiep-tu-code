@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -48,68 +49,47 @@ class KIDGeneratorPage extends ConsumerWidget {
       semanticLabel: 'SC-108 KIDGeneratorPage',
       child: Material(
         color: _kidBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Key Information Document',
-              subtitle: 'PRIIPs KID',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyExAnteCosts),
-              trailing: const _DownloadAction(),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: KIDGeneratorPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const _RegulatoryNotice(),
-                    const SizedBox(height: 35),
-                    _KidPreviewCard(document: snapshot.document),
-                    const SizedBox(height: 26),
-                    const _SectionLabel('Document Sections'),
-                    const SizedBox(height: 9),
-                    for (final section in snapshot.sections) ...[
-                      _KidSectionCard(section: section),
-                      if (section != snapshot.sections.last)
-                        const SizedBox(height: 8),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Key Information Document',
+            subtitle: 'PRIIPs KID',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyExAnteCosts),
+            actions: const [
+              VitHeaderActionItem(
+                type: VitHeaderActionType.export,
+                onPressed: null,
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: KIDGeneratorPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const _RegulatoryNotice(),
+                      const SizedBox(height: 35),
+                      _KidPreviewCard(document: snapshot.document),
+                      const SizedBox(height: 26),
+                      const _SectionLabel('Document Sections'),
+                      const SizedBox(height: 9),
+                      for (final section in snapshot.sections) ...[
+                        _KidSectionCard(section: section),
+                        if (section != snapshot.sections.last)
+                          const SizedBox(height: 8),
+                      ],
+                      const SizedBox(height: 18),
+                      const _Actions(),
                     ],
-                    const SizedBox(height: 18),
-                    const _Actions(),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _DownloadAction extends StatelessWidget {
-  const _DownloadAction();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 36,
-      height: 36,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: _kidPanel2,
-          border: Border.all(color: _kidBorder.withValues(alpha: .72)),
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: IconButton(
-          key: KIDGeneratorPage.downloadKey,
-          onPressed: () {},
-          padding: EdgeInsets.zero,
-          icon: const Icon(
-            Icons.download_rounded,
-            color: AppColors.text1,
-            size: 18,
+            ],
           ),
         ),
       ),

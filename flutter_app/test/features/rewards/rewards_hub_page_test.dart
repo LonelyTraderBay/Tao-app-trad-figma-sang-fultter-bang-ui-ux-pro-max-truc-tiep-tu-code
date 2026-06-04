@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_leader
 import 'package:vit_trade_flutter/features/referral/presentation/pages/referral_home_page.dart';
 import 'package:vit_trade_flutter/features/rewards/data/rewards_repository.dart';
 import 'package:vit_trade_flutter/features/rewards/presentation/pages/rewards_hub_page.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
@@ -71,6 +72,32 @@ void main() {
     expect(find.text('Arena Points'), findsOneWidget);
     expect(find.textContaining('Check-in'), findsOneWidget);
     expect(find.byKey(RewardsHubPage.claimAllKey), findsOneWidget);
+  });
+
+  testWidgets('SC-319 auto-hides rewards header on scroll', (tester) async {
+    await pumpRewards(tester);
+
+    double headerHeight() {
+      return tester
+          .getSize(find.byKey(VitAutoHideHeaderScaffold.headerHostKey))
+          .height;
+    }
+
+    expect(headerHeight(), greaterThan(0));
+
+    await tester.drag(
+      find.byKey(RewardsHubPage.contentKey),
+      const Offset(0, -320),
+    );
+    await tester.pumpAndSettle(const Duration(milliseconds: 220));
+    expect(headerHeight(), 0);
+
+    await tester.drag(
+      find.byKey(RewardsHubPage.contentKey),
+      const Offset(0, 160),
+    );
+    await tester.pumpAndSettle(const Duration(milliseconds: 220));
+    expect(headerHeight(), greaterThan(0));
   });
 
   testWidgets('SC-319 filters reward tasks and supports claim-all state', (

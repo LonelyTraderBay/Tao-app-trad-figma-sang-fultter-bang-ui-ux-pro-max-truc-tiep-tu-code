@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -78,85 +79,98 @@ class _LaunchpadClaimReceiptPageState
         type: MaterialType.transparency,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: snapshot.title,
-                  showBack: true,
-                  action: VitHeaderAction.bell,
-                  onBack: () => context.go(snapshot.backRoute),
-                  onAction: HapticFeedback.selectionClick,
-                ),
-                Container(
-                  key: LaunchpadClaimReceiptPage.tabsKey,
-                  decoration: const BoxDecoration(
-                    color: AppColors.navBg,
-                    border: Border(bottom: BorderSide(color: AppColors.border)),
+            VitAutoHideHeaderScaffold(
+              bottomInset: bottomInset,
+              semanticLabel: 'SC-302 LaunchpadClaimReceiptPage scroll surface',
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () =>
+                    goBackOrFallback(context, fallbackPath: snapshot.backRoute),
+                actions: [
+                  VitHeaderActionItem(
+                    type: VitHeaderActionType.notifications,
+                    tooltip: 'Thông báo claim Launchpad',
+                    onPressed: HapticFeedback.selectionClick,
                   ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.contentPad,
-                  ),
-                  child: VitTabBar(
-                    tabs: const [
-                      VitTabItem(key: 'overview', label: 'Tổng quan'),
-                      VitTabItem(key: 'vesting', label: 'Vesting'),
-                      VitTabItem(key: 'history', label: 'Lịch sử'),
-                    ],
-                    activeKey: _activeTab.id,
-                    variant: VitTabBarVariant.underline,
-                    onChanged: (id) =>
-                        setState(() => _activeTab = _ClaimReceiptTab.byId(id)),
-                  ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: LaunchpadClaimReceiptPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
-                    child: VitPageContent(
-                      padding: VitContentPadding.defaultPadding,
-                      customGap: AppSpacing.x4,
-                      children: [
-                        _RewardHero(receipt: receipt),
-                        if (_activeTab == _ClaimReceiptTab.overview) ...[
-                          _ClaimableBanner(
-                            receipt: receipt,
-                            onClaim: () => setState(
-                              () => _claimEntry = receipt.vestingSchedule
-                                  .firstWhere(
-                                    (entry) =>
-                                        entry.status ==
-                                            LaunchpadVestingEntryStatus
-                                                .claimable ||
-                                        entry.status ==
-                                            LaunchpadVestingEntryStatus
-                                                .unlocking,
-                                    orElse: () => receipt.vestingSchedule.first,
-                                  ),
-                            ),
-                          ),
-                          _NextUnlockCard(receipt: receipt),
-                          _ReceiptDetailsCard(receipt: receipt),
-                          _VestingPreviewCard(
-                            receipt: receipt,
-                            onOpenAll: () => setState(
-                              () => _activeTab = _ClaimReceiptTab.vesting,
-                            ),
-                          ),
-                        ] else if (_activeTab == _ClaimReceiptTab.vesting)
-                          _VestingTimelineCard(
-                            receipt: receipt,
-                            onClaim: (entry) =>
-                                setState(() => _claimEntry = entry),
-                          )
-                        else
-                          _ClaimHistoryCard(receipt: receipt),
-                        const _RiskDisclosureTile(),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    key: LaunchpadClaimReceiptPage.tabsKey,
+                    decoration: const BoxDecoration(
+                      color: AppColors.navBg,
+                      border: Border(
+                        bottom: BorderSide(color: AppColors.border),
+                      ),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.contentPad,
+                    ),
+                    child: VitTabBar(
+                      tabs: const [
+                        VitTabItem(key: 'overview', label: 'Tổng quan'),
+                        VitTabItem(key: 'vesting', label: 'Vesting'),
+                        VitTabItem(key: 'history', label: 'Lịch sử'),
                       ],
+                      activeKey: _activeTab.id,
+                      variant: VitTabBarVariant.underline,
+                      onChanged: (id) => setState(
+                        () => _activeTab = _ClaimReceiptTab.byId(id),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: LaunchpadClaimReceiptPage.contentKey,
+                      physics: const BouncingScrollPhysics(),
+                      child: VitPageContent(
+                        padding: VitContentPadding.defaultPadding,
+                        customGap: AppSpacing.x4,
+                        children: [
+                          _RewardHero(receipt: receipt),
+                          if (_activeTab == _ClaimReceiptTab.overview) ...[
+                            _ClaimableBanner(
+                              receipt: receipt,
+                              onClaim: () => setState(
+                                () => _claimEntry = receipt.vestingSchedule
+                                    .firstWhere(
+                                      (entry) =>
+                                          entry.status ==
+                                              LaunchpadVestingEntryStatus
+                                                  .claimable ||
+                                          entry.status ==
+                                              LaunchpadVestingEntryStatus
+                                                  .unlocking,
+                                      orElse: () =>
+                                          receipt.vestingSchedule.first,
+                                    ),
+                              ),
+                            ),
+                            _NextUnlockCard(receipt: receipt),
+                            _ReceiptDetailsCard(receipt: receipt),
+                            _VestingPreviewCard(
+                              receipt: receipt,
+                              onOpenAll: () => setState(
+                                () => _activeTab = _ClaimReceiptTab.vesting,
+                              ),
+                            ),
+                          ] else if (_activeTab == _ClaimReceiptTab.vesting)
+                            _VestingTimelineCard(
+                              receipt: receipt,
+                              onClaim: (entry) =>
+                                  setState(() => _claimEntry = entry),
+                            )
+                          else
+                            _ClaimHistoryCard(receipt: receipt),
+                          const _RiskDisclosureTile(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             if (_claimEntry != null)
               _ClaimSheet(

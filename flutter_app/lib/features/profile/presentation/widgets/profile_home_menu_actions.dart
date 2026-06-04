@@ -30,6 +30,104 @@ class _MenuSection extends StatelessWidget {
   }
 }
 
+class _ProfileProductHub extends StatelessWidget {
+  const _ProfileProductHub({required this.shortcuts});
+
+  final List<ProfileProductShortcut> shortcuts;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final tileWidth = (constraints.maxWidth - 10) / 2;
+        return Wrap(
+          key: ProfilePage.productHubKey,
+          spacing: 10,
+          runSpacing: 10,
+          children: [
+            for (final shortcut in shortcuts)
+              SizedBox(
+                width: tileWidth,
+                child: _ProfileProductTile(shortcut: shortcut),
+              ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _ProfileProductTile extends StatelessWidget {
+  const _ProfileProductTile({required this.shortcut});
+
+  final ProfileProductShortcut shortcut;
+
+  @override
+  Widget build(BuildContext context) {
+    final accent = Color(shortcut.accentHex);
+    return GestureDetector(
+      key: ProfilePage.productShortcutKey(shortcut.id),
+      onTap: () => context.go(shortcut.route),
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        height: 74,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: _profilePanel,
+          borderRadius: AppRadii.cardRadius,
+          border: Border.all(color: accent.withValues(alpha: .22)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 34,
+              height: 34,
+              decoration: BoxDecoration(
+                color: accent.withValues(alpha: .12),
+                borderRadius: AppRadii.cardRadius,
+              ),
+              alignment: Alignment.center,
+              child: Icon(_iconFor(shortcut.iconKey), color: accent, size: 19),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    shortcut.label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w900,
+                      height: 1,
+                    ),
+                  ),
+                  const SizedBox(height: 7),
+                  Text(
+                    shortcut.stateLabel,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(
+                      color: accent,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w900,
+                      height: 1,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _MenuRow extends StatelessWidget {
   const _MenuRow({required this.item, required this.accent});
 
@@ -209,6 +307,7 @@ class _SectionLabel extends StatelessWidget {
 IconData _iconFor(String key) {
   return switch (key) {
     'shield-check' => Icons.verified_user_outlined,
+    'wallet' => Icons.account_balance_wallet_outlined,
     'shield' => Icons.shield_outlined,
     'crown' => Icons.workspace_premium_outlined,
     'bell' => Icons.notifications_none_rounded,
@@ -223,6 +322,8 @@ IconData _iconFor(String key) {
     'compass' => Icons.explore_outlined,
     'trophy' => Icons.emoji_events_outlined,
     'refresh' => Icons.sync_rounded,
+    'rocket' => Icons.rocket_launch_outlined,
+    'copy' => Icons.content_copy_rounded,
     'zap' => Icons.bolt_rounded,
     'bot' => Icons.smart_toy_outlined,
     'help' => Icons.help_outline_rounded,

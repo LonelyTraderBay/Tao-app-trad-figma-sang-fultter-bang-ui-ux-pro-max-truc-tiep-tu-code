@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -51,31 +52,38 @@ class _DCASmartRulesPageState extends ConsumerState<DCASmartRulesPage> {
 
     return VitPageLayout(
       semanticLabel: 'SC-179 DCASmartRulesPage',
-      child: Column(
-        children: [
-          VitHeader(title: 'Smart DCA Rules', showBack: true, onBack: _close),
-          _TopTabs(
-            activeTab: _activeTab,
-            onChanged: (tab) => setState(() => _activeTab = tab),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              key: DCASmartRulesPage.contentKey,
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.only(bottom: scrollBottom),
-              child: VitPageContent(
-                customGap: AppSpacing.x5,
-                children: [
-                  if (_activeTab == _RulesTab.mine) ..._buildMine(snapshot),
-                  if (_activeTab == _RulesTab.templates)
-                    ..._buildTemplates(snapshot),
-                  if (_activeTab == _RulesTab.history)
-                    ..._buildHistory(snapshot),
-                ],
+      child: VitAutoHideHeaderScaffold(
+        header: VitHeader(
+          title: 'Smart DCA Rules',
+          showBack: true,
+          onBack: _close,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _TopTabs(
+              activeTab: _activeTab,
+              onChanged: (tab) => setState(() => _activeTab = tab),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                key: DCASmartRulesPage.contentKey,
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.only(bottom: scrollBottom),
+                child: VitPageContent(
+                  customGap: AppSpacing.x5,
+                  children: [
+                    if (_activeTab == _RulesTab.mine) ..._buildMine(snapshot),
+                    if (_activeTab == _RulesTab.templates)
+                      ..._buildTemplates(snapshot),
+                    if (_activeTab == _RulesTab.history)
+                      ..._buildHistory(snapshot),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

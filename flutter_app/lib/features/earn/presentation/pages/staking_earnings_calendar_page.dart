@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -76,54 +77,57 @@ class _StakingEarningsCalendarPageState
       semanticLabel: 'SC-361 StakingEarningsCalendarPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _SummaryCard(
-                      snapshot: snapshot,
-                      upcomingCount: upcoming.length,
-                      notificationsEnabled: _notificationsEnabled,
-                      onToggleNotifications: _toggleNotifications,
-                      onExport: _exportCalendar,
-                    ),
-                    _CalendarTabs(
-                      key: StakingEarningsCalendarPage.tabsKey,
-                      tabs: snapshot.tabs,
-                      active: _tab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (_tab == 'calendar') ...[
-                      _CalendarCard(
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _SummaryCard(
                         snapshot: snapshot,
-                        visibleMonth: _visibleMonth,
-                        today: today,
-                        onPrevious: _previousMonth,
-                        onNext: _nextMonth,
+                        upcomingCount: upcoming.length,
+                        notificationsEnabled: _notificationsEnabled,
+                        onToggleNotifications: _toggleNotifications,
+                        onExport: _exportCalendar,
                       ),
-                      const _LegendCard(),
-                    ] else
-                      _UpcomingList(events: upcoming),
-                    _InfoBanner(snapshot: snapshot),
-                  ],
+                      _CalendarTabs(
+                        key: StakingEarningsCalendarPage.tabsKey,
+                        tabs: snapshot.tabs,
+                        active: _tab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                      ),
+                      if (_tab == 'calendar') ...[
+                        _CalendarCard(
+                          snapshot: snapshot,
+                          visibleMonth: _visibleMonth,
+                          today: today,
+                          onPrevious: _previousMonth,
+                          onNext: _nextMonth,
+                        ),
+                        const _LegendCard(),
+                      ] else
+                        _UpcomingList(events: upcoming),
+                      _InfoBanner(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

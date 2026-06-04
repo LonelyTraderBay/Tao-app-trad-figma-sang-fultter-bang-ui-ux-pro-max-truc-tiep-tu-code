@@ -55,72 +55,76 @@ class _PredictionAdvancedChartPageState
       semanticLabel: 'SC-041 PredictionAdvancedChartPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Advanced Chart',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.marketsPredictions),
-            ),
-            _AdvancedChartTabBar(
-              activeTab: _activeTab,
-              onChanged: (tab) => setState(() => _activeTab = tab),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: PredictionAdvancedChartPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 16,
-                    children: switch (_activeTab) {
-                      _ChartTab.chart => [
-                        _TimeframeSelector(
-                          active: _timeframe,
-                          onChanged: (value) =>
-                              setState(() => _timeframe = value),
-                        ),
-                        _ProbabilitySummaryCard(snapshot: snapshot),
-                        _ProbabilityChartCard(
-                          snapshot: snapshot,
-                          showMA7: _showMA7,
-                          showMA25: _showMA25,
-                          showBB: _showBB,
-                        ),
-                        if (_showVolume) _VolumeChartCard(snapshot: snapshot),
-                        _ChartLayerControls(
-                          showMA7: _showMA7,
-                          showMA25: _showMA25,
-                          showBB: _showBB,
-                          showVolume: _showVolume,
-                          onMA7: () => setState(() => _showMA7 = !_showMA7),
-                          onMA25: () => setState(() => _showMA25 = !_showMA25),
-                          onBB: () => setState(() => _showBB = !_showBB),
-                          onVolume: () =>
-                              setState(() => _showVolume = !_showVolume),
-                        ),
-                      ],
-                      _ChartTab.indicators => [
-                        _RsiCard(snapshot: snapshot),
-                        _IndicatorSummarySection(snapshot: snapshot),
-                        const _OverallSignalCard(),
-                      ],
-                      _ChartTab.analysis => [
-                        _OrderFlowCard(snapshot: snapshot),
-                        _SupportResistanceSection(snapshot: snapshot),
-                        _PatternRecognitionCard(snapshot: snapshot),
-                        const _AnalysisDisclaimer(),
-                      ],
-                    },
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Advanced Chart',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.marketsPredictions),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _AdvancedChartTabBar(
+                activeTab: _activeTab,
+                onChanged: (tab) => setState(() => _activeTab = tab),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: PredictionAdvancedChartPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 16,
+                      children: switch (_activeTab) {
+                        _ChartTab.chart => [
+                          _TimeframeSelector(
+                            active: _timeframe,
+                            onChanged: (value) =>
+                                setState(() => _timeframe = value),
+                          ),
+                          _ProbabilitySummaryCard(snapshot: snapshot),
+                          _ProbabilityChartCard(
+                            snapshot: snapshot,
+                            showMA7: _showMA7,
+                            showMA25: _showMA25,
+                            showBB: _showBB,
+                          ),
+                          if (_showVolume) _VolumeChartCard(snapshot: snapshot),
+                          _ChartLayerControls(
+                            showMA7: _showMA7,
+                            showMA25: _showMA25,
+                            showBB: _showBB,
+                            showVolume: _showVolume,
+                            onMA7: () => setState(() => _showMA7 = !_showMA7),
+                            onMA25: () =>
+                                setState(() => _showMA25 = !_showMA25),
+                            onBB: () => setState(() => _showBB = !_showBB),
+                            onVolume: () =>
+                                setState(() => _showVolume = !_showVolume),
+                          ),
+                        ],
+                        _ChartTab.indicators => [
+                          _RsiCard(snapshot: snapshot),
+                          _IndicatorSummarySection(snapshot: snapshot),
+                          const _OverallSignalCard(),
+                        ],
+                        _ChartTab.analysis => [
+                          _OrderFlowCard(snapshot: snapshot),
+                          _SupportResistanceSection(snapshot: snapshot),
+                          _PatternRecognitionCard(snapshot: snapshot),
+                          const _AnalysisDisclaimer(),
+                        ],
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

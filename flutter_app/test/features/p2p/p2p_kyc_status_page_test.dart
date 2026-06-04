@@ -44,7 +44,9 @@ void main() {
     expect(snapshot.steps, hasLength(5));
     expect(snapshot.steps[3].actionRoute, AppRoutePaths.p2pKycSelfie);
     expect(snapshot.parentRoute, AppRoutePaths.p2pKycRequirements);
-    expect(snapshot.supportRoute, '/support');
+    expect(snapshot.supportRoute, startsWith('/support?'));
+    expect(snapshot.supportRoute, contains('flow=kyc'));
+    expect(snapshot.supportRoute, contains('p2p-kyc-pending-tier-2'));
     expect(snapshot.contractNotes, contains('P2P requires escrow'));
     expect(
       snapshot.supportedStates,
@@ -112,7 +114,9 @@ void main() {
     await tester.ensureVisible(find.byKey(P2PKycStatusPage.supportKey));
     await tester.tap(find.text('Mở Support Chat'));
     await tester.pumpAndSettle();
-    expect(find.text('Liên hệ · Hỗ trợ'), findsOneWidget);
+    expect(find.text('Hồ sơ hỗ trợ'), findsOneWidget);
+    expect(find.text('P2P KYC status support'), findsOneWidget);
+    expect(find.text('p2p-kyc-pending-tier-2'), findsOneWidget);
   });
 
   testWidgets('SC-248 back returns to requirements page', (tester) async {

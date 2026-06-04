@@ -23,83 +23,86 @@ class _SavingsRecommendationsPageState
       semanticLabel: 'SC-338 SavingsRecommendationsPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _HeroCard(snapshot: snapshot),
-                    _ProfileCard(snapshot: snapshot),
-                    _AmountSimulator(
-                      amountText: _amountText,
-                      onAmountChanged: (value) =>
-                          setState(() => _amountText = value),
-                      onQuickAmount: (value) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _amountText = '$value');
-                      },
-                    ),
-                    _CompareButton(
-                      onTap: () => _openCompareSheet(snapshot.strategies),
-                    ),
-                    VitPageSection(
-                      label: 'Chiến lược được Đề xuất',
-                      accentColor: AppColors.accent,
-                      children: [
-                        Column(
-                          key: SavingsRecommendationsPage.strategyListKey,
-                          children: [
-                            for (final strategy in snapshot.strategies) ...[
-                              _StrategyCard(
-                                key: SavingsRecommendationsPage.strategyKey(
-                                  strategy.id,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _HeroCard(snapshot: snapshot),
+                      _ProfileCard(snapshot: snapshot),
+                      _AmountSimulator(
+                        amountText: _amountText,
+                        onAmountChanged: (value) =>
+                            setState(() => _amountText = value),
+                        onQuickAmount: (value) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _amountText = '$value');
+                        },
+                      ),
+                      _CompareButton(
+                        onTap: () => _openCompareSheet(snapshot.strategies),
+                      ),
+                      VitPageSection(
+                        label: 'Chiến lược được Đề xuất',
+                        accentColor: AppColors.accent,
+                        children: [
+                          Column(
+                            key: SavingsRecommendationsPage.strategyListKey,
+                            children: [
+                              for (final strategy in snapshot.strategies) ...[
+                                _StrategyCard(
+                                  key: SavingsRecommendationsPage.strategyKey(
+                                    strategy.id,
+                                  ),
+                                  strategy: strategy,
+                                  amount: _amount,
+                                  onTap: () => _openStrategySheet(
+                                    strategy,
+                                    snapshot.savingsRoute,
+                                  ),
                                 ),
-                                strategy: strategy,
-                                amount: _amount,
-                                onTap: () => _openStrategySheet(
-                                  strategy,
-                                  snapshot.savingsRoute,
-                                ),
-                              ),
-                              if (strategy != snapshot.strategies.last)
-                                const SizedBox(height: AppSpacing.x3),
+                                if (strategy != snapshot.strategies.last)
+                                  const SizedBox(height: AppSpacing.x3),
+                              ],
                             ],
-                          ],
-                        ),
-                      ],
-                    ),
-                    VitPageSection(
-                      label: 'Gợi ý Cá nhân hóa',
-                      accentColor: AppColors.buy,
-                      children: [
-                        Column(
-                          children: [
-                            for (final insight in snapshot.insights) ...[
-                              _InsightCard(insight: insight),
-                              if (insight != snapshot.insights.last)
-                                const SizedBox(height: AppSpacing.x3),
+                          ),
+                        ],
+                      ),
+                      VitPageSection(
+                        label: 'Gợi ý Cá nhân hóa',
+                        accentColor: AppColors.buy,
+                        children: [
+                          Column(
+                            children: [
+                              for (final insight in snapshot.insights) ...[
+                                _InsightCard(insight: insight),
+                                if (insight != snapshot.insights.last)
+                                  const SizedBox(height: AppSpacing.x3),
+                              ],
                             ],
-                          ],
-                        ),
-                      ],
-                    ),
-                    _QuickLinks(snapshot: snapshot),
-                    _Disclaimer(text: snapshot.disclaimer),
-                  ],
+                          ),
+                        ],
+                      ),
+                      _QuickLinks(snapshot: snapshot),
+                      _Disclaimer(text: snapshot.disclaimer),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -110,7 +113,7 @@ class _SavingsRecommendationsPageState
     String savingsRoute,
   ) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
@@ -149,7 +152,7 @@ class _SavingsRecommendationsPageState
 
   Future<void> _openCompareSheet(List<SavingsStrategyDraft> strategies) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,

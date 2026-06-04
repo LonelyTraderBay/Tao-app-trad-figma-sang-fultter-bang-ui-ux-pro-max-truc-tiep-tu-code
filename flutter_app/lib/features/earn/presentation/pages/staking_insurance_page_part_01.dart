@@ -20,51 +20,54 @@ class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
       semanticLabel: 'SC-365 StakingInsurancePage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _InfoBanner(snapshot: snapshot),
-                    _InsuranceTabs(
-                      active: _tab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (_tab == _InsuranceTab.overview)
-                      _OverviewTab(snapshot: snapshot),
-                    if (_tab == _InsuranceTab.plans)
-                      _PlansTab(snapshot: snapshot, onOpenPlan: _showPlan),
-                    if (_tab == _InsuranceTab.positions)
-                      _PositionsTab(
-                        snapshot: snapshot,
-                        onAddInsurance: (position) {
-                          HapticFeedback.lightImpact();
-                          setState(() => _tab = _InsuranceTab.plans);
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _InfoBanner(snapshot: snapshot),
+                      _InsuranceTabs(
+                        active: _tab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
                         },
                       ),
-                    if (_tab == _InsuranceTab.claims)
-                      _ClaimsTab(
-                        snapshot: snapshot,
-                        onFileClaim: () => _showClaimForm(snapshot),
-                      ),
-                  ],
+                      if (_tab == _InsuranceTab.overview)
+                        _OverviewTab(snapshot: snapshot),
+                      if (_tab == _InsuranceTab.plans)
+                        _PlansTab(snapshot: snapshot, onOpenPlan: _showPlan),
+                      if (_tab == _InsuranceTab.positions)
+                        _PositionsTab(
+                          snapshot: snapshot,
+                          onAddInsurance: (position) {
+                            HapticFeedback.lightImpact();
+                            setState(() => _tab = _InsuranceTab.plans);
+                          },
+                        ),
+                      if (_tab == _InsuranceTab.claims)
+                        _ClaimsTab(
+                          snapshot: snapshot,
+                          onFileClaim: () => _showClaimForm(snapshot),
+                        ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -72,7 +75,7 @@ class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
 
   Future<void> _showPlan(StakingInsurancePlanDraft plan) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
@@ -82,7 +85,7 @@ class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
 
   Future<void> _showClaimForm(StakingInsuranceSnapshot snapshot) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,

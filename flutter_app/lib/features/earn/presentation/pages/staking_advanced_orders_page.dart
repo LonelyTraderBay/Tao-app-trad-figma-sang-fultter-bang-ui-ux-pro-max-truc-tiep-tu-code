@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -70,52 +71,55 @@ class _StakingAdvancedOrdersPageState
       semanticLabel: 'SC-366 StakingAdvancedOrdersPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _InfoBanner(snapshot: snapshot),
-                    _StatsCard(snapshot: snapshot),
-                    VitCtaButton(
-                      key: StakingAdvancedOrdersPage.createButtonKey,
-                      leading: const Icon(Icons.add_rounded),
-                      onPressed: () => _showCreateOrder(snapshot),
-                      child: const Text('Create Order'),
-                    ),
-                    _OrderTabs(
-                      active: _tab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    VitPageSection(
-                      label: _tab == _AdvancedOrderTab.active
-                          ? 'Active Orders'
-                          : 'Order History',
-                      accentColor: AppColors.primarySoft,
-                      children: [
-                        for (final order in orders) _OrderCard(order: order),
-                      ],
-                    ),
-                    _HowItWorks(snapshot: snapshot),
-                    _RiskDisclosure(snapshot: snapshot),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _InfoBanner(snapshot: snapshot),
+                      _StatsCard(snapshot: snapshot),
+                      VitCtaButton(
+                        key: StakingAdvancedOrdersPage.createButtonKey,
+                        leading: const Icon(Icons.add_rounded),
+                        onPressed: () => _showCreateOrder(snapshot),
+                        child: const Text('Create Order'),
+                      ),
+                      _OrderTabs(
+                        active: _tab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                      ),
+                      VitPageSection(
+                        label: _tab == _AdvancedOrderTab.active
+                            ? 'Active Orders'
+                            : 'Order History',
+                        accentColor: AppColors.primarySoft,
+                        children: [
+                          for (final order in orders) _OrderCard(order: order),
+                        ],
+                      ),
+                      _HowItWorks(snapshot: snapshot),
+                      _RiskDisclosure(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -123,7 +127,7 @@ class _StakingAdvancedOrdersPageState
 
   Future<void> _showCreateOrder(StakingAdvancedOrdersSnapshot snapshot) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,

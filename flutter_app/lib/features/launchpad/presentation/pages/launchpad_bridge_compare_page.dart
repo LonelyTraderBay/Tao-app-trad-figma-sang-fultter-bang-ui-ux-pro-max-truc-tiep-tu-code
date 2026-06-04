@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -77,13 +78,16 @@ class _LaunchpadBridgeComparePageState
         type: MaterialType.transparency,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: snapshot.title,
-                  showBack: true,
-                  onBack: () => context.go(snapshot.backRoute),
-                  trailing: _RefreshButton(
+            VitAutoHideHeaderScaffold(
+              bottomInset: bottomInset,
+              semanticLabel: 'SC-305 LaunchpadBridgeComparePage scroll surface',
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+                actions: [
+                  VitHeaderActionItem(
+                    type: VitHeaderActionType.refresh,
                     onPressed: () {
                       setState(() {
                         _sortMode = 'recommended';
@@ -93,48 +97,44 @@ class _LaunchpadBridgeComparePageState
                       });
                     },
                   ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: LaunchpadBridgeComparePage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
-                    child: VitPageContent(
-                      padding: VitContentPadding.defaultPadding,
-                      customGap: AppSpacing.x4,
-                      children: [
-                        _InputSummaryHero(comparison: snapshot.comparison),
-                        _QuickComparisonCard(comparison: snapshot.comparison),
-                        _SortSelector(
-                          options: snapshot.sortOptions,
-                          activeValue: _sortMode,
-                          onChanged: (value) =>
-                              setState(() => _sortMode = value),
-                        ),
-                        for (final route in routes)
-                          _RouteCard(
-                            route: route,
-                            rank: routes.indexOf(route) + 1,
-                            comparison: snapshot.comparison,
-                            selected: _selectedRouteId == route.id,
-                            expanded: _expandedRouteId == route.id,
-                            onSelect: () => setState(() {
-                              _selectedRouteId = _selectedRouteId == route.id
-                                  ? null
-                                  : route.id;
-                            }),
-                            onExpand: () => setState(() {
-                              _expandedRouteId = _expandedRouteId == route.id
-                                  ? null
-                                  : route.id;
-                            }),
-                          ),
-                        const _RiskDisclosure(),
-                      ],
+                ],
+              ),
+              child: SingleChildScrollView(
+                key: LaunchpadBridgeComparePage.contentKey,
+                physics: const BouncingScrollPhysics(),
+                child: VitPageContent(
+                  padding: VitContentPadding.defaultPadding,
+                  customGap: AppSpacing.x4,
+                  children: [
+                    _InputSummaryHero(comparison: snapshot.comparison),
+                    _QuickComparisonCard(comparison: snapshot.comparison),
+                    _SortSelector(
+                      options: snapshot.sortOptions,
+                      activeValue: _sortMode,
+                      onChanged: (value) => setState(() => _sortMode = value),
                     ),
-                  ),
+                    for (final route in routes)
+                      _RouteCard(
+                        route: route,
+                        rank: routes.indexOf(route) + 1,
+                        comparison: snapshot.comparison,
+                        selected: _selectedRouteId == route.id,
+                        expanded: _expandedRouteId == route.id,
+                        onSelect: () => setState(() {
+                          _selectedRouteId = _selectedRouteId == route.id
+                              ? null
+                              : route.id;
+                        }),
+                        onExpand: () => setState(() {
+                          _expandedRouteId = _expandedRouteId == route.id
+                              ? null
+                              : route.id;
+                        }),
+                      ),
+                    const _RiskDisclosure(),
+                  ],
                 ),
-              ],
+              ),
             ),
             if (selectedRoute != null)
               Positioned(

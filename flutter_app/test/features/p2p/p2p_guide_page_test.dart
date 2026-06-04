@@ -49,7 +49,9 @@ void main() {
     expect(snapshot.safetyTips, hasLength(4));
     expect(snapshot.videos, hasLength(4));
     expect(snapshot.parentRoute, AppRoutePaths.p2p);
-    expect(snapshot.supportRoute, AppRoutePaths.supportHelp);
+    expect(snapshot.supportRoute, startsWith('/support?'));
+    expect(snapshot.supportRoute, contains('flow=p2p_order'));
+    expect(snapshot.supportRoute, contains('p2p-emergency-guide'));
     expect(snapshot.marketRoute, AppRoutePaths.p2p);
     expect(snapshot.contractNotes, contains('P2P requires escrow'));
     expect(
@@ -122,7 +124,9 @@ void main() {
     await tester.ensureVisible(find.byKey(P2PGuidePage.supportKey));
     await tester.tap(find.byKey(P2PGuidePage.supportKey));
     await tester.pumpAndSettle();
-    expect(find.text('Trung tâm trợ giúp'), findsOneWidget);
+    expect(find.text('Hồ sơ hỗ trợ'), findsOneWidget);
+    expect(find.text('P2P emergency trade support'), findsOneWidget);
+    expect(find.text('p2p-emergency-guide'), findsOneWidget);
 
     await pumpGuide(tester);
     await tester.tap(find.text('Hướng dẫn').first);

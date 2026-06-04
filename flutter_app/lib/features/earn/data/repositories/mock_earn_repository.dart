@@ -1,3 +1,5 @@
+import 'package:vit_trade_flutter/core/product_flow/contextual_support_contract.dart';
+import 'package:vit_trade_flutter/core/product_flow/high_risk_flow_contract.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/domain/repositories/earn_repository.dart';
 

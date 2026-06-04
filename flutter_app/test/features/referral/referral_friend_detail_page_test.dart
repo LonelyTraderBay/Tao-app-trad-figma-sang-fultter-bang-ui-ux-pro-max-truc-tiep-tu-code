@@ -85,7 +85,7 @@ void main() {
   ) async {
     await pumpFriendDetail(tester);
 
-    await tester.tap(find.byType(IconButton).first);
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded).first);
     await tester.pumpAndSettle();
 
     expect(find.text('Lịch sử giới thiệu'), findsOneWidget);

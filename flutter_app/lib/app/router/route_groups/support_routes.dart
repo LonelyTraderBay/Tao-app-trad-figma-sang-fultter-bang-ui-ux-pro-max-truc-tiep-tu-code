@@ -5,7 +5,12 @@ List<RouteBase> _supportRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.support,
       name: AppRouteNames.sc294Support,
-      builder: (_, _) => SupportPage(shellRenderMode: shellRenderMode),
+      builder: (_, state) => SupportPage(
+        shellRenderMode: shellRenderMode,
+        supportContext: ProductSupportContext.fromQuery(
+          state.uri.queryParameters,
+        ),
+      ),
     ),
     GoRoute(
       path: AppRoutePaths.supportHelp,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_depth_chart.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_depth_common.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_depth_order_book.dart';
@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_d
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_depth_whale_alerts.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
@@ -55,53 +56,62 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame ? 54 : 20);
+    final resolvedBackPath = resolveSafeBackPath(
+      candidate: widget.backPath,
+      fallbackPath: AppRoutePaths.pairDetail(widget.pairId),
+      allowedPrefixes: const [AppRoutePaths.markets, '/pair'],
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-019 MarketDepthPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: '${snapshot.pair.baseAsset} Depth',
-              showBack: true,
-              onBack: () => context.go(widget.backPath),
-            ),
-            MarketDepthTabs(
-              activeTab: _tab,
-              onChanged: (value) => setState(() => _tab = value),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: MarketDepthPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 16,
-                    children: [
-                      MarketDepthPairSummary(pair: snapshot.pair),
-                      if (_tab == 'depth')
-                        MarketDepthChartView(
-                          snapshot: snapshot,
-                          levels: _levels,
-                          onLevelSelected: (level) =>
-                              setState(() => _levels = level),
-                        )
-                      else if (_tab == 'orderBook')
-                        MarketDepthOrderBookView(snapshot: snapshot)
-                      else
-                        MarketDepthWhaleAlertsView(snapshot: snapshot),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: '${snapshot.pair.baseAsset} Depth',
+            showBack: true,
+            onBack: () =>
+                goBackOrFallback(context, fallbackPath: resolvedBackPath),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              MarketDepthTabs(
+                activeTab: _tab,
+                onChanged: (value) => setState(() => _tab = value),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: MarketDepthPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 16,
+                      children: [
+                        MarketDepthPairSummary(pair: snapshot.pair),
+                        if (_tab == 'depth')
+                          MarketDepthChartView(
+                            snapshot: snapshot,
+                            levels: _levels,
+                            onLevelSelected: (level) =>
+                                setState(() => _levels = level),
+                          )
+                        else if (_tab == 'orderBook')
+                          MarketDepthOrderBookView(snapshot: snapshot)
+                        else
+                          MarketDepthWhaleAlertsView(snapshot: snapshot),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

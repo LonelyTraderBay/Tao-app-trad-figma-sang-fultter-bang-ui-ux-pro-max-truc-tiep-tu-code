@@ -81,6 +81,7 @@ final class TradeMarginTradingSnapshot {
     required this.bestExecution,
     required this.supportedStates,
     required this.lastUpdatedLabel,
+    this.highRiskContractId,
   });
 
   final TradeScreenSnapshot trade;
@@ -101,6 +102,7 @@ final class TradeMarginTradingSnapshot {
   final TradeMarginBestExecutionDisclosure bestExecution;
   final List<TradeScreenState> supportedStates;
   final String lastUpdatedLabel;
+  final String? highRiskContractId;
 }
 
 final class TradeMarginAccount {

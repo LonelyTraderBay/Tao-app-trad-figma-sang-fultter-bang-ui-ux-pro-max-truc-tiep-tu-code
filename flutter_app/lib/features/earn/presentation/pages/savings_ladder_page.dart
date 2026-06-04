@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -84,61 +85,64 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
       semanticLabel: 'SC-351 SavingsLadderPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _LadderHero(
-                      snapshot: snapshot,
-                      amountUsd: amountUsd,
-                      annualInterest: annualInterest,
-                      rungCount: rungs.length,
-                      weightedApy: weightedApy,
-                      liquidityScore: liquidityScore,
-                    ),
-                    _LadderTabs(
-                      tabs: snapshot.tabs,
-                      active: activeTab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (activeTab == 'builder')
-                      ..._buildBuilder(
-                        snapshot,
-                        amountUsd,
-                        selectedPreset,
-                        rungs,
-                        totalAllocated,
-                      )
-                    else if (activeTab == 'timeline')
-                      _TimelineTab(snapshot: snapshot, rungs: rungs)
-                    else
-                      _AnalysisTab(
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _LadderHero(
                         snapshot: snapshot,
-                        rungs: rungs,
                         amountUsd: amountUsd,
-                        weightedApy: weightedApy,
                         annualInterest: annualInterest,
+                        rungCount: rungs.length,
+                        weightedApy: weightedApy,
                         liquidityScore: liquidityScore,
                       ),
-                  ],
+                      _LadderTabs(
+                        tabs: snapshot.tabs,
+                        active: activeTab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                      ),
+                      if (activeTab == 'builder')
+                        ..._buildBuilder(
+                          snapshot,
+                          amountUsd,
+                          selectedPreset,
+                          rungs,
+                          totalAllocated,
+                        )
+                      else if (activeTab == 'timeline')
+                        _TimelineTab(snapshot: snapshot, rungs: rungs)
+                      else
+                        _AnalysisTab(
+                          snapshot: snapshot,
+                          rungs: rungs,
+                          amountUsd: amountUsd,
+                          weightedApy: weightedApy,
+                          annualInterest: annualInterest,
+                          liquidityScore: liquidityScore,
+                        ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -284,7 +288,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
     int amountUsd,
   ) {
     HapticFeedback.mediumImpact();
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.transparent,
       builder: (context) {

@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -80,91 +81,96 @@ class _SavingsAutoRebalancePageState
         color: AppColors.bg,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: snapshot.title,
-                  subtitle: snapshot.subtitle,
-                  showBack: true,
-                  onBack: () => context.go(snapshot.backRoute),
-                ),
-                DecoratedBox(
-                  decoration: const BoxDecoration(
-                    color: AppColors.surface,
-                    border: Border(
-                      bottom: BorderSide(color: AppColors.divider),
+            VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: snapshot.subtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  DecoratedBox(
+                    decoration: const BoxDecoration(
+                      color: AppColors.surface,
+                      border: Border(
+                        bottom: BorderSide(color: AppColors.divider),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.contentPad,
+                      ),
+                      child: VitTabBar(
+                        variant: VitTabBarVariant.underline,
+                        activeKey: activeTab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                        tabs: [
+                          for (final tab in snapshot.tabs)
+                            VitTabItem(key: tab, label: tab),
+                        ],
+                      ),
                     ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.contentPad,
-                    ),
-                    child: VitTabBar(
-                      variant: VitTabBarVariant.underline,
-                      activeKey: activeTab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                      tabs: [
-                        for (final tab in snapshot.tabs)
-                          VitTabItem(key: tab, label: tab),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
-                    child: VitPageContent(
-                      padding: VitContentPadding.compact,
-                      gap: VitContentGap.defaultGap,
-                      children: [
-                        if (activeTab == 'Tổng quan') ...[
-                          _AllocationComparisonCard(
-                            snapshot: snapshot,
-                            strategy: strategy,
-                          ),
-                          _DriftStatusCard(
-                            drift: drift,
-                            threshold: snapshot.settings.driftThreshold,
-                            onPreview: _openPreview,
-                          ),
-                          _DriftHistoryCard(points: snapshot.driftHistory),
-                          _AutoStatusCard(
-                            autoEnabled:
-                                _autoEnabled ?? snapshot.settings.autoEnabled,
-                            settings: snapshot.settings,
-                            onChanged: (value) =>
-                                setState(() => _autoEnabled = value),
-                          ),
-                          _StatsRow(snapshot: snapshot, strategy: strategy),
-                        ] else if (activeTab == 'Chiến lược') ...[
-                          _StrategyList(
-                            snapshot: snapshot,
-                            activeId: strategy.id,
-                            onChanged: (id) {
-                              HapticFeedback.selectionClick();
-                              setState(() => _strategyId = id);
-                            },
-                          ),
-                          _StrategyComparison(strategies: snapshot.strategies),
-                        ] else if (activeTab == 'Lịch sử')
-                          _HistoryList(history: snapshot.history)
-                        else
-                          _SettingsPanel(
-                            settings: snapshot.settings,
-                            autoEnabled:
-                                _autoEnabled ?? snapshot.settings.autoEnabled,
-                            onAutoChanged: (value) =>
-                                setState(() => _autoEnabled = value),
-                          ),
-                      ],
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: EdgeInsets.only(bottom: bottomInset),
+                      child: VitPageContent(
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          if (activeTab == 'Tổng quan') ...[
+                            _AllocationComparisonCard(
+                              snapshot: snapshot,
+                              strategy: strategy,
+                            ),
+                            _DriftStatusCard(
+                              drift: drift,
+                              threshold: snapshot.settings.driftThreshold,
+                              onPreview: _openPreview,
+                            ),
+                            _DriftHistoryCard(points: snapshot.driftHistory),
+                            _AutoStatusCard(
+                              autoEnabled:
+                                  _autoEnabled ?? snapshot.settings.autoEnabled,
+                              settings: snapshot.settings,
+                              onChanged: (value) =>
+                                  setState(() => _autoEnabled = value),
+                            ),
+                            _StatsRow(snapshot: snapshot, strategy: strategy),
+                          ] else if (activeTab == 'Chiến lược') ...[
+                            _StrategyList(
+                              snapshot: snapshot,
+                              activeId: strategy.id,
+                              onChanged: (id) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _strategyId = id);
+                              },
+                            ),
+                            _StrategyComparison(
+                              strategies: snapshot.strategies,
+                            ),
+                          ] else if (activeTab == 'Lịch sử')
+                            _HistoryList(history: snapshot.history)
+                          else
+                            _SettingsPanel(
+                              settings: snapshot.settings,
+                              autoEnabled:
+                                  _autoEnabled ?? snapshot.settings.autoEnabled,
+                              onAutoChanged: (value) =>
+                                  setState(() => _autoEnabled = value),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (showFooter)
               Positioned(

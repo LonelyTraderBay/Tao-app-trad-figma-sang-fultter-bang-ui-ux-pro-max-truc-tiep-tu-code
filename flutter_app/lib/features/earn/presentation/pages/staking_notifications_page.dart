@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -74,49 +75,52 @@ class _StakingNotificationsPageState
       semanticLabel: 'SC-371 StakingNotificationsPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _InfoBanner(snapshot: snapshot),
-                    _SettingsList(
-                      settings: _settings!,
-                      onToggle: _toggleSetting,
-                    ),
-                    _ChannelsList(
-                      channels: _channels!,
-                      onToggle: _toggleChannel,
-                    ),
-                    _HistoryList(
-                      history: history,
-                      unreadCount: unreadCount,
-                      onMarkAllRead: _markAllRead,
-                      onMarkRead: _markRead,
-                    ),
-                    _DoNotDisturbCard(
-                      enabled: _dndEnabled,
-                      onToggle: () {
-                        HapticFeedback.selectionClick();
-                        setState(() => _dndEnabled = !_dndEnabled);
-                      },
-                    ),
-                    _FooterNote(text: snapshot.footerNote),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _InfoBanner(snapshot: snapshot),
+                      _SettingsList(
+                        settings: _settings!,
+                        onToggle: _toggleSetting,
+                      ),
+                      _ChannelsList(
+                        channels: _channels!,
+                        onToggle: _toggleChannel,
+                      ),
+                      _HistoryList(
+                        history: history,
+                        unreadCount: unreadCount,
+                        onMarkAllRead: _markAllRead,
+                        onMarkRead: _markRead,
+                      ),
+                      _DoNotDisturbCard(
+                        enabled: _dndEnabled,
+                        onToggle: () {
+                          HapticFeedback.selectionClick();
+                          setState(() => _dndEnabled = !_dndEnabled);
+                        },
+                      ),
+                      _FooterNote(text: snapshot.footerNote),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

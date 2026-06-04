@@ -7,8 +7,10 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -91,81 +93,87 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame ? 84 : 24);
     final allocationPercent = draft.copyCapital / snapshot.totalPortfolio * 100;
+    final resolvedBackPath = resolveSafeBackPath(
+      candidate: widget.backPath,
+      fallbackPath: AppRoutePaths.tradeCopyProvider(widget.providerId),
+      allowedPrefixes: const [AppRoutePaths.trade],
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-072 CopyConfigurationPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Cấu hình Copy',
-              showBack: true,
-              onBack: () => context.go(
-                widget.backPath ??
-                    AppRoutePaths.tradeCopyProvider(widget.providerId),
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: CopyConfigurationPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 16, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _ProviderCard(provider: provider),
-                    const SizedBox(height: 18),
-                    _CapitalSection(
-                      controller: _capitalController,
-                      allocationPercent: allocationPercent,
-                      availableCapital: snapshot.availableCapital,
-                      totalPortfolio: snapshot.totalPortfolio,
-                      onChanged: _updateCapital,
-                      onPreset: _setCapitalPercent,
-                    ),
-                    const SizedBox(height: 18),
-                    _ModeSection(
-                      selected: draft.copyMode,
-                      copyRatio: draft.copyRatio,
-                      onModeChanged: _setMode,
-                      onRatioChanged: _setCopyRatio,
-                    ),
-                    const SizedBox(height: 18),
-                    _RiskSection(draft: draft, onDraftChanged: _setDraft),
-                    const SizedBox(height: 18),
-                    _FeeSection(preview: preview),
-                    const SizedBox(height: 18),
-                    if (preview.validations.isNotEmpty) ...[
-                      _ValidationList(items: preview.validations),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Cấu hình Copy',
+            showBack: true,
+            onBack: () =>
+                goBackOrFallback(context, fallbackPath: resolvedBackPath),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: CopyConfigurationPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 16, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _ProviderCard(provider: provider),
                       const SizedBox(height: 18),
+                      _CapitalSection(
+                        controller: _capitalController,
+                        allocationPercent: allocationPercent,
+                        availableCapital: snapshot.availableCapital,
+                        totalPortfolio: snapshot.totalPortfolio,
+                        onChanged: _updateCapital,
+                        onPreset: _setCapitalPercent,
+                      ),
+                      const SizedBox(height: 18),
+                      _ModeSection(
+                        selected: draft.copyMode,
+                        copyRatio: draft.copyRatio,
+                        onModeChanged: _setMode,
+                        onRatioChanged: _setCopyRatio,
+                      ),
+                      const SizedBox(height: 18),
+                      _RiskSection(draft: draft, onDraftChanged: _setDraft),
+                      const SizedBox(height: 18),
+                      _FeeSection(preview: preview),
+                      const SizedBox(height: 18),
+                      if (preview.validations.isNotEmpty) ...[
+                        _ValidationList(items: preview.validations),
+                        const SizedBox(height: 18),
+                      ],
+                      _SummaryCard(draft: draft),
                     ],
-                    _SummaryCard(draft: draft),
-                  ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: bottomChrome + MediaQuery.paddingOf(context).bottom,
-              ),
-              child: VitStickyFooter(
-                child: VitCtaButton(
-                  key: CopyConfigurationPage.confirmKey,
-                  onPressed: preview.hasBlockingErrors
-                      ? null
-                      : () => context.go(
-                          AppRoutePaths.tradeCopyProviderConfirmation(
-                            widget.providerId,
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: bottomChrome + MediaQuery.paddingOf(context).bottom,
+                ),
+                child: VitStickyFooter(
+                  child: VitCtaButton(
+                    key: CopyConfigurationPage.confirmKey,
+                    onPressed: preview.hasBlockingErrors
+                        ? null
+                        : () => context.go(
+                            AppRoutePaths.tradeCopyProviderConfirmation(
+                              widget.providerId,
+                            ),
                           ),
-                        ),
-                  variant: VitCtaButtonVariant.auth,
-                  trailing: const Icon(Icons.chevron_right_rounded),
-                  child: const Text('Xem xác nhận'),
+                    variant: VitCtaButtonVariant.auth,
+                    trailing: const Icon(Icons.chevron_right_rounded),
+                    child: const Text('Xem xác nhận'),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -78,76 +79,79 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
           semanticLabel: 'SC-237 P2PPaymentMethodsPage',
           child: Material(
             type: MaterialType.transparency,
-            child: Column(
-              children: [
-                VitHeader(
-                  title: 'Phương thức thanh toán',
-                  subtitle: 'Thanh toán · P2P',
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.p2p),
-                ),
-                Expanded(
-                  child: ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(
-                      context,
-                    ).copyWith(scrollbars: false),
-                    child: SingleChildScrollView(
-                      key: P2PPaymentMethodsPage.contentKey,
-                      physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.fromLTRB(
-                        AppSpacing.contentPad,
-                        AppSpacing.x4,
-                        AppSpacing.contentPad,
-                        bottomInset,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          _AddMethodRow(snapshot: snapshot),
-                          const SizedBox(height: AppSpacing.x5),
-                          if (bankMethods.isNotEmpty) ...[
-                            _SectionHeader(
-                              icon: Icons.credit_card_rounded,
-                              title:
-                                  'Tài khoản ngân hàng (${bankMethods.length})',
-                            ),
-                            const SizedBox(height: AppSpacing.x3),
-                            for (final method in bankMethods) ...[
-                              _PaymentMethodCard(
-                                method: method,
-                                onEdit: () => _openEdit(method),
-                                onDelete: () => _requestDelete(method.id),
-                                onSetDefault: () => _setDefault(method.id),
+            child: VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Phương thức thanh toán',
+                subtitle: 'Thanh toán · P2P',
+                showBack: true,
+                onBack: () => context.go(AppRoutePaths.p2p),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: P2PPaymentMethodsPage.contentKey,
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.fromLTRB(
+                          AppSpacing.contentPad,
+                          AppSpacing.x4,
+                          AppSpacing.contentPad,
+                          bottomInset,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            _AddMethodRow(snapshot: snapshot),
+                            const SizedBox(height: AppSpacing.x5),
+                            if (bankMethods.isNotEmpty) ...[
+                              _SectionHeader(
+                                icon: Icons.credit_card_rounded,
+                                title:
+                                    'Tài khoản ngân hàng (${bankMethods.length})',
                               ),
                               const SizedBox(height: AppSpacing.x3),
+                              for (final method in bankMethods) ...[
+                                _PaymentMethodCard(
+                                  method: method,
+                                  onEdit: () => _openEdit(method),
+                                  onDelete: () => _requestDelete(method.id),
+                                  onSetDefault: () => _setDefault(method.id),
+                                ),
+                                const SizedBox(height: AppSpacing.x3),
+                              ],
                             ],
-                          ],
-                          if (ewalletMethods.isNotEmpty) ...[
-                            const SizedBox(height: AppSpacing.x2),
-                            _SectionHeader(
-                              icon: Icons.phone_android_rounded,
-                              title: 'Ví điện tử (${ewalletMethods.length})',
-                            ),
-                            const SizedBox(height: AppSpacing.x3),
-                            for (final method in ewalletMethods) ...[
-                              _PaymentMethodCard(
-                                method: method,
-                                onEdit: () => _openEdit(method),
-                                onDelete: () => _requestDelete(method.id),
-                                onSetDefault: () => _setDefault(method.id),
+                            if (ewalletMethods.isNotEmpty) ...[
+                              const SizedBox(height: AppSpacing.x2),
+                              _SectionHeader(
+                                icon: Icons.phone_android_rounded,
+                                title: 'Ví điện tử (${ewalletMethods.length})',
                               ),
                               const SizedBox(height: AppSpacing.x3),
+                              for (final method in ewalletMethods) ...[
+                                _PaymentMethodCard(
+                                  method: method,
+                                  onEdit: () => _openEdit(method),
+                                  onDelete: () => _requestDelete(method.id),
+                                  onSetDefault: () => _setDefault(method.id),
+                                ),
+                                const SizedBox(height: AppSpacing.x3),
+                              ],
                             ],
+                            if (_methods.isEmpty)
+                              _EmptyPaymentMethods(snapshot: snapshot),
+                            _SecurityNotice(text: snapshot.securityNote),
                           ],
-                          if (_methods.isEmpty)
-                            _EmptyPaymentMethods(snapshot: snapshot),
-                          _SecurityNotice(text: snapshot.securityNote),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

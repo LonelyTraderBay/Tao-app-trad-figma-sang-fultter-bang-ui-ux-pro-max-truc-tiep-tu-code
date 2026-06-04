@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -70,80 +71,84 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
       semanticLabel: 'SC-121 BotEmergencyStopPage',
       child: Material(
         color: _stopBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Emergency Stop',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeBots),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: BotEmergencyStopPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _WarningBanner(snapshot: snapshot),
-                    const SizedBox(height: 19),
-                    _SectionLabel('Bots to Stop (${snapshot.bots.length})'),
-                    const SizedBox(height: 10),
-                    for (final bot in snapshot.bots) ...[
-                      _BotCard(bot: bot),
-                      if (bot != snapshot.bots.last) const SizedBox(height: 10),
-                    ],
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Reason for Emergency Stop'),
-                    const SizedBox(height: 10),
-                    for (final reason in snapshot.reasons) ...[
-                      _ReasonOption(
-                        reason: reason,
-                        selected: reason.id == _reasonId,
-                        onTap: () => setState(() => _reasonId = reason.id),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Emergency Stop',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeBots),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: BotEmergencyStopPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _WarningBanner(snapshot: snapshot),
+                      const SizedBox(height: 19),
+                      _SectionLabel('Bots to Stop (${snapshot.bots.length})'),
+                      const SizedBox(height: 10),
+                      for (final bot in snapshot.bots) ...[
+                        _BotCard(bot: bot),
+                        if (bot != snapshot.bots.last)
+                          const SizedBox(height: 10),
+                      ],
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Reason for Emergency Stop'),
+                      const SizedBox(height: 10),
+                      for (final reason in snapshot.reasons) ...[
+                        _ReasonOption(
+                          reason: reason,
+                          selected: reason.id == _reasonId,
+                          onTap: () => setState(() => _reasonId = reason.id),
+                        ),
+                        if (reason != snapshot.reasons.last)
+                          const SizedBox(height: 9),
+                      ],
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Additional Actions'),
+                      const SizedBox(height: 10),
+                      _CheckActionCard(
+                        key: BotEmergencyStopPage.closePositionsKey,
+                        selected: _closePositions,
+                        title: snapshot.closePositionsTitle,
+                        description: snapshot.closePositionsDescription,
+                        danger: false,
+                        onTap: () {
+                          setState(() => _closePositions = !_closePositions);
+                        },
                       ),
-                      if (reason != snapshot.reasons.last)
-                        const SizedBox(height: 9),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Confirmation'),
+                      const SizedBox(height: 10),
+                      _CheckActionCard(
+                        key: BotEmergencyStopPage.confirmationKey,
+                        selected: _confirmed,
+                        title: snapshot.confirmationTitle,
+                        description: snapshot.confirmationDescription,
+                        danger: true,
+                        onTap: () => setState(() => _confirmed = !_confirmed),
+                      ),
+                      const SizedBox(height: 18),
+                      _SupportNotice(snapshot: snapshot),
                     ],
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Additional Actions'),
-                    const SizedBox(height: 10),
-                    _CheckActionCard(
-                      key: BotEmergencyStopPage.closePositionsKey,
-                      selected: _closePositions,
-                      title: snapshot.closePositionsTitle,
-                      description: snapshot.closePositionsDescription,
-                      danger: false,
-                      onTap: () {
-                        setState(() => _closePositions = !_closePositions);
-                      },
-                    ),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Confirmation'),
-                    const SizedBox(height: 10),
-                    _CheckActionCard(
-                      key: BotEmergencyStopPage.confirmationKey,
-                      selected: _confirmed,
-                      title: snapshot.confirmationTitle,
-                      description: snapshot.confirmationDescription,
-                      danger: true,
-                      onTap: () => setState(() => _confirmed = !_confirmed),
-                    ),
-                    const SizedBox(height: 18),
-                    _SupportNotice(snapshot: snapshot),
-                  ],
+                  ),
                 ),
               ),
-            ),
-            _StickyActions(
-              bottomPadding: mode.usesVisualQaFrame
-                  ? DeviceMetrics.bottomChrome + 6
-                  : 20 + MediaQuery.paddingOf(context).bottom,
-              canSubmit: _reasonId != null && _confirmed && !_stopping,
-              stopping: _stopping,
-              onCancel: () => context.go(AppRoutePaths.tradeBots),
-              onSubmit: () => _submit(snapshot),
-            ),
-          ],
+              _StickyActions(
+                bottomPadding: mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + 6
+                    : 20 + MediaQuery.paddingOf(context).bottom,
+                canSubmit: _reasonId != null && _confirmed && !_stopping,
+                stopping: _stopping,
+                onCancel: () => context.go(AppRoutePaths.tradeBots),
+                onSubmit: () => _submit(snapshot),
+              ),
+            ],
+          ),
         ),
       ),
     );

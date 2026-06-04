@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -88,80 +89,83 @@ class _PredictionDataIntegrationPageState
       semanticLabel: 'SC-043 PredictionDataIntegrationPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Data Integration',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.marketsPredictions),
-            ),
-            _DataIntegrationTabBar(
-              activeTab: _activeTab,
-              onChanged: (tab) => setState(() => _activeTab = tab),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: PredictionDataIntegrationPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 16,
-                    children: switch (_activeTab) {
-                      _DataIntegrationTab.sources => [
-                        _SourcesOverview(snapshot: snapshot),
-                        _SourceSection(sources: snapshot.sources),
-                        const _PrimaryBlueButton(
-                          key: PredictionDataIntegrationPage.addSourceKey,
-                          icon: Icons.add_rounded,
-                          label: 'Add Data Source',
-                        ),
-                        const _InfoCard(
-                          icon: Icons.shield_outlined,
-                          message:
-                              'Oracle data sources are used for automatic event resolution. All sources are verified and monitored.',
-                        ),
-                      ],
-                      _DataIntegrationTab.apiKeys => [
-                        _ApiKeysSection(
-                          apiKeys: snapshot.apiKeys,
-                          revealedKeys: _revealedKeys,
-                          copiedKeyId: _copiedKeyId,
-                          onReveal: _toggleKey,
-                          onCopy: _copyKey,
-                        ),
-                        const _PrimaryBlueButton(
-                          key: PredictionDataIntegrationPage.createApiKeyKey,
-                          icon: Icons.add_rounded,
-                          label: 'Create API Key',
-                        ),
-                        const _WarningCard(
-                          message:
-                              'Keep your API keys secret. Never share them or commit to version control. Revoke immediately if compromised.',
-                        ),
-                      ],
-                      _DataIntegrationTab.webhooks => [
-                        _WebhookSection(webhooks: snapshot.webhooks),
-                        const _PrimaryBlueButton(
-                          key: PredictionDataIntegrationPage.addWebhookKey,
-                          icon: Icons.add_rounded,
-                          label: 'Add Webhook',
-                        ),
-                        const _InfoCard(
-                          icon: Icons.info_outline_rounded,
-                          message:
-                              'Webhooks allow you to receive real-time notifications when events occur. Configure your endpoint to handle POST requests.',
-                        ),
-                      ],
-                    },
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Data Integration',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.marketsPredictions),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _DataIntegrationTabBar(
+                activeTab: _activeTab,
+                onChanged: (tab) => setState(() => _activeTab = tab),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: PredictionDataIntegrationPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 16,
+                      children: switch (_activeTab) {
+                        _DataIntegrationTab.sources => [
+                          _SourcesOverview(snapshot: snapshot),
+                          _SourceSection(sources: snapshot.sources),
+                          const _PrimaryBlueButton(
+                            key: PredictionDataIntegrationPage.addSourceKey,
+                            icon: Icons.add_rounded,
+                            label: 'Add Data Source',
+                          ),
+                          const _InfoCard(
+                            icon: Icons.shield_outlined,
+                            message:
+                                'Oracle data sources are used for automatic event resolution. All sources are verified and monitored.',
+                          ),
+                        ],
+                        _DataIntegrationTab.apiKeys => [
+                          _ApiKeysSection(
+                            apiKeys: snapshot.apiKeys,
+                            revealedKeys: _revealedKeys,
+                            copiedKeyId: _copiedKeyId,
+                            onReveal: _toggleKey,
+                            onCopy: _copyKey,
+                          ),
+                          const _PrimaryBlueButton(
+                            key: PredictionDataIntegrationPage.createApiKeyKey,
+                            icon: Icons.add_rounded,
+                            label: 'Create API Key',
+                          ),
+                          const _WarningCard(
+                            message:
+                                'Keep your API keys secret. Never share them or commit to version control. Revoke immediately if compromised.',
+                          ),
+                        ],
+                        _DataIntegrationTab.webhooks => [
+                          _WebhookSection(webhooks: snapshot.webhooks),
+                          const _PrimaryBlueButton(
+                            key: PredictionDataIntegrationPage.addWebhookKey,
+                            icon: Icons.add_rounded,
+                            label: 'Add Webhook',
+                          ),
+                          const _InfoCard(
+                            icon: Icons.info_outline_rounded,
+                            message:
+                                'Webhooks allow you to receive real-time notifications when events occur. Configure your endpoint to handle POST requests.',
+                          ),
+                        ],
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

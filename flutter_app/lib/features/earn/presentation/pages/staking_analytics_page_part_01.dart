@@ -23,59 +23,62 @@ class _StakingAnalyticsPageState extends ConsumerState<StakingAnalyticsPage> {
       semanticLabel: 'SC-359 StakingAnalyticsPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _SummaryCard(
-                      snapshot: snapshot,
-                      showCalculator: _showCalculator,
-                      onCalculate: _toggleCalculator,
-                      onExport: _exportReport,
-                    ),
-                    if (_showCalculator)
-                      _CalculatorCard(
-                        key: StakingAnalyticsPage.calculatorKey,
-                        compound: _compound,
-                        onToggleCompound: () {
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _SummaryCard(
+                        snapshot: snapshot,
+                        showCalculator: _showCalculator,
+                        onCalculate: _toggleCalculator,
+                        onExport: _exportReport,
+                      ),
+                      if (_showCalculator)
+                        _CalculatorCard(
+                          key: StakingAnalyticsPage.calculatorKey,
+                          compound: _compound,
+                          onToggleCompound: () {
+                            HapticFeedback.selectionClick();
+                            setState(() => _compound = !_compound);
+                          },
+                        ),
+                      _AnalyticsTabs(
+                        key: StakingAnalyticsPage.tabBarKey,
+                        tabs: snapshot.tabs,
+                        activeTab: activeTab,
+                        onChanged: (tab) {
                           HapticFeedback.selectionClick();
-                          setState(() => _compound = !_compound);
+                          setState(() => _tab = tab);
                         },
                       ),
-                    _AnalyticsTabs(
-                      key: StakingAnalyticsPage.tabBarKey,
-                      tabs: snapshot.tabs,
-                      activeTab: activeTab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (activeTab == 'earnings')
-                      _EarningsTab(snapshot: snapshot)
-                    else if (activeTab == 'apy')
-                      _ApyTab(snapshot: snapshot)
-                    else if (activeTab == 'roi')
-                      _RoiTab(snapshot: snapshot)
-                    else
-                      _ProductsTab(snapshot: snapshot),
-                    _FooterNote(note: snapshot.footerNote),
-                  ],
+                      if (activeTab == 'earnings')
+                        _EarningsTab(snapshot: snapshot)
+                      else if (activeTab == 'apy')
+                        _ApyTab(snapshot: snapshot)
+                      else if (activeTab == 'roi')
+                        _RoiTab(snapshot: snapshot)
+                      else
+                        _ProductsTab(snapshot: snapshot),
+                      _FooterNote(note: snapshot.footerNote),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

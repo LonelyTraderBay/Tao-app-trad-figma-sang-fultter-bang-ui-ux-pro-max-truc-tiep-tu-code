@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -59,89 +60,95 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
       semanticLabel: 'SC-107 ExPostCostsReportPage',
       child: Material(
         color: _reportBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Ex-Post Cost Report',
-              subtitle: 'Annual Actual Costs',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyExAnteCosts),
-              trailing: _DownloadAction(
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Ex-Post Cost Report',
+            subtitle: 'Annual Actual Costs',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyExAnteCosts),
+            actions: [
+              VitHeaderActionItem(
+                type: VitHeaderActionType.export,
                 onPressed: () => repository.createExPostCostsReportExport(
                   year: _selectedYear,
                 ),
               ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: ExPostCostsReportPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _ComplianceNotice(year: report.year),
-                    const SizedBox(height: 35),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _SummaryCard(
-                            label: 'Total Actual Costs',
-                            value: _formatEur(report.totalActual),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: ExPostCostsReportPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _ComplianceNotice(year: report.year),
+                      const SizedBox(height: 35),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _SummaryCard(
+                              label: 'Total Actual Costs',
+                              value: _formatEur(report.totalActual),
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _SummaryCard(
-                            label: 'Estimated Costs',
-                            value: _formatEur(report.totalEstimated),
-                            muted: true,
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: _SummaryCard(
+                              label: 'Estimated Costs',
+                              value: _formatEur(report.totalEstimated),
+                              muted: true,
+                            ),
                           ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      _YearTabs(
+                        reports: snapshot.reports,
+                        activeYear: _selectedYear,
+                        onChanged: (year) => setState(() {
+                          _selectedYear = year;
+                        }),
+                      ),
+                      const SizedBox(height: 27),
+                      const _SectionLabel('Actual vs. Estimated'),
+                      const SizedBox(height: 12),
+                      _CostBreakdownCard(
+                        title: 'One-off Costs',
+                        actual: report.oneOff,
+                        estimate: report.estimatedOneOff,
+                      ),
+                      const SizedBox(height: 13),
+                      _CostBreakdownCard(
+                        title: 'Recurring Costs',
+                        actual: report.recurring,
+                        estimate: report.estimatedRecurring,
+                        note: _VarianceNote.lower(
+                          report.estimatedRecurring - report.recurring,
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
-                    _YearTabs(
-                      reports: snapshot.reports,
-                      activeYear: _selectedYear,
-                      onChanged: (year) => setState(() {
-                        _selectedYear = year;
-                      }),
-                    ),
-                    const SizedBox(height: 27),
-                    const _SectionLabel('Actual vs. Estimated'),
-                    const SizedBox(height: 12),
-                    _CostBreakdownCard(
-                      title: 'One-off Costs',
-                      actual: report.oneOff,
-                      estimate: report.estimatedOneOff,
-                    ),
-                    const SizedBox(height: 13),
-                    _CostBreakdownCard(
-                      title: 'Recurring Costs',
-                      actual: report.recurring,
-                      estimate: report.estimatedRecurring,
-                      note: _VarianceNote.lower(
-                        report.estimatedRecurring - report.recurring,
                       ),
-                    ),
-                    const SizedBox(height: 13),
-                    _CostBreakdownCard(
-                      title: 'Incidental Costs',
-                      actual: report.incidental,
-                      estimate: report.estimatedIncidental,
-                      note: _VarianceNote.higher(
-                        report.incidental - report.estimatedIncidental,
+                      const SizedBox(height: 13),
+                      _CostBreakdownCard(
+                        title: 'Incidental Costs',
+                        actual: report.incidental,
+                        estimate: report.estimatedIncidental,
+                        note: _VarianceNote.higher(
+                          report.incidental - report.estimatedIncidental,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 25),
-                    const _SectionLabel('Variance Analysis'),
-                    const SizedBox(height: 12),
-                    _VarianceCard(report: report),
-                  ],
+                      const SizedBox(height: 25),
+                      const _SectionLabel('Variance Analysis'),
+                      const SizedBox(height: 12),
+                      _VarianceCard(report: report),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -9,8 +9,10 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
@@ -35,6 +37,7 @@ class SecurityPage extends ConsumerStatefulWidget {
   static const scoreCardKey = Key('sc158_security_score_card');
   static const antiPhishingFieldKey = Key('sc158_security_anti_phishing_field');
   static const antiPhishingSaveKey = Key('sc158_security_anti_phishing_save');
+  static const supportKey = Key('sc158_security_support');
 
   static Key itemKey(String id) => Key('sc158_security_item_$id');
 
@@ -70,43 +73,48 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
       semanticLabel: 'SC-158 SecurityPage',
       child: Material(
         color: _securityBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'B\u1EA3o m\u1EADt',
-              subtitle: 'B\u1EA3o m\u1EADt \u00B7 Profile',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: SecurityPage.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _ScoreCard(snapshot: snapshot),
-                    const SizedBox(height: 18),
-                    _SecurityList(
-                      items: snapshot.items,
-                      onItemTap: _handleItemTap,
-                    ),
-                    if (_showDevices) ...[
-                      const SizedBox(height: 16),
-                      _DeviceList(devices: snapshot.devices),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'B\u1EA3o m\u1EADt',
+            subtitle: 'B\u1EA3o m\u1EADt \u00B7 Profile',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: SecurityPage.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _ScoreCard(snapshot: snapshot),
+                      const SizedBox(height: 18),
+                      _SecurityList(
+                        items: snapshot.items,
+                        onItemTap: _handleItemTap,
+                      ),
+                      if (_showDevices) ...[
+                        const SizedBox(height: 16),
+                        _DeviceList(devices: snapshot.devices),
+                      ],
+                      const SizedBox(height: 18),
+                      _AntiPhishingCard(
+                        controller: _antiPhishingController,
+                        saving: _saving,
+                        onSave: _saveAntiPhishingCode,
+                      ),
+                      const SizedBox(height: 18),
+                      _SecuritySupportCard(supportRoute: snapshot.supportRoute),
                     ],
-                    const SizedBox(height: 18),
-                    _AntiPhishingCard(
-                      controller: _antiPhishingController,
-                      saving: _saving,
-                      onSave: _saveAntiPhishingCode,
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -132,10 +140,6 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
   }
 
   void _close() {
-    if (context.canPop()) {
-      context.pop();
-      return;
-    }
-    context.go(AppRoutePaths.profile);
+    goBackOrFallback(context, fallbackPath: AppRoutePaths.profile);
   }
 }

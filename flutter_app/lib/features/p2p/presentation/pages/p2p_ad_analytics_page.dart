@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -49,56 +50,59 @@ class P2PAdAnalyticsPage extends ConsumerWidget {
       semanticLabel: 'SC-223 P2PAdAnalyticsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Phân tích quảng cáo',
-              subtitle: 'Phân tích · P2P',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.p2p),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2PAdAnalyticsPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x5,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _AdIdentityCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _KpiGrid(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _QuickStats(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _ConversionFunnel(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _PerformanceCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _VolumeCard(points: snapshot.dailyPerformance),
-                      const SizedBox(height: AppSpacing.x4),
-                      _HeatmapCard(points: snapshot.hourlyHeatmap),
-                      const SizedBox(height: AppSpacing.x4),
-                      _PaymentBreakdownCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _CompetitorCard(rows: snapshot.competitorComparison),
-                      const SizedBox(height: AppSpacing.x4),
-                      _TipsCard(tips: snapshot.optimizationTips),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Phân tích quảng cáo',
+            subtitle: 'Phân tích · P2P',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.p2p),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2PAdAnalyticsPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x5,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _AdIdentityCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _KpiGrid(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _QuickStats(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _ConversionFunnel(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _PerformanceCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _VolumeCard(points: snapshot.dailyPerformance),
+                        const SizedBox(height: AppSpacing.x4),
+                        _HeatmapCard(points: snapshot.hourlyHeatmap),
+                        const SizedBox(height: AppSpacing.x4),
+                        _PaymentBreakdownCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _CompetitorCard(rows: snapshot.competitorComparison),
+                        const SizedBox(height: AppSpacing.x4),
+                        _TipsCard(tips: snapshot.optimizationTips),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

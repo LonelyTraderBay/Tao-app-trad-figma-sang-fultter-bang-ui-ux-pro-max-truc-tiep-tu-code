@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
@@ -51,37 +52,40 @@ class NetworkStatusPage extends ConsumerWidget {
       semanticLabel: 'SC-155 NetworkStatusPage',
       child: Material(
         color: _networkBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Tr\u1EA1ng th\u00E1i m\u1EA1ng',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.wallet),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: NetworkStatusPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SummaryCard(snapshot: snapshot),
-                    const SizedBox(height: 18),
-                    for (final network in snapshot.networks) ...[
-                      _NetworkCard(network: network),
-                      if (network != snapshot.networks.last)
-                        const SizedBox(height: 14),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Tr\u1EA1ng th\u00E1i m\u1EA1ng',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.wallet),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: NetworkStatusPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SummaryCard(snapshot: snapshot),
+                      const SizedBox(height: 18),
+                      for (final network in snapshot.networks) ...[
+                        _NetworkCard(network: network),
+                        if (network != snapshot.networks.last)
+                          const SizedBox(height: 14),
+                      ],
+                      const SizedBox(height: 18),
+                      const _LegendCard(),
+                      const SizedBox(height: 18),
+                      const _DisclaimerCard(),
                     ],
-                    const SizedBox(height: 18),
-                    const _LegendCard(),
-                    const SizedBox(height: 18),
-                    const _DisclaimerCard(),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

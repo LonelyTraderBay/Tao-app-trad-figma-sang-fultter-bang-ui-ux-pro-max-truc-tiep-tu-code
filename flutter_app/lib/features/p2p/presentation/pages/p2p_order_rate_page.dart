@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -70,55 +71,61 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
       semanticLabel: 'SC-213 P2POrderRatePage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: _submitted ? 'Danh gia' : 'Danh gia giao dich',
-              subtitle: 'Danh gia - P2P',
-              showBack: true,
-              onBack: () => _close(context),
-            ),
-            Expanded(
-              child: _submitted
-                  ? _SuccessView(
-                      title: snapshot.successTitle,
-                      message: snapshot.successMessage,
-                      onBackToP2P: () => context.go(AppRoutePaths.p2p),
-                    )
-                  : ScrollConfiguration(
-                      behavior: ScrollConfiguration.of(
-                        context,
-                      ).copyWith(scrollbars: false),
-                      child: SingleChildScrollView(
-                        key: P2POrderRatePage.contentKey,
-                        physics: const BouncingScrollPhysics(),
-                        padding: EdgeInsets.only(bottom: bottomInset),
-                        child: VitPageContent(
-                          padding: VitContentPadding.relaxed,
-                          customGap: AppSpacing.x6,
-                          children: [
-                            _MerchantSummary(order: snapshot.order),
-                            _RatingCard(rating: _rating, onRating: _setRating),
-                            if (_rating > 0)
-                              _QuickTags(
-                                tags: snapshot.quickTags,
-                                selectedTags: _selectedTags,
-                                onToggle: _toggleTag,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: _submitted ? 'Danh gia' : 'Danh gia giao dich',
+            subtitle: 'Danh gia - P2P',
+            showBack: true,
+            onBack: () => _close(context),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: _submitted
+                    ? _SuccessView(
+                        title: snapshot.successTitle,
+                        message: snapshot.successMessage,
+                        onBackToP2P: () => context.go(AppRoutePaths.p2p),
+                      )
+                    : ScrollConfiguration(
+                        behavior: ScrollConfiguration.of(
+                          context,
+                        ).copyWith(scrollbars: false),
+                        child: SingleChildScrollView(
+                          key: P2POrderRatePage.contentKey,
+                          physics: const BouncingScrollPhysics(),
+                          padding: EdgeInsets.only(bottom: bottomInset),
+                          child: VitPageContent(
+                            padding: VitContentPadding.relaxed,
+                            customGap: AppSpacing.x6,
+                            children: [
+                              _MerchantSummary(order: snapshot.order),
+                              _RatingCard(
+                                rating: _rating,
+                                onRating: _setRating,
                               ),
-                            if (_rating > 0)
-                              _ReviewBox(controller: _reviewController),
-                            _ActionRow(
-                              enabled: _rating > 0,
-                              loading: _isSubmitting,
-                              onSkip: () => _close(context),
-                              onSubmit: _submit,
-                            ),
-                          ],
+                              if (_rating > 0)
+                                _QuickTags(
+                                  tags: snapshot.quickTags,
+                                  selectedTags: _selectedTags,
+                                  onToggle: _toggleTag,
+                                ),
+                              if (_rating > 0)
+                                _ReviewBox(controller: _reviewController),
+                              _ActionRow(
+                                enabled: _rating > 0,
+                                loading: _isSubmitting,
+                                onSkip: () => _close(context),
+                                onSubmit: _submit,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -342,6 +342,7 @@ mixin _MockTradeRepositoryMethodsPart03 on _MockTradeRepositoryBase {
       negativeBalance: _marginNegativeBalance,
       bestExecution: _marginBestExecution,
       lastUpdatedLabel: 'realtime-refresh',
+      highRiskContractId: HighRiskFlowContractIds.tradeMarginFutures,
       supportedStates: const [
         TradeScreenState.loading,
         TradeScreenState.empty,

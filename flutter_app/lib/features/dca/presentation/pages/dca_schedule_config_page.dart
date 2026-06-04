@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -69,112 +70,117 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
 
     return VitPageLayout(
       semanticLabel: 'SC-172 DCAScheduleConfig',
-      child: Column(
-        children: [
-          VitHeader(
-            title: 'Smart Scheduling',
-            subtitle: 'Lịch mua · DCA',
-            showBack: true,
-            onBack: _close,
-          ),
-          Expanded(
-            child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(
-                context,
-              ).copyWith(scrollbars: false),
-              child: SingleChildScrollView(
-                key: DCAScheduleConfig.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  customGap: AppSpacing.x5,
-                  children: [
-                    const _InfoBanner(),
-                    _StrategySection(
-                      strategies: snapshot.strategies,
-                      active: _strategy,
-                      onChanged: _setStrategy,
-                    ),
-                    _TimePreferenceSection(
-                      preferences: snapshot.timePreferences,
-                      active: _timePreference,
-                      activeAccent: _strategyAccent,
-                      onChanged: _setTimePreference,
-                    ),
-                    _LimitsCard(
-                      maxDelayHours: _maxDelayHours,
-                      maxAdvanceHours: _maxAdvanceHours,
-                      onDelayChanged: (value) {
-                        setState(() => _maxDelayHours = value.roundToDouble());
-                      },
-                      onAdvanceChanged: (value) {
-                        setState(
-                          () => _maxAdvanceHours = value.roundToDouble(),
-                        );
-                      },
-                    ),
-                    if (_strategy == DcaScheduleStrategy.volatility ||
-                        _strategy == DcaScheduleStrategy.hybrid)
-                      _ThresholdCard(
-                        key: DCAScheduleConfig.volatilityKey,
-                        title: 'Volatility Settings',
-                        icon: Icons.trending_down,
-                        accent: AppColors.accent,
-                        label: 'Ngưỡng volatility',
-                        valueLabel:
-                            '${_volatilityThreshold.toStringAsFixed(1)}%',
-                        min: 0.5,
-                        max: 10,
-                        divisions: 19,
-                        value: _volatilityThreshold,
-                        helper:
-                            'Ưu tiên thời điểm volatility < ${_volatilityThreshold.toStringAsFixed(1)}%',
-                        onChanged: (value) {
-                          setState(() => _volatilityThreshold = value);
-                        },
+      child: VitAutoHideHeaderScaffold(
+        header: VitHeader(
+          title: 'Smart Scheduling',
+          subtitle: 'Lịch mua · DCA',
+          showBack: true,
+          onBack: _close,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(
+                  context,
+                ).copyWith(scrollbars: false),
+                child: SingleChildScrollView(
+                  key: DCAScheduleConfig.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    customGap: AppSpacing.x5,
+                    children: [
+                      const _InfoBanner(),
+                      _StrategySection(
+                        strategies: snapshot.strategies,
+                        active: _strategy,
+                        onChanged: _setStrategy,
                       ),
-                    if (_strategy == DcaScheduleStrategy.gasOptimized ||
-                        _strategy == DcaScheduleStrategy.hybrid)
-                      _ThresholdCard(
-                        key: DCAScheduleConfig.gasKey,
-                        title: 'Gas Settings',
-                        icon: Icons.bolt_outlined,
-                        accent: AppColors.warn,
-                        label: 'Ngưỡng gas price',
-                        valueLabel: '${_gasPriceThreshold.round()} gwei',
-                        min: 5,
-                        max: 100,
-                        divisions: 19,
-                        value: _gasPriceThreshold,
-                        helper:
-                            'Ưu tiên thời điểm gas < ${_gasPriceThreshold.round()} gwei',
-                        onChanged: (value) {
+                      _TimePreferenceSection(
+                        preferences: snapshot.timePreferences,
+                        active: _timePreference,
+                        activeAccent: _strategyAccent,
+                        onChanged: _setTimePreference,
+                      ),
+                      _LimitsCard(
+                        maxDelayHours: _maxDelayHours,
+                        maxAdvanceHours: _maxAdvanceHours,
+                        onDelayChanged: (value) {
                           setState(
-                            () => _gasPriceThreshold = value.roundToDouble(),
+                            () => _maxDelayHours = value.roundToDouble(),
+                          );
+                        },
+                        onAdvanceChanged: (value) {
+                          setState(
+                            () => _maxAdvanceHours = value.roundToDouble(),
                           );
                         },
                       ),
-                    _EnableCard(
-                      enabled: _enabled,
-                      onChanged: (value) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _enabled = value);
-                      },
-                    ),
-                    if (_strategy == DcaScheduleStrategy.fixed)
-                      const _FixedWarningCard(),
-                    VitCtaButton(
-                      key: DCAScheduleConfig.saveKey,
-                      onPressed: _save,
-                      leading: const Icon(Icons.save_outlined),
-                      child: const Text('Lưu cấu hình'),
-                    ),
-                  ],
+                      if (_strategy == DcaScheduleStrategy.volatility ||
+                          _strategy == DcaScheduleStrategy.hybrid)
+                        _ThresholdCard(
+                          key: DCAScheduleConfig.volatilityKey,
+                          title: 'Volatility Settings',
+                          icon: Icons.trending_down,
+                          accent: AppColors.accent,
+                          label: 'Ngưỡng volatility',
+                          valueLabel:
+                              '${_volatilityThreshold.toStringAsFixed(1)}%',
+                          min: 0.5,
+                          max: 10,
+                          divisions: 19,
+                          value: _volatilityThreshold,
+                          helper:
+                              'Ưu tiên thời điểm volatility < ${_volatilityThreshold.toStringAsFixed(1)}%',
+                          onChanged: (value) {
+                            setState(() => _volatilityThreshold = value);
+                          },
+                        ),
+                      if (_strategy == DcaScheduleStrategy.gasOptimized ||
+                          _strategy == DcaScheduleStrategy.hybrid)
+                        _ThresholdCard(
+                          key: DCAScheduleConfig.gasKey,
+                          title: 'Gas Settings',
+                          icon: Icons.bolt_outlined,
+                          accent: AppColors.warn,
+                          label: 'Ngưỡng gas price',
+                          valueLabel: '${_gasPriceThreshold.round()} gwei',
+                          min: 5,
+                          max: 100,
+                          divisions: 19,
+                          value: _gasPriceThreshold,
+                          helper:
+                              'Ưu tiên thời điểm gas < ${_gasPriceThreshold.round()} gwei',
+                          onChanged: (value) {
+                            setState(
+                              () => _gasPriceThreshold = value.roundToDouble(),
+                            );
+                          },
+                        ),
+                      _EnableCard(
+                        enabled: _enabled,
+                        onChanged: (value) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _enabled = value);
+                        },
+                      ),
+                      if (_strategy == DcaScheduleStrategy.fixed)
+                        const _FixedWarningCard(),
+                      VitCtaButton(
+                        key: DCAScheduleConfig.saveKey,
+                        onPressed: _save,
+                        leading: const Icon(Icons.save_outlined),
+                        child: const Text('Lưu cấu hình'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

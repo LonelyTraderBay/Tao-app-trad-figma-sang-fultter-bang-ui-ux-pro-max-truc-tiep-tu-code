@@ -1,31 +1,5 @@
 part of '../pages/p2p_login_history_page.dart';
 
-class _DownloadButton extends StatelessWidget {
-  const _DownloadButton({super.key, required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: 36,
-      child: Material(
-        color: AppColors.searchBg,
-        borderRadius: AppRadii.mdRadius,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.mdRadius,
-          child: const Icon(
-            Icons.download_rounded,
-            color: AppColors.text1,
-            size: AppSpacing.iconMd,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _LoginStats extends StatelessWidget {
   const _LoginStats({required this.snapshot});
 

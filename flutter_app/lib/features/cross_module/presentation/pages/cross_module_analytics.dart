@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -55,40 +56,43 @@ class _CrossModuleAnalyticsState extends ConsumerState<CrossModuleAnalytics> {
       semanticLabel: 'SC-322 CrossModuleAnalytics',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            _AnalyticsTabs(
-              tabs: snapshot.tabs,
-              active: _activeTab,
-              onChanged: (tab) {
-                HapticFeedback.selectionClick();
-                setState(() => _activeTab = tab);
-              },
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: CrossModuleAnalytics.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    if (_activeTab == CrossModuleAnalyticsTab.performance)
-                      _PerformanceTab(snapshot: snapshot)
-                    else if (_activeTab == CrossModuleAnalyticsTab.metrics)
-                      _MetricsTab(snapshot: snapshot)
-                    else
-                      _ComparisonTab(snapshot: snapshot),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _AnalyticsTabs(
+                tabs: snapshot.tabs,
+                active: _activeTab,
+                onChanged: (tab) {
+                  HapticFeedback.selectionClick();
+                  setState(() => _activeTab = tab);
+                },
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  key: CrossModuleAnalytics.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      if (_activeTab == CrossModuleAnalyticsTab.performance)
+                        _PerformanceTab(snapshot: snapshot)
+                      else if (_activeTab == CrossModuleAnalyticsTab.metrics)
+                        _MetricsTab(snapshot: snapshot)
+                      else
+                        _ComparisonTab(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

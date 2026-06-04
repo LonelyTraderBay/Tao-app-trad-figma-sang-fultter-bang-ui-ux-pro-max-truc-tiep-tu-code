@@ -15,6 +15,7 @@ final class PredictionHomeSnapshot {
     required this.searchQuery,
     required this.lastUpdatedLabel,
     required this.supportedStates,
+    this.highRiskContractId,
   });
 
   final List<PredictionEventDraft> events;
@@ -30,6 +31,7 @@ final class PredictionHomeSnapshot {
   final String searchQuery;
   final String lastUpdatedLabel;
   final Set<PredictionScreenState> supportedStates;
+  final String? highRiskContractId;
 }
 
 final class PredictionSearchSnapshot {
@@ -103,6 +105,7 @@ final class PredictionEventDetailSnapshot {
     required this.rewards,
     required this.lastUpdatedLabel,
     required this.supportedStates,
+    this.highRiskContractId,
   });
 
   final PredictionEventDraft event;
@@ -120,6 +123,7 @@ final class PredictionEventDetailSnapshot {
   final List<PredictionRewardDraft> rewards;
   final String lastUpdatedLabel;
   final Set<PredictionScreenState> supportedStates;
+  final String? highRiskContractId;
 }
 
 final class PredictionPortfolioSnapshot {
@@ -357,6 +361,7 @@ final class PredictionOrderReceiptSnapshot {
     required this.rewards,
     required this.lastUpdatedLabel,
     required this.supportedStates,
+    this.highRiskContractId,
   });
 
   final String receiptId;
@@ -367,6 +372,7 @@ final class PredictionOrderReceiptSnapshot {
   final List<PredictionRewardDraft> rewards;
   final String lastUpdatedLabel;
   final Set<PredictionScreenState> supportedStates;
+  final String? highRiskContractId;
 
   bool get found => receipt != null;
 

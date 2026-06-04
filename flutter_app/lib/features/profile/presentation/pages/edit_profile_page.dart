@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
@@ -76,73 +77,76 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
       semanticLabel: 'SC-157 EditProfilePage',
       child: Material(
         color: _editBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Ch\u1EC9nh s\u1EEDa h\u1ED3 s\u01A1',
-              subtitle: 'Ch\u1EC9nh s\u1EEDa \u00B7 Profile',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: EditProfilePage.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.fromLTRB(20, 36, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _AvatarEditor(
-                      initial: snapshot.user.fullName.substring(0, 1),
-                      selected: _cameraSelected,
-                      onTap: () {
-                        HapticFeedback.selectionClick();
-                        setState(() => _cameraSelected = !_cameraSelected);
-                      },
-                    ),
-                    const SizedBox(height: 52),
-                    _EditProfileField(
-                      label: 'H\u1ECC V\u00C0 T\u00CAN',
-                      controller: _nameController,
-                      keyValue: EditProfilePage.fullNameFieldKey,
-                      onChanged: (_) => setState(() {}),
-                    ),
-                    const SizedBox(height: 18),
-                    _EditProfileField(
-                      label: 'EMAIL',
-                      controller: _emailController,
-                      readOnly: true,
-                      note: 'Email kh\u00F4ng th\u1EC3 thay \u0111\u1ED5i',
-                      muted: true,
-                    ),
-                    const SizedBox(height: 18),
-                    _EditProfileField(
-                      label: 'S\u1ED0 \u0110I\u1EC6N THO\u1EA0I',
-                      controller: _phoneController,
-                      keyValue: EditProfilePage.phoneFieldKey,
-                      keyboardType: TextInputType.phone,
-                      onChanged: (_) => setState(() {}),
-                    ),
-                    const SizedBox(height: 18),
-                    KeyedSubtree(
-                      key: EditProfilePage.saveKey,
-                      child: VitCtaButton(
-                        variant: VitCtaButtonVariant.auth,
-                        loading: _saving,
-                        onPressed: _canSave ? _save : null,
-                        leading: const Icon(Icons.save_rounded),
-                        child: Text(
-                          _saving
-                              ? '\u0110ang l\u01B0u...'
-                              : 'L\u01B0u thay \u0111\u1ED5i',
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Ch\u1EC9nh s\u1EEDa h\u1ED3 s\u01A1',
+            subtitle: 'Ch\u1EC9nh s\u1EEDa \u00B7 Profile',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: EditProfilePage.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(20, 36, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _AvatarEditor(
+                        initial: snapshot.user.fullName.substring(0, 1),
+                        selected: _cameraSelected,
+                        onTap: () {
+                          HapticFeedback.selectionClick();
+                          setState(() => _cameraSelected = !_cameraSelected);
+                        },
+                      ),
+                      const SizedBox(height: 52),
+                      _EditProfileField(
+                        label: 'H\u1ECC V\u00C0 T\u00CAN',
+                        controller: _nameController,
+                        keyValue: EditProfilePage.fullNameFieldKey,
+                        onChanged: (_) => setState(() {}),
+                      ),
+                      const SizedBox(height: 18),
+                      _EditProfileField(
+                        label: 'EMAIL',
+                        controller: _emailController,
+                        readOnly: true,
+                        note: 'Email kh\u00F4ng th\u1EC3 thay \u0111\u1ED5i',
+                        muted: true,
+                      ),
+                      const SizedBox(height: 18),
+                      _EditProfileField(
+                        label: 'S\u1ED0 \u0110I\u1EC6N THO\u1EA0I',
+                        controller: _phoneController,
+                        keyValue: EditProfilePage.phoneFieldKey,
+                        keyboardType: TextInputType.phone,
+                        onChanged: (_) => setState(() {}),
+                      ),
+                      const SizedBox(height: 18),
+                      KeyedSubtree(
+                        key: EditProfilePage.saveKey,
+                        child: VitCtaButton(
+                          variant: VitCtaButtonVariant.auth,
+                          loading: _saving,
+                          onPressed: _canSave ? _save : null,
+                          leading: const Icon(Icons.save_rounded),
+                          child: Text(
+                            _saving
+                                ? '\u0110ang l\u01B0u...'
+                                : 'L\u01B0u thay \u0111\u1ED5i',
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

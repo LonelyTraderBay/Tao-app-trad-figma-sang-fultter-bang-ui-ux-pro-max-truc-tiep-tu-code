@@ -69,6 +69,7 @@ final class TradeFuturesSnapshot {
     required this.usedMargin,
     required this.supportedStates,
     required this.lastUpdatedLabel,
+    this.highRiskContractId,
   });
 
   final TradeScreenSnapshot trade;
@@ -82,6 +83,7 @@ final class TradeFuturesSnapshot {
   final double usedMargin;
   final List<TradeScreenState> supportedStates;
   final String lastUpdatedLabel;
+  final String? highRiskContractId;
 }
 
 final class TradeFuturesPosition {
@@ -249,6 +251,7 @@ final class TradeBotsSnapshot {
     required this.activeBots,
     required this.supportedStates,
     required this.lastUpdatedLabel,
+    this.highRiskContractId,
   });
 
   final TradeScreenSnapshot trade;
@@ -256,6 +259,7 @@ final class TradeBotsSnapshot {
   final List<TradeBot> activeBots;
   final List<TradeScreenState> supportedStates;
   final String lastUpdatedLabel;
+  final String? highRiskContractId;
 
   int get runningCount =>
       activeBots.where((bot) => bot.status == TradeBotStatus.running).length;

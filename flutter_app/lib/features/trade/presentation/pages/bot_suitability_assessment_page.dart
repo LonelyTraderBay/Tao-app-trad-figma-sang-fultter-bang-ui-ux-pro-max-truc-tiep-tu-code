@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -66,37 +67,38 @@ class _BotSuitabilityAssessmentPageState
       semanticLabel: 'SC-119 BotSuitabilityAssessmentPage',
       child: Material(
         color: _assessmentBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: _showResult
-                  ? 'Assessment Result'
-                  : 'Suitability Assessment',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeBots),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: _showResult
-                    ? BotSuitabilityAssessmentPage.resultContentKey
-                    : BotSuitabilityAssessmentPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: _showResult
-                    ? _ResultView(
-                        snapshot: snapshot,
-                        score: _score(snapshot),
-                        answers: _answers,
-                        onComplete: _handleComplete,
-                      )
-                    : _QuestionView(
-                        snapshot: snapshot,
-                        currentQuestion: _currentQuestion,
-                        answers: _answers,
-                        onAnswer: _handleAnswer,
-                      ),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: _showResult ? 'Assessment Result' : 'Suitability Assessment',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeBots),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: _showResult
+                      ? BotSuitabilityAssessmentPage.resultContentKey
+                      : BotSuitabilityAssessmentPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: _showResult
+                      ? _ResultView(
+                          snapshot: snapshot,
+                          score: _score(snapshot),
+                          answers: _answers,
+                          onComplete: _handleComplete,
+                        )
+                      : _QuestionView(
+                          snapshot: snapshot,
+                          currentQuestion: _currentQuestion,
+                          answers: _answers,
+                          onAnswer: _handleAnswer,
+                        ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

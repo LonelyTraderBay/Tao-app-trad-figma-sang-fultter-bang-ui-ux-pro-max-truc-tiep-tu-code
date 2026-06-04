@@ -1,4 +1,4 @@
-sealed class NavigationIntent {
+abstract base class NavigationIntent {
   const NavigationIntent();
 
   String resolve();

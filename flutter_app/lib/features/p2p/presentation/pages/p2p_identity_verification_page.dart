@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -64,90 +65,93 @@ class _P2PIdentityVerificationPageState
       semanticLabel: 'SC-249 P2PIdentityVerificationPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Identity Verification',
-              subtitle: 'KYC · P2P',
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _IdentityHero(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      if (selectedDocument == null)
-                        _DocumentTypePicker(
-                          documents: snapshot.documentTypes,
-                          onSelected: (document) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _selectedTypeId = document.id);
-                          },
-                        )
-                      else ...[
-                        _GuidelinesCard(snapshot: snapshot),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Identity Verification',
+            subtitle: 'KYC · P2P',
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _IdentityHero(snapshot: snapshot),
                         const SizedBox(height: AppSpacing.x5),
-                        _UploadSection(
-                          selectedDocument: selectedDocument,
-                          frontUploaded: _frontUploaded,
-                          backUploaded: _backUploaded,
-                          onFrontUpload: () {
-                            HapticFeedback.selectionClick();
-                            setState(() => _frontUploaded = true);
-                          },
-                          onBackUpload: _frontUploaded
-                              ? () {
-                                  HapticFeedback.selectionClick();
-                                  setState(() => _backUploaded = true);
-                                }
-                              : null,
-                          onFrontRemove: () {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _frontUploaded = false;
-                              _backUploaded = false;
-                            });
-                          },
-                          onBackRemove: () {
-                            HapticFeedback.selectionClick();
-                            setState(() => _backUploaded = false);
-                          },
-                        ),
-                        const SizedBox(height: AppSpacing.x5),
-                        _SecurityCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
-                        VitCtaButton(
-                          key: P2PIdentityVerificationPage.submitKey,
-                          onPressed: _frontUploaded && _backUploaded
-                              ? () {
-                                  HapticFeedback.selectionClick();
-                                  context.go(snapshot.nextRoute);
-                                }
-                              : null,
-                          trailing: const Icon(Icons.chevron_right_rounded),
-                          child: const Text('Tiếp tục'),
-                        ),
+                        if (selectedDocument == null)
+                          _DocumentTypePicker(
+                            documents: snapshot.documentTypes,
+                            onSelected: (document) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _selectedTypeId = document.id);
+                            },
+                          )
+                        else ...[
+                          _GuidelinesCard(snapshot: snapshot),
+                          const SizedBox(height: AppSpacing.x5),
+                          _UploadSection(
+                            selectedDocument: selectedDocument,
+                            frontUploaded: _frontUploaded,
+                            backUploaded: _backUploaded,
+                            onFrontUpload: () {
+                              HapticFeedback.selectionClick();
+                              setState(() => _frontUploaded = true);
+                            },
+                            onBackUpload: _frontUploaded
+                                ? () {
+                                    HapticFeedback.selectionClick();
+                                    setState(() => _backUploaded = true);
+                                  }
+                                : null,
+                            onFrontRemove: () {
+                              HapticFeedback.selectionClick();
+                              setState(() {
+                                _frontUploaded = false;
+                                _backUploaded = false;
+                              });
+                            },
+                            onBackRemove: () {
+                              HapticFeedback.selectionClick();
+                              setState(() => _backUploaded = false);
+                            },
+                          ),
+                          const SizedBox(height: AppSpacing.x5),
+                          _SecurityCard(snapshot: snapshot),
+                          const SizedBox(height: AppSpacing.x5),
+                          VitCtaButton(
+                            key: P2PIdentityVerificationPage.submitKey,
+                            onPressed: _frontUploaded && _backUploaded
+                                ? () {
+                                    HapticFeedback.selectionClick();
+                                    context.go(snapshot.nextRoute);
+                                  }
+                                : null,
+                            trailing: const Icon(Icons.chevron_right_rounded),
+                            child: const Text('Tiếp tục'),
+                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

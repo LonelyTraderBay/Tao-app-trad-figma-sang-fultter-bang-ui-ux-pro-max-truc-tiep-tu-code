@@ -43,6 +43,24 @@ void main() {
     expect(snapshot.vip.progress, .35);
     expect(snapshot.prediction.positions, 5);
     expect(snapshot.arena.pointsLabel, '2,220');
+    expect(snapshot.productShortcuts.map((shortcut) => shortcut.id), [
+      'wallet',
+      'p2p',
+      'earn',
+      'launchpad',
+      'bots',
+      'copy',
+      'support',
+      'referral',
+    ]);
+    expect(
+      snapshot.productShortcuts
+          .map((shortcut) => shortcut.route)
+          .any(
+            (route) => route.startsWith('/admin') || route.startsWith('/dev'),
+          ),
+      isFalse,
+    );
     expect(snapshot.sections.map((section) => section.id), [
       'account',
       'settings',
@@ -79,6 +97,15 @@ void main() {
     expect(find.text('VIP Progress'), findsOneWidget);
     expect(find.text('Prediction Portfolio'), findsOneWidget);
     expect(find.text('Open Arena'), findsOneWidget);
+    expect(find.byKey(ProfilePage.productHubKey), findsOneWidget);
+    expect(
+      find.byKey(ProfilePage.productShortcutKey('wallet')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(ProfilePage.productShortcutKey('support')),
+      findsOneWidget,
+    );
     expect(find.text('T\u00C0I KHO\u1EA2N'), findsOneWidget);
     expect(find.text('X\u00E1c minh danh t\u00EDnh (KYC)'), findsOneWidget);
   });

@@ -25,51 +25,54 @@ class _ClientCategorizationPageState
       semanticLabel: 'SC-099 ClientCategorizationPage',
       child: Material(
         color: _clientBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Client Categorization',
-              subtitle: 'MiFID II Classification',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: ClientCategorizationPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _CurrentCategoryCard(category: current),
-                    const SizedBox(height: 30),
-                    const _InfoNotice(),
-                    const SizedBox(height: 32),
-                    _Tabs(
-                      activeId: _tab!,
-                      onChanged: (id) => setState(() => _tab = id),
-                    ),
-                    const SizedBox(height: 25),
-                    if (_tab == 'overview')
-                      _OverviewTab(
-                        categories: snapshot.categories,
-                        currentCategoryId: snapshot.currentCategoryId,
-                      )
-                    else if (_tab == 'protections')
-                      _ProtectionsTab(categories: snapshot.categories)
-                    else if (_tab == 'requirements')
-                      _RequirementsTab(categories: snapshot.categories)
-                    else
-                      _HistoryTab(
-                        categories: snapshot.categories,
-                        history: snapshot.history,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Client Categorization',
+            subtitle: 'MiFID II Classification',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: ClientCategorizationPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _CurrentCategoryCard(category: current),
+                      const SizedBox(height: 30),
+                      const _InfoNotice(),
+                      const SizedBox(height: 32),
+                      _Tabs(
+                        activeId: _tab!,
+                        onChanged: (id) => setState(() => _tab = id),
                       ),
-                    const SizedBox(height: 24),
-                    const _QuickLinks(),
-                  ],
+                      const SizedBox(height: 25),
+                      if (_tab == 'overview')
+                        _OverviewTab(
+                          categories: snapshot.categories,
+                          currentCategoryId: snapshot.currentCategoryId,
+                        )
+                      else if (_tab == 'protections')
+                        _ProtectionsTab(categories: snapshot.categories)
+                      else if (_tab == 'requirements')
+                        _RequirementsTab(categories: snapshot.categories)
+                      else
+                        _HistoryTab(
+                          categories: snapshot.categories,
+                          history: snapshot.history,
+                        ),
+                      const SizedBox(height: 24),
+                      const _QuickLinks(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -120,140 +123,143 @@ class _ClientOptUpRequestPageState
       semanticLabel: 'SC-099 ClientOptUpRequestPage',
       child: Material(
         color: _clientBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Client Opt-Up Request',
-              subtitle: 'MiFID II Classification',
-              showBack: true,
-              onBack: () =>
-                  context.go(AppRoutePaths.tradeCopyClientCategorization),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: ClientOptUpRequestPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (_submitted) ...[
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Client Opt-Up Request',
+            subtitle: 'MiFID II Classification',
+            showBack: true,
+            onBack: () =>
+                context.go(AppRoutePaths.tradeCopyClientCategorization),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: ClientOptUpRequestPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (_submitted) ...[
+                        _Card(
+                          key: ClientOptUpRequestPage.successKey,
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Icon(
+                                Icons.check_circle_outline,
+                                color: _clientGreen,
+                                size: 24,
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Review request saved',
+                                      style: AppTextStyles.base.copyWith(
+                                        color: AppColors.text1,
+                                        fontWeight: AppTextStyles.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Compliance review is required before any categorization change takes effect.',
+                                      style: AppTextStyles.micro.copyWith(
+                                        color: AppColors.text3,
+                                        height: 1.35,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 18),
+                      ],
                       _Card(
-                        key: ClientOptUpRequestPage.successKey,
                         padding: const EdgeInsets.all(16),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            const Icon(
-                              Icons.check_circle_outline,
-                              color: _clientGreen,
-                              size: 24,
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
+                            const _SectionLabel('Professional Status Criteria'),
+                            const SizedBox(height: 12),
+                            for (final requirement
+                                in professional.requirements) ...[
+                              Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    'Review request saved',
-                                    style: AppTextStyles.base.copyWith(
-                                      color: AppColors.text1,
-                                      fontWeight: AppTextStyles.bold,
-                                    ),
+                                  const Icon(
+                                    Icons.track_changes_outlined,
+                                    color: _clientPrimary,
+                                    size: 14,
                                   ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Compliance review is required before any categorization change takes effect.',
-                                    style: AppTextStyles.micro.copyWith(
-                                      color: AppColors.text3,
-                                      height: 1.35,
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      requirement,
+                                      style: AppTextStyles.micro.copyWith(
+                                        color: AppColors.text2,
+                                        height: 1.35,
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
+                              if (requirement != professional.requirements.last)
+                                const SizedBox(height: 10),
+                            ],
                           ],
                         ),
+                      ),
+                      const SizedBox(height: 16),
+                      _OptUpChecklistTile(
+                        key: ClientOptUpRequestPage.criteriaKey,
+                        value: _criteriaConfirmed,
+                        title: 'I meet the professional client criteria',
+                        subtitle:
+                            'Evidence must be reviewed before status can change.',
+                        onChanged: (value) =>
+                            setState(() => _criteriaConfirmed = value),
+                      ),
+                      const SizedBox(height: 10),
+                      _OptUpChecklistTile(
+                        key: ClientOptUpRequestPage.waiverKey,
+                        value: _waiverAcknowledged,
+                        title: 'I understand protection changes',
+                        subtitle:
+                            'Opting up can reduce retail investor protections.',
+                        onChanged: (value) =>
+                            setState(() => _waiverAcknowledged = value),
                       ),
                       const SizedBox(height: 18),
-                    ],
-                    _Card(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const _SectionLabel('Professional Status Criteria'),
-                          const SizedBox(height: 12),
-                          for (final requirement
-                              in professional.requirements) ...[
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Icon(
-                                  Icons.track_changes_outlined,
-                                  color: _clientPrimary,
-                                  size: 14,
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Text(
-                                    requirement,
-                                    style: AppTextStyles.micro.copyWith(
-                                      color: AppColors.text2,
-                                      height: 1.35,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            if (requirement != professional.requirements.last)
-                              const SizedBox(height: 10),
-                          ],
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    _OptUpChecklistTile(
-                      key: ClientOptUpRequestPage.criteriaKey,
-                      value: _criteriaConfirmed,
-                      title: 'I meet the professional client criteria',
-                      subtitle:
-                          'Evidence must be reviewed before status can change.',
-                      onChanged: (value) =>
-                          setState(() => _criteriaConfirmed = value),
-                    ),
-                    const SizedBox(height: 10),
-                    _OptUpChecklistTile(
-                      key: ClientOptUpRequestPage.waiverKey,
-                      value: _waiverAcknowledged,
-                      title: 'I understand protection changes',
-                      subtitle:
-                          'Opting up can reduce retail investor protections.',
-                      onChanged: (value) =>
-                          setState(() => _waiverAcknowledged = value),
-                    ),
-                    const SizedBox(height: 18),
-                    FilledButton(
-                      key: ClientOptUpRequestPage.submitKey,
-                      onPressed: _canSubmit
-                          ? () => setState(() => _submitted = true)
-                          : null,
-                      style: FilledButton.styleFrom(
-                        backgroundColor: _clientPrimary,
-                        foregroundColor: AppColors.text1,
-                        disabledBackgroundColor: AppColors.surface3,
-                        disabledForegroundColor: AppColors.text3,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: AppRadii.inputRadius,
+                      FilledButton(
+                        key: ClientOptUpRequestPage.submitKey,
+                        onPressed: _canSubmit
+                            ? () => setState(() => _submitted = true)
+                            : null,
+                        style: FilledButton.styleFrom(
+                          backgroundColor: _clientPrimary,
+                          foregroundColor: AppColors.text1,
+                          disabledBackgroundColor: AppColors.surface3,
+                          disabledForegroundColor: AppColors.text3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: AppRadii.inputRadius,
+                          ),
+                          minimumSize: const Size.fromHeight(48),
                         ),
-                        minimumSize: const Size.fromHeight(48),
+                        child: const Text('Submit for Review'),
                       ),
-                      child: const Text('Submit for Review'),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

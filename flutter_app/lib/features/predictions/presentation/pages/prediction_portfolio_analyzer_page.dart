@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -63,51 +64,54 @@ class _PredictionPortfolioAnalyzerPageState
       semanticLabel: 'SC-038 PredictionPortfolioAnalyzerPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Portfolio Analyzer',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.marketsPredictions),
-            ),
-            _AnalyzerTabBar(
-              activeTab: _activeTab,
-              onChanged: (tab) => setState(() => _activeTab = tab),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: PredictionPortfolioAnalyzerPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 16,
-                    children: switch (_activeTab) {
-                      _AnalyzerTab.overview => [
-                        _PortfolioSummaryCard(snapshot: snapshot),
-                        _StatsGrid(snapshot: snapshot),
-                        _CategoryCard(snapshot: snapshot),
-                      ],
-                      _AnalyzerTab.performance => [
-                        _PerformanceChartCard(snapshot: snapshot),
-                        _TradeStatsSection(snapshot: snapshot),
-                        _AttributionSection(snapshot: snapshot),
-                      ],
-                      _AnalyzerTab.risk => [
-                        _RiskMetricsSection(snapshot: snapshot),
-                        _CategoryRiskCard(snapshot: snapshot),
-                        _DiversificationCard(snapshot: snapshot),
-                        const _RiskWarning(),
-                      ],
-                    },
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Portfolio Analyzer',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.marketsPredictions),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _AnalyzerTabBar(
+                activeTab: _activeTab,
+                onChanged: (tab) => setState(() => _activeTab = tab),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: PredictionPortfolioAnalyzerPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 16,
+                      children: switch (_activeTab) {
+                        _AnalyzerTab.overview => [
+                          _PortfolioSummaryCard(snapshot: snapshot),
+                          _StatsGrid(snapshot: snapshot),
+                          _CategoryCard(snapshot: snapshot),
+                        ],
+                        _AnalyzerTab.performance => [
+                          _PerformanceChartCard(snapshot: snapshot),
+                          _TradeStatsSection(snapshot: snapshot),
+                          _AttributionSection(snapshot: snapshot),
+                        ],
+                        _AnalyzerTab.risk => [
+                          _RiskMetricsSection(snapshot: snapshot),
+                          _CategoryRiskCard(snapshot: snapshot),
+                          _DiversificationCard(snapshot: snapshot),
+                          const _RiskWarning(),
+                        ],
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

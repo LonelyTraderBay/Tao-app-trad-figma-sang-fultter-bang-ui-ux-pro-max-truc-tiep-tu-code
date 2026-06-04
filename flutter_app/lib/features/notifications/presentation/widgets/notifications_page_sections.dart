@@ -43,7 +43,7 @@ class _NotificationToolbar extends StatelessWidget {
           ),
           _ToolbarButton(
             key: NotificationsPage.filterKey,
-            icon: Icons.filter_alt_outlined,
+            icon: Icons.tune_rounded,
             label: filter == _NotificationFilter.all ? 'Tất cả' : 'Chưa đọc',
             color: AppColors.primary,
             onTap: onToggleFilter,

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
@@ -65,62 +66,65 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
       semanticLabel: 'SC-160 SettingsPage',
       child: Material(
         color: _settingsBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'C\u00E0i \u0111\u1EB7t',
-              subtitle: 'C\u00E0i \u0111\u1EB7t \u00B7 Profile',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: SettingsPage.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SectionTitle(label: 'GIAO DI\u1EC6N'),
-                    const SizedBox(height: 8),
-                    _CurrencyCard(
-                      currencies: snapshot.currencyOptions,
-                      selectedCurrency: _selectedCurrency,
-                      onChanged: _setCurrency,
-                    ),
-                    const SizedBox(height: 27),
-                    _SectionTitle(label: 'NG\u00D4N NG\u1EEE'),
-                    const SizedBox(height: 8),
-                    _LanguageCard(
-                      languages: snapshot.languages,
-                      selectedId: _selectedLanguageId,
-                      onChanged: _setLanguage,
-                    ),
-                    const SizedBox(height: 28),
-                    _SectionTitle(label: 'B\u1EA2O M\u1EACT GIAO D\u1ECACH'),
-                    const SizedBox(height: 8),
-                    _SettingsListCard(
-                      rows: snapshot.tradeSecurity,
-                      toggles: _toggles,
-                      onToggle: _setToggle,
-                      rowHeight: 72,
-                    ),
-                    const SizedBox(height: 28),
-                    _SectionTitle(label: 'TH\u00D4NG B\u00C1O'),
-                    const SizedBox(height: 8),
-                    _SettingsListCard(
-                      rows: snapshot.notifications,
-                      toggles: _toggles,
-                      onToggle: _setToggle,
-                      rowHeight: 68,
-                    ),
-                    const SizedBox(height: 26),
-                    _AppInfoCard(rows: snapshot.appInfo),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'C\u00E0i \u0111\u1EB7t',
+            subtitle: 'C\u00E0i \u0111\u1EB7t \u00B7 Profile',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: SettingsPage.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SectionTitle(label: 'GIAO DI\u1EC6N'),
+                      const SizedBox(height: 8),
+                      _CurrencyCard(
+                        currencies: snapshot.currencyOptions,
+                        selectedCurrency: _selectedCurrency,
+                        onChanged: _setCurrency,
+                      ),
+                      const SizedBox(height: 27),
+                      _SectionTitle(label: 'NG\u00D4N NG\u1EEE'),
+                      const SizedBox(height: 8),
+                      _LanguageCard(
+                        languages: snapshot.languages,
+                        selectedId: _selectedLanguageId,
+                        onChanged: _setLanguage,
+                      ),
+                      const SizedBox(height: 28),
+                      _SectionTitle(label: 'B\u1EA2O M\u1EACT GIAO D\u1ECACH'),
+                      const SizedBox(height: 8),
+                      _SettingsListCard(
+                        rows: snapshot.tradeSecurity,
+                        toggles: _toggles,
+                        onToggle: _setToggle,
+                        rowHeight: 72,
+                      ),
+                      const SizedBox(height: 28),
+                      _SectionTitle(label: 'TH\u00D4NG B\u00C1O'),
+                      const SizedBox(height: 8),
+                      _SettingsListCard(
+                        rows: snapshot.notifications,
+                        toggles: _toggles,
+                        onToggle: _setToggle,
+                        rowHeight: 68,
+                      ),
+                      const SizedBox(height: 26),
+                      _AppInfoCard(rows: snapshot.appInfo),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

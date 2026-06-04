@@ -25,66 +25,71 @@ class _RegulatoryReportsDashboardPageState
         color: _dashBackground,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: 'Regulatory Reports',
-                  subtitle: 'Dashboard - MiFID II - EMIR',
-                  showBack: true,
-                  onBack: () =>
-                      context.go(AppRoutePaths.tradeCopyTransactionReporting),
-                  trailing: IconButton(
+            VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Regulatory Reports',
+                subtitle: 'Dashboard - MiFID II - EMIR',
+                showBack: true,
+                onBack: () =>
+                    context.go(AppRoutePaths.tradeCopyTransactionReporting),
+                actions: [
+                  VitHeaderActionItem(
+                    type: VitHeaderActionType.export,
                     onPressed: () => setState(() => _notice = 'Export queued'),
-                    icon: const Icon(Icons.download_rounded, size: 19),
-                    color: AppColors.text1,
                   ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: RegulatoryReportsDashboardPage.contentKey,
-                    padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _ComplianceAlert(totals: snapshot.totals),
-                        const SizedBox(height: 35),
-                        _KpiGrid(totals: snapshot.totals),
-                        const SizedBox(height: 24),
-                        _RangeSelector(
-                          ranges: snapshot.timeRanges,
-                          activeId: _range,
-                          onChanged: (id) => setState(() => _range = id),
-                        ),
-                        const SizedBox(height: 20),
-                        _Tabs(
-                          activeId: _tab,
-                          onChanged: (id) => setState(() => _tab = id),
-                        ),
-                        const SizedBox(height: 26),
-                        if (_tab == 'overview')
-                          _OverviewTab(snapshot: snapshot)
-                        else if (_tab == 'queue')
-                          _QueueTab(snapshot: snapshot)
-                        else if (_tab == 'compliance')
-                          _ComplianceTab(totals: snapshot.totals)
-                        else
-                          _ExportsTab(
-                            onNotice: (text) => setState(() => _notice = text),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: RegulatoryReportsDashboardPage.contentKey,
+                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _ComplianceAlert(totals: snapshot.totals),
+                          const SizedBox(height: 35),
+                          _KpiGrid(totals: snapshot.totals),
+                          const SizedBox(height: 24),
+                          _RangeSelector(
+                            ranges: snapshot.timeRanges,
+                            activeId: _range,
+                            onChanged: (id) => setState(() => _range = id),
                           ),
-                        const SizedBox(height: 14),
-                        _QuickActions(
-                          onQueue: () => context.go(
-                            AppRoutePaths.tradeCopyTransactionReporting,
+                          const SizedBox(height: 20),
+                          _Tabs(
+                            activeId: _tab,
+                            onChanged: (id) => setState(() => _tab = id),
                           ),
-                          onArmStatus: () => context.go(
-                            AppRoutePaths.tradeCopyArmIntegrationStatus,
+                          const SizedBox(height: 26),
+                          if (_tab == 'overview')
+                            _OverviewTab(snapshot: snapshot)
+                          else if (_tab == 'queue')
+                            _QueueTab(snapshot: snapshot)
+                          else if (_tab == 'compliance')
+                            _ComplianceTab(totals: snapshot.totals)
+                          else
+                            _ExportsTab(
+                              onNotice: (text) =>
+                                  setState(() => _notice = text),
+                            ),
+                          const SizedBox(height: 14),
+                          _QuickActions(
+                            onQueue: () => context.go(
+                              AppRoutePaths.tradeCopyTransactionReporting,
+                            ),
+                            onArmStatus: () => context.go(
+                              AppRoutePaths.tradeCopyArmIntegrationStatus,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_notice != null)
               _NoticePanel(

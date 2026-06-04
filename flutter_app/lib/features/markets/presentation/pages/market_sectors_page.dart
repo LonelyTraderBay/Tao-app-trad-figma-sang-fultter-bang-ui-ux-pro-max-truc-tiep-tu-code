@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_s
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_distribution.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
@@ -74,91 +75,94 @@ class _MarketSectorsPageState extends ConsumerState<MarketSectorsPage> {
           : 'SC-011 MarketSectorDetail',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: selectedSector?.nameVi ?? 'Ngành thị trường',
-              showBack: true,
-              onBack: () {
-                if (selectedSector != null) {
-                  context.go(AppRoutePaths.marketsSectors);
-                  return;
-                }
-                context.go(AppRoutePaths.markets);
-              },
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: selectedSector == null
-                      ? MarketSectorsPage.contentKey
-                      : MarketSectorsPage.detailContentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.defaultPadding,
-                    gap: VitContentGap.defaultGap,
-                    children: selectedSector == null
-                        ? [
-                            MarketSectorDistributionCard(
-                              sectors: snapshot.sectors,
-                            ),
-                            MarketSectorControls(
-                              timeframes: snapshot.timeframes,
-                              activeTimeframe: _timeframe,
-                              sortOptions: snapshot.screenFilters.sortOptions,
-                              activeSort: _sort,
-                              onTimeframeSelected: (value) {
-                                setState(() => _timeframe = value);
-                              },
-                              onSortSelected: (value) {
-                                setState(() => _sort = value);
-                              },
-                            ),
-                            for (final sector in visibleSectors)
-                              MarketSectorCard(
-                                sector: sector,
-                                change: marketSectorChangeFor(
-                                  sector,
-                                  _timeframe,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: selectedSector?.nameVi ?? 'Ngành thị trường',
+            showBack: true,
+            onBack: () {
+              if (selectedSector != null) {
+                context.go(AppRoutePaths.marketsSectors);
+                return;
+              }
+              context.go(AppRoutePaths.markets);
+            },
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: selectedSector == null
+                        ? MarketSectorsPage.contentKey
+                        : MarketSectorsPage.detailContentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.defaultPadding,
+                      gap: VitContentGap.defaultGap,
+                      children: selectedSector == null
+                          ? [
+                              MarketSectorDistributionCard(
+                                sectors: snapshot.sectors,
+                              ),
+                              MarketSectorControls(
+                                timeframes: snapshot.timeframes,
+                                activeTimeframe: _timeframe,
+                                sortOptions: snapshot.screenFilters.sortOptions,
+                                activeSort: _sort,
+                                onTimeframeSelected: (value) {
+                                  setState(() => _timeframe = value);
+                                },
+                                onSortSelected: (value) {
+                                  setState(() => _sort = value);
+                                },
+                              ),
+                              for (final sector in visibleSectors)
+                                MarketSectorCard(
+                                  sector: sector,
+                                  change: marketSectorChangeFor(
+                                    sector,
+                                    _timeframe,
+                                  ),
+                                  onTap: () => context.go(
+                                    '${AppRoutePaths.marketsSectors}?id=${sector.id}',
+                                  ),
                                 ),
-                                onTap: () => context.go(
-                                  '${AppRoutePaths.marketsSectors}?id=${sector.id}',
+                              MarketSectorComparisonTable(
+                                key: MarketSectorsPage.comparisonKey,
+                                sectors: visibleSectors,
+                              ),
+                              MarketSectorDataRefreshFooter(
+                                count: snapshot.sectors.length,
+                                label: snapshot.lastUpdatedLabel,
+                              ),
+                            ]
+                          : [
+                              MarketSectorDetailSummary(sector: selectedSector),
+                              MarketSectorTopCoinsSection(
+                                sector: selectedSector,
+                                coins: coinsForMarketSector(
+                                  selectedSector,
+                                  snapshot,
+                                ),
+                                onTap: (coin) => context.go(
+                                  AppRoutePaths.pairDetail('${coin.id}usdt'),
                                 ),
                               ),
-                            MarketSectorComparisonTable(
-                              key: MarketSectorsPage.comparisonKey,
-                              sectors: visibleSectors,
-                            ),
-                            MarketSectorDataRefreshFooter(
-                              count: snapshot.sectors.length,
-                              label: snapshot.lastUpdatedLabel,
-                            ),
-                          ]
-                        : [
-                            MarketSectorDetailSummary(sector: selectedSector),
-                            MarketSectorTopCoinsSection(
-                              sector: selectedSector,
-                              coins: coinsForMarketSector(
-                                selectedSector,
-                                snapshot,
+                              MarketSectorComparisonTable(
+                                sectors: visibleSectors,
+                                highlightedSectorId: selectedSector.id,
                               ),
-                              onTap: (coin) => context.go(
-                                AppRoutePaths.pairDetail('${coin.id}usdt'),
-                              ),
-                            ),
-                            MarketSectorComparisonTable(
-                              sectors: visibleSectors,
-                              highlightedSectorId: selectedSector.id,
-                            ),
-                          ],
+                            ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

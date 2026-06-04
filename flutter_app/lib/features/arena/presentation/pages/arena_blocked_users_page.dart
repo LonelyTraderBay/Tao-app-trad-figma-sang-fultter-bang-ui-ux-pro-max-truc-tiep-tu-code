@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -64,60 +65,65 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
       semanticLabel: 'SC-203 ArenaBlockedUsersPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Người đã chặn',
-              subtitle: 'An toàn · Open Arena',
-              showBack: true,
-              onBack: () => _close(context),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ArenaBlockedUsersPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: _blockedUsers.isEmpty
-                      ? VitPageContent(
-                          key: ArenaBlockedUsersPage.emptyKey,
-                          padding: VitContentPadding.none,
-                          children: [
-                            VitEmptyState(
-                              icon: Icons.shield_outlined,
-                              title: snapshot.emptyTitle,
-                              message: snapshot.emptySubtitle,
-                            ),
-                          ],
-                        )
-                      : VitPageContent(
-                          padding: VitContentPadding.defaultPadding,
-                          children: [
-                            _BlockInfoBanner(snapshot: snapshot),
-                            _BlockedUsersCard(
-                              users: _blockedUsers,
-                              onUnblock: (user) => _requestUnblock(user),
-                              onViewProfile: (user) {
-                                HapticFeedback.selectionClick();
-                                context.go(AppRoutePaths.arenaCreator(user.id));
-                              },
-                            ),
-                            Text(
-                              '${_blockedUsers.length} người đã bị chặn',
-                              textAlign: TextAlign.center,
-                              style: AppTextStyles.caption.copyWith(
-                                color: AppColors.text3,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Người đã chặn',
+            subtitle: 'An toàn · Open Arena',
+            showBack: true,
+            onBack: () => _close(context),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ArenaBlockedUsersPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: _blockedUsers.isEmpty
+                        ? VitPageContent(
+                            key: ArenaBlockedUsersPage.emptyKey,
+                            padding: VitContentPadding.none,
+                            children: [
+                              VitEmptyState(
+                                icon: Icons.shield_outlined,
+                                title: snapshot.emptyTitle,
+                                message: snapshot.emptySubtitle,
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          )
+                        : VitPageContent(
+                            padding: VitContentPadding.defaultPadding,
+                            children: [
+                              _BlockInfoBanner(snapshot: snapshot),
+                              _BlockedUsersCard(
+                                users: _blockedUsers,
+                                onUnblock: (user) => _requestUnblock(user),
+                                onViewProfile: (user) {
+                                  HapticFeedback.selectionClick();
+                                  context.go(
+                                    AppRoutePaths.arenaCreator(user.id),
+                                  );
+                                },
+                              ),
+                              Text(
+                                '${_blockedUsers.length} người đã bị chặn',
+                                textAlign: TextAlign.center,
+                                style: AppTextStyles.caption.copyWith(
+                                  color: AppColors.text3,
+                                ),
+                              ),
+                            ],
+                          ),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -39,79 +39,73 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
         type: MaterialType.transparency,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: snapshot.title,
-                  showBack: true,
-                  onBack: () => context.go(snapshot.backRoute),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: LaunchpadMultisigPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+            VitAutoHideHeaderScaffold(
+              bottomInset: bottomInset,
+              semanticLabel: 'SC-313 LaunchpadMultisigPage scroll surface',
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: SingleChildScrollView(
+                key: LaunchpadMultisigPage.contentKey,
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _SafeSelector(
+                      safes: snapshot.safes,
+                      selectedAddress: _selectedSafeAddress,
+                      onChanged: (address) {
+                        setState(() {
+                          _selectedSafeAddress = address;
+                          _expandedTxId = null;
+                        });
+                      },
+                    ),
+                    _StatsStrip(safe: selectedSafe, pending: queueTxs.length),
+                    _Tabs(
+                      activeTab: _activeTab,
+                      onChanged: (tab) => setState(() => _activeTab = tab),
+                    ),
+                    VitPageContent(
+                      padding: VitContentPadding.defaultPadding,
+                      customGap: AppSpacing.x4,
                       children: [
-                        _SafeSelector(
-                          safes: snapshot.safes,
-                          selectedAddress: _selectedSafeAddress,
-                          onChanged: (address) {
-                            setState(() {
-                              _selectedSafeAddress = address;
-                              _expandedTxId = null;
-                            });
-                          },
-                        ),
-                        _StatsStrip(
-                          safe: selectedSafe,
-                          pending: queueTxs.length,
-                        ),
-                        _Tabs(
-                          activeTab: _activeTab,
-                          onChanged: (tab) => setState(() => _activeTab = tab),
-                        ),
-                        VitPageContent(
-                          padding: VitContentPadding.defaultPadding,
-                          customGap: AppSpacing.x4,
-                          children: [
-                            if (_activeTab == _MultisigTab.queue) ...[
-                              _CreateTxCard(
-                                onTap: () => setState(() => _showCreate = true),
-                              ),
-                              _QueueSection(
-                                txs: queueTxs,
-                                expandedTxId: _expandedTxId,
-                                copiedField: _copiedField,
-                                onToggle: _toggleTx,
-                                onCopy: _copyField,
-                                onSign: _signTx,
-                                onExecute: _executeTx,
-                              ),
-                            ] else if (_activeTab == _MultisigTab.history) ...[
-                              _HistorySection(
-                                txs: historyTxs,
-                                expandedTxId: _expandedTxId,
-                                copiedField: _copiedField,
-                                onToggle: _toggleTx,
-                                onCopy: _copyField,
-                              ),
-                            ] else ...[
-                              _OwnersSection(
-                                safe: selectedSafe,
-                                copiedField: _copiedField,
-                                onCopy: _copyField,
-                              ),
-                            ],
-                            _SecurityNotice(safe: selectedSafe),
-                          ],
-                        ),
+                        if (_activeTab == _MultisigTab.queue) ...[
+                          _CreateTxCard(
+                            onTap: () => setState(() => _showCreate = true),
+                          ),
+                          _QueueSection(
+                            txs: queueTxs,
+                            expandedTxId: _expandedTxId,
+                            copiedField: _copiedField,
+                            onToggle: _toggleTx,
+                            onCopy: _copyField,
+                            onSign: _signTx,
+                            onExecute: _executeTx,
+                          ),
+                        ] else if (_activeTab == _MultisigTab.history) ...[
+                          _HistorySection(
+                            txs: historyTxs,
+                            expandedTxId: _expandedTxId,
+                            copiedField: _copiedField,
+                            onToggle: _toggleTx,
+                            onCopy: _copyField,
+                          ),
+                        ] else ...[
+                          _OwnersSection(
+                            safe: selectedSafe,
+                            copiedField: _copiedField,
+                            onCopy: _copyField,
+                          ),
+                        ],
+                        _SecurityNotice(safe: selectedSafe),
                       ],
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
             if (_showCreate)
               Positioned.fill(

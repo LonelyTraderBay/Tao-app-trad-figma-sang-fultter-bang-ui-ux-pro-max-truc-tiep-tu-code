@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -63,46 +64,54 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
       semanticLabel: 'SC-105 ExAnteCostsPage',
       child: Material(
         color: _costBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Cost Disclosure (Ex-Ante)',
-              subtitle: 'Before You Invest',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-              trailing: const _DownloadAction(),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: ExAnteCostsPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const _RegulatoryNotice(),
-                    const SizedBox(height: 35),
-                    _InvestmentCard(snapshot: snapshot),
-                    const SizedBox(height: 24),
-                    _Tabs(activeId: _tab, onChanged: _setTab),
-                    const SizedBox(height: 27),
-                    if (_tab == 'summary')
-                      _Summary(snapshot: snapshot)
-                    else if (_tab == 'breakdown')
-                      _Breakdown(snapshot: snapshot)
-                    else
-                      _Scenarios(
-                        snapshot: snapshot,
-                        holdingPeriod: _holdingPeriod,
-                        onChanged: (period) =>
-                            setState(() => _holdingPeriod = period),
-                      ),
-                    const SizedBox(height: 24),
-                    const _QuickLinks(),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Cost Disclosure (Ex-Ante)',
+            subtitle: 'Before You Invest',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+            actions: const [
+              VitHeaderActionItem(
+                type: VitHeaderActionType.export,
+                onPressed: null,
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: ExAnteCostsPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const _RegulatoryNotice(),
+                      const SizedBox(height: 35),
+                      _InvestmentCard(snapshot: snapshot),
+                      const SizedBox(height: 24),
+                      _Tabs(activeId: _tab, onChanged: _setTab),
+                      const SizedBox(height: 27),
+                      if (_tab == 'summary')
+                        _Summary(snapshot: snapshot)
+                      else if (_tab == 'breakdown')
+                        _Breakdown(snapshot: snapshot)
+                      else
+                        _Scenarios(
+                          snapshot: snapshot,
+                          holdingPeriod: _holdingPeriod,
+                          onChanged: (period) =>
+                              setState(() => _holdingPeriod = period),
+                        ),
+                      const SizedBox(height: 24),
+                      const _QuickLinks(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

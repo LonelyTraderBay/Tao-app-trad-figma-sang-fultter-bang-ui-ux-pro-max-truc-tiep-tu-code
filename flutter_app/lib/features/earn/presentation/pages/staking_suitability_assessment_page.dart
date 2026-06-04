@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -73,89 +74,95 @@ class _StakingSuitabilityAssessmentPageState
       semanticLabel: 'SC-376 StakingSuitabilityAssessmentPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: _showResult ? snapshot.resultTitle : snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: _showResult
-                      ? [
-                          _ResultView(
-                            snapshot: snapshot,
-                            profile: controller.profileForScore(_score),
-                            score: _score,
-                            onReset: _reset,
-                          ),
-                        ]
-                      : [
-                          _ProgressHeader(
-                            current: _step,
-                            total: snapshot.questions.length,
-                          ),
-                          _QuestionCard(
-                            question: snapshot.questions[_step],
-                            selected: _answers[snapshot.questions[_step].id],
-                            quizAnswers: _quizAnswers,
-                            onSelect: _selectAnswer,
-                            onQuizSelect: _selectQuizAnswer,
-                          ),
-                          if (_step == 0)
-                            _InfoBanner(
-                              title: snapshot.infoTitle,
-                              body: snapshot.infoBody,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: _showResult ? snapshot.resultTitle : snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: _showResult
+                        ? [
+                            _ResultView(
+                              snapshot: snapshot,
+                              profile: controller.profileForScore(_score),
+                              score: _score,
+                              onReset: _reset,
                             ),
-                        ],
-                ),
-              ),
-            ),
-            if (!_showResult)
-              Padding(
-                padding: EdgeInsets.only(bottom: footerBottomInset),
-                child: VitStickyFooter(
-                  child: Row(
-                    children: [
-                      if (_step > 0) ...[
-                        Expanded(
-                          child: VitCtaButton(
-                            key: StakingSuitabilityAssessmentPage
-                                .previousButtonKey,
-                            variant: VitCtaButtonVariant.secondary,
-                            height: AppSpacing.ctaHeight,
-                            onPressed: _previous,
-                            child: const Text('Previous'),
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.x3),
-                      ],
-                      Expanded(
-                        child: VitCtaButton(
-                          key: StakingSuitabilityAssessmentPage.nextButtonKey,
-                          height: AppSpacing.ctaHeight,
-                          onPressed:
-                              _isAnswered(controller, snapshot.questions[_step])
-                              ? () => _next(snapshot)
-                              : null,
-                          child: Text(
-                            _step == snapshot.questions.length - 1
-                                ? 'Submit'
-                                : 'Next',
-                          ),
-                        ),
-                      ),
-                    ],
+                          ]
+                        : [
+                            _ProgressHeader(
+                              current: _step,
+                              total: snapshot.questions.length,
+                            ),
+                            _QuestionCard(
+                              question: snapshot.questions[_step],
+                              selected: _answers[snapshot.questions[_step].id],
+                              quizAnswers: _quizAnswers,
+                              onSelect: _selectAnswer,
+                              onQuizSelect: _selectQuizAnswer,
+                            ),
+                            if (_step == 0)
+                              _InfoBanner(
+                                title: snapshot.infoTitle,
+                                body: snapshot.infoBody,
+                              ),
+                          ],
                   ),
                 ),
               ),
-          ],
+              if (!_showResult)
+                Padding(
+                  padding: EdgeInsets.only(bottom: footerBottomInset),
+                  child: VitStickyFooter(
+                    child: Row(
+                      children: [
+                        if (_step > 0) ...[
+                          Expanded(
+                            child: VitCtaButton(
+                              key: StakingSuitabilityAssessmentPage
+                                  .previousButtonKey,
+                              variant: VitCtaButtonVariant.secondary,
+                              height: AppSpacing.ctaHeight,
+                              onPressed: _previous,
+                              child: const Text('Previous'),
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.x3),
+                        ],
+                        Expanded(
+                          child: VitCtaButton(
+                            key: StakingSuitabilityAssessmentPage.nextButtonKey,
+                            height: AppSpacing.ctaHeight,
+                            onPressed:
+                                _isAnswered(
+                                  controller,
+                                  snapshot.questions[_step],
+                                )
+                                ? () => _next(snapshot)
+                                : null,
+                            child: Text(
+                              _step == snapshot.questions.length - 1
+                                  ? 'Submit'
+                                  : 'Next',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/features/home/domain/entities/home_entities.dart';
 
@@ -21,6 +22,8 @@ class HomeMockData {
     homeBadge: homeBadge,
     announcements: announcements,
     quickActions: quickActions,
+    nextAction: nextAction,
+    recentProducts: recentProducts,
     pairs: pairs,
   );
 
@@ -34,82 +37,172 @@ class HomeMockData {
 
   static const quickActions = [
     HomeQuickAction(
-      icon: Icons.explore_rounded,
-      label: 'Kh\u00E1m ph\u00E1',
-      routePath: '/topics',
-      accentColor: AppModuleAccents.markets,
-    ),
-    HomeQuickAction(
       icon: Icons.bolt_rounded,
       label: 'Mua nhanh',
       routePath: '/trade/btcusdt',
       accentColor: AppModuleAccents.trade,
+      stateLabel: 'Spot',
     ),
     HomeQuickAction(
       icon: Icons.swap_horiz_rounded,
       label: 'Convert',
       routePath: '/trade/convert',
       accentColor: AppModuleAccents.trade,
+      stateLabel: 'Core',
+    ),
+    HomeQuickAction(
+      icon: Icons.account_balance_wallet_rounded,
+      label: 'N\u1EA1p/R\u00FAt',
+      routePath: '/wallet',
+      accentColor: AppColors.info,
+      stateLabel: 'Wallet',
     ),
     HomeQuickAction(
       icon: Icons.groups_rounded,
       label: 'P2P',
       routePath: '/p2p',
-      accentColor: AppModuleAccents.wallet,
-    ),
-    HomeQuickAction(
-      icon: Icons.rocket_launch_rounded,
-      label: 'Launchpad',
-      routePath: '/launchpad',
-      accentColor: AppModuleAccents.home,
-    ),
-    HomeQuickAction(
-      icon: Icons.account_balance_rounded,
-      label: 'Staking',
-      routePath: '/earn/staking',
-      accentColor: AppModuleAccents.wallet,
+      accentColor: AppColors.successAccentBright,
+      stateLabel: 'Escrow',
     ),
     HomeQuickAction(
       icon: Icons.calculate_rounded,
       label: 'Mua \u0111\u1ECBnh k\u1EF3',
       routePath: '/dca',
-      accentColor: AppModuleAccents.trade,
+      accentColor: AppColors.caution,
+      stateLabel: 'DCA',
     ),
     HomeQuickAction(
-      icon: Icons.smart_toy_rounded,
-      label: 'Bot',
-      routePath: '/trade/bots',
-      accentColor: AppModuleAccents.trade,
-    ),
-    HomeQuickAction(
-      icon: Icons.content_copy_rounded,
-      label: 'Copy Trade',
-      routePath: '/trade/copy-trading',
-      accentColor: AppModuleAccents.trade,
+      icon: Icons.account_balance_rounded,
+      label: 'Staking',
+      routePath: '/earn/staking',
+      accentColor: AppColors.buy,
+      stateLabel: 'Earn',
     ),
     HomeQuickAction(
       icon: Icons.savings_rounded,
       label: 'Ti\u1EBFt ki\u1EC7m',
       routePath: '/earn/savings',
-      accentColor: AppModuleAccents.wallet,
+      accentColor: AppColors.buy,
+      stateLabel: 'Yield',
+    ),
+    HomeQuickAction(
+      icon: Icons.rocket_launch_rounded,
+      label: 'Launchpad',
+      routePath: '/launchpad',
+      accentColor: AppColors.riskHigh,
+      stateLabel: 'Token',
+    ),
+    HomeQuickAction(
+      icon: Icons.adjust_rounded,
+      label: 'D\u1EF1 \u0111o\u00E1n',
+      routePath: '/markets/predictions',
+      accentColor: AppModuleAccents.predictions,
+      stateLabel: 'Market',
+    ),
+    HomeQuickAction(
+      icon: Icons.sports_esports_outlined,
+      label: 'Arena',
+      routePath: '/arena',
+      accentColor: AppColors.crashAccent,
+      stateLabel: 'Points',
     ),
     HomeQuickAction(
       icon: Icons.card_giftcard_rounded,
       label: 'Ph\u1EA7n th\u01B0\u1EDFng',
       routePath: '/rewards',
-      accentColor: AppModuleAccents.home,
+      accentColor: AppColors.medalGold,
+      stateLabel: 'Growth',
+    ),
+    HomeQuickAction(
+      icon: Icons.support_agent_rounded,
+      label: 'H\u1ED7 tr\u1EE3',
+      routePath: '/support',
+      accentColor: AppColors.info,
+      stateLabel: 'Help',
     ),
     HomeQuickAction(
       icon: Icons.show_chart_rounded,
       label: 'Margin',
       routePath: '/trade/margin',
-      accentColor: AppModuleAccents.trade,
+      accentColor: AppColors.riskHigh,
+      stateLabel: 'Pro',
+    ),
+    HomeQuickAction(
+      icon: Icons.smart_toy_rounded,
+      label: 'Bot',
+      routePath: '/trade/bots',
+      accentColor: AppColors.caution,
+      stateLabel: 'Auto',
+    ),
+    HomeQuickAction(
+      icon: Icons.content_copy_rounded,
+      label: 'Copy Trade',
+      routePath: '/trade/copy-trading',
+      accentColor: AppColors.accentDark,
+      stateLabel: 'Social',
+    ),
+    HomeQuickAction(
+      icon: Icons.explore_rounded,
+      label: 'Kh\u00E1m ph\u00E1',
+      routePath: '/topics',
+      accentColor: AppModuleAccents.discovery,
+      stateLabel: 'Topic',
     ),
     HomeQuickAction(
       icon: Icons.campaign_rounded,
       label: 'Gi\u1EDBi thi\u1EC7u',
       routePath: '/referral',
-      accentColor: AppModuleAccents.home,
+      accentColor: AppColors.accentDark,
+      stateLabel: 'Invite',
+    ),
+  ];
+
+  static const nextAction = HomeNextAction(
+    icon: Icons.file_upload_outlined,
+    title: 'Hoàn tất rút USDT',
+    subtitle: 'TRC20 sẵn sàng, cần xem lại phí và xác nhận 2FA',
+    routePath: '/wallet/withdraw/USDT',
+    ctaLabel: 'Tiếp tục',
+    accentColor: AppModuleAccents.wallet,
+    stateLabel: 'Next',
+  );
+
+  static const recentProducts = [
+    HomeRecentProduct(
+      id: 'spot-btc',
+      icon: Icons.bolt_rounded,
+      label: 'BTC/USDT',
+      contextLabel: 'Spot order',
+      routePath: '/trade/btcusdt',
+      accentColor: AppModuleAccents.trade,
+      stateLabel: 'Spot',
+    ),
+    HomeRecentProduct(
+      id: 'p2p-usdt',
+      icon: Icons.groups_rounded,
+      label: 'P2P USDT/VND',
+      contextLabel: 'Escrow',
+      routePath: '/p2p',
+      accentColor: AppModuleAccents.p2p,
+      stateLabel: 'P2P',
+    ),
+    HomeRecentProduct(
+      id: 'staking-eth',
+      icon: Icons.account_balance_rounded,
+      label: 'ETH staking',
+      contextLabel: 'Earn',
+      routePath: '/earn/staking',
+      accentColor: AppModuleAccents.earn,
+      stateLabel: 'Earn',
+    ),
+    HomeRecentProduct(
+      id: 'copy-alpha',
+      icon: Icons.content_copy_rounded,
+      label: 'Alpha Copy',
+      contextLabel: 'Provider',
+      routePath: '/trade/copy-trading',
+      accentColor: AppModuleAccents.trade,
+      stateLabel: 'Copy',
     ),
   ];
 

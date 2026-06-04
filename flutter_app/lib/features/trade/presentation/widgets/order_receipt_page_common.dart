@@ -93,6 +93,69 @@ class _WarningNotice extends StatelessWidget {
   }
 }
 
+class _OrderSupportLink extends StatelessWidget {
+  const _OrderSupportLink({required this.supportRoute});
+
+  final String supportRoute;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      key: OrderReceiptPage.supportKey,
+      onTap: () => context.go(supportRoute),
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        height: 46,
+        margin: const EdgeInsets.symmetric(horizontal: 40),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        decoration: BoxDecoration(
+          color: AppColors.primary.withValues(alpha: .08),
+          border: Border.all(color: AppColors.primary.withValues(alpha: .18)),
+          borderRadius: AppRadii.mdRadius,
+        ),
+        child: Row(
+          children: [
+            const Icon(
+              Icons.support_agent_rounded,
+              color: AppColors.primary,
+              size: 16,
+            ),
+            const SizedBox(width: 9),
+            Expanded(
+              child: Text(
+                'Cần hỗ trợ lệnh này?',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text1,
+                  fontSize: 12,
+                  fontWeight: AppTextStyles.bold,
+                  height: 1,
+                ),
+              ),
+            ),
+            Text(
+              'Mở hồ sơ',
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.primary,
+                fontSize: 11,
+                fontWeight: AppTextStyles.bold,
+                height: 1,
+              ),
+            ),
+            const SizedBox(width: 4),
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.primary,
+              size: 16,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _ReceiptFooter extends StatelessWidget {
   const _ReceiptFooter({
     required this.sharePressed,

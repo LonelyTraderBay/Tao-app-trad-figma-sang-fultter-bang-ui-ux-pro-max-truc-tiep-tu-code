@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -77,106 +78,109 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
       semanticLabel: 'SC-170 DCARebalanceConfig',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Auto-Rebalance',
-              subtitle: 'Cân bằng · DCA',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: Stack(
-                children: [
-                  ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(
-                      context,
-                    ).copyWith(scrollbars: false),
-                    child: SingleChildScrollView(
-                      key: DCARebalanceConfig.contentKey,
-                      physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(bottom: bottomInset),
-                      child: VitPageContent(
-                        padding: VitContentPadding.relaxed,
-                        customGap: AppSpacing.x5,
-                        children: [
-                          const _InfoBanner(),
-                          _AllocationSummary(
-                            targets: _targets,
-                            totalPercent: _totalPercent,
-                            onAdd: _addTarget,
-                          ),
-                          _TargetList(
-                            targets: _targets,
-                            onPercentChanged: _updateTargetPercent,
-                            onToleranceChanged: _updateTargetTolerance,
-                            onRemove: _removeTarget,
-                          ),
-                          _StrategySection(
-                            options: snapshot.strategyOptions,
-                            active: _strategy,
-                            onChanged: (strategy) {
-                              HapticFeedback.selectionClick();
-                              setState(() => _strategy = strategy);
-                            },
-                          ),
-                          if (_strategy == DcaRebalanceStrategy.threshold ||
-                              _strategy == DcaRebalanceStrategy.hybrid)
-                            _ThresholdCard(
-                              value: _driftThreshold,
-                              onChanged: (value) =>
-                                  setState(() => _driftThreshold = value),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Auto-Rebalance',
+            subtitle: 'Cân bằng · DCA',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: Stack(
+                  children: [
+                    ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: DCARebalanceConfig.contentKey,
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.only(bottom: bottomInset),
+                        child: VitPageContent(
+                          padding: VitContentPadding.relaxed,
+                          customGap: AppSpacing.x5,
+                          children: [
+                            const _InfoBanner(),
+                            _AllocationSummary(
+                              targets: _targets,
+                              totalPercent: _totalPercent,
+                              onAdd: _addTarget,
                             ),
-                          if (_strategy == DcaRebalanceStrategy.periodic ||
-                              _strategy == DcaRebalanceStrategy.hybrid)
-                            _FrequencyCard(
-                              options: snapshot.frequencyOptions,
-                              active: _frequency,
-                              onChanged: (frequency) {
+                            _TargetList(
+                              targets: _targets,
+                              onPercentChanged: _updateTargetPercent,
+                              onToleranceChanged: _updateTargetTolerance,
+                              onRemove: _removeTarget,
+                            ),
+                            _StrategySection(
+                              options: snapshot.strategyOptions,
+                              active: _strategy,
+                              onChanged: (strategy) {
                                 HapticFeedback.selectionClick();
-                                setState(() => _frequency = frequency);
+                                setState(() => _strategy = strategy);
                               },
                             ),
-                          _AdvancedSettings(
-                            expanded: _showAdvanced,
-                            minTradeAmountUsd: _minTradeAmountUsd,
-                            autoExecute: _autoExecute,
-                            onToggleExpanded: () {
-                              HapticFeedback.selectionClick();
-                              setState(() => _showAdvanced = !_showAdvanced);
-                            },
-                            onMinTradeChanged: (value) =>
-                                setState(() => _minTradeAmountUsd = value),
-                            onAutoExecuteChanged: (value) {
-                              HapticFeedback.selectionClick();
-                              setState(() => _autoExecute = value);
-                            },
-                          ),
-                        ],
+                            if (_strategy == DcaRebalanceStrategy.threshold ||
+                                _strategy == DcaRebalanceStrategy.hybrid)
+                              _ThresholdCard(
+                                value: _driftThreshold,
+                                onChanged: (value) =>
+                                    setState(() => _driftThreshold = value),
+                              ),
+                            if (_strategy == DcaRebalanceStrategy.periodic ||
+                                _strategy == DcaRebalanceStrategy.hybrid)
+                              _FrequencyCard(
+                                options: snapshot.frequencyOptions,
+                                active: _frequency,
+                                onChanged: (frequency) {
+                                  HapticFeedback.selectionClick();
+                                  setState(() => _frequency = frequency);
+                                },
+                              ),
+                            _AdvancedSettings(
+                              expanded: _showAdvanced,
+                              minTradeAmountUsd: _minTradeAmountUsd,
+                              autoExecute: _autoExecute,
+                              onToggleExpanded: () {
+                                HapticFeedback.selectionClick();
+                                setState(() => _showAdvanced = !_showAdvanced);
+                              },
+                              onMinTradeChanged: (value) =>
+                                  setState(() => _minTradeAmountUsd = value),
+                              onAutoExecuteChanged: (value) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _autoExecute = value);
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    left: 60,
-                    right: 60,
-                    bottom: stickyBottom,
-                    child: _StickyActions(
-                      valid: _isValidTotal,
-                      onPreview: _openPreview,
-                      onSave: _openPreview,
+                    Positioned(
+                      left: 60,
+                      right: 60,
+                      bottom: stickyBottom,
+                      child: _StickyActions(
+                        valid: _isValidTotal,
+                        onPreview: _openPreview,
+                        onSave: _openPreview,
+                      ),
                     ),
-                  ),
-                  if (_showPreview)
-                    _PreviewSheet(
-                      previews: _tradePreviews(snapshot.totalPortfolioUsd),
-                      totalFeesUsd: _totalFeesUsd(snapshot.totalPortfolioUsd),
-                      onClose: _closePreview,
-                      onConfirm: _saveConfig,
-                    ),
-                ],
+                    if (_showPreview)
+                      _PreviewSheet(
+                        previews: _tradePreviews(snapshot.totalPortfolioUsd),
+                        totalFeesUsd: _totalFeesUsd(snapshot.totalPortfolioUsd),
+                        onClose: _closePreview,
+                        onConfirm: _saveConfig,
+                      ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

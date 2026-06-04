@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -59,51 +60,54 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
       semanticLabel: 'SC-130 BotEquityCurvePage',
       child: Material(
         color: _equityBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Equity Curve',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeBots),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: BotEquityCurvePage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SummaryRow(summary: snapshot.summary),
-                    const SizedBox(height: 14),
-                    _Tabs(
-                      active: _view,
-                      onChanged: (id) => setState(() => _view = id),
-                    ),
-                    const SizedBox(height: 16),
-                    if (_view == 'equity') ...[
-                      const _SectionLabel('Equity Curve vs Buy & Hold'),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Equity Curve',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeBots),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: BotEquityCurvePage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SummaryRow(summary: snapshot.summary),
+                      const SizedBox(height: 14),
+                      _Tabs(
+                        active: _view,
+                        onChanged: (id) => setState(() => _view = id),
+                      ),
+                      const SizedBox(height: 16),
+                      if (_view == 'equity') ...[
+                        const _SectionLabel('Equity Curve vs Buy & Hold'),
+                        const SizedBox(height: 8),
+                        _EquityChartCard(points: snapshot.equityPoints),
+                      ] else if (_view == 'sharpe') ...[
+                        const _SectionLabel('Rolling 30-Day Sharpe Ratio'),
+                        const SizedBox(height: 8),
+                        _SharpeCard(points: snapshot.equityPoints),
+                      ] else ...[
+                        const _SectionLabel('Monthly Alpha (Bot vs Market)'),
+                        const SizedBox(height: 8),
+                        _MonthlyAlphaCard(months: snapshot.monthlyReturns),
+                      ],
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Performance Statistics'),
                       const SizedBox(height: 8),
-                      _EquityChartCard(points: snapshot.equityPoints),
-                    ] else if (_view == 'sharpe') ...[
-                      const _SectionLabel('Rolling 30-Day Sharpe Ratio'),
-                      const SizedBox(height: 8),
-                      _SharpeCard(points: snapshot.equityPoints),
-                    ] else ...[
-                      const _SectionLabel('Monthly Alpha (Bot vs Market)'),
-                      const SizedBox(height: 8),
-                      _MonthlyAlphaCard(months: snapshot.monthlyReturns),
+                      _PerformanceCard(stats: snapshot.performanceStats),
+                      const SizedBox(height: 18),
+                      _AnalysisCard(items: snapshot.analysisItems),
                     ],
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Performance Statistics'),
-                    const SizedBox(height: 8),
-                    _PerformanceCard(stats: snapshot.performanceStats),
-                    const SizedBox(height: 18),
-                    _AnalysisCard(items: snapshot.analysisItems),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/auth/data/auth_repository.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/pages/otp_page.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/pages/two_fa_setup_page.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
@@ -166,5 +167,18 @@ void main() {
 
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_active_home')), findsOneWidget);
+  });
+
+  testWidgets('SC-004 direct header back falls back to OTP', (tester) async {
+    _setPhoneViewport(tester);
+
+    await tester.pumpWidget(_app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(OTPPage), findsOneWidget);
+    expect(find.byType(TwoFASetupPage), findsNothing);
   });
 }

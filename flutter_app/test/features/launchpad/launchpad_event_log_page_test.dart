@@ -127,7 +127,10 @@ void main() {
 
     await tester.tap(find.byKey(LaunchpadEventLogPage.formatKey('json')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(LaunchpadEventLogPage.copyButtonKey));
+    final copyButtonTopLeft = tester.getTopLeft(
+      find.byKey(LaunchpadEventLogPage.copyButtonKey),
+    );
+    await tester.tapAt(copyButtonTopLeft + const Offset(24, 12));
     await tester.pumpAndSettle();
     expect(find.text('Da copy vao clipboard'), findsOneWidget);
   });

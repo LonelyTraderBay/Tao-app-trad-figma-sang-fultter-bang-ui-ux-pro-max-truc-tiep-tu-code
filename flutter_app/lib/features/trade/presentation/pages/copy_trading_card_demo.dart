@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -51,37 +52,40 @@ class CopyTradingCardDemo extends ConsumerWidget {
       semanticLabel: 'SC-401 CopyTradingCardDemo',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: CopyTradingCardDemo.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  gap: VitContentGap.loose,
-                  children: [
-                    _AnalysisHeader(snapshot: snapshot),
-                    for (final variant in snapshot.variants)
-                      CopyTradingVariantSection(
-                        key: CopyTradingCardDemo.variantKey(variant.id),
-                        variant: variant,
-                        metrics: snapshot.metrics,
-                      ),
-                    _ComparisonMatrix(issues: snapshot.issues),
-                    _OriginalIssues(issues: snapshot.originalIssues),
-                    _Recommendation(snapshot: snapshot),
-                    _Guidelines(guidelines: snapshot.guidelines),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: CopyTradingCardDemo.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    gap: VitContentGap.loose,
+                    children: [
+                      _AnalysisHeader(snapshot: snapshot),
+                      for (final variant in snapshot.variants)
+                        CopyTradingVariantSection(
+                          key: CopyTradingCardDemo.variantKey(variant.id),
+                          variant: variant,
+                          metrics: snapshot.metrics,
+                        ),
+                      _ComparisonMatrix(issues: snapshot.issues),
+                      _OriginalIssues(issues: snapshot.originalIssues),
+                      _Recommendation(snapshot: snapshot),
+                      _Guidelines(guidelines: snapshot.guidelines),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

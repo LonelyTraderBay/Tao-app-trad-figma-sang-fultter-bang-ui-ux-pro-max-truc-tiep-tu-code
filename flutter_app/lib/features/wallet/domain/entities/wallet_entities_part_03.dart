@@ -10,6 +10,7 @@ final class WalletWithdrawLimitsSnapshot {
     required this.endpoint,
     required this.actionDraft,
     required this.supportedStates,
+    this.highRiskContractId,
   });
 
   final int currentLevel;
@@ -20,6 +21,7 @@ final class WalletWithdrawLimitsSnapshot {
   final String endpoint;
   final String actionDraft;
   final List<WalletScreenState> supportedStates;
+  final String? highRiskContractId;
 
   WalletKycTier get currentTier =>
       tiers.firstWhere((tier) => tier.level == currentLevel);
@@ -277,6 +279,7 @@ final class WalletWithdrawSnapshot {
     required this.endpoint,
     required this.actionDraft,
     required this.supportedStates,
+    this.highRiskContractId,
   });
 
   final String asset;
@@ -286,6 +289,7 @@ final class WalletWithdrawSnapshot {
   final String endpoint;
   final String actionDraft;
   final List<WalletScreenState> supportedStates;
+  final String? highRiskContractId;
 }
 
 final class WalletWithdrawNetwork {

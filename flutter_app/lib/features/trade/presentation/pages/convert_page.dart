@@ -3,19 +3,22 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/convert_page_widgets.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
 part 'convert_page_part_01.dart';
 part 'convert_page_part_02.dart';
@@ -108,82 +111,89 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
       semanticLabel: 'SC-056 ConvertPage',
       child: Material(
         type: MaterialType.transparency,
-        child: SingleChildScrollView(
-          key: ConvertPage.contentKey,
-          padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _ConvertHeader(onBack: () => context.go(AppRoutePaths.trade)),
-              const SizedBox(height: 20),
-              _ModeTabs(
-                mode: _mode,
-                onChanged: (value) => setState(() => _mode = value),
-              ),
-              const SizedBox(height: 18),
-              _FavoriteHeader(),
-              const SizedBox(height: 9),
-              _FavoritePairs(
-                pairs: snapshot.favoritePairs,
-                activeFrom: fromAsset.symbol,
-                activeTo: toAsset.symbol,
-                onSelected: _selectFavoritePair,
-              ),
-              const SizedBox(height: 22),
-              _RateBar(
-                label: quote.quoteLabel,
-                countdown: '${quote.validSeconds}s',
-              ),
-              const SizedBox(height: 16),
-              _AmountCard(
-                label: 'Từ',
-                asset: fromAsset,
-                amountController: _amountController,
-                input: true,
-                onChanged: () => setState(() => _receipt = null),
-                onAssetTap: () => _showAssetPicker('from', snapshot.assets),
-                onPercent: (pct) => _setPercentAmount(fromAsset, pct),
-              ),
-              Transform.translate(
-                offset: const Offset(0, -2),
-                child: Center(child: _SwapButton(onTap: _swapAssets)),
-              ),
-              Transform.translate(
-                offset: const Offset(0, -2),
-                child: _AmountCard(
-                  label: 'Sang',
-                  asset: toAsset,
-                  quoteAmount: quote.toAmount,
-                  onAssetTap: () => _showAssetPicker('to', snapshot.assets),
+        child: VitAutoHideHeaderScaffold(
+          header: _ConvertHeader(
+            onBack: () => goBackOrFallback(
+              context,
+              fallbackPath: AppRoutePaths.trade,
+              mode: BackNavigationMode.historyThenFallback,
+            ),
+          ),
+          child: SingleChildScrollView(
+            key: ConvertPage.contentKey,
+            padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _ModeTabs(
+                  mode: _mode,
+                  onChanged: (value) => setState(() => _mode = value),
                 ),
-              ),
-              const SizedBox(height: 16),
-              const _ToolRow(),
-              const SizedBox(height: 16),
-              _PairMiniCard(
-                fromSymbol: fromAsset.symbol,
-                toSymbol: toAsset.symbol,
-              ),
-              const SizedBox(height: 16),
-              _SlippageCard(
-                options: snapshot.slippageOptions,
-                active: _slippage,
-                onChanged: (value) => setState(() {
-                  _slippage = value;
-                  _receipt = null;
-                }),
-              ),
-              const SizedBox(height: 18),
-              _SubmitButton(
-                enabled: quote.canSubmit,
-                receipt: _receipt,
-                onPressed: () => _submit(request),
-              ),
-              const SizedBox(height: 18),
-              _HistoryHeader(),
-              const SizedBox(height: 9),
-              _HistoryList(records: snapshot.history),
-            ],
+                const SizedBox(height: 18),
+                _FavoriteHeader(),
+                const SizedBox(height: 9),
+                _FavoritePairs(
+                  pairs: snapshot.favoritePairs,
+                  activeFrom: fromAsset.symbol,
+                  activeTo: toAsset.symbol,
+                  onSelected: _selectFavoritePair,
+                ),
+                const SizedBox(height: 22),
+                _RateBar(
+                  label: quote.quoteLabel,
+                  countdown: '${quote.validSeconds}s',
+                ),
+                const SizedBox(height: 16),
+                _AmountCard(
+                  label: 'Từ',
+                  asset: fromAsset,
+                  amountController: _amountController,
+                  input: true,
+                  onChanged: () => setState(() => _receipt = null),
+                  onAssetTap: () => _showAssetPicker('from', snapshot.assets),
+                  onPercent: (pct) => _setPercentAmount(fromAsset, pct),
+                ),
+                Transform.translate(
+                  offset: const Offset(0, -2),
+                  child: Center(child: _SwapButton(onTap: _swapAssets)),
+                ),
+                Transform.translate(
+                  offset: const Offset(0, -2),
+                  child: _AmountCard(
+                    label: 'Sang',
+                    asset: toAsset,
+                    quoteAmount: quote.toAmount,
+                    onAssetTap: () => _showAssetPicker('to', snapshot.assets),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const _ToolRow(),
+                const SizedBox(height: 16),
+                _PairMiniCard(
+                  fromSymbol: fromAsset.symbol,
+                  toSymbol: toAsset.symbol,
+                ),
+                const SizedBox(height: 16),
+                _SlippageCard(
+                  options: snapshot.slippageOptions,
+                  active: _slippage,
+                  onChanged: (value) => setState(() {
+                    _slippage = value;
+                    _receipt = null;
+                  }),
+                ),
+                const SizedBox(height: 18),
+                _SubmitButton(
+                  enabled: quote.canSubmit,
+                  receipt: _receipt,
+                  onPressed: () => _submit(request),
+                ),
+                const SizedBox(height: 18),
+                _HistoryHeader(),
+                const SizedBox(height: 9),
+                _HistoryList(records: snapshot.history),
+              ],
+            ),
           ),
         ),
       ),
@@ -226,7 +236,7 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
     String side,
     List<TradeConvertAsset> assets,
   ) async {
-    final selected = await showModalBottomSheet<String>(
+    final selected = await showVitBottomSheet<String>(
       context: context,
       backgroundColor: AppColors.transparent,
       barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .72),

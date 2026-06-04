@@ -10,11 +10,18 @@ mixin _MockLaunchpadRepositoryMethodsPart02 on _MockLaunchpadRepositoryBase {
           'POST /orders/:id/action where applicable; POST /launchpad/subscribe|claim|bridge where applicable',
       title: 'Chi tiet Bridge',
       backRoute: '/launchpad/idobridge/sample',
+      supportRoute: ContextualSupportContracts.supportRouteFor(
+        ContextualSupportFlow.launchpad,
+        referenceId: normalizedId,
+        sourceRoute: '/launchpad/bridge-order/tx001',
+        issueLabel: 'Launchpad bridge order support',
+      ),
       txId: normalizedId,
       order: _bridgeOrder,
       events: _bridgeEvents,
       contractNotes:
           'Launchpad bridge order returns launchpadProjects, subscriptions, claims, bridgeOrders, contracts, selected bridge order, polling steps, websocket event summary, action routes, and screenState. Captured route tx001 follows the Flutter fallback to the first bridge history order while preserving the route-scoped endpoint.',
+      highRiskContractId: HighRiskFlowContractIds.launchpadTokenAccess,
       supportedStates: const {
         LaunchpadScreenState.loading,
         LaunchpadScreenState.empty,

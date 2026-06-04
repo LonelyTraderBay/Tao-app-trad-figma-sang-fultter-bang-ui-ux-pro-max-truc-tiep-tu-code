@@ -23,6 +23,7 @@ final class MockDiscoveryRepository implements DiscoveryRepository {
       contractNotes:
           'Discovery-only bridge: Prediction Markets stay wallet/USDT; Open Arena stays Arena Points only.',
       supportedStates: const {
+        DiscoveryScreenState.onlineLive,
         DiscoveryScreenState.loading,
         DiscoveryScreenState.empty,
         DiscoveryScreenState.error,
@@ -61,6 +62,7 @@ final class MockDiscoveryRepository implements DiscoveryRepository {
       contractNotes:
           'Topic is discovery context only; Prediction positions and Arena Points remain separate module contracts.',
       supportedStates: const {
+        DiscoveryScreenState.onlineLive,
         DiscoveryScreenState.loading,
         DiscoveryScreenState.empty,
         DiscoveryScreenState.error,

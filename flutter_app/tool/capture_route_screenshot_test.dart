@@ -18,6 +18,7 @@ void main() {
   );
   const width = int.fromEnvironment('CAPTURE_WIDTH', defaultValue: 440);
   const height = int.fromEnvironment('CAPTURE_HEIGHT', defaultValue: 956);
+  const scrollY = int.fromEnvironment('CAPTURE_SCROLL_Y', defaultValue: 0);
 
   testWidgets('captures a visual QA route screenshot', (tester) async {
     await tester.runAsync(_loadCaptureFonts);
@@ -44,6 +45,14 @@ void main() {
     );
     await tester.pump(const Duration(milliseconds: 100));
     await tester.pump(const Duration(milliseconds: 500));
+
+    if (scrollY > 0) {
+      await tester.drag(
+        find.byType(Scrollable).first,
+        Offset(0, -scrollY.toDouble()),
+      );
+      await tester.pumpAndSettle(const Duration(milliseconds: 300));
+    }
 
     final boundary =
         captureKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;

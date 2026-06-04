@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -50,48 +51,55 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
       semanticLabel: 'SC-110 RiskIndicatorExplainerPage',
       child: Material(
         color: _riskBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Risk Indicator',
-              subtitle: 'Summary Risk Indicator (SRI)',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: RiskIndicatorExplainerPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _ProductSriCard(snapshot: snapshot),
-                    const SizedBox(height: 26),
-                    const _SectionLabel('What is the Summary Risk Indicator?'),
-                    const SizedBox(height: 10),
-                    _SriExplanationCard(
-                      holdingPeriodYears: snapshot.holdingPeriodYears,
-                    ),
-                    const SizedBox(height: 25),
-                    const _SectionLabel('Understanding the 1-7 Scale'),
-                    const SizedBox(height: 10),
-                    for (final level in snapshot.levels) ...[
-                      _RiskLevelCard(
-                        level: level,
-                        isProductLevel: level.level == snapshot.productSri,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Risk Indicator',
+            subtitle: 'Summary Risk Indicator (SRI)',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: RiskIndicatorExplainerPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _ProductSriCard(snapshot: snapshot),
+                      const SizedBox(height: 26),
+                      const _SectionLabel(
+                        'What is the Summary Risk Indicator?',
                       ),
-                      if (level != snapshot.levels.last)
-                        const SizedBox(height: 10),
+                      const SizedBox(height: 10),
+                      _SriExplanationCard(
+                        holdingPeriodYears: snapshot.holdingPeriodYears,
+                      ),
+                      const SizedBox(height: 25),
+                      const _SectionLabel('Understanding the 1-7 Scale'),
+                      const SizedBox(height: 10),
+                      for (final level in snapshot.levels) ...[
+                        _RiskLevelCard(
+                          level: level,
+                          isProductLevel: level.level == snapshot.productSri,
+                        ),
+                        if (level != snapshot.levels.last)
+                          const SizedBox(height: 10),
+                      ],
+                      const SizedBox(height: 25),
+                      const _SectionLabel(
+                        'Additional Risks Not Captured by SRI',
+                      ),
+                      const SizedBox(height: 10),
+                      _AdditionalRisksCard(risks: snapshot.additionalRisks),
                     ],
-                    const SizedBox(height: 25),
-                    const _SectionLabel('Additional Risks Not Captured by SRI'),
-                    const SizedBox(height: 10),
-                    _AdditionalRisksCard(risks: snapshot.additionalRisks),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

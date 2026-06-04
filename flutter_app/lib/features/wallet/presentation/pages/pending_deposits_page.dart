@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
@@ -63,51 +64,55 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
       semanticLabel: 'SC-152 PendingDepositsPage',
       child: Material(
         color: _pendingBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'N\u1EA1p ti\u1EC1n \u0111ang ch\u1EDD',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.wallet),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: PendingDepositsPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SummaryBanner(
-                      pendingCount: snapshot.pendingCount,
-                      onRefresh: () {},
-                    ),
-                    const SizedBox(height: 16),
-                    _FilterChips(
-                      active: _filter,
-                      pendingCount: snapshot.pendingCount,
-                      onChanged: (filter) => setState(() => _filter = filter),
-                    ),
-                    const SizedBox(height: 16),
-                    if (deposits.isEmpty)
-                      const _EmptyDeposits()
-                    else
-                      for (final deposit in deposits) ...[
-                        _DepositCard(
-                          deposit: deposit,
-                          copied: _copiedId == deposit.id,
-                          onCopy: () => setState(() => _copiedId = deposit.id),
-                        ),
-                        if (deposit != deposits.last)
-                          const SizedBox(height: 12),
-                      ],
-                    const SizedBox(height: 16),
-                    const _InfoNotice(),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'N\u1EA1p ti\u1EC1n \u0111ang ch\u1EDD',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.wallet),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: PendingDepositsPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SummaryBanner(
+                        pendingCount: snapshot.pendingCount,
+                        onRefresh: () {},
+                      ),
+                      const SizedBox(height: 16),
+                      _FilterChips(
+                        active: _filter,
+                        pendingCount: snapshot.pendingCount,
+                        onChanged: (filter) => setState(() => _filter = filter),
+                      ),
+                      const SizedBox(height: 16),
+                      if (deposits.isEmpty)
+                        const _EmptyDeposits()
+                      else
+                        for (final deposit in deposits) ...[
+                          _DepositCard(
+                            deposit: deposit,
+                            copied: _copiedId == deposit.id,
+                            onCopy: () =>
+                                setState(() => _copiedId = deposit.id),
+                          ),
+                          if (deposit != deposits.last)
+                            const SizedBox(height: 12),
+                        ],
+                      const SizedBox(height: 16),
+                      const _InfoNotice(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

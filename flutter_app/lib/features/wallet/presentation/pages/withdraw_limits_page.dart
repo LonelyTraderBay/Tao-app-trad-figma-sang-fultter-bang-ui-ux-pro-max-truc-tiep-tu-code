@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
@@ -50,46 +51,50 @@ class WithdrawLimitsPage extends ConsumerWidget {
       semanticLabel: 'SC-153 WithdrawLimitsPage',
       child: Material(
         color: _limitsBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'H\u1EA1n m\u1EE9c r\u00FAt ti\u1EC1n',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.wallet),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: WithdrawLimitsPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _CurrentTierCard(snapshot: snapshot),
-                    const SizedBox(height: 18),
-                    _QuickStats(tier: snapshot.currentTier),
-                    const SizedBox(height: 16),
-                    const _LimitWarning(),
-                    const SizedBox(height: 18),
-                    const _SectionLabel(
-                      label: 'So s\u00E1nh h\u1EA1n m\u1EE9c theo c\u1EA5p KYC',
-                    ),
-                    const SizedBox(height: 10),
-                    for (final tier in snapshot.tiers) ...[
-                      _KycTierCard(
-                        tier: tier,
-                        currentLevel: snapshot.currentLevel,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'H\u1EA1n m\u1EE9c r\u00FAt ti\u1EC1n',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.wallet),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: WithdrawLimitsPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _CurrentTierCard(snapshot: snapshot),
+                      const SizedBox(height: 18),
+                      _QuickStats(tier: snapshot.currentTier),
+                      const SizedBox(height: 16),
+                      const _LimitWarning(),
+                      const SizedBox(height: 18),
+                      const _SectionLabel(
+                        label:
+                            'So s\u00E1nh h\u1EA1n m\u1EE9c theo c\u1EA5p KYC',
                       ),
-                      if (tier != snapshot.tiers.last)
-                        const SizedBox(height: 10),
+                      const SizedBox(height: 10),
+                      for (final tier in snapshot.tiers) ...[
+                        _KycTierCard(
+                          tier: tier,
+                          currentLevel: snapshot.currentLevel,
+                        ),
+                        if (tier != snapshot.tiers.last)
+                          const SizedBox(height: 10),
+                      ],
+                      const SizedBox(height: 18),
+                      _FaqCard(faqs: snapshot.faqs),
                     ],
-                    const SizedBox(height: 18),
-                    _FaqCard(faqs: snapshot.faqs),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

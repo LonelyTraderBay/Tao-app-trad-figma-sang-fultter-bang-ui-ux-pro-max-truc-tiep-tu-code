@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -71,69 +72,72 @@ class _PredictionsBreakingPageState
       semanticLabel: 'SC-029 PredictionsBreakingPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Breaking Movers',
-              subtitle: 'Biến động · Prediction',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.marketsPredictions),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: PredictionsBreakingPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 14,
-                    children: [
-                      _MovementSummary(snapshot: snapshot),
-                      _CategoryTabs(
-                        categories: snapshot.categories,
-                        activeCategory: _category,
-                        onSelected: (value) => setState(() {
-                          _category = value;
-                        }),
-                      ),
-                      if (snapshot.movers.isEmpty)
-                        const _BreakingEmptyState()
-                      else
-                        for (
-                          var index = 0;
-                          index < snapshot.movers.length;
-                          index += 1
-                        )
-                          _MoverCard(
-                            key: PredictionsBreakingPage.moverKey(
-                              snapshot.movers[index].id,
-                            ),
-                            event: snapshot.movers[index],
-                            rank: index + 1,
-                            onTap: () => context.go(
-                              AppRoutePaths.marketsPredictionEvent(
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Breaking Movers',
+            subtitle: 'Biến động · Prediction',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.marketsPredictions),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: PredictionsBreakingPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 14,
+                      children: [
+                        _MovementSummary(snapshot: snapshot),
+                        _CategoryTabs(
+                          categories: snapshot.categories,
+                          activeCategory: _category,
+                          onSelected: (value) => setState(() {
+                            _category = value;
+                          }),
+                        ),
+                        if (snapshot.movers.isEmpty)
+                          const _BreakingEmptyState()
+                        else
+                          for (
+                            var index = 0;
+                            index < snapshot.movers.length;
+                            index += 1
+                          )
+                            _MoverCard(
+                              key: PredictionsBreakingPage.moverKey(
                                 snapshot.movers[index].id,
                               ),
+                              event: snapshot.movers[index],
+                              rank: index + 1,
+                              onTap: () => context.go(
+                                AppRoutePaths.marketsPredictionEvent(
+                                  snapshot.movers[index].id,
+                                ),
+                              ),
                             ),
-                          ),
-                      _EmailCta(
-                        controller: _emailController,
-                        subscribed: _subscribed,
-                        onSubscribe: () => setState(() {
-                          if (_emailController.text.contains('@')) {
-                            _subscribed = true;
-                          }
-                        }),
-                      ),
-                    ],
+                        _EmailCta(
+                          controller: _emailController,
+                          subscribed: _subscribed,
+                          onSubscribe: () => setState(() {
+                            if (_emailController.text.contains('@')) {
+                              _subscribed = true;
+                            }
+                          }),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

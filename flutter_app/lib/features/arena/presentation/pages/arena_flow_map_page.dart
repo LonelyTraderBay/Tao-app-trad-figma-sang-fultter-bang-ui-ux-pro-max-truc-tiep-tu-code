@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -58,88 +59,91 @@ class _ArenaFlowMapPageState extends ConsumerState<ArenaFlowMapPage> {
       semanticLabel: 'SC-197 ArenaFlowMapPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Open Arena Flow Map',
-              subtitle: '06F — Prototype & QA',
-              showBack: true,
-              onBack: () => _close(context),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ArenaFlowMapPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    customGap: AppSpacing.x5,
-                    children: [
-                      _FlowHero(stats: snapshot.stats),
-                      _CollapsibleSection(
-                        id: 'flow',
-                        title: 'SECTION 1 — Flow Map',
-                        badge: '${snapshot.groups.length} flows',
-                        icon: Icons.map_outlined,
-                        color: AppColors.primary,
-                        expanded: _expandedSection == 'flow',
-                        onTap: () => _toggle('flow'),
-                        child: _FlowMapBody(
-                          snapshot: snapshot,
-                          onRoute: (route) => _go(context, route),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Open Arena Flow Map',
+            subtitle: '06F — Prototype & QA',
+            showBack: true,
+            onBack: () => _close(context),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ArenaFlowMapPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      customGap: AppSpacing.x5,
+                      children: [
+                        _FlowHero(stats: snapshot.stats),
+                        _CollapsibleSection(
+                          id: 'flow',
+                          title: 'SECTION 1 — Flow Map',
+                          badge: '${snapshot.groups.length} flows',
+                          icon: Icons.map_outlined,
+                          color: AppColors.primary,
+                          expanded: _expandedSection == 'flow',
+                          onTap: () => _toggle('flow'),
+                          child: _FlowMapBody(
+                            snapshot: snapshot,
+                            onRoute: (route) => _go(context, route),
+                          ),
                         ),
-                      ),
-                      _CollapsibleSection(
-                        id: 'handoff',
-                        title: 'SECTION 2 — Handoff Notes',
-                        badge: '${snapshot.handoffNotes.length} notes',
-                        icon: Icons.menu_book_outlined,
-                        color: AppColors.warn,
-                        expanded: _expandedSection == 'handoff',
-                        onTap: () => _toggle('handoff'),
-                        child: _HandoffNotes(notes: snapshot.handoffNotes),
-                      ),
-                      _CollapsibleSection(
-                        id: 'qa',
-                        title: 'SECTION 3 — QA Checklist',
-                        badge:
-                            '${_checkedQa.length}/${snapshot.qaItems.length}',
-                        icon: Icons.check_circle_outline,
-                        color: AppColors.buy,
-                        expanded: _expandedSection == 'qa',
-                        onTap: () => _toggle('qa'),
-                        child: _QaChecklist(
-                          items: snapshot.qaItems,
-                          checkedIds: _checkedQa,
-                          onToggle: (id) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              if (!_checkedQa.add(id)) _checkedQa.remove(id);
-                            });
-                          },
-                          onCheckAll: () {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _checkedQa
-                                ..clear()
-                                ..addAll(
-                                  snapshot.qaItems.map((item) => item.id),
-                                );
-                            });
-                          },
+                        _CollapsibleSection(
+                          id: 'handoff',
+                          title: 'SECTION 2 — Handoff Notes',
+                          badge: '${snapshot.handoffNotes.length} notes',
+                          icon: Icons.menu_book_outlined,
+                          color: AppColors.warn,
+                          expanded: _expandedSection == 'handoff',
+                          onTap: () => _toggle('handoff'),
+                          child: _HandoffNotes(notes: snapshot.handoffNotes),
                         ),
-                      ),
-                      _FlowDisclaimer(text: snapshot.disclaimer),
-                    ],
+                        _CollapsibleSection(
+                          id: 'qa',
+                          title: 'SECTION 3 — QA Checklist',
+                          badge:
+                              '${_checkedQa.length}/${snapshot.qaItems.length}',
+                          icon: Icons.check_circle_outline,
+                          color: AppColors.buy,
+                          expanded: _expandedSection == 'qa',
+                          onTap: () => _toggle('qa'),
+                          child: _QaChecklist(
+                            items: snapshot.qaItems,
+                            checkedIds: _checkedQa,
+                            onToggle: (id) {
+                              HapticFeedback.selectionClick();
+                              setState(() {
+                                if (!_checkedQa.add(id)) _checkedQa.remove(id);
+                              });
+                            },
+                            onCheckAll: () {
+                              HapticFeedback.selectionClick();
+                              setState(() {
+                                _checkedQa
+                                  ..clear()
+                                  ..addAll(
+                                    snapshot.qaItems.map((item) => item.id),
+                                  );
+                              });
+                            },
+                          ),
+                        ),
+                        _FlowDisclaimer(text: snapshot.disclaimer),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -17,143 +17,97 @@ class _PairHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.bg,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: SizedBox(
-        height: 52,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            children: [
-              _HeaderButton(icon: Icons.chevron_left_rounded, onTap: onBack),
-              const Spacer(),
-              InkWell(
-                onTap: onPairTap,
-                borderRadius: AppRadii.cardRadius,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6,
-                    vertical: 8,
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 28,
-                        height: 28,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: pair.logoColor.withValues(alpha: .15),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Text(
-                          pair.baseAsset,
-                          style: AppTextStyles.micro.copyWith(
-                            color: pair.logoColor,
-                            fontWeight: AppTextStyles.bold,
-                            fontSize: 10,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 9),
-                      Text(
-                        pair.symbol,
-                        style: AppTextStyles.base.copyWith(
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                      const SizedBox(width: 5),
-                      const Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                        color: AppColors.text2,
-                        size: 17,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const Spacer(),
-              SizedBox(
-                width: 76,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    _HeaderSmallIcon(
-                      onTap: onFavorite,
-                      icon: Icon(
-                        favorite
-                            ? Icons.star_rounded
-                            : Icons.star_border_rounded,
-                        color: AppColors.caution,
-                        size: 24,
-                      ),
-                    ),
-                    const _HeaderSmallIcon(
-                      icon: Icon(
-                        Icons.share_outlined,
-                        color: AppColors.text3,
-                        size: 22,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+    return VitTopChrome(
+      type: VitTopChromeType.instrument,
+      leading: SizedBox(
+        width: 40,
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: VitHeaderActionButton(
+            type: VitHeaderActionType.back,
+            tone: VitHeaderActionTone.transparent,
+            onPressed: onBack,
           ),
         ),
       ),
-    );
-  }
-}
-
-class _HeaderSmallIcon extends StatelessWidget {
-  const _HeaderSmallIcon({required this.icon, this.onTap});
-
-  final Widget icon;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 34,
-      height: 38,
-      child: Material(
-        type: MaterialType.transparency,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.mdRadius,
-          child: Center(child: icon),
+      body: Center(
+        child: Semantics(
+          button: true,
+          label: 'Ch\u1ECDn c\u1EB7p giao d\u1ECBch ${pair.symbol}',
+          child: InkWell(
+            onTap: onPairTap,
+            borderRadius: AppRadii.headerActionRadius,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 28,
+                    height: 28,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: pair.logoColor.withValues(alpha: .15),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text(
+                      pair.baseAsset,
+                      style: AppTextStyles.micro.copyWith(
+                        color: pair.logoColor,
+                        fontWeight: AppTextStyles.bold,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 9),
+                  Flexible(
+                    child: Text(
+                      pair.symbol,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.base.copyWith(
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  const Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: AppColors.text2,
+                    size: 17,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      trailing: SizedBox(
+        width: 88,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            VitHeaderActionButton(
+              type: favorite
+                  ? VitHeaderActionType.favoriteOn
+                  : VitHeaderActionType.favoriteOff,
+              tooltip: favorite
+                  ? 'B\u1ECF theo d\u00F5i ${pair.symbol}'
+                  : 'Theo d\u00F5i ${pair.symbol}',
+              onPressed: onFavorite,
+            ),
+            const SizedBox(width: 8),
+            const VitHeaderActionButton(
+              type: VitHeaderActionType.share,
+              onPressed: _noop,
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class _HeaderButton extends StatelessWidget {
-  const _HeaderButton({required this.icon, required this.onTap});
-
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 38,
-      height: 38,
-      child: Material(
-        color: AppColors.surface,
-        borderRadius: AppRadii.mdRadius,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.mdRadius,
-          child: Icon(icon, color: AppColors.text1, size: 22),
-        ),
-      ),
-    );
-  }
-}
+void _noop() {}
 
 class _PriceOverview extends StatelessWidget {
   const _PriceOverview({required this.pair});
@@ -194,7 +148,7 @@ class _PriceOverview extends StatelessWidget {
                   borderRadius: AppRadii.smRadius,
                 ),
                 child: Text(
-                  '${positive ? '▲' : '▼'} ${pair.change24h.abs().toStringAsFixed(2)}%',
+                  '${positive ? '\u25B2' : '\u25BC'} ${pair.change24h.abs().toStringAsFixed(2)}%',
                   style: AppTextStyles.caption.copyWith(
                     color: positive ? AppColors.buy : AppColors.sell,
                     fontWeight: AppTextStyles.bold,

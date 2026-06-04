@@ -7,8 +7,10 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -38,11 +40,16 @@ class CopyProviderDetailPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(tradeCopyProviderDetailProvider(providerId));
     final provider = snapshot.provider;
+    final resolvedBackPath = resolveSafeBackPath(
+      candidate: backPath,
+      fallbackPath: AppRoutePaths.tradeCopyTrading,
+      allowedPrefixes: const [AppRoutePaths.trade],
+    );
 
     if (provider == null) {
       return _ProviderNotFound(
         message: snapshot.notFoundMessage,
-        onBack: () => context.go(backPath ?? AppRoutePaths.tradeCopyTrading),
+        onBack: () => goBackOrFallback(context, fallbackPath: resolvedBackPath),
       );
     }
 
@@ -60,63 +67,66 @@ class CopyProviderDetailPage extends ConsumerWidget {
       semanticLabel: 'SC-070 CopyProviderDetailPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: provider.name,
-              showBack: true,
-              onBack: () =>
-                  context.go(backPath ?? AppRoutePaths.tradeCopyTrading),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const _RiskWarning(),
-                    const SizedBox(height: 14),
-                    _ProviderCard(provider: provider),
-                    const SizedBox(height: 14),
-                    _MetricGrid(provider: provider),
-                    const SizedBox(height: 18),
-                    FilledButton.icon(
-                      key: assessmentKey,
-                      onPressed: () => context.go(
-                        AppRoutePaths.tradeCopyProviderAssessment(providerId),
-                      ),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: _providerPrimary,
-                        minimumSize: const Size.fromHeight(48),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: AppRadii.inputRadius,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: provider.name,
+            showBack: true,
+            onBack: () =>
+                goBackOrFallback(context, fallbackPath: resolvedBackPath),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const _RiskWarning(),
+                      const SizedBox(height: 14),
+                      _ProviderCard(provider: provider),
+                      const SizedBox(height: 14),
+                      _MetricGrid(provider: provider),
+                      const SizedBox(height: 18),
+                      FilledButton.icon(
+                        key: assessmentKey,
+                        onPressed: () => context.go(
+                          AppRoutePaths.tradeCopyProviderAssessment(providerId),
+                        ),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: _providerPrimary,
+                          minimumSize: const Size.fromHeight(48),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: AppRadii.inputRadius,
+                          ),
+                        ),
+                        icon: const Icon(Icons.chevron_right_rounded, size: 18),
+                        label: Text(
+                          'Đánh giá rủi ro',
+                          style: AppTextStyles.baseMedium.copyWith(
+                            color: AppColors.onAccent,
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                       ),
-                      icon: const Icon(Icons.chevron_right_rounded, size: 18),
-                      label: Text(
-                        'Đánh giá rủi ro',
-                        style: AppTextStyles.baseMedium.copyWith(
-                          color: AppColors.onAccent,
-                          fontWeight: FontWeight.w800,
+                      const SizedBox(height: 12),
+                      Text(
+                        'Hiệu suất quá khứ không đảm bảo kết quả tương lai. Copy Trading có rủi ro cao.',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text3,
+                          fontSize: 10,
+                          height: 1.45,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      'Hiệu suất quá khứ không đảm bảo kết quả tương lai. Copy Trading có rủi ro cao.',
-                      textAlign: TextAlign.center,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text3,
-                        fontSize: 10,
-                        height: 1.45,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -136,38 +146,40 @@ class _ProviderNotFound extends StatelessWidget {
       semanticLabel: 'SC-070 CopyProviderDetailPage not found',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            VitHeader(
-              title: 'Provider Not Found',
-              showBack: true,
-              onBack: onBack,
-            ),
-            Expanded(
-              child: Padding(
-                key: CopyProviderDetailPage.notFoundKey,
-                padding: const EdgeInsets.only(top: 64),
-                child: Column(
-                  children: [
-                    const Icon(
-                      Icons.warning_amber_rounded,
-                      color: AppColors.text3,
-                      size: 48,
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      message,
-                      style: AppTextStyles.base.copyWith(
-                        color: AppColors.text2,
-                        fontSize: 14,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Provider Not Found',
+            showBack: true,
+            onBack: onBack,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: Padding(
+                  key: CopyProviderDetailPage.notFoundKey,
+                  padding: const EdgeInsets.only(top: 64),
+                  child: Column(
+                    children: [
+                      const Icon(
+                        Icons.warning_amber_rounded,
+                        color: AppColors.text3,
+                        size: 48,
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 12),
+                      Text(
+                        message,
+                        style: AppTextStyles.base.copyWith(
+                          color: AppColors.text2,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

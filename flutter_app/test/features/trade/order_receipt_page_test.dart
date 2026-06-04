@@ -45,6 +45,9 @@ void main() {
     expect(receipt.total, 1013.15);
     expect(receipt.fee, .96);
     expect(receipt.status, TradeReceiptStatus.submitted);
+    expect(snapshot.supportRoute, startsWith('/support?'));
+    expect(snapshot.supportRoute, contains('flow=order'));
+    expect(snapshot.supportRoute, contains('ORD-98EH1ZT2'));
     expect(receipt.tpPrice, 72000);
     expect(receipt.slPrice, 65000);
     expect(receipt.estimatedFill, '< 2 phút');
@@ -83,6 +86,7 @@ void main() {
     expect(find.byKey(OrderReceiptPage.copyOrderIdKey), findsOneWidget);
     expect(find.byKey(OrderReceiptPage.shareKey), findsOneWidget);
     expect(find.byKey(OrderReceiptPage.continueTradingKey), findsOneWidget);
+    expect(find.byKey(OrderReceiptPage.supportKey), findsOneWidget);
   });
 
   testWidgets('SC-051 status badge opens orders history', (tester) async {
@@ -114,5 +118,17 @@ void main() {
 
     expect(find.byType(OrderReceiptPage), findsOneWidget);
     expect(find.text('Đã chia sẻ'), findsOneWidget);
+  });
+
+  testWidgets('SC-051 support opens contextual order support', (tester) async {
+    await pumpOrderReceipt(tester);
+
+    await tester.ensureVisible(find.byKey(OrderReceiptPage.supportKey));
+    await tester.tap(find.byKey(OrderReceiptPage.supportKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Hồ sơ hỗ trợ'), findsOneWidget);
+    expect(find.text('Trading order receipt support'), findsOneWidget);
+    expect(find.text('ORD-98EH1ZT2'), findsOneWidget);
   });
 }

@@ -22,71 +22,76 @@ class _SavingsPortfolioPageState extends ConsumerState<SavingsPortfolioPage> {
       semanticLabel: 'SC-333 SavingsPortfolioPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            DecoratedBox(
-              decoration: const BoxDecoration(
-                color: AppColors.surface,
-                border: Border(bottom: BorderSide(color: AppColors.divider)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-                child: VitTabBar(
-                  variant: VitTabBarVariant.underline,
-                  activeKey: _tab.name,
-                  onChanged: (key) {
-                    HapticFeedback.selectionClick();
-                    setState(() => _tab = _PortfolioTab.values.byName(key));
-                  },
-                  tabs: [
-                    const VitTabItem(key: 'overview', label: 'Tổng quan'),
-                    const VitTabItem(key: 'positions', label: 'Vị thế'),
-                    const VitTabItem(key: 'earnings', label: 'Thu nhập'),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              DecoratedBox(
+                decoration: const BoxDecoration(
+                  color: AppColors.surface,
+                  border: Border(bottom: BorderSide(color: AppColors.divider)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.x4,
+                  ),
+                  child: VitTabBar(
+                    variant: VitTabBarVariant.underline,
+                    activeKey: _tab.name,
+                    onChanged: (key) {
+                      HapticFeedback.selectionClick();
+                      setState(() => _tab = _PortfolioTab.values.byName(key));
+                    },
+                    tabs: [
+                      const VitTabItem(key: 'overview', label: 'Tổng quan'),
+                      const VitTabItem(key: 'positions', label: 'Vị thế'),
+                      const VitTabItem(key: 'earnings', label: 'Thu nhập'),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    if (_tab == _PortfolioTab.overview)
-                      _OverviewTab(
-                        snapshot: snapshot,
-                        hideBalance: _hideBalance,
-                        onToggleBalance: () {
-                          HapticFeedback.selectionClick();
-                          setState(() => _hideBalance = !_hideBalance);
-                        },
-                      )
-                    else if (_tab == _PortfolioTab.positions)
-                      _PositionsTab(
-                        snapshot: snapshot,
-                        activeFilter: _filter,
-                        onFilterChanged: (filter) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _filter = filter);
-                        },
-                      )
-                    else
-                      _EarningsTab(
-                        snapshot: snapshot,
-                        hideBalance: _hideBalance,
-                      ),
-                  ],
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      if (_tab == _PortfolioTab.overview)
+                        _OverviewTab(
+                          snapshot: snapshot,
+                          hideBalance: _hideBalance,
+                          onToggleBalance: () {
+                            HapticFeedback.selectionClick();
+                            setState(() => _hideBalance = !_hideBalance);
+                          },
+                        )
+                      else if (_tab == _PortfolioTab.positions)
+                        _PositionsTab(
+                          snapshot: snapshot,
+                          activeFilter: _filter,
+                          onFilterChanged: (filter) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _filter = filter);
+                          },
+                        )
+                      else
+                        _EarningsTab(
+                          snapshot: snapshot,
+                          hideBalance: _hideBalance,
+                        ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -69,117 +70,124 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
       semanticLabel: 'SC-277 P2PBlacklistPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-              trailing: _AddButton(
-                onTap: () {
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+            actions: [
+              VitHeaderActionItem(
+                key: P2PBlacklistPage.addKey,
+                type: VitHeaderActionType.add,
+                onPressed: () {
                   HapticFeedback.selectionClick();
                   context.go(snapshot.addRoute);
                 },
               ),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                          AppSpacing.contentPad,
-                          0,
-                          AppSpacing.contentPad,
-                          AppSpacing.x4,
-                        ),
-                        child: _SummaryCard(
-                          snapshot: snapshot,
-                          entries: entries,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.contentPad,
-                        ),
-                        child: VitSearchBar(
-                          key: P2PBlacklistPage.searchKey,
-                          controller: _searchController,
-                          placeholder: snapshot.searchHint,
-                          variant: VitSearchBarVariant.compact,
-                          onChanged: (_) => setState(() {}),
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.x3),
-                      _FilterRail(
-                        snapshot: snapshot,
-                        entries: entries,
-                        activeId: _filterId,
-                        onChanged: (id) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _filterId = id);
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                          AppSpacing.contentPad,
-                          AppSpacing.x2,
-                          AppSpacing.contentPad,
-                          0,
-                        ),
-                        child: Text(
-                          '${filtered.length} kết quả',
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(
+                            AppSpacing.contentPad,
+                            0,
+                            AppSpacing.contentPad,
+                            AppSpacing.x4,
+                          ),
+                          child: _SummaryCard(
+                            snapshot: snapshot,
+                            entries: entries,
                           ),
                         ),
-                      ),
-                      const SizedBox(height: AppSpacing.x2),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.contentPad,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.contentPad,
+                          ),
+                          child: VitSearchBar(
+                            key: P2PBlacklistPage.searchKey,
+                            controller: _searchController,
+                            placeholder: snapshot.searchHint,
+                            variant: VitSearchBarVariant.compact,
+                            onChanged: (_) => setState(() {}),
+                          ),
                         ),
-                        child: _EntryList(
+                        const SizedBox(height: AppSpacing.x3),
+                        _FilterRail(
                           snapshot: snapshot,
-                          entries: filtered,
-                          expandedId: _expandedId,
-                          onToggle: (id) {
+                          entries: entries,
+                          activeId: _filterId,
+                          onChanged: (id) {
                             HapticFeedback.selectionClick();
-                            setState(() {
-                              _expandedId = _expandedId == id ? null : id;
-                            });
-                          },
-                          onUnblock: (id) {
-                            HapticFeedback.mediumImpact();
-                            setState(() {
-                              _removedIds.add(id);
-                              if (_expandedId == id) _expandedId = null;
-                            });
+                            setState(() => _filterId = id);
                           },
                         ),
-                      ),
-                      const SizedBox(height: AppSpacing.x3),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.contentPad,
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(
+                            AppSpacing.contentPad,
+                            AppSpacing.x2,
+                            AppSpacing.contentPad,
+                            0,
+                          ),
+                          child: Text(
+                            '${filtered.length} kết quả',
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.text3,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
                         ),
-                        child: _InfoNote(snapshot: snapshot),
-                      ),
-                    ],
+                        const SizedBox(height: AppSpacing.x2),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.contentPad,
+                          ),
+                          child: _EntryList(
+                            snapshot: snapshot,
+                            entries: filtered,
+                            expandedId: _expandedId,
+                            onToggle: (id) {
+                              HapticFeedback.selectionClick();
+                              setState(() {
+                                _expandedId = _expandedId == id ? null : id;
+                              });
+                            },
+                            onUnblock: (id) {
+                              HapticFeedback.mediumImpact();
+                              setState(() {
+                                _removedIds.add(id);
+                                if (_expandedId == id) _expandedId = null;
+                              });
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.x3),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.contentPad,
+                          ),
+                          child: _InfoNote(snapshot: snapshot),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

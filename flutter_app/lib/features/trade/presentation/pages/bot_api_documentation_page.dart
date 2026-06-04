@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -77,59 +78,62 @@ class _BotApiDocumentationPageState
       semanticLabel: 'SC-134 BotAPIDocumentationPage',
       child: Material(
         color: _apiBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'API Documentation',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeBots),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: BotApiDocumentationPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const _IntroCard(),
-                    const SizedBox(height: 33),
-                    _Tabs(
-                      tabs: snapshot.tabs,
-                      active: _view,
-                      onChanged: (view) => setState(() => _view = view),
-                    ),
-                    const SizedBox(height: 18),
-                    if (_view == 'endpoints')
-                      _EndpointsView(endpoints: snapshot.endpoints)
-                    else if (_view == 'websocket')
-                      _WebSocketView(
-                        url: snapshot.websocketUrl,
-                        events: snapshot.websocketEvents,
-                      )
-                    else
-                      _ExamplesView(
-                        examples: snapshot.codeExamples,
-                        language: _language,
-                        copied: _copied,
-                        onLanguageChanged: (language) {
-                          setState(() {
-                            _language = language;
-                            _copied = false;
-                          });
-                        },
-                        onCopy: _copy,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'API Documentation',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeBots),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: BotApiDocumentationPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const _IntroCard(),
+                      const SizedBox(height: 33),
+                      _Tabs(
+                        tabs: snapshot.tabs,
+                        active: _view,
+                        onChanged: (view) => setState(() => _view = view),
                       ),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Rate Limits'),
-                    const SizedBox(height: 10),
-                    _RateLimitsCard(items: snapshot.rateLimits),
-                    const SizedBox(height: 18),
-                    _AuthCard(header: snapshot.authenticationHeader),
-                  ],
+                      const SizedBox(height: 18),
+                      if (_view == 'endpoints')
+                        _EndpointsView(endpoints: snapshot.endpoints)
+                      else if (_view == 'websocket')
+                        _WebSocketView(
+                          url: snapshot.websocketUrl,
+                          events: snapshot.websocketEvents,
+                        )
+                      else
+                        _ExamplesView(
+                          examples: snapshot.codeExamples,
+                          language: _language,
+                          copied: _copied,
+                          onLanguageChanged: (language) {
+                            setState(() {
+                              _language = language;
+                              _copied = false;
+                            });
+                          },
+                          onCopy: _copy,
+                        ),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Rate Limits'),
+                      const SizedBox(height: 10),
+                      _RateLimitsCard(items: snapshot.rateLimits),
+                      const SizedBox(height: 18),
+                      _AuthCard(header: snapshot.authenticationHeader),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

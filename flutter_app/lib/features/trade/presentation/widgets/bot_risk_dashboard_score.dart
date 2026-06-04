@@ -1,35 +1,5 @@
 part of '../pages/bot_risk_dashboard_page.dart';
 
-class _HeaderEmergencyButton extends StatelessWidget {
-  const _HeaderEmergencyButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      key: BotRiskDashboardPage.emergencyHeaderKey,
-      onTap: onTap,
-      borderRadius: AppRadii.inputRadius,
-      child: Container(
-        width: 40,
-        height: 40,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: _riskPanel2,
-          border: Border.all(color: AppColors.cardBorder),
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: const Icon(
-          Icons.error_outline_rounded,
-          color: AppColors.text1,
-          size: 21,
-        ),
-      ),
-    );
-  }
-}
-
 class _RiskScoreCard extends StatelessWidget {
   const _RiskScoreCard({required this.snapshot});
 

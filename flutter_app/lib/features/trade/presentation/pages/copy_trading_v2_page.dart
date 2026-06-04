@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -60,58 +61,61 @@ class _CopyTradingV2PageState extends ConsumerState<CopyTradingV2Page> {
       semanticLabel: 'SC-064 CopyTradingPageV2',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Copy Trading v2',
-              subtitle: 'With Variant Switcher',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: CopyTradingV2Page.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _VariantSwitcher(
-                      variants: snapshot.heroVariants,
-                      selected: _heroVariant,
-                      onChanged: (value) =>
-                          setState(() => _heroVariant = value),
-                    ),
-                    const SizedBox(height: 24),
-                    _HeroCard(snapshot: copyTrading, variant: _heroVariant),
-                    const SizedBox(height: 24),
-                    _RiskWarningCard(
-                      title: copyTrading.riskWarningTitle,
-                      message: copyTrading.riskWarningText,
-                    ),
-                    const SizedBox(height: 24),
-                    _SortChips(
-                      options: copyTrading.sortOptions,
-                      selected: _sortBy,
-                      onChanged: (value) => setState(() => _sortBy = value),
-                    ),
-                    const SizedBox(height: 20),
-                    for (final trader in traders) ...[
-                      _TraderCard(
-                        trader: trader,
-                        onOpen: () => context.go(
-                          AppRoutePaths.tradeCopyProvider(
-                            trader.id,
-                            backPath: AppRoutePaths.tradeCopyTradingV2,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Copy Trading v2',
+            subtitle: 'With Variant Switcher',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: CopyTradingV2Page.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _VariantSwitcher(
+                        variants: snapshot.heroVariants,
+                        selected: _heroVariant,
+                        onChanged: (value) =>
+                            setState(() => _heroVariant = value),
+                      ),
+                      const SizedBox(height: 24),
+                      _HeroCard(snapshot: copyTrading, variant: _heroVariant),
+                      const SizedBox(height: 24),
+                      _RiskWarningCard(
+                        title: copyTrading.riskWarningTitle,
+                        message: copyTrading.riskWarningText,
+                      ),
+                      const SizedBox(height: 24),
+                      _SortChips(
+                        options: copyTrading.sortOptions,
+                        selected: _sortBy,
+                        onChanged: (value) => setState(() => _sortBy = value),
+                      ),
+                      const SizedBox(height: 20),
+                      for (final trader in traders) ...[
+                        _TraderCard(
+                          trader: trader,
+                          onOpen: () => context.go(
+                            AppRoutePaths.tradeCopyProvider(
+                              trader.id,
+                              backPath: AppRoutePaths.tradeCopyTradingV2,
+                            ),
                           ),
                         ),
-                      ),
-                      if (trader != traders.last) const SizedBox(height: 20),
+                        if (trader != traders.last) const SizedBox(height: 20),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

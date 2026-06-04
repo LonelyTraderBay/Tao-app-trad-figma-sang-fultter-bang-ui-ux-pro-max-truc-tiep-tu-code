@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
 part 'trading_bots_page_part_01.dart';
 part 'trading_bots_page_part_02.dart';
@@ -88,7 +88,11 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: _TradingBotsHeader(
-                      onBack: () => context.go(AppRoutePaths.trade),
+                      onBack: () => goBackOrFallback(
+                        context,
+                        fallbackPath: AppRoutePaths.trade,
+                        mode: BackNavigationMode.historyThenFallback,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -172,10 +176,9 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
   }
 
   Future<void> _openCreateSheet(TradeBotStrategy strategy) async {
-    final created = await showModalBottomSheet<bool>(
+    final created = await showVitBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      useRootNavigator: true,
       backgroundColor: AppColors.transparent,
       builder: (context) => _CreateBotSheet(strategy: strategy),
     );

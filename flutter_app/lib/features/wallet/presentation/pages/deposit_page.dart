@@ -13,8 +13,10 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
 part '../widgets/deposit_page_sections.dart';
 part '../widgets/deposit_page_common.dart';
@@ -75,44 +77,50 @@ class _DepositPageState extends ConsumerState<DepositPage> {
           : 'SC-137 DepositPage',
       child: Material(
         color: _depositBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Nạp ${snapshot.asset}',
-              subtitle: 'Nạp tiền · Wallet',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.wallet),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: DepositPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _NetworkSelector(
-                      asset: snapshot.asset,
-                      selected: selected,
-                      onTap: () => _openNetworkPicker(snapshot.networks),
-                    ),
-                    const SizedBox(height: 24),
-                    _WarningCard(asset: snapshot.asset, network: selected),
-                    const SizedBox(height: 16),
-                    _QrAddressCard(
-                      asset: snapshot.asset,
-                      network: selected,
-                      copied: _copied,
-                      onCopy: () => _copyAddress(selected.address),
-                    ),
-                    const SizedBox(height: 16),
-                    _DepositInfoCard(asset: snapshot.asset, network: selected),
-                    const SizedBox(height: 16),
-                    _RefreshButton(onTap: () {}),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Nạp ${snapshot.asset}',
+            subtitle: 'Nạp tiền · Wallet',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.wallet),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: DepositPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _NetworkSelector(
+                        asset: snapshot.asset,
+                        selected: selected,
+                        onTap: () => _openNetworkPicker(snapshot.networks),
+                      ),
+                      const SizedBox(height: 24),
+                      _WarningCard(asset: snapshot.asset, network: selected),
+                      const SizedBox(height: 16),
+                      _QrAddressCard(
+                        asset: snapshot.asset,
+                        network: selected,
+                        copied: _copied,
+                        onCopy: () => _copyAddress(selected.address),
+                      ),
+                      const SizedBox(height: 16),
+                      _DepositInfoCard(
+                        asset: snapshot.asset,
+                        network: selected,
+                      ),
+                      const SizedBox(height: 16),
+                      _RefreshButton(onTap: () {}),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -135,7 +143,7 @@ class _DepositPageState extends ConsumerState<DepositPage> {
   }
 
   void _openNetworkPicker(List<WalletDepositNetwork> networks) {
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: _depositPanel,
       shape: const RoundedRectangleBorder(

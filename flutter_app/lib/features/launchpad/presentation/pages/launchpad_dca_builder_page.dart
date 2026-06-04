@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/launch
 import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/launchpad_dca_builder_strategies.dart';
 import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/launchpad_dca_builder_summary.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -97,82 +98,89 @@ class _LaunchpadDcaBuilderPageState
         type: MaterialType.transparency,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: snapshot.title,
-                  showBack: true,
-                  onBack: () => context.go(snapshot.backRoute),
-                  trailing: LaunchpadDcaHeaderCreateButton(
-                    buttonKey: LaunchpadDcaBuilderPage.headerCreateKey,
-                    onTap: () => setState(() {
+            VitAutoHideHeaderScaffold(
+              bottomInset: bottomInset,
+              semanticLabel: 'SC-316 LaunchpadDcaBuilderPage scroll surface',
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+                actions: [
+                  VitHeaderActionItem(
+                    key: LaunchpadDcaBuilderPage.headerCreateKey,
+                    type: VitHeaderActionType.add,
+                    onPressed: () => setState(() {
                       _activeTab = LaunchpadDcaBuilderTab.create;
                     }),
                   ),
-                ),
-                LaunchpadDcaTabs(
-                  tabsKey: LaunchpadDcaBuilderPage.tabsKey,
-                  activeTab: _activeTab,
-                  onChanged: (tab) => setState(() => _activeTab = tab),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: LaunchpadDcaBuilderPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
-                    child: VitPageContent(
-                      padding: VitContentPadding.defaultPadding,
-                      customGap: AppSpacing.x4,
-                      children: [
-                        if (_activeTab ==
-                            LaunchpadDcaBuilderTab.strategies) ...[
-                          LaunchpadDcaSummaryCard(
-                            key: LaunchpadDcaBuilderPage.summaryKey,
-                            snapshot: snapshot,
-                          ),
-                          LaunchpadDcaStrategiesSection(
-                            sectionKey: LaunchpadDcaBuilderPage.strategiesKey,
-                            strategyKey: LaunchpadDcaBuilderPage.strategyKey,
-                            strategies: snapshot.strategies,
-                          ),
-                        ] else if (_activeTab ==
-                            LaunchpadDcaBuilderTab.history) ...[
-                          LaunchpadDcaHistorySection(
-                            sectionKey: LaunchpadDcaBuilderPage.historyKey,
-                            chartKey: LaunchpadDcaBuilderPage.chartKey,
-                            executions: snapshot.executions,
-                          ),
-                        ] else ...[
-                          LaunchpadDcaCreateSection(
-                            sectionKey: LaunchpadDcaBuilderPage.createKey,
-                            tokenFieldKey:
-                                LaunchpadDcaBuilderPage.tokenFieldKey,
-                            amountFieldKey:
-                                LaunchpadDcaBuilderPage.amountFieldKey,
-                            budgetFieldKey:
-                                LaunchpadDcaBuilderPage.budgetFieldKey,
-                            startDateFieldKey:
-                                LaunchpadDcaBuilderPage.startDateFieldKey,
-                            previewKey: LaunchpadDcaBuilderPage.previewKey,
-                            frequencyKey: LaunchpadDcaBuilderPage.frequencyKey,
-                            tokenController: _tokenController,
-                            amountController: _amountController,
-                            budgetController: _budgetController,
-                            startDateController: _startDateController,
-                            frequency: _frequency,
-                            submissionMessage: _submissionMessage,
-                            onFrequencyChanged: (frequency) =>
-                                setState(() => _frequency = frequency),
-                            onInputChanged: () => setState(() {
-                              _submissionMessage = null;
-                            }),
-                          ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  LaunchpadDcaTabs(
+                    tabsKey: LaunchpadDcaBuilderPage.tabsKey,
+                    activeTab: _activeTab,
+                    onChanged: (tab) => setState(() => _activeTab = tab),
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: LaunchpadDcaBuilderPage.contentKey,
+                      physics: const BouncingScrollPhysics(),
+                      child: VitPageContent(
+                        padding: VitContentPadding.defaultPadding,
+                        customGap: AppSpacing.x4,
+                        children: [
+                          if (_activeTab ==
+                              LaunchpadDcaBuilderTab.strategies) ...[
+                            LaunchpadDcaSummaryCard(
+                              key: LaunchpadDcaBuilderPage.summaryKey,
+                              snapshot: snapshot,
+                            ),
+                            LaunchpadDcaStrategiesSection(
+                              sectionKey: LaunchpadDcaBuilderPage.strategiesKey,
+                              strategyKey: LaunchpadDcaBuilderPage.strategyKey,
+                              strategies: snapshot.strategies,
+                            ),
+                          ] else if (_activeTab ==
+                              LaunchpadDcaBuilderTab.history) ...[
+                            LaunchpadDcaHistorySection(
+                              sectionKey: LaunchpadDcaBuilderPage.historyKey,
+                              chartKey: LaunchpadDcaBuilderPage.chartKey,
+                              executions: snapshot.executions,
+                            ),
+                          ] else ...[
+                            LaunchpadDcaCreateSection(
+                              sectionKey: LaunchpadDcaBuilderPage.createKey,
+                              tokenFieldKey:
+                                  LaunchpadDcaBuilderPage.tokenFieldKey,
+                              amountFieldKey:
+                                  LaunchpadDcaBuilderPage.amountFieldKey,
+                              budgetFieldKey:
+                                  LaunchpadDcaBuilderPage.budgetFieldKey,
+                              startDateFieldKey:
+                                  LaunchpadDcaBuilderPage.startDateFieldKey,
+                              previewKey: LaunchpadDcaBuilderPage.previewKey,
+                              frequencyKey:
+                                  LaunchpadDcaBuilderPage.frequencyKey,
+                              tokenController: _tokenController,
+                              amountController: _amountController,
+                              budgetController: _budgetController,
+                              startDateController: _startDateController,
+                              frequency: _frequency,
+                              submissionMessage: _submissionMessage,
+                              onFrequencyChanged: (frequency) =>
+                                  setState(() => _frequency = frequency),
+                              onInputChanged: () => setState(() {
+                                _submissionMessage = null;
+                              }),
+                            ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (showCta)
               Positioned(

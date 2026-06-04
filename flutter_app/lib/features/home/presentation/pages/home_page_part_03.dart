@@ -105,42 +105,6 @@ class _CoinAvatar extends StatelessWidget {
   }
 }
 
-class _CountBadge extends StatelessWidget {
-  const _CountBadge({required this.count});
-
-  final int count;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minWidth: 16),
-      height: 16,
-      padding: const EdgeInsets.symmetric(horizontal: 4),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: AppColors.sell,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: const [
-          BoxShadow(
-            color: AppColors.sell20,
-            blurRadius: 6,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Text(
-        count > 99 ? '99+' : '$count',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.onAccent,
-          fontSize: 9,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
-  }
-}
-
 class _Dot extends StatelessWidget {
   const _Dot({required this.active});
 

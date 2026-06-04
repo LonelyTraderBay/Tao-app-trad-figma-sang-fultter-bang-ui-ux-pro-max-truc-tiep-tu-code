@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -57,59 +58,62 @@ class _MyArenaReportsPageState extends ConsumerState<MyArenaReportsPage> {
       semanticLabel: 'SC-204 MyArenaReportsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Báo cáo của tôi',
-              subtitle: 'Báo cáo · Open Arena',
-              showBack: true,
-              onBack: () => _close(context),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: MyArenaReportsPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.defaultPadding,
-                    children: [
-                      _ReportsSummary(summary: snapshot.summary),
-                      _FilterRail(
-                        filters: snapshot.filters,
-                        activeFilter: _activeFilter,
-                        onChanged: (id) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _activeFilter = id);
-                        },
-                      ),
-                      _ProcessBanner(snapshot: snapshot),
-                      if (reports.isEmpty)
-                        VitEmptyState(
-                          key: MyArenaReportsPage.emptyKey,
-                          icon: Icons.flag_outlined,
-                          title: snapshot.emptyTitle,
-                          message: _emptyMessage(snapshot),
-                        )
-                      else
-                        _ReportsCard(reports: reports),
-                      if (reports.isNotEmpty)
-                        Text(
-                          _countLabel(reports.length, snapshot.filters),
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text3,
-                          ),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Báo cáo của tôi',
+            subtitle: 'Báo cáo · Open Arena',
+            showBack: true,
+            onBack: () => _close(context),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: MyArenaReportsPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.defaultPadding,
+                      children: [
+                        _ReportsSummary(summary: snapshot.summary),
+                        _FilterRail(
+                          filters: snapshot.filters,
+                          activeFilter: _activeFilter,
+                          onChanged: (id) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _activeFilter = id);
+                          },
                         ),
-                    ],
+                        _ProcessBanner(snapshot: snapshot),
+                        if (reports.isEmpty)
+                          VitEmptyState(
+                            key: MyArenaReportsPage.emptyKey,
+                            icon: Icons.flag_outlined,
+                            title: snapshot.emptyTitle,
+                            message: _emptyMessage(snapshot),
+                          )
+                        else
+                          _ReportsCard(reports: reports),
+                        if (reports.isNotEmpty)
+                          Text(
+                            _countLabel(reports.length, snapshot.filters),
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.text3,
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

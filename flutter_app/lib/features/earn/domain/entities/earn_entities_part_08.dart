@@ -18,6 +18,7 @@ final class StakingFAQSnapshot {
     required this.actionDraft,
     required this.title,
     required this.backRoute,
+    required this.supportRoute,
     required this.searchPlaceholder,
     required this.items,
     required this.supportTitle,
@@ -30,6 +31,7 @@ final class StakingFAQSnapshot {
   final String actionDraft;
   final String title;
   final String backRoute;
+  final String supportRoute;
   final String searchPlaceholder;
   final List<StakingFAQItemDraft> items;
   final String supportTitle;

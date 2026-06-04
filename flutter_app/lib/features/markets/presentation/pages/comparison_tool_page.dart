@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
@@ -99,65 +100,71 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
       semanticLabel: 'SC-016 ComparisonToolPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'So sánh',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.markets),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ComparisonToolPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 18,
-                    children: [
-                      ComparisonSelectedTokensStrip(
-                        selectedPairs: selectedPairs,
-                        canAdd: _selectedIds.length < comparisonToolMaxCompare,
-                        canRemove: _selectedIds.length > 2,
-                        onAdd: () => setState(() => _showPicker = true),
-                        onRemove: _removeToken,
-                      ),
-                      if (_showPicker)
-                        ComparisonTokenPickerCard(
-                          snapshot: snapshot,
-                          selectedIds: _selectedIds,
-                          controller: _pickerSearchController,
-                          onChanged: () => setState(() {}),
-                          onClose: () => setState(() {
-                            _showPicker = false;
-                            _pickerSearchController.clear();
-                          }),
-                          onTokenSelected: _addToken,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'So sánh',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.markets),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ComparisonToolPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 18,
+                      children: [
+                        ComparisonSelectedTokensStrip(
+                          selectedPairs: selectedPairs,
+                          canAdd:
+                              _selectedIds.length < comparisonToolMaxCompare,
+                          canRemove: _selectedIds.length > 2,
+                          onAdd: () => setState(() => _showPicker = true),
+                          onRemove: _removeToken,
                         ),
-                      if (selectedPairs.length >= 2)
-                        ComparisonSparklineCard(pairs: selectedPairs),
-                      if (selectedPairs.length >= 2)
-                        ComparisonMetricSection(
-                          pairs: selectedPairs,
-                          metrics: snapshot.metrics,
-                        ),
-                      if (selectedPairs.length >= 2)
-                        ComparisonVolumeDistributionCard(pairs: selectedPairs),
-                      if (selectedPairs.length >= 2)
-                        ComparisonMarketCapDistributionCard(
-                          pairs: selectedPairs,
-                        ),
-                      if (selectedPairs.length < 2)
-                        const ComparisonNeedMoreTokensCard(),
-                    ],
+                        if (_showPicker)
+                          ComparisonTokenPickerCard(
+                            snapshot: snapshot,
+                            selectedIds: _selectedIds,
+                            controller: _pickerSearchController,
+                            onChanged: () => setState(() {}),
+                            onClose: () => setState(() {
+                              _showPicker = false;
+                              _pickerSearchController.clear();
+                            }),
+                            onTokenSelected: _addToken,
+                          ),
+                        if (selectedPairs.length >= 2)
+                          ComparisonSparklineCard(pairs: selectedPairs),
+                        if (selectedPairs.length >= 2)
+                          ComparisonMetricSection(
+                            pairs: selectedPairs,
+                            metrics: snapshot.metrics,
+                          ),
+                        if (selectedPairs.length >= 2)
+                          ComparisonVolumeDistributionCard(
+                            pairs: selectedPairs,
+                          ),
+                        if (selectedPairs.length >= 2)
+                          ComparisonMarketCapDistributionCard(
+                            pairs: selectedPairs,
+                          ),
+                        if (selectedPairs.length < 2)
+                          const ComparisonNeedMoreTokensCard(),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

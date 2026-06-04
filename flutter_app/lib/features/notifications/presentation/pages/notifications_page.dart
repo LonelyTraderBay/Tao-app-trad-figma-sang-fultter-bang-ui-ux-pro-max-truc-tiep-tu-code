@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -39,17 +40,14 @@ class NotificationsPage extends ConsumerStatefulWidget {
 }
 
 class _NotificationsPageState extends ConsumerState<NotificationsPage> {
-  List<AppNotificationDraft>? _notifications;
   _NotificationFilter _filter = _NotificationFilter.all;
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(notificationsControllerProvider)
-        .getNotifications();
-    _notifications ??= snapshot.notifications;
-    final notifications = _notifications!;
-    final unreadCount = notifications.where((item) => !item.isRead).length;
+    final state = ref.watch(notificationsStateProvider);
+    final snapshot = state.snapshot;
+    final notifications = state.notifications;
+    final unreadCount = state.unreadCount;
     final filtered = _filter == _NotificationFilter.all
         ? notifications
         : notifications.where((item) => !item.isRead).toList();
@@ -65,63 +63,66 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
       semanticLabel: 'SC-291 NotificationsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: NotificationsPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    children: [
-                      _NotificationToolbar(
-                        unreadCount: unreadCount,
-                        filter: _filter,
-                        onToggleFilter: _toggleFilter,
-                        onMarkAllRead: unreadCount > 0 ? _markAllRead : null,
-                      ),
-                      if (filtered.isEmpty)
-                        VitEmptyState(
-                          key: NotificationsPage.emptyKey,
-                          title: _filter == _NotificationFilter.unread
-                              ? 'Không có thông báo chưa đọc'
-                              : 'Chưa có thông báo nào',
-                          message:
-                              'Thông báo giao dịch, bảo mật và hệ thống sẽ hiển thị tại đây',
-                          icon: Icons.notifications_off_rounded,
-                          actionLabel: _filter == _NotificationFilter.unread
-                              ? 'Xem tất cả'
-                              : null,
-                          onAction: _filter == _NotificationFilter.unread
-                              ? _toggleFilter
-                              : null,
-                        )
-                      else
-                        _NotificationList(
-                          notifications: filtered,
-                          onOpen: _openNotification,
-                          onDelete: _deleteNotification,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: NotificationsPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      children: [
+                        _NotificationToolbar(
+                          unreadCount: unreadCount,
+                          filter: _filter,
+                          onToggleFilter: _toggleFilter,
+                          onMarkAllRead: unreadCount > 0 ? _markAllRead : null,
                         ),
-                      if (filtered.isNotEmpty)
-                        _ListFooter(count: filtered.length),
-                    ],
+                        if (filtered.isEmpty)
+                          VitEmptyState(
+                            key: NotificationsPage.emptyKey,
+                            title: _filter == _NotificationFilter.unread
+                                ? 'Không có thông báo chưa đọc'
+                                : 'Chưa có thông báo nào',
+                            message:
+                                'Thông báo giao dịch, bảo mật và hệ thống sẽ hiển thị tại đây',
+                            icon: Icons.notifications_off_rounded,
+                            actionLabel: _filter == _NotificationFilter.unread
+                                ? 'Xem tất cả'
+                                : null,
+                            onAction: _filter == _NotificationFilter.unread
+                                ? _toggleFilter
+                                : null,
+                          )
+                        else
+                          _NotificationList(
+                            notifications: filtered,
+                            onOpen: _openNotification,
+                            onDelete: _deleteNotification,
+                          ),
+                        if (filtered.isNotEmpty)
+                          _ListFooter(count: filtered.length),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -138,32 +139,18 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
 
   void _markAllRead() {
     HapticFeedback.selectionClick();
-    setState(() {
-      _notifications = _notifications!
-          .map((item) => item.copyWith(isRead: true))
-          .toList();
-    });
+    ref.read(notificationsStateProvider.notifier).markAllRead();
   }
 
   void _deleteNotification(String id) {
     HapticFeedback.selectionClick();
-    setState(() {
-      _notifications = _notifications!.where((item) => item.id != id).toList();
-    });
+    ref.read(notificationsStateProvider.notifier).deleteNotification(id);
   }
 
   void _openNotification(AppNotificationDraft notification) {
     HapticFeedback.selectionClick();
     if (!notification.isRead) {
-      setState(() {
-        _notifications = _notifications!
-            .map(
-              (item) => item.id == notification.id
-                  ? item.copyWith(isRead: true)
-                  : item,
-            )
-            .toList();
-      });
+      ref.read(notificationsStateProvider.notifier).markRead(notification.id);
     }
     final path = _safeActionPath(notification.actionPath);
     if (path != null) context.go(path);

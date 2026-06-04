@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -66,75 +67,78 @@ class _SavingsComparisonPageState extends ConsumerState<SavingsComparisonPage> {
       semanticLabel: 'SC-340 SavingsComparisonPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    VitPageSection(
-                      label: 'Sản phẩm đã chọn',
-                      accentColor: AppColors.primary,
-                      children: [
-                        _SelectedProducts(
-                          selectedProducts: selectedProducts,
-                          selectedCount: selectedIds.length,
-                          maxCompare: snapshot.maxCompare,
-                          canAdd: selectedIds.length < snapshot.maxCompare,
-                          onRemove: _removeProduct,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      VitPageSection(
+                        label: 'Sản phẩm đã chọn',
+                        accentColor: AppColors.primary,
+                        children: [
+                          _SelectedProducts(
+                            selectedProducts: selectedProducts,
+                            selectedCount: selectedIds.length,
+                            maxCompare: snapshot.maxCompare,
+                            canAdd: selectedIds.length < snapshot.maxCompare,
+                            onRemove: _removeProduct,
+                            onAdd: () => _openPicker(
+                              snapshot,
+                              availableProducts,
+                              selectedIds.length,
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (selectedProducts.length >= 2) ...[
+                        VitPageSection(
+                          label: 'So sánh chi tiết',
+                          accentColor: AppColors.buy,
+                          children: [
+                            _ComparisonTable(
+                              products: selectedProducts,
+                              details: snapshot.details,
+                            ),
+                          ],
+                        ),
+                        VitPageSection(
+                          label: 'Tính năng nổi bật',
+                          accentColor: AppColors.accent,
+                          children: [
+                            for (final product in selectedProducts)
+                              _FeatureCard(
+                                product: product,
+                                detail: snapshot.details[product.id],
+                              ),
+                          ],
+                        ),
+                      ] else
+                        _EmptyComparisonState(
                           onAdd: () => _openPicker(
                             snapshot,
                             availableProducts,
                             selectedIds.length,
                           ),
                         ),
-                      ],
-                    ),
-                    if (selectedProducts.length >= 2) ...[
-                      VitPageSection(
-                        label: 'So sánh chi tiết',
-                        accentColor: AppColors.buy,
-                        children: [
-                          _ComparisonTable(
-                            products: selectedProducts,
-                            details: snapshot.details,
-                          ),
-                        ],
-                      ),
-                      VitPageSection(
-                        label: 'Tính năng nổi bật',
-                        accentColor: AppColors.accent,
-                        children: [
-                          for (final product in selectedProducts)
-                            _FeatureCard(
-                              product: product,
-                              detail: snapshot.details[product.id],
-                            ),
-                        ],
-                      ),
-                    ] else
-                      _EmptyComparisonState(
-                        onAdd: () => _openPicker(
-                          snapshot,
-                          availableProducts,
-                          selectedIds.length,
-                        ),
-                      ),
-                    _Disclaimer(text: snapshot.disclaimer),
-                  ],
+                      _Disclaimer(text: snapshot.disclaimer),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -171,11 +175,11 @@ class _SavingsComparisonPageState extends ConsumerState<SavingsComparisonPage> {
     int selectedCount,
   ) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
-      builder: (context) {
+      builder: (sheetContext) {
         return FractionallySizedBox(
           heightFactor: 0.72,
           child: DecoratedBox(
@@ -199,7 +203,7 @@ class _SavingsComparisonPageState extends ConsumerState<SavingsComparisonPage> {
                   availableProducts: availableProducts,
                   selectedCount: selectedCount,
                   maxCompare: snapshot.maxCompare,
-                  onAdd: _addProduct,
+                  onAdd: (productId) => _addProduct(sheetContext, productId),
                 ),
               ),
             ),
@@ -209,7 +213,7 @@ class _SavingsComparisonPageState extends ConsumerState<SavingsComparisonPage> {
     );
   }
 
-  void _addProduct(String productId) {
+  void _addProduct(BuildContext sheetContext, String productId) {
     HapticFeedback.selectionClick();
     setState(() {
       final baseline =
@@ -221,6 +225,6 @@ class _SavingsComparisonPageState extends ConsumerState<SavingsComparisonPage> {
       if (baseline.contains(productId)) return;
       _selectedIds = [...baseline, productId];
     });
-    Navigator.of(context).pop();
+    Navigator.of(sheetContext).pop();
   }
 }

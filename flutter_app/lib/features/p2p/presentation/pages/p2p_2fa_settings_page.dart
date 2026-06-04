@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -72,53 +73,56 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
       semanticLabel: 'SC-254 P2P2FASettingsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: '2FA cho P2P',
-              subtitle: 'Bảo mật · P2P',
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _TwoFactorStatusCard(
-                        enabledMethods: enabledMethods,
-                        primaryMethod: primaryMethod.label,
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      _MethodSection(
-                        methods: _methods,
-                        onToggle: _toggleMethod,
-                        onSetPrimary: _setPrimaryMethod,
-                      ),
-                      const SizedBox(height: AppSpacing.x6),
-                      _ThresholdSection(
-                        thresholds: _thresholds,
-                        onToggle: _toggleThreshold,
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      _SecurityRecommendation(text: snapshot.recommendation),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: '2FA cho P2P',
+            subtitle: 'Bảo mật · P2P',
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _TwoFactorStatusCard(
+                          enabledMethods: enabledMethods,
+                          primaryMethod: primaryMethod.label,
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        _MethodSection(
+                          methods: _methods,
+                          onToggle: _toggleMethod,
+                          onSetPrimary: _setPrimaryMethod,
+                        ),
+                        const SizedBox(height: AppSpacing.x6),
+                        _ThresholdSection(
+                          thresholds: _thresholds,
+                          onToggle: _toggleThreshold,
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        _SecurityRecommendation(text: snapshot.recommendation),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

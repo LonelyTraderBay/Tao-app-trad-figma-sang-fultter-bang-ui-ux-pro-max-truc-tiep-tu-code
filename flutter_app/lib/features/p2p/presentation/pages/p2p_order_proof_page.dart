@@ -9,8 +9,10 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -58,75 +60,78 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
       semanticLabel: 'SC-215 P2POrderProofPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Bằng chứng thanh toán',
-              subtitle: 'Đơn hàng - P2P',
-              showBack: true,
-              onBack: () => _close(context),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2POrderProofPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _OrderProofSummary(order: snapshot.order),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.contentPad,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const SizedBox(height: AppSpacing.x4),
-                            _UploadSection(
-                              title: snapshot.uploadTitle,
-                              subtitle: snapshot.uploadSubtitle,
-                              isUploading: _isUploading,
-                              onCamera: () => _addProof('camera'),
-                              onGallery: () => _addProof('gallery'),
-                            ),
-                            if (_proofs.isNotEmpty) ...[
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Bằng chứng thanh toán',
+            subtitle: 'Đơn hàng - P2P',
+            showBack: true,
+            onBack: () => _close(context),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2POrderProofPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _OrderProofSummary(order: snapshot.order),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.contentPad,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
                               const SizedBox(height: AppSpacing.x4),
-                              _UploadedProofs(
-                                proofs: _proofs,
-                                onRemove: _removeProof,
+                              _UploadSection(
+                                title: snapshot.uploadTitle,
+                                subtitle: snapshot.uploadSubtitle,
+                                isUploading: _isUploading,
+                                onCamera: () => _addProof('camera'),
+                                onGallery: () => _addProof('gallery'),
                               ),
+                              if (_proofs.isNotEmpty) ...[
+                                const SizedBox(height: AppSpacing.x4),
+                                _UploadedProofs(
+                                  proofs: _proofs,
+                                  onRemove: _removeProof,
+                                ),
+                              ],
+                              const SizedBox(height: AppSpacing.x4),
+                              _TipsCard(
+                                title: snapshot.tipsTitle,
+                                tips: snapshot.tips,
+                              ),
+                              const SizedBox(height: AppSpacing.x3),
+                              _ProofWarning(message: snapshot.warningMessage),
                             ],
-                            const SizedBox(height: AppSpacing.x4),
-                            _TipsCard(
-                              title: snapshot.tipsTitle,
-                              tips: snapshot.tips,
-                            ),
-                            const SizedBox(height: AppSpacing.x3),
-                            _ProofWarning(message: snapshot.warningMessage),
-                          ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: AppSpacing.x3),
-                      VitCtaButton(
-                        key: P2POrderProofPage.confirmKey,
-                        onPressed: _proofs.isEmpty
-                            ? null
-                            : () => _confirm(context, snapshot.order),
-                        loading: _isSubmitting,
-                        leading: const Icon(Icons.upload_outlined),
-                        child: Text('Xác nhận (${_proofs.length} ảnh)'),
-                      ),
-                    ],
+                        const SizedBox(height: AppSpacing.x3),
+                        VitCtaButton(
+                          key: P2POrderProofPage.confirmKey,
+                          onPressed: _proofs.isEmpty
+                              ? null
+                              : () => _confirm(context, snapshot.order),
+                          loading: _isSubmitting,
+                          leading: const Icon(Icons.upload_outlined),
+                          child: Text('Xác nhận (${_proofs.length} ảnh)'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -160,10 +165,10 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
 
   void _close(BuildContext context) {
     HapticFeedback.selectionClick();
-    if (context.canPop()) {
-      context.pop();
-      return;
-    }
-    context.go(AppRoutePaths.p2pOrder(widget.orderId));
+    goBackOrFallback(
+      context,
+      fallbackPath: AppRoutePaths.p2pOrder(widget.orderId),
+      mode: BackNavigationMode.historyThenFallback,
+    );
   }
 }

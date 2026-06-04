@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -78,90 +79,94 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
       semanticLabel: 'SC-225 P2PMyAdsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Quảng cáo của tôi',
-              subtitle: 'Quảng cáo · P2P',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.p2p),
-              trailing: VitIconButton(
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Quảng cáo của tôi',
+            subtitle: 'Quảng cáo · P2P',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.p2p),
+            actions: [
+              VitHeaderActionItem(
                 key: P2PMyAdsPage.createButtonKey,
-                icon: Icons.add_rounded,
+                type: VitHeaderActionType.add,
                 tooltip: 'Tạo quảng cáo',
-                variant: VitIconButtonVariant.primary,
                 onPressed: () => context.go(AppRoutePaths.p2pCreate),
               ),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2PMyAdsPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _StatsRow(
-                        activeCount: activeCount,
-                        pausedCount: pausedCount,
-                        totalVolume: totalVolume,
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      VitTabBar(
-                        variant: VitTabBarVariant.segment,
-                        activeKey: _filter.name,
-                        onChanged: (key) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _filter = _filterFromKey(key));
-                        },
-                        tabs: [
-                          VitTabItem(
-                            key: _MyAdsFilter.all.name,
-                            label: 'Tất cả (${ads.length})',
-                          ),
-                          VitTabItem(
-                            key: _MyAdsFilter.active.name,
-                            label: 'Hoạt động ($activeCount)',
-                          ),
-                          VitTabItem(
-                            key: _MyAdsFilter.paused.name,
-                            label: 'Tạm dừng ($pausedCount)',
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      if (filtered.isEmpty)
-                        _EmptyMyAds(snapshot: snapshot)
-                      else
-                        for (final ad in filtered) ...[
-                          _MyAdCard(
-                            ad: ad,
-                            onAnalytics: () => context.go(
-                              AppRoutePaths.p2pAdAnalytics('sample'),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2PMyAdsPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _StatsRow(
+                          activeCount: activeCount,
+                          pausedCount: pausedCount,
+                          totalVolume: totalVolume,
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        VitTabBar(
+                          variant: VitTabBarVariant.segment,
+                          activeKey: _filter.name,
+                          onChanged: (key) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _filter = _filterFromKey(key));
+                          },
+                          tabs: [
+                            VitTabItem(
+                              key: _MyAdsFilter.all.name,
+                              label: 'Tất cả (${ads.length})',
                             ),
-                            onToggle: () => _toggleStatus(ad),
-                            onEdit: () => context.go(AppRoutePaths.p2pCreate),
-                            onDelete: () => _confirmDelete(context, ad),
-                          ),
-                          const SizedBox(height: AppSpacing.x3),
-                        ],
-                      const SizedBox(height: AppSpacing.x3),
-                      _QuickLinksCard(links: snapshot.quickLinks),
-                    ],
+                            VitTabItem(
+                              key: _MyAdsFilter.active.name,
+                              label: 'Hoạt động ($activeCount)',
+                            ),
+                            VitTabItem(
+                              key: _MyAdsFilter.paused.name,
+                              label: 'Tạm dừng ($pausedCount)',
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        if (filtered.isEmpty)
+                          _EmptyMyAds(snapshot: snapshot)
+                        else
+                          for (final ad in filtered) ...[
+                            _MyAdCard(
+                              ad: ad,
+                              onAnalytics: () => context.go(
+                                AppRoutePaths.p2pAdAnalytics('sample'),
+                              ),
+                              onToggle: () => _toggleStatus(ad),
+                              onEdit: () => context.go(AppRoutePaths.p2pCreate),
+                              onDelete: () => _confirmDelete(context, ad),
+                            ),
+                            const SizedBox(height: AppSpacing.x2),
+                          ],
+                        const SizedBox(height: AppSpacing.x2),
+                        _QuickLinksCard(links: snapshot.quickLinks),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

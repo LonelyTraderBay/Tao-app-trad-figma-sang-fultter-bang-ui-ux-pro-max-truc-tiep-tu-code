@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -85,108 +86,111 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
       semanticLabel: 'SC-348 SavingsExportPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _ExportHero(snapshot: snapshot),
-                    _ExportTabs(
-                      tabs: snapshot.tabs,
-                      active: activeTab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (activeTab == 'create') ...[
-                      _SectionTitle(label: 'Loại báo cáo'),
-                      _ReportTypeList(
-                        reports: snapshot.reportTypes,
-                        selected: selectedReport,
-                        onChanged: (report) {
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _ExportHero(snapshot: snapshot),
+                      _ExportTabs(
+                        tabs: snapshot.tabs,
+                        active: activeTab,
+                        onChanged: (tab) {
                           HapticFeedback.selectionClick();
-                          setState(() {
-                            _reportType = report;
-                            _previewReady = false;
-                          });
+                          setState(() => _tab = tab);
                         },
                       ),
-                      _SectionTitle(label: 'Định dạng file'),
-                      _FormatCards(
-                        formats: snapshot.formats,
-                        selected: selectedFormat,
-                        onChanged: (format) {
-                          HapticFeedback.selectionClick();
-                          setState(() {
-                            _format = format;
-                            _previewReady = false;
-                          });
-                        },
-                      ),
-                      _SectionTitle(label: 'Khoảng thời gian'),
-                      _PeriodChips(
-                        periods: snapshot.periods,
-                        selected: selectedPeriod,
-                        onChanged: (period) {
-                          HapticFeedback.selectionClick();
-                          setState(() {
-                            _period = period;
-                            _previewReady = false;
-                          });
-                        },
-                      ),
-                      _SectionTitle(label: 'Loại giao dịch'),
-                      _ScopeChips(
-                        scopes: snapshot.scopes,
-                        selected: selectedScope,
-                        onChanged: (scope) {
-                          HapticFeedback.selectionClick();
-                          setState(() {
-                            _scope = scope;
-                            _previewReady = false;
-                          });
-                        },
-                      ),
-                      _SectionTitle(label: 'Tùy chọn thêm'),
-                      _OptionsList(
-                        options: snapshot.options,
-                        enabled: enabledOptions,
-                        onToggle: _toggleOption,
-                      ),
-                      _ExportSummary(
-                        snapshot: snapshot,
-                        selectedReport: selectedReport,
-                        selectedFormat: selectedFormat,
-                      ),
-                      _SensitiveNotice(text: snapshot.sensitiveNotice),
-                      if (_previewReady)
-                        _PreviewReadyBanner(format: selectedFormat),
-                      VitCtaButton(
-                        key: SavingsExportPage.exportButtonKey,
-                        onPressed: () => _previewExport(selectedFormat),
-                        leading: const Icon(Icons.file_download_outlined),
-                        child: Text(
-                          'Xem trước & Xuất ${_formatLabel(selectedFormat)}',
+                      if (activeTab == 'create') ...[
+                        _SectionTitle(label: 'Loại báo cáo'),
+                        _ReportTypeList(
+                          reports: snapshot.reportTypes,
+                          selected: selectedReport,
+                          onChanged: (report) {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              _reportType = report;
+                              _previewReady = false;
+                            });
+                          },
                         ),
-                      ),
-                    ] else
-                      _HistoryList(history: snapshot.history),
-                  ],
+                        _SectionTitle(label: 'Định dạng file'),
+                        _FormatCards(
+                          formats: snapshot.formats,
+                          selected: selectedFormat,
+                          onChanged: (format) {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              _format = format;
+                              _previewReady = false;
+                            });
+                          },
+                        ),
+                        _SectionTitle(label: 'Khoảng thời gian'),
+                        _PeriodChips(
+                          periods: snapshot.periods,
+                          selected: selectedPeriod,
+                          onChanged: (period) {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              _period = period;
+                              _previewReady = false;
+                            });
+                          },
+                        ),
+                        _SectionTitle(label: 'Loại giao dịch'),
+                        _ScopeChips(
+                          scopes: snapshot.scopes,
+                          selected: selectedScope,
+                          onChanged: (scope) {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              _scope = scope;
+                              _previewReady = false;
+                            });
+                          },
+                        ),
+                        _SectionTitle(label: 'Tùy chọn thêm'),
+                        _OptionsList(
+                          options: snapshot.options,
+                          enabled: enabledOptions,
+                          onToggle: _toggleOption,
+                        ),
+                        _ExportSummary(
+                          snapshot: snapshot,
+                          selectedReport: selectedReport,
+                          selectedFormat: selectedFormat,
+                        ),
+                        _SensitiveNotice(text: snapshot.sensitiveNotice),
+                        if (_previewReady)
+                          _PreviewReadyBanner(format: selectedFormat),
+                        VitCtaButton(
+                          key: SavingsExportPage.exportButtonKey,
+                          onPressed: () => _previewExport(selectedFormat),
+                          leading: const Icon(Icons.file_download_outlined),
+                          child: Text(
+                            'Xem trước & Xuất ${_formatLabel(selectedFormat)}',
+                          ),
+                        ),
+                      ] else
+                        _HistoryList(history: snapshot.history),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

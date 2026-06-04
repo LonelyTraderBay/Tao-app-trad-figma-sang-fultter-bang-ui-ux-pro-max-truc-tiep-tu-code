@@ -9,6 +9,7 @@ final class ProfileSnapshot {
     required this.vip,
     required this.prediction,
     required this.arena,
+    required this.productShortcuts,
     required this.sections,
     required this.endpoint,
     required this.actionDraft,
@@ -19,6 +20,7 @@ final class ProfileSnapshot {
   final ProfileVipProgress vip;
   final ProfilePredictionBlock prediction;
   final ProfileArenaBlock arena;
+  final List<ProfileProductShortcut> productShortcuts;
   final List<ProfileMenuSection> sections;
   final String endpoint;
   final String actionDraft;
@@ -70,6 +72,7 @@ final class ProfileSecuritySnapshot {
     required this.scoreColorHex,
     required this.items,
     required this.devices,
+    required this.supportRoute,
     required this.endpoint,
     required this.actionDraft,
     required this.supportedStates,
@@ -80,6 +83,7 @@ final class ProfileSecuritySnapshot {
   final int scoreColorHex;
   final List<ProfileSecurityItem> items;
   final List<ProfileDevice> devices;
+  final String supportRoute;
   final String endpoint;
   final String actionDraft;
   final List<ProfileScreenState> supportedStates;

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -66,109 +67,112 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
       semanticLabel: 'SC-279 P2PSettingsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _SectionLabel(
-                        icon: Icons.tune_rounded,
-                        label: 'Tùy chọn giao dịch',
-                        color: AppColors.primary,
-                      ),
-                      const SizedBox(height: AppSpacing.x3),
-                      _TradeOptionsCard(
-                        snapshot: snapshot,
-                        asset: _asset,
-                        currency: _currency,
-                        paymentWindow: _paymentWindow,
-                        autoConfirm: _toggles['auto_confirm'] ?? false,
-                        onAsset: (value) => setState(() => _asset = value),
-                        onCurrency: (value) =>
-                            setState(() => _currency = value),
-                        onPaymentWindow: (value) =>
-                            setState(() => _paymentWindow = value),
-                        onToggleAutoConfirm: () => _toggle('auto_confirm'),
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      _ToggleSection(
-                        key: P2PSettingsPage.notificationsKey,
-                        icon: Icons.notifications_none_rounded,
-                        label: 'Thông báo',
-                        color: AppColors.warn,
-                        toggles: snapshot.notificationToggles,
-                        values: _toggles,
-                        onToggle: _toggle,
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      _ToggleSection(
-                        key: P2PSettingsPage.privacyKey,
-                        icon: Icons.visibility_outlined,
-                        label: 'Quyền riêng tư',
-                        color: AppColors.accent,
-                        toggles: snapshot.privacyToggles,
-                        values: _toggles,
-                        onToggle: _toggle,
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      _SecuritySection(
-                        snapshot: snapshot,
-                        values: _toggles,
-                        onToggle: _toggle,
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      _HoursSection(
-                        mode: _hoursMode,
-                        onChanged: (value) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _hoursMode = value);
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      _AutoReplySection(
-                        autoReply: snapshot.autoReply,
-                        enabled: _toggles['auto_reply'] ?? true,
-                        onToggle: () => _toggle('auto_reply'),
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      VitCtaButton(
-                        key: P2PSettingsPage.saveKey,
-                        variant: _saved
-                            ? VitCtaButtonVariant.success
-                            : VitCtaButtonVariant.primary,
-                        onPressed: () {
-                          HapticFeedback.mediumImpact();
-                          setState(() => _saved = true);
-                        },
-                        child: Text(
-                          _saved ? 'Đã lưu thành công!' : 'Lưu cài đặt',
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _SectionLabel(
+                          icon: Icons.tune_rounded,
+                          label: 'Tùy chọn giao dịch',
+                          color: AppColors.primary,
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: AppSpacing.x3),
+                        _TradeOptionsCard(
+                          snapshot: snapshot,
+                          asset: _asset,
+                          currency: _currency,
+                          paymentWindow: _paymentWindow,
+                          autoConfirm: _toggles['auto_confirm'] ?? false,
+                          onAsset: (value) => setState(() => _asset = value),
+                          onCurrency: (value) =>
+                              setState(() => _currency = value),
+                          onPaymentWindow: (value) =>
+                              setState(() => _paymentWindow = value),
+                          onToggleAutoConfirm: () => _toggle('auto_confirm'),
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        _ToggleSection(
+                          key: P2PSettingsPage.notificationsKey,
+                          icon: Icons.notifications_none_rounded,
+                          label: 'Thông báo',
+                          color: AppColors.warn,
+                          toggles: snapshot.notificationToggles,
+                          values: _toggles,
+                          onToggle: _toggle,
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        _ToggleSection(
+                          key: P2PSettingsPage.privacyKey,
+                          icon: Icons.visibility_outlined,
+                          label: 'Quyền riêng tư',
+                          color: AppColors.accent,
+                          toggles: snapshot.privacyToggles,
+                          values: _toggles,
+                          onToggle: _toggle,
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        _SecuritySection(
+                          snapshot: snapshot,
+                          values: _toggles,
+                          onToggle: _toggle,
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        _HoursSection(
+                          mode: _hoursMode,
+                          onChanged: (value) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _hoursMode = value);
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        _AutoReplySection(
+                          autoReply: snapshot.autoReply,
+                          enabled: _toggles['auto_reply'] ?? true,
+                          onToggle: () => _toggle('auto_reply'),
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        VitCtaButton(
+                          key: P2PSettingsPage.saveKey,
+                          variant: _saved
+                              ? VitCtaButtonVariant.success
+                              : VitCtaButtonVariant.primary,
+                          onPressed: () {
+                            HapticFeedback.mediumImpact();
+                            setState(() => _saved = true);
+                          },
+                          child: Text(
+                            _saved ? 'Đã lưu thành công!' : 'Lưu cài đặt',
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

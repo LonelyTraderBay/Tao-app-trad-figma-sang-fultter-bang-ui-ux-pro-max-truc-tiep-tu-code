@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -62,65 +63,68 @@ class _P2PPaymentMethodOwnershipPageState
       semanticLabel: 'SC-234 P2PPaymentMethodOwnershipPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Proof of Ownership',
-              subtitle: 'Thanh toán · P2P',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2PPaymentMethodOwnershipPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const _OwnershipHero(),
-                      const SizedBox(height: AppSpacing.x5),
-                      Text(
-                        'Tài liệu cần thiết',
-                        style: AppTextStyles.baseMedium.copyWith(
-                          color: AppColors.text1,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.x3),
-                      for (final document in snapshot.documents) ...[
-                        _OwnershipDocumentCard(
-                          document: document,
-                          uploaded: _uploaded.contains(document.id),
-                          onUpload: () => _markUploaded(document.id),
-                          onRemove: () => _removeUpload(document.id),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Proof of Ownership',
+            subtitle: 'Thanh toán · P2P',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2PPaymentMethodOwnershipPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const _OwnershipHero(),
+                        const SizedBox(height: AppSpacing.x5),
+                        Text(
+                          'Tài liệu cần thiết',
+                          style: AppTextStyles.baseMedium.copyWith(
+                            color: AppColors.text1,
+                          ),
                         ),
                         const SizedBox(height: AppSpacing.x3),
+                        for (final document in snapshot.documents) ...[
+                          _OwnershipDocumentCard(
+                            document: document,
+                            uploaded: _uploaded.contains(document.id),
+                            onUpload: () => _markUploaded(document.id),
+                            onRemove: () => _removeUpload(document.id),
+                          ),
+                          const SizedBox(height: AppSpacing.x3),
+                        ],
+                        const SizedBox(height: AppSpacing.x3),
+                        VitCtaButton(
+                          key: P2PPaymentMethodOwnershipPage.submitButtonKey,
+                          loading: _submitting,
+                          onPressed: canSubmit
+                              ? () => _confirmSubmit(context, controller)
+                              : null,
+                          trailing: const Icon(Icons.chevron_right_rounded),
+                          child: const Text('Gửi xác minh'),
+                        ),
                       ],
-                      const SizedBox(height: AppSpacing.x3),
-                      VitCtaButton(
-                        key: P2PPaymentMethodOwnershipPage.submitButtonKey,
-                        loading: _submitting,
-                        onPressed: canSubmit
-                            ? () => _confirmSubmit(context, controller)
-                            : null,
-                        trailing: const Icon(Icons.chevron_right_rounded),
-                        child: const Text('Gửi xác minh'),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

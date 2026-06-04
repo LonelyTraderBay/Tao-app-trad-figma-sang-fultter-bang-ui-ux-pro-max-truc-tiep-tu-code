@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -67,78 +68,86 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
       semanticLabel: 'SC-257 P2PLoginHistoryPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Lịch sử đăng nhập',
-              subtitle: 'Bảo mật · P2P',
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-              trailing: _DownloadButton(
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Lịch sử đăng nhập',
+            subtitle: 'Bảo mật · P2P',
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+            actions: [
+              VitHeaderActionItem(
                 key: P2PLoginHistoryPage.downloadKey,
-                onTap: () => HapticFeedback.selectionClick(),
+                type: VitHeaderActionType.export,
+                onPressed: () => HapticFeedback.selectionClick(),
               ),
-            ),
-            Expanded(
-              child: RefreshIndicator(
-                color: AppModuleAccents.p2p,
-                backgroundColor: AppColors.surface2,
-                onRefresh: () async {
-                  HapticFeedback.selectionClick();
-                  await Future<void>.delayed(const Duration(milliseconds: 120));
-                },
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(
-                      parent: BouncingScrollPhysics(),
-                    ),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _LoginStats(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
-                        _FilterTabs(
-                          activeFilter: _filter,
-                          onChanged: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _filter = value;
-                              _expandedEventId = null;
-                            });
-                          },
-                        ),
-                        if (snapshot.riskEventCount > 0 &&
-                            _filter != 'success') ...[
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: RefreshIndicator(
+                  color: AppModuleAccents.p2p,
+                  backgroundColor: AppColors.surface2,
+                  onRefresh: () async {
+                    HapticFeedback.selectionClick();
+                    await Future<void>.delayed(
+                      const Duration(milliseconds: 120),
+                    );
+                  },
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(
+                        parent: BouncingScrollPhysics(),
+                      ),
+                      padding: EdgeInsets.fromLTRB(
+                        AppSpacing.contentPad,
+                        AppSpacing.x4,
+                        AppSpacing.contentPad,
+                        bottomInset,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _LoginStats(snapshot: snapshot),
                           const SizedBox(height: AppSpacing.x4),
-                          _RiskWarning(snapshot: snapshot),
-                        ],
-                        const SizedBox(height: AppSpacing.x4),
-                        if (filteredEvents.isEmpty)
-                          _EmptyState(snapshot: snapshot)
-                        else
-                          _LoginEventList(
-                            events: filteredEvents,
-                            expandedEventId: _expandedEventId,
-                            onToggle: _toggleExpanded,
+                          _FilterTabs(
+                            activeFilter: _filter,
+                            onChanged: (value) {
+                              HapticFeedback.selectionClick();
+                              setState(() {
+                                _filter = value;
+                                _expandedEventId = null;
+                              });
+                            },
                           ),
-                        const SizedBox(height: AppSpacing.x6),
-                        _SecurityInfo(snapshot: snapshot),
-                      ],
+                          if (snapshot.riskEventCount > 0 &&
+                              _filter != 'success') ...[
+                            const SizedBox(height: AppSpacing.x4),
+                            _RiskWarning(snapshot: snapshot),
+                          ],
+                          const SizedBox(height: AppSpacing.x4),
+                          if (filteredEvents.isEmpty)
+                            _EmptyState(snapshot: snapshot)
+                          else
+                            _LoginEventList(
+                              events: filteredEvents,
+                              expandedEventId: _expandedEventId,
+                              onToggle: _toggleExpanded,
+                            ),
+                          const SizedBox(height: AppSpacing.x6),
+                          _SecurityInfo(snapshot: snapshot),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

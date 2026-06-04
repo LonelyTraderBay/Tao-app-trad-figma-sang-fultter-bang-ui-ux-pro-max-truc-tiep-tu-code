@@ -26,102 +26,105 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
       semanticLabel: 'SC-021 PortfolioTrackerPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Danh mục',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.markets),
-            ),
-            _PortfolioTabs(
-              activeTab: _tab,
-              onChanged: (value) => setState(() => _tab = value),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: PortfolioTrackerPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 12,
-                    children: [
-                      if (_tab == 'overview') ...[
-                        _TotalValueHero(
-                          stats: snapshot.stats,
-                          hidden: _hideBalance,
-                          onToggleHidden: () => setState(() {
-                            _hideBalance = !_hideBalance;
-                          }),
-                        ),
-                        _QuickStats(
-                          stats: snapshot.stats,
-                          hidden: _hideBalance,
-                        ),
-                        _AllocationCard(holdings: overviewHoldings),
-                        const _SectionHeader(
-                          label: 'Tài sản chính',
-                          accentColor: _marketPrimary,
-                        ),
-                        _TopHoldings(
-                          holdings: overviewHoldings.take(4).toList(),
-                          hidden: _hideBalance,
-                          onTap: (holding) => context.go(
-                            AppRoutePaths.pairDetail('${holding.id}usdt'),
-                          ),
-                        ),
-                        _RiskCard(stats: snapshot.stats),
-                      ] else if (_tab == 'assets') ...[
-                        _SortChips(
-                          active: _sortBy,
-                          onSelected: (value) => setState(() {
-                            _sortBy = value;
-                          }),
-                        ),
-                        for (final holding in snapshot.holdings)
-                          _HoldingDetailCard(
-                            key: PortfolioTrackerPage.holdingKey(holding.id),
-                            holding: holding,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Danh mục',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.markets),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _PortfolioTabs(
+                activeTab: _tab,
+                onChanged: (value) => setState(() => _tab = value),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: PortfolioTrackerPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 12,
+                      children: [
+                        if (_tab == 'overview') ...[
+                          _TotalValueHero(
+                            stats: snapshot.stats,
                             hidden: _hideBalance,
-                            onTap: () => context.go(
+                            onToggleHidden: () => setState(() {
+                              _hideBalance = !_hideBalance;
+                            }),
+                          ),
+                          _QuickStats(
+                            stats: snapshot.stats,
+                            hidden: _hideBalance,
+                          ),
+                          _AllocationCard(holdings: overviewHoldings),
+                          const _SectionHeader(
+                            label: 'Tài sản chính',
+                            accentColor: _marketPrimary,
+                          ),
+                          _TopHoldings(
+                            holdings: overviewHoldings.take(4).toList(),
+                            hidden: _hideBalance,
+                            onTap: (holding) => context.go(
                               AppRoutePaths.pairDetail('${holding.id}usdt'),
                             ),
                           ),
-                      ] else ...[
-                        _TimeFilterChips(
-                          active: _timeFilter,
-                          onSelected: (value) => setState(() {
-                            _timeFilter = value;
-                          }),
-                        ),
-                        _PerformanceChartCard(
-                          stats: snapshot.stats,
-                          points: snapshot.performance,
-                        ),
-                        const _SectionHeader(
-                          label: 'Lãi/Lỗ theo tài sản',
-                          accentColor: AppColors.buy,
-                        ),
-                        _PnlBreakdown(
-                          holdings: overviewHoldings
-                              .where((holding) => holding.symbol != 'USDT')
-                              .toList(),
-                          hidden: _hideBalance,
-                        ),
-                        _SummaryStats(
-                          stats: snapshot.stats,
-                          hidden: _hideBalance,
-                        ),
+                          _RiskCard(stats: snapshot.stats),
+                        ] else if (_tab == 'assets') ...[
+                          _SortChips(
+                            active: _sortBy,
+                            onSelected: (value) => setState(() {
+                              _sortBy = value;
+                            }),
+                          ),
+                          for (final holding in snapshot.holdings)
+                            _HoldingDetailCard(
+                              key: PortfolioTrackerPage.holdingKey(holding.id),
+                              holding: holding,
+                              hidden: _hideBalance,
+                              onTap: () => context.go(
+                                AppRoutePaths.pairDetail('${holding.id}usdt'),
+                              ),
+                            ),
+                        ] else ...[
+                          _TimeFilterChips(
+                            active: _timeFilter,
+                            onSelected: (value) => setState(() {
+                              _timeFilter = value;
+                            }),
+                          ),
+                          _PerformanceChartCard(
+                            stats: snapshot.stats,
+                            points: snapshot.performance,
+                          ),
+                          const _SectionHeader(
+                            label: 'Lãi/Lỗ theo tài sản',
+                            accentColor: AppColors.buy,
+                          ),
+                          _PnlBreakdown(
+                            holdings: overviewHoldings
+                                .where((holding) => holding.symbol != 'USDT')
+                                .toList(),
+                            hidden: _hideBalance,
+                          ),
+                          _SummaryStats(
+                            stats: snapshot.stats,
+                            hidden: _hideBalance,
+                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

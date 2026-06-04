@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -99,51 +100,54 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
         type: MaterialType.transparency,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: 'Dispute Resolution',
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-                ),
-                if (_activeTabId != 'file')
-                  _DisputeTabs(
-                    tabs: snapshot.tabs,
-                    activeId: _activeTabId,
-                    onChanged: (id) => setState(() => _activeTabId = id),
-                  ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: DisputeResolutionPage.contentKey,
-                    padding: EdgeInsets.fromLTRB(
-                      20,
-                      _activeTabId == 'file' ? 13 : 18,
-                      20,
-                      _activeTabId == 'file' ? 24 : activeBottomInset + 20,
+            VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Dispute Resolution',
+                showBack: true,
+                onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (_activeTabId != 'file')
+                    _DisputeTabs(
+                      tabs: snapshot.tabs,
+                      activeId: _activeTabId,
+                      onChanged: (id) => setState(() => _activeTabId = id),
                     ),
-                    child: _activeTabId == 'file'
-                        ? _FileComplaintTab(
-                            snapshot: snapshot,
-                            selectedType: _selectedType,
-                            selectedProviderId: _selectedProviderId,
-                            subjectController: _subjectController,
-                            descriptionController: _descriptionController,
-                            evidenceAttached: _evidenceAttached,
-                            onTypeChanged: (value) =>
-                                setState(() => _selectedType = value),
-                            onProviderChanged: (value) =>
-                                setState(() => _selectedProviderId = value),
-                            onUpload: () =>
-                                setState(() => _evidenceAttached = true),
-                          )
-                        : _CasesTab(
-                            activeTabId: _activeTabId,
-                            snapshot: snapshot,
-                            lastResult: _lastResult,
-                          ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: DisputeResolutionPage.contentKey,
+                      padding: EdgeInsets.fromLTRB(
+                        20,
+                        _activeTabId == 'file' ? 13 : 18,
+                        20,
+                        _activeTabId == 'file' ? 24 : activeBottomInset + 20,
+                      ),
+                      child: _activeTabId == 'file'
+                          ? _FileComplaintTab(
+                              snapshot: snapshot,
+                              selectedType: _selectedType,
+                              selectedProviderId: _selectedProviderId,
+                              subjectController: _subjectController,
+                              descriptionController: _descriptionController,
+                              evidenceAttached: _evidenceAttached,
+                              onTypeChanged: (value) =>
+                                  setState(() => _selectedType = value),
+                              onProviderChanged: (value) =>
+                                  setState(() => _selectedProviderId = value),
+                              onUpload: () =>
+                                  setState(() => _evidenceAttached = true),
+                            )
+                          : _CasesTab(
+                              activeTabId: _activeTabId,
+                              snapshot: snapshot,
+                              lastResult: _lastResult,
+                            ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_activeTabId == 'file')
               Positioned(

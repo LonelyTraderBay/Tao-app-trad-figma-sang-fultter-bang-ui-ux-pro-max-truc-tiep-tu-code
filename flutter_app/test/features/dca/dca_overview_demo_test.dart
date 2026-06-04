@@ -61,7 +61,8 @@ void main() {
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('DCA Overview Card Demo'), findsOneWidget);
     expect(find.text('Demo · DCA'), findsOneWidget);
-    expect(find.text('Show Loading'), findsOneWidget);
+    expect(find.byKey(DCAOverviewDemo.loadingToggleKey), findsOneWidget);
+    expect(find.byTooltip('Loading demo'), findsOneWidget);
     expect(
       find.text('Scenario 1: Lãi (Profitable) + Sparkline + Actions'),
       findsOneWidget,
@@ -82,7 +83,7 @@ void main() {
     await tester.tap(find.byKey(DCAOverviewDemo.loadingToggleKey));
     await tester.pump();
 
-    expect(find.text('Hide Loading'), findsOneWidget);
+    expect(find.byTooltip('Loading demo'), findsOneWidget);
     expect(find.byKey(DCAOverviewDemo.loadingSectionKey), findsOneWidget);
     expect(find.byType(VitSkeleton), findsWidgets);
   });

@@ -5,6 +5,7 @@ final class AppRadii {
 
   static const double xs = 5;
   static const double sm = 8;
+  static const double headerAction = 10;
   static const double md = 13;
   static const double input = 14;
   static const double card = 16;
@@ -15,6 +16,9 @@ final class AppRadii {
 
   static const BorderRadius xsRadius = BorderRadius.all(Radius.circular(xs));
   static const BorderRadius smRadius = BorderRadius.all(Radius.circular(sm));
+  static const BorderRadius headerActionRadius = BorderRadius.all(
+    Radius.circular(headerAction),
+  );
   static const BorderRadius mdRadius = BorderRadius.all(Radius.circular(md));
   static const BorderRadius inputRadius = BorderRadius.all(
     Radius.circular(input),

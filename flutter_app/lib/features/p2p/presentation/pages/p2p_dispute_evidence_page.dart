@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -59,73 +60,76 @@ class _P2PDisputeEvidencePageState
       semanticLabel: 'SC-219 P2PDisputeEvidencePage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Bằng chứng tranh chấp',
-              subtitle: 'Tranh chấp · P2P',
-              showBack: true,
-              onBack: () =>
-                  context.go(AppRoutePaths.p2pDisputeDetail(widget.disputeId)),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2PDisputeEvidencePage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _HeroCard(
-                        title: snapshot.title,
-                        subtitle: snapshot.subtitle,
-                      ),
-                      const SizedBox(height: AppSpacing.x3),
-                      const _MockActionNote(
-                        text:
-                            'Mock/fail-closed: upload chỉ cập nhật trạng thái cục bộ trong dev smoke; chưa gửi file lên backend.',
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      for (final document in documents) ...[
-                        _EvidenceRow(
-                          document: document,
-                          onUpload: () => _markUploaded(document.source.id),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Bằng chứng tranh chấp',
+            subtitle: 'Tranh chấp · P2P',
+            showBack: true,
+            onBack: () =>
+                context.go(AppRoutePaths.p2pDisputeDetail(widget.disputeId)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2PDisputeEvidencePage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _HeroCard(
+                          title: snapshot.title,
+                          subtitle: snapshot.subtitle,
                         ),
                         const SizedBox(height: AppSpacing.x3),
+                        const _MockActionNote(
+                          text:
+                              'Mock/fail-closed: upload chỉ cập nhật trạng thái cục bộ trong dev smoke; chưa gửi file lên backend.',
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        for (final document in documents) ...[
+                          _EvidenceRow(
+                            document: document,
+                            onUpload: () => _markUploaded(document.source.id),
+                          ),
+                          const SizedBox(height: AppSpacing.x3),
+                        ],
+                        const SizedBox(height: AppSpacing.x2),
+                        VitCtaButton(
+                          key: P2PDisputeEvidencePage.submitKey,
+                          onPressed: controller.canSubmit(_uploaded)
+                              ? () {
+                                  HapticFeedback.mediumImpact();
+                                  final preview = controller.submitPreview(
+                                    _uploaded,
+                                  );
+                                  context.go(
+                                    AppRoutePaths.p2pDisputeDetail(
+                                      preview.disputeId,
+                                    ),
+                                  );
+                                }
+                              : null,
+                          child: const Text('Gửi bằng chứng'),
+                        ),
                       ],
-                      const SizedBox(height: AppSpacing.x2),
-                      VitCtaButton(
-                        key: P2PDisputeEvidencePage.submitKey,
-                        onPressed: controller.canSubmit(_uploaded)
-                            ? () {
-                                HapticFeedback.mediumImpact();
-                                final preview = controller.submitPreview(
-                                  _uploaded,
-                                );
-                                context.go(
-                                  AppRoutePaths.p2pDisputeDetail(
-                                    preview.disputeId,
-                                  ),
-                                );
-                              }
-                            : null,
-                        child: const Text('Gửi bằng chứng'),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

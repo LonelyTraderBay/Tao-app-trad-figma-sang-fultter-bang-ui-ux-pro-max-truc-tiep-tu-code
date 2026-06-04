@@ -1,33 +1,5 @@
 part of '../pages/transaction_history_page.dart';
 
-class _HeaderExportButton extends StatelessWidget {
-  const _HeaderExportButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        width: 36,
-        height: 36,
-        decoration: BoxDecoration(
-          color: _historyPanel2,
-          borderRadius: AppRadii.mdRadius,
-          border: Border.all(color: AppColors.onAccent.withValues(alpha: .04)),
-        ),
-        child: const Icon(
-          Icons.chevron_right_rounded,
-          color: AppColors.text1,
-          size: 22,
-        ),
-      ),
-    );
-  }
-}
-
 class _ExportBar extends StatelessWidget {
   const _ExportBar({required this.count, required this.onExport});
 

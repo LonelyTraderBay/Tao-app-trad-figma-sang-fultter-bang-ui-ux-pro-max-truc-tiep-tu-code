@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -65,77 +66,80 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
       semanticLabel: 'SC-224 P2PAdDetailPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Chi tiết quảng cáo',
-              subtitle: 'Quảng cáo · P2P',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.p2p),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2PAdDetailPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _MerchantCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _TrustMarketRow(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _SignalChips(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _PriceCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _AmountCard(
-                        snapshot: snapshot,
-                        selectedPercent: _selectedPercent,
-                        fiatAmount: fiatAmount,
-                        cryptoAmount: cryptoAmount,
-                        onPercent: (percent) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _selectedPercent = percent);
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _RequirementCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _TermsCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _EscrowCard(snapshot: snapshot, amount: cryptoAmount),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Chi tiết quảng cáo',
+            subtitle: 'Quảng cáo · P2P',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.p2p),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2PAdDetailPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _MerchantCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _TrustMarketRow(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _SignalChips(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _PriceCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _AmountCard(
+                          snapshot: snapshot,
+                          selectedPercent: _selectedPercent,
+                          fiatAmount: fiatAmount,
+                          cryptoAmount: cryptoAmount,
+                          onPercent: (percent) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _selectedPercent = percent);
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        _RequirementCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _TermsCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _EscrowCard(snapshot: snapshot, amount: cryptoAmount),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            VitStickyFooter(
-              backgroundColor: AppColors.surface.withValues(alpha: .96),
-              child: Padding(
-                padding: EdgeInsets.only(bottom: footerInset),
-                child: VitCtaButton(
-                  key: P2PAdDetailPage.buyButtonKey,
-                  onPressed: isValid
-                      ? () => context.go(
-                          AppRoutePaths.p2pOrder(snapshot.targetOrderId),
-                        )
-                      : null,
-                  variant: VitCtaButtonVariant.success,
-                  child: Text('Mua ${ad.asset}'),
+              VitStickyFooter(
+                backgroundColor: AppColors.surface.withValues(alpha: .96),
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: footerInset),
+                  child: VitCtaButton(
+                    key: P2PAdDetailPage.buyButtonKey,
+                    onPressed: isValid
+                        ? () => context.go(
+                            AppRoutePaths.p2pOrder(snapshot.targetOrderId),
+                          )
+                        : null,
+                    variant: VitCtaButtonVariant.success,
+                    child: Text('Mua ${ad.asset}'),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

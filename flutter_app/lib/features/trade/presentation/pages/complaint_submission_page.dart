@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -73,72 +74,74 @@ class _ComplaintSubmissionPageState
       semanticLabel: 'SC-112 ComplaintSubmissionPage',
       child: Material(
         color: _submissionBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Submit Complaint',
-              subtitle: 'FCA Regulated Process',
-              showBack: true,
-              onBack: () =>
-                  context.go(AppRoutePaths.tradeCopyComplaintsHandling),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: ComplaintSubmissionPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 27, 20, scrollBottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _ProcessNotice(snapshot: snapshot),
-                    const SizedBox(height: 36),
-                    const _SectionLabel('Complaint Details'),
-                    const SizedBox(height: 15),
-                    _CategoryField(
-                      value: _category,
-                      categories: snapshot.categories,
-                      onChanged: (value) => setState(() => _category = value),
-                    ),
-                    const SizedBox(height: 19),
-                    _TextInputBlock(
-                      label: 'Subject *',
-                      controller: _subjectController,
-                      hint: 'Brief summary of your complaint',
-                      maxLength: snapshot.subjectMaxLength,
-                      minLength: snapshot.subjectMinLength,
-                      onChanged: (_) => setState(() {}),
-                    ),
-                    const SizedBox(height: 16),
-                    _TextInputBlock(
-                      label: 'Description *',
-                      controller: _descriptionController,
-                      hint:
-                          'Please provide full details of your complaint, including dates, amounts, and any relevant information',
-                      maxLength: snapshot.descriptionMaxLength,
-                      minLength: snapshot.descriptionMinLength,
-                      multiline: true,
-                      onChanged: (_) => setState(() {}),
-                    ),
-                    const SizedBox(height: 18),
-                    const _EvidenceUploadCard(),
-                    const SizedBox(height: 25),
-                    _TermsCard(
-                      snapshot: snapshot,
-                      accepted: _acceptTerms,
-                      onChanged: (value) =>
-                          setState(() => _acceptTerms = value),
-                    ),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Submit Complaint',
+            subtitle: 'FCA Regulated Process',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyComplaintsHandling),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: ComplaintSubmissionPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 27, 20, scrollBottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _ProcessNotice(snapshot: snapshot),
+                      const SizedBox(height: 36),
+                      const _SectionLabel('Complaint Details'),
+                      const SizedBox(height: 15),
+                      _CategoryField(
+                        value: _category,
+                        categories: snapshot.categories,
+                        onChanged: (value) => setState(() => _category = value),
+                      ),
+                      const SizedBox(height: 19),
+                      _TextInputBlock(
+                        label: 'Subject *',
+                        controller: _subjectController,
+                        hint: 'Brief summary of your complaint',
+                        maxLength: snapshot.subjectMaxLength,
+                        minLength: snapshot.subjectMinLength,
+                        onChanged: (_) => setState(() {}),
+                      ),
+                      const SizedBox(height: 16),
+                      _TextInputBlock(
+                        label: 'Description *',
+                        controller: _descriptionController,
+                        hint:
+                            'Please provide full details of your complaint, including dates, amounts, and any relevant information',
+                        maxLength: snapshot.descriptionMaxLength,
+                        minLength: snapshot.descriptionMinLength,
+                        multiline: true,
+                        onChanged: (_) => setState(() {}),
+                      ),
+                      const SizedBox(height: 18),
+                      const _EvidenceUploadCard(),
+                      const SizedBox(height: 25),
+                      _TermsCard(
+                        snapshot: snapshot,
+                        accepted: _acceptTerms,
+                        onChanged: (value) =>
+                            setState(() => _acceptTerms = value),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: footerBottom),
-              child: _SubmissionFooter(
-                enabled: canSubmit,
-                onSubmit: () => _submit(context, snapshot, canSubmit),
+              Padding(
+                padding: EdgeInsets.only(bottom: footerBottom),
+                child: _SubmissionFooter(
+                  enabled: canSubmit,
+                  onSubmit: () => _submit(context, snapshot, canSubmit),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

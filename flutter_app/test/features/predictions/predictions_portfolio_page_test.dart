@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_home_page.dart';
@@ -206,5 +207,42 @@ void main() {
     await tester.tap(find.byKey(PredictionsPortfolioPage.arenaBridgeKey));
     await tester.pumpAndSettle();
     expect(find.byType(ArenaHomePage), findsOneWidget);
+  });
+
+  testWidgets('SC-031 invalid constructor backPath falls back to predictions', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    final router = GoRouter(
+      initialLocation: '/custom-prediction-portfolio',
+      routes: [
+        GoRoute(
+          path: '/custom-prediction-portfolio',
+          builder: (_, _) => const PredictionsPortfolioPage(
+            backPath: 'https://evil.example/predictions',
+          ),
+        ),
+        GoRoute(
+          path: AppRoutePaths.marketsPredictions,
+          builder: (_, _) => const Scaffold(body: Text('Safe predictions')),
+        ),
+      ],
+    );
+    addTearDown(router.dispose);
+
+    await tester.pumpWidget(
+      ProviderScope(child: MaterialApp.router(routerConfig: router)),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Safe predictions'), findsOneWidget);
+    expect(find.byType(PredictionsPortfolioPage), findsNothing);
   });
 }

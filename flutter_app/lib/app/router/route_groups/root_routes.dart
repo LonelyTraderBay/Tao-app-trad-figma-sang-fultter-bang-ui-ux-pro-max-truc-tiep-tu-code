@@ -17,22 +17,26 @@ ShellRoute _appShellRoute(ShellRenderMode shellRenderMode) {
   return ShellRoute(
     builder: (context, state, child) {
       final activeDestination = _activeDestinationForPath(state.uri.path);
-      final appShell = VitAppShell(
-        renderMode: shellRenderMode,
-        currentPath: state.uri.path,
-        activeDestination: activeDestination,
-        homeBadgeCount: HomeMockData.homeBadge,
-        statusBarTime: shellRenderMode.usesVisualQaFrame
-            ? _visualQaStatusBarTimeForUri(state.uri)
-            : null,
-        onDestinationSelected: (destination) {
-          context.go(destination.routePath);
-        },
-        child: child,
-      );
+      return Consumer(
+        builder: (context, ref, _) {
+          final appShell = VitAppShell(
+            renderMode: shellRenderMode,
+            currentPath: state.uri.path,
+            activeDestination: activeDestination,
+            notificationBadgeCount: ref.watch(notificationUnreadCountProvider),
+            statusBarTime: shellRenderMode.usesVisualQaFrame
+                ? _visualQaStatusBarTimeForUri(state.uri)
+                : null,
+            onDestinationSelected: (destination) {
+              context.go(destination.routePath);
+            },
+            child: child,
+          );
 
-      if (!shellRenderMode.usesVisualQaFrame) return appShell;
-      return VitPhoneFrame(child: appShell);
+          if (!shellRenderMode.usesVisualQaFrame) return appShell;
+          return VitPhoneFrame(child: appShell);
+        },
+      );
     },
     routes: [
       ..._homeRoutes(shellRenderMode),

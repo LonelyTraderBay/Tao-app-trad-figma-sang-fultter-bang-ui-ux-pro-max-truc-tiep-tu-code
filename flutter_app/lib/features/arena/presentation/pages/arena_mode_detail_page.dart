@@ -17,8 +17,10 @@ import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_mode
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_mode_detail_rules.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
 class ArenaModeDetailPage extends ConsumerStatefulWidget {
   const ArenaModeDetailPage({
@@ -64,79 +66,84 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
       semanticLabel: 'SC-189 ArenaModeDetailPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.mode.title,
-              subtitle: 'Chế độ chơi · Open Arena',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ArenaModeDetailPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    customGap: AppSpacing.x5,
-                    children: [
-                      ArenaModeHero(
-                        creatorKey: ArenaModeDetailPage.creatorKey,
-                        trustKey: ArenaModeDetailPage.trustKey,
-                        snapshot: snapshot,
-                        onCreator: () => _go(
-                          AppRoutePaths.arenaCreator(snapshot.creator.id),
-                        ),
-                        onTrust: () =>
-                            _go(AppRoutePaths.arenaTrust(snapshot.creator.id)),
-                      ),
-                      ArenaModeDescriptionCard(
-                        description: snapshot.mode.description,
-                      ),
-                      ArenaModeRulesSummary(rows: snapshot.ruleRows),
-                      ArenaModeQualitySection(
-                        infoKey: ArenaModeDetailPage.infoKey,
-                        metrics: snapshot.qualityMetrics,
-                        onInfo: _showTrustSheet,
-                      ),
-                      ArenaModeActions(
-                        useModeKey: ArenaModeDetailPage.useModeKey,
-                        createRoomKey: ArenaModeDetailPage.createRoomKey,
-                        onUseMode: () => _go(AppRoutePaths.arenaStudio),
-                        onCreateRoom: () => _go(AppRoutePaths.arenaStudio),
-                      ),
-                      if (snapshot.relatedRooms.isNotEmpty)
-                        ArenaModeRelatedRooms(
-                          roomKey: ArenaModeDetailPage.roomKey,
-                          rooms: snapshot.relatedRooms,
-                          onRoom: (id) => _go(AppRoutePaths.arenaChallenge(id)),
-                        ),
-                      if (snapshot.relatedModes.isNotEmpty)
-                        ArenaModeRelatedModes(
-                          relatedModeKey: ArenaModeDetailPage.relatedModeKey,
-                          modes: snapshot.relatedModes,
-                          onMode: (id) => _go(AppRoutePaths.arenaMode(id)),
-                        ),
-                      ArenaModePredictionContext(
-                        predictionKey: ArenaModeDetailPage.predictionKey,
-                        contextDraft: snapshot.predictionContext,
-                        onTap: () => _go(
-                          AppRoutePaths.marketsPredictionEvent(
-                            snapshot.predictionContext.eventId,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.mode.title,
+            subtitle: 'Chế độ chơi · Open Arena',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ArenaModeDetailPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      customGap: AppSpacing.x5,
+                      children: [
+                        ArenaModeHero(
+                          creatorKey: ArenaModeDetailPage.creatorKey,
+                          trustKey: ArenaModeDetailPage.trustKey,
+                          snapshot: snapshot,
+                          onCreator: () => _go(
+                            AppRoutePaths.arenaCreator(snapshot.creator.id),
+                          ),
+                          onTrust: () => _go(
+                            AppRoutePaths.arenaTrust(snapshot.creator.id),
                           ),
                         ),
-                      ),
-                    ],
+                        ArenaModeDescriptionCard(
+                          description: snapshot.mode.description,
+                        ),
+                        ArenaModeRulesSummary(rows: snapshot.ruleRows),
+                        ArenaModeQualitySection(
+                          infoKey: ArenaModeDetailPage.infoKey,
+                          metrics: snapshot.qualityMetrics,
+                          onInfo: _showTrustSheet,
+                        ),
+                        ArenaModeActions(
+                          useModeKey: ArenaModeDetailPage.useModeKey,
+                          createRoomKey: ArenaModeDetailPage.createRoomKey,
+                          onUseMode: () => _go(AppRoutePaths.arenaStudio),
+                          onCreateRoom: () => _go(AppRoutePaths.arenaStudio),
+                        ),
+                        if (snapshot.relatedRooms.isNotEmpty)
+                          ArenaModeRelatedRooms(
+                            roomKey: ArenaModeDetailPage.roomKey,
+                            rooms: snapshot.relatedRooms,
+                            onRoom: (id) =>
+                                _go(AppRoutePaths.arenaChallenge(id)),
+                          ),
+                        if (snapshot.relatedModes.isNotEmpty)
+                          ArenaModeRelatedModes(
+                            relatedModeKey: ArenaModeDetailPage.relatedModeKey,
+                            modes: snapshot.relatedModes,
+                            onMode: (id) => _go(AppRoutePaths.arenaMode(id)),
+                          ),
+                        ArenaModePredictionContext(
+                          predictionKey: ArenaModeDetailPage.predictionKey,
+                          contextDraft: snapshot.predictionContext,
+                          onTap: () => _go(
+                            AppRoutePaths.marketsPredictionEvent(
+                              snapshot.predictionContext.eventId,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -161,7 +168,7 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
         .read(arenaReadModelControllerProvider)
         .getArenaModeDetail(widget.modeId);
 
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.surface,
       barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .55),

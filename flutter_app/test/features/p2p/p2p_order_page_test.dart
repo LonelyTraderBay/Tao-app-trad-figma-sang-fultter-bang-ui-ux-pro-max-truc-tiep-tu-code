@@ -98,6 +98,11 @@ void main() {
     await tester.pump();
     expect(find.text('Đã copy!'), findsOneWidget);
 
+    await tester.drag(
+      find.byKey(P2POrderPage.contentKey),
+      const Offset(0, -220),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(P2POrderPage.qrToggleKey));
     await tester.pumpAndSettle();
     expect(find.text('Quét mã bằng app ngân hàng'), findsNothing);

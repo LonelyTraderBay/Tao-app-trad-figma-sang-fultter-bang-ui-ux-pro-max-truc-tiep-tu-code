@@ -28,89 +28,96 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
       semanticLabel: 'SC-184 ArenaHomePage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Open Arena',
-              subtitle: 'Sân chơi cộng đồng',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ArenaHomePage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    customGap: AppSpacing.x5,
-                    children: [
-                      _IntroBlock(
-                        controller: _searchController,
-                        query: _query,
-                        pendingNotifications: snapshot.pendingNotifications,
-                        onChanged: (value) => setState(() => _query = value),
-                        onClear: () => setState(() => _query = ''),
-                        onGuide: () => _go(AppRoutePaths.arenaGuide),
-                        onRewards: () =>
-                            _go('${AppRoutePaths.rewards}?tab=arena'),
-                        onLeaderboard: () =>
-                            _go(AppRoutePaths.arenaLeaderboard),
-                        onMyArena: () => _go(AppRoutePaths.profileArena),
-                      ),
-                      if (hasSearch)
-                        _SearchResults(
+        child: VitAutoHideHeaderScaffold(
+          header: VitTopChrome(
+            type: VitTopChromeType.rootModule,
+            title: 'Open Arena',
+            subtitle: 'Sân chơi cộng đồng',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ArenaHomePage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      customGap: AppSpacing.x5,
+                      children: [
+                        _IntroBlock(
+                          controller: _searchController,
                           query: _query,
-                          snapshot: snapshot,
-                          onMode: (id) => _go(AppRoutePaths.arenaMode(id)),
-                          onRoom: (id) => _go(AppRoutePaths.arenaChallenge(id)),
-                          onCreator: (id) =>
-                              _go(AppRoutePaths.arenaCreator(id)),
-                        )
-                      else ...[
-                        _HeroCard(
-                          onCreate: () => _go(AppRoutePaths.arenaStudio),
-                          onExplore: _scrollToTemplates,
+                          pendingNotifications: snapshot.pendingNotifications,
+                          onChanged: (value) => setState(() => _query = value),
+                          onClear: () => setState(() => _query = ''),
+                          onGuide: () => _go(AppRoutePaths.arenaGuide),
+                          onRewards: () =>
+                              _go('${AppRoutePaths.rewards}?tab=arena'),
+                          onLeaderboard: () =>
+                              _go(AppRoutePaths.arenaLeaderboard),
+                          onMyArena: () => _go(AppRoutePaths.profileArena),
                         ),
-                        _TemplateSection(
-                          anchorKey: _templatesAnchorKey,
-                          templates: snapshot.templates,
-                          onTap: (_) => _go(AppRoutePaths.arenaStudio),
-                        ),
-                        _FeaturedModesSection(
-                          modes: snapshot.featuredModes,
-                          onViewAll: () => _go(AppRoutePaths.arenaLeaderboard),
-                          onMode: (id) => _go(AppRoutePaths.arenaMode(id)),
-                        ),
-                        _LiveRoomsSection(
-                          rooms: snapshot.liveRooms,
-                          onRoom: (id) => _go(AppRoutePaths.arenaChallenge(id)),
-                        ),
-                        _CreatorSpotlightSection(
-                          creators: snapshot.creators,
-                          onCreator: (id) =>
-                              _go(AppRoutePaths.arenaCreator(id)),
-                        ),
-                        _PredictionBridge(
-                          onTap: () => _go(AppRoutePaths.marketsPredictions),
-                        ),
-                        _VerifiedTeaser(
-                          onTap: () => _go(AppRoutePaths.arenaVerified),
+                        if (hasSearch)
+                          _SearchResults(
+                            query: _query,
+                            snapshot: snapshot,
+                            onMode: (id) => _go(AppRoutePaths.arenaMode(id)),
+                            onRoom: (id) =>
+                                _go(AppRoutePaths.arenaChallenge(id)),
+                            onCreator: (id) =>
+                                _go(AppRoutePaths.arenaCreator(id)),
+                          )
+                        else ...[
+                          _HeroCard(
+                            onCreate: () => _go(AppRoutePaths.arenaStudio),
+                            onExplore: _scrollToTemplates,
+                          ),
+                          _TemplateSection(
+                            anchorKey: _templatesAnchorKey,
+                            templates: snapshot.templates,
+                            onTap: (_) => _go(AppRoutePaths.arenaStudio),
+                          ),
+                          _FeaturedModesSection(
+                            modes: snapshot.featuredModes,
+                            onViewAll: () =>
+                                _go(AppRoutePaths.arenaLeaderboard),
+                            onMode: (id) => _go(AppRoutePaths.arenaMode(id)),
+                          ),
+                          _LiveRoomsSection(
+                            rooms: snapshot.liveRooms,
+                            onRoom: (id) =>
+                                _go(AppRoutePaths.arenaChallenge(id)),
+                          ),
+                          _CreatorSpotlightSection(
+                            creators: snapshot.creators,
+                            onCreator: (id) =>
+                                _go(AppRoutePaths.arenaCreator(id)),
+                          ),
+                          _PredictionBridge(
+                            onTap: () => _go(AppRoutePaths.marketsPredictions),
+                          ),
+                          _VerifiedTeaser(
+                            onTap: () => _go(AppRoutePaths.arenaVerified),
+                          ),
+                        ],
+                        _ArenaFooter(
+                          onRules: () => _go(AppRoutePaths.arenaSafety),
                         ),
                       ],
-                      _ArenaFooter(
-                        onRules: () => _go(AppRoutePaths.arenaSafety),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

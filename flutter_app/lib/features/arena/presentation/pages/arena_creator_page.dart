@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -68,67 +69,72 @@ class _ArenaCreatorPageState extends ConsumerState<ArenaCreatorPage> {
       semanticLabel: 'SC-193 ArenaCreatorPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Creator Profile',
-              subtitle: 'Nhà sáng tạo · Open Arena',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ArenaCreatorPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    customGap: AppSpacing.x3,
-                    children: [
-                      _CreatorHero(
-                        creator: snapshot.creator,
-                        onTrust: () =>
-                            _go(AppRoutePaths.arenaTrust(snapshot.creator.id)),
-                      ),
-                      _TrustSection(
-                        metrics: snapshot.trustMetrics,
-                        onDetails: () =>
-                            _go(AppRoutePaths.arenaTrust(snapshot.creator.id)),
-                      ),
-                      VitTabBar(
-                        tabs: const [
-                          VitTabItem(key: 'modes', label: 'Modes'),
-                          VitTabItem(key: 'live', label: 'Live Rooms'),
-                          VitTabItem(key: 'history', label: 'Lịch sử'),
-                          VitTabItem(key: 'about', label: 'Giới thiệu'),
-                        ],
-                        activeKey: _activeTab.name,
-                        variant: VitTabBarVariant.segment,
-                        onChanged: (key) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _activeTab = _tabFromKey(key));
-                        },
-                      ),
-                      _TabContent(
-                        activeTab: _activeTab,
-                        snapshot: snapshot,
-                        onMode: (id) => _go(AppRoutePaths.arenaMode(id)),
-                        onUseMode: () => _go(AppRoutePaths.arenaStudio),
-                      ),
-                      _PolicyLink(
-                        label: snapshot.policyLabel,
-                        onTap: () => _go(AppRoutePaths.arenaSafety),
-                      ),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Creator Profile',
+            subtitle: 'Nhà sáng tạo · Open Arena',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ArenaCreatorPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      customGap: AppSpacing.x3,
+                      children: [
+                        _CreatorHero(
+                          creator: snapshot.creator,
+                          onTrust: () => _go(
+                            AppRoutePaths.arenaTrust(snapshot.creator.id),
+                          ),
+                        ),
+                        _TrustSection(
+                          metrics: snapshot.trustMetrics,
+                          onDetails: () => _go(
+                            AppRoutePaths.arenaTrust(snapshot.creator.id),
+                          ),
+                        ),
+                        VitTabBar(
+                          tabs: const [
+                            VitTabItem(key: 'modes', label: 'Modes'),
+                            VitTabItem(key: 'live', label: 'Live Rooms'),
+                            VitTabItem(key: 'history', label: 'Lịch sử'),
+                            VitTabItem(key: 'about', label: 'Giới thiệu'),
+                          ],
+                          activeKey: _activeTab.name,
+                          variant: VitTabBarVariant.segment,
+                          onChanged: (key) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _activeTab = _tabFromKey(key));
+                          },
+                        ),
+                        _TabContent(
+                          activeTab: _activeTab,
+                          snapshot: snapshot,
+                          onMode: (id) => _go(AppRoutePaths.arenaMode(id)),
+                          onUseMode: () => _go(AppRoutePaths.arenaStudio),
+                        ),
+                        _PolicyLink(
+                          label: snapshot.policyLabel,
+                          onTap: () => _go(AppRoutePaths.arenaSafety),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

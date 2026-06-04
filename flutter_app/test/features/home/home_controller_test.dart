@@ -10,8 +10,58 @@ void main() {
       addTearDown(container.dispose);
 
       final controller = container.read(homeControllerProvider);
+      final snapshot = controller.state.snapshot;
+      final quickActions = snapshot.quickActions;
 
-      expect(controller.state.snapshot.quickActions, isNotEmpty);
+      expect(quickActions, isNotEmpty);
+      expect(snapshot.nextAction.routePath, '/wallet/withdraw/USDT');
+      expect(snapshot.nextAction.stateLabel, 'Next');
+      expect(
+        snapshot.recentProducts.map((product) => product.routePath),
+        equals([
+          '/trade/btcusdt',
+          '/p2p',
+          '/earn/staking',
+          '/trade/copy-trading',
+        ]),
+      );
+      expect(
+        quickActions.map((action) => action.routePath).take(12),
+        equals([
+          '/trade/btcusdt',
+          '/trade/convert',
+          '/wallet',
+          '/p2p',
+          '/dca',
+          '/earn/staking',
+          '/earn/savings',
+          '/launchpad',
+          '/markets/predictions',
+          '/arena',
+          '/rewards',
+          '/support',
+        ]),
+      );
+      expect(
+        quickActions.map((action) => action.routePath).skip(12),
+        equals([
+          '/trade/margin',
+          '/trade/bots',
+          '/trade/copy-trading',
+          '/topics',
+          '/referral',
+        ]),
+      );
+      expect(
+        quickActions
+            .take(12)
+            .every((action) => action.stateLabel?.isNotEmpty ?? false),
+        isTrue,
+      );
+      expect(
+        quickActions.any((action) => action.routePath == '/support'),
+        isTrue,
+      );
       expect(controller.hotPairs.every((pair) => pair.isFavorite), isTrue);
       expect(controller.gainers.first.change24h, greaterThanOrEqualTo(0));
       expect(controller.losers.first.change24h, lessThanOrEqualTo(0));

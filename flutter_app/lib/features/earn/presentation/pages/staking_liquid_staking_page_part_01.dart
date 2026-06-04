@@ -30,75 +30,79 @@ class _StakingLiquidStakingPageState
       semanticLabel: 'SC-364 StakingLiquidStakingPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _InfoBanner(snapshot: snapshot),
-                    _LiquidTabs(
-                      active: _tab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (_tab == _LiquidTab.stake)
-                      _StakeTab(
-                        snapshot: snapshot,
-                        onDetail: _showTokenDetail,
-                        onStake: (token) {
-                          HapticFeedback.lightImpact();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Đã chọn stake ${token.symbol}'),
-                            ),
-                          );
-                        },
-                      ),
-                    if (_tab == _LiquidTab.swap)
-                      _SwapTab(
-                        snapshot: snapshot,
-                        swapFrom: _swapFrom,
-                        swapTo: _swapTo,
-                        amountController: _swapAmountController,
-                        onFromChanged: (value) =>
-                            setState(() => _swapFrom = value),
-                        onToChanged: (value) => setState(() => _swapTo = value),
-                        onAmountChanged: (_) => setState(() {}),
-                        onReverse: () {
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _InfoBanner(snapshot: snapshot),
+                      _LiquidTabs(
+                        active: _tab,
+                        onChanged: (tab) {
                           HapticFeedback.selectionClick();
-                          setState(() {
-                            final oldFrom = _swapFrom;
-                            _swapFrom = _swapTo;
-                            _swapTo = oldFrom;
-                          });
+                          setState(() => _tab = tab);
                         },
                       ),
-                    if (_tab == _LiquidTab.holdings)
-                      _HoldingsTab(
-                        snapshot: snapshot,
-                        onStakeNow: () {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = _LiquidTab.stake);
-                        },
-                      ),
-                    _BenefitsGrid(snapshot: snapshot),
-                  ],
+                      if (_tab == _LiquidTab.stake)
+                        _StakeTab(
+                          snapshot: snapshot,
+                          onDetail: _showTokenDetail,
+                          onStake: (token) {
+                            HapticFeedback.lightImpact();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Đã chọn stake ${token.symbol}'),
+                              ),
+                            );
+                          },
+                        ),
+                      if (_tab == _LiquidTab.swap)
+                        _SwapTab(
+                          snapshot: snapshot,
+                          swapFrom: _swapFrom,
+                          swapTo: _swapTo,
+                          amountController: _swapAmountController,
+                          onFromChanged: (value) =>
+                              setState(() => _swapFrom = value),
+                          onToChanged: (value) =>
+                              setState(() => _swapTo = value),
+                          onAmountChanged: (_) => setState(() {}),
+                          onReverse: () {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              final oldFrom = _swapFrom;
+                              _swapFrom = _swapTo;
+                              _swapTo = oldFrom;
+                            });
+                          },
+                        ),
+                      if (_tab == _LiquidTab.holdings)
+                        _HoldingsTab(
+                          snapshot: snapshot,
+                          onStakeNow: () {
+                            HapticFeedback.selectionClick();
+                            setState(() => _tab = _LiquidTab.stake);
+                          },
+                        ),
+                      _BenefitsGrid(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -106,7 +110,7 @@ class _StakingLiquidStakingPageState
 
   Future<void> _showTokenDetail(StakingLiquidTokenDraft token) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,

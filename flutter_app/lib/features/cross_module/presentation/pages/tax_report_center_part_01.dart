@@ -25,72 +25,75 @@ class _TaxReportCenterState extends ConsumerState<TaxReportCenter> {
       semanticLabel: 'SC-324 TaxReportCenter',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            _TaxTabs(
-              tabs: snapshot.tabs,
-              active: _activeTab,
-              onChanged: (tab) {
-                HapticFeedback.selectionClick();
-                setState(() => _activeTab = tab);
-              },
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: TaxReportCenter.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    if (_activeTab == TaxReportTab.generate)
-                      _GenerateTaxReportTab(
-                        snapshot: snapshot,
-                        startDate: _startDate,
-                        endDate: _endDate,
-                        format: _format,
-                        jurisdictionId: _jurisdictionId,
-                        exportQueued: _exportQueued,
-                        onPresetSelected: (start, end) {
-                          HapticFeedback.selectionClick();
-                          setState(() {
-                            _startDate = start;
-                            _endDate = end;
-                          });
-                        },
-                        onFormatChanged: (format) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _format = format);
-                        },
-                        onJurisdictionChanged: (id) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _jurisdictionId = id);
-                        },
-                        onGenerate: () {
-                          HapticFeedback.mediumImpact();
-                          setState(() => _exportQueued = true);
-                        },
-                      )
-                    else if (_activeTab == TaxReportTab.reports)
-                      _ReportsTab(snapshot: snapshot)
-                    else
-                      _TaxSettingsTab(
-                        includeArena: _includeArena,
-                        onToggleArena: () {
-                          HapticFeedback.selectionClick();
-                          setState(() => _includeArena = !_includeArena);
-                        },
-                      ),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _TaxTabs(
+                tabs: snapshot.tabs,
+                active: _activeTab,
+                onChanged: (tab) {
+                  HapticFeedback.selectionClick();
+                  setState(() => _activeTab = tab);
+                },
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  key: TaxReportCenter.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      if (_activeTab == TaxReportTab.generate)
+                        _GenerateTaxReportTab(
+                          snapshot: snapshot,
+                          startDate: _startDate,
+                          endDate: _endDate,
+                          format: _format,
+                          jurisdictionId: _jurisdictionId,
+                          exportQueued: _exportQueued,
+                          onPresetSelected: (start, end) {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              _startDate = start;
+                              _endDate = end;
+                            });
+                          },
+                          onFormatChanged: (format) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _format = format);
+                          },
+                          onJurisdictionChanged: (id) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _jurisdictionId = id);
+                          },
+                          onGenerate: () {
+                            HapticFeedback.mediumImpact();
+                            setState(() => _exportQueued = true);
+                          },
+                        )
+                      else if (_activeTab == TaxReportTab.reports)
+                        _ReportsTab(snapshot: snapshot)
+                      else
+                        _TaxSettingsTab(
+                          includeArena: _includeArena,
+                          onToggleArena: () {
+                            HapticFeedback.selectionClick();
+                            setState(() => _includeArena = !_includeArena);
+                          },
+                        ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

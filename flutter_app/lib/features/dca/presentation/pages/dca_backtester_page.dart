@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtest
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_tabs.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
@@ -45,54 +46,62 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
 
     return VitPageLayout(
       semanticLabel: 'SC-176 DCABacktesterPage',
-      child: Column(
-        children: [
-          VitHeader(title: 'DCA Backtester', showBack: true, onBack: _close),
-          DcaBacktesterTopTabs(
-            activeTab: _activeTab,
-            tabKey: DCABacktesterPage.tabKey,
-            onChanged: (tab) => setState(() => _activeTab = tab),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              key: DCABacktesterPage.contentKey,
-              physics: const BouncingScrollPhysics(),
-              child: VitPageContent(
-                customGap: AppSpacing.x5,
-                children: [
-                  if (_activeTab == DcaBacktesterTab.setup)
-                    DcaBacktesterSetup(
-                      snapshot: snapshot,
-                      asset: _asset,
-                      frequency: _frequency,
-                      strategy: _strategy,
-                      runKey: DCABacktesterPage.runKey,
-                      strategyKey: DCABacktesterPage.strategyKey,
-                      onAssetChanged: (asset) => setState(() => _asset = asset),
-                      onFrequencyChanged: (frequency) =>
-                          setState(() => _frequency = frequency),
-                      onStrategyChanged: (strategy) =>
-                          setState(() => _strategy = strategy),
-                      onRun: _runBacktest,
-                    ),
-                  if (_activeTab == DcaBacktesterTab.results)
-                    if (_hasResults)
-                      DcaBacktesterResults(snapshot: snapshot)
-                    else
-                      const DcaNoResultsCard(),
-                  if (_activeTab == DcaBacktesterTab.analysis)
-                    if (_hasResults)
-                      DcaBacktesterAnalysis(
+      child: VitAutoHideHeaderScaffold(
+        header: VitHeader(
+          title: 'DCA Backtester',
+          showBack: true,
+          onBack: _close,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            DcaBacktesterTopTabs(
+              activeTab: _activeTab,
+              tabKey: DCABacktesterPage.tabKey,
+              onChanged: (tab) => setState(() => _activeTab = tab),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                key: DCABacktesterPage.contentKey,
+                physics: const BouncingScrollPhysics(),
+                child: VitPageContent(
+                  customGap: AppSpacing.x5,
+                  children: [
+                    if (_activeTab == DcaBacktesterTab.setup)
+                      DcaBacktesterSetup(
                         snapshot: snapshot,
-                        onDownloadReport: _downloadReport,
-                      )
-                    else
-                      const DcaNoResultsCard(),
-                ],
+                        asset: _asset,
+                        frequency: _frequency,
+                        strategy: _strategy,
+                        runKey: DCABacktesterPage.runKey,
+                        strategyKey: DCABacktesterPage.strategyKey,
+                        onAssetChanged: (asset) =>
+                            setState(() => _asset = asset),
+                        onFrequencyChanged: (frequency) =>
+                            setState(() => _frequency = frequency),
+                        onStrategyChanged: (strategy) =>
+                            setState(() => _strategy = strategy),
+                        onRun: _runBacktest,
+                      ),
+                    if (_activeTab == DcaBacktesterTab.results)
+                      if (_hasResults)
+                        DcaBacktesterResults(snapshot: snapshot)
+                      else
+                        const DcaNoResultsCard(),
+                    if (_activeTab == DcaBacktesterTab.analysis)
+                      if (_hasResults)
+                        DcaBacktesterAnalysis(
+                          snapshot: snapshot,
+                          onDownloadReport: _downloadReport,
+                        )
+                      else
+                        const DcaNoResultsCard(),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

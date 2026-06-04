@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/core/product_flow/contextual_support_contract.dart';
 import 'package:vit_trade_flutter/features/support/data/support_repository.dart';
 import 'package:vit_trade_flutter/features/support/presentation/pages/announcements_page.dart';
 import 'package:vit_trade_flutter/features/support/presentation/pages/help_center_page.dart';
@@ -10,7 +11,10 @@ import 'package:vit_trade_flutter/features/support/presentation/pages/support_pa
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
-  Future<void> pumpSupport(WidgetTester tester) async {
+  Future<void> pumpSupport(
+    WidgetTester tester, {
+    String initialLocation = AppRoutePaths.support,
+  }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
@@ -19,7 +23,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         child: VitTradeApp(
-          routerConfig: createAppRouter(initialLocation: AppRoutePaths.support),
+          routerConfig: createAppRouter(initialLocation: initialLocation),
         ),
       ),
     );
@@ -77,6 +81,28 @@ void main() {
     expect(find.text('ĐÃ HOÀN THÀNH'), findsOneWidget);
     expect(find.byKey(SupportPage.ticketKey('ticket002')), findsOneWidget);
     expect(find.text('Không thể đăng nhập vào tài khoản'), findsOneWidget);
+  });
+
+  testWidgets('SC-294 renders contextual support route metadata', (
+    tester,
+  ) async {
+    final route = ContextualSupportContracts.supportRouteFor(
+      ContextualSupportFlow.withdrawal,
+      referenceId: 'tx001',
+      sourceRoute: AppRoutePaths.walletWithdrawAsset('USDT'),
+    );
+
+    await pumpSupport(tester, initialLocation: route);
+
+    expect(find.byType(SupportPage), findsOneWidget);
+    expect(find.byKey(SupportPage.contextKey), findsOneWidget);
+    expect(find.text('Hồ sơ hỗ trợ'), findsOneWidget);
+    expect(find.text('Withdrawal delayed or failed'), findsOneWidget);
+    expect(find.text('Wallet and Treasury'), findsOneWidget);
+    expect(find.text('wallet'), findsOneWidget);
+    expect(find.text('tx001'), findsOneWidget);
+    expect(find.textContaining('Context captured'), findsOneWidget);
+    expect(find.textContaining('Wallet operations queue'), findsOneWidget);
   });
 
   testWidgets('SC-294 quick links navigate to support child routes', (

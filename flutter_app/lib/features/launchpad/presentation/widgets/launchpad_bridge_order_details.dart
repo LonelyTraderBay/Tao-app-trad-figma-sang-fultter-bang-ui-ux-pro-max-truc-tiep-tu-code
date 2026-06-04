@@ -144,6 +144,61 @@ class _SimulationDisclosure extends StatelessWidget {
   }
 }
 
+class _BridgeSupportAction extends StatelessWidget {
+  const _BridgeSupportAction({required this.supportRoute});
+
+  final String supportRoute;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: LaunchpadBridgeOrderPage.supportKey,
+      onTap: () => context.go(supportRoute),
+      radius: VitCardRadius.lg,
+      borderColor: AppColors.primary20,
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      child: Row(
+        children: [
+          const Icon(
+            Icons.support_agent_rounded,
+            color: AppColors.primary,
+            size: AppSpacing.iconMd,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Can ho tro bridge?',
+                  style: AppTextStyles.body.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  'Mo ho so support kem tx, route va trang thai bridge.',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          VitCtaButton(
+            fullWidth: false,
+            height: AppSpacing.buttonCompact,
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+            onPressed: () => context.go(supportRoute),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            child: const Text('Support'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 Color _statusColor(LaunchpadBridgeOrderStatus status) {
   return switch (status) {
     LaunchpadBridgeOrderStatus.initiated => AppColors.primary,

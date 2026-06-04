@@ -12,46 +12,116 @@ class VitServiceTile extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.accentColor,
+    this.badgeLabel,
     this.onTap,
   });
 
   final IconData icon;
   final String label;
   final Color accentColor;
+  final String? badgeLabel;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      radius: VitCardRadius.sm,
-      onTap: onTap,
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 26,
-            height: 26,
-            decoration: BoxDecoration(
-              color: accentColor.withValues(alpha: .12),
-              borderRadius: AppRadii.mdRadius,
-              border: Border.all(color: accentColor.withValues(alpha: .20)),
+    return Semantics(
+      button: onTap != null,
+      label: label,
+      child: VitCard(
+        radius: VitCardRadius.sm,
+        borderColor: accentColor.withValues(alpha: .18),
+        clip: true,
+        onTap: onTap,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 2,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: accentColor.withValues(alpha: .56),
+                ),
+              ),
             ),
-            child: Icon(icon, color: accentColor, size: 20),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  if (badgeLabel != null)
+                    Positioned(
+                      top: -2,
+                      right: -2,
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 52),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: accentColor.withValues(alpha: .14),
+                            borderRadius: AppRadii.xsRadius,
+                            border: Border.all(
+                              color: accentColor.withValues(alpha: .28),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 2,
+                            ),
+                            child: Text(
+                              badgeLabel!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                              style: AppTextStyles.micro.copyWith(
+                                color: accentColor,
+                                fontSize: 8,
+                                fontWeight: AppTextStyles.bold,
+                                height: 1,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 26,
+                          height: 26,
+                          decoration: BoxDecoration(
+                            color: accentColor.withValues(alpha: .16),
+                            borderRadius: AppRadii.mdRadius,
+                            border: Border.all(
+                              color: accentColor.withValues(alpha: .28),
+                            ),
+                          ),
+                          child: Icon(icon, color: accentColor, size: 20),
+                        ),
+                        const SizedBox(height: AppSpacing.x1),
+                        Text(
+                          label,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
+                            height: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

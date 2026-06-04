@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -98,86 +99,89 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
         type: MaterialType.transparency,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: snapshot.title,
-                  showBack: true,
-                  onBack: () => context.go(snapshot.backRoute),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x3,
-                    AppSpacing.contentPad,
-                    AppSpacing.x2,
-                  ),
-                  child: _StatsGrid(
-                    key: LaunchpadWebhooksPage.statsKey,
-                    stats: stats,
-                  ),
-                ),
-                Container(
-                  key: LaunchpadWebhooksPage.tabsKey,
-                  decoration: const BoxDecoration(
-                    color: AppColors.surface,
-                    border: Border(
-                      top: BorderSide(color: AppColors.divider),
-                      bottom: BorderSide(color: AppColors.divider),
+            VitAutoHideHeaderScaffold(
+              bottomInset: bottomInset,
+              semanticLabel: 'SC-310 LaunchpadWebhooksPage scroll surface',
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x3,
+                      AppSpacing.contentPad,
+                      AppSpacing.x2,
+                    ),
+                    child: _StatsGrid(
+                      key: LaunchpadWebhooksPage.statsKey,
+                      stats: stats,
                     ),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.contentPad,
+                  Container(
+                    key: LaunchpadWebhooksPage.tabsKey,
+                    decoration: const BoxDecoration(
+                      color: AppColors.surface,
+                      border: Border(
+                        top: BorderSide(color: AppColors.divider),
+                        bottom: BorderSide(color: AppColors.divider),
+                      ),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.contentPad,
+                    ),
+                    child: _WebhookTabs(
+                      activeTab: _activeTab,
+                      onChanged: (tab) => setState(() => _activeTab = tab),
+                    ),
                   ),
-                  child: _WebhookTabs(
-                    activeTab: _activeTab,
-                    onChanged: (tab) => setState(() => _activeTab = tab),
-                  ),
-                ),
-                Expanded(
-                  child: ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(
-                      context,
-                    ).copyWith(scrollbars: false),
-                    child: SingleChildScrollView(
-                      key: LaunchpadWebhooksPage.contentKey,
-                      physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(bottom: bottomInset),
-                      child: VitPageContent(
-                        padding: VitContentPadding.defaultPadding,
-                        customGap: AppSpacing.x4,
-                        children: [
-                          if (_activeTab == _WebhookTab.subscriptions) ...[
-                            _CreateWebhookCard(
-                              onTap: () =>
-                                  setState(() => _showCreateSheet = true),
-                            ),
-                            _SubscriptionsSection(
-                              subscriptions: _subscriptions,
-                              eventTypes: snapshot.eventTypes,
-                              expandedId: _expandedId,
-                              copiedField: _copiedField,
-                              onExpand: (id) => setState(() {
-                                _expandedId = _expandedId == id ? null : id;
-                              }),
-                              onCopy: _copyField,
-                              onToggle: _toggleStatus,
-                              onDelete: _deleteSubscription,
-                            ),
-                          ] else
-                            _DeliveriesSection(
-                              deliveries: snapshot.deliveries,
-                              eventTypes: snapshot.eventTypes,
-                              copiedField: _copiedField,
-                              onCopy: _copyField,
-                            ),
-                          const _InfoBanner(),
-                        ],
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: LaunchpadWebhooksPage.contentKey,
+                        physics: const BouncingScrollPhysics(),
+                        child: VitPageContent(
+                          padding: VitContentPadding.defaultPadding,
+                          customGap: AppSpacing.x4,
+                          children: [
+                            if (_activeTab == _WebhookTab.subscriptions) ...[
+                              _CreateWebhookCard(
+                                onTap: () =>
+                                    setState(() => _showCreateSheet = true),
+                              ),
+                              _SubscriptionsSection(
+                                subscriptions: _subscriptions,
+                                eventTypes: snapshot.eventTypes,
+                                expandedId: _expandedId,
+                                copiedField: _copiedField,
+                                onExpand: (id) => setState(() {
+                                  _expandedId = _expandedId == id ? null : id;
+                                }),
+                                onCopy: _copyField,
+                                onToggle: _toggleStatus,
+                                onDelete: _deleteSubscription,
+                              ),
+                            ] else
+                              _DeliveriesSection(
+                                deliveries: snapshot.deliveries,
+                                eventTypes: snapshot.eventTypes,
+                                copiedField: _copiedField,
+                                onCopy: _copyField,
+                              ),
+                            const _InfoBanner(),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_showCreateSheet)
               Positioned.fill(

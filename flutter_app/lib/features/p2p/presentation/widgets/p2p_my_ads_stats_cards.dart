@@ -111,7 +111,7 @@ class _MyAdCard extends StatelessWidget {
     return Opacity(
       opacity: active ? 1 : .72,
       child: VitCard(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: const EdgeInsets.all(AppSpacing.x3),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -130,7 +130,7 @@ class _MyAdCard extends StatelessWidget {
                   _MiniBadge(label: 'Thả nổi', color: AppModuleAccents.p2p),
               ],
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.x3),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -165,7 +165,7 @@ class _MyAdCard extends StatelessWidget {
                 ],
               ],
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.x3),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -207,9 +207,9 @@ class _MyAdCard extends StatelessWidget {
                 ],
               ),
             ],
-            const SizedBox(height: AppSpacing.x4),
-            const Divider(color: AppColors.divider, height: 1),
             const SizedBox(height: AppSpacing.x3),
+            const Divider(color: AppColors.divider, height: 1),
+            const SizedBox(height: AppSpacing.x2),
             Row(
               children: [
                 Expanded(

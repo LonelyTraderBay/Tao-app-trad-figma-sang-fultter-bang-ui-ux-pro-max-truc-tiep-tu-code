@@ -22,44 +22,47 @@ class _StakingWithdrawalPolicyPageState
       semanticLabel: 'SC-355 StakingWithdrawalPolicyPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _InfoBanner(snapshot: snapshot),
-                    _PolicyTabs(
-                      tabs: snapshot.tabs,
-                      active: activeTab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _activeTab = tab);
-                      },
-                    ),
-                    if (activeTab == 'timeline')
-                      _TimelineTab(snapshot: snapshot)
-                    else if (activeTab == 'penalties')
-                      _PenaltiesTab(
-                        snapshot: snapshot,
-                        onOpenCalculator: () => _openCalculator(snapshot),
-                      )
-                    else
-                      _EmergencyTab(snapshot: snapshot),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _InfoBanner(snapshot: snapshot),
+                      _PolicyTabs(
+                        tabs: snapshot.tabs,
+                        active: activeTab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _activeTab = tab);
+                        },
+                      ),
+                      if (activeTab == 'timeline')
+                        _TimelineTab(snapshot: snapshot)
+                      else if (activeTab == 'penalties')
+                        _PenaltiesTab(
+                          snapshot: snapshot,
+                          onOpenCalculator: () => _openCalculator(snapshot),
+                        )
+                      else
+                        _EmergencyTab(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -67,7 +70,7 @@ class _StakingWithdrawalPolicyPageState
 
   Future<void> _openCalculator(StakingWithdrawalPolicySnapshot snapshot) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,

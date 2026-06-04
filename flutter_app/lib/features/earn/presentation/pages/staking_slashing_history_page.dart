@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_sla
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_slashing_history_statistics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
@@ -60,43 +61,46 @@ class _StakingSlashingHistoryPageState
       semanticLabel: 'SC-382 StakingSlashingHistoryPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    StakingSlashingInsuranceBanner(snapshot: snapshot),
-                    StakingSlashingSummaryStats(stats: snapshot.stats),
-                    StakingSlashingTabs(
-                      active: _activeTab,
-                      onChanged: (tab) => setState(() => _activeTab = tab),
-                    ),
-                    switch (_activeTab) {
-                      StakingSlashingTab.history => StakingSlashingHistoryTab(
-                        snapshot: snapshot,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      StakingSlashingInsuranceBanner(snapshot: snapshot),
+                      StakingSlashingSummaryStats(stats: snapshot.stats),
+                      StakingSlashingTabs(
+                        active: _activeTab,
+                        onChanged: (tab) => setState(() => _activeTab = tab),
                       ),
-                      StakingSlashingTab.statistics =>
-                        StakingSlashingStatisticsTab(snapshot: snapshot),
-                      StakingSlashingTab.prevention =>
-                        StakingSlashingPreventionTab(snapshot: snapshot),
-                    },
-                    StakingSlashingExportButton(label: snapshot.exportLabel),
-                    StakingSlashingFooterNote(note: snapshot.footerNote),
-                  ],
+                      switch (_activeTab) {
+                        StakingSlashingTab.history => StakingSlashingHistoryTab(
+                          snapshot: snapshot,
+                        ),
+                        StakingSlashingTab.statistics =>
+                          StakingSlashingStatisticsTab(snapshot: snapshot),
+                        StakingSlashingTab.prevention =>
+                          StakingSlashingPreventionTab(snapshot: snapshot),
+                      },
+                      StakingSlashingExportButton(label: snapshot.exportLabel),
+                      StakingSlashingFooterNote(note: snapshot.footerNote),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

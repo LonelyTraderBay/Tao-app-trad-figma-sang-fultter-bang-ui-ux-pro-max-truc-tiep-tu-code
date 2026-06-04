@@ -59,6 +59,36 @@ void main() {
     );
   });
 
+  testWidgets('shell shows notification badge on non-Home routes', (
+    WidgetTester tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(initialLocation: AppRoutePaths.trade),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const Key('vit_bottom_nav_active_trade')),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(const Key('vit_bottom_nav_home')),
+        matching: find.text('7'),
+      ),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('representative route namespaces keep intentional active tabs', (
     WidgetTester tester,
   ) async {

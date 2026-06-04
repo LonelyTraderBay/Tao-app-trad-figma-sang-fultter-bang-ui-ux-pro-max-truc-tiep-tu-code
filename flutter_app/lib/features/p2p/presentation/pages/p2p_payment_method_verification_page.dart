@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -69,58 +70,61 @@ class _P2PPaymentMethodVerificationPageState
       semanticLabel: 'SC-233 P2PPaymentMethodVerificationPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: _selectedMethodId == null
-                  ? 'Xác minh phương thức'
-                  : _selectedTitle(snapshot),
-              subtitle: _selectedMethodId == null ? 'Thanh toán · P2P' : null,
-              showBack: true,
-              onBack: () {
-                if (_selectedMethodId != null) {
-                  setState(() => _selectedMethodId = null);
-                  return;
-                }
-                context.go(AppRoutePaths.p2pPaymentMethods);
-              },
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2PPaymentMethodVerificationPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: _selectedMethodId == null
+                ? 'Xác minh phương thức'
+                : _selectedTitle(snapshot),
+            subtitle: _selectedMethodId == null ? 'Thanh toán · P2P' : null,
+            showBack: true,
+            onBack: () {
+              if (_selectedMethodId != null) {
+                setState(() => _selectedMethodId = null);
+                return;
+              }
+              context.go(AppRoutePaths.p2pPaymentMethods);
+            },
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2PPaymentMethodVerificationPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: _selectedMethodId == null
+                        ? _MethodChooser(
+                            snapshot: snapshot,
+                            onSelected: (methodId) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _selectedMethodId = methodId);
+                            },
+                          )
+                        : _VerificationFlow(
+                            snapshot: snapshot,
+                            methodId: _selectedMethodId!,
+                            controller: _codeController,
+                            submitting: _submitting,
+                            onChanged: () => setState(() {}),
+                            onSubmit: _canSubmit
+                                ? () => _confirmSubmit(context, snapshot)
+                                : null,
+                          ),
                   ),
-                  child: _selectedMethodId == null
-                      ? _MethodChooser(
-                          snapshot: snapshot,
-                          onSelected: (methodId) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _selectedMethodId = methodId);
-                          },
-                        )
-                      : _VerificationFlow(
-                          snapshot: snapshot,
-                          methodId: _selectedMethodId!,
-                          controller: _codeController,
-                          submitting: _submitting,
-                          onChanged: () => setState(() {}),
-                          onSubmit: _canSubmit
-                              ? () => _confirmSubmit(context, snapshot)
-                              : null,
-                        ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

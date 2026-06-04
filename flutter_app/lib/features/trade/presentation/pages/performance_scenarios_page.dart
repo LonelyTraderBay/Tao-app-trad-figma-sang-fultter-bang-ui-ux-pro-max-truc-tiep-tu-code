@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -62,50 +63,53 @@ class _PerformanceScenariosPageState
       semanticLabel: 'SC-109 PerformanceScenariosPage',
       child: Material(
         color: _scenarioBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Performance Scenarios',
-              subtitle: 'Potential Outcomes',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: PerformanceScenariosPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const _WarningNotice(),
-                    const SizedBox(height: 25),
-                    _InvestmentCard(investment: snapshot.investment),
-                    const SizedBox(height: 26),
-                    _HoldingPeriodSelector(
-                      periods: snapshot.holdingPeriods,
-                      selectedPeriod: selectedPeriod,
-                      onChanged: (value) =>
-                          setState(() => _holdingPeriod = value),
-                    ),
-                    const SizedBox(height: 25),
-                    const _SectionLabel('Potential Outcomes'),
-                    const SizedBox(height: 10),
-                    for (final scenario in snapshot.scenarios) ...[
-                      _ScenarioCard(
-                        scenario: scenario,
-                        investment: snapshot.investment,
-                        holdingPeriod: selectedPeriod,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Performance Scenarios',
+            subtitle: 'Potential Outcomes',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: PerformanceScenariosPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const _WarningNotice(),
+                      const SizedBox(height: 25),
+                      _InvestmentCard(investment: snapshot.investment),
+                      const SizedBox(height: 26),
+                      _HoldingPeriodSelector(
+                        periods: snapshot.holdingPeriods,
+                        selectedPeriod: selectedPeriod,
+                        onChanged: (value) =>
+                            setState(() => _holdingPeriod = value),
                       ),
-                      if (scenario != snapshot.scenarios.last)
-                        const SizedBox(height: 13),
+                      const SizedBox(height: 25),
+                      const _SectionLabel('Potential Outcomes'),
+                      const SizedBox(height: 10),
+                      for (final scenario in snapshot.scenarios) ...[
+                        _ScenarioCard(
+                          scenario: scenario,
+                          investment: snapshot.investment,
+                          holdingPeriod: selectedPeriod,
+                        ),
+                        if (scenario != snapshot.scenarios.last)
+                          const SizedBox(height: 13),
+                      ],
+                      const SizedBox(height: 36),
+                      const _InfoNote(),
                     ],
-                    const SizedBox(height: 36),
-                    const _InfoNote(),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

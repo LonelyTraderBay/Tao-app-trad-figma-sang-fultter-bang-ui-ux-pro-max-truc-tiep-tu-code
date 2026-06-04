@@ -35,7 +35,9 @@ void main() {
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));
     expect(snapshot.title, 'FAQ Tiết kiệm');
     expect(snapshot.backRoute, AppRoutePaths.earnSavings);
-    expect(snapshot.supportRoute, AppRoutePaths.support);
+    expect(snapshot.supportRoute, startsWith('/support?'));
+    expect(snapshot.supportRoute, contains('flow=staking'));
+    expect(snapshot.supportRoute, contains('savings-faq'));
     expect(snapshot.categories, hasLength(6));
     expect(snapshot.items, hasLength(19));
     expect(
@@ -114,6 +116,9 @@ void main() {
     await tester.tap(find.byKey(SavingsFAQPage.supportButtonKey));
     await tester.pumpAndSettle();
     expect(find.byType(SupportPage), findsOneWidget);
+    expect(find.text('Hồ sơ hỗ trợ'), findsOneWidget);
+    expect(find.text('Savings FAQ support'), findsOneWidget);
+    expect(find.text('savings-faq'), findsOneWidget);
 
     await pumpFAQ(tester);
     await tester.tap(find.byIcon(Icons.chevron_left_rounded).first);

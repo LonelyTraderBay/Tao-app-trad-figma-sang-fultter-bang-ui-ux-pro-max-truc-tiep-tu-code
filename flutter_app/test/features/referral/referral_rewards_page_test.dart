@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/referral/data/referral_repository.dart';
 import 'package:vit_trade_flutter/features/referral/presentation/pages/referral_rewards_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 
 void main() {
   Future<void> pumpRewards(WidgetTester tester) async {
@@ -109,7 +110,13 @@ void main() {
     await tester.tap(find.byKey(ReferralRewardsPage.exportKey));
     await tester.pumpAndSettle();
     expect(find.text('Xuất báo cáo hoa hồng'), findsOneWidget);
-    await tester.tap(find.text('Tải xuống CSV'));
+    final csvButtonTopLeft = tester.getTopLeft(
+      find.ancestor(
+        of: find.text('Tải xuống CSV'),
+        matching: find.byType(VitCtaButton),
+      ),
+    );
+    await tester.tapAt(csvButtonTopLeft + const Offset(24, 12));
     await tester.pumpAndSettle();
 
     final firstReport = find.byKey(ReferralRewardsPage.reportKey('cr-01'));
@@ -134,7 +141,7 @@ void main() {
   ) async {
     await pumpRewards(tester);
 
-    await tester.tap(find.byType(IconButton).first);
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded).first);
     await tester.pumpAndSettle();
 
     expect(find.text('Giới thiệu bạn bè'), findsOneWidget);

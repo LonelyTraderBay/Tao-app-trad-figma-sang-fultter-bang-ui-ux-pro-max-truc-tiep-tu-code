@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -44,30 +45,27 @@ class LaunchpadContractPage extends ConsumerWidget {
       semanticLabel: 'SC-300 LaunchpadContractPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
+        child: VitAutoHideHeaderScaffold(
+          bottomInset: bottomInset,
+          semanticLabel: 'SC-300 LaunchpadContractPage scroll surface',
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: SingleChildScrollView(
+            key: contentKey,
+            physics: const BouncingScrollPhysics(),
+            child: VitPageContent(
+              padding: VitContentPadding.defaultPadding,
+              children: [
+                if (snapshot.project == null)
+                  const _ContractProjectNotFound()
+                else
+                  _ContractProjectSummary(snapshot: snapshot),
+              ],
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.defaultPadding,
-                  children: [
-                    if (snapshot.project == null)
-                      const _ContractProjectNotFound()
-                    else
-                      _ContractProjectSummary(snapshot: snapshot),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

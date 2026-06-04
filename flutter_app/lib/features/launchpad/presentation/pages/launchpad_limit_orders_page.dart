@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -112,61 +113,68 @@ class _LaunchpadLimitOrdersPageState
         type: MaterialType.transparency,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: snapshot.title,
-                  showBack: true,
-                  onBack: () => context.go(snapshot.backRoute),
-                  trailing: _HeaderCreateButton(
-                    onTap: () => setState(() {
+            VitAutoHideHeaderScaffold(
+              bottomInset: bottomInset,
+              semanticLabel: 'SC-315 LaunchpadLimitOrdersPage scroll surface',
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+                actions: [
+                  VitHeaderActionItem(
+                    key: LaunchpadLimitOrdersPage.headerCreateKey,
+                    type: VitHeaderActionType.add,
+                    onPressed: () => setState(() {
                       _activeTab = _LimitOrderTab.create;
                     }),
                   ),
-                ),
-                _Tabs(
-                  activeTab: _activeTab,
-                  onChanged: (tab) => setState(() => _activeTab = tab),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    key: LaunchpadLimitOrdersPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
-                    child: VitPageContent(
-                      padding: VitContentPadding.defaultPadding,
-                      customGap: AppSpacing.x4,
-                      children: [
-                        if (_activeTab == _LimitOrderTab.active) ...[
-                          _StatsCard(snapshot: snapshot),
-                          _ActiveOrdersSection(orders: snapshot.activeOrders),
-                        ] else if (_activeTab == _LimitOrderTab.history) ...[
-                          _HistorySection(orders: snapshot.historyOrders),
-                        ] else ...[
-                          _CreateOrderSection(
-                            orderSide: _orderSide,
-                            tokenController: _tokenController,
-                            targetPriceController: _targetPriceController,
-                            amountController: _amountController,
-                            expiryDays: _expiryDays,
-                            partialFill: _partialFill,
-                            submissionMessage: _submissionMessage,
-                            onSideChanged: (side) =>
-                                setState(() => _orderSide = side),
-                            onExpiryChanged: (days) =>
-                                setState(() => _expiryDays = days),
-                            onPartialFillChanged: (value) =>
-                                setState(() => _partialFill = value),
-                            onInputChanged: () => setState(() {
-                              _submissionMessage = null;
-                            }),
-                          ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  _Tabs(
+                    activeTab: _activeTab,
+                    onChanged: (tab) => setState(() => _activeTab = tab),
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: LaunchpadLimitOrdersPage.contentKey,
+                      physics: const BouncingScrollPhysics(),
+                      child: VitPageContent(
+                        padding: VitContentPadding.defaultPadding,
+                        customGap: AppSpacing.x4,
+                        children: [
+                          if (_activeTab == _LimitOrderTab.active) ...[
+                            _StatsCard(snapshot: snapshot),
+                            _ActiveOrdersSection(orders: snapshot.activeOrders),
+                          ] else if (_activeTab == _LimitOrderTab.history) ...[
+                            _HistorySection(orders: snapshot.historyOrders),
+                          ] else ...[
+                            _CreateOrderSection(
+                              orderSide: _orderSide,
+                              tokenController: _tokenController,
+                              targetPriceController: _targetPriceController,
+                              amountController: _amountController,
+                              expiryDays: _expiryDays,
+                              partialFill: _partialFill,
+                              submissionMessage: _submissionMessage,
+                              onSideChanged: (side) =>
+                                  setState(() => _orderSide = side),
+                              onExpiryChanged: (days) =>
+                                  setState(() => _expiryDays = days),
+                              onPartialFillChanged: (value) =>
+                                  setState(() => _partialFill = value),
+                              onInputChanged: () => setState(() {
+                                _submissionMessage = null;
+                              }),
+                            ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (showCta)
               Positioned(

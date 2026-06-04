@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -54,57 +55,60 @@ class _P2PReviewsPageState extends ConsumerState<P2PReviewsPage> {
       semanticLabel: 'SC-231 P2PReviewsPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Đánh giá P2P',
-              subtitle: 'Đánh giá · P2P',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.p2p),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2PReviewsPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x5,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _ReviewSummaryCard(reviews: reviews),
-                      const SizedBox(height: AppSpacing.x4),
-                      VitTabBar(
-                        variant: VitTabBarVariant.segment,
-                        activeKey: _tab.name,
-                        onChanged: (key) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = _tabFromKey(key));
-                        },
-                        tabs: const [
-                          VitTabItem(key: 'received', label: 'Nhận được'),
-                          VitTabItem(key: 'given', label: 'Đã viết'),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      _ReviewList(
-                        reviews: reviews,
-                        emptyTitle: snapshot.emptyTitle,
-                        tab: _tab,
-                      ),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Đánh giá P2P',
+            subtitle: 'Đánh giá · P2P',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.p2p),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2PReviewsPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x5,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _ReviewSummaryCard(reviews: reviews),
+                        const SizedBox(height: AppSpacing.x4),
+                        VitTabBar(
+                          variant: VitTabBarVariant.segment,
+                          activeKey: _tab.name,
+                          onChanged: (key) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _tab = _tabFromKey(key));
+                          },
+                          tabs: const [
+                            VitTabItem(key: 'received', label: 'Nhận được'),
+                            VitTabItem(key: 'given', label: 'Đã viết'),
+                          ],
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        _ReviewList(
+                          reviews: reviews,
+                          emptyTitle: snapshot.emptyTitle,
+                          tab: _tab,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

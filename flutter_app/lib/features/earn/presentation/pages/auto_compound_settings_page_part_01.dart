@@ -30,50 +30,52 @@ class _AutoCompoundSettingsPageState
         color: AppColors.bg,
         child: Stack(
           children: [
-            Column(
-              children: [
-                VitHeader(
-                  title: snapshot.title,
-                  showBack: true,
-                  onBack: () => context.go(snapshot.backRoute),
-                  trailing: IconButton(
+            VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+                actions: [
+                  VitHeaderActionItem(
                     key: AutoCompoundSettingsPage.infoButtonKey,
+                    type: VitHeaderActionType.help,
                     onPressed: () => _openInfo(snapshot),
-                    icon: const Icon(
-                      Icons.info_outline_rounded,
-                      color: AppColors.text2,
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: EdgeInsets.only(bottom: bottomInset),
+                      child: VitPageContent(
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          _SummaryCard(positions: positions),
+                          VitPageSection(
+                            label: 'Vị thế tiết kiệm',
+                            accentColor: AppColors.buy,
+                            children: [
+                              for (final position in positions)
+                                _PositionCard(
+                                  position: position,
+                                  onToggle: () => _toggle(position),
+                                  onSettings: () =>
+                                      _openSettings(snapshot, position),
+                                ),
+                            ],
+                          ),
+                          _CalculatorPreview(),
+                          _NoteCard(text: snapshot.note),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
-                    child: VitPageContent(
-                      padding: VitContentPadding.compact,
-                      gap: VitContentGap.defaultGap,
-                      children: [
-                        _SummaryCard(positions: positions),
-                        VitPageSection(
-                          label: 'Vị thế tiết kiệm',
-                          accentColor: AppColors.buy,
-                          children: [
-                            for (final position in positions)
-                              _PositionCard(
-                                position: position,
-                                onToggle: () => _toggle(position),
-                                onSettings: () =>
-                                    _openSettings(snapshot, position),
-                              ),
-                          ],
-                        ),
-                        _CalculatorPreview(),
-                        _NoteCard(text: snapshot.note),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_showSuccess)
               Positioned(
@@ -119,7 +121,7 @@ class _AutoCompoundSettingsPageState
 
   Future<void> _openInfo(AutoCompoundSettingsSnapshot snapshot) async {
     HapticFeedback.selectionClick();
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
@@ -135,7 +137,7 @@ class _AutoCompoundSettingsPageState
   ) async {
     HapticFeedback.selectionClick();
     setState(() => _editingId = position.id);
-    await showModalBottomSheet<void>(
+    await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,

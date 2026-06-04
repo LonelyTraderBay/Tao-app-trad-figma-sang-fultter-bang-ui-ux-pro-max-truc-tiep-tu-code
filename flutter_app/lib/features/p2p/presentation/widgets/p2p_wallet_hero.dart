@@ -1,33 +1,5 @@
 part of '../pages/p2p_wallet_page.dart';
 
-class _HeaderHistoryButton extends StatelessWidget {
-  const _HeaderHistoryButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      key: P2PWalletPage.historyActionKey,
-      color: AppColors.surface2,
-      borderRadius: AppRadii.mdRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: const SizedBox(
-          width: AppSpacing.inputHeight,
-          height: AppSpacing.inputHeight,
-          child: Icon(
-            Icons.history_rounded,
-            color: AppColors.text1,
-            size: AppSpacing.iconMd,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _WalletHero extends StatelessWidget {
   const _WalletHero({
     required this.snapshot,

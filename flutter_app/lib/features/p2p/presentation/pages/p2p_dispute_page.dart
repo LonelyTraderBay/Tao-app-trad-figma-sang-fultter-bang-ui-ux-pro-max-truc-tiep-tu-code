@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -72,75 +73,78 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
       semanticLabel: 'SC-221 P2PDisputePage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Mở tranh chấp',
-              subtitle: 'Tranh chấp · P2P',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.p2pOrder(widget.orderId)),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2PDisputePage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _DisputeHero(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      _SectionTitle(label: 'Lý do tranh chấp'),
-                      const SizedBox(height: AppSpacing.x3),
-                      for (final reason in snapshot.reasons) ...[
-                        _ReasonTile(
-                          key: P2PDisputePage.reasonKey(reason),
-                          reason: reason,
-                          selected: reason == _selectedReason,
-                          onTap: () => _selectReason(reason),
-                        ),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Mở tranh chấp',
+            subtitle: 'Tranh chấp · P2P',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.p2pOrder(widget.orderId)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2PDisputePage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _DisputeHero(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        _SectionTitle(label: 'Lý do tranh chấp'),
                         const SizedBox(height: AppSpacing.x3),
+                        for (final reason in snapshot.reasons) ...[
+                          _ReasonTile(
+                            key: P2PDisputePage.reasonKey(reason),
+                            reason: reason,
+                            selected: reason == _selectedReason,
+                            onTap: () => _selectReason(reason),
+                          ),
+                          const SizedBox(height: AppSpacing.x3),
+                        ],
+                        const SizedBox(height: AppSpacing.x5),
+                        VitInput(
+                          controller: _descriptionController,
+                          fieldKey: P2PDisputePage.descriptionKey,
+                          label: snapshot.descriptionLabel,
+                          hintText: snapshot.descriptionPlaceholder,
+                          textCapitalization: TextCapitalization.sentences,
+                          onChanged: (_) => setState(() {}),
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        _EvidenceUploadBox(
+                          title: snapshot.uploadTitle,
+                          subtitle: snapshot.uploadSubtitle,
+                          uploaded: _evidenceUploaded,
+                          onTap: _markEvidenceUploaded,
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        VitCtaButton(
+                          key: P2PDisputePage.submitKey,
+                          onPressed: _canSubmit
+                              ? () => _submit(snapshot.targetDisputeId)
+                              : null,
+                          variant: VitCtaButtonVariant.danger,
+                          child: const Text('Gửi tranh chấp'),
+                        ),
                       ],
-                      const SizedBox(height: AppSpacing.x5),
-                      VitInput(
-                        controller: _descriptionController,
-                        fieldKey: P2PDisputePage.descriptionKey,
-                        label: snapshot.descriptionLabel,
-                        hintText: snapshot.descriptionPlaceholder,
-                        textCapitalization: TextCapitalization.sentences,
-                        onChanged: (_) => setState(() {}),
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      _EvidenceUploadBox(
-                        title: snapshot.uploadTitle,
-                        subtitle: snapshot.uploadSubtitle,
-                        uploaded: _evidenceUploaded,
-                        onTap: _markEvidenceUploaded,
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      VitCtaButton(
-                        key: P2PDisputePage.submitKey,
-                        onPressed: _canSubmit
-                            ? () => _submit(snapshot.targetDisputeId)
-                            : null,
-                        variant: VitCtaButtonVariant.danger,
-                        child: const Text('Gửi tranh chấp'),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -5,7 +5,9 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/market_list_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/market_movers_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/pair_detail_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/market_sectors_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -122,6 +124,20 @@ void main() {
     await tester.tap(find.byTooltip('Tổng quan thị trường'));
     await tester.pumpAndSettle();
     expect(find.text('Tổng quan thị trường'), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.bar_chart_rounded).first);
+    await tester.pumpAndSettle();
+    expect(find.byType(MarketMoversPage), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.layers_rounded).first);
+    await tester.pumpAndSettle();
+    expect(find.byType(MarketSectorsPage), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));
     await tester.pumpAndSettle();

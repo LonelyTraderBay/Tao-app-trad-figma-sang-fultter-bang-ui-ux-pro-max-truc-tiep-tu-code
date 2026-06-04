@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_sma
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_smart_suggestions_trends.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
@@ -63,55 +64,58 @@ class _SavingsSmartSuggestionsPageState
       semanticLabel: 'SC-347 SavingsSmartSuggestionsPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    SavingsSmartSummary(snapshot: snapshot),
-                    SavingsSmartTabs(
-                      tabs: snapshot.tabs,
-                      active: activeTab,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (activeTab == 'suggestions') ...[
-                      SavingsSmartPriorityFilters(
-                        filters: snapshot.filters,
-                        active: _filter,
-                        onChanged: (filter) {
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      SavingsSmartSummary(snapshot: snapshot),
+                      SavingsSmartTabs(
+                        tabs: snapshot.tabs,
+                        active: activeTab,
+                        onChanged: (tab) {
                           HapticFeedback.selectionClick();
-                          setState(() => _filter = filter);
+                          setState(() => _tab = tab);
                         },
                       ),
-                      SavingsSmartSuggestionList(
-                        suggestions: _filteredSuggestions(snapshot),
-                        helpful: _helpful,
-                        onHelpful: _markHelpful,
-                        onDismiss: _dismissSuggestion,
-                      ),
-                      SavingsSmartDisclaimer(text: snapshot.disclaimer),
-                    ] else if (activeTab == 'trends')
-                      SavingsSmartTrendList(trends: snapshot.trends)
-                    else
-                      SavingsSmartSignalList(signals: snapshot.signals),
-                  ],
+                      if (activeTab == 'suggestions') ...[
+                        SavingsSmartPriorityFilters(
+                          filters: snapshot.filters,
+                          active: _filter,
+                          onChanged: (filter) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _filter = filter);
+                          },
+                        ),
+                        SavingsSmartSuggestionList(
+                          suggestions: _filteredSuggestions(snapshot),
+                          helpful: _helpful,
+                          onHelpful: _markHelpful,
+                          onDismiss: _dismissSuggestion,
+                        ),
+                        SavingsSmartDisclaimer(text: snapshot.disclaimer),
+                      ] else if (activeTab == 'trends')
+                        SavingsSmartTrendList(trends: snapshot.trends)
+                      else
+                        SavingsSmartSignalList(signals: snapshot.signals),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

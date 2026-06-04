@@ -47,22 +47,26 @@ final class LaunchpadBridgeOrderSnapshot {
     required this.actionDraft,
     required this.title,
     required this.backRoute,
+    required this.supportRoute,
     required this.txId,
     required this.order,
     required this.events,
     required this.contractNotes,
     required this.supportedStates,
+    this.highRiskContractId,
   });
 
   final String endpoint;
   final String actionDraft;
   final String title;
   final String backRoute;
+  final String supportRoute;
   final String txId;
   final LaunchpadBridgeOrderDraft order;
   final List<LaunchpadBridgeEventDraft> events;
   final String contractNotes;
   final Set<LaunchpadScreenState> supportedStates;
+  final String? highRiskContractId;
 }
 
 final class LaunchpadBridgeOrderDraft {

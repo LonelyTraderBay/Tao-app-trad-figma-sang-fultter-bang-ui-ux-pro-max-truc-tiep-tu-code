@@ -45,6 +45,7 @@ mixin _MockPredictionsRepositoryMethodsPart01
       category: category,
       searchQuery: searchQuery,
       lastUpdatedLabel: 'read-only',
+      highRiskContractId: HighRiskFlowContractIds.predictionMarketEvent,
       supportedStates: const {
         PredictionScreenState.loading,
         PredictionScreenState.empty,
@@ -312,6 +313,7 @@ mixin _MockPredictionsRepositoryMethodsPart01
       receipts: _predictionReceipts,
       rewards: _predictionRewards,
       lastUpdatedLabel: 'read-only',
+      highRiskContractId: HighRiskFlowContractIds.predictionMarketEvent,
       supportedStates: const {
         PredictionScreenState.loading,
         PredictionScreenState.empty,
@@ -485,6 +487,7 @@ mixin _MockPredictionsRepositoryMethodsPart01
       receipts: _predictionPortfolioReceipts,
       rewards: _predictionRewards,
       lastUpdatedLabel: 'realtime-refresh',
+      highRiskContractId: HighRiskFlowContractIds.predictionMarketEvent,
       supportedStates: const {
         PredictionScreenState.loading,
         PredictionScreenState.empty,

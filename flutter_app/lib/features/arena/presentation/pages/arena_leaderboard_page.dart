@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -60,66 +61,70 @@ class _ArenaLeaderboardPageState extends ConsumerState<ArenaLeaderboardPage> {
       semanticLabel: 'SC-194 ArenaLeaderboardPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Arena Leaderboard',
-              subtitle: 'Bảng xếp hạng · Open Arena',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ArenaLeaderboardPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    customGap: AppSpacing.x5,
-                    children: [
-                      _MyRankCard(myRank: snapshot.myRank),
-                      _MainTabs(
-                        activeTab: _activeTab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _activeTab = tab);
-                        },
-                      ),
-                      _MetricChips(
-                        chips: snapshot.metricChips,
-                        activeMetric: _activeMetric,
-                        onChanged: (metric) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _activeMetric = metric);
-                        },
-                      ),
-                      _SeasonFilters(
-                        filters: snapshot.seasonFilters,
-                        activeSeason: _activeSeason,
-                        onChanged: (season) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _activeSeason = season);
-                        },
-                      ),
-                      _LeaderboardBody(
-                        activeTab: _activeTab,
-                        snapshot: snapshot,
-                        onCreator: (id) => _go(AppRoutePaths.arenaCreator(id)),
-                      ),
-                      _ArenaFooter(
-                        disclaimer: snapshot.disclaimer,
-                        onRules: () => _go(AppRoutePaths.arenaGuide),
-                      ),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Arena Leaderboard',
+            subtitle: 'Bảng xếp hạng · Open Arena',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ArenaLeaderboardPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      customGap: AppSpacing.x5,
+                      children: [
+                        _MyRankCard(myRank: snapshot.myRank),
+                        _MainTabs(
+                          activeTab: _activeTab,
+                          onChanged: (tab) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _activeTab = tab);
+                          },
+                        ),
+                        _MetricChips(
+                          chips: snapshot.metricChips,
+                          activeMetric: _activeMetric,
+                          onChanged: (metric) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _activeMetric = metric);
+                          },
+                        ),
+                        _SeasonFilters(
+                          filters: snapshot.seasonFilters,
+                          activeSeason: _activeSeason,
+                          onChanged: (season) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _activeSeason = season);
+                          },
+                        ),
+                        _LeaderboardBody(
+                          activeTab: _activeTab,
+                          snapshot: snapshot,
+                          onCreator: (id) =>
+                              _go(AppRoutePaths.arenaCreator(id)),
+                        ),
+                        _ArenaFooter(
+                          disclaimer: snapshot.disclaimer,
+                          onRules: () => _go(AppRoutePaths.arenaGuide),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

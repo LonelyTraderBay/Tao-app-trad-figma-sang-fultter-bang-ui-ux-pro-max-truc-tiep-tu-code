@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
-import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_page_sections.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_unavailable_banner.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 
 const _walletBackground = AppColors.bg;
 
@@ -59,67 +62,76 @@ class _WalletPageState extends ConsumerState<WalletPage> {
             : DeviceMetrics.nativeBottomChrome + 28) +
         MediaQuery.paddingOf(context).bottom;
     final assets = _filteredAssets(snapshot.assets);
+    final showBack = context.canPop();
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-135 WalletPage',
       child: Material(
         color: _walletBackground,
-        child: SingleChildScrollView(
-          key: WalletPage.contentKey,
-          padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Ví tài sản',
-                style: AppTextStyles.sectionTitle.copyWith(
-                  color: AppColors.text1,
-                  fontSize: 27,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1.15,
-                ),
-              ),
-              const SizedBox(height: 17),
-              if (snapshot.supportedStates.contains(
-                WalletScreenState.error,
-              )) ...[
-                WalletUnavailableBanner(message: snapshot.actionDraft),
-                const SizedBox(height: 12),
-              ],
-              WalletBalanceHero(
-                snapshot: snapshot,
-                hidden: _balanceHidden,
-                onToggle: () =>
-                    setState(() => _balanceHidden = !_balanceHidden),
-                onNavigate: _navigate,
-              ),
-              const SizedBox(height: 18),
-              WalletDcaCard(dca: snapshot.dca),
-              const SizedBox(height: 18),
-              WalletToolGrid(tools: snapshot.tools, onNavigate: _navigate),
-              const SizedBox(height: 18),
-              WalletSegmentedTabs(active: _tab, onChanged: _setTab),
-              const SizedBox(height: 17),
-              if (_tab == 'assets') ...[
-                WalletSearchAndFilter(
-                  controller: _searchController,
-                  filterActive: _hideSmallBalances,
-                  onChanged: (value) => setState(() => _query = value),
-                  onFilter: () =>
-                      setState(() => _hideSmallBalances = !_hideSmallBalances),
-                ),
-                const SizedBox(height: 18),
-                WalletAssetHeader(count: assets.length, onNavigate: _navigate),
-                const SizedBox(height: 10),
-                WalletAssetList(
-                  assets: assets,
+        child: VitAutoHideHeaderScaffold(
+          header: VitTopChrome(
+            type: VitTopChromeType.rootModule,
+            title: 'V\u00ED t\u00E0i s\u1EA3n',
+            showBack: showBack,
+            onBack: showBack
+                ? () => goBackOrFallback(
+                    context,
+                    fallbackPath: AppRoutePaths.home,
+                    mode: BackNavigationMode.historyThenFallback,
+                  )
+                : null,
+          ),
+          child: SingleChildScrollView(
+            key: WalletPage.contentKey,
+            padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (snapshot.supportedStates.contains(
+                  WalletScreenState.error,
+                )) ...[
+                  WalletUnavailableBanner(message: snapshot.actionDraft),
+                  const SizedBox(height: 12),
+                ],
+                WalletBalanceHero(
+                  snapshot: snapshot,
                   hidden: _balanceHidden,
+                  onToggle: () =>
+                      setState(() => _balanceHidden = !_balanceHidden),
                   onNavigate: _navigate,
                 ),
-              ] else
-                WalletAllocationCard(assets: snapshot.assets),
-            ],
+                const SizedBox(height: 18),
+                WalletDcaCard(dca: snapshot.dca),
+                const SizedBox(height: 18),
+                WalletToolGrid(tools: snapshot.tools, onNavigate: _navigate),
+                const SizedBox(height: 18),
+                WalletSegmentedTabs(active: _tab, onChanged: _setTab),
+                const SizedBox(height: 17),
+                if (_tab == 'assets') ...[
+                  WalletSearchAndFilter(
+                    controller: _searchController,
+                    filterActive: _hideSmallBalances,
+                    onChanged: (value) => setState(() => _query = value),
+                    onFilter: () => setState(
+                      () => _hideSmallBalances = !_hideSmallBalances,
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  WalletAssetHeader(
+                    count: assets.length,
+                    onNavigate: _navigate,
+                  ),
+                  const SizedBox(height: 10),
+                  WalletAssetList(
+                    assets: assets,
+                    hidden: _balanceHidden,
+                    onNavigate: _navigate,
+                  ),
+                ] else
+                  WalletAllocationCard(assets: snapshot.assets),
+              ],
+            ),
           ),
         ),
       ),

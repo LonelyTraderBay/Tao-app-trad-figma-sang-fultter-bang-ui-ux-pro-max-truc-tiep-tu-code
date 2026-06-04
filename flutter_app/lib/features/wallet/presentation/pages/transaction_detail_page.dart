@@ -9,8 +9,10 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/product_flow/contextual_support_contract.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
@@ -55,30 +57,42 @@ class TransactionDetailPage extends ConsumerWidget {
       semanticLabel: 'SC-141 TransactionDetailPage',
       child: Material(
         color: _detailBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Chi tiết giao dịch',
-              subtitle: 'Lịch sử · Wallet',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.walletHistory),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: contentKey,
-                padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-                child: snapshot.transaction == null
-                    ? _MissingTransaction(
-                        onBack: () => context.go(AppRoutePaths.walletHistory),
-                      )
-                    : _TransactionDetailContent(
-                        tx: snapshot.transaction!,
-                        onCopy: (value) => _copyValue(context, value),
-                        onSupport: () => context.go(AppRoutePaths.support),
-                      ),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Chi tiết giao dịch',
+            subtitle: 'Lịch sử · Wallet',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.walletHistory),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  child: snapshot.transaction == null
+                      ? _MissingTransaction(
+                          onBack: () => context.go(AppRoutePaths.walletHistory),
+                        )
+                      : _TransactionDetailContent(
+                          tx: snapshot.transaction!,
+                          onCopy: (value) => _copyValue(context, value),
+                          onSupport: () => context.go(
+                            ContextualSupportContracts.supportRouteFor(
+                              ContextualSupportFlow.withdrawal,
+                              referenceId: snapshot.transaction!.id,
+                              sourceRoute: AppRoutePaths.walletTransaction(
+                                snapshot.transaction!.id,
+                              ),
+                              issueLabel: 'Wallet transaction support',
+                            ),
+                          ),
+                        ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

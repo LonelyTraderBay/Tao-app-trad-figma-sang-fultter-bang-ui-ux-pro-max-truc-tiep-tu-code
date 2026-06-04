@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_active_approvals_tab.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_common.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_history_tab.dart';
@@ -13,7 +13,9 @@ import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_to
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_revoke_sheet.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
 class WalletTokenApprovalPage extends ConsumerStatefulWidget {
   const WalletTokenApprovalPage({super.key, this.shellRenderMode});
@@ -55,25 +57,29 @@ class _WalletTokenApprovalPageState
       semanticLabel: 'SC-150 WalletTokenApprovalPage',
       child: Material(
         color: walletTokenApprovalBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Token Approvals',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.wallet),
-            ),
-            WalletTokenApprovalTabs(
-              activeTab: _tab,
-              onChanged: (tab) => setState(() => _tab = tab),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: WalletTokenApprovalPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-                child: _contentForTab(controller),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Token Approvals',
+            showBack: true,
+            onBack: () =>
+                goBackOrFallback(context, fallbackPath: AppRoutePaths.wallet),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              WalletTokenApprovalTabs(
+                activeTab: _tab,
+                onChanged: (tab) => setState(() => _tab = tab),
               ),
-            ),
-          ],
+              Expanded(
+                child: SingleChildScrollView(
+                  key: WalletTokenApprovalPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  child: _contentForTab(controller),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -105,7 +111,7 @@ class _WalletTokenApprovalPageState
     WalletTokenApproval? approval,
   ) {
     final preview = controller.revokePreview(approval);
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: walletTokenApprovalPanel,
       shape: const RoundedRectangleBorder(

@@ -7,7 +7,9 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -101,11 +103,11 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
       _confirmPassword.isNotEmpty;
 
   void _goBack() {
-    if (context.canPop()) {
-      context.pop();
-      return;
-    }
-    context.go(AppRoutePaths.authLogin);
+    goBackOrFallback(
+      context,
+      fallbackPath: AppRoutePaths.authLogin,
+      mode: BackNavigationMode.historyThenFallback,
+    );
   }
 
   void _handleNewPasswordChanged() {
@@ -166,30 +168,33 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
 
     return VitPageLayout(
       semanticLabel: 'SC-006 ResetPasswordPage',
-      child: Column(
-        children: [
-          VitHeader(
-            title: 'Đặt lại mật khẩu',
-            subtitle: 'Xác thực · Bảo mật',
-            showBack: true,
-            onBack: _goBack,
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              key: ResetPasswordPage.contentKey,
-              padding: const EdgeInsets.only(bottom: AppSpacing.x6),
-              child: VitPageContent(
-                padding: VitContentPadding.relaxed,
-                gap: VitContentGap.relaxed,
-                children: _success
-                    ? _successContent
-                    : challenge == null
-                    ? _expiredContent
-                    : _formContent(challenge),
+      child: VitAutoHideHeaderScaffold(
+        header: VitHeader(
+          title: 'Đặt lại mật khẩu',
+          subtitle: 'Xác thực · Bảo mật',
+          showBack: true,
+          onBack: _goBack,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                key: ResetPasswordPage.contentKey,
+                padding: const EdgeInsets.only(bottom: AppSpacing.x6),
+                child: VitPageContent(
+                  padding: VitContentPadding.relaxed,
+                  gap: VitContentGap.relaxed,
+                  children: _success
+                      ? _successContent
+                      : challenge == null
+                      ? _expiredContent
+                      : _formContent(challenge),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

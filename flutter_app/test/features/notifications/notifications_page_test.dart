@@ -101,6 +101,31 @@ void main() {
     expect(find.text('Không có thông báo chưa đọc'), findsOneWidget);
   });
 
+  testWidgets('SC-291 mark all read clears the shell unread badge', (
+    tester,
+  ) async {
+    await pumpNotifications(tester);
+
+    expect(
+      find.descendant(
+        of: find.byKey(const Key('vit_bottom_nav_home')),
+        matching: find.text('7'),
+      ),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.byKey(NotificationsPage.markAllReadKey));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.descendant(
+        of: find.byKey(const Key('vit_bottom_nav_home')),
+        matching: find.text('7'),
+      ),
+      findsNothing,
+    );
+  });
+
   testWidgets('SC-291 notification action navigates through safe edge', (
     tester,
   ) async {
@@ -119,7 +144,7 @@ void main() {
   testWidgets('SC-291 header back returns to home', (tester) async {
     await pumpNotifications(tester);
 
-    await tester.tap(find.byType(IconButton).first);
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
     await tester.pumpAndSettle();
 
     expect(find.text('VitTrade'), findsOneWidget);

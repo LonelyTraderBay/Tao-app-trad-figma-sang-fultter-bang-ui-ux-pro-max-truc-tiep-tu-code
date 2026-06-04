@@ -1,24 +1,5 @@
 part of '../pages/launchpad_address_book_page.dart';
 
-class _AddButton extends StatelessWidget {
-  const _AddButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      key: LaunchpadAddressBookPage.addKey,
-      onPressed: onTap,
-      style: IconButton.styleFrom(
-        backgroundColor: AppColors.surface2,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-      ),
-      icon: const Icon(Icons.add_rounded, color: AppColors.text1, size: 22),
-    );
-  }
-}
-
 class _SearchField extends StatelessWidget {
   const _SearchField({
     required this.controller,

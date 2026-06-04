@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -60,42 +61,45 @@ class MarketOverviewPage extends ConsumerWidget {
       semanticLabel: 'SC-009 MarketOverviewPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Tổng quan thị trường',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.markets),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.defaultPadding,
-                    gap: VitContentGap.relaxed,
-                    children: [
-                      _MarketCapHero(stats: snapshot.globalStats),
-                      _StatsGrid(stats: snapshot.globalStats),
-                      _SentimentGrid(
-                        stats: snapshot.globalStats,
-                        breadth: snapshot.marketBreadth,
-                      ),
-                      const _QuickNavigation(),
-                      _MoversGrid(movers: snapshot.movers),
-                      _SectorPerformance(sectors: snapshot.sectors),
-                      _FearGreedHistory(points: snapshot.fearGreedHistory),
-                      const _MarketTools(),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Tổng quan thị trường',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.markets),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.defaultPadding,
+                      gap: VitContentGap.relaxed,
+                      children: [
+                        _MarketCapHero(stats: snapshot.globalStats),
+                        _StatsGrid(stats: snapshot.globalStats),
+                        _SentimentGrid(
+                          stats: snapshot.globalStats,
+                          breadth: snapshot.marketBreadth,
+                        ),
+                        const _QuickNavigation(),
+                        _MoversGrid(movers: snapshot.movers),
+                        _SectorPerformance(sectors: snapshot.sectors),
+                        _FearGreedHistory(points: snapshot.fearGreedHistory),
+                        const _MarketTools(),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

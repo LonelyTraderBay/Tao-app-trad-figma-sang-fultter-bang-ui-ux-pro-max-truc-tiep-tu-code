@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -64,96 +65,99 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
       semanticLabel: 'SC-250 P2PAddressProofPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Proof of Address',
-              subtitle: 'KYC · P2P',
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _AddressHero(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _RequirementsCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x6),
-                      if (selectedDocument == null)
-                        _DocumentTypePicker(
-                          documents: snapshot.documentTypes,
-                          onSelected: (document) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _selectedTypeId = document.id);
-                          },
-                        )
-                      else ...[
-                        _UploadSection(
-                          selectedDocument: selectedDocument,
-                          uploaded: _uploaded,
-                          onChangeType: () {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _selectedTypeId = null;
-                              _uploaded = false;
-                              _manualAddress = '';
-                            });
-                          },
-                          onUpload: () {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _uploaded = true;
-                              _manualAddress = snapshot.extractedAddress;
-                            });
-                          },
-                          onRemove: () {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _uploaded = false;
-                              _manualAddress = '';
-                            });
-                          },
-                        ),
-                        if (_uploaded) ...[
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Proof of Address',
+            subtitle: 'KYC · P2P',
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _AddressHero(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _RequirementsCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x6),
+                        if (selectedDocument == null)
+                          _DocumentTypePicker(
+                            documents: snapshot.documentTypes,
+                            onSelected: (document) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _selectedTypeId = document.id);
+                            },
+                          )
+                        else ...[
+                          _UploadSection(
+                            selectedDocument: selectedDocument,
+                            uploaded: _uploaded,
+                            onChangeType: () {
+                              HapticFeedback.selectionClick();
+                              setState(() {
+                                _selectedTypeId = null;
+                                _uploaded = false;
+                                _manualAddress = '';
+                              });
+                            },
+                            onUpload: () {
+                              HapticFeedback.selectionClick();
+                              setState(() {
+                                _uploaded = true;
+                                _manualAddress = snapshot.extractedAddress;
+                              });
+                            },
+                            onRemove: () {
+                              HapticFeedback.selectionClick();
+                              setState(() {
+                                _uploaded = false;
+                                _manualAddress = '';
+                              });
+                            },
+                          ),
+                          if (_uploaded) ...[
+                            const SizedBox(height: AppSpacing.x5),
+                            _ExtractedDataCard(snapshot: snapshot),
+                            const SizedBox(height: AppSpacing.x5),
+                            _AddressConfirmCard(address: _manualAddress),
+                          ],
                           const SizedBox(height: AppSpacing.x5),
-                          _ExtractedDataCard(snapshot: snapshot),
+                          _SecurityCard(snapshot: snapshot),
                           const SizedBox(height: AppSpacing.x5),
-                          _AddressConfirmCard(address: _manualAddress),
+                          VitCtaButton(
+                            key: P2PAddressProofPage.submitKey,
+                            onPressed: _uploaded && _manualAddress.isNotEmpty
+                                ? () {
+                                    HapticFeedback.selectionClick();
+                                    context.go(snapshot.submitRoute);
+                                  }
+                                : null,
+                            trailing: const Icon(Icons.chevron_right_rounded),
+                            child: const Text('Gửi tài liệu'),
+                          ),
                         ],
-                        const SizedBox(height: AppSpacing.x5),
-                        _SecurityCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
-                        VitCtaButton(
-                          key: P2PAddressProofPage.submitKey,
-                          onPressed: _uploaded && _manualAddress.isNotEmpty
-                              ? () {
-                                  HapticFeedback.selectionClick();
-                                  context.go(snapshot.submitRoute);
-                                }
-                              : null,
-                          trailing: const Icon(Icons.chevron_right_rounded),
-                          child: const Text('Gửi tài liệu'),
-                        ),
                       ],
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

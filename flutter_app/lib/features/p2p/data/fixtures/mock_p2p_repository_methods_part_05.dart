@@ -63,10 +63,10 @@ mixin _MockP2PRepositoryMethodsPart05 on _MockP2PRepositoryBase {
 
   @override
   P2PGuideSnapshot getGuide() {
-    return const P2PGuideSnapshot(
+    return P2PGuideSnapshot(
       endpoint: '/api/mobile/p2p/p2p-guide',
       actionDraft: 'POST /p2p/* workflow action where applicable',
-      supportedStates: [
+      supportedStates: const [
         P2PScreenState.loading,
         P2PScreenState.empty,
         P2PScreenState.error,
@@ -82,7 +82,12 @@ mixin _MockP2PRepositoryMethodsPart05 on _MockP2PRepositoryBase {
       safetyTips: _p2pGuideSafetyTips,
       videos: _p2pGuideVideos,
       parentRoute: '/p2p',
-      supportRoute: '/support/help',
+      supportRoute: ContextualSupportContracts.supportRouteFor(
+        ContextualSupportFlow.p2pOrder,
+        referenceId: 'p2p-emergency-guide',
+        sourceRoute: '/p2p/guide',
+        issueLabel: 'P2P emergency trade support',
+      ),
       marketRoute: '/p2p',
       emptyTitle: 'Chưa có hướng dẫn P2P',
       contractNotes: 'P2P requires escrow, fraud, KYC, payment-state clarity.',

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -42,55 +43,58 @@ class P2PTradingLevelPage extends ConsumerWidget {
       semanticLabel: 'SC-230 P2PTradingLevelPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Cấp độ giao dịch P2P',
-              subtitle: 'Cấp bậc · P2P',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.p2p),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2PTradingLevelPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x5,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _CurrentLevelHero(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      if (snapshot.userLevel.currentLevel <
-                          snapshot.levels.length)
-                        _NextLevelProgress(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      Text(
-                        'Tất cả cấp độ',
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text2,
-                          fontWeight: AppTextStyles.medium,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Cấp độ giao dịch P2P',
+            subtitle: 'Cấp bậc · P2P',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.p2p),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2PTradingLevelPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x5,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _CurrentLevelHero(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        if (snapshot.userLevel.currentLevel <
+                            snapshot.levels.length)
+                          _NextLevelProgress(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        Text(
+                          'Tất cả cấp độ',
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text2,
+                            fontWeight: AppTextStyles.medium,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      for (final level in snapshot.levels) ...[
-                        _LevelCard(snapshot: snapshot, level: level),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.x4),
+                        for (final level in snapshot.levels) ...[
+                          _LevelCard(snapshot: snapshot, level: level),
+                          const SizedBox(height: AppSpacing.x3),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

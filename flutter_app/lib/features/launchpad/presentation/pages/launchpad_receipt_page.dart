@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -52,31 +53,28 @@ class LaunchpadReceiptPage extends ConsumerWidget {
       semanticLabel: 'SC-301 LaunchpadReceiptPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: hasSubscription ? 'Biên lai đăng ký' : snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
+        child: VitAutoHideHeaderScaffold(
+          bottomInset: bottomInset,
+          semanticLabel: 'SC-301 LaunchpadReceiptPage scroll surface',
+          header: VitHeader(
+            title: hasSubscription ? 'Biên lai đăng ký' : snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: SingleChildScrollView(
+            key: contentKey,
+            physics: const BouncingScrollPhysics(),
+            child: VitPageContent(
+              padding: VitContentPadding.defaultPadding,
+              customGap: AppSpacing.x4,
+              children: [
+                if (!hasSubscription)
+                  const _ReceiptErrorState()
+                else
+                  _ReceiptSuccess(snapshot: snapshot),
+              ],
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.defaultPadding,
-                  customGap: AppSpacing.x4,
-                  children: [
-                    if (!hasSubscription)
-                      const _ReceiptErrorState()
-                    else
-                      _ReceiptSuccess(snapshot: snapshot),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -79,73 +80,76 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
       semanticLabel: 'SC-125 BotBacktestingPage',
       child: Material(
         color: _backtestBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Backtest Strategy',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeBots),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: BotBacktestingPage.contentKey,
-                padding: EdgeInsets.zero,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 14, 20, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const _SectionLabel('Strategy Selection'),
-                          const SizedBox(height: 10),
-                          _StrategyGrid(
-                            strategies: snapshot.strategies,
-                            selectedId: _selectedStrategy,
-                            onChanged: (id) =>
-                                setState(() => _selectedStrategy = id),
-                          ),
-                          const SizedBox(height: 15),
-                          const _SectionLabel('Trading Pair'),
-                          const SizedBox(height: 10),
-                          _PairGrid(
-                            pairs: snapshot.pairs,
-                            selectedPair: _selectedPair,
-                            onChanged: (pair) =>
-                                setState(() => _selectedPair = pair),
-                          ),
-                          const SizedBox(height: 15),
-                          const _SectionLabel('Date Range'),
-                          const SizedBox(height: 10),
-                          _DateRangeGrid(
-                            ranges: snapshot.dateRanges,
-                            selectedId: _selectedRange,
-                            onChanged: (id) =>
-                                setState(() => _selectedRange = id),
-                          ),
-                          const SizedBox(height: 15),
-                          const _SectionLabel('Initial Capital'),
-                          const SizedBox(height: 10),
-                          _CapitalInput(controller: _capitalController),
-                          const SizedBox(height: 15),
-                          _BacktestPeriodCard(
-                            strategyId: _selectedStrategy,
-                            pair: _selectedPair,
-                            range: range,
-                            capital: _capitalController.text,
-                          ),
-                        ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Backtest Strategy',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeBots),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: BotBacktestingPage.contentKey,
+                  padding: EdgeInsets.zero,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 14, 20, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const _SectionLabel('Strategy Selection'),
+                            const SizedBox(height: 10),
+                            _StrategyGrid(
+                              strategies: snapshot.strategies,
+                              selectedId: _selectedStrategy,
+                              onChanged: (id) =>
+                                  setState(() => _selectedStrategy = id),
+                            ),
+                            const SizedBox(height: 15),
+                            const _SectionLabel('Trading Pair'),
+                            const SizedBox(height: 10),
+                            _PairGrid(
+                              pairs: snapshot.pairs,
+                              selectedPair: _selectedPair,
+                              onChanged: (pair) =>
+                                  setState(() => _selectedPair = pair),
+                            ),
+                            const SizedBox(height: 15),
+                            const _SectionLabel('Date Range'),
+                            const SizedBox(height: 10),
+                            _DateRangeGrid(
+                              ranges: snapshot.dateRanges,
+                              selectedId: _selectedRange,
+                              onChanged: (id) =>
+                                  setState(() => _selectedRange = id),
+                            ),
+                            const SizedBox(height: 15),
+                            const _SectionLabel('Initial Capital'),
+                            const SizedBox(height: 10),
+                            _CapitalInput(controller: _capitalController),
+                            const SizedBox(height: 15),
+                            _BacktestPeriodCard(
+                              strategyId: _selectedStrategy,
+                              pair: _selectedPair,
+                              range: range,
+                              capital: _capitalController.text,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 18),
-                    _RunFooter(onRun: () => _handleRun(snapshot)),
-                    SizedBox(height: bottomGap),
-                  ],
+                      const SizedBox(height: 18),
+                      _RunFooter(onRun: () => _handleRun(snapshot)),
+                      SizedBox(height: bottomGap),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

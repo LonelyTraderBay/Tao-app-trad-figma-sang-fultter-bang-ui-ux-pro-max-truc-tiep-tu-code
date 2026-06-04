@@ -35,67 +35,64 @@ class _ArenaPointsPageState extends ConsumerState<ArenaPointsPage> {
       semanticLabel: widget.semanticLabel,
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Trung tâm Phần thưởng',
-              subtitle: 'Phần thưởng · Rewards',
-              showBack: true,
-              onBack: () => _close(context),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: ArenaPointsPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    customGap: AppSpacing.x5,
-                    children: [
-                      _RewardsHero(
-                        snapshot: snapshot,
-                        claimedAll: _claimedAll,
-                        onClaimAll: () {
-                          HapticFeedback.selectionClick();
-                          setState(() => _claimedAll = true);
-                        },
-                      ),
-                      _CheckInSection(checkIns: snapshot.checkIns),
-                      _ReferralBanner(
-                        onTap: () {
-                          HapticFeedback.selectionClick();
-                          context.go(widget.referralRoute);
-                        },
-                      ),
-                      _TaskSection(
-                        filters: snapshot.filters,
-                        activeFilter: _activeFilter,
-                        tasks: visibleTasks,
-                        onFilter: (filter) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _activeFilter = filter);
-                        },
-                      ),
-                      _BonusSection(rows: snapshot.bonusRows),
-                      _ProgressSection(
-                        summary: snapshot.summary,
-                        leaderboard: snapshot.leaderboard,
-                        onLeaderboardTap: () {
-                          HapticFeedback.selectionClick();
-                          context.go(widget.leaderboardRoute);
-                        },
-                      ),
-                      _RewardsDisclaimer(text: snapshot.disclaimer),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitTopChrome(
+            type: VitTopChromeType.rootModule,
+            title: 'Trung tâm Phần thưởng',
+            subtitle: 'Phần thưởng · Rewards',
+            showBack: true,
+            onBack: () => _close(context),
+          ),
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(
+              context,
+            ).copyWith(scrollbars: false),
+            child: SingleChildScrollView(
+              key: ArenaPointsPage.contentKey,
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.only(bottom: bottomInset),
+              child: VitPageContent(
+                padding: VitContentPadding.compact,
+                customGap: AppSpacing.x5,
+                children: [
+                  _RewardsHero(
+                    snapshot: snapshot,
+                    claimedAll: _claimedAll,
+                    onClaimAll: () {
+                      HapticFeedback.selectionClick();
+                      setState(() => _claimedAll = true);
+                    },
                   ),
-                ),
+                  _CheckInSection(checkIns: snapshot.checkIns),
+                  _ReferralBanner(
+                    onTap: () {
+                      HapticFeedback.selectionClick();
+                      context.go(widget.referralRoute);
+                    },
+                  ),
+                  _TaskSection(
+                    filters: snapshot.filters,
+                    activeFilter: _activeFilter,
+                    tasks: visibleTasks,
+                    onFilter: (filter) {
+                      HapticFeedback.selectionClick();
+                      setState(() => _activeFilter = filter);
+                    },
+                  ),
+                  _BonusSection(rows: snapshot.bonusRows),
+                  _ProgressSection(
+                    summary: snapshot.summary,
+                    leaderboard: snapshot.leaderboard,
+                    onLeaderboardTap: () {
+                      HapticFeedback.selectionClick();
+                      context.go(widget.leaderboardRoute);
+                    },
+                  ),
+                  _RewardsDisclaimer(text: snapshot.disclaimer),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

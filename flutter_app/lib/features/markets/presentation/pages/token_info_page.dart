@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -63,42 +64,45 @@ class _TokenInfoPageState extends ConsumerState<TokenInfoPage> {
       semanticLabel: 'SC-045 TokenInfoPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: '${pair.baseAsset} - Thong tin',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.pairDetail(pair.id)),
-            ),
-            _TokenTabs(
-              active: _tab,
-              onChanged: (tab) => setState(() => _tab = tab),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: TokenInfoPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 14,
-                    children: [
-                      if (_tab == _TokenInfoTab.overview)
-                        _OverviewTab(snapshot: snapshot)
-                      else if (_tab == _TokenInfoTab.onchain)
-                        _OnchainTab(snapshot: snapshot)
-                      else
-                        _ProjectTab(snapshot: snapshot),
-                      const _Disclaimer(),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: '${pair.baseAsset} - Thong tin',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.pairDetail(pair.id)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _TokenTabs(
+                active: _tab,
+                onChanged: (tab) => setState(() => _tab = tab),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: TokenInfoPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 14,
+                      children: [
+                        if (_tab == _TokenInfoTab.overview)
+                          _OverviewTab(snapshot: snapshot)
+                        else if (_tab == _TokenInfoTab.onchain)
+                          _OnchainTab(snapshot: snapshot)
+                        else
+                          _ProjectTab(snapshot: snapshot),
+                        const _Disclaimer(),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

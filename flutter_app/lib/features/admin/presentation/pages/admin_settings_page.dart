@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -36,78 +37,82 @@ class AdminSettingsPage extends ConsumerWidget {
 
     return VitPageLayout(
       semanticLabel: 'SC-180 AdminSettingsPage',
-      child: Column(
-        children: [
-          VitHeader(
-            title: 'Admin Settings',
-            subtitle: 'Operations controls',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.admin),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              key: contentKey,
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.only(bottom: bottomInset),
-              child: VitPageContent(
-                customGap: AppSpacing.x5,
-                children: [
-                  VitCard(
-                    key: routingKey,
-                    padding: const EdgeInsets.all(AppSpacing.x4),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const _SettingsSectionTitle(
-                          icon: Icons.route_outlined,
-                          title: 'Dashboard routing',
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        for (final dashboard in snapshot.dashboards) ...[
-                          _AdminSettingsRow(
-                            icon: _settingsMetricIcon(dashboard.icon),
-                            title: dashboard.title,
-                            subtitle: dashboard.description,
-                            trailing: dashboard.stat,
-                            onTap: () => context.go(dashboard.route),
+      child: VitAutoHideHeaderScaffold(
+        header: VitHeader(
+          title: 'Admin Settings',
+          subtitle: 'Operations controls',
+          showBack: true,
+          onBack: () => context.go(AppRoutePaths.admin),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                key: contentKey,
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.only(bottom: bottomInset),
+                child: VitPageContent(
+                  customGap: AppSpacing.x5,
+                  children: [
+                    VitCard(
+                      key: routingKey,
+                      padding: const EdgeInsets.all(AppSpacing.x4),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const _SettingsSectionTitle(
+                            icon: Icons.route_outlined,
+                            title: 'Dashboard routing',
                           ),
-                          if (dashboard != snapshot.dashboards.last)
-                            const Divider(color: AppColors.divider),
+                          const SizedBox(height: AppSpacing.x4),
+                          for (final dashboard in snapshot.dashboards) ...[
+                            _AdminSettingsRow(
+                              icon: _settingsMetricIcon(dashboard.icon),
+                              title: dashboard.title,
+                              subtitle: dashboard.description,
+                              trailing: dashboard.stat,
+                              onTap: () => context.go(dashboard.route),
+                            ),
+                            if (dashboard != snapshot.dashboards.last)
+                              const Divider(color: AppColors.divider),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
-                  ),
-                  VitCard(
-                    padding: const EdgeInsets.all(AppSpacing.x4),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const _SettingsSectionTitle(
-                          icon: Icons.health_and_safety_outlined,
-                          title: 'Operational health',
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        _AdminSettingsRow(
-                          icon: Icons.bolt_rounded,
-                          title: 'Event stream',
-                          subtitle: snapshot.adminMetrics.liveEventWindowLabel,
-                          trailing: snapshot.adminMetrics.eventsPerMinute,
-                        ),
-                        const Divider(color: AppColors.divider),
-                        _AdminSettingsRow(
-                          icon: Icons.verified_outlined,
-                          title: 'System health',
-                          subtitle: snapshot.adminMetrics.footerUpdatedLabel,
-                          trailing: snapshot.adminMetrics.healthLabel,
-                        ),
-                      ],
+                    VitCard(
+                      padding: const EdgeInsets.all(AppSpacing.x4),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const _SettingsSectionTitle(
+                            icon: Icons.health_and_safety_outlined,
+                            title: 'Operational health',
+                          ),
+                          const SizedBox(height: AppSpacing.x4),
+                          _AdminSettingsRow(
+                            icon: Icons.bolt_rounded,
+                            title: 'Event stream',
+                            subtitle:
+                                snapshot.adminMetrics.liveEventWindowLabel,
+                            trailing: snapshot.adminMetrics.eventsPerMinute,
+                          ),
+                          const Divider(color: AppColors.divider),
+                          _AdminSettingsRow(
+                            icon: Icons.verified_outlined,
+                            title: 'System health',
+                            subtitle: snapshot.adminMetrics.footerUpdatedLabel,
+                            trailing: snapshot.adminMetrics.healthLabel,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

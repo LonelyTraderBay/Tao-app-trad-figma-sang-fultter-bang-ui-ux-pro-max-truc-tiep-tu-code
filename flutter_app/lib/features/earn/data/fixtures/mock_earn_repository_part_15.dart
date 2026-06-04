@@ -230,13 +230,19 @@ final class MockStakingFAQRepository implements StakingFAQRepository {
 
   @override
   StakingFAQSnapshot getFAQ() {
-    return const StakingFAQSnapshot(
+    return StakingFAQSnapshot(
       endpoint: '/api/mobile/earn/earn-faq',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
       title: 'FAQ',
       backRoute: '/earn/staking',
+      supportRoute: ContextualSupportContracts.supportRouteFor(
+        ContextualSupportFlow.staking,
+        referenceId: 'staking-faq',
+        sourceRoute: '/earn/faq',
+        issueLabel: 'Staking FAQ support',
+      ),
       searchPlaceholder: 'Tìm câu hỏi...',
-      items: [
+      items: const [
         StakingFAQItemDraft(
           id: 'g1',
           category: StakingFAQCategory.general,
@@ -383,7 +389,7 @@ final class MockStakingFAQRepository implements StakingFAQRepository {
           'Liên hệ đội ngũ support 24/7. Thời gian phản hồi trung bình: <2 giờ.',
       contractNotes:
           'Match screenshot first; wire BE after visual parity. Include earnProducts, stakingPositions, savingsPositions, validators, rewards, riskData, FAQ categories, search/filter state, support contact actions, and loading/empty/error/offline states.',
-      supportedStates: {
+      supportedStates: const {
         EarnScreenState.loading,
         EarnScreenState.empty,
         EarnScreenState.error,

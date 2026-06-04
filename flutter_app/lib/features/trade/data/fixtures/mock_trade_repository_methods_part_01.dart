@@ -18,6 +18,7 @@ mixin _MockTradeRepositoryMethodsPart01 on _MockTradeRepositoryBase {
       botStrategies: const ['Grid BTC', 'DCA ETH', 'Momentum SOL'],
       balances: const TradeBalances(usdtAvailable: 10200, baseAvailable: 0.84),
       lastUpdatedLabel: 'realtime-refresh',
+      highRiskContractId: HighRiskFlowContractIds.tradeSpotOrder,
       supportedStates: const [
         TradeScreenState.loading,
         TradeScreenState.empty,
@@ -68,7 +69,14 @@ mixin _MockTradeRepositoryMethodsPart01 on _MockTradeRepositoryBase {
         slPrice: 65000,
         estimatedFill: '< 2 phút',
       ),
+      supportRoute: ContextualSupportContracts.supportRouteFor(
+        ContextualSupportFlow.order,
+        referenceId: 'ORD-98EH1ZT2',
+        sourceRoute: '/trade/order-receipt',
+        issueLabel: 'Trading order receipt support',
+      ),
       lastUpdatedLabel: 'success',
+      highRiskContractId: HighRiskFlowContractIds.tradeSpotOrder,
       supportedStates: const [
         TradeScreenState.loading,
         TradeScreenState.empty,
@@ -210,6 +218,7 @@ mixin _MockTradeRepositoryMethodsPart01 on _MockTradeRepositoryBase {
       accountBalance: 5000,
       usedMargin: 544,
       lastUpdatedLabel: 'realtime-refresh',
+      highRiskContractId: HighRiskFlowContractIds.tradeMarginFutures,
       supportedStates: const [
         TradeScreenState.loading,
         TradeScreenState.empty,
@@ -250,6 +259,7 @@ mixin _MockTradeRepositoryMethodsPart01 on _MockTradeRepositoryBase {
       strategies: _botStrategies,
       activeBots: _activeBots,
       lastUpdatedLabel: 'realtime-refresh',
+      highRiskContractId: HighRiskFlowContractIds.tradeBots,
       supportedStates: const [
         TradeScreenState.loading,
         TradeScreenState.empty,
@@ -350,6 +360,7 @@ mixin _MockTradeRepositoryMethodsPart01 on _MockTradeRepositoryBase {
       disclaimer:
           'Hiệu suất quá khứ không đảm bảo kết quả tương lai. Tất cả chỉ số mang tính tham khảo. Copy Trading có rủi ro cao, chỉ đầu tư với số tiền bạn có thể chấp nhận mất.',
       lastUpdatedLabel: '2 mins ago',
+      highRiskContractId: HighRiskFlowContractIds.tradeCopy,
       supportedStates: const [
         TradeScreenState.loading,
         TradeScreenState.empty,

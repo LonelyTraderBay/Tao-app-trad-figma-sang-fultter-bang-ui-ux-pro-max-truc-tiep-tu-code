@@ -8,8 +8,10 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -70,55 +72,62 @@ class _SavingsPageState extends ConsumerState<SavingsPage> {
       semanticLabel: 'SC-329 SavingsPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => goBackOrFallback(
+              context,
+              fallbackPath: snapshot.backRoute,
+              mode: BackNavigationMode.historyThenFallback,
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _SavingsHero(snapshot: snapshot),
-                    _InsightList(insights: snapshot.insights),
-                    _ToolboxButton(
-                      guideRoute: snapshot.guideRoute,
-                      exportRoute: snapshot.exportRoute,
-                    ),
-                    _SavingsTabs(
-                      activeTab: _tab,
-                      positionCount: snapshot.positions.length,
-                      onChanged: (tab) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = tab);
-                      },
-                    ),
-                    if (_tab == _SavingsTab.products) ...[
-                      _SavingsFilters(
-                        activeFilter: _filter,
-                        onChanged: (filter) {
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _SavingsHero(snapshot: snapshot),
+                      _InsightList(insights: snapshot.insights),
+                      _ToolboxButton(
+                        guideRoute: snapshot.guideRoute,
+                        exportRoute: snapshot.exportRoute,
+                      ),
+                      _SavingsTabs(
+                        activeTab: _tab,
+                        positionCount: snapshot.positions.length,
+                        onChanged: (tab) {
                           HapticFeedback.selectionClick();
-                          setState(() => _filter = filter);
+                          setState(() => _tab = tab);
                         },
                       ),
-                      _SavingsProductList(
-                        products: products,
-                        detailRoute: snapshot.productDetailRoute,
-                      ),
-                    ] else
-                      _SavingsPositions(positions: snapshot.positions),
-                  ],
+                      if (_tab == _SavingsTab.products) ...[
+                        _SavingsFilters(
+                          activeFilter: _filter,
+                          onChanged: (filter) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _filter = filter);
+                          },
+                        ),
+                        _SavingsProductList(
+                          products: products,
+                          detailRoute: snapshot.productDetailRoute,
+                        ),
+                      ] else
+                        _SavingsPositions(positions: snapshot.positions),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

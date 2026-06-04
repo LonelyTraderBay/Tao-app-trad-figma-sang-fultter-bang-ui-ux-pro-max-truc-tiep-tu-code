@@ -1,6 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/notifications_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
+import 'package:vit_trade_flutter/core/product_flow/contextual_support_contract.dart';
 import 'package:vit_trade_flutter/features/auth/data/auth_repository.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/pages/login_page.dart';
@@ -129,7 +136,6 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_withd
 import 'package:vit_trade_flutter/features/discovery/presentation/pages/unified_search_page.dart';
 import 'package:vit_trade_flutter/features/discovery/presentation/pages/topic_hub_page.dart';
 import 'package:vit_trade_flutter/features/enterprise_states/presentation/pages/enterprise_states_page.dart';
-import 'package:vit_trade_flutter/features/home/data/home_mock_data.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/advanced_charts_page.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/derivatives_overview_page.dart';
@@ -396,9 +402,13 @@ import 'package:vit_trade_flutter/features/wallet/presentation/pages/withdraw_li
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_app_shell.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 part 'app_route_names.dart';
 part 'app_route_paths.dart';
@@ -419,5 +429,6 @@ part 'route_groups/dca_routes.dart';
 part 'route_groups/wallet_routes.dart';
 part 'route_groups/profile_routes.dart';
 part 'route_groups/placeholder_routes.dart';
+part 'internal_surface_gate.dart';
 part 'router_helpers.dart';
 part 'visual_qa_route_metadata.dart';

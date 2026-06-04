@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -67,70 +68,73 @@ class _ArenaStudioPageState extends ConsumerState<ArenaStudioPage> {
       semanticLabel: 'SC-185 ArenaStudioPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Arena Studio',
-              subtitle: 'Tạo challenge mới',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: Stack(
-                children: [
-                  ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(
-                      context,
-                    ).copyWith(scrollbars: false),
-                    child: SingleChildScrollView(
-                      key: ArenaStudioPage.contentKey,
-                      physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(bottom: bottomInset),
-                      child: VitPageContent(
-                        padding: VitContentPadding.compact,
-                        customGap: AppSpacing.x5,
-                        children: [
-                          _StudioStepper(steps: snapshot.steps, step: _step),
-                          _PlatformFeeBanner(
-                            platformFeePct: snapshot.platformFeePct,
-                          ),
-                          _StepBody(
-                            step: _step,
-                            snapshot: snapshot,
-                            selectedTemplateId: _templateId,
-                            onTemplateSelected: _selectTemplate,
-                          ),
-                          _CommunityRulesFooter(
-                            trustSignals: snapshot.trustSignals,
-                            onTapRules: () =>
-                                context.go(AppRoutePaths.arenaSafety),
-                          ),
-                        ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Arena Studio',
+            subtitle: 'Tạo challenge mới',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: Stack(
+                  children: [
+                    ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: ArenaStudioPage.contentKey,
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.only(bottom: bottomInset),
+                        child: VitPageContent(
+                          padding: VitContentPadding.compact,
+                          customGap: AppSpacing.x5,
+                          children: [
+                            _StudioStepper(steps: snapshot.steps, step: _step),
+                            _PlatformFeeBanner(
+                              platformFeePct: snapshot.platformFeePct,
+                            ),
+                            _StepBody(
+                              step: _step,
+                              snapshot: snapshot,
+                              selectedTemplateId: _templateId,
+                              onTemplateSelected: _selectTemplate,
+                            ),
+                            _CommunityRulesFooter(
+                              trustSignals: snapshot.trustSignals,
+                              onTapRules: () =>
+                                  context.go(AppRoutePaths.arenaSafety),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: stickyBottom,
-                    child: _StickyStudioFooter(
-                      step: _step,
-                      totalSteps: snapshot.steps.length,
-                      canContinue: _canContinue,
-                      statusLabel: _statusLabel,
-                      onBack: _step > 1 ? _backStep : null,
-                      onContinue: _continue,
-                      onSave: () => _markSecondaryAction('Đã lưu bản nháp'),
-                      onExport: () =>
-                          _markSecondaryAction('Đã chuẩn bị file xuất'),
-                      onImport: () =>
-                          _markSecondaryAction('Đã sẵn sàng nhập JSON'),
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: stickyBottom,
+                      child: _StickyStudioFooter(
+                        step: _step,
+                        totalSteps: snapshot.steps.length,
+                        canContinue: _canContinue,
+                        statusLabel: _statusLabel,
+                        onBack: _step > 1 ? _backStep : null,
+                        onContinue: _continue,
+                        onSave: () => _markSecondaryAction('Đã lưu bản nháp'),
+                        onExport: () =>
+                            _markSecondaryAction('Đã chuẩn bị file xuất'),
+                        onImport: () =>
+                            _markSecondaryAction('Đã sẵn sàng nhập JSON'),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

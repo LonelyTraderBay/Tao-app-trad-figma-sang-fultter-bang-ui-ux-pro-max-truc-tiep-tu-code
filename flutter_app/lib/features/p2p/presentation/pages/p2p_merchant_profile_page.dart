@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -64,74 +65,77 @@ class _P2PMerchantProfilePageState
       semanticLabel: 'SC-228 P2PMerchantProfilePage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Hồ sơ Merchant',
-              subtitle: 'Merchant · P2P',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.p2p),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2PMerchantProfilePage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x5,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _ProfileHeader(
-                        snapshot: snapshot,
-                        following: _following,
-                        onFollow: _toggleFollow,
-                        onReport: () => context.go(snapshot.reportRoute),
-                        onBlock: () => _confirmBlock(context, snapshot),
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      _StatsGrid(merchant: snapshot.merchant),
-                      const SizedBox(height: AppSpacing.x5),
-                      _ReputationCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      VitTabBar(
-                        variant: VitTabBarVariant.segment,
-                        activeKey: _tab.name,
-                        onChanged: (key) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = _tabFromKey(key));
-                        },
-                        tabs: [
-                          VitTabItem(
-                            key: _MerchantProfileTab.ads.name,
-                            label: 'Quảng cáo (${snapshot.ads.length})',
-                          ),
-                          VitTabItem(
-                            key: _MerchantProfileTab.reviews.name,
-                            label: 'Đánh giá (${snapshot.reviews.length})',
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 180),
-                        child: _tab == _MerchantProfileTab.ads
-                            ? _AdsList(snapshot: snapshot)
-                            : _ReviewsList(snapshot: snapshot),
-                      ),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Hồ sơ Merchant',
+            subtitle: 'Merchant · P2P',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.p2p),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2PMerchantProfilePage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x5,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _ProfileHeader(
+                          snapshot: snapshot,
+                          following: _following,
+                          onFollow: _toggleFollow,
+                          onReport: () => context.go(snapshot.reportRoute),
+                          onBlock: () => _confirmBlock(context, snapshot),
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        _StatsGrid(merchant: snapshot.merchant),
+                        const SizedBox(height: AppSpacing.x5),
+                        _ReputationCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x5),
+                        VitTabBar(
+                          variant: VitTabBarVariant.segment,
+                          activeKey: _tab.name,
+                          onChanged: (key) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _tab = _tabFromKey(key));
+                          },
+                          tabs: [
+                            VitTabItem(
+                              key: _MerchantProfileTab.ads.name,
+                              label: 'Quảng cáo (${snapshot.ads.length})',
+                            ),
+                            VitTabItem(
+                              key: _MerchantProfileTab.reviews.name,
+                              label: 'Đánh giá (${snapshot.reviews.length})',
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 180),
+                          child: _tab == _MerchantProfileTab.ads
+                              ? _AdsList(snapshot: snapshot)
+                              : _ReviewsList(snapshot: snapshot),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -133,9 +133,15 @@ mixin _MockP2PRepositoryMethodsPart03 on _MockP2PRepositoryBase {
       reasonShares: _p2pClaimReasonShares,
       parentRoute: '/p2p/insurance',
       orderRoute: '/p2p/order/${claim.orderId.replaceFirst('P2P-', '')}',
-      supportRoute: '/support/help',
+      supportRoute: ContextualSupportContracts.supportRouteFor(
+        ContextualSupportFlow.p2pOrder,
+        referenceId: claim.claimCode,
+        sourceRoute: '/p2p/insurance/claim/$claimId',
+        issueLabel: 'P2P claim support for ${claim.claimCode}',
+      ),
       emptyTitle: 'Không tìm thấy claim bảo hiểm',
       contractNotes: 'P2P requires escrow, fraud, KYC, payment-state clarity.',
+      highRiskContractId: HighRiskFlowContractIds.p2pEscrowOrder,
     );
   }
 
@@ -201,11 +207,11 @@ mixin _MockP2PRepositoryMethodsPart03 on _MockP2PRepositoryBase {
 
   @override
   P2PKycRequirementsSnapshot getKycRequirements() {
-    return const P2PKycRequirementsSnapshot(
+    return P2PKycRequirementsSnapshot(
       endpoint: '/api/mobile/p2p/p2p-kyc-requirements',
       actionDraft:
           'POST /p2p/* workflow action where applicable; POST /kyc/submission-step',
-      supportedStates: [
+      supportedStates: const [
         P2PScreenState.loading,
         P2PScreenState.empty,
         P2PScreenState.error,
@@ -226,7 +232,12 @@ mixin _MockP2PRepositoryMethodsPart03 on _MockP2PRepositoryBase {
       supportBody:
           'Nếu bạn gặp khó khăn trong quá trình xác minh, vui lòng liên hệ bộ phận hỗ trợ.',
       verifyRouteBase: '/p2p/kyc/verify',
-      supportRoute: '/support',
+      supportRoute: ContextualSupportContracts.supportRouteFor(
+        ContextualSupportFlow.kyc,
+        referenceId: 'p2p-kyc-requirements',
+        sourceRoute: '/p2p/kyc/requirements',
+        issueLabel: 'P2P KYC verification support',
+      ),
       parentRoute: '/p2p',
       emptyTitle: 'Chưa có tier KYC P2P',
       contractNotes: 'P2P requires escrow, fraud, KYC, payment-state clarity.',
@@ -235,11 +246,11 @@ mixin _MockP2PRepositoryMethodsPart03 on _MockP2PRepositoryBase {
 
   @override
   P2PKycStatusSnapshot getKycStatus() {
-    return const P2PKycStatusSnapshot(
+    return P2PKycStatusSnapshot(
       endpoint: '/api/mobile/p2p/p2p-kyc-status',
       actionDraft:
           'POST /p2p/* workflow action where applicable; POST /kyc/submission-step',
-      supportedStates: [
+      supportedStates: const [
         P2PScreenState.loading,
         P2PScreenState.empty,
         P2PScreenState.error,
@@ -258,7 +269,12 @@ mixin _MockP2PRepositoryMethodsPart03 on _MockP2PRepositoryBase {
       supportBody:
           'Nếu bạn có thắc mắc về quá trình xác minh, vui lòng liên hệ Support.',
       parentRoute: '/p2p/kyc/requirements',
-      supportRoute: '/support',
+      supportRoute: ContextualSupportContracts.supportRouteFor(
+        ContextualSupportFlow.kyc,
+        referenceId: 'p2p-kyc-pending-tier-2',
+        sourceRoute: '/p2p/kyc/status',
+        issueLabel: 'P2P KYC status support',
+      ),
       emptyTitle: 'Chưa có hồ sơ KYC P2P',
       contractNotes: 'P2P requires escrow, fraud, KYC, payment-state clarity.',
     );
@@ -323,11 +339,11 @@ mixin _MockP2PRepositoryMethodsPart03 on _MockP2PRepositoryBase {
 
   @override
   P2PSelfieVerificationSnapshot getSelfieVerification() {
-    return const P2PSelfieVerificationSnapshot(
+    return P2PSelfieVerificationSnapshot(
       endpoint: '/api/mobile/p2p/p2p-kyc-selfie',
       actionDraft:
           'POST /p2p/* workflow action where applicable; POST /kyc/submission-step',
-      supportedStates: [
+      supportedStates: const [
         P2PScreenState.loading,
         P2PScreenState.empty,
         P2PScreenState.error,
@@ -347,7 +363,12 @@ mixin _MockP2PRepositoryMethodsPart03 on _MockP2PRepositoryBase {
       livenessScore: '98.2%',
       parentRoute: '/p2p/kyc/status',
       statusRoute: '/p2p/kyc/status',
-      supportRoute: '/support',
+      supportRoute: ContextualSupportContracts.supportRouteFor(
+        ContextualSupportFlow.kyc,
+        referenceId: 'p2p-kyc-selfie',
+        sourceRoute: '/p2p/kyc/selfie',
+        issueLabel: 'P2P selfie verification support',
+      ),
       emptyTitle: 'Chưa có selfie verification',
       contractNotes: 'P2P requires escrow, fraud, KYC, payment-state clarity.',
     );

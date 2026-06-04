@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -65,43 +66,46 @@ class _ComplaintsHandlingPageState
       semanticLabel: 'SC-111 ComplaintsHandlingPage',
       child: Material(
         color: _complaintsBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Complaints Handling',
-              subtitle: 'FCA Regulated Process',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: ComplaintsHandlingPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const _RightsNotice(),
-                    const SizedBox(height: 36),
-                    _StatsRow(snapshot: snapshot),
-                    const SizedBox(height: 25),
-                    const _SubmitComplaintButton(),
-                    const SizedBox(height: 25),
-                    _Tabs(
-                      active: _tab,
-                      onChanged: (tab) => setState(() => _tab = tab),
-                    ),
-                    const SizedBox(height: 26),
-                    if (_tab == _ComplaintsTab.overview)
-                      _OverviewContent(snapshot: snapshot),
-                    if (_tab == _ComplaintsTab.myComplaints)
-                      _MyComplaintsContent(complaints: snapshot.complaints),
-                    if (_tab == _ComplaintsTab.process)
-                      _ProcessContent(snapshot: snapshot),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Complaints Handling',
+            subtitle: 'FCA Regulated Process',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: ComplaintsHandlingPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const _RightsNotice(),
+                      const SizedBox(height: 36),
+                      _StatsRow(snapshot: snapshot),
+                      const SizedBox(height: 25),
+                      const _SubmitComplaintButton(),
+                      const SizedBox(height: 25),
+                      _Tabs(
+                        active: _tab,
+                        onChanged: (tab) => setState(() => _tab = tab),
+                      ),
+                      const SizedBox(height: 26),
+                      if (_tab == _ComplaintsTab.overview)
+                        _OverviewContent(snapshot: snapshot),
+                      if (_tab == _ComplaintsTab.myComplaints)
+                        _MyComplaintsContent(complaints: snapshot.complaints),
+                      if (_tab == _ComplaintsTab.process)
+                        _ProcessContent(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

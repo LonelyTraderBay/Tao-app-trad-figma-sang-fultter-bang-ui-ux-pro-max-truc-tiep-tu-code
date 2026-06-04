@@ -9,9 +9,11 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
 part '../widgets/bot_security_settings_cards.dart';
 part '../widgets/bot_security_settings_common.dart';
@@ -74,67 +76,70 @@ class _BotSecuritySettingsPageState
       semanticLabel: 'SC-122 BotSecuritySettingsPage',
       child: Material(
         color: _securityBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Security Settings',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeBots),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: BotSecuritySettingsPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const _SectionLabel('Two-Factor Authentication'),
-                    const SizedBox(height: 10),
-                    _TwoFaCard(
-                      enabled: _twoFaEnabled,
-                      onTap: () => _toggleTwoFa(snapshot),
-                    ),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('API Keys'),
-                    const SizedBox(height: 10),
-                    for (final key in snapshot.apiKeys) ...[
-                      _ApiKeyCard(apiKey: key),
-                      if (key != snapshot.apiKeys.last)
-                        const SizedBox(height: 10),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Security Settings',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeBots),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: BotSecuritySettingsPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const _SectionLabel('Two-Factor Authentication'),
+                      const SizedBox(height: 10),
+                      _TwoFaCard(
+                        enabled: _twoFaEnabled,
+                        onTap: () => _toggleTwoFa(snapshot),
+                      ),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('API Keys'),
+                      const SizedBox(height: 10),
+                      for (final key in snapshot.apiKeys) ...[
+                        _ApiKeyCard(apiKey: key),
+                        if (key != snapshot.apiKeys.last)
+                          const SizedBox(height: 10),
+                      ],
+                      const SizedBox(height: 10),
+                      _DashedActionButton(
+                        key: BotSecuritySettingsPage.createApiKeyKey,
+                        label: 'Create New API Key',
+                        icon: Icons.add_rounded,
+                        onTap: () => _showApiKeySheet(context, snapshot),
+                      ),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('IP Whitelist'),
+                      const SizedBox(height: 10),
+                      for (final entry in snapshot.ipWhitelist) ...[
+                        _IpCard(entry: entry),
+                        if (entry != snapshot.ipWhitelist.last)
+                          const SizedBox(height: 10),
+                      ],
+                      const SizedBox(height: 10),
+                      _DashedActionButton(
+                        key: BotSecuritySettingsPage.addIpKey,
+                        label: 'Add IP Address',
+                        icon: Icons.add_rounded,
+                        onTap: () => _showIpSheet(context),
+                      ),
+                      const SizedBox(height: 18),
+                      const _SectionLabel('Recent Activity'),
+                      const SizedBox(height: 10),
+                      _ActivityCard(activities: snapshot.recentActivity),
+                      const SizedBox(height: 18),
+                      _SecurityTipsCard(tips: snapshot.securityTips),
                     ],
-                    const SizedBox(height: 10),
-                    _DashedActionButton(
-                      key: BotSecuritySettingsPage.createApiKeyKey,
-                      label: 'Create New API Key',
-                      icon: Icons.add_rounded,
-                      onTap: () => _showApiKeySheet(context, snapshot),
-                    ),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('IP Whitelist'),
-                    const SizedBox(height: 10),
-                    for (final entry in snapshot.ipWhitelist) ...[
-                      _IpCard(entry: entry),
-                      if (entry != snapshot.ipWhitelist.last)
-                        const SizedBox(height: 10),
-                    ],
-                    const SizedBox(height: 10),
-                    _DashedActionButton(
-                      key: BotSecuritySettingsPage.addIpKey,
-                      label: 'Add IP Address',
-                      icon: Icons.add_rounded,
-                      onTap: () => _showIpSheet(context),
-                    ),
-                    const SizedBox(height: 18),
-                    const _SectionLabel('Recent Activity'),
-                    const SizedBox(height: 10),
-                    _ActivityCard(activities: snapshot.recentActivity),
-                    const SizedBox(height: 18),
-                    _SecurityTipsCard(tips: snapshot.securityTips),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -151,7 +156,7 @@ class _BotSecuritySettingsPageState
     BuildContext context,
     TradeBotSecuritySettingsSnapshot snapshot,
   ) {
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: _securityPanel,
       shape: const RoundedRectangleBorder(
@@ -162,7 +167,7 @@ class _BotSecuritySettingsPageState
   }
 
   void _showIpSheet(BuildContext context) {
-    showModalBottomSheet<void>(
+    showVitBottomSheet<void>(
       context: context,
       backgroundColor: _securityPanel,
       shape: const RoundedRectangleBorder(

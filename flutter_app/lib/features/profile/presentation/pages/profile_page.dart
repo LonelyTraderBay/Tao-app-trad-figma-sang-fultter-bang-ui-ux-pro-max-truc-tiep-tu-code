@@ -3,14 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
+
 part '../widgets/profile_home_hero.dart';
 part '../widgets/profile_home_vip_prediction.dart';
 part '../widgets/profile_home_arena_stats.dart';
@@ -36,6 +39,8 @@ class ProfilePage extends ConsumerStatefulWidget {
   static const logoutKey = Key('sc156_profile_logout');
   static const predictionCardKey = Key('sc156_profile_prediction_card');
   static const arenaCardKey = Key('sc156_profile_arena_card');
+  static const productHubKey = Key('sc156_profile_product_hub');
+  static Key productShortcutKey(String id) => Key('sc156_profile_product_$id');
   static Key menuKey(String id) => Key('sc156_profile_menu_$id');
 
   final ShellRenderMode? shellRenderMode;
@@ -62,76 +67,80 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       semanticLabel: 'SC-156 ProfilePage',
       child: Material(
         color: _profileBackground,
-        child: SingleChildScrollView(
-          key: ProfilePage.contentKey,
-          padding: EdgeInsets.fromLTRB(20, 20, 20, bottomInset),
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'T\u00E0i kho\u1EA3n',
-                style: AppTextStyles.sectionTitle.copyWith(
-                  fontSize: 26,
-                  fontWeight: FontWeight.w900,
-                  height: 1.12,
+        child: VitAutoHideHeaderScaffold(
+          header: const VitTopChrome(
+            type: VitTopChromeType.rootModule,
+            title: 'T\u00E0i kho\u1EA3n',
+          ),
+          child: SingleChildScrollView(
+            key: ProfilePage.contentKey,
+            padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _ProfileHero(
+                  user: snapshot.user,
+                  copiedReferral: _copiedReferral,
+                  onEdit: () => context.go(AppRoutePaths.profileEdit),
+                  onCopyReferral: () {
+                    Clipboard.setData(
+                      ClipboardData(text: snapshot.user.referralCode),
+                    );
+                    setState(() => _copiedReferral = true);
+                  },
                 ),
-              ),
-              const SizedBox(height: 22),
-              _ProfileHero(
-                user: snapshot.user,
-                copiedReferral: _copiedReferral,
-                onEdit: () => context.go(AppRoutePaths.profileEdit),
-                onCopyReferral: () {
-                  Clipboard.setData(
-                    ClipboardData(text: snapshot.user.referralCode),
-                  );
-                  setState(() => _copiedReferral = true);
-                },
-              ),
-              const SizedBox(height: 24),
-              _VipCard(vip: snapshot.vip),
-              const SizedBox(height: 26),
-              const _SectionLabel(
-                label: 'D\u1EF1 \u0111o\u00E1n & Th\u00E1ch \u0111\u1EA5u',
-                accent: _profilePurple,
-              ),
-              const SizedBox(height: 11),
-              _PredictionCard(
-                prediction: snapshot.prediction,
-                onTap: () => context.go(AppRoutePaths.profilePredictions),
-              ),
-              const SizedBox(height: 14),
-              _ArenaCard(
-                arena: snapshot.arena,
-                onTap: () => context.go(AppRoutePaths.profileArena),
-              ),
-              const SizedBox(height: 25),
-              for (final section in snapshot.sections) ...[
-                _SectionLabel(
-                  label: section.label,
-                  accent: Color(section.accentHex),
+                const SizedBox(height: 24),
+                _VipCard(vip: snapshot.vip),
+                const SizedBox(height: 26),
+                const _SectionLabel(
+                  label: 'D\u1EF1 \u0111o\u00E1n & Th\u00E1ch \u0111\u1EA5u',
+                  accent: _profilePurple,
                 ),
                 const SizedBox(height: 11),
-                _MenuSection(section: section),
-                const SizedBox(height: 25),
-              ],
-              _ActivityButton(
-                onTap: () => context.go(AppRoutePaths.profileActivity),
-              ),
-              const SizedBox(height: 28),
-              _LogoutButton(onTap: () => context.go(AppRoutePaths.authLogin)),
-              const SizedBox(height: 38),
-              Text(
-                'VitTrade v2.4.1 \u2022 Tham gia t\u1EEB ${snapshot.user.joinDate}',
-                textAlign: TextAlign.center,
-                style: AppTextStyles.micro.copyWith(
-                  color: _profileMuted,
-                  fontSize: 11,
-                  height: 1,
+                _PredictionCard(
+                  prediction: snapshot.prediction,
+                  onTap: () => context.go(AppRoutePaths.profilePredictions),
                 ),
-              ),
-            ],
+                const SizedBox(height: 14),
+                _ArenaCard(
+                  arena: snapshot.arena,
+                  onTap: () => context.go(AppRoutePaths.profileArena),
+                ),
+                const SizedBox(height: 25),
+                const _SectionLabel(
+                  label: 'S\u1EA2N PH\u1EA8M & H\u1ED6 TR\u1EE2',
+                  accent: _profileAmber,
+                ),
+                const SizedBox(height: 11),
+                _ProfileProductHub(shortcuts: snapshot.productShortcuts),
+                const SizedBox(height: 25),
+                for (final section in snapshot.sections) ...[
+                  _SectionLabel(
+                    label: section.label,
+                    accent: Color(section.accentHex),
+                  ),
+                  const SizedBox(height: 11),
+                  _MenuSection(section: section),
+                  const SizedBox(height: 25),
+                ],
+                _ActivityButton(
+                  onTap: () => context.go(AppRoutePaths.profileActivity),
+                ),
+                const SizedBox(height: 28),
+                _LogoutButton(onTap: () => context.go(AppRoutePaths.authLogin)),
+                const SizedBox(height: 38),
+                Text(
+                  'VitTrade v2.4.1 \u2022 Tham gia t\u1EEB ${snapshot.user.joinDate}',
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.micro.copyWith(
+                    color: _profileMuted,
+                    fontSize: 11,
+                    height: 1,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

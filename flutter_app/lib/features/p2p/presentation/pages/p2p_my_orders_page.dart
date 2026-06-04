@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -70,81 +71,85 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
       semanticLabel: 'SC-281 P2PMyOrdersPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.parentRoute),
-              trailing: VitIconButton(
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.parentRoute),
+            actions: [
+              VitHeaderActionItem(
                 key: P2PMyOrdersPage.dashboardKey,
-                icon: Icons.bar_chart_rounded,
+                type: VitHeaderActionType.analytics,
                 tooltip: 'P2P Dashboard',
-                variant: VitIconButtonVariant.primary,
                 onPressed: () => context.go(snapshot.dashboardRoute),
               ),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: P2PMyOrdersPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _StatsRow(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
-                      _OrderTabs(
-                        snapshot: snapshot,
-                        active: _tab,
-                        onChanged: (value) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = value);
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _SearchSortRow(
-                        hint: snapshot.searchHint,
-                        controller: _searchController,
-                        sort: _sort,
-                        onQueryChanged: (value) =>
-                            setState(() => _query = value),
-                        onSort: () {
-                          HapticFeedback.selectionClick();
-                          setState(() {
-                            _sort = _sort == _OrdersSort.date
-                                ? _OrdersSort.amount
-                                : _OrdersSort.date;
-                          });
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      if (orders.isEmpty)
-                        _EmptyOrders(snapshot: snapshot, activeTab: _tab)
-                      else
-                        for (final order in orders) ...[
-                          _OrderCard(
-                            order: order,
-                            onTap: () => _openOrder(context, order),
-                          ),
-                          const SizedBox(height: AppSpacing.x3),
-                        ],
-                    ],
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: P2PMyOrdersPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _StatsRow(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x4),
+                        _OrderTabs(
+                          snapshot: snapshot,
+                          active: _tab,
+                          onChanged: (value) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _tab = value);
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        _SearchSortRow(
+                          hint: snapshot.searchHint,
+                          controller: _searchController,
+                          sort: _sort,
+                          onQueryChanged: (value) =>
+                              setState(() => _query = value),
+                          onSort: () {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              _sort = _sort == _OrdersSort.date
+                                  ? _OrdersSort.amount
+                                  : _OrdersSort.date;
+                            });
+                          },
+                        ),
+                        const SizedBox(height: AppSpacing.x5),
+                        if (orders.isEmpty)
+                          _EmptyOrders(snapshot: snapshot, activeTab: _tab)
+                        else
+                          for (final order in orders) ...[
+                            _OrderCard(
+                              order: order,
+                              onTap: () => _openOrder(context, order),
+                            ),
+                            const SizedBox(height: AppSpacing.x3),
+                          ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

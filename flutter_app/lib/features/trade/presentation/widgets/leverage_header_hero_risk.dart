@@ -1,58 +1,23 @@
 part of '../pages/leverage_page.dart';
 
-class _LeverageHeader extends StatelessWidget {
-  const _LeverageHeader({required this.currentLeverage, required this.onBack});
+class _LeverageTopChromeHeader extends StatelessWidget {
+  const _LeverageTopChromeHeader({
+    required this.currentLeverage,
+    required this.onBack,
+  });
 
   final int currentLeverage;
   final VoidCallback onBack;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 46,
-      child: Row(
-        children: [
-          InkWell(
-            key: LeveragePage.backKey,
-            onTap: onBack,
-            borderRadius: AppRadii.cardRadius,
-            child: const SizedBox(
-              width: 36,
-              height: 36,
-              child: Icon(
-                Icons.chevron_left_rounded,
-                color: AppColors.text1,
-                size: 26,
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Điều chỉnh đòn bẩy',
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    fontSize: 18,
-                    height: 1.12,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Hiện tại: ${currentLeverage}x',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 12,
-                    height: 1,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return VitTopChrome(
+      type: VitTopChromeType.detail,
+      title: '\u0110i\u1EC1u ch\u1EC9nh \u0111\u00F2n b\u1EA9y',
+      subtitle: 'Hi\u1EC7n t\u1EA1i: ${currentLeverage}x',
+      showBack: true,
+      backKey: LeveragePage.backKey,
+      onBack: onBack,
     );
   }
 }
@@ -90,7 +55,7 @@ class _LeverageHero extends StatelessWidget {
               Icon(Icons.bolt_rounded, color: riskColor, size: 21),
               const SizedBox(width: 8),
               Text(
-                'Đòn bẩy',
+                '\u0110\u00F2n b\u1EA9y',
                 style: AppTextStyles.caption.copyWith(fontSize: 12),
               ),
             ],
@@ -115,7 +80,7 @@ class _LeverageHero extends StatelessWidget {
               border: Border.all(color: riskColor.withValues(alpha: .32)),
             ),
             child: Text(
-              'Rủi ro: ${preview.riskLabel}',
+              'R\u1EE7i ro: ${preview.riskLabel}',
               style: AppTextStyles.caption.copyWith(
                 color: riskColor,
                 fontSize: 12,
@@ -144,7 +109,7 @@ class _RiskMeter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Mức rủi ro',
+              'M\u1EE9c r\u1EE7i ro',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
                 fontSize: 12,

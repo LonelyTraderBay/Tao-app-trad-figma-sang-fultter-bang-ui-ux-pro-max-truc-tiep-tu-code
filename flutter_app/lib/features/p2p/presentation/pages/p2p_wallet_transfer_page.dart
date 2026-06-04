@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -102,72 +103,75 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
       semanticLabel: 'SC-261 P2PWalletTransferPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: _showConfirm ? 'Xác nhận chuyển tiền' : 'Chuyển tiền',
-              subtitle: 'Ví · P2P',
-              showBack: true,
-              onBack: () {
-                if (_showConfirm) {
-                  setState(() => _showConfirm = false);
-                  return;
-                }
-                context.go(snapshot.parentRoute);
-              },
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: _showConfirm ? 'Xác nhận chuyển tiền' : 'Chuyển tiền',
+            subtitle: 'Ví · P2P',
+            showBack: true,
+            onBack: () {
+              if (_showConfirm) {
+                setState(() => _showConfirm = false);
+                return;
+              }
+              context.go(snapshot.parentRoute);
+            },
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x4,
+                      AppSpacing.contentPad,
+                      bottomInset,
+                    ),
+                    child: _showConfirm
+                        ? _ConfirmTransferView(
+                            snapshot: snapshot,
+                            source: source,
+                            destination: destination,
+                            amount: _amount,
+                            asset: _asset,
+                            onEdit: () => setState(() => _showConfirm = false),
+                            onConfirm: () {
+                              HapticFeedback.mediumImpact();
+                              context.go(snapshot.parentRoute);
+                            },
+                          )
+                        : _TransferForm(
+                            snapshot: snapshot,
+                            source: source,
+                            destination: destination,
+                            type: _type,
+                            asset: _asset,
+                            amountController: _amountController,
+                            amount: _amount,
+                            canTransfer: canTransfer,
+                            onSwitch: _switchDirection,
+                            onAssetChanged: _setAsset,
+                            onMax: () => _setAmount(source.available),
+                            onPercent: (percent) =>
+                                _setAmount(source.available * percent / 100),
+                            onAmountChanged: () => setState(() {}),
+                            onSubmit: canTransfer
+                                ? () {
+                                    HapticFeedback.mediumImpact();
+                                    setState(() => _showConfirm = true);
+                                  }
+                                : null,
+                          ),
                   ),
-                  child: _showConfirm
-                      ? _ConfirmTransferView(
-                          snapshot: snapshot,
-                          source: source,
-                          destination: destination,
-                          amount: _amount,
-                          asset: _asset,
-                          onEdit: () => setState(() => _showConfirm = false),
-                          onConfirm: () {
-                            HapticFeedback.mediumImpact();
-                            context.go(snapshot.parentRoute);
-                          },
-                        )
-                      : _TransferForm(
-                          snapshot: snapshot,
-                          source: source,
-                          destination: destination,
-                          type: _type,
-                          asset: _asset,
-                          amountController: _amountController,
-                          amount: _amount,
-                          canTransfer: canTransfer,
-                          onSwitch: _switchDirection,
-                          onAssetChanged: _setAsset,
-                          onMax: () => _setAmount(source.available),
-                          onPercent: (percent) =>
-                              _setAmount(source.available * percent / 100),
-                          onAmountChanged: () => setState(() {}),
-                          onSubmit: canTransfer
-                              ? () {
-                                  HapticFeedback.mediumImpact();
-                                  setState(() => _showConfirm = true);
-                                }
-                              : null,
-                        ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

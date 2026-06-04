@@ -18,48 +18,51 @@ class _LaunchpadStakingPageState extends ConsumerState<LaunchpadStakingPage> {
       semanticLabel: 'SC-298 LaunchpadStakingPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              subtitle: snapshot.subtitle,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            _StakingTabs(
-              activeTab: _activeTab,
-              onChanged: (tab) => setState(() => _activeTab = tab),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: LaunchpadStakingPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.defaultPadding,
-                    customGap: AppSpacing.x4,
-                    children: [
-                      _StakingHero(snapshot: snapshot),
-                      switch (_activeTab) {
-                        _StakingTab.pools => _PoolsTab(snapshot: snapshot),
-                        _StakingTab.positions => _PositionsTab(
-                          snapshot: snapshot,
-                        ),
-                        _StakingTab.calculator => _ApyCalculator(
-                          pools: snapshot.pools,
-                        ),
-                      },
-                      const _RiskDisclosure(),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          bottomInset: bottomInset,
+          semanticLabel: 'SC-298 LaunchpadStakingPage scroll surface',
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            children: [
+              _StakingTabs(
+                activeTab: _activeTab,
+                onChanged: (tab) => setState(() => _activeTab = tab),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: LaunchpadStakingPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    child: VitPageContent(
+                      padding: VitContentPadding.defaultPadding,
+                      customGap: AppSpacing.x4,
+                      children: [
+                        _StakingHero(snapshot: snapshot),
+                        switch (_activeTab) {
+                          _StakingTab.pools => _PoolsTab(snapshot: snapshot),
+                          _StakingTab.positions => _PositionsTab(
+                            snapshot: snapshot,
+                          ),
+                          _StakingTab.calculator => _ApyCalculator(
+                            pools: snapshot.pools,
+                          ),
+                        },
+                        const _RiskDisclosure(),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

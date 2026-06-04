@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -81,80 +82,83 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
           : 'SC-168 MyArenaPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Sân chơi của tôi',
-              subtitle: 'Quản lý · Open Arena',
-              showBack: true,
-              onBack: _close,
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: MyArenaPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: AppSpacing.x5,
-                    children: [
-                      _PointsHero(
-                        stats: snapshot.stats,
-                        onDetails: () => _go(AppRoutePaths.arenaPoints),
-                        onEarn: () => _go('/rewards'),
-                      ),
-                      _StatsGrid(stats: snapshot.stats),
-                      VitCtaButton(
-                        key: MyArenaPage.createChallengeKey,
-                        onPressed: () => _go(AppRoutePaths.arenaStudio),
-                        leading: const Icon(Icons.auto_awesome_rounded),
-                        child: const Text('Tạo challenge mới'),
-                      ),
-                      _QuickLinks(
-                        onLeaderboard: () =>
-                            _go(AppRoutePaths.arenaLeaderboard),
-                        onDiscover: () => _go(AppRoutePaths.arena),
-                      ),
-                      _ArenaTabs(
-                        activeTab: _activeTab,
-                        onChanged: (tab) => setState(() => _activeTab = tab),
-                      ),
-                      _TabContent(
-                        tab: _activeTab,
-                        snapshot: snapshot,
-                        onChallenge: (id) =>
-                            _go(AppRoutePaths.arenaChallenge(id)),
-                        onMode: (id) => _go(AppRoutePaths.arenaMode(id)),
-                        onStudio: () => _go(AppRoutePaths.arenaStudio),
-                        onDiscover: () => _go(AppRoutePaths.arena),
-                      ),
-                      _CreatedModesSection(
-                        snapshot: snapshot,
-                        onTap: () => _go(AppRoutePaths.arenaStudio),
-                      ),
-                      _RewardAnalyticsSection(
-                        history: snapshot.rewardHistory,
-                        onViewChallenge: () =>
-                            _go(AppRoutePaths.arenaChallenge('sample')),
-                      ),
-                      _SafetySection(
-                        onReports: () => _go(AppRoutePaths.arenaMyReports),
-                        onBlocked: () => _go(AppRoutePaths.arenaBlocked),
-                        onSafety: () => _go(AppRoutePaths.arenaSafety),
-                      ),
-                      _ArenaFooter(
-                        onRules: () => _go(AppRoutePaths.arenaSafety),
-                      ),
-                    ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Sân chơi của tôi',
+            subtitle: 'Quản lý · Open Arena',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: MyArenaPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: AppSpacing.x5,
+                      children: [
+                        _PointsHero(
+                          stats: snapshot.stats,
+                          onDetails: () => _go(AppRoutePaths.arenaPoints),
+                          onEarn: () => _go('/rewards'),
+                        ),
+                        _StatsGrid(stats: snapshot.stats),
+                        VitCtaButton(
+                          key: MyArenaPage.createChallengeKey,
+                          onPressed: () => _go(AppRoutePaths.arenaStudio),
+                          leading: const Icon(Icons.auto_awesome_rounded),
+                          child: const Text('Tạo challenge mới'),
+                        ),
+                        _QuickLinks(
+                          onLeaderboard: () =>
+                              _go(AppRoutePaths.arenaLeaderboard),
+                          onDiscover: () => _go(AppRoutePaths.arena),
+                        ),
+                        _ArenaTabs(
+                          activeTab: _activeTab,
+                          onChanged: (tab) => setState(() => _activeTab = tab),
+                        ),
+                        _TabContent(
+                          tab: _activeTab,
+                          snapshot: snapshot,
+                          onChallenge: (id) =>
+                              _go(AppRoutePaths.arenaChallenge(id)),
+                          onMode: (id) => _go(AppRoutePaths.arenaMode(id)),
+                          onStudio: () => _go(AppRoutePaths.arenaStudio),
+                          onDiscover: () => _go(AppRoutePaths.arena),
+                        ),
+                        _CreatedModesSection(
+                          snapshot: snapshot,
+                          onTap: () => _go(AppRoutePaths.arenaStudio),
+                        ),
+                        _RewardAnalyticsSection(
+                          history: snapshot.rewardHistory,
+                          onViewChallenge: () =>
+                              _go(AppRoutePaths.arenaChallenge('sample')),
+                        ),
+                        _SafetySection(
+                          onReports: () => _go(AppRoutePaths.arenaMyReports),
+                          onBlocked: () => _go(AppRoutePaths.arenaBlocked),
+                          onSafety: () => _go(AppRoutePaths.arenaSafety),
+                        ),
+                        _ArenaFooter(
+                          onRules: () => _go(AppRoutePaths.arenaSafety),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

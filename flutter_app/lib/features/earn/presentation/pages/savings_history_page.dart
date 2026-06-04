@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -57,61 +58,64 @@ class _SavingsHistoryPageState extends ConsumerState<SavingsHistoryPage> {
       semanticLabel: 'SC-334 SavingsHistoryPage',
       child: Material(
         color: AppColors.bg,
-        child: Column(
-          children: [
-            VitHeader(
-              title: snapshot.title,
-              showBack: true,
-              onBack: () => context.go(snapshot.backRoute),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.defaultGap,
-                  children: [
-                    _SummaryPills(snapshot: snapshot),
-                    _SearchField(placeholder: snapshot.searchPlaceholder),
-                    _TypeFilterRow(
-                      active: _typeFilter,
-                      onChanged: (filter) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _typeFilter = filter);
-                      },
-                    ),
-                    _DateFilterRow(
-                      active: _dateFilter,
-                      onChanged: (filter) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _dateFilter = filter);
-                      },
-                    ),
-                    _ResultsHeader(count: transactions.length),
-                    for (final group in grouped) ...[
-                      _DateHeader(date: group.date),
-                      for (final tx in group.transactions)
-                        Padding(
-                          padding: EdgeInsets.only(
-                            bottom: tx == group.transactions.last
-                                ? AppSpacing.x4
-                                : AppSpacing.x3,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _SummaryPills(snapshot: snapshot),
+                      _SearchField(placeholder: snapshot.searchPlaceholder),
+                      _TypeFilterRow(
+                        active: _typeFilter,
+                        onChanged: (filter) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _typeFilter = filter);
+                        },
+                      ),
+                      _DateFilterRow(
+                        active: _dateFilter,
+                        onChanged: (filter) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _dateFilter = filter);
+                        },
+                      ),
+                      _ResultsHeader(count: transactions.length),
+                      for (final group in grouped) ...[
+                        _DateHeader(date: group.date),
+                        for (final tx in group.transactions)
+                          Padding(
+                            padding: EdgeInsets.only(
+                              bottom: tx == group.transactions.last
+                                  ? AppSpacing.x4
+                                  : AppSpacing.x3,
+                            ),
+                            child: _TransactionCard(
+                              key: tx == transactions.first
+                                  ? SavingsHistoryPage.firstTransactionKey
+                                  : null,
+                              tx: tx,
+                              receiptRoute: snapshot.receiptRoute,
+                            ),
                           ),
-                          child: _TransactionCard(
-                            key: tx == transactions.first
-                                ? SavingsHistoryPage.firstTransactionKey
-                                : null,
-                            tx: tx,
-                            receiptRoute: snapshot.receiptRoute,
-                          ),
-                        ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
@@ -81,66 +82,69 @@ class _MarketCalendarPageState extends ConsumerState<MarketCalendarPage> {
       semanticLabel: 'SC-017 MarketCalendarPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Lịch sự kiện',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.markets),
-            ),
-            MarketCalendarViewTabs(
-              activeView: _view,
-              onChanged: (value) => setState(() => _view = value),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: MarketCalendarPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 16,
-                    children: [
-                      MarketCalendarStatsSummary(stats: snapshot.stats),
-                      MarketCalendarTypeFilters(
-                        active: _typeFilter,
-                        onSelected: _setType,
-                      ),
-                      MarketCalendarImpactFilters(
-                        activeImpact: _impactFilter,
-                        onSelected: _toggleImpact,
-                      ),
-                      if (_view == 'list')
-                        MarketCalendarEventGroups(
-                          events: snapshot.events,
-                          expandedId: _expandedId,
-                          onToggle: (id) => setState(() {
-                            _expandedId = _expandedId == id ? null : id;
-                          }),
-                        )
-                      else
-                        MarketCalendarMonthGrid(
-                          events: snapshot.events,
-                          onEventDaySelected: (event) => setState(() {
-                            _view = 'list';
-                            _expandedId = event.id;
-                          }),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Lịch sự kiện',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.markets),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              MarketCalendarViewTabs(
+                activeView: _view,
+                onChanged: (value) => setState(() => _view = value),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: MarketCalendarPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 16,
+                      children: [
+                        MarketCalendarStatsSummary(stats: snapshot.stats),
+                        MarketCalendarTypeFilters(
+                          active: _typeFilter,
+                          onSelected: _setType,
                         ),
-                      if (snapshot.events.isEmpty)
-                        const VitEmptyState(
-                          icon: Icons.calendar_month_rounded,
-                          title: 'Không có sự kiện phù hợp',
-                          message: 'Thử đổi loại sự kiện hoặc mức tác động.',
+                        MarketCalendarImpactFilters(
+                          activeImpact: _impactFilter,
+                          onSelected: _toggleImpact,
                         ),
-                    ],
+                        if (_view == 'list')
+                          MarketCalendarEventGroups(
+                            events: snapshot.events,
+                            expandedId: _expandedId,
+                            onToggle: (id) => setState(() {
+                              _expandedId = _expandedId == id ? null : id;
+                            }),
+                          )
+                        else
+                          MarketCalendarMonthGrid(
+                            events: snapshot.events,
+                            onEventDaySelected: (event) => setState(() {
+                              _view = 'list';
+                              _expandedId = event.id;
+                            }),
+                          ),
+                        if (snapshot.events.isEmpty)
+                          const VitEmptyState(
+                            icon: Icons.calendar_month_rounded,
+                            title: 'Không có sự kiện phù hợp',
+                            message: 'Thử đổi loại sự kiện hoặc mức tác động.',
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

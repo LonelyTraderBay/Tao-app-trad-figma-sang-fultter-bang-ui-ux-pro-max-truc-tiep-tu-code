@@ -1,35 +1,5 @@
 part of '../pages/dca_portfolio_optimizer_page.dart';
 
-class _HeaderShareButton extends StatelessWidget {
-  const _HeaderShareButton({required this.onPressed});
-
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.buttonCompact,
-      height: AppSpacing.buttonCompact,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: AppColors.surface2,
-          borderRadius: AppRadii.mdRadius,
-          border: Border.all(color: AppColors.border),
-        ),
-        child: IconButton(
-          onPressed: onPressed,
-          padding: EdgeInsets.zero,
-          icon: const Icon(
-            Icons.share_outlined,
-            color: AppColors.text1,
-            size: AppSpacing.iconMd,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _DriftBanner extends StatelessWidget {
   const _DriftBanner({
     required this.snapshot,

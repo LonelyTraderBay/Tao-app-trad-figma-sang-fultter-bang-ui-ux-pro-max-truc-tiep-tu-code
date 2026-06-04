@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -51,39 +52,41 @@ class ComplaintTrackingPage extends ConsumerWidget {
       semanticLabel: 'SC-113 ComplaintTrackingPage',
       child: Material(
         color: _trackingBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Complaint ${snapshot.complaintId}',
-              showBack: true,
-              onBack: () =>
-                  context.go(AppRoutePaths.tradeCopyComplaintsHandling),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: contentKey,
-                padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _StatusCard(snapshot: snapshot),
-                    const SizedBox(height: 26),
-                    _DeadlineNotice(snapshot: snapshot),
-                    const SizedBox(height: 26),
-                    const _SectionLabel('Investigation Timeline'),
-                    const SizedBox(height: 13),
-                    _TimelineList(steps: snapshot.timeline),
-                    const SizedBox(height: 22),
-                    for (final action in snapshot.actions) ...[
-                      _TrackingActionButton(action: action),
-                      if (action != snapshot.actions.last)
-                        const SizedBox(height: 13),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Complaint ${snapshot.complaintId}',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyComplaintsHandling),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _StatusCard(snapshot: snapshot),
+                      const SizedBox(height: 26),
+                      _DeadlineNotice(snapshot: snapshot),
+                      const SizedBox(height: 26),
+                      const _SectionLabel('Investigation Timeline'),
+                      const SizedBox(height: 13),
+                      _TimelineList(steps: snapshot.timeline),
+                      const SizedBox(height: 22),
+                      for (final action in snapshot.actions) ...[
+                        _TrackingActionButton(action: action),
+                        if (action != snapshot.actions.last)
+                          const SizedBox(height: 13),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

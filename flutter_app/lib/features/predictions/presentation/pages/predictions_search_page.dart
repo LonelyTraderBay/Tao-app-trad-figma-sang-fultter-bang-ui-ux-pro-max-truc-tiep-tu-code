@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -87,77 +88,80 @@ class _PredictionsSearchPageState extends ConsumerState<PredictionsSearchPage> {
       semanticLabel: 'SC-028 PredictionsSearchPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Search Events',
-              subtitle: 'Tìm kiếm · Prediction',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.marketsPredictions),
-            ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: PredictionsSearchPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: 14,
-                    children: [
-                      _SearchControl(
-                        controller: _searchController,
-                        showFilters: _showFilters,
-                        onChanged: () => setState(() {}),
-                        onClear: () => setState(_searchController.clear),
-                        onToggleFilters: () => setState(() {
-                          _showFilters = !_showFilters;
-                        }),
-                      ),
-                      if (_showFilters)
-                        _FilterPanel(
-                          sort: _sort,
-                          status: _status,
-                          categories: snapshot.categories,
-                          selectedCategory: _category,
-                          hasActiveFilters: _hasActiveFilters,
-                          onSortSelected: (value) => setState(() {
-                            _sort = value;
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Search Events',
+            subtitle: 'Tìm kiếm · Prediction',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.marketsPredictions),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: PredictionsSearchPage.contentKey,
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.relaxed,
+                      customGap: 14,
+                      children: [
+                        _SearchControl(
+                          controller: _searchController,
+                          showFilters: _showFilters,
+                          onChanged: () => setState(() {}),
+                          onClear: () => setState(_searchController.clear),
+                          onToggleFilters: () => setState(() {
+                            _showFilters = !_showFilters;
                           }),
-                          onStatusSelected: (value) => setState(() {
-                            _status = value;
-                          }),
-                          onCategorySelected: (value) => setState(() {
-                            _category = value;
-                          }),
-                          onClear: _clearFilters,
                         ),
-                      Text(
-                        _resultsLabel(snapshot.results.length),
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                          fontSize: 11,
-                        ),
-                      ),
-                      if (snapshot.results.isEmpty)
-                        const _SearchEmptyState()
-                      else
-                        for (final event in snapshot.results)
-                          _SearchResultCard(
-                            key: PredictionsSearchPage.resultKey(event.id),
-                            event: event,
-                            onTap: () => context.go(
-                              AppRoutePaths.marketsPredictionEvent(event.id),
-                            ),
+                        if (_showFilters)
+                          _FilterPanel(
+                            sort: _sort,
+                            status: _status,
+                            categories: snapshot.categories,
+                            selectedCategory: _category,
+                            hasActiveFilters: _hasActiveFilters,
+                            onSortSelected: (value) => setState(() {
+                              _sort = value;
+                            }),
+                            onStatusSelected: (value) => setState(() {
+                              _status = value;
+                            }),
+                            onCategorySelected: (value) => setState(() {
+                              _category = value;
+                            }),
+                            onClear: _clearFilters,
                           ),
-                    ],
+                        Text(
+                          _resultsLabel(snapshot.results.length),
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                            fontSize: 11,
+                          ),
+                        ),
+                        if (snapshot.results.isEmpty)
+                          const _SearchEmptyState()
+                        else
+                          for (final event in snapshot.results)
+                            _SearchResultCard(
+                              key: PredictionsSearchPage.resultKey(event.id),
+                              event: event,
+                              onTap: () => context.go(
+                                AppRoutePaths.marketsPredictionEvent(event.id),
+                              ),
+                            ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -21,39 +21,42 @@ class _MarketDataAnalyticsPageState
       semanticLabel: 'SC-089 MarketDataAnalyticsPage',
       child: Material(
         color: _analyticsBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Market Analytics',
-              subtitle: 'Data & Intelligence',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.tradeMargin),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: MarketDataAnalyticsPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _PairSelector(snapshot: snapshot),
-                    const SizedBox(height: 16),
-                    _UnderlineTabs(
-                      activeId: _tab,
-                      onChanged: (id) => setState(() => _tab = id),
-                    ),
-                    const SizedBox(height: 16),
-                    if (_tab == 'market')
-                      _MarketDataTab(snapshot: snapshot)
-                    else if (_tab == 'liquidations')
-                      _LiquidationsTab(snapshot: snapshot)
-                    else
-                      _SentimentTab(snapshot: snapshot),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Market Analytics',
+            subtitle: 'Data & Intelligence',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeMargin),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: MarketDataAnalyticsPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _PairSelector(snapshot: snapshot),
+                      const SizedBox(height: 16),
+                      _UnderlineTabs(
+                        activeId: _tab,
+                        onChanged: (id) => setState(() => _tab = id),
+                      ),
+                      const SizedBox(height: 16),
+                      if (_tab == 'market')
+                        _MarketDataTab(snapshot: snapshot)
+                      else if (_tab == 'liquidations')
+                        _LiquidationsTab(snapshot: snapshot)
+                      else
+                        _SentimentTab(snapshot: snapshot),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

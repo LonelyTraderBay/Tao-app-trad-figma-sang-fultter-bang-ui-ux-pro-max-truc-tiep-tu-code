@@ -1,37 +1,5 @@
 part of '../pages/prediction_event_calendar_page.dart';
 
-class _FilterButton extends StatelessWidget {
-  const _FilterButton({required this.active, required this.onTap});
-
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 38,
-      height: 38,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: active ? _predictionPrimary : AppColors.surface3,
-          border: Border.all(color: AppColors.border),
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: IconButton(
-          key: PredictionEventCalendarPage.filterButtonKey,
-          onPressed: onTap,
-          padding: EdgeInsets.zero,
-          icon: const Icon(
-            Icons.filter_alt_outlined,
-            color: AppColors.text1,
-            size: 20,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _EventCalendarTabBar extends StatelessWidget {
   const _EventCalendarTabBar({
     required this.activeTab,

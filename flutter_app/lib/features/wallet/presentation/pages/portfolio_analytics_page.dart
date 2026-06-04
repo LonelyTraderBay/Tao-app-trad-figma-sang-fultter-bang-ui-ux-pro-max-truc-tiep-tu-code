@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
@@ -66,42 +67,45 @@ class _PortfolioAnalyticsPageState
       semanticLabel: 'SC-142 PortfolioAnalyticsPage',
       child: Material(
         color: _analyticsBackground,
-        child: Column(
-          children: [
-            VitHeader(
-              title: 'Phân tích Danh mục',
-              subtitle: 'Phân tích · Wallet',
-              showBack: true,
-              onBack: () => context.go(AppRoutePaths.wallet),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                key: PortfolioAnalyticsPage.contentKey,
-                padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _ValueSummary(snapshot: snapshot),
-                    const SizedBox(height: 18),
-                    _ViewSwitcher(
-                      active: _activeView,
-                      onChanged: (view) => setState(() => _activeView = view),
-                    ),
-                    const SizedBox(height: 19),
-                    if (_activeView == 'overview')
-                      _OverviewContent(
-                        snapshot: snapshot,
-                        activePeriod: _activePeriod,
-                        onPeriodChanged: (period) =>
-                            setState(() => _activePeriod = period),
-                      )
-                    else
-                      _PlaceholderAnalyticsView(view: _activeView),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Phân tích Danh mục',
+            subtitle: 'Phân tích · Wallet',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.wallet),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: PortfolioAnalyticsPage.contentKey,
+                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _ValueSummary(snapshot: snapshot),
+                      const SizedBox(height: 18),
+                      _ViewSwitcher(
+                        active: _activeView,
+                        onChanged: (view) => setState(() => _activeView = view),
+                      ),
+                      const SizedBox(height: 19),
+                      if (_activeView == 'overview')
+                        _OverviewContent(
+                          snapshot: snapshot,
+                          activePeriod: _activePeriod,
+                          onPeriodChanged: (period) =>
+                              setState(() => _activePeriod = period),
+                        )
+                      else
+                        _PlaceholderAnalyticsView(view: _activeView),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

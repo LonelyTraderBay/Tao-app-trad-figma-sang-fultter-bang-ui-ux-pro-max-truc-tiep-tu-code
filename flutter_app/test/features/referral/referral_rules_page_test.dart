@@ -92,7 +92,7 @@ void main() {
   ) async {
     await pumpRules(tester);
 
-    await tester.tap(find.byType(IconButton).first);
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded).first);
     await tester.pumpAndSettle();
 
     expect(find.text('Giới thiệu bạn bè'), findsOneWidget);

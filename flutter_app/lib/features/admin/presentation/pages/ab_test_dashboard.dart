@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -49,53 +50,56 @@ class _ABTestDashboardState extends ConsumerState<ABTestDashboard> {
 
     return VitPageLayout(
       semanticLabel: 'SC-182 ABTestDashboard',
-      child: Column(
-        children: [
-          VitHeader(
-            title: 'A/B Test Dashboard',
-            subtitle: 'Test Results & Analysis',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.admin),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              key: ABTestDashboard.contentKey,
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.only(bottom: scrollBottom),
-              child: VitPageContent(
-                customGap: AppSpacing.x4,
-                children: [
-                  AdminDashboardStateContent(
-                    status: controller.state.status,
-                    title: 'A/B test dashboard',
-                    message: controller.state.message,
-                    gap: AppSpacing.x4,
-                    children: [
-                      _SummaryGrid(snapshot: snapshot),
-                      const _SectionTitle(title: 'Tất cả A/B Tests'),
-                      if (snapshot.tests.isEmpty)
-                        const _EmptyTestsCard()
-                      else
-                        for (final test in snapshot.tests) ...[
-                          _ABTestCard(
-                            test: test,
-                            selected: test.id == _selectedTestId,
-                            onTap: () {
-                              setState(() {
-                                _selectedTestId = test.id == _selectedTestId
-                                    ? null
-                                    : test.id;
-                              });
-                            },
-                          ),
-                        ],
-                    ],
-                  ),
-                ],
+      child: VitAutoHideHeaderScaffold(
+        header: VitHeader(
+          title: 'A/B Test Dashboard',
+          subtitle: 'Test Results & Analysis',
+          showBack: true,
+          onBack: () => context.go(AppRoutePaths.admin),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                key: ABTestDashboard.contentKey,
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.only(bottom: scrollBottom),
+                child: VitPageContent(
+                  customGap: AppSpacing.x4,
+                  children: [
+                    AdminDashboardStateContent(
+                      status: controller.state.status,
+                      title: 'A/B test dashboard',
+                      message: controller.state.message,
+                      gap: AppSpacing.x4,
+                      children: [
+                        _SummaryGrid(snapshot: snapshot),
+                        const _SectionTitle(title: 'Tất cả A/B Tests'),
+                        if (snapshot.tests.isEmpty)
+                          const _EmptyTestsCard()
+                        else
+                          for (final test in snapshot.tests) ...[
+                            _ABTestCard(
+                              test: test,
+                              selected: test.id == _selectedTestId,
+                              onTap: () {
+                                setState(() {
+                                  _selectedTestId = test.id == _selectedTestId
+                                      ? null
+                                      : test.id;
+                                });
+                              },
+                            ),
+                          ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
