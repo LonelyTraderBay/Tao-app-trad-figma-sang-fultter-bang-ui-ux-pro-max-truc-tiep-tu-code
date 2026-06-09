@@ -8,7 +8,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/live_market_data_analytics_widgets.dart';
 
@@ -62,17 +64,23 @@ class _LiveMarketDataAnalyticsPageState
                 child: SingleChildScrollView(
                   key: LiveMarketDataAnalyticsPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 16,
+                    fullBleed: true,
                     children: [
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review real-time market risk',
+                        message:
+                            'Live feeds can move or disconnect during volatility. Confirm liquidity, limits, and execution risk before trading.',
+                      ),
                       LiveMarketPairCard(snapshot: snapshot),
-                      const SizedBox(height: 16),
                       LiveMarketUnderlineTabs(
                         activeId: _tab,
                         onChanged: (id) => setState(() => _tab = id),
                         keyBuilder: LiveMarketDataAnalyticsPage.tabKey,
                       ),
-                      const SizedBox(height: 16),
                       LiveMarketTabContent(activeTab: _tab, snapshot: snapshot),
                     ],
                   ),

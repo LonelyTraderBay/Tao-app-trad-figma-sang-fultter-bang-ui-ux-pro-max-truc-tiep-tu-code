@@ -73,7 +73,7 @@ void main() {
     expect(find.byKey(SavingsAutoRebalancePage.autoStatusKey), findsOneWidget);
     expect(find.text('Tự động tái cân bằng'), findsOneWidget);
     expect(find.byKey(SavingsAutoRebalancePage.statsKey), findsOneWidget);
-    expect(find.text('Tái cân bằng ngay'), findsOneWidget);
+    expect(find.text('Xem trước'), findsOneWidget);
   });
 
   testWidgets('SC-344 supports strategy tab state changes', (tester) async {

@@ -10,7 +10,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -18,7 +20,6 @@ part '../widgets/audit_trail_page_sections.dart';
 part '../widgets/audit_trail_page_common.dart';
 
 const _auditBackground = AppColors.bg;
-const _auditPanel = AppColors.surface;
 const _auditPanel2 = AppColors.surface2;
 const _auditTabsBackground = AppColors.surface;
 const _auditBorder = AppColors.borderSolid;
@@ -83,31 +84,31 @@ class _AuditTrailPageState extends ConsumerState<AuditTrailPage> {
                 child: SingleChildScrollView(
                   key: AuditTrailPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 26, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 14,
+                    fullBleed: true,
                     children: [
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review audit trail export',
+                        message:
+                            'Confirm record scope, retention limits, client identifiers, and next steps before exporting audit evidence.',
+                      ),
                       _ComplianceNotice(snapshot: snapshot),
-                      const SizedBox(height: 39),
                       _StatsRow(stats: snapshot.stats),
-                      const SizedBox(height: 26),
                       _SearchAndFilter(
                         placeholder: snapshot.searchPlaceholder,
                         onChanged: (value) => setState(() => _query = value),
                       ),
-                      const SizedBox(height: 24),
                       _AuditTabs(
                         tabs: snapshot.tabs,
                         activeId: _activeTab,
                         onChanged: (id) => setState(() => _activeTab = id),
                       ),
-                      const SizedBox(height: 27),
                       const _SectionLabel('Audit Log'),
-                      const SizedBox(height: 11),
-                      for (final entry in entries) ...[
+                      for (final entry in entries)
                         _AuditEntryCard(entry: entry),
-                        if (entry != entries.last) const SizedBox(height: 10),
-                      ],
-                      const SizedBox(height: 24),
                       _ExportActions(formats: snapshot.exportFormats),
                     ],
                   ),

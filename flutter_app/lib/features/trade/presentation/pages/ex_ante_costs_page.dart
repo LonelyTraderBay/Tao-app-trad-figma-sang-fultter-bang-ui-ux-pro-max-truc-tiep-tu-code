@@ -10,7 +10,11 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -20,7 +24,6 @@ part '../widgets/ex_ante_costs_scenarios_actions.dart';
 part '../widgets/ex_ante_costs_common.dart';
 
 const _costBackground = AppColors.bg;
-const _costPanel = AppColors.surface;
 const _costPanel2 = AppColors.surface2;
 const _costBorder = AppColors.borderSolid;
 const _costPrimary = AppColors.primary;
@@ -84,12 +87,22 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
                 child: SingleChildScrollView(
                   key: ExAnteCostsPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 0,
                     children: [
                       const _RegulatoryNotice(),
                       const SizedBox(height: 35),
                       _InvestmentCard(snapshot: snapshot),
+                      const SizedBox(height: 16),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Ex-ante cost preview',
+                        message:
+                            'Review one-off, recurring, incidental fees, RIY impact, limits, and next-step documents before investing.',
+                        contractId: 'SC-105 ex-ante costs review',
+                      ),
                       const SizedBox(height: 24),
                       _Tabs(activeId: _tab, onChanged: _setTab),
                       const SizedBox(height: 27),

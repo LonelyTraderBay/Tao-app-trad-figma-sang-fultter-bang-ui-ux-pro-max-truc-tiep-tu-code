@@ -32,10 +32,11 @@ class _CurrencyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 86,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 15),
-      decoration: _cardDecoration(radius: 16),
+      radius: VitCardRadius.lg,
+      borderColor: _settingsBorder,
       child: Row(
         children: [
           const Icon(Icons.language_rounded, color: _settingsPrimary, size: 21),
@@ -128,23 +129,22 @@ class _LanguageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: _cardDecoration(radius: 16),
-      child: ClipRRect(
-        borderRadius: AppRadii.cardRadius,
-        child: Column(
-          children: [
-            for (final language in languages) ...[
-              _LanguageRow(
-                language: language,
-                selected: language.id == selectedId,
-                onTap: () => onChanged(language.id),
-              ),
-              if (language != languages.last)
-                const Divider(height: 1, color: _settingsDivider),
-            ],
+    return VitCard(
+      radius: VitCardRadius.lg,
+      borderColor: _settingsBorder,
+      clip: true,
+      child: Column(
+        children: [
+          for (final language in languages) ...[
+            _LanguageRow(
+              language: language,
+              selected: language.id == selectedId,
+              onTap: () => onChanged(language.id),
+            ),
+            if (language != languages.last)
+              const Divider(height: 1, color: _settingsDivider),
           ],
-        ),
+        ],
       ),
     );
   }
@@ -215,24 +215,23 @@ class _SettingsListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: _cardDecoration(radius: 16),
-      child: ClipRRect(
-        borderRadius: AppRadii.cardRadius,
-        child: Column(
-          children: [
-            for (final row in rows) ...[
-              _SettingsRow(
-                row: row,
-                enabled: toggles[row.id] ?? false,
-                onToggle: (value) => onToggle(row.id, value),
-                height: rowHeight,
-              ),
-              if (row != rows.last)
-                const Divider(height: 1, color: _settingsDivider),
-            ],
+    return VitCard(
+      radius: VitCardRadius.lg,
+      borderColor: _settingsBorder,
+      clip: true,
+      child: Column(
+        children: [
+          for (final row in rows) ...[
+            _SettingsRow(
+              row: row,
+              enabled: toggles[row.id] ?? false,
+              onToggle: (value) => onToggle(row.id, value),
+              height: rowHeight,
+            ),
+            if (row != rows.last)
+              const Divider(height: 1, color: _settingsDivider),
           ],
-        ),
+        ],
       ),
     );
   }

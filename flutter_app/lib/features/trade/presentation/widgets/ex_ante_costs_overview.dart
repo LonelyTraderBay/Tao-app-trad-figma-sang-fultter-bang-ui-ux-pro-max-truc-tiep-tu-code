@@ -146,9 +146,9 @@ class _Tabs extends StatelessWidget {
       ('breakdown', 'Breakdown'),
       ('scenarios', 'Scenarios'),
     ];
-    return Container(
+    return VitCard(
       height: 53,
-      color: _costPanel,
+      padding: EdgeInsets.zero,
       child: Row(
         children: [
           for (final tab in tabs)

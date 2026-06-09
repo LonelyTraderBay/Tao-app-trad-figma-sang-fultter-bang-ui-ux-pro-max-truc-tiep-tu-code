@@ -331,6 +331,18 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                           ),
                           preview: preview,
                         ),
+                        const SizedBox(height: AppSpacing.x3),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'P2P ad publish review',
+                            message:
+                                'Price, limits, payment methods, escrow review, fee/risk preview, confirmation dialog and publish result are reviewed before listing.',
+                            contractId: 'p2p-create-ad-review',
+                          ),
+                        ),
                       ],
                     ),
                   ),

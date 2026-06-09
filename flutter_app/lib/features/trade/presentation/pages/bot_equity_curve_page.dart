@@ -12,7 +12,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -73,29 +75,61 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
                 child: SingleChildScrollView(
                   key: BotEquityCurvePage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 0,
                     children: [
                       _SummaryRow(summary: snapshot.summary),
+                      const SizedBox(height: 12),
+                      const VitCard(
+                        variant: VitCardVariant.inner,
+                        padding: EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Equity curve review',
+                              message:
+                                  'Equity trend, alpha, drawdown, Sharpe context and risk next steps are reviewed before bot changes.',
+                              contractId: 'bot-equity-curve-review',
+                            ),
+                            SizedBox(height: 8),
+                            VitStatusPill(
+                              label: 'Performance is not guaranteed',
+                              status: VitStatusPillStatus.warning,
+                              size: VitStatusPillSize.sm,
+                            ),
+                          ],
+                        ),
+                      ),
                       const SizedBox(height: 14),
                       _Tabs(
                         active: _view,
                         onChanged: (id) => setState(() => _view = id),
                       ),
                       const SizedBox(height: 16),
-                      if (_view == 'equity') ...[
-                        const _SectionLabel('Equity Curve vs Buy & Hold'),
-                        const SizedBox(height: 8),
-                        _EquityChartCard(points: snapshot.equityPoints),
-                      ] else if (_view == 'sharpe') ...[
-                        const _SectionLabel('Rolling 30-Day Sharpe Ratio'),
-                        const SizedBox(height: 8),
-                        _SharpeCard(points: snapshot.equityPoints),
-                      ] else ...[
-                        const _SectionLabel('Monthly Alpha (Bot vs Market)'),
-                        const SizedBox(height: 8),
-                        _MonthlyAlphaCard(months: snapshot.monthlyReturns),
-                      ],
+                      VitPageSection(
+                        customGap: 0,
+                        children: [
+                          if (_view == 'equity') ...[
+                            const _SectionLabel('Equity Curve vs Buy & Hold'),
+                            const SizedBox(height: 8),
+                            _EquityChartCard(points: snapshot.equityPoints),
+                          ] else if (_view == 'sharpe') ...[
+                            const _SectionLabel('Rolling 30-Day Sharpe Ratio'),
+                            const SizedBox(height: 8),
+                            _SharpeCard(points: snapshot.equityPoints),
+                          ] else ...[
+                            const _SectionLabel(
+                              'Monthly Alpha (Bot vs Market)',
+                            ),
+                            const SizedBox(height: 8),
+                            _MonthlyAlphaCard(months: snapshot.monthlyReturns),
+                          ],
+                        ],
+                      ),
                       const SizedBox(height: 18),
                       const _SectionLabel('Performance Statistics'),
                       const SizedBox(height: 8),

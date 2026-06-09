@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -118,6 +119,18 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
                       ),
                       const SizedBox(height: 16),
                       _ComplianceNote(snapshot: snapshot),
+                      const SizedBox(height: 12),
+                      const VitCard(
+                        variant: VitCardVariant.inner,
+                        padding: EdgeInsets.all(12),
+                        child: VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Terms acceptance review',
+                          message:
+                              'Read-to-end status, agreement checkbox, suitability limits and confirmation next step are reviewed before bot access is enabled.',
+                          contractId: 'bot-terms-acceptance-review',
+                        ),
+                      ),
                     ],
                   ),
                 ),

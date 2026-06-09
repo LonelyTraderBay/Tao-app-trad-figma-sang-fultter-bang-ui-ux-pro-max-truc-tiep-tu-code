@@ -39,13 +39,10 @@ class _PositionModeCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 14),
-          Container(
+          VitCard(
             height: 44,
             padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              color: AppColors.surface2,
-              borderRadius: AppRadii.cardRadius,
-            ),
+            variant: VitCardVariant.inner,
             child: Row(
               children: [
                 _ModeButton(
@@ -137,10 +134,8 @@ class _UnderlineTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
+    return VitCard(
+      borderColor: AppColors.divider,
       child: Row(
         children: [
           for (final tab in _tabs)
@@ -243,28 +238,22 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: AdvancedTradingDemoPage.actionKey(action.id),
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        constraints: const BoxConstraints(minHeight: 46),
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        decoration: BoxDecoration(
-          color: AppColors.surface2,
-          border: Border.all(color: AppColors.borderSolid),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Text(
-          action.label,
-          textAlign: TextAlign.center,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text1,
-            fontSize: 13,
-            fontWeight: AppTextStyles.bold,
-            height: 1.25,
-          ),
+      constraints: const BoxConstraints(minHeight: 46),
+      alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.borderSolid,
+      child: Text(
+        action.label,
+        textAlign: TextAlign.center,
+        style: AppTextStyles.caption.copyWith(
+          color: AppColors.text1,
+          fontSize: 13,
+          fontWeight: AppTextStyles.bold,
+          height: 1.25,
         ),
       ),
     );

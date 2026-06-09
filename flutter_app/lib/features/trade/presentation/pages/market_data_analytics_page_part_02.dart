@@ -497,13 +497,9 @@ class _AnalyticsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _analyticsPanel,
-        border: Border.all(color: _analyticsBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _analyticsBorder.withValues(alpha: .72),
       child: child,
     );
   }

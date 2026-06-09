@@ -4,18 +4,18 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _assessmentPrimary = AppColors.primary;
-const _assessmentGreen = AppColors.buy;
 
 class PreCopyAssessmentPage extends ConsumerStatefulWidget {
   const PreCopyAssessmentPage({
@@ -81,12 +81,19 @@ class _PreCopyAssessmentPageState extends ConsumerState<PreCopyAssessmentPage> {
                 child: SingleChildScrollView(
                   key: PreCopyAssessmentPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 16, 20, bottomInset),
-                  child: _started
-                      ? _QuestionsSummary(snapshot: snapshot)
-                      : _WelcomeAssessment(
-                          snapshot: snapshot,
-                          onStart: () => setState(() => _started = true),
-                        ),
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 14,
+                    fullBleed: true,
+                    children: [
+                      _started
+                          ? _QuestionsSummary(snapshot: snapshot)
+                          : _WelcomeAssessment(
+                              snapshot: snapshot,
+                              onStart: () => setState(() => _started = true),
+                            ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -110,18 +117,13 @@ class _WelcomeAssessment extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _NoticeCard(
-          icon: Icons.shield_outlined,
           title: 'Đánh giá bắt buộc (MiFID II)',
           text:
               'Chúng tôi cần đánh giá sự phù hợp của Copy Trading với kiến thức, kinh nghiệm và mục tiêu đầu tư của bạn.',
         ),
         const SizedBox(height: 14),
-        Container(
+        VitCard(
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: AppRadii.cardRadius,
-          ),
           child: Row(
             children: [
               CircleAvatar(
@@ -175,16 +177,11 @@ class _WelcomeAssessment extends StatelessWidget {
           _ProcessRow(title: item.$1, description: item.$2),
           const SizedBox(height: 12),
         ],
-        FilledButton.icon(
+        VitCtaButton(
           key: PreCopyAssessmentPage.startKey,
           onPressed: onStart,
-          style: FilledButton.styleFrom(
-            backgroundColor: _assessmentPrimary,
-            minimumSize: const Size.fromHeight(48),
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-          ),
-          icon: const Icon(Icons.chevron_right_rounded, size: 18),
-          label: Text(
+          trailing: const Icon(Icons.chevron_right_rounded, size: 18),
+          child: Text(
             'Bắt đầu đánh giá',
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.onAccent,
@@ -207,13 +204,16 @@ class _QuestionsSummary extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Review suitability result',
+          message:
+              'Confirm risk, limits, cooling-off requirements, and next steps before configuring copy trading.',
+        ),
+        const SizedBox(height: 14),
         for (final question in snapshot.questions) ...[
-          Container(
+          VitCard(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: AppRadii.cardRadius,
-            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -242,18 +242,14 @@ class _QuestionsSummary extends StatelessWidget {
           ),
           const SizedBox(height: 12),
         ],
-        FilledButton.icon(
+        VitCtaButton(
           key: PreCopyAssessmentPage.continueKey,
           onPressed: () => context.go(
             AppRoutePaths.tradeCopyProviderConfiguration(snapshot.providerId),
           ),
-          style: FilledButton.styleFrom(
-            backgroundColor: _assessmentGreen,
-            minimumSize: const Size.fromHeight(48),
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-          ),
-          icon: const Icon(Icons.chevron_right_rounded, size: 18),
-          label: Text(
+          variant: VitCtaButtonVariant.success,
+          trailing: const Icon(Icons.chevron_right_rounded, size: 18),
+          child: Text(
             'Tiếp tục cấu hình',
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.onAccent,
@@ -267,54 +263,17 @@ class _QuestionsSummary extends StatelessWidget {
 }
 
 class _NoticeCard extends StatelessWidget {
-  const _NoticeCard({
-    required this.icon,
-    required this.title,
-    required this.text,
-  });
+  const _NoticeCard({required this.title, required this.text});
 
-  final IconData icon;
   final String title;
   final String text;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _assessmentPrimary.withValues(alpha: .12),
-        border: Border.all(color: _assessmentPrimary.withValues(alpha: .55)),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: _assessmentPrimary, size: 24),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: _assessmentPrimary,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  text,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: 1.45,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return VitHighRiskStatePanel(
+      state: VitHighRiskUiState.riskReview,
+      title: title,
+      message: text,
     );
   }
 }
@@ -368,12 +327,8 @@ class _OptionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCardStat(
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.mdRadius,
-      ),
       child: Text(
         option.label,
         style: AppTextStyles.caption.copyWith(color: AppColors.text2),

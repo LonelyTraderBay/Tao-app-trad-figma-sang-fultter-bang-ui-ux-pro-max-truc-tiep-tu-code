@@ -111,14 +111,10 @@ class _GasStatusCard extends StatelessWidget {
         ? 'Low Gas Prices - Good Time!'
         : (isHigh ? 'High Gas Prices' : 'Normal Gas Prices');
 
-    return Container(
+    return VitCard(
       height: 76,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 14),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .07),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: color.withValues(alpha: .22)),
-      ),
+      borderColor: color.withValues(alpha: .22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -336,14 +332,10 @@ class _ComparisonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 233,
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 17),
-      decoration: BoxDecoration(
-        color: _gasPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _gasBorder),
-      ),
+      borderColor: _gasBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

@@ -15,19 +15,11 @@ class _ProfileHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 216,
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: _profileHero,
-        borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppColors.portfolioBorder),
-        gradient: const RadialGradient(
-          center: Alignment(.85, -.9),
-          radius: 1.15,
-          colors: [AppColors.primary12, _profileHero],
-        ),
-      ),
+      radius: VitCardRadius.lg,
+      variant: VitCardVariant.hero,
       child: Column(
         children: [
           Row(

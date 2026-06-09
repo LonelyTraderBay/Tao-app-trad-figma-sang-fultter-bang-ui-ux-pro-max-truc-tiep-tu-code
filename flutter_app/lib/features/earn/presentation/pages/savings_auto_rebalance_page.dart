@@ -70,9 +70,7 @@ class _SavingsAutoRebalancePageState
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
     final safeBottom = MediaQuery.paddingOf(context).bottom;
-    const footerHeight = 92.0;
-    final bottomInset = navInset + safeBottom + AppSpacing.x6 + footerHeight;
-    final showFooter = activeTab == snapshot.defaultTab && drift >= 3;
+    final bottomInset = navInset + safeBottom + AppSpacing.x6;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -172,21 +170,6 @@ class _SavingsAutoRebalancePageState
                 ],
               ),
             ),
-            if (showFooter)
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: navInset + safeBottom,
-                child: VitStickyFooter(
-                  backgroundColor: AppColors.surface.withValues(alpha: .94),
-                  child: VitCtaButton(
-                    key: SavingsAutoRebalancePage.previewButtonKey,
-                    onPressed: _openPreview,
-                    leading: const Icon(Icons.sync_rounded),
-                    child: const Text('Tái cân bằng ngay'),
-                  ),
-                ),
-              ),
             if (_showPreview)
               Positioned.fill(
                 child: _PreviewSheet(

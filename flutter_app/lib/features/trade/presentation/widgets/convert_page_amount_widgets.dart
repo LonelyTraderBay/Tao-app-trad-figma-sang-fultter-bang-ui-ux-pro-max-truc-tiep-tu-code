@@ -23,17 +23,12 @@ class _AmountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = input ? 176.0 : 108.0;
+    final height = input ? 188.0 : 108.0;
     final balanceLabel =
         'Số dư: ${formatConvertBalance(asset.balance, asset.symbol)} ${asset.symbol}';
-    return Container(
+    return VitCard(
       height: height,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
-      decoration: BoxDecoration(
-        color: _panelBackground,
-        border: Border.all(color: AppColors.onAccent.withValues(alpha: .07)),
-        borderRadius: AppRadii.lgRadius,
-      ),
       child: Column(
         children: [
           Row(
@@ -66,9 +61,10 @@ class _AmountCard extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: input
-                    ? TextField(
-                        key: ConvertPage.amountFieldKey,
-                        controller: amountController,
+                    ? VitInput(
+                        fieldKey: ConvertPage.amountFieldKey,
+                        controller: amountController!,
+                        hintText: '0.00',
                         textAlign: TextAlign.right,
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
@@ -79,23 +75,11 @@ class _AmountCard extends StatelessWidget {
                           ),
                         ],
                         onChanged: (_) => onChanged?.call(),
-                        style: AppTextStyles.sectionTitle.copyWith(
+                        textStyle: AppTextStyles.sectionTitle.copyWith(
                           color: AppColors.text1,
                           fontSize: 22,
                           fontFamily: 'monospace',
                           fontWeight: AppTextStyles.bold,
-                        ),
-                        cursorColor: _tradePrimary,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          border: InputBorder.none,
-                          hintText: '0.00',
-                          hintStyle: AppTextStyles.sectionTitle.copyWith(
-                            color: AppColors.text3,
-                            fontSize: 22,
-                            fontFamily: 'monospace',
-                            fontWeight: AppTextStyles.bold,
-                          ),
                         ),
                       )
                     : Text(

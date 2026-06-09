@@ -102,24 +102,15 @@ class _AmountInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-      child: TextField(
-        key: StakingRiskScoreCalculatorPage.amountFieldKey,
-        controller: controller,
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        cursorColor: AppColors.primary,
-        onChanged: onChanged,
-        style: AppTextStyles.baseMedium.copyWith(
-          fontFeatures: AppTextStyles.tabularFigures,
-        ),
-        decoration: InputDecoration(
-          hintText: '0',
-          hintStyle: AppTextStyles.baseMedium.copyWith(color: AppColors.text3),
-          border: InputBorder.none,
-        ),
+    return VitInput(
+      fieldKey: StakingRiskScoreCalculatorPage.amountFieldKey,
+      controller: controller,
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      semanticLabel: 'Staking risk amount',
+      hintText: '0',
+      onChanged: onChanged,
+      textStyle: AppTextStyles.baseMedium.copyWith(
+        fontFeatures: AppTextStyles.tabularFigures,
       ),
     );
   }

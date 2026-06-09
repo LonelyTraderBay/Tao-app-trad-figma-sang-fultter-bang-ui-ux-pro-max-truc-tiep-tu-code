@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -127,6 +128,18 @@ class _BotStrategyComparePageState
                       ],
                       const SizedBox(height: 18),
                       _AnalysisPeriodCard(text: snapshot.analysisPeriod),
+                      const SizedBox(height: 12),
+                      const VitCard(
+                        variant: VitCardVariant.inner,
+                        padding: EdgeInsets.all(12),
+                        child: VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Strategy comparison review',
+                          message:
+                              'Selected strategies, performance spread, radar metrics, recommendation rationale and next step are reviewed before allocation changes.',
+                          contractId: 'bot-strategy-compare-review',
+                        ),
+                      ),
                     ],
                   ),
                 ),

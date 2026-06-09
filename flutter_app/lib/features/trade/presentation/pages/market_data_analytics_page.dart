@@ -12,7 +12,10 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -22,7 +25,6 @@ part 'market_data_analytics_page_part_03.dart';
 part 'market_data_analytics_page_part_04.dart';
 
 const _analyticsBackground = AppColors.bg;
-const _analyticsPanel = AppColors.surface;
 const _analyticsPanel2 = AppColors.surface2;
 const _analyticsSurface3 = AppColors.surfaceNavyDeep;
 const _analyticsBorder = AppColors.analyticsBorder;

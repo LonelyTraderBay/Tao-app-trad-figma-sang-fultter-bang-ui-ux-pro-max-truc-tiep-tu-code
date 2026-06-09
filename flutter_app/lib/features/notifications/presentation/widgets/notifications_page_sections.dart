@@ -15,17 +15,17 @@ class _NotificationToolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       key: NotificationsPage.toolbarKey,
+      width: double.infinity,
+      radius: VitCardRadius.sm,
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.divider,
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.contentPad,
         AppSpacing.x3,
         AppSpacing.contentPad,
         AppSpacing.x3,
-      ),
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: Row(
         children: [
@@ -110,90 +110,86 @@ class _NotificationRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = _typeStyle(notification.type);
-    return InkWell(
+    return VitCard(
       key: NotificationsPage.notificationKey(notification.id),
+      width: double.infinity,
+      radius: VitCardRadius.sm,
+      variant: highlighted ? VitCardVariant.inner : VitCardVariant.ghost,
+      borderColor: showDivider ? AppColors.divider : AppColors.transparent,
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.contentPad,
+        AppSpacing.x2,
+        AppSpacing.contentPad,
+        AppSpacing.x2,
+      ),
       onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.contentPad,
-          AppSpacing.x2,
-          AppSpacing.contentPad,
-          AppSpacing.x2,
-        ),
-        decoration: BoxDecoration(
-          color: highlighted ? AppColors.primary08 : AppColors.transparent,
-          border: showDivider
-              ? const Border(bottom: BorderSide(color: AppColors.divider))
-              : null,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _TypeIcon(style: style),
-            const SizedBox(width: AppSpacing.x4),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          notification.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.body.copyWith(
-                            color: AppColors.text1,
-                            fontWeight: AppTextStyles.bold,
-                          ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _TypeIcon(style: style),
+          const SizedBox(width: AppSpacing.x4),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        notification.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.body.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      if (!notification.isRead)
-                        Container(
-                          width: 8,
-                          height: 8,
-                          margin: const EdgeInsets.only(left: AppSpacing.x2),
-                          decoration: const BoxDecoration(
-                            color: AppColors.primary,
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    notification.message,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text2,
-                      height: 1.25,
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.x2),
-                  Row(
-                    children: [
-                      _TypePill(label: style.label, color: style.color),
-                      const SizedBox(width: AppSpacing.x3),
-                      Flexible(
-                        child: Text(
-                          notification.time,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                          ),
+                    if (!notification.isRead)
+                      Container(
+                        width: 8,
+                        height: 8,
+                        margin: const EdgeInsets.only(left: AppSpacing.x2),
+                        decoration: const BoxDecoration(
+                          color: AppColors.primary,
+                          shape: BoxShape.circle,
                         ),
                       ),
-                    ],
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  notification.message,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    height: 1.25,
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(height: AppSpacing.x2),
+                Row(
+                  children: [
+                    _TypePill(label: style.label, color: style.color),
+                    const SizedBox(width: AppSpacing.x3),
+                    Flexible(
+                      child: Text(
+                        notification.time,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            const SizedBox(width: AppSpacing.x3),
-            _DeleteButton(id: notification.id, onDelete: onDelete),
-          ],
-        ),
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          _DeleteButton(id: notification.id, onDelete: onDelete),
+        ],
       ),
     );
   }

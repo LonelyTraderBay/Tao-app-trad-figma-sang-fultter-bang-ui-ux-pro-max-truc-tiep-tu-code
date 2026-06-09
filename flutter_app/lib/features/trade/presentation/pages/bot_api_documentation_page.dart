@@ -11,7 +11,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -91,10 +93,35 @@ class _BotApiDocumentationPageState
                 child: SingleChildScrollView(
                   key: BotApiDocumentationPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 0,
                     children: [
                       const _IntroCard(),
+                      const SizedBox(height: 12),
+                      const VitCard(
+                        variant: VitCardVariant.inner,
+                        padding: EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Bot API operational review',
+                              message:
+                                  'Endpoints, authentication, rate limits, websocket events and support path are reviewed before bot integration.',
+                              contractId: 'bot-api-documentation-review',
+                            ),
+                            SizedBox(height: 8),
+                            VitStatusPill(
+                              label: 'Read-only documentation',
+                              status: VitStatusPillStatus.info,
+                              size: VitStatusPillSize.sm,
+                            ),
+                          ],
+                        ),
+                      ),
                       const SizedBox(height: 33),
                       _Tabs(
                         tabs: snapshot.tabs,
@@ -102,26 +129,31 @@ class _BotApiDocumentationPageState
                         onChanged: (view) => setState(() => _view = view),
                       ),
                       const SizedBox(height: 18),
-                      if (_view == 'endpoints')
-                        _EndpointsView(endpoints: snapshot.endpoints)
-                      else if (_view == 'websocket')
-                        _WebSocketView(
-                          url: snapshot.websocketUrl,
-                          events: snapshot.websocketEvents,
-                        )
-                      else
-                        _ExamplesView(
-                          examples: snapshot.codeExamples,
-                          language: _language,
-                          copied: _copied,
-                          onLanguageChanged: (language) {
-                            setState(() {
-                              _language = language;
-                              _copied = false;
-                            });
-                          },
-                          onCopy: _copy,
-                        ),
+                      VitPageSection(
+                        customGap: 0,
+                        children: [
+                          if (_view == 'endpoints')
+                            _EndpointsView(endpoints: snapshot.endpoints)
+                          else if (_view == 'websocket')
+                            _WebSocketView(
+                              url: snapshot.websocketUrl,
+                              events: snapshot.websocketEvents,
+                            )
+                          else
+                            _ExamplesView(
+                              examples: snapshot.codeExamples,
+                              language: _language,
+                              copied: _copied,
+                              onLanguageChanged: (language) {
+                                setState(() {
+                                  _language = language;
+                                  _copied = false;
+                                });
+                              },
+                              onCopy: _copy,
+                            ),
+                        ],
+                      ),
                       const SizedBox(height: 18),
                       const _SectionLabel('Rate Limits'),
                       const SizedBox(height: 10),

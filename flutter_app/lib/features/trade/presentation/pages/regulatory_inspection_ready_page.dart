@@ -11,7 +11,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -19,7 +21,6 @@ part '../widgets/regulatory_inspection_ready_page_sections.dart';
 part '../widgets/regulatory_inspection_ready_page_common.dart';
 
 const _inspectionBackground = AppColors.bg;
-const _inspectionPanel = AppColors.surface;
 const _inspectionPanel2 = AppColors.surface2;
 const _inspectionBorder = AppColors.borderSolid;
 const _inspectionGreen = AppColors.buy;
@@ -72,33 +73,27 @@ class RegulatoryInspectionReadyPage extends ConsumerWidget {
                 child: SingleChildScrollView(
                   key: contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 14,
+                    fullBleed: true,
                     children: [
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review inspection readiness evidence',
+                        message:
+                            'Confirm report scope, access limits, retained records, and next steps before sharing compliance material.',
+                      ),
                       _ComplianceScoreCard(snapshot: snapshot),
-                      const SizedBox(height: 25),
                       _QuickStats(stats: snapshot.stats),
-                      const SizedBox(height: 25),
                       const _SectionLabel('Regulatory Framework Coverage'),
-                      const SizedBox(height: 12),
-                      for (final framework in snapshot.frameworks) ...[
+                      for (final framework in snapshot.frameworks)
                         _FrameworkCard(framework: framework),
-                        if (framework != snapshot.frameworks.last)
-                          const SizedBox(height: 14),
-                      ],
-                      const SizedBox(height: 25),
                       const _SectionLabel('Document Repository'),
-                      const SizedBox(height: 12),
-                      for (final document in snapshot.documents) ...[
+                      for (final document in snapshot.documents)
                         _DocumentCard(document: document),
-                        if (document != snapshot.documents.last)
-                          const SizedBox(height: 8),
-                      ],
-                      const SizedBox(height: 25),
                       const _SectionLabel('Regulatory Inspector Access'),
-                      const SizedBox(height: 12),
                       _InspectorPortalCard(snapshot: snapshot),
-                      const SizedBox(height: 26),
                       _ReportButton(snapshot: snapshot),
                     ],
                   ),

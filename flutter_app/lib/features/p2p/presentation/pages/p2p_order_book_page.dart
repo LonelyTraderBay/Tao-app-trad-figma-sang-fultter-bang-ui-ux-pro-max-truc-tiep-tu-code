@@ -105,6 +105,18 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
                         _BestPriceCards(snapshot: snapshot),
                         const SizedBox(height: AppSpacing.x5),
                         _OrderBookLists(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x3),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Order book liquidity review',
+                            message:
+                                'Selected asset, refresh state, depth chart, best bid/ask, liquidity risk and next ad step are reviewed before taking a P2P order.',
+                            contractId: 'p2p-order-book-review',
+                          ),
+                        ),
                       ],
                     ),
                   ),

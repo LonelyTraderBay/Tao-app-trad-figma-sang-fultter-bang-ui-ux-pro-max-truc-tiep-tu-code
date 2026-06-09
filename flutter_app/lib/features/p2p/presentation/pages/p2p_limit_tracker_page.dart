@@ -92,6 +92,18 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
                         _UsageHero(usage: usage),
                         const SizedBox(height: AppSpacing.x5),
                         _LimitBreakdownList(items: snapshot.breakdown),
+                        const SizedBox(height: AppSpacing.x3),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'P2P limit review',
+                            message:
+                                'Selected period, used volume, remaining limit, history breakdown and next limit-management step are reviewed before more P2P activity.',
+                            contractId: 'p2p-limit-tracker-review',
+                          ),
+                        ),
                       ],
                     ),
                   ),

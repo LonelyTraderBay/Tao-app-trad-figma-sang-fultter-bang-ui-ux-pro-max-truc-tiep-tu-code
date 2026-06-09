@@ -102,6 +102,18 @@ class _P2PVideoVerificationPageState
                           trailing: const Icon(Icons.chevron_right_rounded),
                           child: const Text('Đặt lịch'),
                         ),
+                        const SizedBox(height: AppSpacing.x3),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Video verification review',
+                            message:
+                                'Preparation checklist, slot availability, selected time, verification status route and next KYC step are reviewed before booking.',
+                            contractId: 'p2p-video-verification-review',
+                          ),
+                        ),
                       ],
                     ),
                   ),

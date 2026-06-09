@@ -16,14 +16,16 @@ class WalletBalanceHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 324,
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 17),
-      decoration: BoxDecoration(
-        color: _walletHero,
-        border: Border.all(color: _walletPrimary.withValues(alpha: .20)),
-        borderRadius: AppRadii.lgRadius,
+    return VitCard(
+      variant: VitCardVariant.hero,
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.contentPad,
+        AppSpacing.contentPad,
+        AppSpacing.contentPad,
+        AppSpacing.x4,
       ),
+      borderColor: _walletPrimary.withValues(alpha: .20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -182,40 +184,36 @@ class _ActionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(action.colorHex);
-    return GestureDetector(
+    return VitCard(
       key: Key('sc135_wallet_action_${action.id}'),
-      behavior: HitTestBehavior.opaque,
       onTap: onTap,
-      child: Container(
-        height: 68,
-        decoration: BoxDecoration(
-          color: AppColors.onAccent.withValues(alpha: .10),
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 34,
-              height: 34,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: .18),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(_actionIcon(action.iconKey), color: color, size: 22),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      height: 68,
+      borderColor: AppColors.portfolioBtnGhostBorder,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: .18),
+              shape: BoxShape.circle,
             ),
-            const SizedBox(height: 7),
-            Text(
-              action.label,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                fontSize: 11,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
+            child: Icon(_actionIcon(action.iconKey), color: color, size: 22),
+          ),
+          const SizedBox(height: 7),
+          Text(
+            action.label,
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text2,
+              fontSize: 11,
+              fontWeight: AppTextStyles.bold,
+              height: 1,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

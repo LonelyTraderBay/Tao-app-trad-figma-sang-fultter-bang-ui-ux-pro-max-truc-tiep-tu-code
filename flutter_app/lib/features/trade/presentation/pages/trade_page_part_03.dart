@@ -44,47 +44,24 @@ class _TradeInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+    return VitInput(
+      controller: controller,
+      label: label,
+      semanticLabel: label,
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
+      textStyle: AppTextStyles.baseMedium.copyWith(
+        fontFamily: 'monospace',
+        fontSize: 18,
+      ),
+      suffix: Text(
+        suffix,
+        style: AppTextStyles.caption.copyWith(
+          color: AppColors.text3,
+          fontWeight: AppTextStyles.bold,
         ),
-        const SizedBox(height: 8),
-        Container(
-          height: 52,
-          decoration: BoxDecoration(
-            color: _fieldBackground,
-            border: Border.all(color: AppColors.borderSolid),
-            borderRadius: AppRadii.cardRadius,
-          ),
-          child: TextField(
-            controller: controller,
-            onChanged: (_) => onChanged(),
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-            ],
-            style: AppTextStyles.baseMedium.copyWith(
-              fontFamily: 'monospace',
-              fontSize: 18,
-            ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 13,
-              ),
-              suffixText: suffix,
-              suffixStyle: AppTextStyles.caption.copyWith(
-                color: AppColors.text3,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ),
-      ],
+      ),
+      onChanged: (_) => onChanged(),
     );
   }
 }

@@ -13,6 +13,8 @@ class VitSearchBar extends StatefulWidget {
     super.key,
     this.controller,
     this.focusNode,
+    this.fieldKey,
+    this.filterKey,
     this.placeholder = 'Search',
     this.variant = VitSearchBarVariant.defaultSearch,
     this.autofocus = false,
@@ -29,6 +31,8 @@ class VitSearchBar extends StatefulWidget {
 
   final TextEditingController? controller;
   final FocusNode? focusNode;
+  final Key? fieldKey;
+  final Key? filterKey;
   final String placeholder;
   final VitSearchBarVariant variant;
   final bool autofocus;
@@ -167,6 +171,7 @@ class _VitSearchBarState extends State<VitSearchBar> {
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: TextField(
+                    key: widget.fieldKey,
                     controller: _controller,
                     focusNode: _focusNode,
                     autofocus: widget.autofocus,
@@ -195,6 +200,7 @@ class _VitSearchBarState extends State<VitSearchBar> {
                   ),
                 if (widget.onFilterTap != null && widget.filterInline)
                   VitIconButton(
+                    key: widget.filterKey,
                     icon: Icons.tune_rounded,
                     tooltip: widget.filterActive
                         ? 'Disable filters'
@@ -214,6 +220,7 @@ class _VitSearchBarState extends State<VitSearchBar> {
             !widget.filterInline) ...[
           const SizedBox(width: AppSpacing.x3),
           VitIconButton(
+            key: widget.filterKey,
             icon: Icons.tune_rounded,
             tooltip: widget.filterActive ? 'Disable filters' : 'Enable filters',
             onPressed: widget.onFilterTap,

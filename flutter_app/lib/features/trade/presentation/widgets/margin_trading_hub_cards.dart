@@ -1,4 +1,4 @@
-﻿part of '../pages/margin_trading_hub_page.dart';
+part of '../pages/margin_trading_hub_page.dart';
 
 class _FeatureCard extends StatelessWidget {
   const _FeatureCard({required this.feature});
@@ -88,13 +88,10 @@ class _ComplianceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _hubGreen.withValues(alpha: .08),
-        border: Border.all(color: _hubGreen.withValues(alpha: .24), width: 1.5),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _hubGreen.withValues(alpha: .24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -174,13 +171,9 @@ class _HubCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _hubPanel,
-        border: Border.all(color: _hubBorder.withValues(alpha: .68)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _hubBorder.withValues(alpha: .68),
       child: child,
     );
   }

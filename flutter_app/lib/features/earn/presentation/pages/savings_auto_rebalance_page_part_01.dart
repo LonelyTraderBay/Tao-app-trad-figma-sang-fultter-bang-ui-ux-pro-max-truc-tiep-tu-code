@@ -247,6 +247,7 @@ class _DriftStatusCard extends StatelessWidget {
           ),
           if (needsAction)
             TextButton(
+              key: SavingsAutoRebalancePage.previewButtonKey,
               onPressed: onPreview,
               style: TextButton.styleFrom(
                 foregroundColor: AppColors.primary,

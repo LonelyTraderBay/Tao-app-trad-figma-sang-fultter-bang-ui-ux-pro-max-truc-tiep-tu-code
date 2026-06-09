@@ -156,85 +156,70 @@ class _NewsArticleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final type = article.type;
-    return Material(
-      color: AppColors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: pinned
-                ? _newsPrimary.withValues(alpha: .06)
-                : AppColors.cardBg,
-            border: Border.all(
-              color: pinned
-                  ? _newsPrimary.withValues(alpha: .28)
-                  : AppColors.cardBorder,
-            ),
-            borderRadius: AppRadii.cardRadius,
-          ),
-          child: Column(
+    return VitCard(
+      width: double.infinity,
+      variant: pinned ? VitCardVariant.inner : VitCardVariant.standard,
+      borderColor: pinned
+          ? _newsPrimary.withValues(alpha: .28)
+          : AppColors.cardBorder,
+      padding: const EdgeInsets.all(16),
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _TypeAvatar(type: type),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _ArticleMeta(article: article, pinned: pinned),
-                        const SizedBox(height: 8),
-                        Text(
-                          article.title,
-                          style: AppTextStyles.baseMedium.copyWith(
-                            fontSize: 15,
-                            height: 1.25,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 7),
-                        Text(
-                          article.summary,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text2,
-                            fontSize: 13,
-                            height: 1.34,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 6),
-                    child: Icon(
-                      Icons.chevron_right_rounded,
-                      color: AppColors.text3,
-                      size: 22,
-                    ),
-                  ),
-                ],
-              ),
-              if (article.tags.isNotEmpty) ...[
-                const SizedBox(height: 12),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 6,
+              _TypeAvatar(type: type),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    for (final tag in article.tags) _TagChip(label: tag),
+                    _ArticleMeta(article: article, pinned: pinned),
+                    const SizedBox(height: 8),
+                    Text(
+                      article.title,
+                      style: AppTextStyles.baseMedium.copyWith(
+                        fontSize: 15,
+                        height: 1.25,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 7),
+                    Text(
+                      article.summary,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text2,
+                        fontSize: 13,
+                        height: 1.34,
+                      ),
+                    ),
                   ],
                 ),
-              ],
+              ),
+              const SizedBox(width: 10),
+              const Padding(
+                padding: EdgeInsets.only(top: 6),
+                child: Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.text3,
+                  size: 22,
+                ),
+              ),
             ],
           ),
-        ),
+          if (article.tags.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 8,
+              runSpacing: 6,
+              children: [for (final tag in article.tags) _TagChip(label: tag)],
+            ),
+          ],
+        ],
       ),
     );
   }

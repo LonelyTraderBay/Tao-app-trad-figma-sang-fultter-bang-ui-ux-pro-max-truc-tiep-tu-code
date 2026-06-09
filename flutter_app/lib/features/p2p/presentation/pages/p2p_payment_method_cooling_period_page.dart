@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -64,21 +65,34 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
                       AppSpacing.contentPad,
                       bottomInset,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      customGap: AppSpacing.x5,
                       children: [
-                        _CoolingHero(
-                          daysLeft: controller.daysLeft,
-                          hoursLeft: controller.hoursLeft,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            _CoolingHero(
+                              daysLeft: controller.daysLeft,
+                              hoursLeft: controller.hoursLeft,
+                            ),
+                            const SizedBox(height: AppSpacing.x4),
+                            _TimelineCard(snapshot: snapshot),
+                            const SizedBox(height: AppSpacing.x5),
+                            _ReasonCard(reasons: snapshot.reasons),
+                            const SizedBox(height: AppSpacing.x5),
+                            _WaitingNote(
+                              title: snapshot.waitTitle,
+                              message: snapshot.waitMessage,
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: AppSpacing.x4),
-                        _TimelineCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
-                        _ReasonCard(reasons: snapshot.reasons),
-                        const SizedBox(height: AppSpacing.x5),
-                        _WaitingNote(
-                          title: snapshot.waitTitle,
-                          message: snapshot.waitMessage,
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Payment method cooling review',
+                          message:
+                              'New payment methods stay restricted until the waiting period completes. Keep escrow, dispute, and withdrawal limits visible before enabling use.',
+                          contractId: 'SC-235',
                         ),
                       ],
                     ),

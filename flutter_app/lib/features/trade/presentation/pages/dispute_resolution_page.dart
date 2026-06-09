@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -22,7 +24,6 @@ const _disputePrimary = AppColors.primary;
 const _disputeField = AppColors.surface2;
 const _disputeFieldBorder = AppColors.borderSolid;
 const _disputeFooter = AppColors.surface;
-const _disputeDangerBackground = AppColors.disputeDangerBg;
 
 class DisputeResolutionPage extends ConsumerStatefulWidget {
   const DisputeResolutionPage({super.key, this.shellRenderMode});
@@ -124,8 +125,13 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
                         20,
                         _activeTabId == 'file' ? 24 : activeBottomInset + 20,
                       ),
-                      child: _activeTabId == 'file'
-                          ? _FileComplaintTab(
+                      child: VitPageContent(
+                        padding: VitContentPadding.none,
+                        customGap: 0,
+                        fullBleed: true,
+                        children: [
+                          if (_activeTabId == 'file')
+                            _FileComplaintTab(
                               snapshot: snapshot,
                               selectedType: _selectedType,
                               selectedProviderId: _selectedProviderId,
@@ -139,11 +145,14 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
                               onUpload: () =>
                                   setState(() => _evidenceAttached = true),
                             )
-                          : _CasesTab(
+                          else
+                            _CasesTab(
                               activeTabId: _activeTabId,
                               snapshot: snapshot,
                               lastResult: _lastResult,
                             ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

@@ -7,14 +7,11 @@ class _WarningBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-      decoration: BoxDecoration(
-        color: AppColors.warn08,
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: AppColors.warn15),
-      ),
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.warn15,
       child: Row(
         children: [
           const Icon(
@@ -94,8 +91,8 @@ class _VerifyStep extends StatelessWidget {
                 height: 1,
                 child: Opacity(
                   opacity: 0,
-                  child: TextField(
-                    key: TwoFASetupPage.codeFieldKey,
+                  child: VitInput(
+                    fieldKey: TwoFASetupPage.codeFieldKey,
                     controller: controller,
                     focusNode: focusNode,
                     autofocus: true,
@@ -172,14 +169,11 @@ class _ErrorBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: AppColors.sell10,
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: AppColors.sell20),
-      ),
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.sell20,
       child: Text(
         error,
         textAlign: TextAlign.center,

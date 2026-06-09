@@ -45,14 +45,10 @@ class _ChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: height,
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
-      decoration: BoxDecoration(
-        color: _gasPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _gasBorder),
-      ),
+      borderColor: _gasBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -77,13 +73,9 @@ class _BestTimeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _gasGreen.withValues(alpha: .07),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _gasGreen.withValues(alpha: .22)),
-      ),
+      borderColor: _gasGreen.withValues(alpha: .22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

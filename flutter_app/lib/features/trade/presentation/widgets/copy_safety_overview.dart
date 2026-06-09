@@ -7,14 +7,10 @@ class _HeroBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       constraints: const BoxConstraints(minHeight: 95),
       padding: const EdgeInsets.fromLTRB(16, 15, 16, 14),
-      decoration: BoxDecoration(
-        color: _safetyPrimary.withValues(alpha: .11),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _safetyPrimary, width: 2),
-      ),
+      borderColor: _safetyPrimary,
       child: Row(
         children: [
           Container(
@@ -195,7 +191,7 @@ class _VerificationTierCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(tier.colorHex);
-    return Container(
+    return VitCard(
       constraints: BoxConstraints(
         minHeight: tier.tier == 'Basic'
             ? 207
@@ -204,11 +200,7 @@ class _VerificationTierCard extends StatelessWidget {
             : 296,
       ),
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
-      decoration: BoxDecoration(
-        color: _safetyCard,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: color, width: 2),
-      ),
+      borderColor: color,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

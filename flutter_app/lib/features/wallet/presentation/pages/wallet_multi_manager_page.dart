@@ -9,7 +9,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_multi_manager_sections.dart';
 
@@ -87,17 +89,35 @@ class _WalletMultiManagerPageState
   }
 
   Widget _contentForTab(WalletMultiManagerSnapshot snapshot) {
-    if (_tab == _tabGroups) return WalletGroupsTab(snapshot: snapshot);
-    if (_tab == _tabActivity) return WalletActivityTab(snapshot: snapshot);
-    return WalletAllWalletsTab(
-      snapshot: snapshot,
-      selectedWalletId: _selectedWalletId,
-      revealedWalletIds: _revealedWalletIds,
-      copiedWalletId: _copiedWalletId,
-      onSelectWallet: (walletId) =>
-          setState(() => _selectedWalletId = walletId),
-      onRevealWallet: _toggleReveal,
-      onCopyWallet: _copyWallet,
+    final tabContent = switch (_tab) {
+      _tabGroups => WalletGroupsTab(snapshot: snapshot),
+      _tabActivity => WalletActivityTab(snapshot: snapshot),
+      _ => WalletAllWalletsTab(
+        snapshot: snapshot,
+        selectedWalletId: _selectedWalletId,
+        revealedWalletIds: _revealedWalletIds,
+        copiedWalletId: _copiedWalletId,
+        onSelectWallet: (walletId) =>
+            setState(() => _selectedWalletId = walletId),
+        onRevealWallet: _toggleReveal,
+        onCopyWallet: _copyWallet,
+      ),
+    };
+
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      customGap: 0,
+      fullBleed: true,
+      children: [
+        const VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Review wallet privacy',
+          message:
+              'Reveal or copy masked wallet addresses only when you trust the destination and next step.',
+        ),
+        const SizedBox(height: 14),
+        tabContent,
+      ],
     );
   }
 

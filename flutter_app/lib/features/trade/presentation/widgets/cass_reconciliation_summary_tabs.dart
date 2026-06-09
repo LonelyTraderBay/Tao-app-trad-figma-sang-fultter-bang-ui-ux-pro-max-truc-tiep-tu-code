@@ -55,14 +55,10 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 89,
       padding: const EdgeInsets.fromLTRB(12, 16, 12, 13),
-      decoration: BoxDecoration(
-        color: _cassPanel,
-        border: Border.all(color: _cassBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _cassBorder.withValues(alpha: .72),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

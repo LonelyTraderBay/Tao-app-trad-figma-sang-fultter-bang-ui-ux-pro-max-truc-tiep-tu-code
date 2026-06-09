@@ -89,13 +89,9 @@ class _SubAccountInfoNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(14, 13, 14, 13),
-      decoration: BoxDecoration(
-        color: AppColors.primary08,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.primary20),
-      ),
+      borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

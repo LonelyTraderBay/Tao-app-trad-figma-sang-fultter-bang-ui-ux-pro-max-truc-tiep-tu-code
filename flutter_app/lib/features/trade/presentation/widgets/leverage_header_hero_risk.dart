@@ -30,22 +30,11 @@ class _LeverageHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 178,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 22),
-      decoration: BoxDecoration(
-        color: riskColor.withValues(alpha: .08),
-        borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: riskColor.withValues(alpha: .32), width: 1.5),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            riskColor.withValues(alpha: .10),
-            riskColor.withValues(alpha: .04),
-          ],
-        ),
-      ),
+      radius: VitCardRadius.lg,
+      borderColor: riskColor.withValues(alpha: .32),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -103,48 +92,52 @@ class _RiskMeter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'M\u1EE9c r\u1EE7i ro',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text3,
-                fontSize: 12,
-              ),
-            ),
-            Text(
-              preview.riskLabel,
-              style: AppTextStyles.caption.copyWith(
-                color: riskColor,
-                fontSize: 12,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Row(
-          children: [
-            for (var level = 1; level <= 6; level++) ...[
-              Expanded(
-                child: Container(
-                  height: 7,
-                  decoration: BoxDecoration(
-                    color: level <= preview.riskLevel
-                        ? _segmentColor(level)
-                        : _chipBackground,
-                    borderRadius: AppRadii.xsRadius,
-                  ),
+    return VitCard(
+      padding: const EdgeInsets.all(14),
+      borderColor: riskColor.withValues(alpha: .18),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'M\u1EE9c r\u1EE7i ro',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text3,
+                  fontSize: 12,
                 ),
               ),
-              if (level != 6) const SizedBox(width: 5),
+              Text(
+                preview.riskLabel,
+                style: AppTextStyles.caption.copyWith(
+                  color: riskColor,
+                  fontSize: 12,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
             ],
-          ],
-        ),
-      ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              for (var level = 1; level <= 6; level++) ...[
+                Expanded(
+                  child: Container(
+                    height: 7,
+                    decoration: BoxDecoration(
+                      color: level <= preview.riskLevel
+                          ? _segmentColor(level)
+                          : _chipBackground,
+                      borderRadius: AppRadii.xsRadius,
+                    ),
+                  ),
+                ),
+                if (level != 6) const SizedBox(width: 5),
+              ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 

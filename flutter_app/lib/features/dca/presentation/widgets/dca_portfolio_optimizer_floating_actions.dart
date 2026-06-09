@@ -1,72 +1,24 @@
 part of '../pages/dca_portfolio_optimizer_page.dart';
 
-class _FloatingActions extends StatelessWidget {
-  const _FloatingActions({
-    required this.onShare,
-    required this.onSettings,
-    required this.onApply,
-  });
+class _OptimizerApplyAction extends StatelessWidget {
+  const _OptimizerApplyAction({required this.onApply});
 
-  final VoidCallback onShare;
-  final VoidCallback onSettings;
   final VoidCallback onApply;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _FloatingIconButton(icon: Icons.share_outlined, onTap: onShare),
-        const SizedBox(width: AppSpacing.x3),
-        _FloatingIconButton(
-          key: DCAPortfolioOptimizer.driftSettingsKey,
-          icon: Icons.notifications_none_rounded,
-          iconColor: AppColors.warn,
-          onTap: onSettings,
-        ),
-        const SizedBox(width: AppSpacing.x3),
-        Expanded(
-          child: VitCtaButton(
-            key: DCAPortfolioOptimizer.applyKey,
-            onPressed: onApply,
-            leading: const Icon(Icons.arrow_outward_rounded),
-            child: const Text('Áp dụng phân bổ'),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _FloatingIconButton extends StatelessWidget {
-  const _FloatingIconButton({
-    super.key,
-    required this.icon,
-    required this.onTap,
-    this.iconColor = AppColors.navCenterIcon,
-  });
-
-  final IconData icon;
-  final VoidCallback onTap;
-  final Color iconColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.inputHeight,
-      height: AppSpacing.inputHeight,
-      child: VitCtaButton(
-        onPressed: onTap,
-        fullWidth: false,
-        padding: EdgeInsets.zero,
-        child: Icon(icon, color: iconColor, size: AppSpacing.iconMd),
-      ),
+    return VitCtaButton(
+      key: DCAPortfolioOptimizer.applyKey,
+      onPressed: onApply,
+      leading: const Icon(Icons.arrow_outward_rounded),
+      child: const Text('Áp dụng phân bổ'),
     );
   }
 }
 
 class _MiniButton extends StatelessWidget {
   const _MiniButton({
+    super.key,
     required this.label,
     required this.icon,
     required this.color,

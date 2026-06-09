@@ -35,10 +35,14 @@ class _MarketDataAnalyticsPageState
                 child: SingleChildScrollView(
                   key: MarketDataAnalyticsPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 0,
                     children: [
                       _PairSelector(snapshot: snapshot),
+                      const SizedBox(height: 12),
+                      _MarketAnalyticsRiskPanel(snapshot: snapshot),
                       const SizedBox(height: 16),
                       _UnderlineTabs(
                         activeId: _tab,
@@ -70,13 +74,9 @@ class _PairSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 82,
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 13),
-      decoration: BoxDecoration(
-        color: _analyticsPanel,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Row(
         children: [
           Expanded(
@@ -95,6 +95,23 @@ class _PairSelector extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _MarketAnalyticsRiskPanel extends StatelessWidget {
+  const _MarketAnalyticsRiskPanel({required this.snapshot});
+
+  final TradeMarketDataAnalyticsSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitHighRiskStatePanel(
+      state: VitHighRiskUiState.riskReview,
+      title: 'Market data risk review',
+      message:
+          'Use ${snapshot.selectedPair} analytics as a preview input only. Confirm margin, liquidation risk, funding fee, position limits, and next steps before placing a trade.',
+      contractId: 'SC-089 analytics review',
     );
   }
 }
@@ -161,9 +178,9 @@ class _UnderlineTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 54,
-      color: _analyticsPanel,
+      padding: EdgeInsets.zero,
       child: Row(
         children: [
           for (final tab in _tabs)

@@ -10,7 +10,11 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -19,10 +23,6 @@ part '../widgets/provider_governance_page_details.dart';
 part '../widgets/provider_governance_page_common.dart';
 
 const _governancePrimary = AppColors.primary;
-const _governanceCard = AppColors.surface;
-const _governanceTabs = AppColors.surface;
-const _governanceHeroBackground = AppColors.primary15;
-const _governanceWarningBackground = AppColors.warningBg;
 const _governanceWarningBorder = AppColors.warningBorderStrong;
 const _governanceWarning = AppColors.caution;
 const _governancePill = AppColors.buy20;
@@ -84,10 +84,20 @@ class _ProviderGovernancePageState
                     child: SingleChildScrollView(
                       key: ProviderGovernancePage.contentKey,
                       padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      child: VitPageContent(
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        customGap: 0,
                         children: [
                           _ProviderDashboard(stats: snapshot.stats),
+                          const SizedBox(height: 14),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Provider governance review',
+                            message:
+                                'Review strategy change notice, follower impact, fee waterfall, compliance score, limits, and next steps before broadcasting or modifying strategy.',
+                            contractId: 'SC-081 provider governance review',
+                          ),
                           const SizedBox(height: 25),
                           _GovernanceTabs(
                             tabs: snapshot.tabs,

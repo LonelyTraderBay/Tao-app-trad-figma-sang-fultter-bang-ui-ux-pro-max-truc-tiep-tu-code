@@ -9,7 +9,9 @@ import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -115,11 +117,25 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                     child: SingleChildScrollView(
                       key: MarginTradingPage.contentKey,
                       padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      child: VitPageContent(
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        customGap: 0,
                         children: [
                           _ClientCategoryCard(
                             category: snapshot.clientCategory,
+                          ),
+                          const SizedBox(height: 12),
+                          const VitCard(
+                            variant: VitCardVariant.inner,
+                            padding: EdgeInsets.all(12),
+                            child: VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Margin order review required',
+                              message:
+                                  'Leverage, liquidation risk, fee estimate, limit, preview and confirmation are reviewed before order submission.',
+                              contractId: 'margin-trading-review',
+                            ),
                           ),
                           const SizedBox(height: 18),
                           _SegmentedTabs(
@@ -153,37 +169,43 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                             keyBuilder: MarginTradingPage.tabKey,
                           ),
                           const SizedBox(height: 16),
-                          if (_tab == 'trade')
-                            _TradeTab(
-                              snapshot: snapshot,
-                              side: _side,
-                              leverage: _leverage,
-                              orderType: _orderType,
-                              amount: _amount,
-                              showLeverageSheet: _showLeverageSheet,
-                              onSideChanged: (side) =>
-                                  setState(() => _side = side),
-                              onLeverageToggle: () => setState(
-                                () => _showLeverageSheet = !_showLeverageSheet,
-                              ),
-                              onLeverageChanged: (leverage) => setState(() {
-                                _leverage = leverage;
-                                _showLeverageSheet = false;
-                              }),
-                              onOrderTypeChanged: (type) =>
-                                  setState(() => _orderType = type),
-                              onMaxAmount: () => setState(() {
-                                _amount = controller.maxAmountFor(
+                          VitPageSection(
+                            customGap: 0,
+                            children: [
+                              if (_tab == 'trade')
+                                _TradeTab(
+                                  snapshot: snapshot,
+                                  side: _side,
                                   leverage: _leverage,
-                                );
-                              }),
-                              onNotice: (notice) =>
-                                  setState(() => _notice = notice),
-                            )
-                          else if (_tab == 'positions')
-                            _PositionsTab(positions: modePositions)
-                          else
-                            const _OrdersTab(),
+                                  orderType: _orderType,
+                                  amount: _amount,
+                                  showLeverageSheet: _showLeverageSheet,
+                                  onSideChanged: (side) =>
+                                      setState(() => _side = side),
+                                  onLeverageToggle: () => setState(
+                                    () => _showLeverageSheet =
+                                        !_showLeverageSheet,
+                                  ),
+                                  onLeverageChanged: (leverage) => setState(() {
+                                    _leverage = leverage;
+                                    _showLeverageSheet = false;
+                                  }),
+                                  onOrderTypeChanged: (type) =>
+                                      setState(() => _orderType = type),
+                                  onMaxAmount: () => setState(() {
+                                    _amount = controller.maxAmountFor(
+                                      leverage: _leverage,
+                                    );
+                                  }),
+                                  onNotice: (notice) =>
+                                      setState(() => _notice = notice),
+                                )
+                              else if (_tab == 'positions')
+                                _PositionsTab(positions: modePositions)
+                              else
+                                const _OrdersTab(),
+                            ],
+                          ),
                         ],
                       ),
                     ),

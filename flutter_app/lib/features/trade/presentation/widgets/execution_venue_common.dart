@@ -42,13 +42,9 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _venuePanel,
-        border: Border.all(color: _venueBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _venueBorder.withValues(alpha: .72),
       child: child,
     );
   }
@@ -68,13 +64,10 @@ class _NoticePanel extends StatelessWidget {
       top: MediaQuery.paddingOf(context).top + 18,
       child: Material(
         color: AppColors.transparent,
-        child: Container(
+        child: VitCard(
+          variant: VitCardVariant.inner,
           padding: const EdgeInsets.fromLTRB(12, 9, 8, 9),
-          decoration: BoxDecoration(
-            color: _venuePanel2,
-            border: Border.all(color: _venueBorder),
-            borderRadius: AppRadii.inputRadius,
-          ),
+          borderColor: _venueBorder,
           child: Row(
             children: [
               const Icon(

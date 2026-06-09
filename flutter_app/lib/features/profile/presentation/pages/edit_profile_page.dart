@@ -11,14 +11,12 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 const _editBackground = AppColors.bg;
-const _editPanel = AppColors.surface;
-const _editPanel2 = AppColors.surface2;
-const _editBorder = AppColors.borderSolid;
 const _editPrimary = AppColors.primary;
 const _editPurple = AppColors.primaryDark;
 const _editMuted = AppColors.text3;
@@ -92,8 +90,10 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                   key: EditProfilePage.contentKey,
                   physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(20, 36, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
                     children: [
                       _AvatarEditor(
                         initial: snapshot.user.fullName.substring(0, 1),
@@ -140,6 +140,13 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                                 : 'L\u01B0u thay \u0111\u1ED5i',
                           ),
                         ),
+                      ),
+                      const SizedBox(height: 14),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review profile changes',
+                        message:
+                            'Confirm name, phone number, avatar change, and account notification details before saving.',
                       ),
                     ],
                   ),
@@ -292,32 +299,13 @@ class _EditProfileField extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        Container(
-          height: 52,
-          decoration: BoxDecoration(
-            color: muted ? _editPanel : _editPanel2,
-            borderRadius: AppRadii.cardRadius,
-            border: Border.all(color: _editBorder, width: 1.2),
-          ),
-          alignment: Alignment.center,
-          child: TextField(
-            key: keyValue,
-            controller: controller,
-            readOnly: readOnly,
-            keyboardType: keyboardType,
-            onChanged: onChanged,
-            cursorColor: _editPrimary,
-            style: AppTextStyles.baseMedium.copyWith(
-              color: muted ? _editMuted : AppColors.text1,
-              fontSize: 15,
-              height: 1,
-            ),
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-              isCollapsed: true,
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
-            ),
-          ),
+        VitInput(
+          fieldKey: keyValue,
+          controller: controller,
+          semanticLabel: label,
+          enabled: !readOnly,
+          keyboardType: keyboardType,
+          onChanged: onChanged,
         ),
         if (note != null) ...[
           const SizedBox(height: 7),

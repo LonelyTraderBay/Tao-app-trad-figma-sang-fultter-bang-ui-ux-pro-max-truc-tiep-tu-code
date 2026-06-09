@@ -112,40 +112,7 @@ class _TradeSection extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 7),
-              Container(
-                height: AppSpacing.inputHeight,
-                padding: const EdgeInsets.symmetric(horizontal: 14),
-                decoration: BoxDecoration(
-                  color: AppColors.surface2,
-                  border: Border.all(color: AppColors.borderSolid),
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        onChanged: onAmountChanged,
-                        style: AppTextStyles.body.copyWith(
-                          fontFeatures: AppTextStyles.tabularFigures,
-                        ),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: '0.00',
-                          hintStyle: AppTextStyles.body.copyWith(
-                            color: AppColors.text3,
-                          ),
-                        ),
-                      ),
-                    ),
-                    _TinyBadge(
-                      label: 'USDT',
-                      color: AppColors.text2,
-                      background: AppColors.surface3,
-                    ),
-                  ],
-                ),
-              ),
+              _TradeAmountInput(amount: amount, onChanged: onAmountChanged),
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -187,6 +154,63 @@ class _TradeSection extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _TradeAmountInput extends StatefulWidget {
+  const _TradeAmountInput({required this.amount, required this.onChanged});
+
+  final String amount;
+  final ValueChanged<String> onChanged;
+
+  @override
+  State<_TradeAmountInput> createState() => _TradeAmountInputState();
+}
+
+class _TradeAmountInputState extends State<_TradeAmountInput> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.amount);
+  }
+
+  @override
+  void didUpdateWidget(covariant _TradeAmountInput oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.amount != widget.amount &&
+        _controller.text != widget.amount) {
+      _controller.value = TextEditingValue(
+        text: widget.amount,
+        selection: TextSelection.collapsed(offset: widget.amount.length),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return VitInput(
+      controller: _controller,
+      keyboardType: TextInputType.number,
+      onChanged: widget.onChanged,
+      semanticLabel: 'Prediction order amount',
+      hintText: '0.00',
+      textStyle: AppTextStyles.body.copyWith(
+        fontFeatures: AppTextStyles.tabularFigures,
+      ),
+      suffix: _TinyBadge(
+        label: 'USDT',
+        color: AppColors.text2,
+        background: AppColors.surface3,
+      ),
     );
   }
 }

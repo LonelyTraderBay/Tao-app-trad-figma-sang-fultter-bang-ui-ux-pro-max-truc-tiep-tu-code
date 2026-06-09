@@ -7,13 +7,9 @@ class _WarningCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-      decoration: BoxDecoration(
-        color: _safetyWarningBackground,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _safetyWarningBorder),
-      ),
+      borderColor: _safetyWarningBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -90,12 +86,8 @@ class _MetricCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: _safetyCard,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.cardBorder),
-      ),
+    return VitCard(
+      borderColor: AppColors.cardBorder,
       child: Column(
         children: [
           InkWell(
@@ -316,8 +308,11 @@ class _ToolButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(tool.colorHex);
-    return InkWell(
+    return VitCard(
       key: CopySafetyCenterPage.toolKey(tool.id),
+      variant: VitCardVariant.inner,
+      padding: const EdgeInsets.all(14),
+      borderColor: AppColors.cardBorder,
       onTap: () {
         if (tool.routePath != null) {
           context.go(tool.routePath!);
@@ -325,52 +320,43 @@ class _ToolButton extends StatelessWidget {
           onEmergency();
         }
       },
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: AppColors.surface2,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: AppColors.cardBorder),
-        ),
-        child: Row(
-          children: [
-            Icon(
-              tool.id == 'block'
-                  ? Icons.block_rounded
-                  : tool.id == 'report'
-                  ? Icons.flag_outlined
-                  : Icons.warning_amber_rounded,
-              color: color,
-              size: 20,
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    tool.title,
-                    style: AppTextStyles.caption.copyWith(
-                      color: tool.id == 'emergency' ? color : AppColors.text1,
-                      fontSize: 13,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+      child: Row(
+        children: [
+          Icon(
+            tool.id == 'block'
+                ? Icons.block_rounded
+                : tool.id == 'report'
+                ? Icons.flag_outlined
+                : Icons.warning_amber_rounded,
+            color: color,
+            size: 20,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  tool.title,
+                  style: AppTextStyles.caption.copyWith(
+                    color: tool.id == 'emergency' ? color : AppColors.text1,
+                    fontSize: 13,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(height: 3),
-                  Text(
-                    tool.description,
-                    style: AppTextStyles.micro.copyWith(
-                      color: tool.id == 'emergency' ? color : AppColors.text3,
-                      fontSize: 10,
-                    ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  tool.description,
+                  style: AppTextStyles.micro.copyWith(
+                    color: tool.id == 'emergency' ? color : AppColors.text3,
+                    fontSize: 10,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Icon(Icons.chevron_right_rounded, color: color, size: 18),
-          ],
-        ),
+          ),
+          Icon(Icons.chevron_right_rounded, color: color, size: 18),
+        ],
       ),
     );
   }

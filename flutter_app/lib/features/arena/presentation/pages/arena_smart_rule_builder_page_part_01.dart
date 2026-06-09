@@ -264,14 +264,16 @@ class _GuidanceLink extends StatelessWidget {
 
 class _TitleField extends StatelessWidget {
   const _TitleField({
-    required this.title,
+    required this.controller,
     required this.suggestions,
     required this.onChanged,
+    required this.onSuggestion,
   });
 
-  final String title;
+  final TextEditingController controller;
   final List<String> suggestions;
   final ValueChanged<String> onChanged;
+  final ValueChanged<String> onSuggestion;
 
   @override
   Widget build(BuildContext context) {
@@ -281,11 +283,12 @@ class _TitleField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextField(
-            key: ArenaSmartRuleBuilderPage.titleKey,
+          VitInput(
+            fieldKey: ArenaSmartRuleBuilderPage.titleKey,
+            controller: controller,
+            semanticLabel: 'Arena challenge title',
+            hintText: 'VD: BTC Weekly Predict - Tuan 10',
             onChanged: onChanged,
-            style: AppTextStyles.base.copyWith(color: AppColors.text1),
-            decoration: _inputDecoration('VD: BTC Weekly Predict — Tuần 10'),
           ),
           const SizedBox(height: AppSpacing.x3),
           Wrap(
@@ -294,7 +297,7 @@ class _TitleField extends StatelessWidget {
             children: [
               for (final suggestion in suggestions)
                 GestureDetector(
-                  onTap: () => onChanged(suggestion),
+                  onTap: () => onSuggestion(suggestion),
                   child: Text(
                     '"$suggestion"',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),

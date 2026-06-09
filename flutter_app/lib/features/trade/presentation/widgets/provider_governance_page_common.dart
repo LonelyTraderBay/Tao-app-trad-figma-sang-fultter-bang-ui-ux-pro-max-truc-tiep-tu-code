@@ -12,12 +12,9 @@ class _MessagePanel extends StatelessWidget {
         decoration: const BoxDecoration(color: AppColors.modalScrim),
         child: Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
+          child: VitCard(
+            radius: VitCardRadius.lg,
             padding: const EdgeInsets.all(20),
-            decoration: const BoxDecoration(
-              color: AppColors.bg,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,

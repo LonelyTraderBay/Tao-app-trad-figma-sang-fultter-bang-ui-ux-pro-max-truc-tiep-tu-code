@@ -63,19 +63,17 @@ class _SwapInputCard extends StatelessWidget {
               _TokenButton(token: fromToken, color: AppColors.buy),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
-                child: TextField(
+                child: VitInput(
                   controller: amountController,
                   onChanged: onAmountChanged,
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.end,
-                  style: AppTextStyles.base.copyWith(
+                  semanticLabel: 'Launchpad swap amount',
+                  hintText: '0.00',
+                  textStyle: AppTextStyles.base.copyWith(
                     color: AppColors.text1,
                     fontSize: 18,
                     fontWeight: AppTextStyles.bold,
-                  ),
-                  decoration: const InputDecoration.collapsed(
-                    hintText: '0.00',
-                    hintStyle: TextStyle(color: AppColors.text3),
                   ),
                 ),
               ),

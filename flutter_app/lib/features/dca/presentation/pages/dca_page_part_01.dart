@@ -8,12 +8,11 @@ class _DCAPageState extends ConsumerState<DCAPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(dcaDashboardProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final stickyBottom =
+    final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + AppSpacing.x5
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
-    final bottomInset = stickyBottom + AppSpacing.ctaHeight + AppSpacing.x6;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -77,17 +76,6 @@ class _DCAPageState extends ConsumerState<DCAPage> {
                             ),
                           ],
                         ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 60,
-                      right: 60,
-                      bottom: stickyBottom,
-                      child: VitCtaButton(
-                        key: DCAPage.createPlanKey,
-                        onPressed: _openCreateSheet,
-                        leading: const Icon(Icons.add_rounded),
-                        child: const Text('Tạo kế hoạch mới'),
                       ),
                     ),
                     if (_createSheetOpen)
@@ -277,7 +265,7 @@ class _DcaOverviewCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _OverviewAction(
-                  key: DCAPage.overviewCreateKey,
+                  key: DCAPage.createPlanKey,
                   icon: Icons.add_rounded,
                   label: 'Tạo mới',
                   color: AppColors.buy,

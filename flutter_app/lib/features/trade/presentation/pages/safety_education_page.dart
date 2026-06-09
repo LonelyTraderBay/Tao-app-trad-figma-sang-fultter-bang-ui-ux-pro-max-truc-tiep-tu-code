@@ -10,7 +10,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -18,9 +20,7 @@ part '../widgets/safety_education_page_sections.dart';
 part '../widgets/safety_education_page_common.dart';
 
 const _safetyPrimary = AppColors.primary;
-const _safetyCard = AppColors.surface;
 const _safetyTabs = AppColors.surface;
-const _safetyHeroBackground = AppColors.primary15;
 
 class SafetyEducationPage extends ConsumerStatefulWidget {
   const SafetyEducationPage({super.key, this.shellRenderMode});
@@ -78,11 +78,18 @@ class _SafetyEducationPageState extends ConsumerState<SafetyEducationPage> {
                 child: SingleChildScrollView(
                   key: SafetyEducationPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 18,
+                    fullBleed: true,
                     children: [
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review copy-trading safety signals',
+                        message:
+                            'Confirm scam indicators, provider verification, reporting limits, and next steps before copying.',
+                      ),
                       _HeroBanner(snapshot: snapshot),
-                      const SizedBox(height: 25),
                       _SafetyTabs(
                         tabs: snapshot.tabs,
                         activeId: _activeTabId,
@@ -93,7 +100,6 @@ class _SafetyEducationPageState extends ConsumerState<SafetyEducationPage> {
                           });
                         },
                       ),
-                      const SizedBox(height: 25),
                       if (_activeTabId == 'scams')
                         _ScamsTab(
                           scams: snapshot.scams,

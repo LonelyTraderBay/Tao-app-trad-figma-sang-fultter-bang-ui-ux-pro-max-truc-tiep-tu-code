@@ -73,34 +73,15 @@ class _TextInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: height,
-      child: TextField(
+      child: VitInput(
+        fieldKey: key,
         controller: controller,
-        maxLength: maxLength,
+        hintText: hint,
+        inputFormatters: maxLength == null
+            ? null
+            : [LengthLimitingTextInputFormatter(maxLength!)],
         onChanged: onChanged,
         onSubmitted: onSubmitted,
-        cursorColor: _apiPrimary,
-        style: AppTextStyles.caption.copyWith(
-          color: AppColors.text1,
-          fontSize: 14,
-          fontWeight: FontWeight.w700,
-          height: 1,
-        ),
-        decoration: InputDecoration(
-          counterText: '',
-          filled: true,
-          fillColor: _apiPanel2,
-          hintText: hint,
-          hintStyle: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-            height: 1,
-          ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-          border: _inputBorder(_apiBorder),
-          enabledBorder: _inputBorder(_apiBorder),
-          focusedBorder: _inputBorder(_apiPrimary, width: 1.5),
-        ),
       ),
     );
   }
@@ -120,26 +101,10 @@ class _PrimaryCta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: enabled ? onTap : null,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: AppSpacing.inputHeight,
-        decoration: BoxDecoration(
-          color: enabled ? _apiPrimary : _apiPanel2,
-          borderRadius: AppRadii.cardRadius,
-        ),
-        alignment: Alignment.center,
-        child: Text(
-          label,
-          style: AppTextStyles.baseMedium.copyWith(
-            color: enabled ? AppColors.onAccent : AppColors.borderSolid,
-            fontSize: 16,
-            fontWeight: FontWeight.w800,
-            height: 1,
-          ),
-        ),
-      ),
+    return VitCtaButton(
+      onPressed: enabled ? onTap : null,
+      height: AppSpacing.inputHeight,
+      child: Text(label),
     );
   }
 }
@@ -181,14 +146,11 @@ class _SimpleStepScaffold extends StatelessWidget {
                 child: SingleChildScrollView(
                   padding: EdgeInsets.fromLTRB(20, 28, 20, bottomInset),
                   physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      for (final child in children) ...[
-                        child,
-                        if (child != children.last) const SizedBox(height: 18),
-                      ],
-                    ],
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 18,
+                    fullBleed: true,
+                    children: children,
                   ),
                 ),
               ),
@@ -242,13 +204,9 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _apiPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _apiBorder),
-      ),
+      borderColor: _apiBorder,
       child: Column(
         children: [
           for (final row in rows) ...[
@@ -294,13 +252,9 @@ class _WarningCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = amber ? _apiAmber : _apiRed;
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .08),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: color.withValues(alpha: .22)),
-      ),
+      borderColor: color.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -330,13 +284,9 @@ class _KeyResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _apiPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _apiBorder),
-      ),
+      borderColor: _apiBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -361,13 +311,6 @@ class _KeyResultCard extends StatelessWidget {
       ),
     );
   }
-}
-
-OutlineInputBorder _inputBorder(Color color, {double width = 1.5}) {
-  return OutlineInputBorder(
-    borderRadius: AppRadii.cardRadius,
-    borderSide: BorderSide(color: color, width: width),
-  );
 }
 
 IconData _apiPermissionIcon(String key) {

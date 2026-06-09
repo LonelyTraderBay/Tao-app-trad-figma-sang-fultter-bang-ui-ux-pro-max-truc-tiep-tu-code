@@ -143,6 +143,17 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                             ),
                             const SizedBox(height: AppSpacing.x3),
                           ],
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'P2P order list review',
+                            message:
+                                'Pending, completed and disputed orders keep status, amount, merchant, detail route and next settlement step visible before navigation.',
+                            contractId: 'p2p-my-orders-review',
+                          ),
+                        ),
                       ],
                     ),
                   ),

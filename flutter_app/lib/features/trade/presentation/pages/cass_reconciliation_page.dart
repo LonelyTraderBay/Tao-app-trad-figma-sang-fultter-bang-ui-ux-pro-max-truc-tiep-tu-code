@@ -10,7 +10,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -77,21 +79,22 @@ class _CassReconciliationPageState
                 child: SingleChildScrollView(
                   key: CassReconciliationPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 14,
+                    fullBleed: true,
                     children: [
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review CASS reconciliation evidence',
+                        message:
+                            'Confirm client-money balances, discrepancy status, limits, and next steps before export or escalation.',
+                      ),
                       _SummaryGrid(snapshot: snapshot),
-                      const SizedBox(height: 25),
                       _Tabs(activeId: _tab, onChanged: _setTab),
-                      const SizedBox(height: 24),
                       const _SectionLabel('Reconciliation Records'),
-                      const SizedBox(height: 12),
-                      for (final record in snapshot.records) ...[
+                      for (final record in snapshot.records)
                         _RecordCard(record: record),
-                        if (record != snapshot.records.last)
-                          const SizedBox(height: 12),
-                      ],
-                      const SizedBox(height: 23),
                       const _ExportButton(),
                     ],
                   ),

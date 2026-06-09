@@ -8,14 +8,10 @@ class _AuditEntryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = _styleForCategory(entry.category);
-    return Container(
+    return VitCard(
       constraints: const BoxConstraints(minHeight: 89),
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
-      decoration: BoxDecoration(
-        color: _auditPanel,
-        border: Border.all(color: _auditBorder.withValues(alpha: .76)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _auditBorder.withValues(alpha: .76),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -139,29 +135,20 @@ class _ExportActions extends StatelessWidget {
       children: [
         for (final format in formats) ...[
           Expanded(
-            child: SizedBox(
+            child: VitCtaButton(
+              key: AuditTrailPage.exportKey(format),
+              onPressed: () {},
+              variant: VitCtaButtonVariant.secondary,
               height: 40,
-              child: OutlinedButton.icon(
-                key: AuditTrailPage.exportKey(format),
-                onPressed: () {},
-                icon: const Icon(Icons.download_rounded, size: 14),
-                label: Text(
-                  format,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontFamily: 'Roboto',
-                    fontSize: 12,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
-                  ),
-                ),
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: _auditPanel2,
-                  foregroundColor: AppColors.text1,
-                  side: BorderSide(color: _auditBorder.withValues(alpha: .82)),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadii.lgRadius,
-                  ),
+              leading: const Icon(Icons.download_rounded, size: 14),
+              child: Text(
+                format,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text1,
+                  fontFamily: 'Roboto',
+                  fontSize: 12,
+                  fontWeight: AppTextStyles.bold,
+                  height: 1,
                 ),
               ),
             ),

@@ -181,40 +181,21 @@ class _QuickAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 44,
-        padding: const EdgeInsets.symmetric(horizontal: 13),
-        decoration: BoxDecoration(
-          color: _armPanel2,
-          border: Border.all(color: _armBorder),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Row(
-          children: [
-            Icon(icon, color: color, size: 17),
-            const SizedBox(width: 9),
-            Expanded(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontSize: 12,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
-              ),
-            ),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: 17,
-            ),
-          ],
+    return VitCtaButton(
+      onPressed: onTap,
+      variant: VitCtaButtonVariant.secondary,
+      height: 44,
+      leading: Icon(icon, color: color, size: 17),
+      trailing: const Icon(Icons.chevron_right_rounded, size: 17),
+      child: Text(
+        label,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: AppTextStyles.caption.copyWith(
+          color: AppColors.text1,
+          fontSize: 12,
+          fontWeight: AppTextStyles.bold,
+          height: 1,
         ),
       ),
     );

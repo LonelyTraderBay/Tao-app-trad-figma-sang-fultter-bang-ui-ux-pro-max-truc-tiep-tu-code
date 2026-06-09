@@ -7,14 +7,11 @@ class _DocumentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 56,
       padding: const EdgeInsets.fromLTRB(12, 9, 12, 9),
-      decoration: BoxDecoration(
-        color: _inspectionPanel,
-        border: Border.all(color: _inspectionBorder.withValues(alpha: .76)),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      radius: VitCardRadius.sm,
+      borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Row(
         children: [
           Container(
@@ -91,13 +88,9 @@ class _InspectorPortalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-      decoration: BoxDecoration(
-        color: _inspectionPanel,
-        border: Border.all(color: _inspectionBorder.withValues(alpha: .76)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Column(
         children: [
           Row(
@@ -144,30 +137,20 @@ class _InspectorPortalCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          SizedBox(
+          VitCtaButton(
             key: RegulatoryInspectionReadyPage.portalKey,
+            onPressed: () {},
+            variant: VitCtaButtonVariant.secondary,
             height: 40,
-            width: double.infinity,
-            child: OutlinedButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.open_in_new_rounded, size: 15),
-              label: Text(
-                snapshot.portalCta,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontFamily: 'Roboto',
-                  fontSize: 12,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
-              ),
-              style: OutlinedButton.styleFrom(
-                backgroundColor: _inspectionPanel2,
-                foregroundColor: AppColors.text1,
-                side: BorderSide(
-                  color: _inspectionBorder.withValues(alpha: .82),
-                ),
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+            leading: const Icon(Icons.open_in_new_rounded, size: 15),
+            child: Text(
+              snapshot.portalCta,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
+                fontFamily: 'Roboto',
+                fontSize: 12,
+                fontWeight: AppTextStyles.bold,
+                height: 1,
               ),
             ),
           ),
@@ -184,27 +167,21 @@ class _ReportButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitCtaButton(
       key: RegulatoryInspectionReadyPage.reportKey,
+      onPressed: () {},
+      variant: VitCtaButtonVariant.success,
       height: AppSpacing.inputHeight,
-      child: FilledButton.icon(
-        onPressed: () {},
-        icon: const Icon(Icons.download_rounded, size: 18),
-        label: Text(
-          snapshot.reportCta,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.body.copyWith(
-            color: AppColors.onAccent,
-            fontFamily: 'Roboto',
-            fontSize: 14,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-        style: FilledButton.styleFrom(
-          backgroundColor: _inspectionGreen,
-          foregroundColor: AppColors.onAccent,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
+      leading: const Icon(Icons.download_rounded, size: 18),
+      child: Text(
+        snapshot.reportCta,
+        overflow: TextOverflow.ellipsis,
+        style: AppTextStyles.body.copyWith(
+          color: AppColors.onAccent,
+          fontFamily: 'Roboto',
+          fontSize: 14,
+          fontWeight: AppTextStyles.bold,
+          height: 1,
         ),
       ),
     );

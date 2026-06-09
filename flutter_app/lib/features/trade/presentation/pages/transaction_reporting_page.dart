@@ -15,7 +15,9 @@ import 'package:vit_trade_flutter/features/trade/presentation/widgets/transactio
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class TransactionReportingPage extends ConsumerStatefulWidget {
   const TransactionReportingPage({super.key, this.shellRenderMode});
@@ -77,25 +79,29 @@ class _TransactionReportingPageState
                     child: SingleChildScrollView(
                       key: TransactionReportingPage.contentKey,
                       padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      child: VitPageContent(
+                        padding: VitContentPadding.none,
+                        customGap: 14,
+                        fullBleed: true,
                         children: [
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Review regulatory reporting queue',
+                            message:
+                                'Confirm report status, retry impact, and next steps before resubmitting transaction records.',
+                          ),
                           const TransactionReportingComplianceNotice(),
-                          const SizedBox(height: 14),
                           TransactionReportingStatsGrid(stats: snapshot.stats),
-                          const SizedBox(height: 14),
                           TransactionReportingSearchField(
                             query: _query,
                             onChanged: (value) =>
                                 setState(() => _query = value),
                           ),
-                          const SizedBox(height: 14),
                           TransactionReportingTabs(
                             activeId: _tab,
                             stats: snapshot.stats,
                             onChanged: (id) => setState(() => _tab = id),
                           ),
-                          const SizedBox(height: 16),
                           if (_tab == 'stats')
                             TransactionReportingStatsTab(stats: snapshot.stats)
                           else
@@ -117,7 +123,6 @@ class _TransactionReportingPageState
                                 setState(() => _notice = 'Message ID copied');
                               },
                             ),
-                          const SizedBox(height: 14),
                           TransactionReportingQuickActions(
                             onDashboard: () => context.go(
                               AppRoutePaths.tradeCopyRegulatoryReportsDashboard,

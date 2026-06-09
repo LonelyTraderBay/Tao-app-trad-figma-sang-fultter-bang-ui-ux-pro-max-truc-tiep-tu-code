@@ -1,4 +1,4 @@
-﻿part of '../pages/bot_faq_page.dart';
+part of '../pages/bot_faq_page.dart';
 
 class _FaqCard extends StatelessWidget {
   const _FaqCard({
@@ -17,13 +17,9 @@ class _FaqCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       key: BotFaqPage.questionKey(categoryId, index),
-      decoration: BoxDecoration(
-        color: _faqPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: Column(
         children: [
           GestureDetector(
@@ -123,14 +119,10 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 86,
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: _faqPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -164,13 +156,9 @@ class _HelpCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
-      decoration: BoxDecoration(
-        color: _faqPrimary.withValues(alpha: .08),
-        border: Border.all(color: _faqPrimary.withValues(alpha: .25)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _faqPrimary.withValues(alpha: .25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

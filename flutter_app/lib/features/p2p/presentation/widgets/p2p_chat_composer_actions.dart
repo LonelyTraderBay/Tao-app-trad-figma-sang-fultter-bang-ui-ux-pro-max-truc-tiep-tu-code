@@ -83,38 +83,14 @@ class _ChatComposer extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: AppSpacing.x1),
-                      TextField(
-                        key: P2PChatPage.inputKey,
+                      VitInput(
+                        fieldKey: P2PChatPage.inputKey,
                         controller: controller,
                         onChanged: (_) => onChanged(),
-                        minLines: 1,
-                        maxLines: 3,
-                        style: AppTextStyles.body.copyWith(
+                        semanticLabel: 'P2P encrypted chat message',
+                        hintText: 'Nhap tin nhan...',
+                        textStyle: AppTextStyles.body.copyWith(
                           color: AppColors.text1,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: 'Nhập tin nhắn...',
-                          hintStyle: AppTextStyles.body.copyWith(
-                            color: AppColors.text3,
-                          ),
-                          filled: true,
-                          fillColor: AppColors.surface2,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.x4,
-                            vertical: AppSpacing.x3,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: AppRadii.inputRadius,
-                            borderSide: const BorderSide(
-                              color: AppColors.borderSolid,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: AppRadii.inputRadius,
-                            borderSide: const BorderSide(
-                              color: AppModuleAccents.p2p,
-                            ),
-                          ),
                         ),
                       ),
                     ],

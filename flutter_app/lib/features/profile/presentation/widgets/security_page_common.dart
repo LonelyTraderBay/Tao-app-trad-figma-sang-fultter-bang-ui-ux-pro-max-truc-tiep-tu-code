@@ -13,10 +13,10 @@ class _AntiPhishingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: AppSpacing.buttonHero + AppSpacing.inputHeight,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
-      decoration: _cardDecoration(radius: 16),
+      borderColor: _securityBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -51,66 +51,22 @@ class _AntiPhishingCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 14),
-          Container(
-            height: AppSpacing.inputHeight,
-            decoration: BoxDecoration(
-              color: _securityPanel2,
-              borderRadius: AppRadii.cardLargeRadius,
-              border: Border.all(color: AppColors.borderSolid),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    key: SecurityPage.antiPhishingFieldKey,
-                    controller: controller,
-                    maxLength: 8,
-                    cursorColor: _securityPrimary,
-                    style: AppTextStyles.baseMedium.copyWith(
-                      color: AppColors.text1,
-                      fontSize: 14,
-                      height: 1,
-                    ),
-                    decoration: InputDecoration(
-                      counterText: '',
-                      border: InputBorder.none,
-                      isCollapsed: true,
-                      contentPadding: const EdgeInsets.only(left: 17),
-                      hintText: 'Nh\u1EADp m\u00E3 4\u20138 k\u00FD t\u1EF1',
-                      hintStyle: AppTextStyles.caption.copyWith(
-                        color: AppColors.text3,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        height: 1,
-                      ),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  key: SecurityPage.antiPhishingSaveKey,
-                  onTap: saving ? null : onSave,
-                  behavior: HitTestBehavior.opaque,
-                  child: Container(
-                    width: 50,
-                    height: 30,
-                    margin: const EdgeInsets.only(right: 16),
-                    decoration: BoxDecoration(
-                      color: _securityPrimary,
-                      borderRadius: AppRadii.cardRadius,
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      saving ? '...' : 'L\u01B0u',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.onAccent,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w900,
-                        height: 1,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+          VitInput(
+            fieldKey: SecurityPage.antiPhishingFieldKey,
+            controller: controller,
+            semanticLabel: 'Anti phishing code',
+            hintText: 'Nh\u1EADp m\u00E3 4\u20138 k\u00FD t\u1EF1',
+            inputFormatters: [LengthLimitingTextInputFormatter(8)],
+            suffix: SizedBox(
+              width: 58,
+              child: VitCtaButton(
+                key: SecurityPage.antiPhishingSaveKey,
+                onPressed: saving ? null : onSave,
+                loading: saving,
+                height: 32,
+                padding: EdgeInsets.zero,
+                child: Text(saving ? '...' : 'L\u01B0u'),
+              ),
             ),
           ),
         ],
@@ -130,10 +86,10 @@ class _SecuritySupportCard extends StatelessWidget {
       key: SecurityPage.supportKey,
       onTap: () => context.go(supportRoute),
       behavior: HitTestBehavior.opaque,
-      child: Container(
+      child: VitCard(
         height: 68,
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        decoration: _cardDecoration(radius: 16),
+        borderColor: _securityBorder,
         child: Row(
           children: [
             Container(
@@ -190,14 +146,6 @@ class _SecuritySupportCard extends StatelessWidget {
       ),
     );
   }
-}
-
-BoxDecoration _cardDecoration({required double radius}) {
-  return BoxDecoration(
-    color: _securityPanel,
-    borderRadius: BorderRadius.circular(radius),
-    border: Border.all(color: _securityBorder),
-  );
 }
 
 IconData _iconFor(String key) {

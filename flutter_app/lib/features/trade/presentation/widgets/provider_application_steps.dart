@@ -138,6 +138,14 @@ class _ReviewStep extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _StepTitle(title: 'Xem lại đơn đăng ký'),
+        const VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Review provider obligations',
+          message:
+              'Preview fee, disclosure, copier impact, limits, and next step before submitting this provider application.',
+          contractId: 'SC-069 provider review',
+        ),
+        const SizedBox(height: 12),
         _InfoPanel(
           icon: Icons.fact_check_outlined,
           title: 'Thông tin cơ bản',
@@ -172,31 +180,19 @@ class _FooterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final submit = step == TradeProviderApplicationStep.review;
-    return SizedBox(
+    return VitCtaButton(
+      key: submit
+          ? ProviderApplicationPage.submitKey
+          : ProviderApplicationPage.nextKey,
+      onPressed: enabled ? onPressed : null,
+      variant: submit
+          ? VitCtaButtonVariant.success
+          : VitCtaButtonVariant.primary,
       height: AppSpacing.inputHeight,
-      child: FilledButton.icon(
-        key: submit
-            ? ProviderApplicationPage.submitKey
-            : ProviderApplicationPage.nextKey,
-        onPressed: enabled ? onPressed : null,
-        style: FilledButton.styleFrom(
-          backgroundColor: submit ? _providerGreen : _providerPrimary,
-          disabledBackgroundColor: _providerPrimary.withValues(alpha: .42),
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
-        ),
-        icon: Icon(
-          submit ? Icons.workspace_premium_outlined : Icons.chevron_right,
-          size: 17,
-          color: AppColors.onAccent,
-        ),
-        label: Text(
-          submit ? 'Gửi đơn đăng ký' : 'Tiếp tục',
-          style: AppTextStyles.baseMedium.copyWith(
-            color: AppColors.onAccent,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
+      leading: Icon(
+        submit ? Icons.workspace_premium_outlined : Icons.chevron_right,
       ),
+      child: Text(submit ? 'Gửi đơn đăng ký' : 'Tiếp tục'),
     );
   }
 }

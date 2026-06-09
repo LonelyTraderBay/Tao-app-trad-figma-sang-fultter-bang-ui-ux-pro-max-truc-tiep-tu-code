@@ -117,6 +117,8 @@ void main() {
     await tester.tap(find.byKey(LaunchpadNotifSoundPage.toggleKey('master')));
     await tester.pumpAndSettle();
 
+    await tester.ensureVisible(find.byKey(LaunchpadNotifSoundPage.saveKey));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(LaunchpadNotifSoundPage.saveKey));
     await tester.pumpAndSettle();
 

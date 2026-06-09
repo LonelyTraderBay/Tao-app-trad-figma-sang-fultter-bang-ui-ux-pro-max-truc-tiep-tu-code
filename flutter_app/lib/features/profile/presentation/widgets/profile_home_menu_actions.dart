@@ -8,23 +8,17 @@ class _MenuSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = Color(section.accentHex);
-    return Container(
-      decoration: BoxDecoration(
-        color: _profilePanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _profileBorder),
-      ),
-      child: ClipRRect(
-        borderRadius: AppRadii.cardRadius,
-        child: Column(
-          children: [
-            for (final item in section.items) ...[
-              _MenuRow(item: item, accent: accent),
-              if (item != section.items.last)
-                const Divider(height: 1, color: AppColors.divider),
-            ],
+    return VitCard(
+      borderColor: _profileBorder,
+      clip: true,
+      child: Column(
+        children: [
+          for (final item in section.items) ...[
+            _MenuRow(item: item, accent: accent),
+            if (item != section.items.last)
+              const Divider(height: 1, color: AppColors.divider),
           ],
-        ),
+        ],
       ),
     );
   }
@@ -65,64 +59,57 @@ class _ProfileProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = Color(shortcut.accentHex);
-    return GestureDetector(
+    return VitCard(
       key: ProfilePage.productShortcutKey(shortcut.id),
       onTap: () => context.go(shortcut.route),
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 74,
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: _profilePanel,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: accent.withValues(alpha: .22)),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 34,
-              height: 34,
-              decoration: BoxDecoration(
-                color: accent.withValues(alpha: .12),
-                borderRadius: AppRadii.cardRadius,
-              ),
-              alignment: Alignment.center,
-              child: Icon(_iconFor(shortcut.iconKey), color: accent, size: 19),
+      height: 74,
+      padding: const EdgeInsets.all(12),
+      borderColor: accent.withValues(alpha: .22),
+      child: Row(
+        children: [
+          Container(
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(
+              color: accent.withValues(alpha: .12),
+              borderRadius: AppRadii.cardRadius,
             ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    shortcut.label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w900,
-                      height: 1,
-                    ),
+            alignment: Alignment.center,
+            child: Icon(_iconFor(shortcut.iconKey), color: accent, size: 19),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  shortcut.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w900,
+                    height: 1,
                   ),
-                  const SizedBox(height: 7),
-                  Text(
-                    shortcut.stateLabel,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: accent,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w900,
-                      height: 1,
-                    ),
+                ),
+                const SizedBox(height: 7),
+                Text(
+                  shortcut.stateLabel,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: accent,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w900,
+                    height: 1,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -208,24 +195,17 @@ class _ActivityButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 44,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: _profilePanel,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: _profileBorder),
-        ),
-        child: Text(
-          'Nh\u1EADt k\u00FD ho\u1EA1t \u0111\u1ED9ng',
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 14,
-            fontWeight: FontWeight.w800,
-          ),
+      height: 44,
+      alignment: Alignment.center,
+      borderColor: _profileBorder,
+      child: Text(
+        'Nh\u1EADt k\u00FD ho\u1EA1t \u0111\u1ED9ng',
+        style: AppTextStyles.caption.copyWith(
+          color: AppColors.text2,
+          fontSize: 14,
+          fontWeight: FontWeight.w800,
         ),
       ),
     );
@@ -239,33 +219,26 @@ class _LogoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       key: ProfilePage.logoutKey,
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 54,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: _profileRed.withValues(alpha: .1),
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: _profileRed.withValues(alpha: .28)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.logout_rounded, color: _profileRed, size: 21),
-            const SizedBox(width: 10),
-            Text(
-              '\u0110\u0103ng xu\u1EA5t',
-              style: AppTextStyles.baseMedium.copyWith(
-                color: _profileRed,
-                fontSize: 16,
-                fontWeight: FontWeight.w900,
-              ),
+      height: 54,
+      alignment: Alignment.center,
+      borderColor: _profileRed.withValues(alpha: .28),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.logout_rounded, color: _profileRed, size: 21),
+          const SizedBox(width: 10),
+          Text(
+            '\u0110\u0103ng xu\u1EA5t',
+            style: AppTextStyles.baseMedium.copyWith(
+              color: _profileRed,
+              fontSize: 16,
+              fontWeight: FontWeight.w900,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

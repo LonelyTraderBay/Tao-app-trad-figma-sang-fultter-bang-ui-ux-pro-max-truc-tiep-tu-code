@@ -12,13 +12,14 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 part '../widgets/settings_page_sections.dart';
 part '../widgets/settings_page_common.dart';
 
 const _settingsBackground = AppColors.bg;
-const _settingsPanel = AppColors.surface;
 const _settingsPanel2 = AppColors.surface2;
 const _settingsSelected = AppColors.surface2;
 const _settingsBorder = AppColors.cardBorder;
@@ -81,8 +82,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   key: SettingsPage.contentKey,
                   physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
                     children: [
                       _SectionTitle(label: 'GIAO DI\u1EC6N'),
                       const SizedBox(height: 8),
@@ -102,21 +105,38 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                       const SizedBox(height: 28),
                       _SectionTitle(label: 'B\u1EA2O M\u1EACT GIAO D\u1ECACH'),
                       const SizedBox(height: 8),
-                      _SettingsListCard(
-                        rows: snapshot.tradeSecurity,
-                        toggles: _toggles,
-                        onToggle: _setToggle,
-                        rowHeight: 72,
-                      ),
+                      if (snapshot.tradeSecurity.isEmpty)
+                        const VitEmptyState(
+                          title:
+                              'Ch\u01B0a c\u00F3 c\u00E0i \u0111\u1EB7t giao d\u1ECBch',
+                          message:
+                              'C\u00E1c tu\u1EF3 ch\u1ECDn b\u1EA3o m\u1EADt s\u1EBD hi\u1EC3n th\u1ECB khi kh\u1EA3 d\u1EE5ng.',
+                          icon: Icons.shield_outlined,
+                        )
+                      else
+                        _SettingsListCard(
+                          rows: snapshot.tradeSecurity,
+                          toggles: _toggles,
+                          onToggle: _setToggle,
+                          rowHeight: 72,
+                        ),
                       const SizedBox(height: 28),
                       _SectionTitle(label: 'TH\u00D4NG B\u00C1O'),
                       const SizedBox(height: 8),
-                      _SettingsListCard(
-                        rows: snapshot.notifications,
-                        toggles: _toggles,
-                        onToggle: _setToggle,
-                        rowHeight: 68,
-                      ),
+                      if (snapshot.notifications.isEmpty)
+                        const VitEmptyState(
+                          title: 'Ch\u01B0a c\u00F3 th\u00F4ng b\u00E1o',
+                          message:
+                              'C\u00E0i \u0111\u1EB7t th\u00F4ng b\u00E1o s\u1EBD hi\u1EC3n th\u1ECB sau khi t\u1EA3i xong.',
+                          icon: Icons.notifications_none_rounded,
+                        )
+                      else
+                        _SettingsListCard(
+                          rows: snapshot.notifications,
+                          toggles: _toggles,
+                          onToggle: _setToggle,
+                          rowHeight: 68,
+                        ),
                       const SizedBox(height: 26),
                       _AppInfoCard(rows: snapshot.appInfo),
                     ],

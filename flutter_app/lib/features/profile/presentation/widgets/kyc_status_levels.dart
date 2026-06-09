@@ -7,15 +7,11 @@ class _KycStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       key: KYCPage.statusCardKey,
       height: 81,
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: AppColors.buy10,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _kycGreen.withValues(alpha: .45)),
-      ),
+      borderColor: _kycGreen.withValues(alpha: .45),
       child: Row(
         children: [
           Container(
@@ -102,107 +98,99 @@ class _KycLevelCard extends StatelessWidget {
     final accent = Color(level.colorHex);
     final border = done ? accent.withValues(alpha: .44) : AppColors.borderSolid;
 
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 180),
-      curve: Curves.easeOutCubic,
-      decoration: BoxDecoration(
-        color: _kycPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: border),
-      ),
-      child: ClipRRect(
-        borderRadius: AppRadii.cardRadius,
-        child: Column(
-          children: [
-            GestureDetector(
-              key: KYCPage.levelKey(level.level),
-              onTap: onTap,
-              behavior: HitTestBehavior.opaque,
-              child: Container(
-                height: 73,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    _LevelIcon(level: level.level, done: done, accent: accent),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+    return VitCard(
+      borderColor: border,
+      clip: true,
+      child: Column(
+        children: [
+          GestureDetector(
+            key: KYCPage.levelKey(level.level),
+            onTap: onTap,
+            behavior: HitTestBehavior.opaque,
+            child: Container(
+              height: 73,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  _LevelIcon(level: level.level, done: done, accent: accent),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          level.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.baseMedium.copyWith(
+                            color: done ? AppColors.text1 : AppColors.text2,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
+                            height: 1,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        if (done)
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.check_rounded,
+                                color: _kycMuted,
+                                size: 12,
+                              ),
+                              const SizedBox(width: 3),
+                              Text(
+                                '\u0110\u00E3 ho\u00E0n th\u00E0nh',
+                                style: AppTextStyles.micro.copyWith(
+                                  color: _kycMuted,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  height: 1,
+                                ),
+                              ),
+                            ],
+                          )
+                        else
                           Text(
-                            level.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.baseMedium.copyWith(
-                              color: done ? AppColors.text1 : AppColors.text2,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w900,
+                            'Ch\u01B0a x\u00E1c minh',
+                            style: AppTextStyles.micro.copyWith(
+                              color: _kycMuted,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                               height: 1,
                             ),
                           ),
-                          const SizedBox(height: 8),
-                          if (done)
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.check_rounded,
-                                  color: _kycMuted,
-                                  size: 12,
-                                ),
-                                const SizedBox(width: 3),
-                                Text(
-                                  '\u0110\u00E3 ho\u00E0n th\u00E0nh',
-                                  style: AppTextStyles.micro.copyWith(
-                                    color: _kycMuted,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1,
-                                  ),
-                                ),
-                              ],
-                            )
-                          else
-                            Text(
-                              'Ch\u01B0a x\u00E1c minh',
-                              style: AppTextStyles.micro.copyWith(
-                                color: _kycMuted,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                height: 1,
-                              ),
-                            ),
-                        ],
-                      ),
+                      ],
                     ),
-                    AnimatedRotation(
-                      turns: expanded ? .25 : 0,
-                      duration: const Duration(milliseconds: 180),
-                      child: const Icon(
-                        Icons.chevron_right_rounded,
-                        color: AppColors.text3,
-                        size: 19,
-                      ),
+                  ),
+                  AnimatedRotation(
+                    turns: expanded ? .25 : 0,
+                    duration: const Duration(milliseconds: 180),
+                    child: const Icon(
+                      Icons.chevron_right_rounded,
+                      color: AppColors.text3,
+                      size: 19,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            if (expanded) ...[
-              const Divider(height: 1, color: AppColors.divider),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
-                child: _ExpandedLevelDetails(
-                  level: level,
-                  done: done,
-                  currentLevel: currentLevel,
-                  submitting: submitting,
-                  onStart: onStart,
-                ),
+          ),
+          if (expanded) ...[
+            const Divider(height: 1, color: AppColors.divider),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
+              child: _ExpandedLevelDetails(
+                level: level,
+                done: done,
+                currentLevel: currentLevel,
+                submitting: submitting,
+                onStart: onStart,
               ),
-            ],
+            ),
           ],
-        ),
+        ],
       ),
     );
   }
@@ -265,7 +253,6 @@ class _ExpandedLevelDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accent = Color(level.colorHex);
     final canStart = !done && level.level == currentLevel + 1;
 
     return Column(
@@ -283,30 +270,15 @@ class _ExpandedLevelDetails extends StatelessWidget {
         ),
         if (canStart) ...[
           const SizedBox(height: 14),
-          GestureDetector(
+          VitCtaButton(
             key: KYCPage.startKey(level.level),
-            onTap: submitting ? null : onStart,
-            behavior: HitTestBehavior.opaque,
-            child: Container(
-              height: AppSpacing.inputHeight,
-              decoration: BoxDecoration(
-                borderRadius: AppRadii.cardRadius,
-                gradient: LinearGradient(
-                  colors: [accent, accent.withValues(alpha: .8)],
-                ),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                submitting
-                    ? '\u0110ang g\u1EEDi...'
-                    : 'B\u1EAFt \u0111\u1EA7u x\u00E1c minh ${level.title}',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.onAccent,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w900,
-                  height: 1,
-                ),
-              ),
+            onPressed: submitting ? null : onStart,
+            loading: submitting,
+            height: AppSpacing.inputHeight,
+            child: Text(
+              submitting
+                  ? '\u0110ang g\u1EEDi...'
+                  : 'B\u1EAFt \u0111\u1EA7u x\u00E1c minh ${level.title}',
             ),
           ),
         ],

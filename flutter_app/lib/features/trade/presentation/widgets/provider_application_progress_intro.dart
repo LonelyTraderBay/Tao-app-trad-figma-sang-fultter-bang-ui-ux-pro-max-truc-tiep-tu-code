@@ -89,13 +89,9 @@ class _BenefitCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       constraints: const BoxConstraints(minHeight: 64),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: _providerPanel,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Row(
         children: [
           Container(
@@ -145,13 +141,9 @@ class _ResponsibilitiesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.warningBg,
-        border: Border.all(color: _providerWarning.withValues(alpha: .55)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _providerWarning.withValues(alpha: .55),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -202,13 +194,9 @@ class _RequirementPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 32,
       padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        color: _providerPanel,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Row(
         children: [
           Expanded(

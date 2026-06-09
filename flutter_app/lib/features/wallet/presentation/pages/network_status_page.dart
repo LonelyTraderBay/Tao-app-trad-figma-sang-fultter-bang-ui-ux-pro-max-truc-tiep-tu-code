@@ -10,8 +10,10 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 part '../widgets/network_status_summary.dart';
 part '../widgets/network_status_cards_stats.dart';
@@ -19,7 +21,6 @@ part '../widgets/network_status_legend_common.dart';
 
 const _networkBackground = AppColors.bg;
 const _networkPanel = AppColors.surface;
-const _networkPanel2 = AppColors.surface2;
 const _networkBorder = AppColors.overlayStroke;
 const _networkPrimary = AppColors.primary;
 const _networkGreen = AppColors.buy;
@@ -66,9 +67,18 @@ class NetworkStatusPage extends ConsumerWidget {
                   key: NetworkStatusPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
                   physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
                     children: [
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review network availability',
+                        message:
+                            'Check fee, latency, congestion, and confirmation status before deposit or withdrawal actions.',
+                      ),
+                      const SizedBox(height: 14),
                       _SummaryCard(snapshot: snapshot),
                       const SizedBox(height: 18),
                       for (final network in snapshot.networks) ...[

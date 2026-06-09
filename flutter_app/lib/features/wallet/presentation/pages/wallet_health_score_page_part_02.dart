@@ -12,13 +12,9 @@ class _RecommendationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final impactColor = _impactColor(recommendation.impact);
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _healthPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _healthBorder),
-      ),
+      borderColor: _healthBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -192,13 +188,9 @@ class _ScoreSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _healthPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _healthBorder),
-      ),
+      borderColor: _healthBorder,
       child: Row(
         children: [
           Container(
@@ -265,13 +257,10 @@ class _ChecklistCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = item.enabled ? _healthGreen : _healthRed;
-    return Container(
+    return VitCard(
+      radius: VitCardRadius.sm,
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: _healthPanel,
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: _healthBorder),
-      ),
+      borderColor: _healthBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -328,13 +317,10 @@ class _ActionRequiredCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      radius: VitCardRadius.sm,
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: _healthRed.withValues(alpha: .06),
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: _healthRed.withValues(alpha: .15)),
-      ),
+      borderColor: _healthRed.withValues(alpha: .15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -378,13 +364,9 @@ class _AssetDistributionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _healthPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _healthBorder),
-      ),
+      borderColor: _healthBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -446,13 +428,9 @@ class _ConcentrationRiskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _healthAmber.withValues(alpha: .06),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _healthAmber.withValues(alpha: .15)),
-      ),
+      borderColor: _healthAmber.withValues(alpha: .15),
       child: Column(
         children: [
           Row(

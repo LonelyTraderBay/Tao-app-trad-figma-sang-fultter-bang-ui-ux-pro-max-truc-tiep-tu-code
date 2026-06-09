@@ -24,38 +24,11 @@ class _SearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 52,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: _bookPanel2,
-        borderRadius: AppRadii.inputRadius,
-        border: Border.all(color: AppColors.borderSolid, width: 1.35),
-      ),
-      child: Row(
-        children: [
-          const Icon(Icons.search_rounded, color: AppColors.text3, size: 20),
-          const SizedBox(width: 12),
-          Expanded(
-            child: TextField(
-              key: AddressBookPage.searchKey,
-              controller: controller,
-              onChanged: (_) => onChanged(),
-              style: AppTextStyles.body.copyWith(fontSize: 14),
-              decoration: InputDecoration(
-                hintText: 'Tìm địa chỉ hoặc tên...',
-                hintStyle: AppTextStyles.body.copyWith(
-                  color: AppColors.text2,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
-                border: InputBorder.none,
-                isCollapsed: true,
-              ),
-            ),
-          ),
-        ],
-      ),
+    return VitSearchBar(
+      fieldKey: AddressBookPage.searchKey,
+      controller: controller,
+      placeholder: 'Tìm địa chỉ hoặc tên...',
+      onChanged: (_) => onChanged(),
     );
   }
 }
@@ -85,17 +58,15 @@ class _NetworkFilterBar extends StatelessWidget {
             key: AddressBookPage.filterKey(filter),
             onTap: () => onChanged(filter),
             behavior: HitTestBehavior.opaque,
-            child: Container(
+            child: VitCard(
+              variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
+              radius: VitCardRadius.sm,
               height: 30,
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(horizontal: 13),
-              decoration: BoxDecoration(
-                color: selected ? AppColors.primary15 : AppColors.transparent,
-                borderRadius: AppRadii.inputRadius,
-                border: Border.all(
-                  color: selected ? AppColors.primary60 : AppColors.transparent,
-                ),
-              ),
+              borderColor: selected
+                  ? AppColors.primary60
+                  : AppColors.transparent,
               child: Text(
                 filter,
                 style: AppTextStyles.caption.copyWith(
@@ -140,13 +111,10 @@ class _AddressStats extends StatelessWidget {
       children: [
         for (var i = 0; i < stats.length; i++) ...[
           Expanded(
-            child: Container(
+            child: VitCard(
+              variant: VitCardVariant.inner,
               height: 70,
-              decoration: BoxDecoration(
-                color: _bookPanel,
-                borderRadius: AppRadii.mdRadius,
-                border: Border.all(color: AppColors.overlayStroke),
-              ),
+              borderColor: AppColors.overlayStroke,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

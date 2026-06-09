@@ -132,13 +132,9 @@ class _ConvertedBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(13),
-      decoration: BoxDecoration(
-        color: _dustGreen.withValues(alpha: .1),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _dustGreen.withValues(alpha: .28)),
-      ),
+      borderColor: _dustGreen.withValues(alpha: .28),
       child: Row(
         children: [
           const Icon(Icons.check_circle_outline, color: _dustGreen, size: 19),

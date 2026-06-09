@@ -55,6 +55,13 @@ class _ResultView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        VitHighRiskStatePanel(
+          state: VitHighRiskUiState.success,
+          title: 'Risk profile ready',
+          message:
+              'Review product fit, lockup, APY variability, risk notes and next steps before subscribing.',
+          contractId: 'savings-risk-assessment-result',
+        ),
         VitCard(
           key: SavingsRiskAssessmentPage.resultCardKey,
           radius: VitCardRadius.lg,

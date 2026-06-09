@@ -36,7 +36,12 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
                   key: WalletHealthScorePage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
                   physics: const BouncingScrollPhysics(),
-                  child: _buildTab(snapshot),
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
+                    children: [_buildTab(snapshot)],
+                  ),
                 ),
               ),
             ],
@@ -211,14 +216,20 @@ class _OverviewTab extends StatelessWidget {
         const SizedBox(height: 16),
         const _SectionLabel(label: '\u0110\u1EC1 xu\u1EA5t \u01B0u ti\u00EAn'),
         const SizedBox(height: 10),
-        for (final rec in snapshot.priorityRecommendations) ...[
-          _RecommendationCard(
-            recommendation: rec,
-            onTap: () => onRecommendationTap(rec),
-          ),
-          if (rec != snapshot.priorityRecommendations.last)
-            const SizedBox(height: 10),
-        ],
+        if (snapshot.priorityRecommendations.isEmpty)
+          const VitEmptyState(
+            title: 'No priority recommendations',
+            message: 'Wallet health actions will appear here when needed.',
+          )
+        else
+          for (final rec in snapshot.priorityRecommendations) ...[
+            _RecommendationCard(
+              recommendation: rec,
+              onTap: () => onRecommendationTap(rec),
+            ),
+            if (rec != snapshot.priorityRecommendations.last)
+              const SizedBox(height: 10),
+          ],
       ],
     );
   }
@@ -232,14 +243,10 @@ class _OverallScoreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scoreColor = _scoreColor(snapshot.overallScore);
-    return Container(
+    return VitCard(
       height: 292,
       padding: const EdgeInsets.fromLTRB(16, 22, 16, 20),
-      decoration: BoxDecoration(
-        color: _healthPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _healthBorder),
-      ),
+      borderColor: _healthBorder,
       child: Column(
         children: [
           Text(
@@ -324,14 +331,10 @@ class _RadarCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 325,
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
-      decoration: BoxDecoration(
-        color: _healthPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _healthBorder),
-      ),
+      borderColor: _healthBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -365,14 +368,11 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _statusColor(metric.status);
-    return Container(
+    return VitCard(
+      radius: VitCardRadius.sm,
       height: 60,
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
-      decoration: BoxDecoration(
-        color: _healthPanel,
-        borderRadius: AppRadii.inputRadius,
-        border: Border.all(color: _healthBorder),
-      ),
+      borderColor: _healthBorder,
       child: Column(
         children: [
           Row(
@@ -427,14 +427,10 @@ class _TrendCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 205,
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 14),
-      decoration: BoxDecoration(
-        color: _healthPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _healthBorder),
-      ),
+      borderColor: _healthBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

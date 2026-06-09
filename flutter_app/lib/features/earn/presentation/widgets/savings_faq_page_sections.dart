@@ -50,42 +50,11 @@ class _SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      key: SavingsFAQPage.searchFieldKey,
+    return VitSearchBar(
+      fieldKey: SavingsFAQPage.searchFieldKey,
+      placeholder: placeholder,
+      variant: VitSearchBarVariant.compact,
       onChanged: onChanged,
-      cursorColor: AppColors.primary,
-      style: AppTextStyles.caption.copyWith(color: AppColors.text1),
-      decoration: InputDecoration(
-        isDense: true,
-        hintText: placeholder,
-        hintStyle: AppTextStyles.caption.copyWith(
-          color: AppColors.searchPlaceholder,
-          fontWeight: AppTextStyles.bold,
-        ),
-        prefixIcon: const Icon(
-          Icons.search_rounded,
-          color: AppColors.text3,
-          size: AppSpacing.iconMd,
-        ),
-        prefixIconConstraints: const BoxConstraints(
-          minWidth: AppSpacing.x7,
-          minHeight: AppSpacing.x6,
-        ),
-        filled: true,
-        fillColor: AppColors.searchBg,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x4,
-          vertical: AppSpacing.x2,
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderRadius: AppRadii.xlRadius,
-          borderSide: BorderSide(color: AppColors.searchBorder),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderRadius: AppRadii.xlRadius,
-          borderSide: BorderSide(color: AppColors.primary30),
-        ),
-      ),
     );
   }
 }

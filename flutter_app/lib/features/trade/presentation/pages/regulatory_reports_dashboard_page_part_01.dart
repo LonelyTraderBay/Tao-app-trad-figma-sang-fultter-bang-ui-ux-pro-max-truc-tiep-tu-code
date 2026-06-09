@@ -46,12 +46,17 @@ class _RegulatoryReportsDashboardPageState
                     child: SingleChildScrollView(
                       key: RegulatoryReportsDashboardPage.contentKey,
                       padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      child: VitPageContent(
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        customGap: 0,
                         children: [
                           _ComplianceAlert(totals: snapshot.totals),
                           const SizedBox(height: 35),
-                          _KpiGrid(totals: snapshot.totals),
+                          VitPageSection(
+                            customGap: 0,
+                            children: [_KpiGrid(totals: snapshot.totals)],
+                          ),
                           const SizedBox(height: 24),
                           _RangeSelector(
                             ranges: snapshot.timeRanges,
@@ -82,6 +87,29 @@ class _RegulatoryReportsDashboardPageState
                             ),
                             onArmStatus: () => context.go(
                               AppRoutePaths.tradeCopyArmIntegrationStatus,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          const VitCard(
+                            variant: VitCardVariant.inner,
+                            padding: EdgeInsets.all(12),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                VitHighRiskStatePanel(
+                                  state: VitHighRiskUiState.riskReview,
+                                  title: 'Regulatory report review',
+                                  message:
+                                      'Report queue, confirmed count, failed count, export action, ARM route and remediation next step are reviewed before submission follow-up.',
+                                  contractId: 'regulatory-reports-review',
+                                ),
+                                SizedBox(height: 8),
+                                VitStatusPill(
+                                  label: 'SLA and failures visible',
+                                  status: VitStatusPillStatus.warning,
+                                  size: VitStatusPillSize.sm,
+                                ),
+                              ],
                             ),
                           ),
                         ],

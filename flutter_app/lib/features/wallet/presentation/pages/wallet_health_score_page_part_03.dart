@@ -44,13 +44,10 @@ class _TipCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      radius: VitCardRadius.sm,
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: _healthPanel,
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: _healthBorder),
-      ),
+      borderColor: _healthBorder,
       child: Row(
         children: [
           const Icon(Icons.bolt_rounded, color: _healthAmber, size: 14),
@@ -78,13 +75,10 @@ class _InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      radius: VitCardRadius.sm,
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: _healthPrimary.withValues(alpha: .06),
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: _healthPrimary.withValues(alpha: .15)),
-      ),
+      borderColor: _healthPrimary.withValues(alpha: .15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

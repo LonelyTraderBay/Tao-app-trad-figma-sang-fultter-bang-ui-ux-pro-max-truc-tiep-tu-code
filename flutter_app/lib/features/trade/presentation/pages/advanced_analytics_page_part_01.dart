@@ -34,17 +34,16 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: AdvancedAnalyticsPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    customGap: 16,
                     children: [
                       _HeroCard(stats: snapshot.stats),
-                      const SizedBox(height: 16),
                       _UnderlineTabs(
                         activeId: _tab,
                         onChanged: (id) => setState(() => _tab = id),
                       ),
-                      const SizedBox(height: 16),
                       if (_tab == 'ai')
                         _AiSignalsTab(
                           snapshot: snapshot,
@@ -57,9 +56,14 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
                         _TradeJournalTab(snapshot: snapshot)
                       else
                         _PositionSizingTab(snapshot: snapshot),
-                      const SizedBox(height: 12),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Analytics risk review',
+                        message:
+                            'AI signals, sizing, and journal metrics are decision-support tools. Confirm risk limits before using them for live orders.',
+                        contractId: 'SC-092',
+                      ),
                       _ModelInfoCard(),
-                      const SizedBox(height: 12),
                       _FeaturesCard(features: snapshot.features),
                     ],
                   ),
@@ -80,17 +84,10 @@ class _HeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.hero,
+      borderColor: AppColors.onAccent.withValues(alpha: .10),
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 25),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [AppColors.surface, AppColors.surface2],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        border: Border.all(color: AppColors.onAccent.withValues(alpha: .10)),
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         children: [
           Row(
@@ -159,13 +156,10 @@ class _HeroStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(stat.colorHex);
-    return Container(
+    return VitCard(
       height: 78,
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 12),
-      decoration: BoxDecoration(
-        color: AppColors.onAccent.withValues(alpha: .10),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.inner,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -215,9 +209,8 @@ class _UnderlineTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 54,
-      color: _advancedPanel,
       child: Row(
         children: [
           for (final tab in _tabs)
@@ -383,18 +376,11 @@ class _FilterChip extends StatelessWidget {
       key: AdvancedAnalyticsPage.filterKey(id),
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
-      child: Container(
+      child: VitCard(
         height: 36,
         alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: selected
-              ? _advancedPurple.withValues(alpha: .18)
-              : _advancedPanel2,
-          border: Border.all(
-            color: selected ? _advancedPurple : _advancedBorder,
-          ),
-          borderRadius: AppRadii.cardRadius,
-        ),
+        variant: VitCardVariant.inner,
+        borderColor: selected ? _advancedPurple : _advancedBorder,
         child: Text(
           id.toUpperCase(),
           style: AppTextStyles.caption.copyWith(

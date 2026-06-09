@@ -136,14 +136,13 @@ class _NumberPanel extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          TextField(
-            key: ProviderApplicationPage.monthsFieldKey,
+          VitInput(
+            fieldKey: ProviderApplicationPage.monthsFieldKey,
             controller: controller,
+            hintText: '0',
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             onChanged: (value) => onChanged(int.tryParse(value) ?? 0),
-            style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
-            decoration: _inputDecoration('0'),
           ),
         ],
       ),
@@ -170,18 +169,10 @@ class _ConsentTile extends StatelessWidget {
       key: tileKey,
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
-      child: Container(
+      child: VitCard(
+        variant: checked ? VitCardVariant.inner : VitCardVariant.standard,
         padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: checked
-              ? _providerPrimary.withValues(alpha: .14)
-              : _providerPanel,
-          border: Border.all(
-            color: checked ? _providerPrimary : AppColors.cardBorder,
-            width: 1.5,
-          ),
-          borderRadius: AppRadii.cardRadius,
-        ),
+        borderColor: checked ? _providerPrimary : AppColors.cardBorder,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -243,15 +234,7 @@ class _Panel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: child,
-    );
+    return VitCard(padding: const EdgeInsets.all(16), child: child);
   }
 }
 

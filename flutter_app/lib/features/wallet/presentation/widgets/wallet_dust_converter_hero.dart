@@ -17,13 +17,10 @@ class _DustHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      radius: VitCardRadius.lg,
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-      decoration: BoxDecoration(
-        color: _dustHero,
-        borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: _dustHeroBorder),
-      ),
+      borderColor: _dustHeroBorder,
       child: Column(
         children: [
           Row(

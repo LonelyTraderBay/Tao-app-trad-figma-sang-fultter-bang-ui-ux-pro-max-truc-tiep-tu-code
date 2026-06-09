@@ -1,4 +1,4 @@
-﻿part of '../pages/cass_reconciliation_page.dart';
+part of '../pages/cass_reconciliation_page.dart';
 
 class _RecordCard extends StatelessWidget {
   const _RecordCard({required this.record});
@@ -8,14 +8,10 @@ class _RecordCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tone = _toneFor(record.status);
-    return Container(
+    return VitCard(
       key: CassReconciliationPage.recordKey(record.id),
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
-      decoration: BoxDecoration(
-        color: _cassPanel,
-        border: Border.all(color: _cassBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _cassBorder.withValues(alpha: .72),
       child: Column(
         children: [
           Row(
@@ -195,36 +191,21 @@ class _ExportButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitCtaButton(
+      key: CassReconciliationPage.exportKey,
+      onPressed: () {},
+      variant: VitCtaButtonVariant.secondary,
       height: 44,
-      child: OutlinedButton(
-        key: CassReconciliationPage.exportKey,
-        style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.text1,
-          side: BorderSide(color: _cassBorder.withValues(alpha: .72)),
-          backgroundColor: _cassPanel2,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-        ),
-        onPressed: () {},
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.download_rounded, size: 16),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(
-                'Export Reconciliation Report (CSV)',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontSize: 13,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
-              ),
-            ),
-          ],
+      leading: const Icon(Icons.download_rounded, size: 16),
+      child: Text(
+        'Export Reconciliation Report (CSV)',
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: AppTextStyles.caption.copyWith(
+          color: AppColors.text1,
+          fontSize: 13,
+          fontWeight: AppTextStyles.bold,
+          height: 1,
         ),
       ),
     );

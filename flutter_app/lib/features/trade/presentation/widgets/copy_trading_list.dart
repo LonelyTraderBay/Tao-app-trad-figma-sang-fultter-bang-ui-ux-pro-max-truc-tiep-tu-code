@@ -271,37 +271,13 @@ class _DetailsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCtaButton(
       key: CopyTradingPage.detailKey(traderId),
-      onTap: onOpen,
-      borderRadius: AppRadii.inputRadius,
-      child: Container(
-        height: 40,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: AppColors.surface2,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Xem chi tiết',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontSize: 13,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-            const SizedBox(width: 8),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text1,
-              size: 16,
-            ),
-          ],
-        ),
-      ),
+      onPressed: onOpen,
+      variant: VitCtaButtonVariant.secondary,
+      height: 40,
+      trailing: const Icon(Icons.chevron_right_rounded),
+      child: const Text('Xem chi tiết'),
     );
   }
 }

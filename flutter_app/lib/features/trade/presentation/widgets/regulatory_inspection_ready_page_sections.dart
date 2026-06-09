@@ -7,14 +7,10 @@ class _ComplianceScoreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       constraints: const BoxConstraints(minHeight: 203),
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
-      decoration: BoxDecoration(
-        color: _inspectionPanel,
-        border: Border.all(color: _inspectionBorder.withValues(alpha: .76)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -172,14 +168,11 @@ class _QuickStatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = _styleForStat(stat.icon);
-    return Container(
+    return VitCard(
       height: 80,
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 9),
-      decoration: BoxDecoration(
-        color: _inspectionPanel,
-        border: Border.all(color: _inspectionBorder.withValues(alpha: .76)),
-        borderRadius: AppRadii.mdRadius,
-      ),
+      radius: VitCardRadius.sm,
+      borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -217,13 +210,9 @@ class _FrameworkCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
-      decoration: BoxDecoration(
-        color: _inspectionPanel,
-        border: Border.all(color: _inspectionBorder.withValues(alpha: .76)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

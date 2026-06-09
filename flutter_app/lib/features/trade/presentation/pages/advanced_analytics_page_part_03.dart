@@ -22,12 +22,9 @@ class _RiskAnalysisTab extends StatelessWidget {
                 subtitle: 'VaR, Sharpe Ratio, Max Drawdown, Beta',
               ),
               const SizedBox(height: 16),
-              Container(
+              VitCard(
+                variant: VitCardVariant.inner,
                 padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: _advancedPanel2,
-                  borderRadius: AppRadii.cardRadius,
-                ),
                 child: Row(
                   children: [
                     const Icon(
@@ -322,12 +319,9 @@ class _FeaturesCard extends StatelessWidget {
               mainAxisSpacing: 8,
             ),
             itemBuilder: (context, index) {
-              return Container(
+              return VitCard(
+                variant: VitCardVariant.inner,
                 padding: const EdgeInsets.symmetric(horizontal: 9),
-                decoration: BoxDecoration(
-                  color: _advancedPanel2,
-                  borderRadius: AppRadii.cardRadius,
-                ),
                 child: Row(
                   children: [
                     Container(
@@ -440,12 +434,10 @@ class _InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(14, 13, 14, 13),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .09),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.inner,
+      borderColor: color.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

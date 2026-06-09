@@ -11,7 +11,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -19,7 +21,6 @@ part '../widgets/bot_backtesting_widgets.dart';
 
 const _backtestBackground = AppColors.bg;
 const _backtestPanel = AppColors.surface;
-const _backtestPanel2 = AppColors.surface2;
 const _backtestPrimary = AppColors.primary;
 
 class BotBacktestingPage extends ConsumerStatefulWidget {
@@ -98,40 +99,40 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 14, 20, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                        child: VitPageContent(
+                          padding: VitContentPadding.none,
+                          customGap: 10,
+                          fullBleed: true,
                           children: [
+                            const VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Review backtest assumptions',
+                              message:
+                                  'Backtests are simulated. Confirm strategy, pair, date range, capital, and risk limits before running.',
+                            ),
                             const _SectionLabel('Strategy Selection'),
-                            const SizedBox(height: 10),
                             _StrategyGrid(
                               strategies: snapshot.strategies,
                               selectedId: _selectedStrategy,
                               onChanged: (id) =>
                                   setState(() => _selectedStrategy = id),
                             ),
-                            const SizedBox(height: 15),
                             const _SectionLabel('Trading Pair'),
-                            const SizedBox(height: 10),
                             _PairGrid(
                               pairs: snapshot.pairs,
                               selectedPair: _selectedPair,
                               onChanged: (pair) =>
                                   setState(() => _selectedPair = pair),
                             ),
-                            const SizedBox(height: 15),
                             const _SectionLabel('Date Range'),
-                            const SizedBox(height: 10),
                             _DateRangeGrid(
                               ranges: snapshot.dateRanges,
                               selectedId: _selectedRange,
                               onChanged: (id) =>
                                   setState(() => _selectedRange = id),
                             ),
-                            const SizedBox(height: 15),
                             const _SectionLabel('Initial Capital'),
-                            const SizedBox(height: 10),
                             _CapitalInput(controller: _capitalController),
-                            const SizedBox(height: 15),
                             _BacktestPeriodCard(
                               strategyId: _selectedStrategy,
                               pair: _selectedPair,

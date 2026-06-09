@@ -100,16 +100,11 @@ class _PermissionCard extends StatelessWidget {
       key: ApiKeyCreatePage.permissionKey(permission.id),
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
+      child: VitCard(
         height: 73,
         padding: const EdgeInsets.fromLTRB(16, 13, 16, 13),
-        decoration: BoxDecoration(
-          color: selected ? accent.withValues(alpha: .04) : _apiPanel2,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(
-            color: selected ? accent.withValues(alpha: .42) : _apiBorder,
-          ),
-        ),
+        variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
+        borderColor: selected ? accent.withValues(alpha: .42) : _apiBorder,
         child: Row(
           children: [
             Container(
@@ -401,14 +396,10 @@ class _SecurityTips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 160,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
-      decoration: BoxDecoration(
-        color: _apiPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _apiBorder),
-      ),
+      borderColor: _apiBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

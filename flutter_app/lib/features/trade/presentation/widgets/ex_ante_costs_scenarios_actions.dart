@@ -146,41 +146,13 @@ class _QuickLinkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitCtaButton(
+      onPressed: onPressed,
+      variant: VitCtaButtonVariant.secondary,
       height: 44,
-      child: OutlinedButton(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.text1,
-          side: BorderSide(color: _costBorder.withValues(alpha: .72)),
-          backgroundColor: _costPanel2,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-        ),
-        onPressed: onPressed,
-        child: Row(
-          children: [
-            Icon(icon, color: color, size: 16),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontSize: 12,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: 16,
-            ),
-          ],
-        ),
-      ),
+      leading: Icon(icon, color: color),
+      trailing: const Icon(Icons.chevron_right_rounded),
+      child: Text(label),
     );
   }
 }
@@ -199,26 +171,12 @@ class _FullWidthButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitCtaButton(
+      onPressed: onPressed,
+      variant: VitCtaButtonVariant.secondary,
       height: 44,
-      child: OutlinedButton.icon(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.text1,
-          side: BorderSide(color: _costBorder.withValues(alpha: .72)),
-          backgroundColor: _costPanel2,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-        ),
-        onPressed: onPressed,
-        icon: Icon(icon, size: 16),
-        label: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text1,
-            fontSize: 13,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
+      leading: Icon(icon),
+      child: Text(label),
     );
   }
 }

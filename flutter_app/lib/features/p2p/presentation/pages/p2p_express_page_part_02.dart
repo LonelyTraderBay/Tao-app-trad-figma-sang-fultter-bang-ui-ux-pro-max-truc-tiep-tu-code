@@ -76,23 +76,17 @@ class _AmountCard extends StatelessWidget {
                   ),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(
-                    child: TextField(
-                      key: P2PExpressPage.amountFieldKey,
+                    child: VitInput(
+                      fieldKey: P2PExpressPage.amountFieldKey,
                       controller: controller,
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       onChanged: (_) => onChanged(),
-                      style: AppTextStyles.sectionTitle.copyWith(
+                      semanticLabel: 'P2P express amount VND',
+                      hintText: 'Nhập số tiền...',
+                      textStyle: AppTextStyles.sectionTitle.copyWith(
                         fontWeight: AppTextStyles.bold,
                         fontFeatures: AppTextStyles.tabularFigures,
-                      ),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Nhập số tiền...',
-                        hintStyle: AppTextStyles.base.copyWith(
-                          color: AppColors.text3,
-                        ),
-                        isCollapsed: true,
                       ),
                     ),
                   ),

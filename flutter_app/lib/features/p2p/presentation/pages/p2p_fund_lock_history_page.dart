@@ -76,6 +76,18 @@ class P2PFundLockHistoryPage extends ConsumerWidget {
                         _FundLockHero(snapshot: snapshot),
                         const SizedBox(height: AppSpacing.x5),
                         _FundLockList(records: snapshot.records),
+                        const SizedBox(height: AppSpacing.x3),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Fund lock history review',
+                            message:
+                                'Locked and released records, asset amount, order reference, alias route and next wallet/P2P step are reviewed before action.',
+                            contractId: 'p2p-fund-lock-history-review',
+                          ),
+                        ),
                       ],
                     ),
                   ),

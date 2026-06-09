@@ -48,13 +48,8 @@ class _SettingsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 17),
-      decoration: BoxDecoration(
-        color: _cardBackground,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

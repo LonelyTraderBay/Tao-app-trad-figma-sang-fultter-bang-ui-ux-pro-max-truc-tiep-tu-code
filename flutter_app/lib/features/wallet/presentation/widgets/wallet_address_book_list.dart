@@ -17,14 +17,10 @@ class _AddressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 162,
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _bookPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.overlayStroke),
-      ),
+      borderColor: AppColors.overlayStroke,
       child: Column(
         children: [
           Row(

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
@@ -94,23 +95,11 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
             entry.note == null ? 'Thêm ghi chú' : 'Sửa ghi chú',
             style: AppTextStyles.baseMedium,
           ),
-          content: TextField(
+          content: VitInput(
             controller: controller,
             autofocus: true,
-            style: AppTextStyles.body,
-            cursorColor: _marketPrimary,
-            decoration: InputDecoration(
-              hintText: 'Nhập ghi chú',
-              hintStyle: AppTextStyles.body.copyWith(color: AppColors.text3),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.borderSolid),
-                borderRadius: AppRadii.inputRadius,
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: _marketPrimary),
-                borderRadius: AppRadii.inputRadius,
-              ),
-            ),
+            semanticLabel: 'Watchlist note',
+            hintText: 'Nhap ghi chu',
           ),
           actions: [
             TextButton(
@@ -187,38 +176,44 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
                   child: SingleChildScrollView(
                     key: WatchlistPage.contentKey,
                     padding: EdgeInsets.only(bottom: bottomInset),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
-                      child: items.isEmpty
-                          ? _EmptyWatchlist(
-                              searchActive: _searchController.text
-                                  .trim()
-                                  .isNotEmpty,
-                              onAddPair: () =>
-                                  context.go(AppRoutePaths.markets),
-                            )
-                          : Column(
-                              children: [
-                                for (var i = 0; i < items.length; i++) ...[
-                                  _WatchlistCard(
-                                    item: items[i],
-                                    onPairTap: () => context.go(
-                                      AppRoutePaths.pairDetail(
-                                        items[i].pair.id,
+                    child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      customGap: 12,
+                      children: [
+                        items.isEmpty
+                            ? _EmptyWatchlist(
+                                searchActive: _searchController.text
+                                    .trim()
+                                    .isNotEmpty,
+                                onAddPair: () =>
+                                    context.go(AppRoutePaths.markets),
+                              )
+                            : Column(
+                                children: [
+                                  for (var i = 0; i < items.length; i++) ...[
+                                    _WatchlistCard(
+                                      item: items[i],
+                                      onPairTap: () => context.go(
+                                        AppRoutePaths.pairDetail(
+                                          items[i].pair.id,
+                                        ),
                                       ),
+                                      onTradeTap: () => context.go(
+                                        AppRoutePaths.tradePair(
+                                          items[i].pair.id,
+                                        ),
+                                      ),
+                                      onNoteTap: () =>
+                                          _editNote(items[i].entry),
+                                      onRemoveTap: () =>
+                                          _removeEntry(items[i].entry.id),
                                     ),
-                                    onTradeTap: () => context.go(
-                                      AppRoutePaths.tradePair(items[i].pair.id),
-                                    ),
-                                    onNoteTap: () => _editNote(items[i].entry),
-                                    onRemoveTap: () =>
-                                        _removeEntry(items[i].entry.id),
-                                  ),
-                                  if (i != items.length - 1)
-                                    const SizedBox(height: 12),
+                                    if (i != items.length - 1)
+                                      const SizedBox(height: 12),
+                                  ],
                                 ],
-                              ],
-                            ),
+                              ),
+                      ],
                     ),
                   ),
                 ),

@@ -87,6 +87,8 @@ void main() {
     expect(find.text('Cấu hình Hiệu suất'), findsOneWidget);
     expect(find.text('600K'), findsWidgets);
 
+    await tester.ensureVisible(find.byKey(DCADynamicAmount.applyKey));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(DCADynamicAmount.applyKey));
     await tester.pumpAndSettle();
 

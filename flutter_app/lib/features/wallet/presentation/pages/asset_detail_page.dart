@@ -12,7 +12,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 part '../widgets/asset_detail_page_sections.dart';
@@ -75,8 +77,10 @@ class _AssetDetailPageState extends ConsumerState<AssetDetailPage> {
                 child: SingleChildScrollView(
                   key: AssetDetailPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
                     children: [
                       _AssetHero(snapshot: snapshot),
                       const SizedBox(height: 16),

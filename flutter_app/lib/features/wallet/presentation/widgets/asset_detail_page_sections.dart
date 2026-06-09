@@ -309,14 +309,10 @@ class _PriceChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(snapshot.colorHex);
-    return Container(
+    return VitCard(
       height: 209,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
-      decoration: BoxDecoration(
-        color: _assetPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.overlayStroke),
-      ),
+      borderColor: AppColors.overlayStroke,
       child: Column(
         children: [
           Row(

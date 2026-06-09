@@ -15,13 +15,10 @@ class _EmergencyContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.warn08,
-        border: Border.all(color: AppColors.warn15),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: AppColors.warn15,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -69,7 +66,7 @@ class _EmergencyContactCard extends StatelessWidget {
   }
 }
 
-class _SettingsTextField extends StatelessWidget {
+class _SettingsTextField extends StatefulWidget {
   const _SettingsTextField({
     required this.label,
     required this.initialValue,
@@ -85,55 +82,41 @@ class _SettingsTextField extends StatelessWidget {
   final ValueChanged<String> onChanged;
 
   @override
+  State<_SettingsTextField> createState() => _SettingsTextFieldState();
+}
+
+class _SettingsTextFieldState extends State<_SettingsTextField> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.initialValue);
+  }
+
+  @override
+  void didUpdateWidget(covariant _SettingsTextField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialValue != oldWidget.initialValue &&
+        widget.initialValue != _controller.text) {
+      _controller.text = widget.initialValue;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text2,
-            fontSize: 10,
-            height: 1,
-          ),
-        ),
-        const SizedBox(height: 6),
-        TextFormField(
-          initialValue: initialValue,
-          onChanged: onChanged,
-          keyboardType: keyboardType,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text1,
-            fontSize: 12,
-          ),
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 12,
-            ),
-            filled: true,
-            fillColor: _settingsInput,
-            isDense: true,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 13,
-              vertical: 13,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: AppRadii.inputRadius,
-              borderSide: const BorderSide(color: AppColors.cardBorder),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: AppRadii.inputRadius,
-              borderSide: const BorderSide(color: AppColors.cardBorder),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: AppRadii.inputRadius,
-              borderSide: const BorderSide(color: _settingsPrimary),
-            ),
-          ),
-        ),
-      ],
+    return VitInput(
+      controller: _controller,
+      label: widget.label,
+      hintText: widget.hint,
+      keyboardType: widget.keyboardType,
+      onChanged: widget.onChanged,
     );
   }
 }
@@ -192,38 +175,15 @@ class _SaveButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCtaButton(
       key: CopySettingsPage.saveKey,
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: AppSpacing.inputHeight,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: saved ? AppColors.buy : _settingsPrimary,
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              saved ? Icons.shield_rounded : Icons.settings_rounded,
-              color: AppColors.onAccent,
-              size: 16,
-            ),
-            const SizedBox(width: 9),
-            Text(
-              saved ? 'Đã lưu!' : 'Lưu cài đặt',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.onAccent,
-                fontSize: 14,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
-            ),
-          ],
-        ),
-      ),
+      onPressed: onTap,
+      variant: saved
+          ? VitCtaButtonVariant.success
+          : VitCtaButtonVariant.primary,
+      height: AppSpacing.inputHeight,
+      leading: Icon(saved ? Icons.shield_rounded : Icons.settings_rounded),
+      child: Text(saved ? 'Đã lưu!' : 'Lưu cài đặt'),
     );
   }
 }
@@ -241,13 +201,10 @@ class _SettingsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       height: height,
       padding: padding,
-      decoration: BoxDecoration(
-        color: _settingsPanel,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: child,
     );
   }

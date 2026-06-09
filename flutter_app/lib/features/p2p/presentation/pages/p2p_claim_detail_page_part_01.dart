@@ -67,12 +67,17 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                       AppSpacing.contentPad,
                       bottomInset,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      customGap: 0,
                       children: [
                         _ClaimHeroCard(claim: claim),
                         const SizedBox(height: AppSpacing.x5),
-                        _ClaimBenchmarksCard(snapshot: snapshot),
+                        VitPageSection(
+                          customGap: 0,
+                          children: [_ClaimBenchmarksCard(snapshot: snapshot)],
+                        ),
                         const SizedBox(height: AppSpacing.x5),
                         _DescriptionCard(description: claim.description),
                         const SizedBox(height: AppSpacing.x4),
@@ -138,6 +143,18 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                             },
                             child: const Text('Tải biên lai'),
                           ),
+                        const SizedBox(height: AppSpacing.x3),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Claim detail review',
+                            message:
+                                'Claim status, covered amount, evidence, notifications, receipt action and support next step are reviewed before follow-up.',
+                            contractId: 'p2p-claim-detail-review',
+                          ),
+                        ),
                       ],
                     ),
                   ),

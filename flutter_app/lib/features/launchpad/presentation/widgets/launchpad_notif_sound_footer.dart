@@ -37,8 +37,8 @@ class _InfoBanner extends StatelessWidget {
   }
 }
 
-class _SaveFooter extends StatelessWidget {
-  const _SaveFooter({
+class _InlineSaveActions extends StatelessWidget {
+  const _InlineSaveActions({
     required this.saved,
     required this.hasChanges,
     required this.onSave,
@@ -50,10 +50,12 @@ class _SaveFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitStickyFooter(
+    return VitCard(
       key: LaunchpadNotifSoundPage.footerKey,
-      backgroundColor: AppColors.surface.withValues(alpha: .94),
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.contentPad),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (saved) ...[
             Row(

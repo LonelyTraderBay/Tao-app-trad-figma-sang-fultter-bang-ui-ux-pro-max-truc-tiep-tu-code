@@ -13,6 +13,8 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 part '../widgets/profile_sub_account_summary.dart';
@@ -75,13 +77,23 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
                   key: SubAccountPage.contentKey,
                   physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
                     children: [
                       _SubAccountSummaryCard(
                         snapshot: snapshot,
                         isBalanceHidden: _isBalanceHidden,
                         onToggleBalance: _toggleBalance,
+                      ),
+                      const SizedBox(height: 18),
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review sub-account permissions',
+                        message:
+                            'Ki\u1EC3m tra quy\u1EC1n chuy\u1EC3n, r\u00FAt, API key v\u00E0 gi\u1EDBi h\u1EA1n tr\u01B0\u1EDBc khi t\u1EA1o ho\u1EB7c m\u1EDF r\u1ED9ng t\u00E0i kho\u1EA3n ph\u1EE5.',
+                        contractId: 'Sub accounts: ${snapshot.accounts.length}',
                       ),
                       const SizedBox(height: 26),
                       _CreateSubAccountButton(
@@ -98,16 +110,25 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
                             'T\u00C0I KHO\u1EA2N (${snapshot.accounts.length})',
                       ),
                       const SizedBox(height: 10),
-                      for (final account in snapshot.accounts) ...[
-                        _SubAccountCard(
-                          account: account,
-                          isExpanded: _expandedId == account.id,
-                          isBalanceHidden: _isBalanceHidden,
-                          onTap: () => _toggleExpanded(account.id),
-                        ),
-                        if (account != snapshot.accounts.last)
-                          const SizedBox(height: 13),
-                      ],
+                      if (snapshot.accounts.isEmpty)
+                        const VitEmptyState(
+                          title:
+                              'Ch\u01B0a c\u00F3 t\u00E0i kho\u1EA3n ph\u1EE5',
+                          message:
+                              'T\u1EA1o t\u00E0i kho\u1EA3n ph\u1EE5 \u0111\u1EC3 t\u00E1ch quy\u1EC1n, API v\u00E0 v\u00ED giao d\u1ECBch.',
+                          icon: Icons.groups_outlined,
+                        )
+                      else
+                        for (final account in snapshot.accounts) ...[
+                          _SubAccountCard(
+                            account: account,
+                            isExpanded: _expandedId == account.id,
+                            isBalanceHidden: _isBalanceHidden,
+                            onTap: () => _toggleExpanded(account.id),
+                          ),
+                          if (account != snapshot.accounts.last)
+                            const SizedBox(height: 13),
+                        ],
                       const SizedBox(height: 25),
                       const _SubAccountInfoNote(),
                     ],

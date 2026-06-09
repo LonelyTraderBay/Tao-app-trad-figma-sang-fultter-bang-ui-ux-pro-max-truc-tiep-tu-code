@@ -60,12 +60,11 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(dcaPortfolioOptimizerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final floatingBottom =
+    final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.tabBar + AppSpacing.x2
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x2) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x5
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
-    final contentBottom = floatingBottom + AppSpacing.buttonStandard;
 
     return VitPageLayout(
       semanticLabel: 'SC-174 DCAPortfolioOptimizer',
@@ -86,60 +85,47 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              child: Stack(
-                children: [
-                  ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(
-                      context,
-                    ).copyWith(scrollbars: false),
-                    child: SingleChildScrollView(
-                      key: DCAPortfolioOptimizer.contentKey,
-                      physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(bottom: contentBottom),
-                      child: VitPageContent(
-                        customGap: AppSpacing.x5,
-                        children: [
-                          if (_showDriftBanner)
-                            _DriftBanner(
-                              snapshot: snapshot,
-                              onDismiss: () {
-                                setState(() => _showDriftBanner = false);
-                              },
-                              onSettings: _showDriftSettings,
-                            ),
-                          _ComparisonHero(snapshot: snapshot),
-                          _OptimizerTabs(
-                            activeTab: _activeTab,
-                            onChanged: (tab) {
-                              setState(() => _activeTab = tab);
-                            },
-                          ),
-                          _TabContent(
-                            activeTab: _activeTab,
-                            snapshot: snapshot,
-                            showSuggestions: _showSuggestions,
-                            onToggleSuggestions: () {
-                              setState(
-                                () => _showSuggestions = !_showSuggestions,
-                              );
-                            },
-                          ),
-                        ],
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(
+                  context,
+                ).copyWith(scrollbars: false),
+                child: SingleChildScrollView(
+                  key: DCAPortfolioOptimizer.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    customGap: AppSpacing.x5,
+                    children: [
+                      if (_showDriftBanner)
+                        _DriftBanner(
+                          snapshot: snapshot,
+                          onDismiss: () {
+                            setState(() => _showDriftBanner = false);
+                          },
+                          onSettings: _showDriftSettings,
+                        ),
+                      _ComparisonHero(snapshot: snapshot),
+                      _OptimizerTabs(
+                        activeTab: _activeTab,
+                        onChanged: (tab) {
+                          setState(() => _activeTab = tab);
+                        },
                       ),
-                    ),
+                      _TabContent(
+                        activeTab: _activeTab,
+                        snapshot: snapshot,
+                        showSuggestions: _showSuggestions,
+                        onToggleSuggestions: () {
+                          setState(() => _showSuggestions = !_showSuggestions);
+                        },
+                      ),
+                      _OptimizerApplyAction(
+                        onApply: () =>
+                            context.go(AppRoutePaths.dcaRebalanceConfig),
+                      ),
+                    ],
                   ),
-                  Positioned(
-                    left: AppSpacing.contentPad,
-                    right: AppSpacing.contentPad,
-                    bottom: floatingBottom,
-                    child: _FloatingActions(
-                      onShare: _showExportNotice,
-                      onSettings: _showDriftSettings,
-                      onApply: () =>
-                          context.go(AppRoutePaths.dcaRebalanceConfig),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ],

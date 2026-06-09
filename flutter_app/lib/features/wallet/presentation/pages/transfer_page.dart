@@ -11,8 +11,10 @@ import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_tr
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 
 const _transferBackground = AppColors.bg;
 const _transferPanel = AppColors.surface;
@@ -89,8 +91,10 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                 child: SingleChildScrollView(
                   key: TransferPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
                     children: [
                       if (_showSuccess) ...[
                         const TransferSuccessBanner(),
@@ -167,6 +171,15 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                                 usdValue: usdValue,
                               )
                             : null,
+                      ),
+                      const SizedBox(height: 12),
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review transfer before confirmation',
+                        message:
+                            'Check source wallet, destination wallet, amount, fee, and masked confirmation details before submitting.',
+                        contractId:
+                            '${fromWallet.name} -> ${toWallet.name} / ${asset.symbol}',
                       ),
                       const SizedBox(height: 19),
                       RecentTransfersList(transfers: snapshot.recentTransfers),

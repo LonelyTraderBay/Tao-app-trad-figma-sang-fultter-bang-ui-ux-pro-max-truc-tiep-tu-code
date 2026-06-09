@@ -216,14 +216,10 @@ class _SecretKeyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
-      decoration: BoxDecoration(
-        color: _authStepInactive,
-        borderRadius: AppRadii.inputRadius,
-        border: Border.all(color: _authPrimary30),
-      ),
+      borderColor: _authPrimary30,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

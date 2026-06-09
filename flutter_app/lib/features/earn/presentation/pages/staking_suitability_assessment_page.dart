@@ -104,6 +104,13 @@ class _StakingSuitabilityAssessmentPageState
                               current: _step,
                               total: snapshot.questions.length,
                             ),
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Suitability review active',
+                              message:
+                                  'Answers are checked against experience, liquidity, income, allocation and knowledge limits before any staking action.',
+                              contractId: 'staking-suitability-assessment',
+                            ),
                             _QuestionCard(
                               question: snapshot.questions[_step],
                               selected: _answers[snapshot.questions[_step].id],

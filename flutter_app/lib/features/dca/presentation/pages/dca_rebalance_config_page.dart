@@ -66,12 +66,12 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
     _initialize(snapshot);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final stickyBottom =
+    final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + AppSpacing.x5
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
-    final bottomInset = stickyBottom + AppSpacing.ctaHeight + AppSpacing.x7;
+        MediaQuery.paddingOf(context).bottom +
+        AppSpacing.x7;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -155,18 +155,13 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
                                 setState(() => _autoExecute = value);
                               },
                             ),
+                            _InlineRebalanceActions(
+                              valid: _isValidTotal,
+                              onPreview: _openPreview,
+                              onSave: _openPreview,
+                            ),
                           ],
                         ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 60,
-                      right: 60,
-                      bottom: stickyBottom,
-                      child: _StickyActions(
-                        valid: _isValidTotal,
-                        onPreview: _openPreview,
-                        onSave: _openPreview,
                       ),
                     ),
                     if (_showPreview)

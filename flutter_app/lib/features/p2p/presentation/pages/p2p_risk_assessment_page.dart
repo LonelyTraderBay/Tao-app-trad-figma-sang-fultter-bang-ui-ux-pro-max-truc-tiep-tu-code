@@ -82,6 +82,18 @@ class P2PRiskAssessmentPage extends ConsumerWidget {
                         ),
                         const SizedBox(height: AppSpacing.x3),
                         _RiskFactorList(factors: controller.materialFactors),
+                        const SizedBox(height: AppSpacing.x3),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'P2P risk score review',
+                            message:
+                                'Risk score, factor weights, account signals, limit impact and next review step are checked before P2P exposure changes.',
+                            contractId: 'p2p-risk-assessment-review',
+                          ),
+                        ),
                       ],
                     ),
                   ),

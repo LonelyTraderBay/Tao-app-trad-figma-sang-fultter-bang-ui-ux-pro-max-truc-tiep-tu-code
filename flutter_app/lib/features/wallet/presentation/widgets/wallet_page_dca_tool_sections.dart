@@ -7,14 +7,11 @@ class WalletDcaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 268,
+    return VitCard(
+      variant: VitCardVariant.standard,
+      radius: VitCardRadius.md,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
-      decoration: BoxDecoration(
-        color: _walletPanel2,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.onAccent.withValues(alpha: .18)),
-      ),
+      borderColor: AppColors.cardBorder,
       child: Column(
         children: [
           Row(
@@ -176,14 +173,12 @@ class _DcaStatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 72,
       padding: const EdgeInsets.fromLTRB(13, 9, 13, 9),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        border: Border.all(color: AppColors.borderSolid),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      borderColor: AppColors.borderSolid,
       child: Row(
         children: [
           _IconCircle(icon: icon, color: iconColor, size: 35),
@@ -297,36 +292,31 @@ class _ToolButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(tool.colorHex);
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
+    return VitCard(
       onTap: onTap,
-      child: Container(
-        height: 38,
-        padding: const EdgeInsets.symmetric(horizontal: 13),
-        decoration: BoxDecoration(
-          color: _walletPanel2,
-          border: Border.all(color: AppColors.cardBorder),
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: Row(
-          children: [
-            Icon(_toolIcon(tool.iconKey), color: color, size: 16),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                tool.label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  fontSize: 11,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
+      height: 44,
+      padding: const EdgeInsets.symmetric(horizontal: 13),
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      borderColor: AppColors.cardBorder,
+      child: Row(
+        children: [
+          Icon(_toolIcon(tool.iconKey), color: color, size: 16),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              tool.label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text2,
+                fontSize: 11,
+                fontWeight: AppTextStyles.bold,
+                height: 1,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

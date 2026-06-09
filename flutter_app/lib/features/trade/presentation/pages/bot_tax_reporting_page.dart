@@ -10,7 +10,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -96,19 +98,26 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
                     child: SingleChildScrollView(
                       key: BotTaxReportingPage.contentKey,
                       padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      child: VitPageContent(
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        customGap: 0,
                         children: [
                           const _TaxNotice(),
                           const SizedBox(height: 31),
                           const _SectionLabel('Select Tax Year'),
                           const SizedBox(height: 10),
-                          _YearPicker(
-                            years: snapshot.taxYears,
-                            selectedYear: _selectedYear,
-                            onChanged: (year) {
-                              setState(() => _selectedYear = year);
-                            },
+                          VitPageSection(
+                            customGap: 0,
+                            children: [
+                              _YearPicker(
+                                years: snapshot.taxYears,
+                                selectedYear: _selectedYear,
+                                onChanged: (year) {
+                                  setState(() => _selectedYear = year);
+                                },
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 18),
                           _SectionLabel('Summary for $_selectedYear'),
@@ -144,6 +153,29 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
                           ),
                           const SizedBox(height: 17),
                           _TaxNotesCard(notes: snapshot.taxNotes),
+                          const SizedBox(height: 12),
+                          const VitCard(
+                            variant: VitCardVariant.inner,
+                            padding: EdgeInsets.all(12),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                VitHighRiskStatePanel(
+                                  state: VitHighRiskUiState.riskReview,
+                                  title: 'Tax export review required',
+                                  message:
+                                      'Tax year, cost basis, report type, generated file, sensitive data masking and next steps are reviewed before export.',
+                                  contractId: 'bot-tax-reporting-review',
+                                ),
+                                SizedBox(height: 8),
+                                VitStatusPill(
+                                  label: 'Report preview before export',
+                                  status: VitStatusPillStatus.info,
+                                  size: VitStatusPillSize.sm,
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),

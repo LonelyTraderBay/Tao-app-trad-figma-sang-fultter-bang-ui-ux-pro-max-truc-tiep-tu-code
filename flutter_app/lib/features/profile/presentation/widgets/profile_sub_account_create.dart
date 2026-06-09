@@ -8,44 +8,15 @@ class _CreateSubAccountButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      child: InkWell(
-        key: SubAccountPage.createButtonKey,
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: Container(
-          height: AppSpacing.ctaHeight,
-          decoration: BoxDecoration(
-            color: AppColors.primary08,
-            borderRadius: AppRadii.cardRadius,
-            border: Border.all(
-              color: AppColors.primary40,
-              style: BorderStyle.solid,
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                isOpen ? Icons.close_rounded : Icons.add_rounded,
-                color: AppColors.primary,
-                size: 19,
-              ),
-              const SizedBox(width: 10),
-              Text(
-                isOpen
-                    ? '\u0110\u00F3ng bi\u1EC3u m\u1EABu'
-                    : 'T\u1EA1o t\u00E0i kho\u1EA3n ph\u1EE5 m\u1EDBi',
-                style: AppTextStyles.body.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
-              ),
-            ],
-          ),
-        ),
+    return VitCtaButton(
+      key: SubAccountPage.createButtonKey,
+      onPressed: onTap,
+      variant: VitCtaButtonVariant.secondary,
+      leading: Icon(isOpen ? Icons.close_rounded : Icons.add_rounded),
+      child: Text(
+        isOpen
+            ? '\u0110\u00F3ng bi\u1EC3u m\u1EABu'
+            : 'T\u1EA1o t\u00E0i kho\u1EA3n ph\u1EE5 m\u1EDBi',
       ),
     );
   }
@@ -56,14 +27,10 @@ class _CreateSubAccountForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       key: SubAccountPage.createFormKey,
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.cardBorder),
-      ),
+      borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -99,24 +66,9 @@ class _CreateSubAccountForm extends StatelessWidget {
             wrap: true,
           ),
           const SizedBox(height: 14),
-          SizedBox(
-            height: AppSpacing.ctaHeight,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: AppRadii.inputRadius,
-              ),
-              child: Center(
-                child: Text(
-                  'T\u1EA1o t\u00E0i kho\u1EA3n',
-                  style: AppTextStyles.body.copyWith(
-                    color: AppColors.portfolioBtnGhostText,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
-                  ),
-                ),
-              ),
-            ),
+          VitCtaButton(
+            onPressed: () {},
+            child: const Text('T\u1EA1o t\u00E0i kho\u1EA3n'),
           ),
         ],
       ),

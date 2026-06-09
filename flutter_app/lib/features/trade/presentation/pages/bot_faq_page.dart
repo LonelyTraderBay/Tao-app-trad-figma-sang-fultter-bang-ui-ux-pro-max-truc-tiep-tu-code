@@ -10,7 +10,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -18,7 +20,6 @@ part '../widgets/bot_faq_search_tabs.dart';
 part '../widgets/bot_faq_cards_help.dart';
 
 const _faqBackground = AppColors.bg;
-const _faqPanel = AppColors.surface;
 const _faqPanel2 = AppColors.surface2;
 const _faqPrimary = AppColors.primary;
 
@@ -98,8 +99,10 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
                   key: BotFaqPage.contentKey,
                   clipBehavior: Clip.none,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 14,
+                    fullBleed: true,
                     children: [
                       _SearchField(
                         controller: _searchController,
@@ -108,7 +111,6 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
                           _expandedIndex = null;
                         }),
                       ),
-                      const SizedBox(height: 32),
                       _CategoryTabs(
                         categories: snapshot.categories,
                         activeId: _categoryId,
@@ -117,9 +119,7 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
                           _expandedIndex = null;
                         }),
                       ),
-                      const SizedBox(height: 17),
                       _SectionLabel('${category.label} (${items.length})'),
-                      const SizedBox(height: 10),
                       if (items.isEmpty)
                         const _EmptyFaqs()
                       else
@@ -135,12 +135,10 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
                           ),
                           if (i != items.length - 1) const SizedBox(height: 9),
                         ],
-                      const SizedBox(height: 10),
                       _StatsRow(
                         totalFaqs: snapshot.totalFaqs,
                         categories: snapshot.categories.length,
                       ),
-                      const SizedBox(height: 17),
                       const _HelpCard(),
                     ],
                   ),

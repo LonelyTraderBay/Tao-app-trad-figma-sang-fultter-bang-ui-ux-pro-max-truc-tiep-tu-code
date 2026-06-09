@@ -7,12 +7,9 @@ class _CriticalAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-      decoration: BoxDecoration(
-        color: AppColors.transparent,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -114,14 +111,10 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 140,
       padding: const EdgeInsets.fromLTRB(10, 13, 10, 11),
-      decoration: BoxDecoration(
-        color: _slipPanel,
-        border: Border.all(color: _slipBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _slipBorder.withValues(alpha: .72),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -199,9 +192,9 @@ class _Tabs extends StatelessWidget {
       ('history', 'History'),
       ('alerts', 'Alerts (${summary.critical + summary.warning})'),
     ];
-    return Container(
+    return VitCard(
       height: 53,
-      color: _slipPanel,
+      padding: EdgeInsets.zero,
       child: Row(
         children: [
           for (final tab in tabs)

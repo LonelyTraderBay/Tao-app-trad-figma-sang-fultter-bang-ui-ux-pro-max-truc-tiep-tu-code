@@ -18,22 +18,10 @@ class _SummaryCard extends StatelessWidget {
         ? '${snapshot.issueCount} m\u1EA1ng \u0111ang ch\u1EADm'
         : 'T\u1EA5t c\u1EA3 m\u1EA1ng ho\u1EA1t \u0111\u1ED9ng t\u1ED1t';
 
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(20, 21, 20, 20),
-      decoration: BoxDecoration(
-        color: _networkPanel,
-        borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppColors.onAccent.withValues(alpha: .3)),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColors.onAccent.withValues(alpha: .05),
-            summaryColor.withValues(alpha: .04),
-            _networkPanel2,
-          ],
-        ),
-      ),
+      radius: VitCardRadius.lg,
+      borderColor: summaryColor.withValues(alpha: .34),
       child: Column(
         children: [
           Row(
@@ -146,14 +134,11 @@ class _SummaryStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
+      child: VitCard(
+        variant: VitCardVariant.inner,
         height: 59,
         alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: _networkPanel.withValues(alpha: .75),
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: color.withValues(alpha: .32)),
-        ),
+        borderColor: color.withValues(alpha: .32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

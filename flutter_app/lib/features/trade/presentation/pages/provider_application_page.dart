@@ -12,7 +12,12 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_input.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -23,7 +28,6 @@ part '../widgets/provider_application_common.dart';
 const _providerPrimary = AppColors.primary;
 const _providerGreen = AppColors.buy;
 const _providerWarning = AppColors.caution;
-const _providerPanel = AppColors.surface2;
 const _providerField = AppColors.surface3;
 
 class ProviderApplicationPage extends ConsumerStatefulWidget {
@@ -100,8 +104,10 @@ class _ProviderApplicationPageState
                 child: SingleChildScrollView(
                   key: ProviderApplicationPage.contentKey,
                   padding: const EdgeInsets.fromLTRB(20, 14, 20, 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 0,
                     children: [
                       _ProgressBars(steps: snapshot.steps, activeStep: step),
                       const SizedBox(height: 58),

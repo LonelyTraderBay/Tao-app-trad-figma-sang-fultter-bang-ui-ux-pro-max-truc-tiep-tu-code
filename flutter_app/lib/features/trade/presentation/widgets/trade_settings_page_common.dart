@@ -152,22 +152,13 @@ class _ResetButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitCtaButton(
+      key: TradeSettingsPage.resetKey,
+      onPressed: onReset,
+      variant: VitCtaButtonVariant.danger,
       height: 46,
-      child: OutlinedButton(
-        key: TradeSettingsPage.resetKey,
-        onPressed: onReset,
-        style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.sell,
-          side: BorderSide(color: AppColors.sell.withValues(alpha: .28)),
-          backgroundColor: AppColors.sell.withValues(alpha: .08),
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-          textStyle: AppTextStyles.caption.copyWith(
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-        child: const Text('Đặt lại mặc định'),
-      ),
+      leading: const Icon(Icons.restart_alt_rounded),
+      child: const Text('Đặt lại mặc định'),
     );
   }
 }
@@ -177,39 +168,12 @@ class _InfoNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-      decoration: BoxDecoration(
-        color: _tradePrimary.withValues(alpha: .06),
-        border: Border.all(color: _tradePrimary.withValues(alpha: .12)),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 2),
-            child: Icon(
-              Icons.info_outline_rounded,
-              color: _tradePrimary,
-              size: 14,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              'Cài đặt được lưu cục bộ trên thiết bị và áp dụng ngay khi thay đổi. '
-              'Đăng nhập trên thiết bị khác sẽ dùng cài đặt mặc định.',
-              style: AppTextStyles.micro.copyWith(
-                color: _tradePrimary,
-                fontSize: 11,
-                height: 1.45,
-                fontWeight: AppTextStyles.medium,
-              ),
-            ),
-          ),
-        ],
-      ),
+    return const VitHighRiskStatePanel(
+      state: VitHighRiskUiState.success,
+      title: 'Settings apply locally',
+      message:
+          'Settings are saved on this device and apply immediately. Other devices keep default settings until changed there.',
+      contractId: 'SC-052 local settings result',
     );
   }
 }

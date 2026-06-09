@@ -10,7 +10,10 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -20,7 +23,6 @@ part '../widgets/execution_venue_speed_trends.dart';
 part '../widgets/execution_venue_common.dart';
 
 const _venueBackground = AppColors.bg;
-const _venuePanel = AppColors.surface;
 const _venuePanel2 = AppColors.surface2;
 const _venueBorder = AppColors.borderSolid;
 const _venueGreen = AppColors.buy;
@@ -90,10 +92,20 @@ class _ExecutionVenueAnalysisPageState
                     child: SingleChildScrollView(
                       key: ExecutionVenueAnalysisPage.contentKey,
                       padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      child: VitPageContent(
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        customGap: 0,
                         children: [
                           _SummaryGrid(summary: snapshot.summary),
+                          const SizedBox(height: 16),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Execution venue review',
+                            message:
+                                'Compare fill quality, total cost, speed, venue concentration, fee impact, and next-step export before changing routing decisions.',
+                            contractId: 'SC-097 venue analysis review',
+                          ),
                           const SizedBox(height: 25),
                           _SortSelector(
                             activeId: _sort,

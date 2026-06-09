@@ -239,13 +239,9 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _govPanel,
-        border: Border.all(color: _govBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _govBorder.withValues(alpha: .72),
       child: child,
     );
   }

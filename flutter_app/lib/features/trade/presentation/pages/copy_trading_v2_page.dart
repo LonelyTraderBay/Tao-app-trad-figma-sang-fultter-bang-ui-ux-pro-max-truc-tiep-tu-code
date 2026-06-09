@@ -10,7 +10,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -75,8 +77,10 @@ class _CopyTradingV2PageState extends ConsumerState<CopyTradingV2Page> {
                 child: SingleChildScrollView(
                   key: CopyTradingV2Page.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 0,
                     children: [
                       _VariantSwitcher(
                         variants: snapshot.heroVariants,
@@ -92,24 +96,31 @@ class _CopyTradingV2PageState extends ConsumerState<CopyTradingV2Page> {
                         message: copyTrading.riskWarningText,
                       ),
                       const SizedBox(height: 24),
-                      _SortChips(
-                        options: copyTrading.sortOptions,
-                        selected: _sortBy,
-                        onChanged: (value) => setState(() => _sortBy = value),
-                      ),
-                      const SizedBox(height: 20),
-                      for (final trader in traders) ...[
-                        _TraderCard(
-                          trader: trader,
-                          onOpen: () => context.go(
-                            AppRoutePaths.tradeCopyProvider(
-                              trader.id,
-                              backPath: AppRoutePaths.tradeCopyTradingV2,
-                            ),
+                      VitPageSection(
+                        customGap: 0,
+                        children: [
+                          _SortChips(
+                            options: copyTrading.sortOptions,
+                            selected: _sortBy,
+                            onChanged: (value) =>
+                                setState(() => _sortBy = value),
                           ),
-                        ),
-                        if (trader != traders.last) const SizedBox(height: 20),
-                      ],
+                          const SizedBox(height: 20),
+                          for (final trader in traders) ...[
+                            _TraderCard(
+                              trader: trader,
+                              onOpen: () => context.go(
+                                AppRoutePaths.tradeCopyProvider(
+                                  trader.id,
+                                  backPath: AppRoutePaths.tradeCopyTradingV2,
+                                ),
+                              ),
+                            ),
+                            if (trader != traders.last)
+                              const SizedBox(height: 20),
+                          ],
+                        ],
+                      ),
                     ],
                   ),
                 ),

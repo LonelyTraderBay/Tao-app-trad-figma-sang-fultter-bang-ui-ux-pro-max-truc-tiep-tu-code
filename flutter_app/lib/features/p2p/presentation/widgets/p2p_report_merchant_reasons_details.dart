@@ -1,4 +1,4 @@
-﻿part of '../pages/p2p_report_merchant_page.dart';
+part of '../pages/p2p_report_merchant_page.dart';
 
 class _ReasonCard extends StatelessWidget {
   const _ReasonCard({
@@ -134,29 +134,13 @@ class _DetailField extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.x2),
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x3,
-          ),
-          decoration: BoxDecoration(
-            color: AppColors.surface2,
-            border: Border.all(color: AppColors.borderSolid, width: 1.5),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: TextField(
-            key: P2PReportMerchantPage.detailFieldKey,
-            controller: controller,
-            minLines: 4,
-            maxLines: 4,
-            cursorColor: AppColors.primary,
-            style: AppTextStyles.body.copyWith(color: AppColors.text1),
-            onChanged: (_) => onChanged(),
-            decoration: InputDecoration.collapsed(
-              hintText: hintText,
-              hintStyle: AppTextStyles.body.copyWith(color: AppColors.text3),
-            ),
-          ),
+        VitInput(
+          fieldKey: P2PReportMerchantPage.detailFieldKey,
+          controller: controller,
+          semanticLabel: 'P2P merchant report details',
+          hintText: hintText,
+          textStyle: AppTextStyles.body.copyWith(color: AppColors.text1),
+          onChanged: (_) => onChanged(),
         ),
       ],
     );

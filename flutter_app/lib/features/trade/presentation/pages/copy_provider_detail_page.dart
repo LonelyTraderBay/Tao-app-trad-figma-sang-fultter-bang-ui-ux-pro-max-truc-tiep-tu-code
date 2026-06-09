@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -85,6 +86,18 @@ class CopyProviderDetailPage extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const _RiskWarning(),
+                      const SizedBox(height: 12),
+                      const VitCard(
+                        variant: VitCardVariant.inner,
+                        padding: EdgeInsets.all(12),
+                        child: VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Provider detail review required',
+                          message:
+                              'Performance, max drawdown, copier limit, risk score, fees and suitability assessment are reviewed before copying.',
+                          contractId: 'copy-provider-detail-review',
+                        ),
+                      ),
                       const SizedBox(height: 14),
                       _ProviderCard(provider: provider),
                       const SizedBox(height: 14),

@@ -26,6 +26,8 @@ class VitInput extends StatelessWidget {
     this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
     this.autofillHints,
+    this.textAlign = TextAlign.start,
+    this.textStyle,
     this.onChanged,
     this.onSubmitted,
   });
@@ -47,6 +49,8 @@ class VitInput extends StatelessWidget {
   final TextCapitalization textCapitalization;
   final List<TextInputFormatter>? inputFormatters;
   final Iterable<String>? autofillHints;
+  final TextAlign textAlign;
+  final TextStyle? textStyle;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
 
@@ -110,8 +114,9 @@ class VitInput extends StatelessWidget {
               textCapitalization: textCapitalization,
               inputFormatters: inputFormatters,
               autofillHints: autofillHints,
+              textAlign: textAlign,
               cursorColor: AppColors.primary,
-              style: AppTextStyles.body.copyWith(fontSize: 15),
+              style: textStyle ?? AppTextStyles.body.copyWith(fontSize: 15),
               onChanged: onChanged,
               onSubmitted: onSubmitted,
               decoration: InputDecoration.collapsed(

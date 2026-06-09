@@ -13,9 +13,10 @@ class _DisputeTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 54,
-      color: _disputeFooter,
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -139,21 +140,11 @@ class _ResultBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.buy10,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.buy20),
-      ),
-      child: Text(
-        '${result.message}: ${result.caseId}',
-        style: AppTextStyles.caption.copyWith(
-          color: AppColors.buy,
-          fontSize: 12,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
+    return VitHighRiskStatePanel(
+      state: VitHighRiskUiState.success,
+      title: '${result.message}: ${result.caseId}',
+      message: 'Case is now available in Active Cases.',
+      contractId: result.caseId,
     );
   }
 }
@@ -167,13 +158,9 @@ class _DisputeCaseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final statusColor = _statusColor(disputeCase.status);
     final resolved = disputeCase.status == 'resolved';
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.cardBorder),
-      ),
+      borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -243,22 +230,11 @@ class _DisputeCaseCard extends StatelessWidget {
             _RefundPanel(disputeCase: disputeCase),
           if (!resolved) ...[
             const SizedBox(height: 12),
-            Container(
+            VitCtaButton(
+              onPressed: () {},
+              variant: VitCtaButtonVariant.danger,
               height: 36,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: _disputeDangerBackground,
-                borderRadius: AppRadii.smRadius,
-              ),
-              child: Text(
-                'Escalate to Senior Support',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.sell,
-                  fontSize: 11,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
-              ),
+              child: const Text('Escalate to Senior Support'),
             ),
           ],
         ],

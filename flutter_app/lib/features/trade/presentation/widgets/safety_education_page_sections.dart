@@ -7,14 +7,10 @@ class _HeroBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 94,
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _safetyHeroBackground,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _safetyPrimary, width: 2),
-      ),
+      borderColor: _safetyPrimary,
       child: Row(
         children: [
           Container(
@@ -176,12 +172,8 @@ class _ScamCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: _safetyCard,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.cardBorder),
-      ),
+    return VitCard(
+      borderColor: AppColors.cardBorder,
       child: Column(
         children: [
           InkWell(

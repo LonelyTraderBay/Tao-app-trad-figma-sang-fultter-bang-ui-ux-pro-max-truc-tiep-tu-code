@@ -93,16 +93,11 @@ class _ArticleSheet extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      Container(
+                      VitCard(
                         width: double.infinity,
                         padding: const EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          color: _newsPrimary.withValues(alpha: .06),
-                          border: Border.all(
-                            color: _newsPrimary.withValues(alpha: .12),
-                          ),
-                          borderRadius: AppRadii.lgRadius,
-                        ),
+                        variant: VitCardVariant.inner,
+                        borderColor: _newsPrimary.withValues(alpha: .12),
                         child: Text(
                           article.summary,
                           style: AppTextStyles.body.copyWith(
@@ -126,25 +121,15 @@ class _ArticleSheet extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      SizedBox(
-                        width: double.infinity,
+                      VitCtaButton(
+                        key: NewsPage.closeSheetKey,
                         height: AppSpacing.inputHeight,
-                        child: FilledButton(
-                          key: NewsPage.closeSheetKey,
-                          onPressed: () => Navigator.of(context).pop(),
-                          style: FilledButton.styleFrom(
-                            backgroundColor: _newsPrimary,
-                            foregroundColor: AppColors.onAccent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: AppRadii.lgRadius,
-                            ),
-                          ),
-                          child: Text(
-                            'Đóng',
-                            style: AppTextStyles.baseMedium.copyWith(
-                              color: AppColors.onAccent,
-                              fontSize: 15,
-                            ),
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text(
+                          'Đóng',
+                          style: AppTextStyles.baseMedium.copyWith(
+                            color: AppColors.onAccent,
+                            fontSize: 15,
                           ),
                         ),
                       ),

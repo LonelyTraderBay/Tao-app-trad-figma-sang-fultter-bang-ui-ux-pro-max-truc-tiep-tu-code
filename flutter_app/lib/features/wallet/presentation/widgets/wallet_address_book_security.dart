@@ -12,14 +12,10 @@ class _WhitelistModeCard extends StatelessWidget {
       key: AddressBookPage.whitelistModeKey,
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
+      child: VitCard(
         height: 74,
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
-        decoration: BoxDecoration(
-          color: _bookPanel,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: AppColors.overlayStroke),
-        ),
+        borderColor: AppColors.overlayStroke,
         child: Row(
           children: [
             Container(
@@ -111,13 +107,9 @@ class _SecurityTip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
-      decoration: BoxDecoration(
-        color: AppColors.primary08,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.primary15),
-      ),
+      borderColor: AppColors.primary15,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

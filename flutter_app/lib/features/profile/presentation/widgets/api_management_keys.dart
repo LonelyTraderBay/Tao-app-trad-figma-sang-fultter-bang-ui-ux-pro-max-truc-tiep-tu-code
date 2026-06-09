@@ -24,16 +24,10 @@ class _ApiKeyCard extends StatelessWidget {
     final active = apiKey.isActive;
     return Opacity(
       opacity: active ? 1 : .65,
-      child: Container(
+      child: VitCard(
         key: ApiManagementPage.cardKey(apiKey.id),
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-        decoration: BoxDecoration(
-          color: _apiPanel,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(
-            color: active ? _apiBorder : _apiRed.withValues(alpha: .15),
-          ),
-        ),
+        borderColor: active ? _apiBorder : _apiRed.withValues(alpha: .15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

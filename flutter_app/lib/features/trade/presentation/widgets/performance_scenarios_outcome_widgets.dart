@@ -190,13 +190,9 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _scenarioPanel,
-        border: Border.all(color: _scenarioBorder.withValues(alpha: .76)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _scenarioBorder.withValues(alpha: .76),
       child: child,
     );
   }

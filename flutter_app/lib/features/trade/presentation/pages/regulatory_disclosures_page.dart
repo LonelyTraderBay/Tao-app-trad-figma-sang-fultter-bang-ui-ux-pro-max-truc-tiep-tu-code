@@ -10,7 +10,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -80,8 +82,10 @@ class _RegulatoryDisclosuresPageState
                     child: SingleChildScrollView(
                       key: RegulatoryDisclosuresPage.contentKey,
                       padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      child: VitPageContent(
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        customGap: 0,
                         children: [
                           _LegalHero(snapshot: snapshot),
                           const SizedBox(height: 24),
@@ -97,6 +101,35 @@ class _RegulatoryDisclosuresPageState
                             activeTabId: _activeTabId!,
                             onNotice: (notice) =>
                                 setState(() => _notice = notice),
+                          ),
+                          const SizedBox(height: 12),
+                          const VitPageSection(
+                            customGap: 0,
+                            children: [
+                              VitCard(
+                                variant: VitCardVariant.inner,
+                                padding: EdgeInsets.all(12),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    VitHighRiskStatePanel(
+                                      state: VitHighRiskUiState.riskReview,
+                                      title: 'Disclosure review state',
+                                      message:
+                                          'Legal tabs, product disclosures, contact routes, notice result and investor next step are reviewed before regulated action.',
+                                      contractId:
+                                          'regulatory-disclosures-review',
+                                    ),
+                                    SizedBox(height: 8),
+                                    VitStatusPill(
+                                      label: 'Disclosure route visible',
+                                      status: VitStatusPillStatus.info,
+                                      size: VitStatusPillSize.sm,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),

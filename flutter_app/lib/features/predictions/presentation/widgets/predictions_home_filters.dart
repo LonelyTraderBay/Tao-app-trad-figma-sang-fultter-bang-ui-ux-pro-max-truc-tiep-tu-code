@@ -2,62 +2,23 @@ part of '../pages/predictions_home_page.dart';
 
 class _SearchField extends StatelessWidget {
   const _SearchField({
-    required this.value,
+    required this.controller,
     required this.onChanged,
     required this.onClear,
   });
 
-  final String value;
+  final TextEditingController controller;
   final ValueChanged<String> onChanged;
   final VoidCallback onClear;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitSearchBar(
       key: PredictionsHomePage.searchFieldKey,
-      height: 48,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: AppColors.searchBg,
-        border: Border.all(color: AppColors.searchBorder, width: 1.5),
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.search_rounded,
-            color: AppColors.searchPlaceholder,
-            size: 18,
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: TextField(
-              controller: TextEditingController(text: value)
-                ..selection = TextSelection.collapsed(offset: value.length),
-              onChanged: onChanged,
-              style: AppTextStyles.base.copyWith(fontSize: 15),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                isDense: true,
-                hintText: 'Search events...',
-                hintStyle: AppTextStyles.base.copyWith(
-                  color: AppColors.searchPlaceholder,
-                  fontSize: 15,
-                ),
-              ),
-            ),
-          ),
-          if (value.isNotEmpty)
-            InkWell(
-              onTap: onClear,
-              child: const Icon(
-                Icons.close_rounded,
-                color: AppColors.text3,
-                size: 14,
-              ),
-            ),
-        ],
-      ),
+      controller: controller,
+      placeholder: 'Search events...',
+      onChanged: onChanged,
+      onClear: onClear,
     );
   }
 }

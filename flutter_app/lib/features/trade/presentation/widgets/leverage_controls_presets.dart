@@ -15,52 +15,55 @@ class _LeverageSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          'Kéo để điều chỉnh',
-          style: AppTextStyles.caption.copyWith(
-            fontSize: 12,
-            fontWeight: AppTextStyles.bold,
+    return VitCard(
+      padding: const EdgeInsets.fromLTRB(14, 14, 14, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Kéo để điều chỉnh',
+            style: AppTextStyles.caption.copyWith(
+              fontSize: 12,
+              fontWeight: AppTextStyles.bold,
+            ),
           ),
-        ),
-        const SizedBox(height: 8),
-        SliderTheme(
-          data: SliderTheme.of(context).copyWith(
-            trackHeight: 4,
-            activeTrackColor: riskColor,
-            inactiveTrackColor: AppColors.medalSilverMuted,
-            thumbColor: riskColor,
-            overlayColor: riskColor.withValues(alpha: .12),
-            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
-            overlayShape: const RoundSliderOverlayShape(overlayRadius: 18),
+          const SizedBox(height: 8),
+          SliderTheme(
+            data: SliderTheme.of(context).copyWith(
+              trackHeight: 4,
+              activeTrackColor: riskColor,
+              inactiveTrackColor: AppColors.medalSilverMuted,
+              thumbColor: riskColor,
+              overlayColor: riskColor.withValues(alpha: .12),
+              thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
+              overlayShape: const RoundSliderOverlayShape(overlayRadius: 18),
+            ),
+            child: Slider(
+              key: LeveragePage.sliderKey,
+              min: 1,
+              max: 100,
+              divisions: 99,
+              value: leverage.toDouble(),
+              onChanged: (value) => onChanged(value.round()),
+            ),
           ),
-          child: Slider(
-            key: LeveragePage.sliderKey,
-            min: 1,
-            max: 100,
-            divisions: 99,
-            value: leverage.toDouble(),
-            onChanged: (value) => onChanged(value.round()),
-          ),
-        ),
-        const SizedBox(height: 4),
-        Row(
-          children: [
-            for (final stop in stops) ...[
-              Expanded(
-                child: _StopButton(
-                  leverage: stop,
-                  active: leverage == stop,
-                  onTap: () => onChanged(stop),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              for (final stop in stops) ...[
+                Expanded(
+                  child: _StopButton(
+                    leverage: stop,
+                    active: leverage == stop,
+                    onTap: () => onChanged(stop),
+                  ),
                 ),
-              ),
-              if (stop != stops.last) const SizedBox(width: 9),
+                if (stop != stops.last) const SizedBox(width: 9),
+              ],
             ],
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -119,38 +122,41 @@ class _PresetGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          'Chọn nhanh',
-          style: AppTextStyles.caption.copyWith(
-            fontSize: 12,
-            fontWeight: AppTextStyles.bold,
+    return VitCard(
+      padding: const EdgeInsets.fromLTRB(14, 14, 14, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Chọn nhanh',
+            style: AppTextStyles.caption.copyWith(
+              fontSize: 12,
+              fontWeight: AppTextStyles.bold,
+            ),
           ),
-        ),
-        const SizedBox(height: 10),
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.zero,
-          itemCount: presets.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 5,
-            crossAxisSpacing: 9,
-            mainAxisSpacing: 10,
-            childAspectRatio: 1.78,
+          const SizedBox(height: 10),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            itemCount: presets.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 5,
+              crossAxisSpacing: 9,
+              mainAxisSpacing: 10,
+              childAspectRatio: 1.78,
+            ),
+            itemBuilder: (context, index) {
+              final leverage = presets[index];
+              return _PresetButton(
+                leverage: leverage,
+                active: leverage == active,
+                onTap: () => onChanged(leverage),
+              );
+            },
           ),
-          itemBuilder: (context, index) {
-            final leverage = presets[index];
-            return _PresetButton(
-              leverage: leverage,
-              active: leverage == active,
-              onTap: () => onChanged(leverage),
-            );
-          },
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

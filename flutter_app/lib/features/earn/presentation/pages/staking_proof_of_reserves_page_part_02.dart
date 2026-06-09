@@ -282,14 +282,14 @@ class _VerifySheetState extends State<_VerifySheet> {
         ),
         const SizedBox(height: AppSpacing.x4),
         _TextInput(
-          key: StakingProofOfReservesPage.userIdFieldKey,
+          fieldKey: StakingProofOfReservesPage.userIdFieldKey,
           label: 'User ID',
           controller: _userId,
           hint: 'e.g., user_12345',
         ),
         const SizedBox(height: AppSpacing.x3),
         _TextInput(
-          key: StakingProofOfReservesPage.balanceFieldKey,
+          fieldKey: StakingProofOfReservesPage.balanceFieldKey,
           label: 'Staked Balance (ETH)',
           controller: _balance,
           hint: 'e.g., 10.5',
@@ -403,13 +403,14 @@ class _VerifySheetState extends State<_VerifySheet> {
 
 class _TextInput extends StatelessWidget {
   const _TextInput({
-    super.key,
+    required this.fieldKey,
     required this.label,
     required this.controller,
     required this.hint,
     this.keyboardType,
   });
 
+  final Key fieldKey;
   final String label;
   final TextEditingController controller;
   final String hint;
@@ -425,11 +426,12 @@ class _TextInput extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
         const SizedBox(height: AppSpacing.x2),
-        TextField(
+        VitInput(
+          fieldKey: fieldKey,
           controller: controller,
+          semanticLabel: label,
+          hintText: hint,
           keyboardType: keyboardType,
-          style: AppTextStyles.body,
-          decoration: InputDecoration(hintText: hint),
         ),
       ],
     );

@@ -12,6 +12,8 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -20,8 +22,6 @@ part '../widgets/copy_trading_list.dart';
 part '../widgets/copy_trading_metrics_common.dart';
 
 const _copyPrimary = AppColors.primary;
-const _copyCardTone = AppColors.surface;
-const _copyPanelTone = AppColors.surface2;
 
 class CopyTradingPage extends ConsumerStatefulWidget {
   const CopyTradingPage({super.key, this.shellRenderMode});
@@ -76,31 +76,46 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
                 child: SingleChildScrollView(
                   key: CopyTradingPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 20,
+                    fullBleed: true,
                     children: [
                       _CopyHeroCard(snapshot: snapshot),
-                      const SizedBox(height: 20),
                       _RiskWarningCard(
                         title: snapshot.riskWarningTitle,
                         message: snapshot.riskWarningText,
                       ),
-                      const SizedBox(height: 20),
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review copy trading risk',
+                        message:
+                            'Compare provider drawdown, copier concentration, fees, and stop rules before copying any strategy.',
+                        contractId: 'Providers available: ${traders.length}',
+                      ),
                       _SortChips(
                         options: snapshot.sortOptions,
                         selected: _sortBy,
                         onChanged: (value) => setState(() => _sortBy = value),
                       ),
-                      const SizedBox(height: 20),
-                      for (final trader in traders) ...[
-                        _TraderCard(
-                          trader: trader,
-                          onOpen: () => context.go(
-                            AppRoutePaths.tradeCopyProvider(trader.id),
+                      if (traders.isEmpty)
+                        const VitEmptyState(
+                          title: 'No copy providers',
+                          message:
+                              'Providers matching this sort will appear here when available.',
+                          icon: Icons.groups_outlined,
+                        )
+                      else
+                        for (final trader in traders) ...[
+                          _TraderCard(
+                            trader: trader,
+                            onOpen: () => context.go(
+                              AppRoutePaths.tradeCopyProvider(trader.id),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                      ],
+                          if (trader != traders.last)
+                            const SizedBox(height: 20),
+                        ],
                       _Disclaimer(text: snapshot.disclaimer),
                     ],
                   ),

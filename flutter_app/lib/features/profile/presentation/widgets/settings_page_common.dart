@@ -7,11 +7,12 @@ class _AppInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       key: SettingsPage.appInfoKey,
       height: 164,
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 14),
-      decoration: _cardDecoration(radius: 16),
+      radius: VitCardRadius.lg,
+      borderColor: _settingsBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -60,14 +61,6 @@ class _AppInfoCard extends StatelessWidget {
       ),
     );
   }
-}
-
-BoxDecoration _cardDecoration({required double radius}) {
-  return BoxDecoration(
-    color: _settingsPanel,
-    borderRadius: BorderRadius.circular(radius),
-    border: Border.all(color: _settingsBorder),
-  );
 }
 
 IconData _iconFor(String key) {

@@ -80,34 +80,17 @@ class _LabeledField extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
         const SizedBox(height: AppSpacing.x2),
-        TextField(
-          key: fieldKey,
+        VitInput(
+          fieldKey: fieldKey,
           controller: controller,
           keyboardType: keyboardType,
           inputFormatters: keyboardType == TextInputType.text
               ? const []
               : [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
           onChanged: (_) => onChanged(),
-          style: AppTextStyles.base.copyWith(color: AppColors.text1),
-          decoration: InputDecoration(
-            hintText: hintText,
-            hintStyle: AppTextStyles.base.copyWith(color: AppColors.text3),
-            isDense: true,
-            filled: true,
-            fillColor: AppColors.bg,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x3,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: AppRadii.inputRadius,
-              borderSide: const BorderSide(color: AppColors.cardBorder),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: AppRadii.inputRadius,
-              borderSide: const BorderSide(color: AppColors.primary),
-            ),
-          ),
+          semanticLabel: label,
+          hintText: hintText,
+          textStyle: AppTextStyles.base.copyWith(color: AppColors.text1),
         ),
       ],
     );

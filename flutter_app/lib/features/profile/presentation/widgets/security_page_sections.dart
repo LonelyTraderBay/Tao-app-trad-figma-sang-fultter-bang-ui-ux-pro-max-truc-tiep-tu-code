@@ -9,11 +9,11 @@ class _ScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scoreColor = Color(snapshot.scoreColorHex);
 
-    return Container(
+    return VitCard(
       key: SecurityPage.scoreCardKey,
       height: 140,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
-      decoration: _cardDecoration(radius: 16),
+      borderColor: _securityBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -105,8 +105,9 @@ class _SecurityList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: _cardDecoration(radius: 16),
+    return VitCard(
+      borderColor: _securityBorder,
+      clip: true,
       child: ClipRRect(
         borderRadius: AppRadii.cardRadius,
         child: Column(
@@ -248,8 +249,9 @@ class _DeviceList extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Container(
-          decoration: _cardDecoration(radius: 16),
+        VitCard(
+          borderColor: _securityBorder,
+          clip: true,
           child: ClipRRect(
             borderRadius: AppRadii.cardRadius,
             child: Column(

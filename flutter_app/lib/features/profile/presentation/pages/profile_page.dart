@@ -12,7 +12,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 part '../widgets/profile_home_hero.dart';
 part '../widgets/profile_home_vip_prediction.dart';
@@ -20,9 +22,7 @@ part '../widgets/profile_home_arena_stats.dart';
 part '../widgets/profile_home_menu_actions.dart';
 
 const _profileBackground = AppColors.bg;
-const _profilePanel = AppColors.surface;
 const _profilePanel2 = AppColors.surface2;
-const _profileHero = AppColors.surface;
 const _profileBorder = AppColors.cardBorder;
 const _profileGreen = AppColors.buy;
 const _profileAmber = AppColors.warn;
@@ -76,8 +76,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             key: ProfilePage.contentKey,
             padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
             physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            child: VitPageContent(
+              padding: VitContentPadding.none,
+              customGap: 0,
+              fullBleed: true,
               children: [
                 _ProfileHero(
                   user: snapshot.user,
@@ -113,17 +115,33 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   accent: _profileAmber,
                 ),
                 const SizedBox(height: 11),
-                _ProfileProductHub(shortcuts: snapshot.productShortcuts),
+                if (snapshot.productShortcuts.isEmpty)
+                  const VitEmptyState(
+                    title: 'Ch\u01B0a c\u00F3 s\u1EA3n ph\u1EA9m',
+                    message:
+                        'C\u00E1c shortcut s\u1EA3n ph\u1EA9m s\u1EBD hi\u1EC3n th\u1ECB khi kh\u1EA3 d\u1EE5ng.',
+                    icon: Icons.explore_outlined,
+                  )
+                else
+                  _ProfileProductHub(shortcuts: snapshot.productShortcuts),
                 const SizedBox(height: 25),
-                for (final section in snapshot.sections) ...[
-                  _SectionLabel(
-                    label: section.label,
-                    accent: Color(section.accentHex),
-                  ),
-                  const SizedBox(height: 11),
-                  _MenuSection(section: section),
-                  const SizedBox(height: 25),
-                ],
+                if (snapshot.sections.isEmpty)
+                  const VitEmptyState(
+                    title: 'Ch\u01B0a c\u00F3 m\u1EE5c t\u00E0i kho\u1EA3n',
+                    message:
+                        'C\u00E1c c\u00E0i \u0111\u1EB7t profile s\u1EBD hi\u1EC3n th\u1ECB sau khi t\u1EA3i xong.',
+                    icon: Icons.account_circle_outlined,
+                  )
+                else
+                  for (final section in snapshot.sections) ...[
+                    _SectionLabel(
+                      label: section.label,
+                      accent: Color(section.accentHex),
+                    ),
+                    const SizedBox(height: 11),
+                    _MenuSection(section: section),
+                    const SizedBox(height: 25),
+                  ],
                 _ActivityButton(
                   onTap: () => context.go(AppRoutePaths.profileActivity),
                 ),

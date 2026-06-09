@@ -11,13 +11,9 @@ class _LegendCard extends StatelessWidget {
       ('congested', 'T\u1EAFc ngh\u1EBDn'),
       ('down', 'B\u1EA3o tr\u00EC'),
     ];
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _networkPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _networkBorder),
-      ),
+      borderColor: _networkBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -97,13 +93,9 @@ class _DisclaimerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
-      decoration: BoxDecoration(
-        color: _networkPrimary.withValues(alpha: .08),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _networkPrimary.withValues(alpha: .25)),
-      ),
+      borderColor: _networkPrimary.withValues(alpha: .25),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

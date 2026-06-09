@@ -12,7 +12,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -94,18 +96,49 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                               20,
                               footerBottom + 74,
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                            child: VitPageContent(
+                              padding: VitContentPadding.none,
+                              fullBleed: true,
+                              customGap: 0,
                               children: [
                                 const _IntroCard(),
+                                const SizedBox(height: 12),
+                                const VitCard(
+                                  variant: VitCardVariant.inner,
+                                  padding: EdgeInsets.all(12),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      VitHighRiskStatePanel(
+                                        state: VitHighRiskUiState.riskReview,
+                                        title: 'Optimization review required',
+                                        message:
+                                            'Target metric, parameter range, queue state, result preview and rollback next step are reviewed before bot changes.',
+                                        contractId: 'bot-optimization-review',
+                                      ),
+                                      SizedBox(height: 8),
+                                      VitStatusPill(
+                                        label: 'Queued before apply',
+                                        status: VitStatusPillStatus.info,
+                                        size: VitStatusPillSize.sm,
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 const SizedBox(height: 31),
                                 const _SectionLabel('Optimization Target'),
                                 const SizedBox(height: 10),
-                                _TargetCard(
-                                  targets: snapshot.targets,
-                                  selectedId: _selectedTarget,
-                                  onChanged: (id) =>
-                                      setState(() => _selectedTarget = id),
+                                VitPageSection(
+                                  customGap: 0,
+                                  children: [
+                                    _TargetCard(
+                                      targets: snapshot.targets,
+                                      selectedId: _selectedTarget,
+                                      onChanged: (id) =>
+                                          setState(() => _selectedTarget = id),
+                                    ),
+                                  ],
                                 ),
                                 const SizedBox(height: 18),
                                 const _SectionLabel('Parameter Ranges'),

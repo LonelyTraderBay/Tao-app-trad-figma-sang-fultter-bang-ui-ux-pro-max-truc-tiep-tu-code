@@ -25,56 +25,51 @@ class _NetworkSelector extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        GestureDetector(
+        VitCard(
           key: DepositPage.networkSelectorKey,
+          variant: VitCardVariant.inner,
+          radius: VitCardRadius.sm,
+          height: 52,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          borderColor: _depositPrimary,
           onTap: onTap,
-          behavior: HitTestBehavior.opaque,
-          child: Container(
-            height: 52,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(
-              color: _depositPanel2,
-              border: Border.all(color: _depositPrimary, width: 1.5),
-              borderRadius: AppRadii.inputRadius,
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        selected.name,
-                        style: AppTextStyles.body.copyWith(
-                          color: AppColors.text1,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w800,
-                          height: 1,
-                        ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      selected.name,
+                      style: AppTextStyles.body.copyWith(
+                        color: AppColors.text1,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        height: 1,
                       ),
-                      const SizedBox(height: 7),
-                      Text(
-                        'Phí: ${selected.fee} · Nạp tối thiểu: ${_formatDeposit(selected.minDeposit)} $asset',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text2,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                          height: 1,
-                        ),
+                    ),
+                    const SizedBox(height: 7),
+                    Text(
+                      'Phí: ${selected.fee} · Nạp tối thiểu: ${_formatDeposit(selected.minDeposit)} $asset',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        height: 1,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: AppColors.text2,
-                  size: 24,
-                ),
-              ],
-            ),
+              ),
+              const Icon(
+                Icons.keyboard_arrow_down_rounded,
+                color: AppColors.text2,
+                size: 24,
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 10),
@@ -123,50 +118,64 @@ class _WarningCard extends StatelessWidget {
       'Cần ${network.confirmations} xác nhận blockchain',
     ];
 
-    return Container(
-      constraints: const BoxConstraints(minHeight: 129),
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
-      decoration: BoxDecoration(
-        color: _depositRed.withValues(alpha: .08),
-        border: Border.all(color: _depositRed.withValues(alpha: .38)),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(Icons.warning_amber_rounded, color: _depositRed, size: 15),
-          const SizedBox(width: 9),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Quan trọng — Đọc trước khi nạp',
-                  style: AppTextStyles.body.copyWith(
-                    color: _depositRed,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800,
-                    height: 1.15,
-                  ),
-                ),
-                const SizedBox(height: 9),
-                for (final item in warningItems) ...[
-                  Text(
-                    '• $item',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.sell,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
-                      height: 1.18,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Review deposit network',
+          message:
+              'Use only ${network.name} for $asset. Wrong network deposits may be unrecoverable.',
+          contractId:
+              'Min ${_formatDeposit(network.minDeposit)} $asset / ${network.confirmations} confirmations',
+        ),
+        const SizedBox(height: 10),
+        VitCard(
+          constraints: const BoxConstraints(minHeight: 129),
+          padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+          borderColor: _depositRed.withValues(alpha: .38),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(
+                Icons.warning_amber_rounded,
+                color: _depositRed,
+                size: 15,
+              ),
+              const SizedBox(width: 9),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Quan trọng — Đọc trước khi nạp',
+                      style: AppTextStyles.body.copyWith(
+                        color: _depositRed,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        height: 1.15,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                ],
-              ],
-            ),
+                    const SizedBox(height: 9),
+                    for (final item in warningItems) ...[
+                      Text(
+                        '• $item',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.sell,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          height: 1.18,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                    ],
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -186,13 +195,8 @@ class _QrAddressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-      decoration: BoxDecoration(
-        color: _depositPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         children: [
           _QrCode(address: network.address),

@@ -283,28 +283,17 @@ class _OrderForm extends StatelessWidget {
           const SizedBox(height: 16),
           _FeeCard(preview: preview),
           const SizedBox(height: 16),
-          SizedBox(
+          VitCtaButton(
+            key: TradePage.submitKey,
+            onPressed: canSubmit ? onSubmit : null,
             height: 52,
-            child: FilledButton(
-              key: TradePage.submitKey,
-              onPressed: canSubmit ? onSubmit : null,
-              style: FilledButton.styleFrom(
-                backgroundColor: side == TradeOrderSide.buy
-                    ? AppColors.buy
-                    : AppColors.sell,
-                disabledBackgroundColor: AppColors.surface,
-                shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.cardRadius,
-                ),
-              ),
-              child: Text(
-                canSubmit
-                    ? (side == TradeOrderSide.buy ? 'Mua BTC' : 'Bán BTC')
-                    : 'Nhập thông tin lệnh',
-                style: AppTextStyles.baseMedium.copyWith(
-                  color: canSubmit ? AppColors.onAccent : AppColors.text3,
-                ),
-              ),
+            variant: side == TradeOrderSide.buy
+                ? VitCtaButtonVariant.success
+                : VitCtaButtonVariant.danger,
+            child: Text(
+              canSubmit
+                  ? (side == TradeOrderSide.buy ? 'Mua BTC' : 'Bán BTC')
+                  : 'Nhập thông tin lệnh',
             ),
           ),
           const SizedBox(height: 14),

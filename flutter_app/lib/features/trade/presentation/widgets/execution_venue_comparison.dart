@@ -30,14 +30,10 @@ class _VenueCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isWinner = rank == 1;
-    return Container(
+    return VitCard(
       key: ExecutionVenueAnalysisPage.venueKey(venue.venue),
       padding: const EdgeInsets.all(13),
-      decoration: BoxDecoration(
-        color: _venuePanel,
-        border: Border.all(color: _venueBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _venueBorder.withValues(alpha: .72),
       child: Column(
         children: [
           Row(

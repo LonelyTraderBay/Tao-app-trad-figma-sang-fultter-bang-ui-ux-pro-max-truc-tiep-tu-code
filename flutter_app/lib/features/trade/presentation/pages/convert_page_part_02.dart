@@ -1,4 +1,4 @@
-﻿part of 'convert_page.dart';
+part of 'convert_page.dart';
 
 class _SwapButton extends StatelessWidget {
   const _SwapButton({required this.onTap});
@@ -11,22 +11,12 @@ class _SwapButton extends StatelessWidget {
       key: ConvertPage.swapKey,
       onTap: onTap,
       borderRadius: AppRadii.lgRadius,
-      child: Container(
+      child: VitCard(
+        variant: VitCardVariant.inner,
         width: 44,
         height: 44,
         alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          border: Border.all(color: _tradePrimary.withValues(alpha: .45)),
-          borderRadius: AppRadii.cardRadius,
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.dynamicIslandBg.withValues(alpha: .30),
-              blurRadius: 14,
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
+        borderColor: _tradePrimary.withValues(alpha: .45),
         child: const Icon(
           Icons.swap_vert_rounded,
           color: _tradePrimary,
@@ -201,14 +191,9 @@ class _PairMiniCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 54,
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: _panelBackground,
-        border: Border.all(color: AppColors.onAccent.withValues(alpha: .06)),
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: Row(
         children: [
           Text(
@@ -281,14 +266,9 @@ class _SlippageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 108,
       padding: const EdgeInsets.fromLTRB(16, 15, 16, 16),
-      decoration: BoxDecoration(
-        color: _panelBackground,
-        border: Border.all(color: AppColors.onAccent.withValues(alpha: .06)),
-        borderRadius: AppRadii.lgRadius,
-      ),
       child: Column(
         children: [
           Row(
@@ -396,6 +376,35 @@ class _SlippageChip extends StatelessWidget {
   }
 }
 
+class _ConvertRiskReviewPanel extends StatelessWidget {
+  const _ConvertRiskReviewPanel({
+    required this.quote,
+    required this.fromSymbol,
+    required this.toSymbol,
+    required this.slippage,
+  });
+
+  final TradeConvertQuote quote;
+  final String fromSymbol;
+  final String toSymbol;
+  final double slippage;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitHighRiskStatePanel(
+      state: quote.canSubmit
+          ? VitHighRiskUiState.riskReview
+          : VitHighRiskUiState.empty,
+      title: quote.canSubmit
+          ? 'Preview convert quote'
+          : 'Enter amount to preview',
+      message:
+          'Confirm $fromSymbol/$toSymbol rate, fee, ${slippage.toStringAsFixed(1)}% slippage limit, network risk, and next-step receipt before submitting.',
+      contractId: 'SC-056 Convert preview',
+    );
+  }
+}
+
 class _SubmitButton extends StatelessWidget {
   const _SubmitButton({
     required this.enabled,
@@ -412,27 +421,19 @@ class _SubmitButton extends StatelessWidget {
     final label = receipt == null
         ? (enabled ? 'Chuyển đổi ngay' : 'Nhập số lượng')
         : 'Đã gửi ${receipt!.convertId}';
-    return InkWell(
+    return VitCtaButton(
       key: ConvertPage.submitKey,
-      onTap: enabled ? onPressed : null,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        height: AppSpacing.inputHeight,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: enabled ? _tradePrimary : AppColors.surface3,
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: enabled
-                ? AppColors.onAccent
-                : AppColors.text3.withValues(alpha: .32),
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
+      onPressed: enabled ? onPressed : null,
+      variant: receipt == null
+          ? VitCtaButtonVariant.primary
+          : VitCtaButtonVariant.success,
+      height: AppSpacing.inputHeight,
+      leading: Icon(
+        receipt == null
+            ? Icons.swap_vert_rounded
+            : Icons.check_circle_outline_rounded,
       ),
+      child: Text(label),
     );
   }
 }
@@ -484,12 +485,8 @@ class _HistoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: _panelBackground,
-        border: Border.all(color: AppColors.onAccent.withValues(alpha: .07)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+    return VitCard(
+      padding: EdgeInsets.zero,
       child: Column(
         children: [
           for (var i = 0; i < records.length; i++)

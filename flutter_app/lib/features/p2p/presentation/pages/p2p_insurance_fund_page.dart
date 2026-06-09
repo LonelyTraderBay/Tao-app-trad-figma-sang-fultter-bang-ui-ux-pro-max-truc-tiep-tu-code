@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -131,9 +132,33 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
                           AppSpacing.contentPad,
                           bottomInset,
                         ),
-                        child: _tab == _InsuranceTab.overview
-                            ? _OverviewContent(snapshot: snapshot)
-                            : _ClaimsContent(snapshot: snapshot),
+                        child: VitPageContent(
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          customGap: 0,
+                          children: [
+                            VitPageSection(
+                              customGap: 0,
+                              children: [
+                                _tab == _InsuranceTab.overview
+                                    ? _OverviewContent(snapshot: snapshot)
+                                    : _ClaimsContent(snapshot: snapshot),
+                              ],
+                            ),
+                            const SizedBox(height: AppSpacing.x3),
+                            const VitCard(
+                              variant: VitCardVariant.inner,
+                              padding: EdgeInsets.all(AppSpacing.x3),
+                              child: VitHighRiskStatePanel(
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'Insurance fund review',
+                                message:
+                                    'Fund health, eligibility, coverage tiers, claim list, certificate route and next protection step are reviewed before claim action.',
+                                contractId: 'p2p-insurance-fund-review',
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

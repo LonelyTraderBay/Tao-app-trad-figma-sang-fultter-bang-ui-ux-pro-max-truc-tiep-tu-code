@@ -127,6 +127,15 @@ class _LaunchpadRebalancePageState
                         assetCount: assets.length,
                         totalDeviation: totalDeviation,
                       ),
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: _showConfirm
+                            ? 'Rebalance confirmation open'
+                            : 'Rebalance preview required',
+                        message:
+                            'Target allocation, deviation, gas estimate, risk impact and confirmation are reviewed before execution.',
+                        contractId: 'launchpad-rebalance-$_strategyId',
+                      ),
                       LaunchpadRebalanceStrategySection(
                         sectionKey: LaunchpadRebalancePage.strategyKey,
                         strategies: snapshot.strategies,

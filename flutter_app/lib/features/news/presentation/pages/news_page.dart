@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 part '../widgets/news_page_sections.dart';
 part '../widgets/news_page_common.dart';

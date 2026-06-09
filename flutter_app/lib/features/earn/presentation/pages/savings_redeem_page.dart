@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -71,16 +70,11 @@ class _MissingPositionState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Icon(
-          Icons.warning_amber_rounded,
-          color: AppColors.text3,
-          size: AppSpacing.iconLg,
-        ),
-        const SizedBox(height: AppSpacing.x4),
-        Text(
-          snapshot.notFoundMessage,
-          textAlign: TextAlign.center,
-          style: AppTextStyles.base.copyWith(color: AppColors.text2),
+        VitHighRiskStatePanel(
+          state: VitHighRiskUiState.empty,
+          title: 'Redeem position unavailable',
+          message: snapshot.notFoundMessage,
+          contractId: 'savings-redeem-empty',
         ),
         const SizedBox(height: AppSpacing.x5),
         Align(

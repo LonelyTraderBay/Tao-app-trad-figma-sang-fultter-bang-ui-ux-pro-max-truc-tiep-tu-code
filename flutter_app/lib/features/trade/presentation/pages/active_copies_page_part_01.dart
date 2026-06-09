@@ -9,17 +9,12 @@ class _PortfolioOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     final positive = snapshot.totalPnl >= 0;
     final color = positive ? AppColors.buy : AppColors.sell;
-    final bg = positive ? _lightBuyBackground : _lightSellBackground;
     final labelColor = positive ? AppColors.buy20 : AppColors.sellDeep;
 
-    return Container(
+    return VitCard(
       height: 194,
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _copyPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: Column(
         children: [
           Row(
@@ -61,14 +56,12 @@ class _PortfolioOverview extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          Container(
+          VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
             height: 62,
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-            decoration: BoxDecoration(
-              color: bg,
-              border: Border.all(color: color),
-              borderRadius: AppRadii.cardRadius,
-            ),
+            borderColor: color,
             child: Row(
               children: [
                 Icon(
@@ -170,13 +163,11 @@ class _SegmentedTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 48,
       padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: _copySegmentBackground,
-        borderRadius: AppRadii.cardLargeRadius,
-      ),
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.lg,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -257,15 +248,10 @@ class _ActiveCopyCard extends StatelessWidget {
     final status = _statusStyle(copy.status);
     final positive = copy.pnl >= 0;
     final pnlColor = positive ? AppColors.buy : AppColors.sell;
-    final pnlBg = positive ? _lightBuyBackground : _lightSellBackground;
 
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _copyPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: Column(
         children: [
           Row(
@@ -367,7 +353,6 @@ class _ActiveCopyCard extends StatelessWidget {
                   label: 'P/L',
                   value: _formatSignedUsd(copy.pnl),
                   valueColor: pnlColor,
-                  background: pnlBg,
                 ),
               ),
             ],
@@ -449,23 +434,19 @@ class _MiniValueCard extends StatelessWidget {
     required this.label,
     required this.value,
     this.valueColor = AppColors.text1,
-    this.background = _copyPanel2,
   });
 
   final String label;
   final String value;
   final Color valueColor;
-  final Color background;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       height: 51,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

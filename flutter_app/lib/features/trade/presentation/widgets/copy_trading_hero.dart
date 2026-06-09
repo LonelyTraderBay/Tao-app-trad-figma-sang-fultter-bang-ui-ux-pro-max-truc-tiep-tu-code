@@ -12,13 +12,11 @@ class _CopyHeroCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
+          VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: _copyPanelTone,
-              border: Border.all(color: AppColors.cardBorder),
-              borderRadius: AppRadii.inputRadius,
-            ),
+            borderColor: AppColors.cardBorder,
             child: Column(
               children: [
                 Text(
@@ -92,13 +90,11 @@ class _HeroMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: _copyPanelTone,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -194,48 +190,11 @@ class _RiskWarningCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.warningBg,
-        border: Border.all(color: AppColors.warningBorder),
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warningText,
-            size: 17,
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.warningText,
-                    fontSize: 11,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  message,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.warningText.withValues(alpha: .90),
-                    fontSize: 10,
-                    height: 1.4,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return VitHighRiskStatePanel(
+      state: VitHighRiskUiState.riskReview,
+      title: title,
+      message: message,
+      contractId: 'Copy trading provider risk disclosure',
     );
   }
 }

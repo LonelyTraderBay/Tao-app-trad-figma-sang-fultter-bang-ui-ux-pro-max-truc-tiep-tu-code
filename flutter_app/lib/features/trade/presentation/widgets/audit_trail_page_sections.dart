@@ -75,14 +75,11 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 75,
       padding: const EdgeInsets.fromLTRB(12, 15, 12, 11),
-      decoration: BoxDecoration(
-        color: _auditPanel,
-        border: Border.all(color: _auditBorder.withValues(alpha: .76)),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      radius: VitCardRadius.sm,
+      borderColor: _auditBorder.withValues(alpha: .76),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -122,58 +119,11 @@ class _SearchAndFilter extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: SizedBox(
-            height: 39,
-            child: TextField(
-              key: AuditTrailPage.searchKey,
-              onChanged: onChanged,
-              cursorColor: _auditPrimary,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontFamily: 'Roboto',
-                fontSize: 12,
-                height: 1.2,
-              ),
-              decoration: InputDecoration(
-                isDense: true,
-                contentPadding: const EdgeInsets.fromLTRB(0, 11, 12, 11),
-                prefixIcon: const Icon(
-                  Icons.search_rounded,
-                  color: AppColors.text3,
-                  size: 18,
-                ),
-                prefixIconConstraints: const BoxConstraints(
-                  minWidth: 39,
-                  minHeight: 39,
-                ),
-                hintText: placeholder,
-                hintStyle: AppTextStyles.caption.copyWith(
-                  color: AppColors.text3,
-                  fontFamily: 'Roboto',
-                  fontSize: 12,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1.2,
-                ),
-                filled: true,
-                fillColor: _auditPanel2,
-                border: OutlineInputBorder(
-                  borderRadius: AppRadii.lgRadius,
-                  borderSide: BorderSide(
-                    color: _auditBorder.withValues(alpha: .82),
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: AppRadii.lgRadius,
-                  borderSide: BorderSide(
-                    color: _auditBorder.withValues(alpha: .82),
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: AppRadii.lgRadius,
-                  borderSide: const BorderSide(color: _auditPrimary),
-                ),
-              ),
-            ),
+          child: VitSearchBar(
+            fieldKey: AuditTrailPage.searchKey,
+            placeholder: placeholder,
+            variant: VitSearchBarVariant.compact,
+            onChanged: onChanged,
           ),
         ),
         const SizedBox(width: 9),

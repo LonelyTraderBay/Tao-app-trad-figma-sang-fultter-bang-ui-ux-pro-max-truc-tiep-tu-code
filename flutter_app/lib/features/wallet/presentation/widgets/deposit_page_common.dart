@@ -16,13 +16,8 @@ class _DepositInfoCard extends StatelessWidget {
       ('Nạp nhỏ hơn tối thiểu', 'Không được ghi nhận'),
     ];
 
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
-      decoration: BoxDecoration(
-        color: _depositPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

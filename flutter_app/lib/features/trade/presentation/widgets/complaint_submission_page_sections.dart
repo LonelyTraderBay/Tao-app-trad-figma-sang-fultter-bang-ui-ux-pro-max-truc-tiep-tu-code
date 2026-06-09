@@ -152,46 +152,55 @@ class _TextInputBlock extends StatelessWidget {
       children: [
         _FieldLabel(label),
         const SizedBox(height: 9),
-        SizedBox(
-          height: height,
-          child: TextField(
-            key: multiline
-                ? ComplaintSubmissionPage.descriptionKey
-                : ComplaintSubmissionPage.subjectKey,
+        if (!multiline)
+          VitInput(
             controller: controller,
+            fieldKey: ComplaintSubmissionPage.subjectKey,
+            hintText: hint,
+            inputFormatters: [LengthLimitingTextInputFormatter(maxLength)],
             onChanged: onChanged,
-            maxLength: maxLength,
-            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-            maxLines: multiline ? null : 1,
-            expands: multiline,
-            textAlignVertical: multiline
-                ? TextAlignVertical.top
-                : TextAlignVertical.center,
-            style: AppTextStyles.base.copyWith(
-              color: AppColors.text1,
-              fontSize: multiline ? 16 : 14,
-              height: multiline ? 1.35 : 1,
-            ),
-            decoration: InputDecoration(
-              counterText: '',
-              hintText: hint,
-              hintMaxLines: multiline ? 3 : 1,
-              hintStyle: AppTextStyles.base.copyWith(
-                color: AppColors.text3,
-                fontSize: 16,
-                fontWeight: AppTextStyles.bold,
-                height: multiline ? 1.4 : 1,
+          )
+        else
+          SizedBox(
+            height: height,
+            child: TextField(
+              key: multiline
+                  ? ComplaintSubmissionPage.descriptionKey
+                  : ComplaintSubmissionPage.subjectKey,
+              controller: controller,
+              onChanged: onChanged,
+              maxLength: maxLength,
+              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+              maxLines: multiline ? null : 1,
+              expands: multiline,
+              textAlignVertical: multiline
+                  ? TextAlignVertical.top
+                  : TextAlignVertical.center,
+              style: AppTextStyles.base.copyWith(
+                color: AppColors.text1,
+                fontSize: multiline ? 16 : 14,
+                height: multiline ? 1.35 : 1,
               ),
-              filled: true,
-              fillColor: _submissionPanel2,
-              contentPadding: multiline
-                  ? const EdgeInsets.fromLTRB(12, 15, 12, 12)
-                  : const EdgeInsets.symmetric(horizontal: 12),
-              enabledBorder: _inputBorder,
-              focusedBorder: _inputBorder,
+              decoration: InputDecoration(
+                counterText: '',
+                hintText: hint,
+                hintMaxLines: multiline ? 3 : 1,
+                hintStyle: AppTextStyles.base.copyWith(
+                  color: AppColors.text3,
+                  fontSize: 16,
+                  fontWeight: AppTextStyles.bold,
+                  height: multiline ? 1.4 : 1,
+                ),
+                filled: true,
+                fillColor: _submissionPanel2,
+                contentPadding: multiline
+                    ? const EdgeInsets.fromLTRB(12, 15, 12, 12)
+                    : const EdgeInsets.symmetric(horizontal: 12),
+                enabledBorder: _inputBorder,
+                focusedBorder: _inputBorder,
+              ),
             ),
           ),
-        ),
         const SizedBox(height: 5),
         Text(
           '${controller.text.length}/$maxLength characters (min $minLength)',

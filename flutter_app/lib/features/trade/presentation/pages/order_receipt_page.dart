@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -75,6 +76,17 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _SuccessHero(receipt: receipt),
+                      const VitCard(
+                        variant: VitCardVariant.inner,
+                        padding: EdgeInsets.all(12),
+                        child: VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.success,
+                          title: 'Order receipt confirmed',
+                          message:
+                              'Order id, fill status, fees, risk impact, support path and next steps are available after execution.',
+                          contractId: 'order-receipt-success',
+                        ),
+                      ),
                       _ReceiptCard(receipt: receipt),
                       const SizedBox(height: 28),
                       _WarningNotice(),

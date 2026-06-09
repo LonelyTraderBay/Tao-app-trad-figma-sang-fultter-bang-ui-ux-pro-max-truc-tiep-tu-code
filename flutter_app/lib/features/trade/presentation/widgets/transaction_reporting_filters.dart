@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/transaction_reporting_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
-class TransactionReportingSearchField extends StatelessWidget {
+class TransactionReportingSearchField extends StatefulWidget {
   const TransactionReportingSearchField({
     required this.query,
     required this.onChanged,
@@ -17,47 +17,43 @@ class TransactionReportingSearchField extends StatelessWidget {
   final ValueChanged<String> onChanged;
 
   @override
+  State<TransactionReportingSearchField> createState() =>
+      _TransactionReportingSearchFieldState();
+}
+
+class _TransactionReportingSearchFieldState
+    extends State<TransactionReportingSearchField> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.query);
+  }
+
+  @override
+  void didUpdateWidget(covariant TransactionReportingSearchField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.query == _controller.text) return;
+    _controller
+      ..text = widget.query
+      ..selection = TextSelection.collapsed(offset: widget.query.length);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 42,
-      child: TextField(
-        key: transactionReportingSearchKey,
-        controller: TextEditingController(text: query)
-          ..selection = TextSelection.collapsed(offset: query.length),
-        onChanged: onChanged,
-        style: AppTextStyles.caption.copyWith(
-          color: AppColors.text1,
-          fontSize: 13,
-          height: 1,
-        ),
-        decoration: InputDecoration(
-          hintText: 'Search by transaction ID or instrument...',
-          hintStyle: AppTextStyles.caption.copyWith(
-            color: AppColors.text3,
-            fontSize: 13,
-          ),
-          prefixIcon: const Icon(
-            Icons.search_rounded,
-            color: AppColors.text3,
-            size: 18,
-          ),
-          filled: true,
-          fillColor: transactionReportPanel2,
-          contentPadding: EdgeInsets.zero,
-          border: OutlineInputBorder(
-            borderRadius: AppRadii.cardRadius,
-            borderSide: const BorderSide(color: transactionReportBorder),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: AppRadii.cardRadius,
-            borderSide: const BorderSide(color: transactionReportBorder),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: AppRadii.cardRadius,
-            borderSide: const BorderSide(color: AppColors.primary),
-          ),
-        ),
-      ),
+    return VitSearchBar(
+      controller: _controller,
+      fieldKey: transactionReportingSearchKey,
+      placeholder: 'Search by transaction ID or instrument...',
+      variant: VitSearchBarVariant.compact,
+      onChanged: widget.onChanged,
     );
   }
 }

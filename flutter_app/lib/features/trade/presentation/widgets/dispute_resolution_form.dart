@@ -31,6 +31,14 @@ class _FileComplaintTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _NoticeCard(title: snapshot.noticeTitle, body: snapshot.noticeBody),
+        const SizedBox(height: 12),
+        const VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Review dispute complaint',
+          message:
+              'Confirm complaint type, provider, evidence, and issue details before submitting a formal dispute case.',
+          contractId: 'Copy trading dispute intake',
+        ),
         const SizedBox(height: 26),
         const _SectionLabel('Complaint Type'),
         const SizedBox(height: 9),
@@ -86,14 +94,10 @@ class _NoticeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       constraints: const BoxConstraints(minHeight: 74),
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
-      decoration: BoxDecoration(
-        color: _disputePrimary.withValues(alpha: .08),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _disputePrimary, width: 1.5),
-      ),
+      borderColor: _disputePrimary,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -147,51 +151,40 @@ class _ComplaintTypeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: DisputeResolutionPage.complaintTypeKey(option.value),
+      variant: VitCardVariant.inner,
+      height: 62,
+      padding: const EdgeInsets.fromLTRB(14, 11, 14, 9),
+      borderColor: selected ? _disputePrimary : _disputeFieldBorder,
       onTap: onPressed,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 62,
-        padding: const EdgeInsets.fromLTRB(14, 11, 14, 9),
-        decoration: BoxDecoration(
-          color: selected
-              ? _disputePrimary.withValues(alpha: .13)
-              : _disputeField,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(
-            color: selected ? _disputePrimary : _disputeFieldBorder,
-            width: selected ? 2 : 1.5,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            option.label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(
+              color: selected ? _disputePrimary : AppColors.text1,
+              fontSize: 12,
+              fontWeight: AppTextStyles.bold,
+              height: 1,
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              option.label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(
-                color: selected ? _disputePrimary : AppColors.text1,
-                fontSize: 12,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
+          const SizedBox(height: 8),
+          Text(
+            option.description,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(
+              color: selected ? _disputePrimary : AppColors.text3,
+              fontSize: 10,
+              height: 1,
             ),
-            const SizedBox(height: 8),
-            Text(
-              option.description,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: selected ? _disputePrimary : AppColors.text3,
-                fontSize: 10,
-                height: 1,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -273,6 +266,14 @@ class _TextFieldShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (minLines == 1 && maxLines == 1) {
+      return VitInput(
+        controller: controller,
+        hintText: hint,
+        textInputAction: TextInputAction.next,
+      );
+    }
+
     return TextField(
       controller: controller,
       minLines: minLines,
@@ -322,43 +323,18 @@ class _UploadEvidenceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCtaButton(
       key: DisputeResolutionPage.uploadKey,
-      onTap: onPressed,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 45,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: _disputeField,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(
-            color: attached ? AppColors.buy : _disputeFieldBorder,
-            style: BorderStyle.solid,
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              attached
-                  ? Icons.check_circle_outline_rounded
-                  : Icons.upload_rounded,
-              color: attached ? AppColors.buy : AppColors.text3,
-              size: 16,
-            ),
-            const SizedBox(width: 8),
-            Text(
-              attached ? 'Evidence attached' : 'Upload Evidence (Optional)',
-              style: AppTextStyles.caption.copyWith(
-                color: attached ? AppColors.buy : AppColors.text3,
-                fontSize: 12,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
-            ),
-          ],
-        ),
+      onPressed: onPressed,
+      variant: attached
+          ? VitCtaButtonVariant.success
+          : VitCtaButtonVariant.secondary,
+      height: 45,
+      leading: Icon(
+        attached ? Icons.check_circle_outline_rounded : Icons.upload_rounded,
+      ),
+      child: Text(
+        attached ? 'Evidence attached' : 'Upload Evidence (Optional)',
       ),
     );
   }
@@ -372,38 +348,12 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCtaButton(
       key: DisputeResolutionPage.submitKey,
-      onTap: enabled ? onPressed : null,
-      borderRadius: AppRadii.inputRadius,
-      child: Container(
-        height: 44,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: enabled ? _disputePrimary : AppColors.surface3,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.send_outlined,
-              color: enabled ? AppColors.onAccent : AppColors.text3,
-              size: 17,
-            ),
-            const SizedBox(width: 9),
-            Text(
-              'Submit Complaint',
-              style: AppTextStyles.body.copyWith(
-                color: enabled ? AppColors.onAccent : AppColors.text3,
-                fontSize: 14,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
-            ),
-          ],
-        ),
-      ),
+      onPressed: enabled ? onPressed : null,
+      height: 44,
+      leading: const Icon(Icons.send_outlined),
+      child: const Text('Submit Complaint'),
     );
   }
 }

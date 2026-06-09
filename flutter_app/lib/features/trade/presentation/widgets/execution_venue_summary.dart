@@ -54,14 +54,10 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 90,
       padding: const EdgeInsets.fromLTRB(12, 13, 12, 12),
-      decoration: BoxDecoration(
-        color: _venuePanel,
-        border: Border.all(color: _venueBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _venueBorder.withValues(alpha: .72),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -184,9 +180,9 @@ class _Tabs extends StatelessWidget {
       ('speed', 'Speed'),
       ('trends', 'Trends'),
     ];
-    return Container(
+    return VitCard(
       height: 52,
-      color: _venuePanel,
+      padding: EdgeInsets.zero,
       child: Row(
         children: [
           for (final tab in tabs)

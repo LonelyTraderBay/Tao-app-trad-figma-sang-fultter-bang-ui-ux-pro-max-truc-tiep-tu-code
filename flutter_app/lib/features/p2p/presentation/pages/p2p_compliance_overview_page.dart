@@ -76,6 +76,18 @@ class P2PComplianceOverviewPage extends ConsumerWidget {
                         ),
                         const SizedBox(height: AppSpacing.x3),
                         _ComplianceChecklist(items: snapshot.items),
+                        const SizedBox(height: AppSpacing.x3),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Compliance checklist review',
+                            message:
+                                'Checklist status, route targets, incomplete requirements and next compliance action are reviewed before opening P2P flows.',
+                            contractId: 'p2p-compliance-overview-review',
+                          ),
+                        ),
                       ],
                     ),
                   ),

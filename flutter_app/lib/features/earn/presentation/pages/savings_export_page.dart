@@ -173,6 +173,18 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                           selectedFormat: selectedFormat,
                         ),
                         _SensitiveNotice(text: snapshot.sensitiveNotice),
+                        VitHighRiskStatePanel(
+                          state: _previewReady
+                              ? VitHighRiskUiState.success
+                              : VitHighRiskUiState.riskReview,
+                          title: _previewReady
+                              ? 'Export preview ready'
+                              : 'Export review required',
+                          message:
+                              'Masked account data, report scope, file format, fee impact and transaction period are reviewed before export.',
+                          contractId:
+                              'savings-export-${selectedReport.name}-${selectedFormat.name}',
+                        ),
                         if (_previewReady)
                           _PreviewReadyBanner(format: selectedFormat),
                         VitCtaButton(

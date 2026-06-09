@@ -14,7 +14,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -22,7 +24,6 @@ part '../widgets/riy_calculator_page_sections.dart';
 part '../widgets/riy_calculator_page_common.dart';
 
 const _riyBackground = AppColors.bg;
-const _riyPanel = AppColors.surface;
 const _riyPanel2 = AppColors.surface2;
 const _riyBorder = AppColors.borderSolid;
 const _riyPrimary = AppColors.primary;
@@ -103,11 +104,18 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
                 child: SingleChildScrollView(
                   key: RIYCalculatorPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 15, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 12,
+                    fullBleed: true,
                     children: [
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review cost impact before proceeding',
+                        message:
+                            'Confirm fees, risk assumptions, holding period, and next steps before using RIY projections for copy trading.',
+                      ),
                       const _SectionLabel('Investment Parameters'),
-                      const SizedBox(height: 12),
                       _InputCard(
                         investment: _investment,
                         expectedReturn: _expectedReturn,
@@ -122,9 +130,7 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
                         onYearsChanged: (value) =>
                             setState(() => _years = value),
                       ),
-                      const SizedBox(height: 25),
                       const _SectionLabel('Impact Analysis'),
-                      const SizedBox(height: 12),
                       Row(
                         children: [
                           Expanded(
@@ -144,15 +150,12 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
                       _CostImpactCard(
                         years: _years,
                         difference: difference,
                         lossPct: lossPct,
                       ),
-                      const SizedBox(height: 25),
                       const _SectionLabel('Growth Comparison'),
-                      const SizedBox(height: 12),
                       _ChartCard(projections: projections),
                     ],
                   ),

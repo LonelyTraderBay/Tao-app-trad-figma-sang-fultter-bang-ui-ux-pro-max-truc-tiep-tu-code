@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 
 class DCARebalanceDashboard extends ConsumerWidget {
@@ -51,6 +52,13 @@ class DCARebalanceDashboard extends ConsumerWidget {
                 style: AppTextStyles.base.copyWith(color: AppColors.text2),
                 textAlign: TextAlign.center,
               ),
+            ),
+            const VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Rebalance review required',
+              message:
+                  'Rebalance changes can move funds between assets. Show allocation delta, fees, limits, and confirmation before execution.',
+              contractId: 'SC-171',
             ),
           ],
         ),

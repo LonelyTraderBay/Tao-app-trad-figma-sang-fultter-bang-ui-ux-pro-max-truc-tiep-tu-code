@@ -7,14 +7,11 @@ class _ProviderDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.hero,
       height: 136,
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 12),
-      decoration: BoxDecoration(
-        color: _governanceHeroBackground,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _governancePrimary, width: 2),
-      ),
+      borderColor: _governancePrimary,
       child: Column(
         children: [
           Row(
@@ -133,9 +130,9 @@ class _GovernanceTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 53,
-      color: _governanceTabs,
+      padding: EdgeInsets.zero,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -222,14 +219,11 @@ class _Notice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       constraints: const BoxConstraints(minHeight: 52),
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
-      decoration: BoxDecoration(
-        color: _governanceWarningBackground,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _governanceWarningBorder),
-      ),
+      borderColor: _governanceWarningBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

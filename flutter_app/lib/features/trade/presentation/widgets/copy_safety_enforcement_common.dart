@@ -46,13 +46,9 @@ class _EnforcementCard extends StatelessWidget {
       'warned' => AppColors.warn,
       _ => AppColors.buy,
     };
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: _safetyCard,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.cardBorder),
-      ),
+      borderColor: AppColors.cardBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -140,12 +136,10 @@ class _IconTextRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
-      ),
       child: Row(
         children: [
           Icon(icon, color: color, size: 14),
@@ -175,14 +169,12 @@ class _SimpleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = color ?? AppColors.text1;
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       width: double.infinity,
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
-        border: color == null ? null : Border.all(color: color!),
-      ),
+      borderColor: color,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -243,24 +235,10 @@ class _EmergencyPanel extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                InkWell(
-                  onTap: onClose,
-                  borderRadius: AppRadii.inputRadius,
-                  child: Container(
-                    height: 44,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: _safetyPrimary,
-                      borderRadius: AppRadii.inputRadius,
-                    ),
-                    child: Text(
-                      'Done',
-                      style: AppTextStyles.body.copyWith(
-                        color: AppColors.onAccent,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ),
+                VitCtaButton(
+                  onPressed: onClose,
+                  height: 44,
+                  child: const Text('Done'),
                 ),
               ],
             ),

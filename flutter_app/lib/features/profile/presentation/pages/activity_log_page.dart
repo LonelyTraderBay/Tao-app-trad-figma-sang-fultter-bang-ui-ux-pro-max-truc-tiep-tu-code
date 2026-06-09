@@ -12,13 +12,14 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 part '../widgets/activity_log_page_sections.dart';
 part '../widgets/activity_log_page_common.dart';
 
 const _activityBackground = AppColors.bg;
-const _activityPanel = AppColors.surface;
 const _activityPanel2 = AppColors.surface2;
 const _activityBorder = AppColors.cardBorder;
 const _activityDivider = AppColors.divider;
@@ -81,8 +82,10 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
                   key: ActivityLogPage.contentKey,
                   physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.only(bottom: bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
                     children: [
                       _FilterPanel(
                         filters: snapshot.filters,

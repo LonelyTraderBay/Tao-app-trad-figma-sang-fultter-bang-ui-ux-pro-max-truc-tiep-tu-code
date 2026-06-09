@@ -70,6 +70,7 @@ class _DriftBanner extends StatelessWidget {
                   runSpacing: AppSpacing.x2,
                   children: [
                     _MiniButton(
+                      key: DCAPortfolioOptimizer.driftSettingsKey,
                       label: 'Cài đặt',
                       icon: Icons.tune_rounded,
                       color: AppColors.sell,

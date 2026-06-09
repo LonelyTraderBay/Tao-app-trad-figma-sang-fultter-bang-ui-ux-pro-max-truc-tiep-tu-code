@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -83,17 +84,23 @@ class _PerformanceAttributionPageState
                 child: SingleChildScrollView(
                   key: PerformanceAttributionPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 18,
+                    fullBleed: true,
                     children: [
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review performance attribution risk',
+                        message:
+                            'Confirm drawdown, exposure, limits, and next steps before adjusting copy-trading allocation.',
+                      ),
                       _SummaryGrid(snapshot: snapshot),
-                      const SizedBox(height: 24),
                       _AttributionTabs(
                         activeTab: _activeTab,
                         onChanged: (value) =>
                             setState(() => _activeTab = value),
                       ),
-                      const SizedBox(height: 22),
                       if (_activeTab == 'attribution')
                         _AttributionTab(snapshot: snapshot)
                       else if (_activeTab == 'drawdown')

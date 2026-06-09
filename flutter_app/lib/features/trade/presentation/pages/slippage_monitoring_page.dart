@@ -10,7 +10,10 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -20,7 +23,6 @@ part '../widgets/slippage_monitoring_tabs.dart';
 part '../widgets/slippage_monitoring_common.dart';
 
 const _slipBackground = AppColors.bg;
-const _slipPanel = AppColors.surface;
 const _slipPanel2 = AppColors.surface2;
 const _slipBorder = AppColors.borderSolid;
 const _slipGreen = AppColors.buy;
@@ -87,10 +89,20 @@ class _SlippageMonitoringPageState
                     child: SingleChildScrollView(
                       key: SlippageMonitoringPage.contentKey,
                       padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      child: VitPageContent(
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        customGap: 0,
                         children: [
                           _CriticalAlert(summary: snapshot.summary),
+                          const SizedBox(height: 14),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Slippage risk review',
+                            message:
+                                'Review critical events, average slippage, provider routing, alert thresholds, fee impact, and next steps before changing copy execution settings.',
+                            contractId: 'SC-098 slippage monitoring review',
+                          ),
                           const SizedBox(height: 22),
                           _StatsGrid(summary: snapshot.summary),
                           const SizedBox(height: 24),

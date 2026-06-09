@@ -108,9 +108,9 @@ class _YearTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 53,
-      color: _reportPanel,
+      padding: EdgeInsets.zero,
       child: Row(
         children: [
           for (final report in reports)

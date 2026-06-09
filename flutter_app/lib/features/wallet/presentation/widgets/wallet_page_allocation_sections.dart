@@ -8,13 +8,9 @@ class WalletAllocationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final total = assets.fold<double>(0, (sum, asset) => sum + asset.usdValue);
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _walletPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.standard,
       child: Row(
         children: [
           CustomPaint(
@@ -47,7 +43,9 @@ class WalletAllocationCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${(asset.usdValue / total * 100).toStringAsFixed(1)}%',
+                        total <= 0
+                            ? '0.0%'
+                            : '${(asset.usdValue / total * 100).toStringAsFixed(1)}%',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text1,
                           fontSize: 12,
@@ -75,6 +73,24 @@ class _AllocationPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (total <= 0) {
+      final trackPaint = Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 16
+        ..color = AppColors.surface3;
+      final rect = Offset.zero & size;
+      canvas.drawArc(
+        rect.deflate(8),
+        -math.pi / 2,
+        math.pi * 2,
+        false,
+        trackPaint,
+      );
+      final centerPaint = Paint()..color = _walletPanel;
+      canvas.drawCircle(rect.center, 22, centerPaint);
+      return;
+    }
+
     final rect = Offset.zero & size;
     var start = -math.pi / 2;
     final paint = Paint()

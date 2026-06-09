@@ -10,7 +10,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 part '../widgets/pending_deposits_page_sections.dart';
@@ -18,7 +20,6 @@ part '../widgets/pending_deposits_page_common.dart';
 
 const _pendingBackground = AppColors.bg;
 const _pendingPanel = AppColors.surface;
-const _pendingPanel2 = AppColors.surface3;
 const _pendingBorder = AppColors.overlayStroke;
 const _pendingPrimary = AppColors.primary;
 const _pendingGreen = AppColors.buy;
@@ -78,20 +79,26 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                   key: PendingDepositsPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
                   physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 16,
+                    fullBleed: true,
                     children: [
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review pending deposit status',
+                        message:
+                            'Check network, confirmations, amount, fee policy, and next step before taking wallet action.',
+                      ),
                       _SummaryBanner(
                         pendingCount: snapshot.pendingCount,
                         onRefresh: () {},
                       ),
-                      const SizedBox(height: 16),
                       _FilterChips(
                         active: _filter,
                         pendingCount: snapshot.pendingCount,
                         onChanged: (filter) => setState(() => _filter = filter),
                       ),
-                      const SizedBox(height: 16),
                       if (deposits.isEmpty)
                         const _EmptyDeposits()
                       else
@@ -105,7 +112,6 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                           if (deposit != deposits.last)
                             const SizedBox(height: 12),
                         ],
-                      const SizedBox(height: 16),
                       const _InfoNotice(),
                     ],
                   ),

@@ -165,6 +165,14 @@ class _LaunchpadDetailSummary extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           const SizedBox(height: AppSpacing.x4),
+          VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Launchpad staking review required',
+            message:
+                'Review allocation, eligibility, lockup terms, fees and project risk before opening the staking flow.',
+            contractId: project.id,
+          ),
+          const SizedBox(height: AppSpacing.x4),
           VitCtaButton(
             onPressed: () => context.go(snapshot.stakingRoute),
             leading: const Icon(Icons.rocket_launch_outlined),

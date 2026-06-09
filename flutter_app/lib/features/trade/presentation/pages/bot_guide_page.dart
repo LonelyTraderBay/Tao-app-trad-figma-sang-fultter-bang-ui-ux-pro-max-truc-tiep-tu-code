@@ -11,7 +11,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -75,23 +77,53 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
                 child: SingleChildScrollView(
                   key: BotGuidePage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 0,
                     children: [
                       const _IntroBanner(),
+                      const SizedBox(height: 12),
+                      const VitCard(
+                        variant: VitCardVariant.inner,
+                        padding: EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Bot education review',
+                              message:
+                                  'Strategy type, setup risk, operational limits, mistakes and next steps are reviewed before bot activation.',
+                              contractId: 'bot-guide-review',
+                            ),
+                            SizedBox(height: 8),
+                            VitStatusPill(
+                              label: 'Education before activation',
+                              status: VitStatusPillStatus.warning,
+                              size: VitStatusPillSize.sm,
+                            ),
+                          ],
+                        ),
+                      ),
                       const SizedBox(height: 28),
                       _Tabs(active: _view, onChanged: _setView),
                       const SizedBox(height: 17),
-                      if (_view == 'strategies')
-                        _StrategiesView(
-                          strategies: snapshot.strategies,
-                          expandedStrategyId: _expandedStrategyId,
-                          onToggle: _toggleStrategy,
-                        )
-                      else if (_view == 'best-practices')
-                        _BestPracticesView(items: snapshot.bestPractices)
-                      else
-                        _MistakesView(items: snapshot.mistakes),
+                      VitPageSection(
+                        customGap: 0,
+                        children: [
+                          if (_view == 'strategies')
+                            _StrategiesView(
+                              strategies: snapshot.strategies,
+                              expandedStrategyId: _expandedStrategyId,
+                              onToggle: _toggleStrategy,
+                            )
+                          else if (_view == 'best-practices')
+                            _BestPracticesView(items: snapshot.bestPractices)
+                          else
+                            _MistakesView(items: snapshot.mistakes),
+                        ],
+                      ),
                       const SizedBox(height: 16),
                       const _VideoTutorialsCard(),
                     ],

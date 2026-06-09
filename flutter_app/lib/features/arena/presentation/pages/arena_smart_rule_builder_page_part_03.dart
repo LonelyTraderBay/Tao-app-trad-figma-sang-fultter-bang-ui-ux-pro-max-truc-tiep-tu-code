@@ -285,24 +285,3 @@ class _FieldBlock extends StatelessWidget {
     );
   }
 }
-
-InputDecoration _inputDecoration(String hint) {
-  return InputDecoration(
-    hintText: hint,
-    hintStyle: AppTextStyles.base.copyWith(color: AppColors.text3),
-    filled: true,
-    fillColor: AppColors.searchBg,
-    contentPadding: const EdgeInsets.symmetric(
-      horizontal: AppSpacing.x4,
-      vertical: AppSpacing.x4,
-    ),
-    enabledBorder: const OutlineInputBorder(
-      borderRadius: AppRadii.inputRadius,
-      borderSide: BorderSide(color: AppColors.searchBorder, width: 1.5),
-    ),
-    focusedBorder: const OutlineInputBorder(
-      borderRadius: AppRadii.inputRadius,
-      borderSide: BorderSide(color: AppColors.accent, width: 1.5),
-    ),
-  );
-}

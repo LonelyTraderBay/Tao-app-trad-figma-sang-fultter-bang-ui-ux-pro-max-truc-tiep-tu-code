@@ -95,55 +95,12 @@ class _ToolbarSearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasValue = controller.text.isNotEmpty;
-    return Container(
-      height: 40,
-      padding: const EdgeInsets.only(left: 12, right: 8),
-      decoration: BoxDecoration(
-        color: AppColors.searchBg,
-        border: Border.all(color: AppColors.searchBorder),
-        borderRadius: AppRadii.lgRadius,
-      ),
-      child: Row(
-        children: [
-          const Icon(Icons.search_rounded, color: AppColors.text3, size: 18),
-          const SizedBox(width: 8),
-          Expanded(
-            child: TextField(
-              controller: controller,
-              onChanged: onChanged,
-              cursorColor: _marketPrimary,
-              textInputAction: TextInputAction.search,
-              style: AppTextStyles.body.copyWith(fontSize: 14),
-              decoration: InputDecoration.collapsed(
-                hintText: placeholder,
-                hintStyle: AppTextStyles.body.copyWith(
-                  color: AppColors.searchPlaceholder,
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          ),
-          if (hasValue)
-            InkWell(
-              onTap: () {
-                controller.clear();
-                onChanged('');
-                onClear();
-              },
-              borderRadius: AppRadii.inputRadius,
-              child: const SizedBox(
-                width: 28,
-                height: 28,
-                child: Icon(
-                  Icons.close_rounded,
-                  color: AppColors.text3,
-                  size: 17,
-                ),
-              ),
-            ),
-        ],
-      ),
+    return VitSearchBar(
+      controller: controller,
+      placeholder: placeholder,
+      variant: VitSearchBarVariant.compact,
+      onChanged: onChanged,
+      onClear: onClear,
     );
   }
 }

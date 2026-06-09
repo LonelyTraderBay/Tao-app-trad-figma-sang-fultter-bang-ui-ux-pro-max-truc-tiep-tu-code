@@ -12,7 +12,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 part '../widgets/wallet_gas_optimizer_current.dart';
@@ -94,12 +96,21 @@ class _WalletGasOptimizerPageState
   }
 
   Widget _contentForTab(WalletGasOptimizerSnapshot snapshot) {
-    if (_tab == _tabTrends) return _TrendsTab(snapshot: snapshot);
-    if (_tab == _tabTips) return _TipsTab(snapshot: snapshot);
-    return _CurrentGasTab(
-      snapshot: snapshot,
-      selectedSpeed: _selectedSpeed,
-      onSelectSpeed: (speed) => setState(() => _selectedSpeed = speed),
+    final tabContent = switch (_tab) {
+      _tabTrends => _TrendsTab(snapshot: snapshot),
+      _tabTips => _TipsTab(snapshot: snapshot),
+      _ => _CurrentGasTab(
+        snapshot: snapshot,
+        selectedSpeed: _selectedSpeed,
+        onSelectSpeed: (speed) => setState(() => _selectedSpeed = speed),
+      ),
+    };
+
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      customGap: 0,
+      fullBleed: true,
+      children: [tabContent],
     );
   }
 }

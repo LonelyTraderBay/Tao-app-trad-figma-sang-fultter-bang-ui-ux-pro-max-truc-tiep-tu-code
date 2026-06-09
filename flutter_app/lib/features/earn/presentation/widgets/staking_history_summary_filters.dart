@@ -103,42 +103,12 @@ class _SearchAndActions extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: AppColors.surface3,
-              borderRadius: AppRadii.xlRadius,
-              border: Border.all(color: AppColors.cardBorder),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.search_rounded,
-                    color: AppColors.text3,
-                    size: 20,
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Expanded(
-                    child: TextField(
-                      key: StakingHistoryPage.searchKey,
-                      controller: controller,
-                      onChanged: onQueryChanged,
-                      style: AppTextStyles.body,
-                      decoration: InputDecoration(
-                        hintText: placeholder,
-                        hintStyle: AppTextStyles.caption.copyWith(
-                          color: AppColors.text3,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                        border: InputBorder.none,
-                        isDense: true,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          child: VitSearchBar(
+            fieldKey: StakingHistoryPage.searchKey,
+            controller: controller,
+            placeholder: placeholder,
+            variant: VitSearchBarVariant.compact,
+            onChanged: onQueryChanged,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),

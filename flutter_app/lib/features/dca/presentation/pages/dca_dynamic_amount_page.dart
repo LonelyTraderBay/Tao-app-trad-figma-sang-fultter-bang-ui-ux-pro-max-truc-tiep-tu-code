@@ -47,12 +47,11 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(dcaDynamicAmountProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final floatingBottom =
+    final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.tabBar + AppSpacing.x2
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x2) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x5
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
-    final contentBottom = floatingBottom + AppSpacing.buttonStandard;
     final activeOption = _strategyOption(snapshot.strategies, _activeStrategy);
     final adjustment = _adjustmentFor(_activeStrategy, snapshot.adjustment);
 
@@ -76,61 +75,50 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              child: Stack(
-                children: [
-                  ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(
-                      context,
-                    ).copyWith(scrollbars: false),
-                    child: SingleChildScrollView(
-                      key: DCADynamicAmount.contentKey,
-                      physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(bottom: contentBottom),
-                      child: VitPageContent(
-                        customGap: AppSpacing.x5,
-                        children: [
-                          _DynamicHero(
-                            option: activeOption,
-                            adjustment: adjustment,
-                            onChangeStrategy: _showStrategyNotice,
-                          ),
-                          _StrategyStrip(
-                            strategies: snapshot.strategies,
-                            activeStrategy: _activeStrategy,
-                            onChanged: (strategy) {
-                              setState(() => _activeStrategy = strategy);
-                            },
-                          ),
-                          _StrategyVisualization(
-                            strategy: _activeStrategy,
-                            option: activeOption,
-                            volatilityHistory: snapshot.volatilityHistory,
-                          ),
-                          _AmountHistoryCard(entries: snapshot.amountHistory),
-                          _RecentDetailsCard(entries: snapshot.amountHistory),
-                          _ConfigSection(
-                            option: activeOption,
-                            items:
-                                _activeStrategy == DcaDynamicStrategy.volatility
-                                ? snapshot.configItems
-                                : _configItemsFor(_activeStrategy),
-                          ),
-                          _StrategyExplainer(option: activeOption),
-                          const _DynamicDisclaimer(),
-                        ],
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(
+                  context,
+                ).copyWith(scrollbars: false),
+                child: SingleChildScrollView(
+                  key: DCADynamicAmount.contentKey,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    customGap: AppSpacing.x5,
+                    children: [
+                      _DynamicHero(
+                        option: activeOption,
+                        adjustment: adjustment,
+                        onChangeStrategy: _showStrategyNotice,
                       ),
-                    ),
+                      _StrategyStrip(
+                        strategies: snapshot.strategies,
+                        activeStrategy: _activeStrategy,
+                        onChanged: (strategy) {
+                          setState(() => _activeStrategy = strategy);
+                        },
+                      ),
+                      _StrategyVisualization(
+                        strategy: _activeStrategy,
+                        option: activeOption,
+                        volatilityHistory: snapshot.volatilityHistory,
+                      ),
+                      _AmountHistoryCard(entries: snapshot.amountHistory),
+                      _RecentDetailsCard(entries: snapshot.amountHistory),
+                      _ConfigSection(
+                        option: activeOption,
+                        items: _activeStrategy == DcaDynamicStrategy.volatility
+                            ? snapshot.configItems
+                            : _configItemsFor(_activeStrategy),
+                      ),
+                      _StrategyExplainer(option: activeOption),
+                      const _DynamicDisclaimer(),
+                      _ApplyStrategyAction(
+                        onApply: () => context.go(AppRoutePaths.dca),
+                      ),
+                    ],
                   ),
-                  Positioned(
-                    left: AppSpacing.contentPad,
-                    right: AppSpacing.contentPad,
-                    bottom: floatingBottom,
-                    child: _FloatingActions(
-                      onSettings: _showSettingsNotice,
-                      onApply: () => context.go(AppRoutePaths.dca),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ],

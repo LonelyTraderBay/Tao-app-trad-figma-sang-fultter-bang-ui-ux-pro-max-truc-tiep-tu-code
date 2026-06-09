@@ -10,14 +10,10 @@ class _SummaryBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasPending = pendingCount > 0;
     final color = hasPending ? _pendingAmber : _pendingGreen;
-    return Container(
+    return VitCard(
       height: 78,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-      decoration: BoxDecoration(
-        color: _pendingPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _pendingBorder),
-      ),
+      borderColor: _pendingBorder,
       child: Row(
         children: [
           Container(
@@ -169,14 +165,10 @@ class _DepositCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final config = _statusConfig(deposit.status);
-    return Container(
+    return VitCard(
       key: PendingDepositsPage.depositKey(deposit.id),
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _pendingPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _pendingBorder),
-      ),
+      borderColor: _pendingBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

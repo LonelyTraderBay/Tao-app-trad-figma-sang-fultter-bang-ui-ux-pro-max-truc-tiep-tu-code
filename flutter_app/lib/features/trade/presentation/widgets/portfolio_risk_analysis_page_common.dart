@@ -8,13 +8,8 @@ class _PlaceholderPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: _riskCard,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.cardBorder),
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -65,12 +60,9 @@ class _StressScenarioPanel extends StatelessWidget {
     return Column(
       children: [
         for (final scenario in scenarios) ...[
-          Container(
+          VitCard(
+            variant: VitCardVariant.inner,
             padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: _riskPanel,
-              borderRadius: AppRadii.inputRadius,
-            ),
             child: Row(
               children: [
                 Expanded(

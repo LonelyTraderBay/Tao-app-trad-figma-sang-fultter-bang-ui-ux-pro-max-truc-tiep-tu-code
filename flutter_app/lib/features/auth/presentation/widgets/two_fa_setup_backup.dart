@@ -66,14 +66,11 @@ class _BackupCodeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.inputRadius,
-        border: Border.all(color: AppColors.borderSolid),
-      ),
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.borderSolid,
       child: Column(
         children: [
           for (var index = 0; index < codes.length; index++) ...[

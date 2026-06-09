@@ -97,6 +97,13 @@ class _StakingRiskAssessmentPageState
                               currentQuestion: _currentQuestion,
                               totalQuestions: snapshot.questions.length,
                             ),
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Staking risk review active',
+                              message:
+                                  'Answers classify staking knowledge, liquidity need, risk reaction and allocation limits before product selection.',
+                              contractId: 'staking-risk-assessment',
+                            ),
                             _QuestionCard(
                               question: snapshot.questions[_currentQuestion],
                               index: _currentQuestion,

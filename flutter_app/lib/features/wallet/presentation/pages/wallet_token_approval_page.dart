@@ -14,8 +14,10 @@ import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_to
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 
 class WalletTokenApprovalPage extends ConsumerStatefulWidget {
   const WalletTokenApprovalPage({super.key, this.shellRenderMode});
@@ -88,21 +90,49 @@ class _WalletTokenApprovalPageState
   Widget _contentForTab(TokenApprovalController controller) {
     final snapshot = controller.state.snapshot;
     if (_tab == walletTokenApprovalTabHistory) {
-      return WalletTokenApprovalHistoryTab(snapshot: snapshot);
-    }
-    if (_tab == walletTokenApprovalTabSettings) {
-      return WalletTokenApprovalSettingsTab(
-        autoRevokeUnused: _autoRevokeUnused,
-        warnUnlimited: _warnUnlimited,
-        onAutoRevoke: () =>
-            setState(() => _autoRevokeUnused = !_autoRevokeUnused),
-        onWarnUnlimited: () => setState(() => _warnUnlimited = !_warnUnlimited),
+      return VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 0,
+        fullBleed: true,
+        children: [WalletTokenApprovalHistoryTab(snapshot: snapshot)],
       );
     }
-    return WalletTokenActiveApprovalsTab(
-      snapshot: snapshot,
-      onRevoke: (approval) => _showRevokeSheet(controller, approval),
-      onRevokeAll: () => _showRevokeSheet(controller, null),
+    if (_tab == walletTokenApprovalTabSettings) {
+      return VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 0,
+        fullBleed: true,
+        children: [
+          WalletTokenApprovalSettingsTab(
+            autoRevokeUnused: _autoRevokeUnused,
+            warnUnlimited: _warnUnlimited,
+            onAutoRevoke: () =>
+                setState(() => _autoRevokeUnused = !_autoRevokeUnused),
+            onWarnUnlimited: () =>
+                setState(() => _warnUnlimited = !_warnUnlimited),
+          ),
+        ],
+      );
+    }
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      customGap: 16,
+      fullBleed: true,
+      children: [
+        VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Review token approval risk',
+          message:
+              'Prioritize critical, unlimited, and unused approvals before revoking permissions.',
+          contractId:
+              '${snapshot.criticalCount} critical / ${snapshot.unlimitedCount} unlimited',
+        ),
+        WalletTokenActiveApprovalsTab(
+          snapshot: snapshot,
+          onRevoke: (approval) => _showRevokeSheet(controller, approval),
+          onRevokeAll: () => _showRevokeSheet(controller, null),
+        ),
+      ],
     );
   }
 

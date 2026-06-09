@@ -8,14 +8,9 @@ class _ModificationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final typeColor = _modificationColor(modification.type);
-    return Container(
+    return VitCard(
       height: 154,
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 10),
-      decoration: BoxDecoration(
-        color: _governanceCard,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.cardBorder),
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -156,42 +151,12 @@ class _RequestButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCtaButton(
       key: ProviderGovernancePage.requestActionKey,
-      onTap: onPressed,
-      borderRadius: AppRadii.inputRadius,
-      child: Container(
-        height: 46,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: _governancePrimary,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.edit_outlined,
-              color: AppColors.onAccent,
-              size: 17,
-            ),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(
-                'Request Strategy Modification',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.body.copyWith(
-                  color: AppColors.onAccent,
-                  fontSize: 13,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      onPressed: onPressed,
+      height: 46,
+      leading: const Icon(Icons.edit_outlined),
+      child: const Text('Request Strategy Modification'),
     );
   }
 }
@@ -289,13 +254,8 @@ class _SimplePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: _governanceCard,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.cardBorder),
-      ),
       child: Row(
         children: [
           if (leading != null) ...[

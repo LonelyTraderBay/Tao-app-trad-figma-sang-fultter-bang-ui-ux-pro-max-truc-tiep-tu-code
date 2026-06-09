@@ -277,7 +277,7 @@ class _StaticSelect extends StatelessWidget {
   }
 }
 
-class _TextInput extends StatelessWidget {
+class _TextInput extends StatefulWidget {
   const _TextInput({
     required this.hint,
     this.numeric = false,
@@ -289,25 +289,27 @@ class _TextInput extends StatelessWidget {
   final int minLines;
 
   @override
+  State<_TextInput> createState() => _TextInputState();
+}
+
+class _TextInputState extends State<_TextInput> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-      child: TextField(
-        minLines: minLines,
-        maxLines: minLines,
-        keyboardType: numeric
-            ? const TextInputType.numberWithOptions(decimal: true)
-            : TextInputType.multiline,
-        cursorColor: AppColors.primary,
-        style: AppTextStyles.body,
-        decoration: InputDecoration(
-          hintText: hint,
-          hintStyle: AppTextStyles.caption.copyWith(color: AppColors.text3),
-          border: InputBorder.none,
-        ),
-      ),
+    return VitInput(
+      controller: _controller,
+      hintText: widget.hint,
+      semanticLabel: widget.hint,
+      keyboardType: widget.numeric
+          ? const TextInputType.numberWithOptions(decimal: true)
+          : TextInputType.text,
     );
   }
 }

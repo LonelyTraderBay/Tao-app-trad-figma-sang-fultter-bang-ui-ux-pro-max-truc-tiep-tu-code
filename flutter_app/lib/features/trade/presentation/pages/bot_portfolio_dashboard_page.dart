@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -82,6 +83,18 @@ class BotPortfolioDashboardPage extends ConsumerWidget {
                       _CorrelationCard(rows: snapshot.correlations),
                       const SizedBox(height: 18),
                       _HealthCard(items: snapshot.healthItems),
+                      const SizedBox(height: 12),
+                      const VitCard(
+                        variant: VitCardVariant.inner,
+                        padding: EdgeInsets.all(12),
+                        child: VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Portfolio risk review',
+                          message:
+                              'Equity curve, allocation concentration, correlation pressure and health next steps are reviewed before portfolio changes.',
+                          contractId: 'bot-portfolio-review',
+                        ),
+                      ),
                     ],
                   ),
                 ),

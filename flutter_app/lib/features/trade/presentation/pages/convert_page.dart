@@ -13,12 +13,17 @@ import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/convert_page_widgets.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_input.dart';
 
 part 'convert_page_part_01.dart';
 part 'convert_page_part_02.dart';
@@ -27,9 +32,7 @@ part '../widgets/convert_page_amount_widgets.dart';
 
 const _tradePrimary = AppColors.primary;
 const _tradePrimaryDark = AppColors.primaryDark;
-const _panelBackground = AppColors.surface;
 const _chipBackground = AppColors.surface2;
-const _rateBackground = AppColors.surface;
 const _disabledPrimary = AppColors.surface3;
 
 enum _ConvertMode { market, limit, schedule }
@@ -122,8 +125,10 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
           child: SingleChildScrollView(
             key: ConvertPage.contentKey,
             padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            child: VitPageContent(
+              padding: VitContentPadding.none,
+              fullBleed: true,
+              customGap: 0,
               children: [
                 _ModeTabs(
                   mode: _mode,
@@ -181,6 +186,13 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
                     _slippage = value;
                     _receipt = null;
                   }),
+                ),
+                const SizedBox(height: 16),
+                _ConvertRiskReviewPanel(
+                  quote: quote,
+                  fromSymbol: fromAsset.symbol,
+                  toSymbol: toAsset.symbol,
+                  slippage: _slippage,
                 ),
                 const SizedBox(height: 18),
                 _SubmitButton(

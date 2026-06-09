@@ -5,49 +5,11 @@ class _OperationalAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-      decoration: BoxDecoration(
-        color: AppColors.transparent,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.check_circle_outline,
-            color: AppColors.text1,
-            size: 17,
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'All Systems Operational',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontSize: 11,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  '3/3 ARM providers online. Failover ready. Average uptime: 99.5%.',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 10,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1.4,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return const VitHighRiskStatePanel(
+      state: VitHighRiskUiState.success,
+      title: 'All Systems Operational',
+      message:
+          '3/3 ARM providers online. Failover ready. Average uptime: 99.5%.',
     );
   }
 }
@@ -66,14 +28,10 @@ class _ArmProviderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = _statusStyle(connection.status);
-    return Container(
+    return VitCard(
       key: ArmIntegrationStatusPage.connectionKey(connection.id),
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _armPanel,
-        border: Border.all(color: _armBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _armBorder.withValues(alpha: .72),
       child: Column(
         children: [
           Row(
@@ -359,36 +317,23 @@ class _TestButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCtaButton(
       key: ArmIntegrationStatusPage.testKey(connectionId),
-      onTap: isTesting ? null : onTap,
-      borderRadius: AppRadii.smRadius,
-      child: Container(
-        height: 34,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: (isTesting ? _armPanel2 : _armPrimary.withValues(alpha: .14)),
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              isTesting ? Icons.sync_rounded : Icons.bolt_rounded,
-              color: isTesting ? AppColors.text3 : _armPrimary,
-              size: 15,
-            ),
-            const SizedBox(width: 8),
-            Text(
-              isTesting ? 'Testing...' : 'Test Connection',
-              style: AppTextStyles.caption.copyWith(
-                color: isTesting ? AppColors.text3 : _armPrimary,
-                fontSize: 11,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
-            ),
-          ],
+      onPressed: isTesting ? null : onTap,
+      variant: VitCtaButtonVariant.secondary,
+      height: 34,
+      leading: Icon(
+        isTesting ? Icons.sync_rounded : Icons.bolt_rounded,
+        color: isTesting ? AppColors.text3 : _armPrimary,
+        size: 15,
+      ),
+      child: Text(
+        isTesting ? 'Testing...' : 'Test Connection',
+        style: AppTextStyles.caption.copyWith(
+          color: isTesting ? AppColors.text3 : _armPrimary,
+          fontSize: 11,
+          fontWeight: AppTextStyles.bold,
+          height: 1,
         ),
       ),
     );
@@ -400,31 +345,24 @@ class _LogsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCtaButton(
+      onPressed: () {},
+      variant: VitCtaButtonVariant.secondary,
+      fullWidth: false,
       height: 34,
-      padding: const EdgeInsets.symmetric(horizontal: 13),
-      decoration: BoxDecoration(
-        color: _armPanel2,
-        borderRadius: AppRadii.inputRadius,
+      leading: const Icon(
+        Icons.open_in_new_rounded,
+        color: AppColors.text2,
+        size: 14,
       ),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.open_in_new_rounded,
-            color: AppColors.text2,
-            size: 14,
-          ),
-          const SizedBox(width: 7),
-          Text(
-            'Logs',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 11,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
-            ),
-          ),
-        ],
+      child: Text(
+        'Logs',
+        style: AppTextStyles.caption.copyWith(
+          color: AppColors.text2,
+          fontSize: 11,
+          fontWeight: AppTextStyles.bold,
+          height: 1,
+        ),
       ),
     );
   }

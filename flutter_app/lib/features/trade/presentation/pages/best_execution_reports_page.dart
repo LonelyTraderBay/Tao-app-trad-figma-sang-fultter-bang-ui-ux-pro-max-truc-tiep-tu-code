@@ -10,7 +10,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -88,15 +90,14 @@ class _BestExecutionReportsPageState
                     child: SingleChildScrollView(
                       key: BestExecutionReportsPage.contentKey,
                       padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      child: VitPageContent(
+                        padding: VitContentPadding.none,
+                        customGap: 14,
+                        fullBleed: true,
                         children: [
                           const _ComplianceNotice(),
-                          const SizedBox(height: 22),
                           _SummaryGrid(summary: snapshot.summary),
-                          const SizedBox(height: 26),
                           _Tabs(activeId: _tab, onChanged: _setTab),
-                          const SizedBox(height: 26),
                           if (_tab == 'current')
                             _CurrentReport(
                               venues: snapshot.venues,

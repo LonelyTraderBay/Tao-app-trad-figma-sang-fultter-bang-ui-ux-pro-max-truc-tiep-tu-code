@@ -12,7 +12,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -88,19 +90,24 @@ class _ComplaintSubmissionPageState
                 child: SingleChildScrollView(
                   key: ComplaintSubmissionPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 27, 20, scrollBottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 14,
+                    fullBleed: true,
                     children: [
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review complaint submission',
+                        message:
+                            'Confirm evidence, personal details, deadlines, and next steps before submitting this regulated complaint.',
+                      ),
                       _ProcessNotice(snapshot: snapshot),
-                      const SizedBox(height: 36),
                       const _SectionLabel('Complaint Details'),
-                      const SizedBox(height: 15),
                       _CategoryField(
                         value: _category,
                         categories: snapshot.categories,
                         onChanged: (value) => setState(() => _category = value),
                       ),
-                      const SizedBox(height: 19),
                       _TextInputBlock(
                         label: 'Subject *',
                         controller: _subjectController,
@@ -109,7 +116,6 @@ class _ComplaintSubmissionPageState
                         minLength: snapshot.subjectMinLength,
                         onChanged: (_) => setState(() {}),
                       ),
-                      const SizedBox(height: 16),
                       _TextInputBlock(
                         label: 'Description *',
                         controller: _descriptionController,
@@ -120,9 +126,7 @@ class _ComplaintSubmissionPageState
                         multiline: true,
                         onChanged: (_) => setState(() {}),
                       ),
-                      const SizedBox(height: 18),
                       const _EvidenceUploadCard(),
-                      const SizedBox(height: 25),
                       _TermsCard(
                         snapshot: snapshot,
                         accepted: _acceptTerms,

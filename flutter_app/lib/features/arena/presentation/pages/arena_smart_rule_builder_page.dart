@@ -69,6 +69,11 @@ class ArenaSmartRuleBuilderPage extends ConsumerStatefulWidget {
 
 class _ArenaSmartRuleBuilderPageState
     extends ConsumerState<ArenaSmartRuleBuilderPage> {
+  final _titleController = TextEditingController();
+  final _customWinController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _endDateController = TextEditingController();
+
   String _title = '';
   String _domainId = '';
   String _challengeTypeId = '';
@@ -91,6 +96,16 @@ class _ArenaSmartRuleBuilderPageState
   void initState() {
     super.initState();
     _endDate = '2026-03-15';
+    _endDateController.text = _formatArenaRuleDateInput(_endDate);
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _customWinController.dispose();
+    _descriptionController.dispose();
+    _endDateController.dispose();
+    super.dispose();
   }
 
   @override
@@ -99,6 +114,9 @@ class _ArenaSmartRuleBuilderPageState
         .watch(arenaReadModelControllerProvider)
         .getArenaSmartRules();
     _endDate = _endDate.isEmpty ? snapshot.defaultEndDate : _endDate;
+    if (_endDateController.text.isEmpty && _endDate.isNotEmpty) {
+      _endDateController.text = _formatArenaRuleDateInput(_endDate);
+    }
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -138,9 +156,10 @@ class _ArenaSmartRuleBuilderPageState
                       _ClarityScoreCard(score: clarity.score),
                       _GuidanceLink(onTap: _showGuidance),
                       _TitleField(
-                        title: _title,
+                        controller: _titleController,
                         suggestions: snapshot.titleSuggestions,
                         onChanged: (value) => setState(() => _title = value),
+                        onSuggestion: _setTitle,
                       ),
                       _DomainField(
                         domain: _selectedDomain(snapshot),
@@ -158,7 +177,7 @@ class _ArenaSmartRuleBuilderPageState
                         metric: _metric,
                         winType: _winType,
                         deadlineContext: _deadlineContext,
-                        customWinCondition: _customWinCondition,
+                        customWinController: _customWinController,
                         onSubject: () =>
                             setState(() => _subject = snapshot.subjects.first),
                         onAction: () =>
@@ -175,7 +194,7 @@ class _ArenaSmartRuleBuilderPageState
                             setState(() => _customWinCondition = value),
                       ),
                       _DescriptionField(
-                        value: _description,
+                        controller: _descriptionController,
                         onChanged: (value) =>
                             setState(() => _description = value),
                       ),
@@ -183,15 +202,15 @@ class _ArenaSmartRuleBuilderPageState
                         suggestions: _quickSuggestions(snapshot),
                         onTap: (value) => setState(() {
                           if (_title.isEmpty) {
-                            _title = value;
+                            _setTitle(value);
                           } else {
-                            _customWinCondition = value;
+                            _setCustomWinCondition(value);
                           }
                         }),
                       ),
                       _TimingRulesCard(
                         snapshot: snapshot,
-                        endDate: _endDate,
+                        endDateController: _endDateController,
                         tieRule: _tieRule,
                         voidRule: _voidRule,
                         resultDeadline: _resultDeadline,
@@ -328,6 +347,22 @@ class _ArenaSmartRuleBuilderPageState
       HapticFeedback.selectionClick();
       setState(() => _domainId = id);
     }
+  }
+
+  void _setTitle(String value) {
+    _titleController.value = TextEditingValue(
+      text: value,
+      selection: TextSelection.collapsed(offset: value.length),
+    );
+    setState(() => _title = value);
+  }
+
+  void _setCustomWinCondition(String value) {
+    _customWinController.value = TextEditingValue(
+      text: value,
+      selection: TextSelection.collapsed(offset: value.length),
+    );
+    setState(() => _customWinCondition = value);
   }
 
   void _showGuidance() {

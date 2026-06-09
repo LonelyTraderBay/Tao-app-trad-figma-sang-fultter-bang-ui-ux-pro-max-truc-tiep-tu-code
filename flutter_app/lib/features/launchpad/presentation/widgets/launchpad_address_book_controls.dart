@@ -15,49 +15,13 @@ class _SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitSearchBar(
       key: LaunchpadAddressBookPage.searchKey,
-      decoration: BoxDecoration(
-        color: AppColors.searchBg,
-        border: Border.all(color: AppColors.searchBorder),
-        borderRadius: AppRadii.xlRadius,
-      ),
-      child: TextField(
-        controller: controller,
-        onChanged: onChanged,
-        style: AppTextStyles.caption.copyWith(
-          color: AppColors.text1,
-          fontWeight: FontWeight.w700,
-        ),
-        decoration: InputDecoration(
-          isDense: true,
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x3,
-          ),
-          hintText: 'Tim dia chi, nhan, chain...',
-          hintStyle: AppTextStyles.caption.copyWith(
-            color: AppColors.searchPlaceholder,
-            fontWeight: FontWeight.w700,
-          ),
-          prefixIcon: const Icon(
-            Icons.search_rounded,
-            color: AppColors.text3,
-            size: 18,
-          ),
-          suffixIcon: query.isEmpty
-              ? null
-              : IconButton(
-                  onPressed: onClear,
-                  icon: const Icon(
-                    Icons.close_rounded,
-                    color: AppColors.text3,
-                    size: 18,
-                  ),
-                ),
-        ),
-      ),
+      controller: controller,
+      placeholder: 'Tim dia chi, nhan, chain...',
+      variant: VitSearchBarVariant.compact,
+      onChanged: onChanged,
+      onClear: onClear,
     );
   }
 }

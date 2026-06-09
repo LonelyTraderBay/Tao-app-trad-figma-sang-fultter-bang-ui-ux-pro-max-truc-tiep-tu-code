@@ -210,36 +210,22 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        height: 40,
-        decoration: BoxDecoration(
-          color: background,
-          border: bordered ? Border.all(color: _bestBorder) : null,
-          borderRadius: AppRadii.mdRadius,
-        ),
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: foreground, size: 15),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: foreground,
-                  fontSize: 12,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
-              ),
-            ),
-          ],
+    return VitCtaButton(
+      onPressed: onTap,
+      variant: bordered
+          ? VitCtaButtonVariant.secondary
+          : VitCtaButtonVariant.primary,
+      height: 40,
+      leading: Icon(icon, color: foreground, size: 15),
+      child: Text(
+        label,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: AppTextStyles.caption.copyWith(
+          color: foreground,
+          fontSize: 12,
+          fontWeight: AppTextStyles.bold,
+          height: 1,
         ),
       ),
     );
@@ -288,13 +274,9 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _bestPanel,
-        border: Border.all(color: _bestBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _bestBorder.withValues(alpha: .72),
       child: child,
     );
   }

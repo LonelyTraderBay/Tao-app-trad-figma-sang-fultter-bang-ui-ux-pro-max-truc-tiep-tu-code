@@ -171,27 +171,12 @@ class _NewCommentCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 14),
-          Container(
-            height: 78,
-            padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 7),
-            decoration: BoxDecoration(
-              color: AppColors.bg,
-              borderRadius: AppRadii.lgRadius,
-            ),
-            child: TextField(
-              key: PredictionSocialPage.commentFieldKey,
-              controller: controller,
-              maxLines: 3,
-              cursorColor: _predictionPrimary,
-              style: AppTextStyles.body.copyWith(fontSize: 13),
-              decoration: InputDecoration.collapsed(
-                hintText: 'Chia se y kien cua ban...',
-                hintStyle: AppTextStyles.body.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 13,
-                ),
-              ),
-            ),
+          VitInput(
+            fieldKey: PredictionSocialPage.commentFieldKey,
+            controller: controller,
+            semanticLabel: 'Prediction comment',
+            hintText: 'Chia se y kien cua ban...',
+            textStyle: AppTextStyles.body.copyWith(fontSize: 13),
           ),
           const SizedBox(height: 20),
           SizedBox(

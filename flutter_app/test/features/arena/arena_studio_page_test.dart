@@ -81,12 +81,17 @@ void main() {
   testWidgets('SC-185 requires a template before continuing', (tester) async {
     await pumpArenaStudio(tester);
 
+    await tester.ensureVisible(find.byKey(ArenaStudioPage.continueKey));
     await tester.tap(find.byKey(ArenaStudioPage.continueKey));
     await tester.pumpAndSettle();
     expect(find.text('Chọn template'), findsOneWidget);
 
+    await tester.ensureVisible(
+      find.byKey(ArenaStudioPage.templateKey('prediction')),
+    );
     await tester.tap(find.byKey(ArenaStudioPage.templateKey('prediction')));
     await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(ArenaStudioPage.continueKey));
     await tester.tap(find.byKey(ArenaStudioPage.continueKey));
     await tester.pumpAndSettle();
 
@@ -99,14 +104,17 @@ void main() {
   ) async {
     await pumpArenaStudio(tester);
 
+    await tester.ensureVisible(find.byKey(ArenaStudioPage.saveKey));
     await tester.tap(find.byKey(ArenaStudioPage.saveKey));
     await tester.pumpAndSettle();
     expect(find.text('Đã lưu bản nháp'), findsOneWidget);
 
+    await tester.ensureVisible(find.byKey(ArenaStudioPage.exportKey));
     await tester.tap(find.byKey(ArenaStudioPage.exportKey));
     await tester.pumpAndSettle();
     expect(find.text('Đã chuẩn bị file xuất'), findsOneWidget);
 
+    await tester.ensureVisible(find.byKey(ArenaStudioPage.importKey));
     await tester.tap(find.byKey(ArenaStudioPage.importKey));
     await tester.pumpAndSettle();
     expect(find.text('Đã sẵn sàng nhập JSON'), findsOneWidget);

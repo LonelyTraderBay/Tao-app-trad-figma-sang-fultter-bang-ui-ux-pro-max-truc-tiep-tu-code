@@ -36,13 +36,9 @@ class _TipCard extends StatelessWidget {
       'advanced' => _gasRed,
       _ => AppColors.text3,
     };
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _gasPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _gasBorder),
-      ),
+      borderColor: _gasBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -184,13 +180,9 @@ class _QuickActionsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _gasPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _gasBorder),
-      ),
+      borderColor: _gasBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

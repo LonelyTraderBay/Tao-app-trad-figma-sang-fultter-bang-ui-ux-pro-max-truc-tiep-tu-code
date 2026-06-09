@@ -414,6 +414,14 @@ class _TradeTab extends ConsumerWidget {
           onTap: onSubmit,
         ),
         const SizedBox(height: 14),
+        const VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Futures margin review',
+          message:
+              'Review leverage, margin, liquidation price, fees, TP/SL, and order side before opening a futures position.',
+          contractId: 'SC-057',
+        ),
+        const SizedBox(height: 12),
         const _RiskWarning(),
         const SizedBox(height: 12),
         const _FuturesSafetyChecklist(),

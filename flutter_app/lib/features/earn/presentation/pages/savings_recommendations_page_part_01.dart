@@ -3,8 +3,21 @@ part of 'savings_recommendations_page.dart';
 class _SavingsRecommendationsPageState
     extends ConsumerState<SavingsRecommendationsPage> {
   String _amountText = '15000';
+  late final TextEditingController _amountController;
 
   double get _amount => double.tryParse(_amountText) ?? 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _amountController = TextEditingController(text: _amountText);
+  }
+
+  @override
+  void dispose() {
+    _amountController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +56,13 @@ class _SavingsRecommendationsPageState
                       _HeroCard(snapshot: snapshot),
                       _ProfileCard(snapshot: snapshot),
                       _AmountSimulator(
+                        controller: _amountController,
                         amountText: _amountText,
                         onAmountChanged: (value) =>
                             setState(() => _amountText = value),
                         onQuickAmount: (value) {
                           HapticFeedback.selectionClick();
-                          setState(() => _amountText = '$value');
+                          _setAmountText('$value');
                         },
                       ),
                       _CompareButton(
@@ -106,6 +120,14 @@ class _SavingsRecommendationsPageState
         ),
       ),
     );
+  }
+
+  void _setAmountText(String value) {
+    _amountController.value = TextEditingValue(
+      text: value,
+      selection: TextSelection.collapsed(offset: value.length),
+    );
+    setState(() => _amountText = value);
   }
 
   Future<void> _openStrategySheet(
@@ -362,11 +384,13 @@ class _ProfileMetric extends StatelessWidget {
 
 class _AmountSimulator extends StatelessWidget {
   const _AmountSimulator({
+    required this.controller,
     required this.amountText,
     required this.onAmountChanged,
     required this.onQuickAmount,
   });
 
+  final TextEditingController controller;
   final String amountText;
   final ValueChanged<String> onAmountChanged;
   final ValueChanged<int> onQuickAmount;
@@ -399,33 +423,15 @@ class _AmountSimulator extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x3),
-          TextField(
-            key: SavingsRecommendationsPage.amountFieldKey,
+          VitInput(
+            fieldKey: SavingsRecommendationsPage.amountFieldKey,
+            controller: controller,
             keyboardType: TextInputType.number,
+            semanticLabel: 'Savings recommendations amount',
             onChanged: onAmountChanged,
-            controller: TextEditingController(text: amountText)
-              ..selection = TextSelection.collapsed(offset: amountText.length),
-            cursorColor: AppColors.primary,
-            style: AppTextStyles.baseMedium.copyWith(
+            textStyle: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,
               fontFeatures: AppTextStyles.tabularFigures,
-            ),
-            decoration: const InputDecoration(
-              isDense: true,
-              filled: true,
-              fillColor: AppColors.surface2,
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: AppSpacing.x4,
-                vertical: AppSpacing.x3,
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: AppRadii.inputRadius,
-                borderSide: BorderSide(color: AppColors.borderSolid),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: AppRadii.inputRadius,
-                borderSide: BorderSide(color: AppColors.primary30),
-              ),
             ),
           ),
           const SizedBox(height: AppSpacing.x3),

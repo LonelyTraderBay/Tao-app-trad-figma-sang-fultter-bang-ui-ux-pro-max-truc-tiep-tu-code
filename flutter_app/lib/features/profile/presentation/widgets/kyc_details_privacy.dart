@@ -1,4 +1,4 @@
-﻿part of '../pages/kyc_page.dart';
+part of '../pages/kyc_page.dart';
 
 class _DetailsBlock extends StatelessWidget {
   const _DetailsBlock({
@@ -68,15 +68,11 @@ class _PrivacyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       key: KYCPage.privacyCardKey,
       height: 95,
       padding: const EdgeInsets.fromLTRB(16, 15, 16, 14),
-      decoration: BoxDecoration(
-        color: AppColors.primary08,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _kycPrimary.withValues(alpha: .24)),
-      ),
+      borderColor: _kycPrimary.withValues(alpha: .24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

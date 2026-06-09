@@ -7,14 +7,10 @@ class _IntroBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       constraints: const BoxConstraints(minHeight: 96),
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
-      decoration: BoxDecoration(
-        color: _copyPrimary.withValues(alpha: .08),
-        border: Border.all(color: _copyPrimary),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      borderColor: _copyPrimary,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -277,14 +273,12 @@ class _CopyModeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(mode.colorHex);
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       constraints: const BoxConstraints(minHeight: 116),
       padding: const EdgeInsets.fromLTRB(14, 13, 14, 12),
-      decoration: BoxDecoration(
-        color: _educationPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

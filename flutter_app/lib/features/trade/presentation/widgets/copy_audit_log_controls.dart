@@ -7,13 +7,9 @@ class _ComplianceNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
-      decoration: BoxDecoration(
-        color: _auditPrimary.withValues(alpha: .08),
-        border: Border.all(color: _auditPrimary),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _auditPrimary,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,43 +56,12 @@ class _AuditSearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 45,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        color: _auditChip,
-        borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppColors.borderSolid),
-      ),
-      child: Row(
-        children: [
-          const Icon(Icons.search_rounded, color: _auditMuted, size: 19),
-          const SizedBox(width: 11),
-          Expanded(
-            child: TextField(
-              key: CopyAuditLogPage.searchFieldKey,
-              controller: controller,
-              onChanged: onChanged,
-              cursorColor: _auditPrimary,
-              textInputAction: TextInputAction.search,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontSize: 13,
-                fontWeight: AppTextStyles.medium,
-                height: 1,
-              ),
-              decoration: InputDecoration.collapsed(
-                hintText: 'Tìm kiếm event, pair, ID...',
-                hintStyle: AppTextStyles.caption.copyWith(
-                  color: _auditMuted,
-                  fontSize: 13,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+    return VitSearchBar(
+      controller: controller,
+      fieldKey: CopyAuditLogPage.searchFieldKey,
+      placeholder: 'Tìm kiếm event, pair, ID...',
+      variant: VitSearchBarVariant.compact,
+      onChanged: onChanged,
     );
   }
 }

@@ -8,13 +8,9 @@ class _AuditEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _eventColor(event);
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-      decoration: BoxDecoration(
-        color: _auditCard,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -143,15 +139,13 @@ class _EventMetadataPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final metadata = event.metadata!;
     if (event.type == TradeCopyAuditEventType.config) {
-      return Container(
+      return VitCard(
+        variant: VitCardVariant.inner,
+        radius: VitCardRadius.sm,
         height: 29,
         width: double.infinity,
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        decoration: BoxDecoration(
-          color: _auditPanel,
-          borderRadius: AppRadii.inputRadius,
-        ),
         child: Text(
           '${metadata.oldValue} → ${metadata.newValue}',
           style: AppTextStyles.micro.copyWith(
@@ -163,13 +157,11 @@ class _EventMetadataPanel extends StatelessWidget {
       );
     }
 
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(9, 9, 9, 10),
-      decoration: BoxDecoration(
-        color: _auditPanel,
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: Column(
         children: [
           Row(
@@ -265,27 +257,10 @@ class _EmptyAuditState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return VitEmptyState(
       key: CopyAuditLogPage.emptyStateKey,
-      padding: const EdgeInsets.symmetric(vertical: 50),
-      child: Column(
-        children: [
-          const Icon(
-            Icons.description_outlined,
-            color: AppColors.text3,
-            size: 34,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            searching ? 'Không tìm thấy event phù hợp' : 'Chưa có event nào',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 13,
-            ),
-          ),
-        ],
-      ),
+      title: searching ? 'Không tìm thấy event phù hợp' : 'Chưa có event nào',
+      icon: Icons.description_outlined,
     );
   }
 }

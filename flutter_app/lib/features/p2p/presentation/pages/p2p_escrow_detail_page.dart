@@ -136,6 +136,18 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
                         _SecurityNotice(snapshot: snapshot),
                         const SizedBox(height: AppSpacing.x4),
                         _OrderLink(orderId: widget.orderId),
+                        const SizedBox(height: AppSpacing.x3),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Escrow detail review',
+                            message:
+                                'Masked escrow address, reveal/copy action, multisig state, order link, timeline and next safe step are reviewed before fund action.',
+                            contractId: 'p2p-escrow-detail-review',
+                          ),
+                        ),
                       ],
                     ),
                   ),

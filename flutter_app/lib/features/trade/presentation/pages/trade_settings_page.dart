@@ -10,7 +10,11 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -18,7 +22,6 @@ part '../widgets/trade_settings_page_sections.dart';
 part '../widgets/trade_settings_page_common.dart';
 
 const _tradePrimary = AppColors.primary;
-const _cardBackground = AppColors.surface2;
 const _chipBackground = AppColors.surface2;
 
 class TradeSettingsPage extends ConsumerStatefulWidget {
@@ -81,9 +84,19 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomChrome + 32),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 0,
                     children: [
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Trade settings safety review',
+                        message:
+                            'Confirm order preview, small-order confirmation limits, slippage, chart defaults, and next steps before using these settings for live trading.',
+                        contractId: 'SC-052 settings review',
+                      ),
+                      const SizedBox(height: 20),
                       _SettingsSection(
                         title: 'Mặc định lệnh',
                         child: _OrderDefaultsCard(

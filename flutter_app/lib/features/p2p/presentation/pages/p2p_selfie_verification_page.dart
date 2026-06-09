@@ -91,6 +91,49 @@ class _P2PSelfieVerificationPageState
             ? DeviceMetrics.bottomChrome + AppSpacing.x5
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
+    final stepBody = switch (_step) {
+      _SelfieStep.guide => _GuideStep(
+        snapshot: snapshot,
+        onStart: () {
+          HapticFeedback.selectionClick();
+          setState(() => _step = _SelfieStep.capture);
+        },
+      ),
+      _SelfieStep.capture => _CaptureStep(
+        onCapture: () {
+          HapticFeedback.selectionClick();
+          setState(() => _step = _SelfieStep.liveness);
+        },
+      ),
+      _SelfieStep.liveness => _LivenessStep(
+        snapshot: snapshot,
+        currentActionIndex: _currentActionIndex,
+        completedActions: _completedActions,
+        onConfirmAction: () {
+          HapticFeedback.selectionClick();
+          setState(() {
+            final action = snapshot.livenessActions[_currentActionIndex];
+            _completedActions.add(action.id);
+            if (_currentActionIndex < snapshot.livenessActions.length - 1) {
+              _currentActionIndex += 1;
+            } else {
+              _step = _SelfieStep.result;
+            }
+          });
+        },
+      ),
+      _SelfieStep.result => _ResultStep(
+        snapshot: snapshot,
+        onComplete: () {
+          HapticFeedback.selectionClick();
+          context.go(snapshot.statusRoute);
+        },
+        onSupport: () {
+          HapticFeedback.selectionClick();
+          context.go(snapshot.supportRoute);
+        },
+      ),
+    };
 
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
@@ -102,49 +145,24 @@ class _P2PSelfieVerificationPageState
           AppSpacing.contentPad,
           bottomInset,
         ),
-        child: switch (_step) {
-          _SelfieStep.guide => _GuideStep(
-            snapshot: snapshot,
-            onStart: () {
-              HapticFeedback.selectionClick();
-              setState(() => _step = _SelfieStep.capture);
-            },
-          ),
-          _SelfieStep.capture => _CaptureStep(
-            onCapture: () {
-              HapticFeedback.selectionClick();
-              setState(() => _step = _SelfieStep.liveness);
-            },
-          ),
-          _SelfieStep.liveness => _LivenessStep(
-            snapshot: snapshot,
-            currentActionIndex: _currentActionIndex,
-            completedActions: _completedActions,
-            onConfirmAction: () {
-              HapticFeedback.selectionClick();
-              setState(() {
-                final action = snapshot.livenessActions[_currentActionIndex];
-                _completedActions.add(action.id);
-                if (_currentActionIndex < snapshot.livenessActions.length - 1) {
-                  _currentActionIndex += 1;
-                } else {
-                  _step = _SelfieStep.result;
-                }
-              });
-            },
-          ),
-          _SelfieStep.result => _ResultStep(
-            snapshot: snapshot,
-            onComplete: () {
-              HapticFeedback.selectionClick();
-              context.go(snapshot.statusRoute);
-            },
-            onSupport: () {
-              HapticFeedback.selectionClick();
-              context.go(snapshot.supportRoute);
-            },
-          ),
-        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            stepBody,
+            const SizedBox(height: AppSpacing.x3),
+            const VitCard(
+              variant: VitCardVariant.inner,
+              padding: EdgeInsets.all(AppSpacing.x3),
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Selfie verification review',
+                message:
+                    'Guide, capture, liveness progress, biometric handling, result state and support next step are reviewed before P2P verification completes.',
+                contractId: 'p2p-selfie-verification-review',
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -15,13 +15,10 @@ class _FilterPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 146,
+    return VitCard(
+      height: 148,
       padding: const EdgeInsets.fromLTRB(20, 25, 20, 13),
-      decoration: const BoxDecoration(
-        color: _activityPanel,
-        border: Border(bottom: BorderSide(color: _activityDivider)),
-      ),
+      borderColor: _activityDivider,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -58,15 +55,11 @@ class _SuspiciousBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       key: ActivityLogPage.warningKey,
       height: 64,
       padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-      decoration: BoxDecoration(
-        color: _activityAmber.withValues(alpha: .1),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _activityAmber.withValues(alpha: .34)),
-      ),
+      borderColor: _activityAmber.withValues(alpha: .34),
       child: Row(
         children: [
           const Icon(
@@ -168,21 +161,13 @@ class _ActivityCard extends StatelessWidget {
     final status = _statusConfig(log.status);
     final suspicious = log.status == 'suspicious';
 
-    return Container(
+    return VitCard(
       key: ActivityLogPage.logKey(log.id),
       height: 223,
       padding: const EdgeInsets.fromLTRB(16, 13, 16, 12),
-      decoration: BoxDecoration(
-        color: suspicious
-            ? _activityAmber.withValues(alpha: .05)
-            : _activityPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(
-          color: suspicious
-              ? _activityAmber.withValues(alpha: .32)
-              : _activityBorder,
-        ),
-      ),
+      borderColor: suspicious
+          ? _activityAmber.withValues(alpha: .32)
+          : _activityBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

@@ -71,6 +71,14 @@ class _TransferForm extends StatelessWidget {
               : 'Chuyển $asset',
           onTap: onSubmit,
         ),
+        const SizedBox(height: AppSpacing.x4),
+        const VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'P2P transfer review',
+          message:
+              'Confirm source, destination, asset, amount, escrow note, fee, and processing status before moving funds.',
+          contractId: 'SC-261',
+        ),
       ],
     );
   }

@@ -12,7 +12,10 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -21,9 +24,6 @@ part '../widgets/portfolio_risk_analysis_page_common.dart';
 
 const _riskPrimary = AppColors.primary;
 const _riskPanel = AppColors.surface2;
-const _riskTabBackground = AppColors.surface;
-const _riskCard = AppColors.surface;
-const _riskWarningBackground = AppColors.warningBg;
 const _riskWarningBorder = AppColors.warningBorderStrong;
 const _riskWarningText = AppColors.caution;
 
@@ -74,10 +74,20 @@ class _PortfolioRiskAnalysisPageState
                 child: SingleChildScrollView(
                   key: PortfolioRiskAnalysisPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 0,
                     children: [
                       _RiskSummaryGrid(snapshot: snapshot),
+                      const SizedBox(height: 16),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Portfolio risk preview',
+                        message:
+                            'Review exposure, VaR, correlation, stress scenarios, limits, and next-step rebalancing before changing copy allocations.',
+                        contractId: 'SC-078 risk analysis review',
+                      ),
                       const SizedBox(height: 24),
                       _RiskWarningPanel(alerts: snapshot.riskAlerts),
                       const SizedBox(height: 24),

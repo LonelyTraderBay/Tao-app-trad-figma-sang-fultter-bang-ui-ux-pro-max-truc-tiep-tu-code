@@ -19,13 +19,9 @@ class _SubAccountCard extends StatelessWidget {
     final statusColor = _statusColor(account.status);
     final pnlColor = account.pnl30d >= 0 ? AppColors.buy : AppColors.sell;
 
-    return Container(
+    return VitCard(
       key: SubAccountPage.accountCardKey(account.id),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.cardBorder),
-      ),
+      borderColor: AppColors.cardBorder,
       child: Column(
         children: [
           Material(

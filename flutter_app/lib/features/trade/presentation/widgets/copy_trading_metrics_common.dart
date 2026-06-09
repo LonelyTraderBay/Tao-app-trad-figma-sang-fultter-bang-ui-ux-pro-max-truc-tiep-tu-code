@@ -181,13 +181,9 @@ class _Panel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _copyCardTone,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: child,
     );
   }

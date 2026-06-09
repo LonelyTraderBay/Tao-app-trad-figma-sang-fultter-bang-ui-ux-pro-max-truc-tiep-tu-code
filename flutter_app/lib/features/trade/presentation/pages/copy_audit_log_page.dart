@@ -11,9 +11,10 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 part '../widgets/copy_audit_log_controls.dart';
 part '../widgets/copy_audit_log_events.dart';
@@ -23,8 +24,6 @@ const _auditPrimary = AppColors.primary;
 const _auditAmber = AppColors.caution;
 const _auditPurple = AppColors.accent;
 const _auditGreen = AppColors.buy;
-const _auditCard = AppColors.surface;
-const _auditPanel = AppColors.surface2;
 const _auditChip = AppColors.surface3;
 const _auditMuted = AppColors.text3;
 
@@ -101,22 +100,28 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                 child: SingleChildScrollView(
                   key: CopyAuditLogPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 22,
+                    fullBleed: true,
                     children: [
                       _ComplianceNotice(snapshot: snapshot),
-                      const SizedBox(height: 24),
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review copy audit evidence',
+                        message:
+                            'Search, filter, and export audit evidence with retention, risk, and config-change context preserved.',
+                        contractId: 'Copy ID: ${snapshot.copyId}',
+                      ),
                       _AuditSearchField(
                         controller: _searchController,
                         onChanged: (_) => setState(() {}),
                       ),
-                      const SizedBox(height: 25),
                       _AuditFilterTabs(
                         tabs: snapshot.tabs,
                         activeId: _activeFilter,
                         onChanged: (id) => setState(() => _activeFilter = id),
                       ),
-                      const SizedBox(height: 24),
                       if (events.isEmpty)
                         _EmptyAuditState(
                           searching: _searchController.text.isNotEmpty,
@@ -129,7 +134,6 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                           ),
                           if (event != events.last) const SizedBox(height: 10),
                         ],
-                      const SizedBox(height: 24),
                       _SummarySection(events: snapshot.events),
                     ],
                   ),
@@ -220,23 +224,11 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                     const SizedBox(height: 8),
                 ],
                 const SizedBox(height: 14),
-                TextButton(
+                VitCtaButton(
                   onPressed: () => Navigator.of(sheetContext).pop(),
-                  style: TextButton.styleFrom(
-                    fixedSize: const Size.fromHeight(46),
-                    backgroundColor: _auditChip,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: AppRadii.inputRadius,
-                    ),
-                  ),
-                  child: Text(
-                    'Hủy',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontSize: 14,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
+                  variant: VitCtaButtonVariant.secondary,
+                  height: 46,
+                  child: const Text('Hủy'),
                 ),
               ],
             ),

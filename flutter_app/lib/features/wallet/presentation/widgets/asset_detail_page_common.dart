@@ -65,6 +65,14 @@ class _AssetTransactions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (transactions.isEmpty) {
+      return const VitEmptyState(
+        title: 'No asset transactions',
+        message:
+            'Recent deposit, withdrawal, transfer, and trade activity will appear here.',
+      );
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

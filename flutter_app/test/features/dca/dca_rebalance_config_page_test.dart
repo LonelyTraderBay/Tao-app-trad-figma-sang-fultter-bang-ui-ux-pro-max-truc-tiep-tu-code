@@ -97,6 +97,8 @@ void main() {
   ) async {
     await pumpRebalanceConfig(tester);
 
+    await tester.ensureVisible(find.byKey(DCARebalanceConfig.previewKey));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(DCARebalanceConfig.previewKey));
     await tester.pumpAndSettle();
     expect(find.byKey(DCARebalanceConfig.previewSheetKey), findsOneWidget);

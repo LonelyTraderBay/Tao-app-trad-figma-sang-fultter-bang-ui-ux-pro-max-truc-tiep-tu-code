@@ -71,14 +71,9 @@ class _RiskSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 88,
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
-      decoration: BoxDecoration(
-        color: _riskCard,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.cardBorder),
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -123,13 +118,10 @@ class _RiskWarningPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(12, 13, 12, 13),
-      decoration: BoxDecoration(
-        color: _riskWarningBackground,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _riskWarningBorder),
-      ),
+      borderColor: _riskWarningBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -187,9 +179,9 @@ class _RiskTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 53,
-      color: _riskTabBackground,
+      padding: EdgeInsets.zero,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -345,13 +337,10 @@ class _DiversificationNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(12, 13, 12, 13),
-      decoration: BoxDecoration(
-        color: _riskPrimary.withValues(alpha: .08),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _riskPrimary),
-      ),
+      borderColor: _riskPrimary,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

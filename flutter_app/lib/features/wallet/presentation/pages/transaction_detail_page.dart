@@ -13,14 +13,15 @@ import 'package:vit_trade_flutter/core/product_flow/contextual_support_contract.
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
 part '../widgets/transaction_detail_page_sections.dart';
 part '../widgets/transaction_detail_page_common.dart';
 
 const _detailBackground = AppColors.bg;
-const _detailPanel = AppColors.surface;
 const _detailPanel2 = AppColors.surface2;
 const _detailPrimary = AppColors.primary;
 const _detailGreen = AppColors.buy;
@@ -71,24 +72,32 @@ class TransactionDetailPage extends ConsumerWidget {
                 child: SingleChildScrollView(
                   key: contentKey,
                   padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-                  child: snapshot.transaction == null
-                      ? _MissingTransaction(
-                          onBack: () => context.go(AppRoutePaths.walletHistory),
-                        )
-                      : _TransactionDetailContent(
-                          tx: snapshot.transaction!,
-                          onCopy: (value) => _copyValue(context, value),
-                          onSupport: () => context.go(
-                            ContextualSupportContracts.supportRouteFor(
-                              ContextualSupportFlow.withdrawal,
-                              referenceId: snapshot.transaction!.id,
-                              sourceRoute: AppRoutePaths.walletTransaction(
-                                snapshot.transaction!.id,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
+                    children: [
+                      snapshot.transaction == null
+                          ? _MissingTransaction(
+                              onBack: () =>
+                                  context.go(AppRoutePaths.walletHistory),
+                            )
+                          : _TransactionDetailContent(
+                              tx: snapshot.transaction!,
+                              onCopy: (value) => _copyValue(context, value),
+                              onSupport: () => context.go(
+                                ContextualSupportContracts.supportRouteFor(
+                                  ContextualSupportFlow.withdrawal,
+                                  referenceId: snapshot.transaction!.id,
+                                  sourceRoute: AppRoutePaths.walletTransaction(
+                                    snapshot.transaction!.id,
+                                  ),
+                                  issueLabel: 'Wallet transaction support',
+                                ),
                               ),
-                              issueLabel: 'Wallet transaction support',
                             ),
-                          ),
-                        ),
+                    ],
+                  ),
                 ),
               ),
             ],

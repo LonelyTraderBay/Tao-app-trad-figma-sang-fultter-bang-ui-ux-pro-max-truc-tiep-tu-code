@@ -11,8 +11,10 @@ import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_bu
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 
 const _buyBackground = AppColors.bg;
 const _buyPanel = AppColors.surface;
@@ -100,16 +102,30 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
                 child: SingleChildScrollView(
                   key: BuyCryptoPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: _confirming
-                      ? BuyConfirmContent(
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
+                    children: [
+                      if (_confirming) ...[
+                        VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Review buy order',
+                          message:
+                              'Confirm amount, received asset, payment method, fee, and next step before submitting.',
+                          contractId: '${crypto.symbol} / ${payment.name}',
+                        ),
+                        const SizedBox(height: 14),
+                        BuyConfirmContent(
                           crypto: crypto,
                           payment: payment,
                           amountVnd: _amountVnd,
                           receiveAmount: receiveAmount,
                           onConfirm: () => setState(() => _success = true),
                           onBack: () => setState(() => _confirming = false),
-                        )
-                      : BuyInputContent(
+                        ),
+                      ] else
+                        BuyInputContent(
                           snapshot: snapshot,
                           selectedCrypto: crypto,
                           selectedPaymentId: _selectedPayment,
@@ -128,6 +144,8 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
                               ? () => setState(() => _confirming = true)
                               : null,
                         ),
+                    ],
+                  ),
                 ),
               ),
             ],

@@ -83,14 +83,14 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                       ],
                     ),
                     const SizedBox(height: AppSpacing.x4),
-                    _SheetTextField(
+                    _SheetInputField(
                       label: 'Ten webhook',
                       hint: 'VD: Staking Monitor',
                       controller: _labelController,
                       onChanged: (_) => setState(() {}),
                     ),
                     const SizedBox(height: AppSpacing.x3),
-                    _SheetTextField(
+                    _SheetInputField(
                       label: 'Webhook URL',
                       hint: 'https://api.example.com/webhooks',
                       controller: _urlController,
@@ -98,7 +98,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                       onChanged: (_) => setState(() {}),
                     ),
                     const SizedBox(height: AppSpacing.x3),
-                    _SheetTextField(
+                    _SheetInputField(
                       label: 'Contract Address',
                       hint: '0x...',
                       controller: _contractController,

@@ -27,13 +27,11 @@ class _SeveritySection extends StatelessWidget {
         ),
         const SizedBox(height: 9),
         for (final flag in flags) ...[
-          Container(
+          VitCard(
             padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              borderRadius: AppRadii.inputRadius,
-              border: Border.all(color: color.withValues(alpha: .65)),
-            ),
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            borderColor: color.withValues(alpha: .65),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -107,13 +105,9 @@ class _TierCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(tier.colorHex);
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: _safetyCard,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: color, width: 2),
-      ),
+      borderColor: color,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -166,13 +160,9 @@ class _ReportTab extends StatelessWidget {
           color: AppColors.sell,
         ),
         const SizedBox(height: 14),
-        Container(
+        VitCard(
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: _safetyCard,
-            borderRadius: AppRadii.cardRadius,
-            border: Border.all(color: AppColors.cardBorder),
-          ),
+          borderColor: AppColors.cardBorder,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -191,13 +181,10 @@ class _ReportTab extends StatelessWidget {
               const SizedBox(height: 12),
               const _ReportField(label: 'Mô tả chi tiết', height: 82),
               const SizedBox(height: 13),
-              Container(
+              VitCtaButton(
+                onPressed: () {},
+                variant: VitCtaButtonVariant.danger,
                 height: 46,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppColors.sell,
-                  borderRadius: AppRadii.inputRadius,
-                ),
                 child: Text(
                   'Submit Report',
                   style: AppTextStyles.body.copyWith(
@@ -235,12 +222,11 @@ class _ReportField extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 7),
-        Container(
+        SizedBox(
           height: height,
-          decoration: BoxDecoration(
-            color: AppColors.surface2,
-            borderRadius: AppRadii.inputRadius,
-            border: Border.all(color: AppColors.cardBorder),
+          child: const VitCardStat(
+            padding: EdgeInsets.zero,
+            child: SizedBox.expand(),
           ),
         ),
       ],
@@ -256,21 +242,10 @@ class _InfoPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: color.withValues(alpha: .65)),
-      ),
-      child: Text(
-        text,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 11,
-          height: 1.5,
-        ),
-      ),
+    return VitHighRiskStatePanel(
+      state: VitHighRiskUiState.riskReview,
+      title: 'Review safety guidance',
+      message: text,
     );
   }
 }

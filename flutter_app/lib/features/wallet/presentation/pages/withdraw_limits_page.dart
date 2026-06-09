@@ -11,15 +11,15 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 part '../widgets/withdraw_limits_page_sections.dart';
 part '../widgets/withdraw_limits_page_common.dart';
 
 const _limitsBackground = AppColors.bg;
-const _limitsPanel = AppColors.surface;
-const _limitsHero = AppColors.surface;
 const _limitsHeroBorder = AppColors.primary20;
 const _limitsBorder = AppColors.overlayStroke;
 const _limitsPrimary = AppColors.primary;
@@ -65,8 +65,10 @@ class WithdrawLimitsPage extends ConsumerWidget {
                   key: WithdrawLimitsPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
                   physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
                     children: [
                       _CurrentTierCard(snapshot: snapshot),
                       const SizedBox(height: 18),
@@ -89,6 +91,15 @@ class WithdrawLimitsPage extends ConsumerWidget {
                       ],
                       const SizedBox(height: 18),
                       _FaqCard(faqs: snapshot.faqs),
+                      const SizedBox(height: 14),
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review withdrawal limits',
+                        message:
+                            'Confirm daily limit, remaining quota, KYC tier, fee policy, and next step before withdrawal.',
+                        contractId:
+                            'Current tier: ${snapshot.currentTier.name}',
+                      ),
                     ],
                   ),
                 ),

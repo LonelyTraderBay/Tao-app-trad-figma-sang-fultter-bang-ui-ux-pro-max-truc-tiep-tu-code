@@ -103,38 +103,12 @@ class _ProviderCta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCtaButton(
       key: CopyEducationPage.providerCtaKey,
-      onTap: onTap,
-      borderRadius: AppRadii.inputRadius,
-      child: Container(
-        height: AppSpacing.inputHeight,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: _copyPrimary,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.visibility_outlined,
-              color: AppColors.onAccent,
-              size: 16,
-            ),
-            const SizedBox(width: 9),
-            Text(
-              'Xem danh sách providers',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.onAccent,
-                fontSize: 14,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
-            ),
-          ],
-        ),
-      ),
+      onPressed: onTap,
+      leading: const Icon(Icons.visibility_outlined),
+      height: AppSpacing.inputHeight,
+      child: const Text('Xem danh sách providers'),
     );
   }
 }
@@ -180,13 +154,9 @@ class _CardShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _educationCard,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: child,
     );
   }

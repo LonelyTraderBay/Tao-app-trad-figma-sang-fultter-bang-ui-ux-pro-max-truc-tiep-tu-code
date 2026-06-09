@@ -138,6 +138,18 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
                           variant: VitCtaButtonVariant.danger,
                           child: const Text('Gửi tranh chấp'),
                         ),
+                        const SizedBox(height: AppSpacing.x3),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Dispute submission review',
+                            message:
+                                'Reason, description, uploaded evidence, escrow impact, case target and next dispute step are reviewed before submission.',
+                            contractId: 'p2p-dispute-open-review',
+                          ),
+                        ),
                       ],
                     ),
                   ),

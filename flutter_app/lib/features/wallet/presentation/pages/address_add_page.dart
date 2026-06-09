@@ -11,8 +11,10 @@ import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_ad
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 
 const _addressBackground = AppColors.bg;
 const _addressPanel = AppColors.surface;
@@ -74,6 +76,10 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
   Widget build(BuildContext context) {
     final controller = ref.watch(addressAddControllerProvider);
     final snapshot = controller.state.snapshot;
+    final selectedNetwork = snapshot.networks.firstWhere(
+      (network) => network.id == _networkId,
+      orElse: () => snapshot.networks.first,
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
     if (_saved) {
@@ -119,24 +125,39 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
                             20,
                             _scrollBottomInset(context, mode),
                           ),
-                          child: AddressAddForm(
-                            snapshot: snapshot,
-                            selectedNetworkId: _networkId,
-                            selectedAsset: _asset,
-                            labelController: _labelController,
-                            addressController: _addressController,
-                            memoController: _memoController,
-                            whitelist: _whitelist,
-                            agreed: _agreed,
-                            onNetworkChanged: (id) =>
-                                setState(() => _networkId = id),
-                            onAssetChanged: (asset) =>
-                                setState(() => _asset = asset),
-                            onWhitelistChanged: () =>
-                                setState(() => _whitelist = !_whitelist),
-                            onAgreementChanged: () =>
-                                setState(() => _agreed = !_agreed),
-                            onInputChanged: () => setState(() {}),
+                          child: VitPageContent(
+                            padding: VitContentPadding.none,
+                            customGap: 0,
+                            fullBleed: true,
+                            children: [
+                              VitHighRiskStatePanel(
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'Review withdrawal address safety',
+                                message:
+                                    'Confirm the wallet address, network, asset, whitelist setting, and masked preview before saving.',
+                                contractId: 'Network: ${selectedNetwork.label}',
+                              ),
+                              const SizedBox(height: 18),
+                              AddressAddForm(
+                                snapshot: snapshot,
+                                selectedNetworkId: _networkId,
+                                selectedAsset: _asset,
+                                labelController: _labelController,
+                                addressController: _addressController,
+                                memoController: _memoController,
+                                whitelist: _whitelist,
+                                agreed: _agreed,
+                                onNetworkChanged: (id) =>
+                                    setState(() => _networkId = id),
+                                onAssetChanged: (asset) =>
+                                    setState(() => _asset = asset),
+                                onWhitelistChanged: () =>
+                                    setState(() => _whitelist = !_whitelist),
+                                onAgreementChanged: () =>
+                                    setState(() => _agreed = !_agreed),
+                                onInputChanged: () => setState(() {}),
+                              ),
+                            ],
                           ),
                         ),
                       ),

@@ -20,6 +20,13 @@ class _ResultView extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        VitHighRiskStatePanel(
+          state: VitHighRiskUiState.success,
+          title: 'Suitability result ready',
+          message:
+              'Review recommended products, allocation limits, lockup terms, annual reassessment and next steps before subscribing.',
+          contractId: 'staking-suitability-result',
+        ),
         VitCard(
           key: StakingSuitabilityAssessmentPage.resultCardKey,
           radius: VitCardRadius.lg,

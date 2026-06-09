@@ -87,13 +87,11 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       height: 69,
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: _auditPanel,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -134,50 +132,44 @@ class _ExportFormatButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: const EdgeInsets.all(13),
+      borderColor: AppColors.cardBorder,
       onTap: onTap,
-      borderRadius: AppRadii.inputRadius,
-      child: Container(
-        padding: const EdgeInsets.all(13),
-        decoration: BoxDecoration(
-          color: _auditChip,
-          borderRadius: AppRadii.inputRadius,
-          border: Border.all(color: AppColors.cardBorder),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    format.label,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontSize: 13,
-                      fontWeight: AppTextStyles.bold,
-                      height: 1.1,
-                    ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  format.label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontSize: 13,
+                    fontWeight: AppTextStyles.bold,
+                    height: 1.1,
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    format.description,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 10,
-                      height: 1.1,
-                    ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  format.description,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    fontSize: 10,
+                    height: 1.1,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            const Icon(
-              Icons.file_download_outlined,
-              color: AppColors.text3,
-              size: 17,
-            ),
-          ],
-        ),
+          ),
+          const Icon(
+            Icons.file_download_outlined,
+            color: AppColors.text3,
+            size: 17,
+          ),
+        ],
       ),
     );
   }

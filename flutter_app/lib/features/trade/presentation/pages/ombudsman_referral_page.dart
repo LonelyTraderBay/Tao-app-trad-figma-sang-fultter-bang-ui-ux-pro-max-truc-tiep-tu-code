@@ -10,12 +10,13 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 const _ombudsmanBackground = AppColors.bg;
-const _ombudsmanPanel = AppColors.surface;
 const _ombudsmanPanel2 = AppColors.surface3;
 const _ombudsmanBorder = AppColors.borderSolid;
 const _ombudsmanPrimary = AppColors.primary;
@@ -61,27 +62,25 @@ class OmbudsmanReferralPage extends ConsumerWidget {
                 child: SingleChildScrollView(
                   key: contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 12,
+                    fullBleed: true,
                     children: [
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review ombudsman referral route',
+                        message:
+                            'Confirm complaint deadline, eligibility, evidence, and next steps before external escalation.',
+                      ),
                       _IntroCard(snapshot: snapshot),
-                      const SizedBox(height: 27),
                       const _SectionLabel('When Can You Refer?'),
-                      const SizedBox(height: 12),
                       _EligibilityCard(items: snapshot.eligibility),
-                      const SizedBox(height: 27),
                       const _SectionLabel('Contact Information'),
-                      const SizedBox(height: 12),
                       _ContactCard(contacts: snapshot.contacts),
-                      const SizedBox(height: 27),
                       const _SectionLabel('How It Works'),
-                      const SizedBox(height: 12),
-                      for (final step in snapshot.processSteps) ...[
+                      for (final step in snapshot.processSteps)
                         _ProcessStepCard(step: step),
-                        if (step != snapshot.processSteps.last)
-                          const SizedBox(height: 13),
-                      ],
-                      const SizedBox(height: 24),
                       _VisitButton(snapshot: snapshot),
                     ],
                   ),
@@ -396,11 +395,11 @@ class _VisitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton.icon(
+    return VitCtaButton(
       key: OmbudsmanReferralPage.ctaKey,
       onPressed: () {},
-      icon: const Icon(Icons.open_in_new_rounded, size: 18),
-      label: Text(
+      leading: const Icon(Icons.open_in_new_rounded, size: 18),
+      child: Text(
         snapshot.ctaLabel,
         style: AppTextStyles.body.copyWith(
           color: AppColors.onAccent,
@@ -409,17 +408,6 @@ class _VisitButton extends StatelessWidget {
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
-      ),
-      style: FilledButton.styleFrom(
-        fixedSize: const Size.fromHeight(48),
-        backgroundColor: _ombudsmanPrimary,
-        foregroundColor: AppColors.onAccent,
-        textStyle: AppTextStyles.body.copyWith(
-          fontSize: 14,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
     );
   }
@@ -465,13 +453,9 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _ombudsmanPanel,
-        border: Border.all(color: _ombudsmanBorder.withValues(alpha: .76)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _ombudsmanBorder.withValues(alpha: .76),
       child: child,
     );
   }

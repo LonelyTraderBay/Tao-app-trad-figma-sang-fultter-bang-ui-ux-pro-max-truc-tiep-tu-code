@@ -39,8 +39,10 @@ class _ClientCategorizationPageState
                 child: SingleChildScrollView(
                   key: ClientCategorizationPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 0,
                     children: [
                       _CurrentCategoryCard(category: current),
                       const SizedBox(height: 30),
@@ -66,7 +68,33 @@ class _ClientCategorizationPageState
                           history: snapshot.history,
                         ),
                       const SizedBox(height: 24),
-                      const _QuickLinks(),
+                      const VitPageSection(
+                        customGap: 0,
+                        children: [_QuickLinks()],
+                      ),
+                      const SizedBox(height: 12),
+                      const VitCard(
+                        variant: VitCardVariant.inner,
+                        padding: EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Client classification review',
+                              message:
+                                  'Current category, protection changes, eligibility evidence, disclosure links and compliance next step are reviewed before status changes.',
+                              contractId: 'client-categorization-review',
+                            ),
+                            SizedBox(height: 8),
+                            VitStatusPill(
+                              label: 'Compliance gated',
+                              status: VitStatusPillStatus.info,
+                              size: VitStatusPillSize.sm,
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -138,8 +166,10 @@ class _ClientOptUpRequestPageState
                 child: SingleChildScrollView(
                   key: ClientOptUpRequestPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 0,
                     children: [
                       if (_submitted) ...[
                         _Card(
@@ -217,24 +247,28 @@ class _ClientOptUpRequestPageState
                         ),
                       ),
                       const SizedBox(height: 16),
-                      _OptUpChecklistTile(
-                        key: ClientOptUpRequestPage.criteriaKey,
-                        value: _criteriaConfirmed,
-                        title: 'I meet the professional client criteria',
-                        subtitle:
-                            'Evidence must be reviewed before status can change.',
-                        onChanged: (value) =>
-                            setState(() => _criteriaConfirmed = value),
-                      ),
-                      const SizedBox(height: 10),
-                      _OptUpChecklistTile(
-                        key: ClientOptUpRequestPage.waiverKey,
-                        value: _waiverAcknowledged,
-                        title: 'I understand protection changes',
-                        subtitle:
-                            'Opting up can reduce retail investor protections.',
-                        onChanged: (value) =>
-                            setState(() => _waiverAcknowledged = value),
+                      VitPageSection(
+                        customGap: 10,
+                        children: [
+                          _OptUpChecklistTile(
+                            key: ClientOptUpRequestPage.criteriaKey,
+                            value: _criteriaConfirmed,
+                            title: 'I meet the professional client criteria',
+                            subtitle:
+                                'Evidence must be reviewed before status can change.',
+                            onChanged: (value) =>
+                                setState(() => _criteriaConfirmed = value),
+                          ),
+                          _OptUpChecklistTile(
+                            key: ClientOptUpRequestPage.waiverKey,
+                            value: _waiverAcknowledged,
+                            title: 'I understand protection changes',
+                            subtitle:
+                                'Opting up can reduce retail investor protections.',
+                            onChanged: (value) =>
+                                setState(() => _waiverAcknowledged = value),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 18),
                       FilledButton(
@@ -253,6 +287,29 @@ class _ClientOptUpRequestPageState
                           minimumSize: const Size.fromHeight(48),
                         ),
                         child: const Text('Submit for Review'),
+                      ),
+                      const SizedBox(height: 12),
+                      const VitCard(
+                        variant: VitCardVariant.inner,
+                        padding: EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Opt-up request review',
+                              message:
+                                  'Criteria acknowledgement, protection waiver, compliance receipt and delayed-effect next step are reviewed before any category change.',
+                              contractId: 'client-opt-up-review',
+                            ),
+                            SizedBox(height: 8),
+                            VitStatusPill(
+                              label: 'No instant status change',
+                              status: VitStatusPillStatus.warning,
+                              size: VitStatusPillSize.sm,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

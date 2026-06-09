@@ -443,34 +443,16 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x2),
-                  TextField(
+                  VitInput(
                     controller: _thresholdController,
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),
                     onChanged: (_) => setState(() {}),
-                    style: AppTextStyles.caption.copyWith(
+                    semanticLabel: 'Gas alert threshold',
+                    hintText: 'VD: 15',
+                    textStyle: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: 'VD: 15',
-                      hintStyle: AppTextStyles.caption.copyWith(
-                        color: AppColors.text3,
-                      ),
-                      filled: true,
-                      fillColor: AppColors.surface2,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.x3,
-                        vertical: AppSpacing.x3,
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.borderSolid),
-                        borderRadius: AppRadii.inputRadius,
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.primary),
-                        borderRadius: AppRadii.inputRadius,
-                      ),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x5),

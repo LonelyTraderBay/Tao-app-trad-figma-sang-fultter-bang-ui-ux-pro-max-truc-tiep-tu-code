@@ -56,23 +56,16 @@ class _OtpDigitField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final filled = controller.text.isNotEmpty;
-    final borderColor = hasError
-        ? AppColors.sell
-        : filled
-        ? _authPrimary
-        : AppColors.borderSolid;
-    final background = filled ? _authPrimary10 : AppColors.surface2;
-
     return SizedBox(
       width: _otpBoxSize,
       height: _otpBoxHeight,
       child: Focus(
         onKeyEvent: onKey,
-        child: TextField(
-          key: OTPPage.digitFieldKey(index),
+        child: VitInput(
+          fieldKey: OTPPage.digitFieldKey(index),
           controller: controller,
           focusNode: focusNode,
+          semanticLabel: 'OTP digit ${index + 1}',
           textAlign: TextAlign.center,
           keyboardType: TextInputType.number,
           textInputAction: index == 5
@@ -82,32 +75,14 @@ class _OtpDigitField extends StatelessWidget {
             FilteringTextInputFormatter.digitsOnly,
             LengthLimitingTextInputFormatter(1),
           ],
-          style: AppTextStyles.sectionTitle.copyWith(
+          textStyle: AppTextStyles.sectionTitle.copyWith(
             fontSize: 24,
             fontWeight: AppTextStyles.bold,
           ),
-          cursorColor: _authPrimary,
-          decoration: InputDecoration(
-            counterText: '',
-            filled: true,
-            fillColor: background,
-            contentPadding: EdgeInsets.zero,
-            border: _border(borderColor),
-            enabledBorder: _border(borderColor),
-            focusedBorder: _border(_authPrimary, width: 2),
-            errorBorder: _border(AppColors.sell),
-            focusedErrorBorder: _border(AppColors.sell, width: 2),
-          ),
+          errorText: hasError ? '' : null,
           onChanged: onChanged,
         ),
       ),
-    );
-  }
-
-  OutlineInputBorder _border(Color color, {double width = 1.5}) {
-    return OutlineInputBorder(
-      borderRadius: AppRadii.inputRadius,
-      borderSide: BorderSide(color: color, width: width),
     );
   }
 }

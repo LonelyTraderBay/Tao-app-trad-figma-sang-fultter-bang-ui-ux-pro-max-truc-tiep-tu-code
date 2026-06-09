@@ -247,32 +247,11 @@ class _InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitHighRiskStatePanel(
       key: BotSuitabilityAssessmentPage.infoKey,
-      constraints: const BoxConstraints(minHeight: 91),
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
-      decoration: BoxDecoration(
-        color: _assessmentPrimary.withValues(alpha: .08),
-        border: Border.all(color: _assessmentPrimary.withValues(alpha: .22)),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: RichText(
-        text: TextSpan(
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontFamily: 'Roboto',
-            fontSize: 12,
-            height: 1.55,
-          ),
-          children: [
-            TextSpan(
-              text: '${snapshot.infoTitle} ',
-              style: const TextStyle(fontWeight: AppTextStyles.bold),
-            ),
-            TextSpan(text: snapshot.infoDescription),
-          ],
-        ),
-      ),
+      state: VitHighRiskUiState.riskReview,
+      title: snapshot.infoTitle,
+      message: snapshot.infoDescription,
     );
   }
 }

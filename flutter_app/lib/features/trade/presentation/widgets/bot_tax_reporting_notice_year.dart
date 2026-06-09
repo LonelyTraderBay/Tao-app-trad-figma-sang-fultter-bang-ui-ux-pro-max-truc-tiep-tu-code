@@ -5,13 +5,10 @@ class _TaxNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
-      decoration: BoxDecoration(
-        color: _taxAmber.withValues(alpha: .10),
-        border: Border.all(color: _taxAmber.withValues(alpha: .30)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.inner,
+      borderColor: _taxAmber.withValues(alpha: .30),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

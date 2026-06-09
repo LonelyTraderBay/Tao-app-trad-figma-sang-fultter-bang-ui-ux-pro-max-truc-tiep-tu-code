@@ -11,7 +11,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trader_profile_chart_painters.dart';
@@ -83,14 +85,39 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
                 child: SingleChildScrollView(
                   key: TraderProfilePage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 0,
                     children: [
                       _ProfileHero(
                         trader: trader,
                         isFollowing: _isFollowing,
                         onToggleFollow: () =>
                             setState(() => _isFollowing = !_isFollowing),
+                      ),
+                      const SizedBox(height: 12),
+                      VitCard(
+                        variant: VitCardVariant.inner,
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Trader profile review',
+                              message:
+                                  'Performance, recent trades, statistics, risk history and copy action suitability are reviewed before following.',
+                              contractId: 'trader-profile-${widget.traderId}',
+                            ),
+                            const SizedBox(height: 8),
+                            const VitStatusPill(
+                              label: 'Past performance varies',
+                              status: VitStatusPillStatus.warning,
+                              size: VitStatusPillSize.sm,
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 16),
                       _SegmentTabs(
@@ -103,12 +130,17 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
                         onChanged: (id) => setState(() => _tab = id),
                       ),
                       const SizedBox(height: 16),
-                      if (_tab == 'overview')
-                        _OverviewTab(snapshot: snapshot)
-                      else if (_tab == 'trades')
-                        _TradesTab(trades: snapshot.recentTrades)
-                      else
-                        _StatsTab(trader: trader),
+                      VitPageSection(
+                        customGap: 0,
+                        children: [
+                          if (_tab == 'overview')
+                            _OverviewTab(snapshot: snapshot)
+                          else if (_tab == 'trades')
+                            _TradesTab(trades: snapshot.recentTrades)
+                          else
+                            _StatsTab(trader: trader),
+                        ],
+                      ),
                     ],
                   ),
                 ),

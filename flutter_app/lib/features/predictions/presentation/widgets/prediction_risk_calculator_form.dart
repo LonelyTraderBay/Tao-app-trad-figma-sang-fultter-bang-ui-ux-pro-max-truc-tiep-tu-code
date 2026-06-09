@@ -191,34 +191,19 @@ class _RiskInput extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Container(
-          height: 42,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          decoration: BoxDecoration(
-            color: AppColors.bg,
-            border: Border.all(color: AppColors.border),
-            borderRadius: AppRadii.lgRadius,
-          ),
-          alignment: Alignment.center,
-          child: Semantics(
-            textField: true,
-            label: label,
-            child: TextField(
-              key: fieldKey,
-              controller: controller,
-              keyboardType: numeric
-                  ? const TextInputType.numberWithOptions(decimal: true)
-                  : TextInputType.text,
-              inputFormatters: numeric
-                  ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))]
-                  : null,
-              cursorColor: _predictionPrimary,
-              style: AppTextStyles.body.copyWith(
-                fontSize: 14,
-                fontWeight: AppTextStyles.medium,
-              ),
-              decoration: const InputDecoration.collapsed(hintText: ''),
-            ),
+        VitInput(
+          fieldKey: fieldKey,
+          controller: controller,
+          keyboardType: numeric
+              ? const TextInputType.numberWithOptions(decimal: true)
+              : TextInputType.text,
+          inputFormatters: numeric
+              ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))]
+              : null,
+          semanticLabel: label,
+          textStyle: AppTextStyles.body.copyWith(
+            fontSize: 14,
+            fontWeight: AppTextStyles.medium,
           ),
         ),
       ],

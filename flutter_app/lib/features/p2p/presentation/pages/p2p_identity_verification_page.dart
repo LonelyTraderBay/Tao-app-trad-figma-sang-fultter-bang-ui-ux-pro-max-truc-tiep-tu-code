@@ -145,6 +145,18 @@ class _P2PIdentityVerificationPageState
                             child: const Text('Tiếp tục'),
                           ),
                         ],
+                        const SizedBox(height: AppSpacing.x3),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Identity document review',
+                            message:
+                                'Document type, front/back upload status, security notice, KYC route and next verification step are reviewed before continuing.',
+                            contractId: 'p2p-identity-verification-review',
+                          ),
+                        ),
                       ],
                     ),
                   ),

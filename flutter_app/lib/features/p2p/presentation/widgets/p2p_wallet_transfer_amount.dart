@@ -55,53 +55,28 @@ class _AmountInput extends StatelessWidget {
           ],
         ),
         const SizedBox(height: AppSpacing.x3),
-        Container(
-          constraints: const BoxConstraints(minHeight: AppSpacing.inputHeight),
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-          decoration: BoxDecoration(
-            color: AppColors.surface2,
-            borderRadius: AppRadii.lgRadius,
-            border: Border.all(
-              color: insufficient ? AppColors.sell : AppColors.cardBorder,
+        VitInput(
+          controller: controller,
+          fieldKey: P2PWalletTransferPage.amountFieldKey,
+          semanticLabel: 'P2P wallet transfer amount',
+          hintText: '0.00',
+          errorText: insufficient ? 'Số dư không đủ' : null,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+          ],
+          textStyle: AppTextStyles.sectionTitle.copyWith(
+            fontSize: 18,
+            fontFeatures: AppTextStyles.tabularFigures,
+          ),
+          suffix: Text(
+            asset,
+            style: AppTextStyles.baseMedium.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
-          child: Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  key: P2PWalletTransferPage.amountFieldKey,
-                  controller: controller,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                  ],
-                  onChanged: (_) => onChanged(),
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    fontSize: 18,
-                    fontFeatures: AppTextStyles.tabularFigures,
-                  ),
-                  decoration: InputDecoration(
-                    hintText: '0.00',
-                    hintStyle: AppTextStyles.sectionTitle.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 18,
-                    ),
-                    border: InputBorder.none,
-                    isCollapsed: true,
-                  ),
-                ),
-              ),
-              Text(
-                asset,
-                style: AppTextStyles.baseMedium.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
+          onChanged: (_) => onChanged(),
         ),
         if (insufficient) ...[
           const SizedBox(height: AppSpacing.x2),

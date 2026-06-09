@@ -8,52 +8,57 @@ class _ExportBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            '$count giao dịch',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 11,
-              height: 1,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              '$count giao dịch',
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text3,
+                fontSize: 11,
+                height: 1,
+              ),
             ),
           ),
-        ),
-        GestureDetector(
-          key: TransactionHistoryPage.exportKey,
-          onTap: onExport,
-          behavior: HitTestBehavior.opaque,
-          child: Container(
-            height: 30,
-            padding: const EdgeInsets.symmetric(horizontal: 11),
-            decoration: BoxDecoration(
-              color: _historyPrimary.withValues(alpha: .14),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.cloud_download_outlined,
-                  color: _historyPrimary,
-                  size: 12,
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  'Xuất CSV',
-                  style: AppTextStyles.micro.copyWith(
+          GestureDetector(
+            key: TransactionHistoryPage.exportKey,
+            onTap: onExport,
+            behavior: HitTestBehavior.opaque,
+            child: Container(
+              height: 30,
+              padding: const EdgeInsets.symmetric(horizontal: 11),
+              decoration: BoxDecoration(
+                color: _historyPrimary.withValues(alpha: .14),
+                borderRadius: AppRadii.mdRadius,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.cloud_download_outlined,
                     color: _historyPrimary,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700,
-                    height: 1,
+                    size: 12,
                   ),
-                ),
-              ],
+                  const SizedBox(width: 5),
+                  Text(
+                    'Xuất CSV',
+                    style: AppTextStyles.micro.copyWith(
+                      color: _historyPrimary,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                      height: 1,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

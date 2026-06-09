@@ -17,16 +17,12 @@ class _KycTierCard extends StatelessWidget {
       key: WithdrawLimitsPage.tierKey(tier.level),
       onTap: isLocked ? () => context.go(AppRoutePaths.profileKyc) : () {},
       behavior: HitTestBehavior.opaque,
-      child: Container(
+      child: VitCard(
         height: AppSpacing.buttonStandard + AppSpacing.x4,
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        decoration: BoxDecoration(
-          color: _limitsPanel,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(
-            color: isCurrent ? tierColor.withValues(alpha: .45) : _limitsBorder,
-          ),
-        ),
+        borderColor: isCurrent
+            ? tierColor.withValues(alpha: .45)
+            : _limitsBorder,
         child: Row(
           children: [
             Container(
@@ -123,13 +119,9 @@ class _FaqCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
-      decoration: BoxDecoration(
-        color: _limitsPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _limitsBorder),
-      ),
+      borderColor: _limitsBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

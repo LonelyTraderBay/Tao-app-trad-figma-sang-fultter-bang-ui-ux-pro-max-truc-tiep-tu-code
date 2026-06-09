@@ -109,6 +109,18 @@ class _P2PSuspiciousActivityPageState
                               alerts: _alerts,
                               onDismiss: _markReviewed,
                             ),
+                          const SizedBox(height: AppSpacing.x3),
+                          const VitCard(
+                            variant: VitCardVariant.inner,
+                            padding: EdgeInsets.all(AppSpacing.x3),
+                            child: VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Suspicious activity review',
+                              message:
+                                  'Alert severity, reviewed state, dismissal action, account risk and next security step are reviewed before clearing alerts.',
+                              contractId: 'p2p-suspicious-activity-review',
+                            ),
+                          ),
                         ],
                       ),
                     ),

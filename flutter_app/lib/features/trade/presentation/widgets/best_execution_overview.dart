@@ -5,45 +5,11 @@ class _ComplianceNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-      decoration: BoxDecoration(
-        color: AppColors.transparent,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(Icons.shield_outlined, color: AppColors.text1, size: 17),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'MiFID II RTS 27/28 Compliance',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontSize: 11,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  'Quarterly disclosure of Top 5 execution venues by trading volume. Reports assessed on price, cost, speed, likelihood of execution, and settlement.',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 10,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1.4,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return const VitHighRiskStatePanel(
+      state: VitHighRiskUiState.riskReview,
+      title: 'MiFID II RTS 27/28 Compliance',
+      message:
+          'Quarterly disclosure of Top 5 execution venues by trading volume. Review price, cost, speed, execution likelihood, settlement, and next steps before publishing.',
     );
   }
 }
@@ -108,14 +74,10 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 95,
       padding: const EdgeInsets.fromLTRB(12, 13, 12, 12),
-      decoration: BoxDecoration(
-        color: _bestPanel,
-        border: Border.all(color: _bestBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _bestBorder.withValues(alpha: .72),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

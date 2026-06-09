@@ -7,7 +7,7 @@ class _ConditionBuilder extends StatelessWidget {
     required this.metric,
     required this.winType,
     required this.deadlineContext,
-    required this.customWinCondition,
+    required this.customWinController,
     required this.onSubject,
     required this.onAction,
     required this.onMetric,
@@ -21,7 +21,7 @@ class _ConditionBuilder extends StatelessWidget {
   final String metric;
   final String winType;
   final String deadlineContext;
-  final String customWinCondition;
+  final TextEditingController customWinController;
   final VoidCallback onSubject;
   final VoidCallback onAction;
   final VoidCallback onMetric;
@@ -132,14 +132,12 @@ class _ConditionBuilder extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.x2),
-          TextField(
-            minLines: 2,
-            maxLines: 3,
+          VitInput(
+            controller: customWinController,
+            semanticLabel: 'Arena custom win condition',
+            hintText:
+                'VD: Nguoi doan gan nhat voi gia ETH vao 25/03/2026 luc 10:00 se thang.',
             onChanged: onCustomWinChanged,
-            style: AppTextStyles.base.copyWith(color: AppColors.text1),
-            decoration: _inputDecoration(
-              'VD: Người đoán gần nhất với giá ETH vào 25/03/2026 lúc 10:00 sẽ thắng.',
-            ),
           ),
         ],
       ),
@@ -219,9 +217,9 @@ class _BuilderBox extends StatelessWidget {
 }
 
 class _DescriptionField extends StatelessWidget {
-  const _DescriptionField({required this.value, required this.onChanged});
+  const _DescriptionField({required this.controller, required this.onChanged});
 
-  final String value;
+  final TextEditingController controller;
   final ValueChanged<String> onChanged;
 
   @override
@@ -229,14 +227,11 @@ class _DescriptionField extends StatelessWidget {
     return _FieldBlock(
       label: 'Mô tả ngắn',
       hint: 'Tùy chọn',
-      child: TextField(
-        minLines: 2,
-        maxLines: 3,
+      child: VitInput(
+        controller: controller,
+        semanticLabel: 'Arena rule description',
+        hintText: 'Mo ta boi canh neu can. Khong can lap lai luat choi.',
         onChanged: onChanged,
-        style: AppTextStyles.base.copyWith(color: AppColors.text1),
-        decoration: _inputDecoration(
-          'Mô tả bối cảnh nếu cần. Không cần lặp lại luật chơi.',
-        ),
       ),
     );
   }
@@ -293,7 +288,7 @@ class _QuickSuggestions extends StatelessWidget {
 class _TimingRulesCard extends StatelessWidget {
   const _TimingRulesCard({
     required this.snapshot,
-    required this.endDate,
+    required this.endDateController,
     required this.tieRule,
     required this.voidRule,
     required this.resultDeadline,
@@ -308,7 +303,7 @@ class _TimingRulesCard extends StatelessWidget {
   });
 
   final ArenaSmartRulesSnapshot snapshot;
-  final String endDate;
+  final TextEditingController endDateController;
   final String tieRule;
   final String voidRule;
   final String resultDeadline;
@@ -349,17 +344,16 @@ class _TimingRulesCard extends StatelessWidget {
           _FieldBlock(
             label: 'Thời hạn kết thúc',
             required: true,
-            child: TextFormField(
-              onChanged: (value) => onDate(_normalizeArenaRuleDateInput(value)),
-              initialValue: _formatArenaRuleDateInput(endDate),
-              style: AppTextStyles.base.copyWith(color: AppColors.text1),
-              decoration: _inputDecoration('03/15/2026').copyWith(
-                suffixIcon: const Icon(
-                  Icons.calendar_today_outlined,
-                  color: AppColors.text3,
-                  size: 16,
-                ),
+            child: VitInput(
+              controller: endDateController,
+              semanticLabel: 'Arena end date',
+              hintText: '03/15/2026',
+              suffix: const Icon(
+                Icons.calendar_today_outlined,
+                color: AppColors.text3,
+                size: 16,
               ),
+              onChanged: (value) => onDate(_normalizeArenaRuleDateInput(value)),
             ),
           ),
           _EdgeRuleField(

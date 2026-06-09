@@ -120,12 +120,10 @@ class _RefundPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: AppColors.buy10,
-        borderRadius: AppRadii.smRadius,
-      ),
       child: Text(
         '\$5 refund issued to your account',
         style: AppTextStyles.micro.copyWith(
@@ -145,27 +143,11 @@ class _EmptyCases extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 48),
-      child: Column(
-        children: [
-          Icon(
-            history
-                ? Icons.description_outlined
-                : Icons.check_circle_outline_rounded,
-            color: AppColors.text3,
-            size: 48,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            history ? 'No resolved cases yet' : 'No active cases',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 13,
-            ),
-          ),
-        ],
-      ),
+    return VitEmptyState(
+      title: history ? 'No resolved cases yet' : 'No active cases',
+      icon: history
+          ? Icons.description_outlined
+          : Icons.check_circle_outline_rounded,
     );
   }
 }

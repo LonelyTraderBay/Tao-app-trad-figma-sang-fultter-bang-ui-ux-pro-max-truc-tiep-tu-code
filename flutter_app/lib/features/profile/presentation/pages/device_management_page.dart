@@ -13,13 +13,14 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 part '../widgets/device_management_page_sections.dart';
 part '../widgets/device_management_page_common.dart';
 
 const _devicesBackground = AppColors.bg;
-const _devicesPanel = AppColors.surface;
 const _devicesPanel3 = AppColors.surface3;
 const _devicesBorder = AppColors.cardBorder;
 const _devicesDivider = AppColors.divider;
@@ -85,14 +86,25 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                   key: DeviceManagementPage.contentKey,
                   physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
                     children: [
                       _SecuritySummaryCard(
                         totalDevices: _devices.length,
                         trustedCount: _trustedCount,
                         untrustedCount: _untrustedCount,
                         activeCount: _activeCount,
+                      ),
+                      const SizedBox(height: 18),
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review device sessions',
+                        message:
+                            'Ch\u1EC9 tin c\u1EADy thi\u1EBFt b\u1ECB b\u1EA1n s\u1EDF h\u1EEFu; \u0111\u0103ng xu\u1EA5t c\u00E1c phi\u00EAn l\u1EA1 ho\u1EB7c kh\u00F4ng c\u00F2n s\u1EED d\u1EE5ng.',
+                        contractId:
+                            'Trusted devices: $_trustedCount/${_devices.length}',
                       ),
                       const SizedBox(height: 27),
                       if (currentDevice != null) ...[
@@ -107,22 +119,40 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                           onLogout: () {},
                         ),
                         const SizedBox(height: 26),
+                      ] else ...[
+                        const VitEmptyState(
+                          title:
+                              'Kh\u00F4ng c\u00F3 thi\u1EBFt b\u1ECB hi\u1EC7n t\u1EA1i',
+                          message:
+                              'Phi\u00EAn \u0111\u0103ng nh\u1EADp s\u1EBD hi\u1EC3n th\u1ECB sau khi \u0111\u1ED3ng b\u1ED9.',
+                          icon: Icons.devices_other_outlined,
+                        ),
+                        const SizedBox(height: 26),
                       ],
                       _OtherDevicesHeader(
                         count: otherDevices.length,
                         onLogoutAll: otherDevices.isEmpty ? null : _logoutAll,
                       ),
                       const SizedBox(height: 10),
-                      for (final device in otherDevices) ...[
-                        _DeviceCard(
-                          device: device,
-                          showActions: true,
-                          onToggleTrust: () => _toggleTrust(device.id),
-                          onLogout: () => _logoutDevice(device.id),
-                        ),
-                        if (device != otherDevices.last)
-                          const SizedBox(height: 13),
-                      ],
+                      if (otherDevices.isEmpty)
+                        const VitEmptyState(
+                          title:
+                              'Kh\u00F4ng c\u00F3 thi\u1EBFt b\u1ECB kh\u00E1c',
+                          message:
+                              'C\u00E1c phi\u00EAn \u0111\u0103ng nh\u1EADp ph\u1EE5 s\u1EBD xu\u1EA5t hi\u1EC7n t\u1EA1i \u0111\u00E2y.',
+                          icon: Icons.phone_android_outlined,
+                        )
+                      else
+                        for (final device in otherDevices) ...[
+                          _DeviceCard(
+                            device: device,
+                            showActions: true,
+                            onToggleTrust: () => _toggleTrust(device.id),
+                            onLogout: () => _logoutDevice(device.id),
+                          ),
+                          if (device != otherDevices.last)
+                            const SizedBox(height: 13),
+                        ],
                       const SizedBox(height: 27),
                       _SecuritySummaryCard(
                         totalDevices: _devices.length,

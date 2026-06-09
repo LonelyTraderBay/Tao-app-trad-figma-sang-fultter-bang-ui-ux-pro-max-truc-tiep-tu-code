@@ -270,23 +270,35 @@ class _Recommendation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _InfoPanel(
+    return Column(
       key: CopyTradingCardDemo.recommendationKey,
-      icon: Icons.verified_rounded,
-      iconColor: AppColors.buy,
-      borderColor: AppColors.buy20,
-      title: 'Final Recommendation',
       children: [
-        Text(
-          snapshot.recommendation,
-          style: AppTextStyles.body.copyWith(
-            color: AppColors.text1,
-            fontWeight: AppTextStyles.bold,
-          ),
+        _InfoPanel(
+          icon: Icons.verified_rounded,
+          iconColor: AppColors.buy,
+          borderColor: AppColors.buy20,
+          title: 'Final Recommendation',
+          children: [
+            Text(
+              snapshot.recommendation,
+              style: AppTextStyles.body.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.x3),
+            for (final item in snapshot.recommendationReasons)
+              _IconLine(icon: Icons.check_rounded, text: item),
+          ],
         ),
-        const SizedBox(height: AppSpacing.x3),
-        for (final item in snapshot.recommendationReasons)
-          _IconLine(icon: Icons.check_rounded, text: item),
+        const SizedBox(height: AppSpacing.x4),
+        const VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Copy trading disclosure checkpoint',
+          message:
+              'AUM, copier count, and trader metrics are informational. Copy decisions must show fee, drawdown, allocation, and confirmation disclosure before live follow.',
+          contractId: 'SC-401',
+        ),
       ],
     );
   }

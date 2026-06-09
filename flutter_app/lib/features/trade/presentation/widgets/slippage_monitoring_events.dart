@@ -29,14 +29,10 @@ class _SlippageEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = _severityStyle(event.severity);
-    return Container(
+    return VitCard(
       key: SlippageMonitoringPage.eventKey(event.id),
       padding: const EdgeInsets.all(13),
-      decoration: BoxDecoration(
-        color: _slipPanel,
-        border: Border.all(color: _slipBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _slipBorder.withValues(alpha: .72),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

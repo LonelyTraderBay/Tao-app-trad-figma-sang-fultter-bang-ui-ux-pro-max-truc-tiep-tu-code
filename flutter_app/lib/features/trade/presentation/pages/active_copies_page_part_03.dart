@@ -7,61 +7,12 @@ class _RiskAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: AppColors.warningBg,
-        border: Border.all(color: AppColors.warningBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warningText,
-            size: 19,
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Cảnh báo rủi ro',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.warningText,
-                    fontSize: 12,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Một copy đang lỗ >5%. Xem xét dừng copy hoặc điều chỉnh stop-loss.',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.warningText,
-                    fontSize: 11,
-                    height: 1.4,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                InkWell(
-                  onTap: onViewDetails,
-                  child: Text(
-                    'Xem chi tiết',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.warningText,
-                      fontSize: 11,
-                      fontWeight: AppTextStyles.bold,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return VitHighRiskStatePanel(
+      state: VitHighRiskUiState.riskReview,
+      title: 'Cảnh báo rủi ro',
+      message:
+          'Một copy đang lỗ >5%. Xem xét dừng copy hoặc điều chỉnh stop-loss.',
+      contractId: 'Active copy risk alert',
     );
   }
 }
@@ -73,26 +24,16 @@ class _ActionStatusBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.buy10,
-        border: Border.all(color: AppColors.buy20),
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Text(
-        text,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.buy,
-          fontSize: 11,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
+    return VitHighRiskStatePanel(
+      state: VitHighRiskUiState.success,
+      title: 'Copy action recorded',
+      message: text,
+      contractId: 'Active copy action',
     );
   }
 }
 
-class _StopCopyModal extends StatelessWidget {
+class _StopCopyModal extends StatefulWidget {
   const _StopCopyModal({
     required this.copy,
     required this.confirmText,
@@ -108,8 +49,36 @@ class _StopCopyModal extends StatelessWidget {
   final VoidCallback onConfirm;
 
   @override
+  State<_StopCopyModal> createState() => _StopCopyModalState();
+}
+
+class _StopCopyModalState extends State<_StopCopyModal> {
+  late final TextEditingController _confirmController;
+
+  @override
+  void initState() {
+    super.initState();
+    _confirmController = TextEditingController(text: widget.confirmText);
+  }
+
+  @override
+  void didUpdateWidget(covariant _StopCopyModal oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.confirmText != oldWidget.confirmText &&
+        widget.confirmText != _confirmController.text) {
+      _confirmController.text = widget.confirmText;
+    }
+  }
+
+  @override
+  void dispose() {
+    _confirmController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final canConfirm = confirmText.toLowerCase() == 'stop';
+    final canConfirm = widget.confirmText.toLowerCase() == 'stop';
 
     return Positioned.fill(
       child: Material(
@@ -158,7 +127,7 @@ class _StopCopyModal extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            copy.providerName,
+                            widget.copy.providerName,
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
                               fontSize: 12,
@@ -195,43 +164,25 @@ class _StopCopyModal extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 6),
-                TextField(
-                  key: ActiveCopiesPage.stopConfirmInputKey,
-                  onChanged: onTextChanged,
-                  style: AppTextStyles.body,
-                  decoration: InputDecoration(
-                    hintText: 'STOP',
-                    hintStyle: AppTextStyles.body.copyWith(
-                      color: AppColors.text3,
-                    ),
-                    filled: true,
-                    fillColor: AppColors.surface2,
-                    border: OutlineInputBorder(
-                      borderRadius: AppRadii.inputRadius,
-                      borderSide: const BorderSide(color: AppColors.border),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: AppRadii.inputRadius,
-                      borderSide: const BorderSide(color: AppColors.border),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: AppRadii.inputRadius,
-                      borderSide: const BorderSide(color: _copyPrimary),
-                    ),
-                  ),
+                VitInput(
+                  controller: _confirmController,
+                  fieldKey: ActiveCopiesPage.stopConfirmInputKey,
+                  hintText: 'STOP',
+                  textInputAction: TextInputAction.done,
+                  onChanged: widget.onTextChanged,
                 ),
                 const SizedBox(height: 12),
                 Row(
                   children: [
                     Expanded(
-                      child: _SheetButton(label: 'Hủy', onTap: onCancel),
+                      child: _SheetButton(label: 'Hủy', onTap: widget.onCancel),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: _SheetButton(
                         key: ActiveCopiesPage.stopConfirmButtonKey,
                         label: 'Dừng copy',
-                        onTap: canConfirm ? onConfirm : null,
+                        onTap: canConfirm ? widget.onConfirm : null,
                         danger: true,
                       ),
                     ),
@@ -260,28 +211,13 @@ class _SheetButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.inputRadius,
-      child: Opacity(
-        opacity: onTap == null ? .45 : 1,
-        child: Container(
-          height: AppSpacing.inputHeight,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: danger ? AppColors.sell : AppColors.surface2,
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.onAccent,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
-            ),
-          ),
-        ),
-      ),
+    return VitCtaButton(
+      onPressed: onTap,
+      variant: danger
+          ? VitCtaButtonVariant.danger
+          : VitCtaButtonVariant.secondary,
+      height: AppSpacing.inputHeight,
+      child: Text(label),
     );
   }
 }

@@ -55,13 +55,11 @@ class _ArenaStudioPageState extends ConsumerState<ArenaStudioPage> {
         .watch(arenaReadModelControllerProvider)
         .getArenaStudio();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final stickyBottom =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
     final bottomInset =
-        stickyBottom + AppSpacing.ctaHeight + AppSpacing.x7 + AppSpacing.x6;
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x6
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -79,58 +77,49 @@ class _ArenaStudioPageState extends ConsumerState<ArenaStudioPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: Stack(
-                  children: [
-                    ScrollConfiguration(
-                      behavior: ScrollConfiguration.of(
-                        context,
-                      ).copyWith(scrollbars: false),
-                      child: SingleChildScrollView(
-                        key: ArenaStudioPage.contentKey,
-                        physics: const BouncingScrollPhysics(),
-                        padding: EdgeInsets.only(bottom: bottomInset),
-                        child: VitPageContent(
-                          padding: VitContentPadding.compact,
-                          customGap: AppSpacing.x5,
-                          children: [
-                            _StudioStepper(steps: snapshot.steps, step: _step),
-                            _PlatformFeeBanner(
-                              platformFeePct: snapshot.platformFeePct,
-                            ),
-                            _StepBody(
-                              step: _step,
-                              snapshot: snapshot,
-                              selectedTemplateId: _templateId,
-                              onTemplateSelected: _selectTemplate,
-                            ),
-                            _CommunityRulesFooter(
-                              trustSignals: snapshot.trustSignals,
-                              onTapRules: () =>
-                                  context.go(AppRoutePaths.arenaSafety),
-                            ),
-                          ],
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ArenaStudioPage.contentKey,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      customGap: AppSpacing.x5,
+                      children: [
+                        _StudioStepper(steps: snapshot.steps, step: _step),
+                        _PlatformFeeBanner(
+                          platformFeePct: snapshot.platformFeePct,
                         ),
-                      ),
+                        _StepBody(
+                          step: _step,
+                          snapshot: snapshot,
+                          selectedTemplateId: _templateId,
+                          onTemplateSelected: _selectTemplate,
+                        ),
+                        _CommunityRulesFooter(
+                          trustSignals: snapshot.trustSignals,
+                          onTapRules: () =>
+                              context.go(AppRoutePaths.arenaSafety),
+                        ),
+                        _InlineStudioActions(
+                          step: _step,
+                          totalSteps: snapshot.steps.length,
+                          canContinue: _canContinue,
+                          statusLabel: _statusLabel,
+                          onBack: _step > 1 ? _backStep : null,
+                          onContinue: _continue,
+                          onSave: () => _markSecondaryAction('Đã lưu bản nháp'),
+                          onExport: () =>
+                              _markSecondaryAction('Đã chuẩn bị file xuất'),
+                          onImport: () =>
+                              _markSecondaryAction('Đã sẵn sàng nhập JSON'),
+                        ),
+                      ],
                     ),
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      bottom: stickyBottom,
-                      child: _StickyStudioFooter(
-                        step: _step,
-                        totalSteps: snapshot.steps.length,
-                        canContinue: _canContinue,
-                        statusLabel: _statusLabel,
-                        onBack: _step > 1 ? _backStep : null,
-                        onContinue: _continue,
-                        onSave: () => _markSecondaryAction('Đã lưu bản nháp'),
-                        onExport: () =>
-                            _markSecondaryAction('Đã chuẩn bị file xuất'),
-                        onImport: () =>
-                            _markSecondaryAction('Đã sẵn sàng nhập JSON'),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ],

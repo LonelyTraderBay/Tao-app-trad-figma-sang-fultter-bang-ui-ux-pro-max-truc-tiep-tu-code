@@ -9,8 +9,12 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -20,7 +24,6 @@ part '../widgets/leverage_impact_confirm.dart';
 
 const _tradePrimary = AppColors.primary;
 const _tradePrimaryDark = AppColors.primaryDark;
-const _panelBackground = AppColors.surface;
 const _chipBackground = AppColors.surface2;
 
 class LeveragePage extends ConsumerStatefulWidget {
@@ -89,43 +92,31 @@ class _LeveragePageState extends ConsumerState<LeveragePage> {
           child: SingleChildScrollView(
             key: LeveragePage.contentKey,
             padding: EdgeInsets.only(bottom: bottomInset),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _LeverageHero(preview: preview, riskColor: riskColor),
-                  const SizedBox(height: 20),
-                  _RiskMeter(preview: preview, riskColor: riskColor),
-                  const SizedBox(height: 19),
-                  _LeverageSlider(
-                    leverage: _leverage,
-                    stops: snapshot.sliderStops,
-                    riskColor: riskColor,
-                    onChanged: _setLeverage,
-                  ),
-                  const SizedBox(height: 19),
-                  _PresetGrid(
-                    presets: snapshot.presets,
-                    active: _leverage,
-                    onChanged: _setLeverage,
-                  ),
-                  const SizedBox(height: 20),
-                  _ImpactCard(margin: snapshot.exampleMargin, preview: preview),
-                  const SizedBox(height: 20),
-                  _WarningCard(preview: preview),
-                  if (preview.showRiskTips) ...[
-                    const SizedBox(height: 12),
-                    const _RiskTipsCard(),
-                  ],
-                  const SizedBox(height: 38),
-                  _ConfirmButton(
-                    leverage: _leverage,
-                    onPressed: () => _confirm(controller),
-                  ),
-                  const SizedBox(height: 16),
-                ],
-              ),
+            child: VitPageContent(
+              padding: VitContentPadding.relaxed,
+              customGap: 18,
+              children: [
+                _LeverageHero(preview: preview, riskColor: riskColor),
+                _RiskMeter(preview: preview, riskColor: riskColor),
+                _LeverageSlider(
+                  leverage: _leverage,
+                  stops: snapshot.sliderStops,
+                  riskColor: riskColor,
+                  onChanged: _setLeverage,
+                ),
+                _PresetGrid(
+                  presets: snapshot.presets,
+                  active: _leverage,
+                  onChanged: _setLeverage,
+                ),
+                _ImpactCard(margin: snapshot.exampleMargin, preview: preview),
+                _WarningCard(preview: preview),
+                if (preview.showRiskTips) const _RiskTipsCard(),
+                _ConfirmButton(
+                  leverage: _leverage,
+                  onPressed: () => _confirm(controller),
+                ),
+              ],
             ),
           ),
         ),

@@ -36,13 +36,9 @@ class _ImpactCard extends StatelessWidget {
       ),
     ];
 
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 15, 16, 13),
-      decoration: BoxDecoration(
-        color: _panelBackground,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.cardBorder),
-      ),
+      borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -134,33 +130,11 @@ class _WarningCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final danger = preview.leverage > 20;
-    final color = danger ? AppColors.sell : AppColors.warn;
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .08),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: color.withValues(alpha: .25)),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(Icons.warning_amber_rounded, color: color, size: 16),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              preview.warningText,
-              style: AppTextStyles.caption.copyWith(
-                color: color,
-                fontSize: 12,
-                height: 1.6,
-                fontWeight: AppTextStyles.medium,
-              ),
-            ),
-          ),
-        ],
-      ),
+    return VitHighRiskStatePanel(
+      state: VitHighRiskUiState.riskReview,
+      title: 'Leverage risk review',
+      message: preview.warningText,
+      contractId: 'SC-058 ${preview.leverage}x',
     );
   }
 }
@@ -176,13 +150,9 @@ class _RiskTipsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _panelBackground,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.sell.withValues(alpha: .22)),
-      ),
+      borderColor: AppColors.sell.withValues(alpha: .22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -246,34 +216,18 @@ class _ConfirmButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCtaButton(
       key: LeveragePage.confirmKey,
-      onTap: onPressed,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 52,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [_tradePrimary, _tradePrimaryDark],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: AppRadii.cardRadius,
-          boxShadow: [
-            BoxShadow(
-              color: _tradePrimary.withValues(alpha: .25),
-              blurRadius: 18,
-              offset: const Offset(0, 8),
-            ),
-          ],
-        ),
-        child: Text(
-          'Xác nhận đòn bẩy ${leverage}x',
-          style: AppTextStyles.baseMedium.copyWith(
-            color: AppColors.onAccent,
-            fontWeight: AppTextStyles.bold,
-          ),
+      onPressed: onPressed,
+      height: 52,
+      variant: leverage > 20
+          ? VitCtaButtonVariant.danger
+          : VitCtaButtonVariant.primary,
+      child: Text(
+        'Xác nhận đòn bẩy ${leverage}x',
+        style: AppTextStyles.baseMedium.copyWith(
+          color: AppColors.onAccent,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );

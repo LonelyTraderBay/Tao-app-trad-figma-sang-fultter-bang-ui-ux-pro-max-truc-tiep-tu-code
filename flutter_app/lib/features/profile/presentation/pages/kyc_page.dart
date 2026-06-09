@@ -13,13 +13,14 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 part '../widgets/kyc_status_levels.dart';
 part '../widgets/kyc_details_privacy.dart';
 
 const _kycBackground = AppColors.bg;
-const _kycPanel = AppColors.surface;
 const _kycGreen = AppColors.buy;
 const _kycPrimary = AppColors.primary;
 const _kycMuted = AppColors.text3;
@@ -73,32 +74,54 @@ class _KYCPageState extends ConsumerState<KYCPage> {
                   key: KYCPage.contentKey,
                   physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(20, 31, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
                     children: [
                       _KycStatusCard(snapshot: snapshot),
+                      const SizedBox(height: 18),
+                      VitHighRiskStatePanel(
+                        state: _submitting
+                            ? VitHighRiskUiState.submitting
+                            : VitHighRiskUiState.riskReview,
+                        title: _submitting
+                            ? 'Submitting identity review'
+                            : 'Review identity verification',
+                        message:
+                            'Ki\u1EC3m tra c\u1EA5p KYC, gi\u1EDBi h\u1EA1n giao d\u1ECBch v\u00E0 t\u00EDnh n\u0103ng m\u1EDF kho\u00E1 tr\u01B0\u1EDBc khi n\u1ED9p.',
+                        contractId: 'Current level: ${snapshot.currentLevel}',
+                      ),
                       const SizedBox(height: 33),
-                      for (final level in snapshot.levels) ...[
-                        _KycLevelCard(
-                          level: level,
-                          done: snapshot.currentLevel >= level.level,
-                          expanded: _expandedLevel == level.level,
-                          currentLevel: snapshot.currentLevel,
-                          submitting: _submitting,
-                          onTap: () {
-                            HapticFeedback.selectionClick();
-                            setState(
-                              () =>
-                                  _expandedLevel = _expandedLevel == level.level
-                                  ? null
-                                  : level.level,
-                            );
-                          },
-                          onStart: () => _startVerification(level.level),
-                        ),
-                        if (level != snapshot.levels.last)
-                          const SizedBox(height: 25),
-                      ],
+                      if (snapshot.levels.isEmpty)
+                        const VitEmptyState(
+                          title: 'Ch\u01B0a c\u00F3 c\u1EA5p KYC',
+                          message:
+                              'C\u00E1c c\u1EA5p x\u00E1c minh s\u1EBD hi\u1EC3n th\u1ECB sau khi \u0111\u1ED3ng b\u1ED9.',
+                          icon: Icons.verified_user_outlined,
+                        )
+                      else
+                        for (final level in snapshot.levels) ...[
+                          _KycLevelCard(
+                            level: level,
+                            done: snapshot.currentLevel >= level.level,
+                            expanded: _expandedLevel == level.level,
+                            currentLevel: snapshot.currentLevel,
+                            submitting: _submitting,
+                            onTap: () {
+                              HapticFeedback.selectionClick();
+                              setState(
+                                () => _expandedLevel =
+                                    _expandedLevel == level.level
+                                    ? null
+                                    : level.level,
+                              );
+                            },
+                            onStart: () => _startVerification(level.level),
+                          ),
+                          if (level != snapshot.levels.last)
+                            const SizedBox(height: 25),
+                        ],
                       const SizedBox(height: 29),
                       const _PrivacyCard(),
                     ],

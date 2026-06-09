@@ -224,65 +224,25 @@ class _MarginInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 64,
-      padding: const EdgeInsets.fromLTRB(16, 8, 12, 8),
-      decoration: BoxDecoration(
-        color: _panelBackground,
-        border: Border.all(color: _tradePrimary.withValues(alpha: .26)),
-        borderRadius: AppRadii.cardRadius,
+    return VitInput(
+      controller: controller,
+      fieldKey: FuturesPage.marginFieldKey,
+      label: 'Ký quỹ (USDT)',
+      semanticLabel: 'Futures margin in USDT',
+      hintText: 'Nhập số tiền ký quỹ',
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,4}')),
+      ],
+      textStyle: AppTextStyles.base.copyWith(
+        color: AppColors.text1,
+        fontFamily: 'monospace',
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Ký quỹ (USDT)',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 12,
-            ),
-          ),
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    key: FuturesPage.marginFieldKey,
-                    controller: controller,
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
-                    ),
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(
-                        RegExp(r'^\d*\.?\d{0,4}'),
-                      ),
-                    ],
-                    onChanged: (_) => onChanged(),
-                    cursorColor: _tradePrimary,
-                    style: AppTextStyles.base.copyWith(
-                      color: AppColors.text1,
-                      fontFamily: 'monospace',
-                    ),
-                    decoration: InputDecoration(
-                      isDense: true,
-                      border: InputBorder.none,
-                      hintText: 'Nhập số tiền ký quỹ',
-                      hintStyle: AppTextStyles.base.copyWith(
-                        color: AppColors.text2.withValues(alpha: .72),
-                        fontFamily: 'monospace',
-                      ),
-                    ),
-                  ),
-                ),
-                Text(
-                  'USDT',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
-          ),
-        ],
+      suffix: Text(
+        'USDT',
+        style: AppTextStyles.caption.copyWith(color: AppColors.text3),
       ),
+      onChanged: (_) => onChanged(),
     );
   }
 }

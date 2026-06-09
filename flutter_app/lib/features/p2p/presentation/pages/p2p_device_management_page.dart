@@ -143,6 +143,18 @@ class _P2PDeviceManagementPageState
                           ),
                           const SizedBox(height: AppSpacing.x6),
                           _SecurityTips(tips: snapshot.securityTips),
+                          const SizedBox(height: AppSpacing.x3),
+                          const VitCard(
+                            variant: VitCardVariant.inner,
+                            padding: EdgeInsets.all(AppSpacing.x3),
+                            child: VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Trusted device review',
+                              message:
+                                  'Trusted status, revoke/remove action, device evidence, security risk and next verification step are reviewed before device changes.',
+                              contractId: 'p2p-device-management-review',
+                            ),
+                          ),
                         ],
                       ),
                     ),

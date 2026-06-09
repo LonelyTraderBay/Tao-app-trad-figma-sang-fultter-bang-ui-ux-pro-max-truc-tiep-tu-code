@@ -10,7 +10,10 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -19,7 +22,6 @@ part '../widgets/product_governance_products.dart';
 part '../widgets/product_governance_reviews_distribution.dart';
 
 const _govBackground = AppColors.bg;
-const _govPanel = AppColors.surface;
 const _govPanel2 = AppColors.surface2;
 const _govBorder = AppColors.borderSolid;
 const _govGreen = AppColors.buy;
@@ -77,10 +79,20 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
                 child: SingleChildScrollView(
                   key: ProductGovernancePage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 25, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 0,
                     children: [
                       _ComplianceNotice(snapshot: snapshot),
+                      const SizedBox(height: 16),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Product governance review',
+                        message:
+                            'Review target market, negative market, risk level, distribution channel, fee disclosure, and next review deadline before approving copy products.',
+                        contractId: 'SC-100 product governance review',
+                      ),
                       const SizedBox(height: 36),
                       _Stats(products: snapshot.products),
                       const SizedBox(height: 25),

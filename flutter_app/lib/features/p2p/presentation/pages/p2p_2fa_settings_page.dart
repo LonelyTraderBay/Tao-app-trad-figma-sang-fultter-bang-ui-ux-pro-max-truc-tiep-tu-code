@@ -116,6 +116,18 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
                         ),
                         const SizedBox(height: AppSpacing.x5),
                         _SecurityRecommendation(text: snapshot.recommendation),
+                        const SizedBox(height: AppSpacing.x3),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'P2P 2FA change review',
+                            message:
+                                'Enabled methods, primary factor, transaction thresholds, setup status and next security step are reviewed before P2P protection changes.',
+                            contractId: 'p2p-2fa-settings-review',
+                          ),
+                        ),
                       ],
                     ),
                   ),

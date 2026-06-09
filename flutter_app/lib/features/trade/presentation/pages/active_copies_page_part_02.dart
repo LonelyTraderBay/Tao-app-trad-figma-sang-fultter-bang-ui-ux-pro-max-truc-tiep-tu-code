@@ -10,13 +10,11 @@ class _ReturnBar extends StatelessWidget {
     final color = value >= 0 ? AppColors.buy : AppColors.sell;
     final widthFactor = (value.abs() * .05).clamp(.0, 1.0).toDouble();
 
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       height: 41,
       padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: _copyPanel2,
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: Column(
         children: [
           Row(
@@ -207,13 +205,11 @@ class _MiniPerformanceStrip extends StatelessWidget {
     final positive = last >= first;
     final color = positive ? AppColors.buy : AppColors.sell;
 
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       height: 54,
       padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: _copyPanel2,
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -261,12 +257,10 @@ class _DetailStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: _copyPanel2,
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -309,12 +303,10 @@ class _RecentTradeRow extends StatelessWidget {
         ? AppColors.buy
         : AppColors.sell;
 
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       padding: const EdgeInsets.all(9),
-      decoration: BoxDecoration(
-        color: _copyPanel2,
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: Row(
         children: [
           Container(
@@ -376,37 +368,15 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = danger ? AppColors.sell : AppColors.text1;
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.inputRadius,
-      child: Opacity(
-        opacity: onTap == null ? .5 : 1,
-        child: Container(
-          height: 42,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: danger ? AppColors.sell10 : _copyPanel2,
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: color, size: 15),
-              const SizedBox(width: 7),
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: color,
-                  fontSize: 12,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitCtaButton(
+      onPressed: onTap,
+      variant: danger
+          ? VitCtaButtonVariant.danger
+          : VitCtaButtonVariant.secondary,
+      height: 42,
+      leading: Icon(icon),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Text(label),
     );
   }
 }
@@ -419,67 +389,14 @@ class _EmptyCopiesState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 40),
-      decoration: BoxDecoration(
-        color: _copyPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Column(
-        children: [
-          Icon(
-            history ? Icons.history_rounded : Icons.groups_rounded,
-            color: AppColors.text3,
-            size: 34,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            history ? 'Chưa có lịch sử copy' : 'Chưa có copy nào đang chạy',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.baseMedium.copyWith(
-              fontSize: 16,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            history
-                ? 'Lịch sử copy sẽ hiển thị ở đây.'
-                : 'Bắt đầu copy từ trader chuyên nghiệp để tự động hóa giao dịch của bạn.',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 12,
-              height: 1.45,
-            ),
-          ),
-          if (!history) ...[
-            const SizedBox(height: 18),
-            InkWell(
-              onTap: onExplore,
-              borderRadius: AppRadii.inputRadius,
-              child: Container(
-                height: 42,
-                padding: const EdgeInsets.symmetric(horizontal: 18),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: _copyPrimary,
-                  borderRadius: AppRadii.inputRadius,
-                ),
-                child: Text(
-                  'Khám phá traders',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.onAccent,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ],
-      ),
+    return VitEmptyState(
+      title: history ? 'Chưa có lịch sử copy' : 'Chưa có copy nào đang chạy',
+      message: history
+          ? 'Lịch sử copy sẽ hiển thị ở đây.'
+          : 'Bắt đầu copy từ trader chuyên nghiệp để tự động hóa giao dịch của bạn.',
+      icon: history ? Icons.history_rounded : Icons.groups_rounded,
+      actionLabel: history ? null : 'Khám phá traders',
+      onAction: history ? null : onExplore,
     );
   }
 }

@@ -17,21 +17,10 @@ class _SecuritySummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       key: compactBorder ? null : DeviceManagementPage.summaryKey,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
-      decoration: BoxDecoration(
-        color: _devicesPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(
-          color: compactBorder ? _devicesBorder : AppColors.primary20,
-        ),
-        gradient: const RadialGradient(
-          center: Alignment(.82, -.85),
-          radius: 1.2,
-          colors: [AppColors.primary12, _devicesPanel],
-        ),
-      ),
+      borderColor: compactBorder ? _devicesBorder : AppColors.primary20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -237,20 +226,12 @@ class _DeviceCard extends StatelessWidget {
     final suspicious = !device.isTrusted && !device.isCurrent;
     final accent = suspicious ? _devicesAmber : _devicesPrimary;
 
-    return Container(
+    return VitCard(
       key: DeviceManagementPage.deviceCardKey(device.id),
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-      decoration: BoxDecoration(
-        color: suspicious
-            ? _devicesAmber.withValues(alpha: .05)
-            : _devicesPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(
-          color: suspicious
-              ? _devicesAmber.withValues(alpha: .42)
-              : _devicesBorder,
-        ),
-      ),
+      borderColor: suspicious
+          ? _devicesAmber.withValues(alpha: .42)
+          : _devicesBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

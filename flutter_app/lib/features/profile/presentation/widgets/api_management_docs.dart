@@ -5,14 +5,10 @@ class _ApiDocsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 96,
       padding: const EdgeInsets.fromLTRB(16, 16, 14, 16),
-      decoration: BoxDecoration(
-        color: _apiPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _apiBorder),
-      ),
+      borderColor: _apiBorder,
       child: Row(
         children: [
           Container(

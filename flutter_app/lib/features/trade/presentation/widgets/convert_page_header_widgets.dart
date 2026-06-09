@@ -32,14 +32,10 @@ class _ModeTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 50,
       padding: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        color: _chipBackground,
-        border: Border.all(color: _tradePrimary.withValues(alpha: .18)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _tradePrimary.withValues(alpha: .18),
       child: Row(
         children: [
           _ModeTab(
@@ -221,14 +217,10 @@ class _RateBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 44,
       padding: const EdgeInsets.symmetric(horizontal: 14),
-      decoration: BoxDecoration(
-        color: _rateBackground,
-        border: Border.all(color: _tradePrimary.withValues(alpha: .22)),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      borderColor: _tradePrimary.withValues(alpha: .22),
       child: Row(
         children: [
           const Icon(Icons.sync_rounded, color: _tradePrimary, size: 16),

@@ -17,72 +17,17 @@ class _SearchControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitSearchBar(
       key: PredictionsSearchPage.searchFieldKey,
-      height: 48,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: AppColors.searchBg,
-        border: Border.all(color: AppColors.searchBorder, width: 1.5),
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.search_rounded,
-            color: AppColors.searchPlaceholder,
-            size: 18,
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: TextField(
-              controller: controller,
-              autofocus: true,
-              onChanged: (_) => onChanged(),
-              style: AppTextStyles.base.copyWith(fontSize: 15),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                isDense: true,
-                hintText: 'Search by title, tag, category...',
-                hintStyle: AppTextStyles.base.copyWith(
-                  color: AppColors.searchPlaceholder,
-                  fontSize: 15,
-                ),
-              ),
-            ),
-          ),
-          if (controller.text.isNotEmpty)
-            InkWell(
-              onTap: onClear,
-              child: const Icon(
-                Icons.close_rounded,
-                color: AppColors.text3,
-                size: 14,
-              ),
-            ),
-          const SizedBox(width: 6),
-          InkWell(
-            key: PredictionsSearchPage.filtersToggleKey,
-            onTap: onToggleFilters,
-            borderRadius: AppRadii.smRadius,
-            child: Container(
-              width: 34,
-              height: 34,
-              decoration: BoxDecoration(
-                color: showFilters
-                    ? _predictionPrimary.withValues(alpha: .16)
-                    : AppColors.transparent,
-                borderRadius: AppRadii.smRadius,
-              ),
-              child: Icon(
-                Icons.tune_rounded,
-                color: showFilters ? _predictionPrimary : AppColors.text3,
-                size: 17,
-              ),
-            ),
-          ),
-        ],
-      ),
+      controller: controller,
+      placeholder: 'Search by title, tag, category...',
+      autofocus: true,
+      filterKey: PredictionsSearchPage.filtersToggleKey,
+      filterActive: showFilters,
+      filterInline: true,
+      onChanged: (_) => onChanged(),
+      onClear: onClear,
+      onFilterTap: onToggleFilters,
     );
   }
 }

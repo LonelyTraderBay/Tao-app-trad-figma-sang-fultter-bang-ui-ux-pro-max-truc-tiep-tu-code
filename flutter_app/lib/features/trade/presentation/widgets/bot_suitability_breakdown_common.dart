@@ -173,12 +173,9 @@ class _RegulatoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 15, 16, 16),
-      decoration: BoxDecoration(
-        color: _assessmentPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.inner,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -236,13 +233,9 @@ class _ResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _assessmentPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: child,
     );
   }

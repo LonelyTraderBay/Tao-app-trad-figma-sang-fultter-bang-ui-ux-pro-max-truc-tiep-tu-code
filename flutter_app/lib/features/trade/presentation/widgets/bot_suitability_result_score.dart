@@ -74,23 +74,20 @@ class _ResultView extends StatelessWidget {
         const SizedBox(height: 18),
         _RegulatoryCard(snapshot: snapshot),
         const SizedBox(height: 16),
-        SizedBox(
+        VitCtaButton(
           key: BotSuitabilityAssessmentPage.resultCtaKey,
+          onPressed: () => onComplete(result),
           height: 44,
-          child: FilledButton(
-            onPressed: () => onComplete(result),
-            style: FilledButton.styleFrom(
-              backgroundColor: color,
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-            ),
-            child: Text(
-              result.ctaLabel,
-              style: AppTextStyles.body.copyWith(
-                color: AppColors.onAccent,
-                fontSize: 14,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
+          variant: result.outcome == TradeBotSuitabilityOutcome.fail
+              ? VitCtaButtonVariant.danger
+              : VitCtaButtonVariant.success,
+          child: Text(
+            result.ctaLabel,
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.onAccent,
+              fontSize: 14,
+              fontWeight: AppTextStyles.bold,
+              height: 1,
             ),
           ),
         ),

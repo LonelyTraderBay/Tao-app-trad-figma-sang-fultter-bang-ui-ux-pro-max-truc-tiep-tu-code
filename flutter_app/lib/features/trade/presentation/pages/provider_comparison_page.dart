@@ -93,6 +93,18 @@ class ProviderComparisonPage extends ConsumerWidget {
                       _ComparisonTable(snapshot: snapshot),
                       const SizedBox(height: 22),
                       _LegendPanel(text: snapshot.legend),
+                      const SizedBox(height: 12),
+                      const VitCard(
+                        variant: VitCardVariant.inner,
+                        padding: EdgeInsets.all(12),
+                        child: VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Provider comparison review',
+                          message:
+                              'Performance, risk, execution, fees, drawdown and provider limits are reviewed before adding or copying.',
+                          contractId: 'provider-comparison-review',
+                        ),
+                      ),
                     ],
                   ),
                 ),

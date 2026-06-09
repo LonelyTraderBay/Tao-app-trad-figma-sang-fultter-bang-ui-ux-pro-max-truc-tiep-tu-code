@@ -8,44 +8,12 @@ class _SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 46,
-      decoration: BoxDecoration(
-        color: _faqPanel,
-        border: Border.all(color: AppColors.borderSolid),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        children: [
-          const SizedBox(width: 16),
-          const Icon(Icons.search_rounded, color: AppColors.text3, size: 20),
-          const SizedBox(width: 11),
-          Expanded(
-            child: TextField(
-              key: BotFaqPage.searchKey,
-              controller: controller,
-              onChanged: onChanged,
-              cursorColor: _faqPrimary,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-              decoration: InputDecoration(
-                isDense: true,
-                border: InputBorder.none,
-                hintText: 'Search FAQs...',
-                hintStyle: AppTextStyles.caption.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 14),
-        ],
-      ),
+    return VitSearchBar(
+      controller: controller,
+      fieldKey: BotFaqPage.searchKey,
+      placeholder: 'Search FAQs...',
+      variant: VitSearchBarVariant.compact,
+      onChanged: onChanged,
     );
   }
 }

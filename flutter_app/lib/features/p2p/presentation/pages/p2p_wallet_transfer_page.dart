@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -132,8 +133,11 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
                       AppSpacing.contentPad,
                       bottomInset,
                     ),
-                    child: _showConfirm
-                        ? _ConfirmTransferView(
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      children: [
+                        if (_showConfirm)
+                          _ConfirmTransferView(
                             snapshot: snapshot,
                             source: source,
                             destination: destination,
@@ -145,7 +149,8 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
                               context.go(snapshot.parentRoute);
                             },
                           )
-                        : _TransferForm(
+                        else
+                          _TransferForm(
                             snapshot: snapshot,
                             source: source,
                             destination: destination,
@@ -167,6 +172,8 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
                                   }
                                 : null,
                           ),
+                      ],
+                    ),
                   ),
                 ),
               ),

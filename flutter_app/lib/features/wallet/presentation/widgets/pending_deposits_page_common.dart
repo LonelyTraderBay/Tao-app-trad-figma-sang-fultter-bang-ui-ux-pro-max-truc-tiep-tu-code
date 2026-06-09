@@ -13,13 +13,12 @@ class _StatusNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       constraints: const BoxConstraints(minHeight: 34),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: color.withValues(alpha: .22),
       child: Row(
         children: [
           Icon(icon, color: color, size: 14),
@@ -56,12 +55,10 @@ class _DepositDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       padding: const EdgeInsets.fromLTRB(12, 11, 12, 10),
-      decoration: BoxDecoration(
-        color: _pendingPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         children: [
           _DetailRow(label: 'M\u1EA1ng', value: deposit.network),
@@ -220,13 +217,9 @@ class _InfoNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
-      decoration: BoxDecoration(
-        color: _pendingPrimary.withValues(alpha: .06),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _pendingPrimary.withValues(alpha: .15)),
-      ),
+      borderColor: _pendingPrimary.withValues(alpha: .15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

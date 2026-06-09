@@ -11,9 +11,10 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 part '../widgets/wallet_dust_converter_hero.dart';
 part '../widgets/wallet_dust_converter_targets.dart';
@@ -23,7 +24,6 @@ part '../widgets/wallet_dust_converter_confirm.dart';
 const _dustBackground = AppColors.bg;
 const _dustPanel = AppColors.surface;
 const _dustPanel2 = AppColors.surface3;
-const _dustHero = AppColors.surface;
 const _dustHeroBorder = AppColors.primary20;
 const _dustBorder = AppColors.overlayStroke;
 const _dustPrimary = AppColors.primary;
@@ -90,13 +90,21 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                   key: DustConverterPage.contentKey,
                   padding: const EdgeInsets.fromLTRB(20, 14, 20, 16),
                   physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 16,
+                    fullBleed: true,
                     children: [
-                      if (_converted) ...[
+                      if (_converted)
                         _ConvertedBanner(targetSymbol: _targetSymbol),
-                        const SizedBox(height: 12),
-                      ],
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review dust conversion',
+                        message:
+                            'Confirm selected assets, conversion fee, receive amount, and target asset before submitting.',
+                        contractId:
+                            '${_selectedIds.length} selected / $_targetSymbol',
+                      ),
                       _DustHero(
                         snapshot: snapshot,
                         targetSymbol: _targetSymbol,
@@ -104,11 +112,9 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                         selectedCount: _selectedIds.length,
                         selectedValue: selectedTotal,
                       ),
-                      const SizedBox(height: 18),
                       const _SectionLabel(
                         label: 'Chuy\u1EC3n \u0111\u1ED5i sang',
                       ),
-                      const SizedBox(height: 10),
                       _TargetSelector(
                         targets: snapshot.targets,
                         selected: _targetSymbol,
@@ -118,11 +124,9 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                           _converted = false;
                         }),
                       ),
-                      const SizedBox(height: 18),
                       _SectionLabel(
                         label: 'S\u1ED1 d\u01B0 nh\u1ECF (${assets.length})',
                       ),
-                      const SizedBox(height: 10),
                       _SelectAllRow(
                         selectedAll: _selectedIds.length == assets.length,
                         selectedCount: _selectedIds.length,
@@ -233,13 +237,11 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Container(
+                VitCard(
+                  variant: VitCardVariant.inner,
+                  radius: VitCardRadius.sm,
                   padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: _dustBackground,
-                    borderRadius: AppRadii.cardRadius,
-                    border: Border.all(color: _dustBorder),
-                  ),
+                  borderColor: _dustBorder,
                   child: Column(
                     children: [
                       _PreviewRow(

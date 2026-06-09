@@ -102,14 +102,10 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 89,
       padding: const EdgeInsets.fromLTRB(12, 14, 12, 12),
-      decoration: BoxDecoration(
-        color: _govPanel,
-        border: Border.all(color: _govBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _govBorder.withValues(alpha: .72),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -163,9 +159,9 @@ class _Tabs extends StatelessWidget {
       ('reviews', 'Reviews'),
       ('distribution', 'Distribution'),
     ];
-    return Container(
+    return VitCard(
       height: 53,
-      color: _govPanel,
+      padding: EdgeInsets.zero,
       child: Row(
         children: [
           for (final tab in tabs)

@@ -15,26 +15,12 @@ class _SubAccountSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final pnlColor = snapshot.totalPnl30d >= 0 ? AppColors.buy : AppColors.sell;
 
-    return Container(
+    return VitCard(
       key: SubAccountPage.summaryKey,
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppRadii.cardLargeRadius,
-        border: Border.all(color: AppColors.primary20),
-        gradient: const RadialGradient(
-          center: Alignment(.85, -.9),
-          radius: 1.15,
-          colors: [AppColors.primary12, AppColors.surface],
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary.withValues(alpha: .13),
-            blurRadius: 22,
-            offset: const Offset(0, 12),
-          ),
-        ],
-      ),
+      radius: VitCardRadius.lg,
+      variant: VitCardVariant.hero,
+      borderColor: AppColors.primary20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -57,21 +43,17 @@ class _SubAccountSummaryCard extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                width: 34,
-                height: 34,
-                child: IconButton(
-                  key: SubAccountPage.balanceToggleKey,
-                  padding: EdgeInsets.zero,
-                  onPressed: onToggleBalance,
-                  icon: Icon(
-                    isBalanceHidden
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    color: AppColors.text3,
-                    size: 17,
-                  ),
-                ),
+              VitIconButton(
+                key: SubAccountPage.balanceToggleKey,
+                icon: isBalanceHidden
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined,
+                tooltip: isBalanceHidden
+                    ? 'Hi\u1EC3n s\u1ED1 d\u01B0'
+                    : '\u1EA8n s\u1ED1 d\u01B0',
+                onPressed: onToggleBalance,
+                variant: VitIconButtonVariant.transparent,
+                size: VitIconButtonSize.sm,
               ),
             ],
           ),

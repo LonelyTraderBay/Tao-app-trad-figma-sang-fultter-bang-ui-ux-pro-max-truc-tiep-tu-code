@@ -259,10 +259,13 @@ class _ConfigSection extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x4),
                 LayoutBuilder(
                   builder: (context, constraints) {
-                    final itemWidth =
-                        (constraints.maxWidth - AppSpacing.x3) / 2;
+                    final availableWidth = math.max(0.0, constraints.maxWidth);
+                    final useTwoColumns = availableWidth >= 280;
+                    final itemWidth = useTwoColumns
+                        ? (availableWidth - AppSpacing.x3) / 2
+                        : availableWidth;
                     return Wrap(
-                      spacing: AppSpacing.x3,
+                      spacing: useTwoColumns ? AppSpacing.x3 : 0,
                       runSpacing: AppSpacing.x3,
                       children: [
                         for (final item in items)
@@ -424,44 +427,22 @@ class _DynamicDisclaimer extends StatelessWidget {
   }
 }
 
-class _FloatingActions extends StatelessWidget {
-  const _FloatingActions({required this.onSettings, required this.onApply});
+class _ApplyStrategyAction extends StatelessWidget {
+  const _ApplyStrategyAction({required this.onApply});
 
-  final VoidCallback onSettings;
   final VoidCallback onApply;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: AppSpacing.ctaHeight,
-          height: AppSpacing.ctaHeight,
-          child: VitCtaButton(
-            onPressed: onSettings,
-            fullWidth: false,
-            padding: EdgeInsets.zero,
-            child: const Icon(
-              Icons.settings_outlined,
-              color: AppColors.onAccent,
-              size: AppSpacing.iconMd,
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.x3),
-        Expanded(
-          child: VitCtaButton(
-            key: DCADynamicAmount.applyKey,
-            onPressed: onApply,
-            leading: const Icon(
-              Icons.arrow_upward_rounded,
-              color: AppColors.onAccent,
-              size: AppSpacing.iconMd,
-            ),
-            child: const Text('Áp dụng chiến lược'),
-          ),
-        ),
-      ],
+    return VitCtaButton(
+      key: DCADynamicAmount.applyKey,
+      onPressed: onApply,
+      leading: const Icon(
+        Icons.arrow_upward_rounded,
+        color: AppColors.onAccent,
+        size: AppSpacing.iconMd,
+      ),
+      child: const Text('Áp dụng chiến lược'),
     );
   }
 }

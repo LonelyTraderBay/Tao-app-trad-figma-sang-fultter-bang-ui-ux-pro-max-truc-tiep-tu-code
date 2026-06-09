@@ -75,97 +75,96 @@ class _LaunchpadNotifSoundPageState
     final navInset = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final footerHeight = _saved ? 118.0 : 92.0;
     final bottomInset =
-        navInset + MediaQuery.paddingOf(context).bottom + footerHeight;
+        navInset + MediaQuery.paddingOf(context).bottom + AppSpacing.x4;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-306 LaunchpadNotifSoundPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Stack(
-          children: [
-            VitAutoHideHeaderScaffold(
-              bottomInset: bottomInset,
-              semanticLabel: 'SC-306 LaunchpadNotifSoundPage scroll surface',
-              header: VitHeader(
-                title: snapshot.title,
-                showBack: true,
-                onBack: () => context.go(snapshot.backRoute),
-              ),
-              child: SingleChildScrollView(
-                key: LaunchpadNotifSoundPage.contentKey,
-                physics: const BouncingScrollPhysics(),
-                child: VitPageContent(
-                  padding: VitContentPadding.defaultPadding,
-                  customGap: AppSpacing.x4,
-                  children: [
-                    _MasterSoundHero(
-                      masterEnabled: _masterEnabled,
-                      volume: _masterVolume,
-                      onToggle: () => _markChanged(() {
-                        _masterEnabled = !_masterEnabled;
-                      }),
-                      onVolumeChanged: (value) => _markChanged(() {
-                        _masterVolume = value;
-                      }),
-                    ),
-                    _QuickTogglesCard(
-                      vibrate: _vibrate,
-                      doNotDisturb: _doNotDisturb,
-                      dndStartHour: _dndStartHour,
-                      dndEndHour: _dndEndHour,
-                      onVibrate: () => _markChanged(() {
-                        _vibrate = !_vibrate;
-                      }),
-                      onDoNotDisturb: () => _markChanged(() {
-                        _doNotDisturb = !_doNotDisturb;
-                      }),
-                    ),
-                    if (_doNotDisturb)
-                      _DndScheduleCard(
-                        startHour: _dndStartHour,
-                        endHour: _dndEndHour,
-                        onStartChanged: (value) => _markChanged(() {
-                          _dndStartHour = value;
-                        }),
-                        onEndChanged: (value) => _markChanged(() {
-                          _dndEndHour = value;
-                        }),
-                      ),
-                    _CategorySoundSection(
-                      snapshot: snapshot,
-                      masterEnabled: _masterEnabled,
-                      categories: _categories,
-                      expandedCategoryId: _expandedCategoryId,
-                      playingPreviewId: _playingPreviewId,
-                      onToggleCategory: _toggleCategory,
-                      onExpandCategory: (id) => setState(() {
-                        _expandedCategoryId = _expandedCategoryId == id
-                            ? null
-                            : id;
-                      }),
-                      onSoundType: _setSoundType,
-                      onVolume: _setCategoryVolume,
-                      onPreview: _previewSound,
-                    ),
-                    const _InfoBanner(),
-                  ],
+        child: VitAutoHideHeaderScaffold(
+          bottomInset: bottomInset,
+          semanticLabel: 'SC-306 LaunchpadNotifSoundPage scroll surface',
+          header: VitHeader(
+            title: snapshot.title,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: SingleChildScrollView(
+            key: LaunchpadNotifSoundPage.contentKey,
+            physics: const BouncingScrollPhysics(),
+            child: VitPageContent(
+              padding: VitContentPadding.defaultPadding,
+              customGap: AppSpacing.x4,
+              children: [
+                _MasterSoundHero(
+                  masterEnabled: _masterEnabled,
+                  volume: _masterVolume,
+                  onToggle: () => _markChanged(() {
+                    _masterEnabled = !_masterEnabled;
+                  }),
+                  onVolumeChanged: (value) => _markChanged(() {
+                    _masterVolume = value;
+                  }),
                 ),
-              ),
+                VitHighRiskStatePanel(
+                  state: _saved
+                      ? VitHighRiskUiState.success
+                      : VitHighRiskUiState.riskReview,
+                  title: _saved
+                      ? 'Notification settings saved'
+                      : 'Notification settings review',
+                  message:
+                      'Sound, vibration, do-not-disturb, alert categories and delivery preferences are reviewed before saving.',
+                  contractId: 'launchpad-notification-sound',
+                ),
+                _QuickTogglesCard(
+                  vibrate: _vibrate,
+                  doNotDisturb: _doNotDisturb,
+                  dndStartHour: _dndStartHour,
+                  dndEndHour: _dndEndHour,
+                  onVibrate: () => _markChanged(() {
+                    _vibrate = !_vibrate;
+                  }),
+                  onDoNotDisturb: () => _markChanged(() {
+                    _doNotDisturb = !_doNotDisturb;
+                  }),
+                ),
+                if (_doNotDisturb)
+                  _DndScheduleCard(
+                    startHour: _dndStartHour,
+                    endHour: _dndEndHour,
+                    onStartChanged: (value) => _markChanged(() {
+                      _dndStartHour = value;
+                    }),
+                    onEndChanged: (value) => _markChanged(() {
+                      _dndEndHour = value;
+                    }),
+                  ),
+                _CategorySoundSection(
+                  snapshot: snapshot,
+                  masterEnabled: _masterEnabled,
+                  categories: _categories,
+                  expandedCategoryId: _expandedCategoryId,
+                  playingPreviewId: _playingPreviewId,
+                  onToggleCategory: _toggleCategory,
+                  onExpandCategory: (id) => setState(() {
+                    _expandedCategoryId = _expandedCategoryId == id ? null : id;
+                  }),
+                  onSoundType: _setSoundType,
+                  onVolume: _setCategoryVolume,
+                  onPreview: _previewSound,
+                ),
+                const _InfoBanner(),
+                _InlineSaveActions(
+                  saved: _saved,
+                  hasChanges: _hasChanges,
+                  onSave: _hasChanges || _saved ? _save : null,
+                ),
+              ],
             ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: navInset + MediaQuery.paddingOf(context).bottom,
-              child: _SaveFooter(
-                saved: _saved,
-                hasChanges: _hasChanges,
-                onSave: _hasChanges || _saved ? _save : null,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

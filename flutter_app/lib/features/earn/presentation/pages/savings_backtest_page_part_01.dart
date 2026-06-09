@@ -224,50 +224,26 @@ class _AmountField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        VitCard(
-          variant: VitCardVariant.inner,
-          radius: VitCardRadius.md,
-          borderColor: AppColors.primary30,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-          child: SizedBox(
-            height: AppSpacing.inputHeight,
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.attach_money_rounded,
-                  color: AppColors.primary,
-                  size: AppSpacing.iconMd,
-                ),
-                Expanded(
-                  child: TextField(
-                    key: SavingsBacktestPage.amountFieldKey,
-                    controller: controller,
-                    keyboardType: TextInputType.number,
-                    style: AppTextStyles.base.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: AppSpacing.x3,
-                      ),
-                    ),
-                    onChanged: (value) {
-                      final parsed = int.tryParse(value);
-                      if (parsed != null && parsed >= 100) {
-                        onAmountChanged(parsed);
-                      }
-                    },
-                  ),
-                ),
-                Text(
-                  'USD',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
+        VitInput(
+          fieldKey: SavingsBacktestPage.amountFieldKey,
+          controller: controller,
+          keyboardType: TextInputType.number,
+          semanticLabel: 'Savings backtest amount',
+          prefix: const Icon(Icons.attach_money_rounded),
+          suffix: Text(
+            'USD',
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
+          textStyle: AppTextStyles.base.copyWith(
+            color: AppColors.text1,
+            fontWeight: AppTextStyles.bold,
+          ),
+          onChanged: (value) {
+            final parsed = int.tryParse(value);
+            if (parsed != null && parsed >= 100) {
+              onAmountChanged(parsed);
+            }
+          },
         ),
         const SizedBox(height: AppSpacing.x3),
         Row(

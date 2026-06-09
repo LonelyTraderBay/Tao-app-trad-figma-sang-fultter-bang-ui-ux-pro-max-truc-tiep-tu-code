@@ -40,6 +40,13 @@ class _StakingWithdrawalPolicyPageState
                     gap: VitContentGap.defaultGap,
                     children: [
                       _InfoBanner(snapshot: snapshot),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Withdrawal policy review required',
+                        message:
+                            'Timeline, early fee, emergency limits, preview, confirm and support next steps are reviewed before withdrawal.',
+                        contractId: 'staking-withdrawal-policy',
+                      ),
                       _PolicyTabs(
                         tabs: snapshot.tabs,
                         active: activeTab,

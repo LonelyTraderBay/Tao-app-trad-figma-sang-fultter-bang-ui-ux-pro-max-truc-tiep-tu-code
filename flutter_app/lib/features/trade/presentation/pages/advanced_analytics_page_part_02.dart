@@ -17,14 +17,10 @@ class _SignalCard extends StatelessWidget {
         : _advancedPrimary;
     final rrColor = signal.riskReward >= 3 ? _advancedGreen : _advancedPrimary;
 
-    return Container(
+    return VitCard(
       constraints: const BoxConstraints(minHeight: 232),
       padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
-      decoration: BoxDecoration(
-        color: _advancedPanel,
-        border: Border.all(color: tone.withValues(alpha: .28), width: 1.5),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: tone.withValues(alpha: .28),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -198,13 +194,10 @@ class _ConfidenceBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 58,
       padding: const EdgeInsets.fromLTRB(10, 9, 10, 9),
-      decoration: BoxDecoration(
-        color: _advancedPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.inner,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -270,13 +263,10 @@ class _MetricBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       constraints: const BoxConstraints(minHeight: 58),
       padding: const EdgeInsets.fromLTRB(10, 9, 10, 9),
-      decoration: BoxDecoration(
-        color: _advancedPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.inner,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: alignLeft
@@ -326,13 +316,10 @@ class _MiniStatBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 65,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 11),
-      decoration: BoxDecoration(
-        color: _advancedPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.inner,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -438,48 +425,11 @@ class _DisclaimerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-      decoration: BoxDecoration(
-        color: _advancedAmber.withValues(alpha: .10),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: _advancedAmber,
-            size: 15,
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'AI Prediction Disclaimer',
-                  style: AppTextStyles.caption.copyWith(
-                    color: _advancedAmber,
-                    fontSize: 12,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  'Signals are predictions, not guarantees. Always conduct your own research and risk management. Past accuracy does not guarantee future results.',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 10,
-                    height: 1.45,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return const VitHighRiskStatePanel(
+      state: VitHighRiskUiState.riskReview,
+      title: 'AI Prediction Disclaimer',
+      message:
+          'Signals are predictions, not guarantees. Always conduct your own research and risk management. Past accuracy does not guarantee future results.',
     );
   }
 }

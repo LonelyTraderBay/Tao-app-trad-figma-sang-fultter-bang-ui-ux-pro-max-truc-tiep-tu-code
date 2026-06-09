@@ -10,7 +10,10 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -18,7 +21,6 @@ part '../widgets/ex_post_costs_report_summary.dart';
 part '../widgets/ex_post_costs_report_variance_common.dart';
 
 const _reportBackground = AppColors.bg;
-const _reportPanel = AppColors.surface;
 const _reportPanel2 = AppColors.surface2;
 const _reportBorder = AppColors.borderSolid;
 const _reportPrimary = AppColors.primary;
@@ -82,8 +84,10 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
                 child: SingleChildScrollView(
                   key: ExPostCostsReportPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 0,
                     children: [
                       _ComplianceNotice(year: report.year),
                       const SizedBox(height: 35),
@@ -104,6 +108,14 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
                             ),
                           ),
                         ],
+                      ),
+                      const SizedBox(height: 16),
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.success,
+                        title: 'Actual cost report ready',
+                        message:
+                            'Review actual versus estimated costs, variance drivers, fee impact, and next-step export before using this report for disclosure.',
+                        contractId: 'SC-107 ${report.year} report',
                       ),
                       const SizedBox(height: 24),
                       _YearTabs(

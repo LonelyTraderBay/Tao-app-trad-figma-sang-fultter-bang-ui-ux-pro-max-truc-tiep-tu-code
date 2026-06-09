@@ -10,14 +10,10 @@ class _NetworkCard extends StatelessWidget {
     final tokenColor = Color(network.colorHex);
     final healthColor = _healthColor(network.health);
     final congestionColor = _congestionColor(network.congestionPct);
-    return Container(
+    return VitCard(
       key: NetworkStatusPage.networkKey(network.id),
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _networkPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _networkBorder),
-      ),
+      borderColor: _networkBorder,
       child: Column(
         children: [
           Row(
@@ -192,14 +188,11 @@ class _StatTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       height: 48,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: _networkPanel2,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.divider),
-      ),
+      borderColor: AppColors.divider,
       child: Row(
         children: [
           Icon(stat.icon, color: _networkMuted, size: 13),

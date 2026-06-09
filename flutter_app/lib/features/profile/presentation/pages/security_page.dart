@@ -13,15 +13,15 @@ import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
 part '../widgets/security_page_sections.dart';
 part '../widgets/security_page_common.dart';
 
 const _securityBackground = AppColors.bg;
-const _securityPanel = AppColors.surface;
-const _securityPanel2 = AppColors.surface2;
 const _securityBorder = AppColors.cardBorder;
 const _securityDivider = AppColors.divider;
 const _securityPrimary = AppColors.primary;
@@ -88,26 +88,31 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
                   key: SecurityPage.contentKey,
                   physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 18,
+                    fullBleed: true,
                     children: [
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review account security',
+                        message:
+                            'Confirm 2FA, anti-phishing code, device sessions, and password changes before sensitive account actions.',
+                        contractId: 'Security score: ${snapshot.score}/4',
+                      ),
                       _ScoreCard(snapshot: snapshot),
-                      const SizedBox(height: 18),
                       _SecurityList(
                         items: snapshot.items,
                         onItemTap: _handleItemTap,
                       ),
                       if (_showDevices) ...[
-                        const SizedBox(height: 16),
                         _DeviceList(devices: snapshot.devices),
                       ],
-                      const SizedBox(height: 18),
                       _AntiPhishingCard(
                         controller: _antiPhishingController,
                         saving: _saving,
                         onSave: _saveAntiPhishingCode,
                       ),
-                      const SizedBox(height: 18),
                       _SecuritySupportCard(supportRoute: snapshot.supportRoute),
                     ],
                   ),

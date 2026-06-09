@@ -201,46 +201,18 @@ class _CapitalInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 52,
-      padding: const EdgeInsets.fromLTRB(16, 0, 12, 0),
-      decoration: BoxDecoration(
-        color: _backtestPanel2,
-        border: Border.all(color: AppColors.borderSolid),
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              key: BotBacktestingPage.capitalKey,
-              controller: controller,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-              ],
-              style: AppTextStyles.body.copyWith(
-                color: AppColors.text1,
-                fontSize: 16,
-                fontFamily: 'Roboto',
-              ),
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                isCollapsed: true,
-              ),
-            ),
-          ),
-          Text(
-            'USDT',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 13,
-              height: 1,
-            ),
-          ),
-        ],
+    return VitInput(
+      controller: controller,
+      fieldKey: BotBacktestingPage.capitalKey,
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
+      suffix: Text(
+        'USDT',
+        style: AppTextStyles.caption.copyWith(
+          color: AppColors.text3,
+          fontSize: 13,
+          height: 1,
+        ),
       ),
     );
   }
@@ -261,13 +233,9 @@ class _BacktestPeriodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
-      decoration: BoxDecoration(
-        color: _backtestPrimary.withValues(alpha: .08),
-        border: Border.all(color: _backtestPrimary.withValues(alpha: .22)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _backtestPrimary.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -315,28 +283,21 @@ class _RunFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 80,
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
-      color: _backtestPanel,
-      child: SizedBox(
+      child: VitCtaButton(
+        key: BotBacktestingPage.runKey,
+        onPressed: onRun,
         height: 44,
-        child: FilledButton.icon(
-          key: BotBacktestingPage.runKey,
-          onPressed: onRun,
-          style: FilledButton.styleFrom(
-            backgroundColor: _backtestPrimary,
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-          ),
-          icon: const Icon(Icons.play_arrow_outlined, size: 19),
-          label: Text(
-            'Run Backtest',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.onAccent,
-              fontSize: 14,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
-            ),
+        leading: const Icon(Icons.play_arrow_outlined, size: 19),
+        child: Text(
+          'Run Backtest',
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.onAccent,
+            fontSize: 14,
+            fontWeight: AppTextStyles.bold,
+            height: 1,
           ),
         ),
       ),

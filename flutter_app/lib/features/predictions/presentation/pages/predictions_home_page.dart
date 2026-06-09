@@ -48,9 +48,16 @@ class PredictionsHomePage extends ConsumerStatefulWidget {
 }
 
 class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
+  final _searchController = TextEditingController();
   PredictionFilterTab _filter = PredictionFilterTab.trending;
   String? _category;
   String _searchQuery = '';
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,11 +118,12 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                       customGap: 13,
                       children: [
                         _SearchField(
-                          value: _searchQuery,
+                          controller: _searchController,
                           onChanged: (value) => setState(() {
                             _searchQuery = value;
                           }),
                           onClear: () => setState(() {
+                            _searchController.clear();
                             _searchQuery = '';
                           }),
                         ),

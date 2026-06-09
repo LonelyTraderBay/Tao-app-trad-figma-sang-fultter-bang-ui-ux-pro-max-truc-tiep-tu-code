@@ -1,7 +1,7 @@
 part of '../pages/launchpad_webhooks_page.dart';
 
-class _SheetTextField extends StatelessWidget {
-  const _SheetTextField({
+class _SheetInputField extends StatelessWidget {
+  const _SheetInputField({
     required this.label,
     required this.hint,
     required this.controller,
@@ -29,33 +29,14 @@ class _SheetTextField extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.x2),
-        TextField(
+        VitInput(
           controller: controller,
           onChanged: onChanged,
-          style: AppTextStyles.caption.copyWith(
+          semanticLabel: label,
+          hintText: hint,
+          textStyle: AppTextStyles.caption.copyWith(
             color: AppColors.text1,
             fontFamily: monospace ? 'monospace' : null,
-          ),
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontFamily: monospace ? 'monospace' : null,
-            ),
-            filled: true,
-            fillColor: AppColors.surface2,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x3,
-            ),
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.borderSolid),
-              borderRadius: AppRadii.inputRadius,
-            ),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.primary),
-              borderRadius: AppRadii.inputRadius,
-            ),
           ),
         ),
       ],

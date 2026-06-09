@@ -216,26 +216,12 @@ class _ReviewBox extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.x2),
-        DecoratedBox(
-          decoration: BoxDecoration(
-            color: AppColors.surface2,
-            border: Border.all(color: AppColors.borderSolid),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: TextField(
-            key: P2POrderRatePage.reviewKey,
-            controller: controller,
-            minLines: 4,
-            maxLines: 4,
-            cursorColor: AppColors.primary,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text1),
-            decoration: InputDecoration(
-              hintText: 'Chia se trai nghiem giao dich...',
-              hintStyle: AppTextStyles.caption.copyWith(color: AppColors.text3),
-              border: InputBorder.none,
-              contentPadding: const EdgeInsets.all(AppSpacing.x4),
-            ),
-          ),
+        VitInput(
+          fieldKey: P2POrderRatePage.reviewKey,
+          controller: controller,
+          semanticLabel: 'P2P order review',
+          hintText: 'Chia se trai nghiem giao dich...',
+          textStyle: AppTextStyles.caption.copyWith(color: AppColors.text1),
         ),
       ],
     );

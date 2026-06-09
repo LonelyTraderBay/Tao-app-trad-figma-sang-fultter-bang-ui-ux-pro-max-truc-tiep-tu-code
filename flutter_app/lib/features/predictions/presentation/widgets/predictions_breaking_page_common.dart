@@ -103,29 +103,14 @@ class _EmailCta extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Container(
-                  height: 42,
-                  padding: const EdgeInsets.symmetric(horizontal: 14),
-                  decoration: BoxDecoration(
-                    color: AppColors.surface2,
-                    border: Border.all(color: AppColors.borderSolid),
-                    borderRadius: AppRadii.mdRadius,
-                  ),
-                  child: TextField(
-                    key: PredictionsBreakingPage.emailFieldKey,
-                    controller: controller,
-                    keyboardType: TextInputType.emailAddress,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                    ),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      isDense: true,
-                      hintText: 'your@email.com',
-                      hintStyle: AppTextStyles.caption.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
+                child: VitInput(
+                  fieldKey: PredictionsBreakingPage.emailFieldKey,
+                  controller: controller,
+                  keyboardType: TextInputType.emailAddress,
+                  semanticLabel: 'Prediction breaking email',
+                  hintText: 'your@email.com',
+                  textStyle: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
                   ),
                 ),
               ),

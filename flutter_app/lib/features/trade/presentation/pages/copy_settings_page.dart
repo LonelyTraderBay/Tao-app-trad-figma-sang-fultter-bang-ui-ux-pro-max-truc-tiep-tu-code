@@ -14,6 +14,8 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -22,8 +24,6 @@ part '../widgets/copy_settings_controls.dart';
 part '../widgets/copy_settings_contacts_privacy.dart';
 
 const _settingsPrimary = AppColors.primary;
-const _settingsPanel = AppColors.surface2;
-const _settingsInput = AppColors.surface3;
 const _sliderInactive = AppColors.tierPlatinum;
 
 class CopySettingsPage extends ConsumerStatefulWidget {
@@ -90,9 +90,21 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
                 child: SingleChildScrollView(
                   key: CopySettingsPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
                     children: [
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review copy trading defaults',
+                        message:
+                            'Confirm stop-loss, take-profit, allocation limits, circuit breaker, and emergency contact before saving copy defaults.',
+                        contractId: settings.enableCircuitBreaker
+                            ? 'Circuit breaker: on'
+                            : 'Circuit breaker: off',
+                      ),
+                      const SizedBox(height: 12),
                       _SettingsSection(
                         label: 'Cài đặt mặc định',
                         accent: _settingsPrimary,

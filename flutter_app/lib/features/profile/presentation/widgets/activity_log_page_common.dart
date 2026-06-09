@@ -54,26 +54,11 @@ class _EmptyActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 220,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.shield_outlined,
-            color: AppColors.borderSolid,
-            size: 48,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'Kh\u00F4ng c\u00F3 ho\u1EA1t \u0111\u1ED9ng n\u00E0o',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 14,
-            ),
-          ),
-        ],
-      ),
+    return const VitEmptyState(
+      title: 'Kh\u00F4ng c\u00F3 ho\u1EA1t \u0111\u1ED9ng n\u00E0o',
+      message:
+          'Nh\u1EADt k\u00FD \u0111\u0103ng nh\u1EADp, b\u1EA3o m\u1EADt v\u00E0 API s\u1EBD hi\u1EC3n th\u1ECB t\u1EA1i \u0111\u00E2y.',
+      icon: Icons.shield_outlined,
     );
   }
 }
@@ -83,13 +68,10 @@ class _ActivityFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 64,
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
-      decoration: const BoxDecoration(
-        color: _activityPanel,
-        border: Border(top: BorderSide(color: _activityDivider)),
-      ),
+      borderColor: _activityDivider,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

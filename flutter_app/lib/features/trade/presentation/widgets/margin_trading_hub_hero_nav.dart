@@ -7,13 +7,10 @@ class _HeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.hero,
       padding: const EdgeInsets.fromLTRB(25, 29, 25, 25),
-      decoration: BoxDecoration(
-        color: _hubHero,
-        border: Border.all(color: _hubHeroBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _hubHeroBorder,
       child: Column(
         children: [
           Row(
@@ -190,14 +187,10 @@ class _MenuItem extends StatelessWidget {
       key: MarginTradingHubPage.menuKey(item.id),
       borderRadius: AppRadii.cardRadius,
       onTap: () => context.go(item.targetPath),
-      child: Container(
+      child: VitCard(
         constraints: const BoxConstraints(minHeight: 92),
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
-        decoration: BoxDecoration(
-          color: _hubPanel,
-          border: Border.all(color: color.withValues(alpha: .28)),
-          borderRadius: AppRadii.cardRadius,
-        ),
+        borderColor: color.withValues(alpha: .28),
         child: Row(
           children: [
             Container(

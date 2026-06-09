@@ -8,13 +8,9 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _advancedPanel,
-        border: Border.all(color: _advancedBorder.withValues(alpha: .7)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _advancedBorder.withValues(alpha: .7),
       child: child,
     );
   }

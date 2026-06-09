@@ -64,12 +64,10 @@ class _ChoiceChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
-      decoration: BoxDecoration(
-        color: active ? AppColors.primary : AppColors.surface2,
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: active ? VitCardVariant.standard : VitCardVariant.inner,
+      borderColor: active ? AppColors.primary : null,
       child: Text(
         label,
         style: AppTextStyles.caption.copyWith(
@@ -131,13 +129,9 @@ class _Panel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: child,
     );
   }
@@ -167,14 +161,9 @@ class _DemoSheet extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
+                VitCard(
                   padding: const EdgeInsets.all(20),
-                  decoration: const BoxDecoration(
-                    color: AppColors.bg,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(24),
-                    ),
-                  ),
+                  radius: VitCardRadius.lg,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -195,19 +184,12 @@ class _DemoSheet extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      FilledButton(
+                      VitCtaButton(
                         onPressed: onClose,
-                        style: FilledButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          minimumSize: const Size.fromHeight(44),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: AppRadii.inputRadius,
-                          ),
-                        ),
+                        height: 44,
                         child: Text(
                           'Đóng',
                           style: AppTextStyles.body.copyWith(
-                            color: AppColors.onAccent,
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),

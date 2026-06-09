@@ -12,6 +12,8 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -20,9 +22,6 @@ part 'active_copies_page_part_02.dart';
 part 'active_copies_page_part_03.dart';
 
 const _copyPrimary = AppColors.primary;
-const _copyPanel = AppColors.surface;
-const _copyPanel2 = AppColors.surface2;
-const _copySegmentBackground = AppColors.surface3;
 const _lightBuyBackground = AppColors.surfaceSuccessLight;
 const _lightSellBackground = AppColors.surfaceDangerLight;
 const _lightWarnBackground = AppColors.surfaceWarningLight;
@@ -96,11 +95,19 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
                     child: SingleChildScrollView(
                       key: ActiveCopiesPage.contentKey,
                       padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      child: VitPageContent(
+                        padding: VitContentPadding.none,
+                        customGap: 20,
+                        fullBleed: true,
                         children: [
                           _PortfolioOverview(snapshot: snapshot.portfolio),
-                          const SizedBox(height: 26),
+                          VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Review active copy exposure',
+                            message:
+                                'Check open provider risk, stop-loss rules, cooling-off status, and current P/L before changing or stopping a copy.',
+                            contractId: 'Active copies: ${copies.length}',
+                          ),
                           _SegmentedTabs(
                             tabs: snapshot.tabs,
                             activeTab: _activeTab,
@@ -109,7 +116,6 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
                               _expandedCopyId = null;
                             }),
                           ),
-                          const SizedBox(height: 24),
                           if (copies.isEmpty)
                             _EmptyCopiesState(
                               history: _activeTab == 'history',
@@ -152,11 +158,9 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
                                 const SizedBox(height: 12),
                             ],
                           if (_actionStatus != null) ...[
-                            const SizedBox(height: 14),
                             _ActionStatusBanner(text: _actionStatus!),
                           ],
                           if (controller.hasRiskAlert(snapshot.copies)) ...[
-                            const SizedBox(height: 14),
                             _RiskAlert(
                               onViewDetails: () =>
                                   setState(() => _activeTab = 'active'),

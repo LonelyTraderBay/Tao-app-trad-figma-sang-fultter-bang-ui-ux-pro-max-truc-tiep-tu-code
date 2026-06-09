@@ -374,8 +374,8 @@ class _AdvancedSettings extends StatelessWidget {
   }
 }
 
-class _StickyActions extends StatelessWidget {
-  const _StickyActions({
+class _InlineRebalanceActions extends StatelessWidget {
+  const _InlineRebalanceActions({
     required this.valid,
     required this.onPreview,
     required this.onSave,
@@ -387,28 +387,62 @@ class _StickyActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: VitCtaButton(
-            key: DCARebalanceConfig.previewKey,
-            onPressed: valid ? onPreview : null,
-            fullWidth: true,
-            leading: const Icon(Icons.visibility_outlined),
-            child: const Text('Xem trước'),
+    return VitCard(
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.all(AppSpacing.contentPad),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              _AccentIcon(
+                icon: valid
+                    ? Icons.check_circle_outline_rounded
+                    : Icons.error_outline_rounded,
+                color: valid ? AppColors.buy : AppColors.warn,
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Text(
+                  valid
+                      ? 'Phân bổ hợp lệ. Xem preview trước khi lưu.'
+                      : 'Tổng phân bổ phải bằng 100% trước khi xem preview.',
+                  style: AppTextStyles.caption.copyWith(
+                    color: valid ? AppColors.buy : AppColors.text3,
+                    fontWeight: AppTextStyles.bold,
+                    height: 1.35,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
-        const SizedBox(width: AppSpacing.x4),
-        Expanded(
-          child: VitCtaButton(
-            key: DCARebalanceConfig.saveKey,
-            onPressed: valid ? onSave : null,
-            fullWidth: true,
-            leading: const Icon(Icons.save_outlined),
-            child: const Text('Lưu cấu hình'),
+          const SizedBox(height: AppSpacing.x4),
+          Row(
+            children: [
+              Expanded(
+                child: VitCtaButton(
+                  key: DCARebalanceConfig.previewKey,
+                  onPressed: valid ? onPreview : null,
+                  fullWidth: true,
+                  leading: const Icon(Icons.visibility_outlined),
+                  child: const Text('Xem trước'),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: VitCtaButton(
+                  key: DCARebalanceConfig.saveKey,
+                  onPressed: valid ? onSave : null,
+                  fullWidth: true,
+                  variant: VitCtaButtonVariant.secondary,
+                  leading: const Icon(Icons.save_outlined),
+                  child: const Text('Lưu cấu hình'),
+                ),
+              ),
+            ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

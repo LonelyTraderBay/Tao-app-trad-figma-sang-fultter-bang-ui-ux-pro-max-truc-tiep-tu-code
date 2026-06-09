@@ -252,42 +252,21 @@ class _MarketInput extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Container(
-          height: 42,
-          padding: EdgeInsets.only(left: prefix == null ? 16 : 10, right: 16),
-          decoration: BoxDecoration(
-            color: AppColors.bg,
-            border: Border.all(color: AppColors.border),
-            borderRadius: AppRadii.lgRadius,
-          ),
-          child: Row(
-            children: [
-              if (prefix != null) ...[prefix!, const SizedBox(width: 8)],
-              Expanded(
-                child: TextField(
-                  key: fieldKey,
-                  controller: controller,
-                  keyboardType: numeric
-                      ? const TextInputType.numberWithOptions(decimal: true)
-                      : TextInputType.text,
-                  inputFormatters: numeric
-                      ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))]
-                      : null,
-                  cursorColor: _predictionPrimary,
-                  style: AppTextStyles.body.copyWith(
-                    fontSize: 14,
-                    fontWeight: AppTextStyles.medium,
-                  ),
-                  decoration: InputDecoration.collapsed(
-                    hintText: hintText,
-                    hintStyle: AppTextStyles.body.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+        VitInput(
+          fieldKey: fieldKey,
+          controller: controller,
+          keyboardType: numeric
+              ? const TextInputType.numberWithOptions(decimal: true)
+              : TextInputType.text,
+          inputFormatters: numeric
+              ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))]
+              : null,
+          semanticLabel: label,
+          hintText: hintText,
+          prefix: prefix,
+          textStyle: AppTextStyles.body.copyWith(
+            fontSize: 14,
+            fontWeight: AppTextStyles.medium,
           ),
         ),
       ],

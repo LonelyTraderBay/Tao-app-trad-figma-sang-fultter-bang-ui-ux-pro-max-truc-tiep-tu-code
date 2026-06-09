@@ -82,6 +82,18 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _PerformanceSummary(snapshot: snapshot),
+                      const SizedBox(height: 12),
+                      VitCard(
+                        variant: VitCardVariant.inner,
+                        padding: const EdgeInsets.all(12),
+                        child: VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Copy performance review',
+                          message:
+                              'PnL, fees, drawdown, trade history, risk metrics and next steps are reviewed before copy allocation changes.',
+                          contractId: 'copy-performance-${widget.copyId}',
+                        ),
+                      ),
                       const SizedBox(height: 24),
                       _PerformanceTabs(
                         activeTab: _activeTab,

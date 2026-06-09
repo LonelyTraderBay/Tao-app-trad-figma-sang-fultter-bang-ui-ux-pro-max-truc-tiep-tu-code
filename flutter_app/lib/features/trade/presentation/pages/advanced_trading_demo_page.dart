@@ -10,7 +10,11 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -76,21 +80,20 @@ class _AdvancedTradingDemoPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: AdvancedTradingDemoPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      padding: EdgeInsets.only(bottom: bottomInset),
+                      child: VitPageContent(
+                        padding: VitContentPadding.compact,
+                        customGap: 16,
                         children: [
                           _PositionModeCard(
                             activeMode: _positionMode,
                             onChanged: (mode) =>
                                 setState(() => _positionMode = mode),
                           ),
-                          const SizedBox(height: 18),
                           _UnderlineTabs(
                             activeId: _tab,
                             onChanged: (id) => setState(() => _tab = id),
                           ),
-                          const SizedBox(height: 16),
                           if (_tab == 'position')
                             _PositionTab(
                               snapshot: snapshot,
@@ -102,6 +105,13 @@ class _AdvancedTradingDemoPageState
                             _OrdersTab(snapshot: snapshot)
                           else
                             _AnalyticsTab(snapshot: snapshot),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Demo execution boundary',
+                            message:
+                                'Advanced order controls are shown in demo mode. Live execution requires preview, margin, fee, and liquidation review.',
+                            contractId: 'SC-088',
+                          ),
                         ],
                       ),
                     ),

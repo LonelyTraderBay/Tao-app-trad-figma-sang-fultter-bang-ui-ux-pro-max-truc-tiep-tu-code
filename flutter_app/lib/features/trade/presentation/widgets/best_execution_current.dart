@@ -43,14 +43,10 @@ class _VenueCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isWinner = venue.rank == 1;
-    return Container(
+    return VitCard(
       key: BestExecutionReportsPage.venueKey(venue.rank),
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _bestPanel,
-        border: Border.all(color: _bestBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _bestBorder.withValues(alpha: .72),
       child: Column(
         children: [
           Row(
@@ -285,43 +281,20 @@ class _AnalysisButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCtaButton(
       key: BestExecutionReportsPage.analysisKey,
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 44,
-        decoration: BoxDecoration(
-          color: _bestPanel2,
-          border: Border.all(color: _bestBorder),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.bar_chart_rounded,
-              color: AppColors.text1,
-              size: 17,
-            ),
-            const SizedBox(width: 9),
-            Text(
-              'View Detailed Analysis',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontSize: 13,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
-            ),
-            const SizedBox(width: 7),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text1,
-              size: 16,
-            ),
-          ],
+      onPressed: onTap,
+      variant: VitCtaButtonVariant.secondary,
+      height: 44,
+      leading: const Icon(Icons.bar_chart_rounded, color: AppColors.text1),
+      trailing: const Icon(Icons.chevron_right_rounded, color: AppColors.text1),
+      child: Text(
+        'View Detailed Analysis',
+        style: AppTextStyles.caption.copyWith(
+          color: AppColors.text1,
+          fontSize: 13,
+          fontWeight: AppTextStyles.bold,
+          height: 1,
         ),
       ),
     );

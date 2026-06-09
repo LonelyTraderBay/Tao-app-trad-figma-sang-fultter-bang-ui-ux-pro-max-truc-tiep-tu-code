@@ -8,50 +8,17 @@ class _RiskWarningCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       constraints: const BoxConstraints(minHeight: 72),
       padding: const EdgeInsets.fromLTRB(12, 12, 14, 12),
-      decoration: BoxDecoration(
-        color: AppColors.warningBg,
-        border: Border.all(color: AppColors.warningBorder),
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warningText,
-            size: 16,
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.warningText,
-                    fontSize: 11,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1.2,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  message,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.warningText.withValues(alpha: .90),
-                    fontSize: 10,
-                    height: 1.4,
-                    fontWeight: AppTextStyles.medium,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.warningBorder,
+      child: VitHighRiskStatePanel(
+        state: VitHighRiskUiState.riskReview,
+        title: title,
+        message:
+            '$message Preview, fees, allocation limit and confirmation are reviewed before copying.',
+        contractId: 'copy-trading-v2-review',
       ),
     );
   }

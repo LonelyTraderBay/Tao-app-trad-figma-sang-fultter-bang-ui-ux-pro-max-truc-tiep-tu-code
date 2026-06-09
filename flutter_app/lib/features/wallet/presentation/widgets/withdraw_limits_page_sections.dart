@@ -10,13 +10,10 @@ class _CurrentTierCard extends StatelessWidget {
     final tier = snapshot.currentTier;
     final tierColor = Color(tier.colorHex);
 
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
-      decoration: BoxDecoration(
-        color: _limitsHero,
-        borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: _limitsHeroBorder),
-      ),
+      radius: VitCardRadius.lg,
+      borderColor: _limitsHeroBorder,
       child: Column(
         children: [
           Row(
@@ -205,14 +202,11 @@ class _QuickStats extends StatelessWidget {
       children: [
         for (final stat in stats) ...[
           Expanded(
-            child: Container(
+            child: VitCard(
+              variant: VitCardVariant.inner,
               height: 58,
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-              decoration: BoxDecoration(
-                color: _limitsPanel,
-                borderRadius: AppRadii.inputRadius,
-                border: Border.all(color: _limitsBorder),
-              ),
+              borderColor: _limitsBorder,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -257,13 +251,9 @@ class _LimitWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 13, 16, 13),
-      decoration: BoxDecoration(
-        color: _limitsAmber.withValues(alpha: .08),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _limitsAmber.withValues(alpha: .34)),
-      ),
+      borderColor: _limitsAmber.withValues(alpha: .34),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

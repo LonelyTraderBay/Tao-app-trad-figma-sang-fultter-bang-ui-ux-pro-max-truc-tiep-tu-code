@@ -123,6 +123,18 @@ class _P2PDisputeEvidencePageState
                               : null,
                           child: const Text('Gửi bằng chứng'),
                         ),
+                        const SizedBox(height: AppSpacing.x3),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Evidence submission review',
+                            message:
+                                'Required documents, uploaded state, fail-closed backend note, dispute target and receipt next step are reviewed before evidence submission.',
+                            contractId: 'p2p-dispute-evidence-review',
+                          ),
+                        ),
                       ],
                     ),
                   ),

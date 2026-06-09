@@ -12,7 +12,9 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -21,7 +23,6 @@ part '../widgets/arm_integration_sla_actions.dart';
 part '../widgets/arm_integration_common_painter.dart';
 
 const _armBackground = AppColors.bg;
-const _armPanel = AppColors.surface;
 const _armPanel2 = AppColors.surface2;
 const _armBorder = AppColors.borderSolid;
 const _armGreen = AppColors.buy;
@@ -89,31 +90,29 @@ class _ArmIntegrationStatusPageState
                 child: SingleChildScrollView(
                   key: ArmIntegrationStatusPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 14,
+                    fullBleed: true,
                     children: [
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review ARM integration health',
+                        message:
+                            'Confirm provider failover, latency limits, reporting queue impact, and next steps before retrying submissions.',
+                      ),
                       const _OperationalAlert(),
-                      const SizedBox(height: 35),
                       const _SectionLabel('ARM Providers'),
-                      const SizedBox(height: 12),
-                      for (final connection in snapshot.connections) ...[
+                      for (final connection in snapshot.connections)
                         _ArmProviderCard(
                           connection: connection,
                           isTesting: _testingId == connection.id,
                           onTest: () => _testConnection(connection.id),
                         ),
-                        if (connection != snapshot.connections.last)
-                          const SizedBox(height: 13),
-                      ],
-                      const SizedBox(height: 26),
                       const _SectionLabel('Latency Monitoring (Last 15 min)'),
-                      const SizedBox(height: 12),
                       _LatencyCard(points: snapshot.latencyHistory),
-                      const SizedBox(height: 26),
                       const _SectionLabel('SLA Compliance'),
-                      const SizedBox(height: 12),
                       _SlaCard(sla: snapshot.sla),
-                      const SizedBox(height: 26),
                       _QuickActions(
                         onQueue: () => context.go(
                           AppRoutePaths.tradeCopyTransactionReporting,

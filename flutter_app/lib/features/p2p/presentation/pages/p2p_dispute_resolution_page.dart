@@ -98,6 +98,18 @@ class _P2PDisputeResolutionPageState
                               context.go(AppRoutePaths.p2pDisputes),
                           child: const Text('Quay về danh sách tranh chấp'),
                         ),
+                        const SizedBox(height: AppSpacing.x3),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsets.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Dispute resolution review',
+                            message:
+                                'Decision, refund amount, mediator note, appeal state, dispute list route and next case step are reviewed before closing.',
+                            contractId: 'p2p-dispute-resolution-review',
+                          ),
+                        ),
                       ],
                     ),
                   ),
