@@ -49,8 +49,8 @@ class _StepBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 36,
-                height: 36,
+                width: AppSpacing.arenaStudioStepIconBox,
+                height: AppSpacing.arenaStudioStepIconBox,
                 decoration: BoxDecoration(
                   color: AppColors.warn10,
                   borderRadius: AppRadii.mdRadius,
@@ -78,7 +78,7 @@ class _StepBody extends StatelessWidget {
                       description,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1.45,
+                        height: AppSpacing.arenaStudioDescriptionLineHeight,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x3),
@@ -165,8 +165,8 @@ class _TemplateCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 44,
-            height: 44,
+            width: AppSpacing.arenaStudioTemplateIconBox,
+            height: AppSpacing.arenaStudioTemplateIconBox,
             decoration: BoxDecoration(
               color: _templateAccent(template.kind).withValues(alpha: .14),
               borderRadius: AppRadii.mdRadius,
@@ -174,7 +174,7 @@ class _TemplateCard extends StatelessWidget {
             child: Icon(
               _templateIcon(template.kind),
               color: _templateAccent(template.kind),
-              size: 22,
+              size: AppSpacing.arenaStudioTemplateGlyph,
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -199,13 +199,13 @@ class _TemplateCard extends StatelessWidget {
                       const Icon(
                         Icons.check_circle_rounded,
                         color: _arenaAccent,
-                        size: 17,
+                        size: AppSpacing.arenaStudioSelectedIcon,
                       )
                     else if (template.verifiedOnly)
                       const Icon(
                         Icons.lock_outline_rounded,
                         color: AppColors.text3,
-                        size: 16,
+                        size: AppSpacing.arenaStudioLockIcon,
                       ),
                   ],
                 ),
@@ -214,7 +214,7 @@ class _TemplateCard extends StatelessWidget {
                   template.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.35,
+                    height: AppSpacing.arenaStudioTemplateLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x3),
@@ -297,7 +297,10 @@ class _CommunityRulesFooter extends StatelessWidget {
       children: [
         TextButton.icon(
           onPressed: onTapRules,
-          icon: const Icon(Icons.menu_book_outlined, size: 16),
+          icon: const Icon(
+            Icons.menu_book_outlined,
+            size: AppSpacing.arenaStudioCommunityIcon,
+          ),
           label: const Text('Quy tắc cộng đồng'),
         ),
         const SizedBox(height: AppSpacing.x3),
@@ -318,7 +321,7 @@ class _CommunityRulesFooter extends StatelessWidget {
                   'Arena Points chỉ dùng trong Open Arena, không phải tài sản tài chính. Không thỏa thuận giao dịch ngoài nền tảng.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.35,
+                    height: AppSpacing.arenaStudioTemplateLineHeight,
                   ),
                 ),
               ),

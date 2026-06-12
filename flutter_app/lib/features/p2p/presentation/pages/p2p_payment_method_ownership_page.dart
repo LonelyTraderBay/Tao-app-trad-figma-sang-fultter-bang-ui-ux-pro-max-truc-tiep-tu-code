@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -54,8 +55,10 @@ class _P2PPaymentMethodOwnershipPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pPaymentBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pPaymentBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
     final canSubmit = controller.canSubmit(_uploaded) && !_submitting;
 
@@ -81,12 +84,7 @@ class _P2PPaymentMethodOwnershipPageState
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodOwnershipPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pPaymentScrollPadding(bottomInset),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -109,6 +107,19 @@ class _P2PPaymentMethodOwnershipPageState
                           const SizedBox(height: AppSpacing.x3),
                         ],
                         const SizedBox(height: AppSpacing.x3),
+                        VitPageContent(
+                          padding: VitContentPadding.compact,
+                          customGap: 0,
+                          children: const [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Payment ownership submission review',
+                              message:
+                                  'Required documents, optional evidence, upload and remove state, confirmation dialog, submitting state, and return path are reviewed before payment method ownership is approved.',
+                              contractId: 'SC-234',
+                            ),
+                          ],
+                        ),
                         VitCtaButton(
                           key: P2PPaymentMethodOwnershipPage.submitButtonKey,
                           loading: _submitting,
@@ -196,7 +207,7 @@ class _OwnershipHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pPaymentCardPadding,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -211,7 +222,7 @@ class _OwnershipHero extends StatelessWidget {
             child: const Icon(
               Icons.credit_card_rounded,
               color: AppColors.text1,
-              size: 28,
+              size: AppSpacing.p2pPaymentHeroIcon,
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -228,10 +239,7 @@ class _OwnershipHero extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Upload tài liệu chứng minh tài khoản thuộc sở hữu của bạn',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: 1.45,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],
             ),
@@ -260,7 +268,7 @@ class _OwnershipDocumentCard extends StatelessWidget {
     return VitCard(
       key: P2PPaymentMethodOwnershipPage.documentKey(document.id),
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pPaymentCardPadding,
       child: Row(
         children: [
           _DocumentIcon(uploaded: uploaded),
@@ -370,10 +378,7 @@ class _UploadButton extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadii.inputRadius,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x2,
-            ),
+            padding: AppSpacing.p2pPaymentOptionPadding,
             child: Text(
               'Upload',
               style: AppTextStyles.caption.copyWith(

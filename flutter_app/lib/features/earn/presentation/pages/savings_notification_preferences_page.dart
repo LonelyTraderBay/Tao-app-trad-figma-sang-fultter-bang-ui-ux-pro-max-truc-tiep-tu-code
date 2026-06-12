@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class SavingsNotificationPreferencesPage extends ConsumerStatefulWidget {
   const SavingsNotificationPreferencesPage({super.key, this.shellRenderMode});
@@ -99,30 +100,35 @@ class _SavingsNotificationPreferencesPageState
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
-                      SavingsNotificationMasterSummaryCard(
-                        masterEnabled: masterEnabled,
-                        enabledAlerts: enabledAlerts,
-                        totalAlerts: _alerts.length,
-                        onChanged: (value) {
-                          HapticFeedback.selectionClick();
-                          setState(() {
-                            _masterEnabled = value;
-                            if (!value) {
-                              _alerts = [
-                                for (final alert in _alerts)
-                                  SavingsNotificationAlertDraft(
-                                    id: alert.id,
-                                    title: alert.title,
-                                    description: alert.description,
-                                    iconKey: alert.iconKey,
-                                    enabled: false,
-                                    category: alert.category,
-                                    severity: alert.severity,
-                                  ),
-                              ];
-                            }
-                          });
-                        },
+                      VitCard(
+                        variant: VitCardVariant.standard,
+                        radius: VitCardRadius.md,
+                        padding: EdgeInsets.zero,
+                        child: SavingsNotificationMasterSummaryCard(
+                          masterEnabled: masterEnabled,
+                          enabledAlerts: enabledAlerts,
+                          totalAlerts: _alerts.length,
+                          onChanged: (value) {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              _masterEnabled = value;
+                              if (!value) {
+                                _alerts = [
+                                  for (final alert in _alerts)
+                                    SavingsNotificationAlertDraft(
+                                      id: alert.id,
+                                      title: alert.title,
+                                      description: alert.description,
+                                      iconKey: alert.iconKey,
+                                      enabled: false,
+                                      category: alert.category,
+                                      severity: alert.severity,
+                                    ),
+                                ];
+                              }
+                            });
+                          },
+                        ),
                       ),
                       SavingsNotificationQuickStats(
                         enabledChannels: enabledChannels,

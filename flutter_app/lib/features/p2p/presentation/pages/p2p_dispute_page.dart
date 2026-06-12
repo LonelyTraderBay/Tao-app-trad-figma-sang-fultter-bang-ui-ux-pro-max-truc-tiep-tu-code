@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -64,8 +65,10 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pDisputeBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pDisputeBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -91,19 +94,16 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
                   child: SingleChildScrollView(
                     key: P2PDisputePage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    padding: AppSpacing.p2pDisputeScrollPadding(bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      customGap: 0,
                       children: [
                         _DisputeHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.p2pDisputeSectionGap),
                         _SectionTitle(label: 'Lý do tranh chấp'),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.p2pDisputeSmallGap),
                         for (final reason in snapshot.reasons) ...[
                           _ReasonTile(
                             key: P2PDisputePage.reasonKey(reason),
@@ -111,9 +111,9 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
                             selected: reason == _selectedReason,
                             onTap: () => _selectReason(reason),
                           ),
-                          const SizedBox(height: AppSpacing.x3),
+                          const SizedBox(height: AppSpacing.p2pDisputeSmallGap),
                         ],
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.p2pDisputeSectionGap),
                         VitInput(
                           controller: _descriptionController,
                           fieldKey: P2PDisputePage.descriptionKey,
@@ -122,14 +122,14 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
                           textCapitalization: TextCapitalization.sentences,
                           onChanged: (_) => setState(() {}),
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.p2pDisputeSectionGap),
                         _EvidenceUploadBox(
                           title: snapshot.uploadTitle,
                           subtitle: snapshot.uploadSubtitle,
                           uploaded: _evidenceUploaded,
                           onTap: _markEvidenceUploaded,
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.p2pDisputeSectionGap),
                         VitCtaButton(
                           key: P2PDisputePage.submitKey,
                           onPressed: _canSubmit
@@ -138,10 +138,10 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
                           variant: VitCtaButtonVariant.danger,
                           child: const Text('Gửi tranh chấp'),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.p2pDisputeSmallGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pDisputeCompactCardPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Dispute submission review',
@@ -185,19 +185,17 @@ class _DisputeHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
-        color: AppColors.sell10,
-        border: Border.all(color: AppColors.sell15),
-        borderRadius: AppRadii.cardLargeRadius,
-      ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.lg,
+      borderColor: AppColors.sell15,
+      padding: AppSpacing.p2pDisputeCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: AppSpacing.ctaHeight,
-            height: AppSpacing.ctaHeight,
+            width: AppSpacing.p2pDisputeHeroIconBox,
+            height: AppSpacing.p2pDisputeHeroIconBox,
             decoration: BoxDecoration(
               color: AppColors.sell.withValues(alpha: .18),
               borderRadius: AppRadii.inputRadius,
@@ -271,20 +269,14 @@ class _ReasonTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
+        child: VitCard(
+          variant: VitCardVariant.ghost,
+          radius: VitCardRadius.sm,
+          borderColor: selected ? AppColors.sell : AppColors.borderSolid,
           constraints: const BoxConstraints(
-            minHeight: AppSpacing.buttonCompact + AppSpacing.x2,
+            minHeight: AppSpacing.p2pDisputeReasonMinHeight,
           ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: selected ? AppColors.sell : AppColors.borderSolid,
-            ),
-            borderRadius: AppRadii.inputRadius,
-          ),
+          padding: AppSpacing.p2pDisputeReasonTilePadding,
           alignment: Alignment.centerLeft,
           child: Text(
             reason,
@@ -318,7 +310,7 @@ class _EvidenceUploadBox extends StatelessWidget {
     return CustomPaint(
       painter: _DashedBorderPainter(
         color: uploaded ? AppColors.buy20 : AppColors.accent30,
-        radius: AppRadii.cardRadius.topLeft.x,
+        radius: AppRadii.cardRadius.topLeft,
       ),
       child: Material(
         color: AppColors.surface.withValues(alpha: .56),
@@ -328,7 +320,7 @@ class _EvidenceUploadBox extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadii.cardRadius,
           child: SizedBox(
-            height: AppSpacing.buttonHero + AppSpacing.x5,
+            height: AppSpacing.p2pDisputeUploadHeight,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -365,24 +357,22 @@ class _DashedBorderPainter extends CustomPainter {
   const _DashedBorderPainter({required this.color, required this.radius});
 
   final Color color;
-  final double radius;
+  final Radius radius;
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = color
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.5;
+      ..strokeWidth = AppSpacing.borderWidth;
     final path = Path()
-      ..addRRect(
-        RRect.fromRectAndRadius(Offset.zero & size, Radius.circular(radius)),
-      );
+      ..addRRect(RRect.fromRectAndRadius(Offset.zero & size, radius));
     for (final metric in path.computeMetrics()) {
       var distance = 0.0;
       while (distance < metric.length) {
-        final next = distance + AppSpacing.x3;
+        final next = distance + AppSpacing.p2pDisputeDashLength;
         canvas.drawPath(metric.extractPath(distance, next), paint);
-        distance = next + AppSpacing.x2;
+        distance = next + AppSpacing.p2pDisputeDashGap;
       }
     }
   }

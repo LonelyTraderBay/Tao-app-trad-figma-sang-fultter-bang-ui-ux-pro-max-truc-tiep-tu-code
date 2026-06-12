@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
 class StakingRecommendationsPage extends ConsumerStatefulWidget {
@@ -79,7 +80,14 @@ class _StakingRecommendationsPageState
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
-                      StakingRecommendationsHeroCard(snapshot: snapshot),
+                      VitCard(
+                        variant: VitCardVariant.standard,
+                        radius: VitCardRadius.md,
+                        padding: EdgeInsets.zero,
+                        child: StakingRecommendationsHeroCard(
+                          snapshot: snapshot,
+                        ),
+                      ),
                       StakingRecommendationsProfileCard(snapshot: snapshot),
                       StakingRecommendationsAmountSimulator(
                         amountText: _amountText,

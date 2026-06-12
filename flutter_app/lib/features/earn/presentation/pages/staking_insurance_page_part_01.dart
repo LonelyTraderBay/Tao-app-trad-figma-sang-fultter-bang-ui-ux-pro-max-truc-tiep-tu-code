@@ -120,7 +120,7 @@ class _InfoBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -190,11 +190,11 @@ class _TabButton extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 160),
                 width: selected ? AppSpacing.buttonHero : 0,
-                height: 2,
+                height: AppSpacing.stakingInsuranceTabIndicatorHeight,
                 decoration: BoxDecoration(
                   color: selected
                       ? AppColors.primarySoft
@@ -251,23 +251,26 @@ class _OverviewTab extends StatelessWidget {
                             color: AppColors.text3,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x3),
+                        ),
                         Text(
                           _formatUsd(totalInsured),
-                          style: AppTextStyles.heroNumber.copyWith(
-                            fontSize: 28,
-                          ),
+                          style: AppTextStyles.heroNumber.copyWith(),
                         ),
                       ],
                     ),
                   ),
                   Container(
-                    width: 60,
-                    height: 60,
+                    width: AppSpacing.stakingInsuranceShieldIconBox,
+                    height: AppSpacing.stakingInsuranceShieldIconBox,
                     decoration: BoxDecoration(
                       color: AppColors.buy10,
-                      borderRadius: BorderRadius.circular(999),
-                      border: Border.all(color: AppColors.buy, width: 2),
+                      borderRadius: AppRadii.pillRadius,
+                      border: Border.all(
+                        color: AppColors.buy,
+                        width: AppSpacing.stakingInsuranceShieldBorderWidth,
+                      ),
                     ),
                     child: const Icon(
                       Icons.shield_outlined,
@@ -277,7 +280,7 @@ class _OverviewTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
               Row(
                 children: [
                   Expanded(
@@ -298,9 +301,9 @@ class _OverviewTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         _BenefitsGrid(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         _WarningNote(snapshot: snapshot),
       ],
     );
@@ -326,7 +329,7 @@ class _SummaryMetric extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
@@ -360,10 +363,10 @@ class _BenefitsGrid extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+            crossAxisCount: AppSpacing.stakingInsuranceBenefitGridColumns,
             crossAxisSpacing: AppSpacing.x4,
             mainAxisSpacing: AppSpacing.x4,
-            childAspectRatio: 1.55,
+            childAspectRatio: AppSpacing.stakingInsuranceBenefitGridAspect,
           ),
           itemBuilder: (context, index) {
             final benefit = snapshot.benefits[index];
@@ -393,7 +396,7 @@ class _BenefitCard extends StatelessWidget {
             height: AppSpacing.ctaHeight,
             decoration: BoxDecoration(
               color: _iconFillColor(benefit.icon),
-              borderRadius: BorderRadius.circular(999),
+              borderRadius: AppRadii.pillRadius,
               border: Border.all(color: _iconBorder(benefit.icon)),
             ),
             child: Icon(
@@ -412,7 +415,7 @@ class _BenefitCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Text(
             benefit.description,
             maxLines: 1,
@@ -451,7 +454,7 @@ class _WarningNote extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.warningTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x3),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                 for (final bullet in snapshot.warningBullets)
                   Padding(
                     padding: const EdgeInsets.only(bottom: AppSpacing.x1),

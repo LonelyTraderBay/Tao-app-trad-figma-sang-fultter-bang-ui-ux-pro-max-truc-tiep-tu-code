@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/p2p/domain/entities/p2p_entities.dart';
@@ -35,10 +36,7 @@ class P2PDisputeSupportChatCard extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x3,
-            ),
+            padding: AppSpacing.p2pDisputeChatHeaderPadding,
             decoration: const BoxDecoration(
               color: AppColors.surface,
               border: Border(bottom: BorderSide(color: AppColors.divider)),
@@ -68,7 +66,7 @@ class P2PDisputeSupportChatCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.p2pDisputeChatBodyPadding,
             child: Column(
               children: [
                 for (final message in messages)
@@ -77,12 +75,7 @@ class P2PDisputeSupportChatCard extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.x4,
-              AppSpacing.x3,
-              AppSpacing.x4,
-              AppSpacing.x3,
-            ),
+            padding: AppSpacing.p2pDisputeChatInputPadding,
             decoration: const BoxDecoration(
               color: AppColors.surface,
               border: Border(top: BorderSide(color: AppColors.divider)),
@@ -120,8 +113,8 @@ class P2PDisputeSupportChatCard extends StatelessWidget {
                     onTap: onSend,
                     customBorder: const CircleBorder(),
                     child: const SizedBox(
-                      width: 38,
-                      height: 38,
+                      width: AppSpacing.p2pDisputeSendButtonSize,
+                      height: AppSpacing.p2pDisputeSendButtonSize,
                       child: Icon(
                         Icons.send_rounded,
                         color: AppColors.text1,
@@ -150,20 +143,14 @@ class _SupportMessageBubble extends StatelessWidget {
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        constraints: const BoxConstraints(maxWidth: 300),
-        margin: const EdgeInsets.only(bottom: AppSpacing.x3),
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
+        constraints: const BoxConstraints(
+          maxWidth: AppSpacing.p2pDisputeBubbleMaxWidth,
         ),
+        margin: AppSpacing.p2pDisputeBubbleMargin,
+        padding: AppSpacing.p2pDisputeBubblePadding,
         decoration: BoxDecoration(
           color: isUser ? AppModuleAccents.p2p : AppColors.surface2,
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(16),
-            topRight: const Radius.circular(16),
-            bottomLeft: Radius.circular(isUser ? 16 : 4),
-            bottomRight: Radius.circular(isUser ? 4 : 16),
-          ),
+          borderRadius: AppRadii.disputeMessageBubbleRadius(isUser: isUser),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

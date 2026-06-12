@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -33,8 +34,10 @@ class P2PDisputesPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pDisputeBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pDisputeBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -60,14 +63,11 @@ class P2PDisputesPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: P2PDisputesPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x5,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    padding: AppSpacing.p2pDisputesScrollPadding(bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      customGap: 0,
                       children: [
                         _StatsRow(snapshot: snapshot),
                         const SizedBox(height: AppSpacing.x4),
@@ -155,14 +155,14 @@ class _StatCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      height: AppSpacing.buttonHero + AppSpacing.x5,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      height: AppSpacing.p2pDisputeStatCardHeight,
+      padding: AppSpacing.p2pDisputeCompactCardPadding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: AppSpacing.x6,
-            height: AppSpacing.x6,
+            width: AppSpacing.p2pDisputeStatIconBox,
+            height: AppSpacing.p2pDisputeStatIconBox,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .12),
               shape: BoxShape.circle,
@@ -198,12 +198,9 @@ class _SafetyNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.buttonHero + AppSpacing.x1,
+        minHeight: AppSpacing.p2pDisputeNoticeMinHeight,
       ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.p2pDisputeNoticePadding,
       decoration: BoxDecoration(
         color: AppModuleAccents.p2p.withValues(alpha: .08),
         border: Border.all(color: AppModuleAccents.p2p.withValues(alpha: .18)),
@@ -232,10 +229,7 @@ class _SafetyNotice extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   snapshot.notice,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: 1.55,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -258,7 +252,10 @@ class _ListHeader extends StatelessWidget {
         Expanded(
           child: Text(
             'Danh sách tranh chấp',
-            style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
           ),
         ),
         if (activeCount > 0)
@@ -296,7 +293,7 @@ class _EmptyDisputes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pDisputeEmptyPadding,
       child: Column(
         children: [
           const Icon(
@@ -334,7 +331,7 @@ class _DisputeListTile extends StatelessWidget {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.p2pDisputeDetail(dispute.id));
       },
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDisputeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -423,10 +420,7 @@ class _StatusPill extends StatelessWidget {
         borderRadius: AppRadii.smRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.p2pDisputePillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -450,7 +444,7 @@ class _MetaItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: AppColors.text3, size: 11),
+        Icon(icon, color: AppColors.text3, size: AppSpacing.p2pDisputeMetaIcon),
         const SizedBox(width: AppSpacing.x1),
         Text(
           label,
@@ -471,9 +465,9 @@ class _GuideCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.buttonHero + AppSpacing.x7,
+        minHeight: AppSpacing.p2pDisputeGuideMinHeight,
       ),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDisputeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

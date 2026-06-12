@@ -58,19 +58,19 @@ class _VerifyStep extends StatelessWidget {
       child: Column(
         children: [
           const _ShieldHero(),
-          const SizedBox(height: 18),
+          const Padding(padding: EdgeInsets.only(top: 18)),
           Text(
             'Bước 2: Xác minh mã',
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             'Nhập mã 6 chữ số từ ứng dụng xác thực của bạn',
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: 28),
+          const Padding(padding: EdgeInsets.only(top: 28)),
           Stack(
             alignment: Alignment.center,
             children: [
@@ -108,17 +108,14 @@ class _VerifyStep extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           Text(
             'Chạm vào đây để nhập mã',
             textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(
-              color: _authPrimary,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.caption.copyWith(color: _authPrimary),
           ),
           if (error.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
             _ErrorBanner(error: error),
           ],
         ],
@@ -154,7 +151,6 @@ class _CodeDigitBox extends StatelessWidget {
       child: Text(
         digit,
         style: AppTextStyles.sectionTitle.copyWith(
-          fontSize: 24,
           fontWeight: AppTextStyles.bold,
         ),
       ),

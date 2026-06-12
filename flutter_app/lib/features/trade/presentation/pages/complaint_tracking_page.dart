@@ -16,6 +16,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 const _trackingBackground = AppColors.bg;
 const _trackingPanel2 = AppColors.surface3;
 const _trackingBorder = AppColors.borderSolid;
@@ -83,6 +85,18 @@ class ComplaintTrackingPage extends ConsumerWidget {
                       _TimelineList(steps: snapshot.timeline),
                       for (final action in snapshot.actions)
                         _TrackingActionButton(action: action),
+                      const TradeBodyReviewSection(
+                        title: 'Complaint status review',
+                        message: 'Complaint tracking body reviewed',
+                        detail:
+                            'Case status, deadline, timeline, action, empty, and result states stay visible for complaint follow-up.',
+                        primary:
+                            'Status and response deadline remain above the investigation timeline.',
+                        secondary:
+                            'Escalation actions stay after evidence and next-step context.',
+                        tertiary:
+                            'Review copy keeps the flow regulatory and avoids trading execution language.',
+                      ),
                     ],
                   ),
                 ),

@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -22,7 +23,6 @@ const _historyBackground = AppColors.bg;
 const _historyPrimary = AppColors.primary;
 const _historyGreen = AppColors.buy;
 const _historyRed = AppColors.sell;
-const _historyAmber = AppColors.caution;
 
 class TransactionHistoryPage extends ConsumerStatefulWidget {
   const TransactionHistoryPage({super.key, this.shellRenderMode});
@@ -51,8 +51,10 @@ class _TransactionHistoryPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 92
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.walletBottomInsetVisualChrome
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.walletBottomInsetNativeChrome) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -80,7 +82,12 @@ class _TransactionHistoryPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: TransactionHistoryPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.pageHorizontalPadding,
+                    AppSpacing.rowPy,
+                    AppSpacing.pageHorizontalPadding,
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     customGap: 0,
@@ -90,13 +97,17 @@ class _TransactionHistoryPageState
                         count: transactions.length,
                         onExport: () => _showExportNotice(transactions.length),
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(
+                        height: AppSpacing.walletHistoryFilterTopPad,
+                      ),
                       _FilterTabs(
                         filters: snapshot.filters,
                         active: _filter,
                         onChanged: (id) => setState(() => _filter = id),
                       ),
-                      const SizedBox(height: 22),
+                      const SizedBox(
+                        height: AppSpacing.walletHistoryGroupTopPad,
+                      ),
                       for (final group in grouped)
                         _TransactionGroup(
                           group: group,

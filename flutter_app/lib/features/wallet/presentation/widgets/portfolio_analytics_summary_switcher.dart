@@ -8,8 +8,8 @@ class _ValueSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 222,
-      padding: const EdgeInsets.fromLTRB(20, 22, 20, 20),
+      height: AppSpacing.walletAnalyticsSummaryHeight,
+      padding: AppSpacing.walletAnalyticsSummaryPadding,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
@@ -23,33 +23,34 @@ class _ValueSummary extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Tổng giá trị danh mục',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 12,
-              height: 1,
+            'T\u1ED5ng gi\u00E1 tr\u1ECB danh m\u1EE5c',
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+          ),
+          const SizedBox(height: AppSpacing.walletAnalyticsSummaryGap),
+          SizedBox(
+            width: double.infinity,
+            child: FittedBox(
+              alignment: Alignment.centerLeft,
+              fit: BoxFit.scaleDown,
+              child: Text(
+                _formatUsd(snapshot.totalUsd),
+                maxLines: 1,
+                style: AppTextStyles.heroNumber.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
+              ),
             ),
           ),
-          const SizedBox(height: 16),
-          Text(
-            _formatUsd(snapshot.totalUsd),
-            style: AppTextStyles.heroNumber.copyWith(
-              color: AppColors.text1,
-              fontSize: 27,
-              fontWeight: FontWeight.w800,
-              fontFamily: 'Roboto',
-              fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
-            ),
-          ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.walletAnalyticsSummaryGap),
           Row(
             children: [
               SizedBox(
-                width: 164,
+                width: AppSpacing.walletAnalyticsReturnPillWidth,
                 child: Container(
-                  height: 23,
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  height: AppSpacing.walletAnalyticsReturnPillHeight,
+                  padding: AppSpacing.walletAnalyticsReturnPillPadding,
                   decoration: BoxDecoration(
                     color: _analyticsGreen.withValues(alpha: .16),
                     borderRadius: AppRadii.mdRadius,
@@ -60,9 +61,11 @@ class _ValueSummary extends StatelessWidget {
                       const Icon(
                         Icons.trending_up_rounded,
                         color: _analyticsGreen,
-                        size: 13,
+                        size: AppSpacing.walletAnalyticsReturnPillIcon,
                       ),
-                      const SizedBox(width: 4),
+                      const SizedBox(
+                        width: AppSpacing.walletAnalyticsReturnPillGap,
+                      ),
                       Expanded(
                         child: Text(
                           '+${_formatUsd(snapshot.totalReturnUsd, symbol: false)} (+${snapshot.totalReturnPct.toStringAsFixed(2)}%)',
@@ -70,10 +73,7 @@ class _ValueSummary extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.micro.copyWith(
                             color: _analyticsGreen,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w800,
-                            fontFamily: 'Roboto',
-                            height: 1,
+                            fontWeight: AppTextStyles.bold,
                           ),
                         ),
                       ),
@@ -81,13 +81,13 @@ class _ValueSummary extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 9),
-              Text(
-                'so với đầu kỳ',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 11,
-                  height: 1,
+              const SizedBox(width: AppSpacing.walletAnalyticsReturnMetaGap),
+              Expanded(
+                child: Text(
+                  'so v\u1EDBi \u0111\u1EA7u k\u1EF3',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
             ],
@@ -97,28 +97,28 @@ class _ValueSummary extends StatelessWidget {
             children: [
               Expanded(
                 child: _QuickStat(
-                  label: 'Lợi nhuận tốt nhất',
+                  label: 'L\u1EE3i nhu\u1EADn t\u1ED1t nh\u1EA5t',
                   value: '+\$${_formatCompactMoney(snapshot.bestProfitUsd)}',
                   sub: snapshot.bestProfitAsset,
                   color: _analyticsGreen,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.walletAnalyticsQuickStatGap),
               Expanded(
                 child: _QuickStat(
-                  label: 'Thua lỗ nhất',
+                  label: 'Thua l\u1ED7 nh\u1EA5t',
                   value:
                       '-\$${_formatCompactMoney(snapshot.worstLossUsd.abs())}',
                   sub: snapshot.worstLossAsset,
                   color: _analyticsRed,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.walletAnalyticsQuickStatGap),
               Expanded(
                 child: _QuickStat(
-                  label: 'Tài sản',
+                  label: 'T\u00E0i s\u1EA3n',
                   value: '${snapshot.assets.length}',
-                  sub: 'loại coin',
+                  sub: 'lo\u1EA1i coin',
                   color: _analyticsPrimary,
                 ),
               ),
@@ -146,8 +146,8 @@ class _QuickStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 74,
-      padding: const EdgeInsets.fromLTRB(12, 8, 12, 7),
+      height: AppSpacing.walletAnalyticsQuickStatHeight,
+      padding: AppSpacing.walletAnalyticsQuickStatPadding,
       decoration: BoxDecoration(
         color: AppColors.onAccent.withValues(alpha: .055),
         borderRadius: AppRadii.inputRadius,
@@ -159,31 +159,24 @@ class _QuickStat extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 9,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: AppSpacing.walletAnalyticsQuickStatTextGap),
           Text(
             value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: color,
-              fontSize: 13,
-              fontWeight: FontWeight.w800,
-              fontFamily: 'Roboto',
-              height: 1,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: AppSpacing.walletAnalyticsQuickStatTextGap),
           Text(
             sub,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text2,
-              fontSize: 10,
-              height: 1,
-            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text2),
           ),
         ],
       ),
@@ -200,14 +193,18 @@ class _ViewSwitcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const items = [
-      _ViewItem('overview', 'Tổng quan', Icons.bar_chart_rounded),
-      _ViewItem('allocation', 'Phân bổ', Icons.pie_chart_outline_rounded),
-      _ViewItem('pnl', 'Lãi/Lỗ', Icons.trending_up_rounded),
+      _ViewItem('overview', 'T\u1ED5ng quan', Icons.bar_chart_rounded),
+      _ViewItem(
+        'allocation',
+        'Ph\u00E2n b\u1ED5',
+        Icons.pie_chart_outline_rounded,
+      ),
+      _ViewItem('pnl', 'L\u00E3i/L\u1ED7', Icons.trending_up_rounded),
     ];
 
     return Container(
-      height: 46,
-      padding: const EdgeInsets.all(4),
+      height: AppSpacing.walletAnalyticsSwitcherHeight,
+      padding: AppSpacing.walletAnalyticsSwitcherPadding,
       decoration: BoxDecoration(
         color: _analyticsPanel2,
         borderRadius: AppRadii.lgRadius,
@@ -236,18 +233,22 @@ class _ViewSwitcher extends StatelessWidget {
                         color: active == item.id
                             ? _analyticsPrimary
                             : AppColors.text2,
-                        size: 14,
+                        size: AppSpacing.walletAnalyticsSwitcherIcon,
                       ),
-                      const SizedBox(width: 7),
-                      Text(
-                        item.label,
-                        style: AppTextStyles.micro.copyWith(
-                          color: active == item.id
-                              ? _analyticsPrimary
-                              : AppColors.text2,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w800,
-                          height: 1,
+                      const SizedBox(
+                        width: AppSpacing.walletAnalyticsSwitcherIconGap,
+                      ),
+                      Flexible(
+                        child: Text(
+                          item.label,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.micro.copyWith(
+                            color: active == item.id
+                                ? _analyticsPrimary
+                                : AppColors.text2,
+                            fontWeight: AppTextStyles.bold,
+                          ),
                         ),
                       ),
                     ],

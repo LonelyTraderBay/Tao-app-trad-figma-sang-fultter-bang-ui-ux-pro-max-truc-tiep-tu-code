@@ -75,7 +75,8 @@ class _FilterTabs extends StatelessWidget {
               active: active == tabs[index].filter,
               onTap: () => onSelected(tabs[index].filter),
             ),
-            if (index != tabs.length - 1) const SizedBox(width: 8),
+            if (index != tabs.length - 1)
+              const SizedBox(width: AppSpacing.predictionHomeFilterGap),
           ],
         ],
       ),
@@ -110,8 +111,8 @@ class _FilterTabButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.mdRadius,
       child: Container(
-        height: 36,
-        padding: const EdgeInsets.symmetric(horizontal: 13),
+        height: AppSpacing.predictionHomeFilterHeight,
+        padding: AppSpacing.predictionHomeFilterPadding,
         decoration: BoxDecoration(
           color: active
               ? _marketPrimary.withValues(alpha: .12)
@@ -127,15 +128,14 @@ class _FilterTabButton extends StatelessWidget {
           children: [
             Icon(
               meta.icon,
-              size: 12,
+              size: AppSpacing.predictionHomeFilterIcon,
               color: active ? _marketPrimary : AppColors.text3,
             ),
-            const SizedBox(width: 6),
+            const SizedBox(width: AppSpacing.predictionHomeFilterIconGap),
             Text(
               meta.label,
-              style: AppTextStyles.caption.copyWith(
+              style: AppTextStyles.badge.copyWith(
                 color: active ? _marketPrimary : AppColors.text3,
-                fontSize: 12,
                 fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
               ),
             ),
@@ -169,7 +169,7 @@ class _CategoryChips extends StatelessWidget {
             active: activeCategory == null,
             onTap: () => onSelected(null),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.predictionHomeFilterGap),
           for (var index = 0; index < categories.length; index += 1) ...[
             _CategoryChip(
               key: categories[index] == 'Live Crypto'
@@ -181,7 +181,8 @@ class _CategoryChips extends StatelessWidget {
                 activeCategory == categories[index] ? null : categories[index],
               ),
             ),
-            if (index != categories.length - 1) const SizedBox(width: 8),
+            if (index != categories.length - 1)
+              const SizedBox(width: AppSpacing.predictionHomeFilterGap),
           ],
         ],
       ),
@@ -207,8 +208,8 @@ class _CategoryChip extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
       child: Container(
-        height: 31,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        height: AppSpacing.predictionHomeCategoryHeight,
+        padding: AppSpacing.predictionHomeCategoryPadding,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active

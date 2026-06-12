@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_common.dart';
@@ -16,8 +17,8 @@ class MarketListColumnHeader extends StatelessWidget {
     return Tooltip(
       message: 'Cập nhật $lastUpdatedLabel',
       child: Container(
-        height: 46,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        height: AppSpacing.marketColumnHeaderHeight,
+        padding: AppSpacing.marketColumnHeaderPadding,
         decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(color: AppColors.divider)),
         ),
@@ -109,11 +110,11 @@ class _MarketPairRow extends StatelessWidget {
         decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(color: AppColors.divider)),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        padding: AppSpacing.marketPairRowPadding,
         child: Row(
           children: [
             _CoinAvatar(pair: pair),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.marketPairGap),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,26 +125,23 @@ class _MarketPairRow extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.body.copyWith(
                       fontWeight: AppTextStyles.bold,
-                      height: 1.15,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.marketPairMicroGap),
                   Text(
                     pair.quoteAsset,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      fontSize: 12,
-                      height: 1.1,
                     ),
                   ),
                 ],
               ),
             ),
             SizedBox(
-              width: 70,
-              height: 32,
+              width: AppSpacing.marketPairSparklineWidth,
+              height: AppSpacing.marketPairSparklineHeight,
               child: CustomPaint(
                 painter: MarketListSparklinePainter(
                   values: pair.sparklineData,
@@ -151,9 +149,9 @@ class _MarketPairRow extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.marketPairGap),
             SizedBox(
-              width: 74,
+              width: AppSpacing.marketPairPriceColumnWidth,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -163,27 +161,21 @@ class _MarketPairRow extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.body.copyWith(
                       fontWeight: AppTextStyles.bold,
-                      height: 1.1,
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: AppSpacing.marketPairPriceGap),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 5,
-                    ),
+                    padding: AppSpacing.marketPairChangePadding,
                     decoration: BoxDecoration(
                       color: positive ? AppColors.buy15 : AppColors.sell15,
                       borderRadius: AppRadii.smRadius,
                     ),
                     child: Text(
                       marketListFormatPct(pair.change24h),
-                      style: AppTextStyles.micro.copyWith(
+                      style: AppTextStyles.badge.copyWith(
                         color: color,
-                        fontSize: 12,
                         fontWeight: AppTextStyles.bold,
-                        height: 1,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
@@ -191,7 +183,7 @@ class _MarketPairRow extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.marketPairFavoriteGap),
             Tooltip(
               message: favorite ? 'Bỏ yêu thích' : 'Thêm vào yêu thích',
               child: Semantics(
@@ -201,14 +193,14 @@ class _MarketPairRow extends StatelessWidget {
                     : 'Thêm vào yêu thích ${pair.baseAsset}',
                 child: InkResponse(
                   onTap: onFavoriteToggle,
-                  radius: 18,
+                  radius: AppSpacing.marketPairFavoriteRadius,
                   child: SizedBox(
-                    width: 28,
-                    height: 32,
+                    width: AppSpacing.marketPairFavoriteWidth,
+                    height: AppSpacing.marketPairFavoriteHeight,
                     child: Icon(
                       favorite ? Icons.star_rounded : Icons.star_border_rounded,
                       color: favorite ? marketListArenaAccent : AppColors.text3,
-                      size: 18,
+                      size: AppSpacing.marketPairFavoriteIcon,
                     ),
                   ),
                 ),
@@ -229,14 +221,14 @@ class _CoinAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 34,
-      height: 34,
+      width: AppSpacing.marketPairAvatar,
+      height: AppSpacing.marketPairAvatar,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: pair.logoColor.withValues(alpha: 0.15),
         border: Border.all(
           color: pair.logoColor.withValues(alpha: 0.30),
-          width: 1.5,
+          width: AppSpacing.marketPairAvatarBorder,
         ),
         shape: BoxShape.circle,
       ),
@@ -245,11 +237,9 @@ class _CoinAvatar extends StatelessWidget {
           0,
           pair.baseAsset.length < 3 ? pair.baseAsset.length : 3,
         ),
-        style: AppTextStyles.caption.copyWith(
+        style: AppTextStyles.badge.copyWith(
           color: pair.logoColor,
-          fontSize: 12,
           fontWeight: AppTextStyles.bold,
-          height: 1,
         ),
       ),
     );

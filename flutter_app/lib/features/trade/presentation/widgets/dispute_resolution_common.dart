@@ -1,34 +1,5 @@
 part of '../pages/dispute_resolution_page.dart';
 
-class _StatusPill extends StatelessWidget {
-  const _StatusPill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 20,
-      alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .16),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Text(
-        label.toUpperCase(),
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 10,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
-  }
-}
-
 class _CaseTimeline extends StatelessWidget {
   const _CaseTimeline({required this.disputeCase});
 
@@ -91,7 +62,6 @@ class _TimelineRow extends StatelessWidget {
                 label,
                 style: AppTextStyles.micro.copyWith(
                   color: done ? AppColors.text1 : AppColors.text3,
-                  fontSize: 10,
                   fontWeight: done ? AppTextStyles.bold : AppTextStyles.normal,
                   height: 1.2,
                 ),
@@ -101,7 +71,6 @@ class _TimelineRow extends StatelessWidget {
                   date,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 9,
                     height: 1.2,
                   ),
                 ),
@@ -126,11 +95,7 @@ class _RefundPanel extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Text(
         '\$5 refund issued to your account',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.buy,
-          fontSize: 10,
-          height: 1.3,
-        ),
+        style: AppTextStyles.micro.copyWith(color: AppColors.buy, height: 1.3),
       ),
     );
   }
@@ -152,28 +117,6 @@ class _EmptyCases extends StatelessWidget {
   }
 }
 
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10),
-      child: Text(
-        text,
-        style: AppTextStyles.caption.copyWith(
-          color: AppColors.text2,
-          fontSize: 12,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
-  }
-}
-
 class _FieldLabel extends StatelessWidget {
   const _FieldLabel(this.text);
 
@@ -183,27 +126,23 @@ class _FieldLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: AppTextStyles.micro.copyWith(
-        color: AppColors.text2,
-        fontSize: 11,
-        height: 1,
-      ),
+      style: AppTextStyles.micro.copyWith(color: AppColors.text2, height: 1),
     );
   }
 }
 
-Color _statusColor(String status) {
+VitStatusPillStatus _statusPillStatus(String status) {
   switch (status) {
     case 'under_review':
-      return _disputePrimary;
+      return VitStatusPillStatus.info;
     case 'provider_response':
-      return AppColors.warn;
+      return VitStatusPillStatus.warning;
     case 'resolved':
-      return AppColors.buy;
+      return VitStatusPillStatus.success;
     case 'escalated':
-      return AppColors.sell;
+      return VitStatusPillStatus.error;
     default:
-      return AppColors.text3;
+      return VitStatusPillStatus.neutral;
   }
 }
 

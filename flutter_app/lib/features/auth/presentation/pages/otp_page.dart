@@ -239,14 +239,23 @@ class _OTPPageState extends ConsumerState<OTPPage> {
                   padding: VitContentPadding.relaxed,
                   gap: VitContentGap.relaxed,
                   children: [
-                    const _ShieldHero(),
-                    _OtpIntro(contact: widget.contact),
-                    _OtpDigitRow(
-                      controllers: _controllers,
-                      focusNodes: _focusNodes,
-                      hasError: _error.isNotEmpty,
-                      onChanged: _handleChanged,
-                      onKey: _handleKey,
+                    const VitCard(
+                      padding: EdgeInsets.zero,
+                      child: _ShieldHero(),
+                    ),
+                    VitCard(
+                      padding: EdgeInsets.zero,
+                      child: _OtpIntro(contact: widget.contact),
+                    ),
+                    VitCard(
+                      padding: EdgeInsets.zero,
+                      child: _OtpDigitRow(
+                        controllers: _controllers,
+                        focusNodes: _focusNodes,
+                        hasError: _error.isNotEmpty,
+                        onChanged: _handleChanged,
+                        onKey: _handleKey,
+                      ),
                     ),
                     _OtpProgress(filled: filled),
                     if (_error.isNotEmpty) _OtpErrorBanner(error: _error),
@@ -272,7 +281,6 @@ class _OTPPageState extends ConsumerState<OTPPage> {
                       textAlign: TextAlign.center,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 12,
                         height: 1.5,
                       ),
                     ),

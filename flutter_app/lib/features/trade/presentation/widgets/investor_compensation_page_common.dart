@@ -23,7 +23,6 @@ class _WarningBox extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: _compAmber,
-                fontSize: 10,
                 fontWeight: AppTextStyles.bold,
                 height: 1.3,
               ),
@@ -100,7 +99,6 @@ class _ClaimGuide extends StatelessWidget {
               'Visit FSCS Website',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.onAccent,
-                fontSize: 13,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -135,7 +133,6 @@ class _ClaimStep extends StatelessWidget {
               '${step.step}',
               style: AppTextStyles.baseMedium.copyWith(
                 color: _compPrimary,
-                fontSize: 14,
                 height: 1,
               ),
             ),
@@ -149,7 +146,6 @@ class _ClaimStep extends StatelessWidget {
                   step.title,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -159,7 +155,6 @@ class _ClaimStep extends StatelessWidget {
                   step.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1.35,
                   ),
                 ),
@@ -183,7 +178,6 @@ class _EligibilityHeading extends StatelessWidget {
       text,
       style: AppTextStyles.caption.copyWith(
         color: AppColors.text1,
-        fontSize: 12,
         fontWeight: AppTextStyles.bold,
         height: 1,
       ),
@@ -215,7 +209,6 @@ class _Bullet extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 11,
               height: 1.35,
             ),
           ),
@@ -254,7 +247,6 @@ class _FaqButton extends StatelessWidget {
                 'FSCS FAQs',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -294,7 +286,6 @@ class _SectionLabel extends StatelessWidget {
           text,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            fontSize: 11,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

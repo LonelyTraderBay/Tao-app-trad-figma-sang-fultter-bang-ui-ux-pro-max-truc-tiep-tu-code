@@ -25,7 +25,6 @@ class _ProviderMetric extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.micro.copyWith(
             color: color,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
           ),
         ),
@@ -200,7 +199,7 @@ class _LegendItem extends StatelessWidget {
           height: 10,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(3),
+            borderRadius: AppRadii.xsRadius,
           ),
         ),
         const SizedBox(width: 6),
@@ -302,7 +301,7 @@ class _SectionHeader extends StatelessWidget {
           height: 16,
           decoration: BoxDecoration(
             color: accentColor,
-            borderRadius: BorderRadius.circular(2),
+            borderRadius: AppRadii.xsRadius,
           ),
         ),
         const SizedBox(width: 8),

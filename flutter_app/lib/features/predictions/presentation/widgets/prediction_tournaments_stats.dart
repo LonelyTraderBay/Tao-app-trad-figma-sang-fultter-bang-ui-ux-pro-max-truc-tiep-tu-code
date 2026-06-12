@@ -8,12 +8,12 @@ class _TournamentStatsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: 2,
+      crossAxisCount: AppSpacing.predictionTournamentStatsColumns,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: 8,
-      crossAxisSpacing: 16,
-      childAspectRatio: 4.6,
+      mainAxisSpacing: AppSpacing.predictionTournamentStatsMainGap,
+      crossAxisSpacing: AppSpacing.predictionTournamentStatsCrossGap,
+      childAspectRatio: AppSpacing.predictionTournamentStatsAspect,
       children: [
         _StatCell(
           icon: Icons.attach_money_rounded,
@@ -61,29 +61,30 @@ class _StatCell extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(icon, color: AppColors.text3, size: 12),
-            const SizedBox(width: 7),
+            Icon(
+              icon,
+              color: AppColors.text3,
+              size: AppSpacing.predictionTournamentStatIcon,
+            ),
+            const SizedBox(width: AppSpacing.predictionTournamentStatIconGap),
             Text(
               label,
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.numericMicro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
-                height: 1.2,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.predictionTournamentStatValueGap),
         Center(
           child: Text(
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.baseMedium.copyWith(
+            style: AppTextStyles.control.copyWith(
               color: valueColor,
               fontWeight: AppTextStyles.bold,
-              fontSize: 15,
-              height: 1.2,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ),
@@ -101,17 +102,16 @@ class _StatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      padding: AppSpacing.predictionTournamentPillPadding,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .14),
         borderRadius: AppRadii.smRadius,
       ),
       child: Text(
         _statusLabel(status),
-        style: AppTextStyles.micro.copyWith(
+        style: AppTextStyles.numericMicro.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          fontSize: 10,
         ),
       ),
     );
@@ -126,7 +126,7 @@ class _CategoryChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      padding: AppSpacing.predictionTournamentPillPadding,
       decoration: BoxDecoration(
         color: AppColors.surface2,
         borderRadius: AppRadii.smRadius,
@@ -147,23 +147,20 @@ class _TournamentInfoCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: _predictionPrimary.withValues(alpha: .18),
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.predictionTournamentInfoPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: _predictionPrimary,
-            size: 14,
+            size: AppSpacing.predictionTournamentInfoIcon,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.predictionTournamentInfoGap),
           Expanded(
             child: Text(
               'Tournaments are skill-based competitions. Prizes distributed based on prediction accuracy. Read rules carefully before joining.',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                height: 1.5,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],
@@ -183,7 +180,7 @@ class _MyTournamentStats extends StatelessWidget {
         .map((item) => item.myRank ?? 999)
         .reduce((a, b) => a < b ? a : b);
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionTournamentCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -191,7 +188,7 @@ class _MyTournamentStats extends StatelessWidget {
             'Tournament Stats',
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.predictionTournamentMineStatsGap),
           Row(
             children: [
               Expanded(
@@ -241,7 +238,9 @@ class _CenteredMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(
+          height: AppSpacing.predictionTournamentCenteredMetricGap,
+        ),
         Text(value, style: AppTextStyles.sectionTitle.copyWith(color: color)),
       ],
     );

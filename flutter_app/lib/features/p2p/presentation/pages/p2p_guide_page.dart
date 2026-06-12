@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -93,23 +94,30 @@ class _P2PGuidePageState extends ConsumerState<P2PGuidePage> {
                       AppSpacing.contentPad,
                       bottomInset,
                     ),
-                    child: _GuideBody(
-                      snapshot: snapshot,
-                      activeTab: _tab,
-                      mode: _mode,
-                      expandedFaqId: _expandedFaqId,
-                      onModeChanged: (value) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _mode = value);
-                      },
-                      onFaqToggle: (faqId) {
-                        HapticFeedback.selectionClick();
-                        setState(() {
-                          _expandedFaqId = _expandedFaqId == faqId
-                              ? null
-                              : faqId;
-                        });
-                      },
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      customGap: 0,
+                      children: [
+                        _GuideBody(
+                          snapshot: snapshot,
+                          activeTab: _tab,
+                          mode: _mode,
+                          expandedFaqId: _expandedFaqId,
+                          onModeChanged: (value) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _mode = value);
+                          },
+                          onFaqToggle: (faqId) {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              _expandedFaqId = _expandedFaqId == faqId
+                                  ? null
+                                  : faqId;
+                            });
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ),

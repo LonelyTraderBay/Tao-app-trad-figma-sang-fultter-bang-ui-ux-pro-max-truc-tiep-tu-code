@@ -23,8 +23,6 @@ part '../widgets/bot_equity_curve_charts_cards.dart';
 part '../widgets/bot_equity_curve_analysis_painters.dart';
 
 const _equityBackground = AppColors.bg;
-const _equityPanel = AppColors.surface;
-const _equityPanel2 = AppColors.surface2;
 const _equityGreen = AppColors.buy;
 const _equityPrimary = AppColors.primary;
 const _equityRed = AppColors.sell;
@@ -78,15 +76,16 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 0,
+                    customGap: 12,
                     children: [
                       _SummaryRow(summary: snapshot.summary),
-                      const SizedBox(height: 12),
                       const VitCard(
                         variant: VitCardVariant.inner,
                         padding: EdgeInsets.all(12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: VitPageContent(
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          customGap: 8,
                           children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
@@ -95,7 +94,6 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
                                   'Equity trend, alpha, drawdown, Sharpe context and risk next steps are reviewed before bot changes.',
                               contractId: 'bot-equity-curve-review',
                             ),
-                            SizedBox(height: 8),
                             VitStatusPill(
                               label: 'Performance is not guaranteed',
                               status: VitStatusPillStatus.warning,
@@ -104,37 +102,37 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 14),
                       _Tabs(
                         active: _view,
                         onChanged: (id) => setState(() => _view = id),
                       ),
-                      const SizedBox(height: 16),
-                      VitPageSection(
-                        customGap: 0,
-                        children: [
-                          if (_view == 'equity') ...[
-                            const _SectionLabel('Equity Curve vs Buy & Hold'),
-                            const SizedBox(height: 8),
+                      if (_view == 'equity')
+                        VitPageSection(
+                          label: 'Equity Curve vs Buy & Hold',
+                          children: [
                             _EquityChartCard(points: snapshot.equityPoints),
-                          ] else if (_view == 'sharpe') ...[
-                            const _SectionLabel('Rolling 30-Day Sharpe Ratio'),
-                            const SizedBox(height: 8),
+                          ],
+                        )
+                      else if (_view == 'sharpe')
+                        VitPageSection(
+                          label: 'Rolling 30-Day Sharpe Ratio',
+                          children: [
                             _SharpeCard(points: snapshot.equityPoints),
-                          ] else ...[
-                            const _SectionLabel(
-                              'Monthly Alpha (Bot vs Market)',
-                            ),
-                            const SizedBox(height: 8),
+                          ],
+                        )
+                      else
+                        VitPageSection(
+                          label: 'Monthly Alpha (Bot vs Market)',
+                          children: [
                             _MonthlyAlphaCard(months: snapshot.monthlyReturns),
                           ],
+                        ),
+                      VitPageSection(
+                        label: 'Performance Statistics',
+                        children: [
+                          _PerformanceCard(stats: snapshot.performanceStats),
                         ],
                       ),
-                      const SizedBox(height: 18),
-                      const _SectionLabel('Performance Statistics'),
-                      const SizedBox(height: 8),
-                      _PerformanceCard(stats: snapshot.performanceStats),
-                      const SizedBox(height: 18),
                       _AnalysisCard(items: snapshot.analysisItems),
                     ],
                   ),

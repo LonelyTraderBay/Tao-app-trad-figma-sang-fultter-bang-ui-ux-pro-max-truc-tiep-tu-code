@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -13,6 +14,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+
+import '../widgets/trade_body_review_widgets.dart';
 
 part '../widgets/orders_history_page_sections.dart';
 part '../widgets/orders_history_page_common.dart';
@@ -52,7 +55,9 @@ class _OrdersHistoryPageState extends ConsumerState<OrdersHistoryPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 42 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.tradeHistoryBottomInsetVisual
+            : AppSpacing.tradeHistoryBottomInsetNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -96,6 +101,18 @@ class _OrdersHistoryPageState extends ConsumerState<OrdersHistoryPage> {
                                 : null,
                             onCancel: () => _cancelOrder(orders[i].id),
                           ),
+                      const TradeBodyReviewSection(
+                        title: 'Orders history body review',
+                        message: 'Orders history body reviewed',
+                        detail:
+                            'Open/history tabs, filters, empty, cancel, snackbar, and result states stay visible.',
+                        primary:
+                            'Tabs and filters stay above order rows for recovery from empty states.',
+                        secondary:
+                            'Cancel action keeps selected order context visible.',
+                        tertiary:
+                            'History rows remain separated from live position management.',
+                      ),
                     ],
                   ),
                 ),

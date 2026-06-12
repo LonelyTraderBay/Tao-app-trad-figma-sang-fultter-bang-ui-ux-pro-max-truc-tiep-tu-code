@@ -38,7 +38,6 @@ class _SubAccountSummaryCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1.2,
                   ),
                 ),
@@ -57,18 +56,17 @@ class _SubAccountSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 17),
+          const Padding(padding: EdgeInsets.only(top: 17)),
           Text(
             isBalanceHidden
                 ? '\u2022\u2022\u2022\u2022\u2022\u2022'
                 : _formatUsd(snapshot.totalBalance),
             style: AppTextStyles.heroNumber.copyWith(
-              fontSize: 26,
               height: 1.05,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: 14),
+          const Padding(padding: EdgeInsets.only(top: 14)),
           Text(
             isBalanceHidden
                 ? 'PnL 30d: \u2022\u2022\u2022\u2022'
@@ -79,7 +77,7 @@ class _SubAccountSummaryCard extends StatelessWidget {
               height: 1,
             ),
           ),
-          const SizedBox(height: 20),
+          const Padding(padding: EdgeInsets.only(top: 20)),
           Row(
             children: [
               Expanded(
@@ -143,16 +141,14 @@ class _SummaryMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
-              fontSize: 10,
               height: 1,
             ),
           ),
-          const SizedBox(height: 8),
+          const Padding(padding: EdgeInsets.only(top: 8)),
           Text(
             value,
             style: AppTextStyles.baseMedium.copyWith(
               color: valueColor,
-              fontSize: 16,
               height: 1,
             ),
           ),

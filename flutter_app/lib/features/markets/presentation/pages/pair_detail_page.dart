@@ -8,11 +8,13 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -72,7 +74,9 @@ class _PairDetailPageState extends ConsumerState<PairDetailPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.pairDetailVisualBottomExtra
+            : AppSpacing.pairDetailNativeBottomExtra);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -99,7 +103,7 @@ class _PairDetailPageState extends ConsumerState<PairDetailPage> {
                 ).copyWith(scrollbars: false),
                 child: SingleChildScrollView(
                   key: PairDetailPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.pairDetailScrollPadding(bottomInset),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -134,32 +138,36 @@ class _PairDetailPageState extends ConsumerState<PairDetailPage> {
                         _TradesPanel(trades: snapshot.recentTrades),
                       ],
                       const _RiskWarning(),
-                      _LinkCard(
-                        key: PairDetailPage.dcaButtonKey,
-                        icon: Icons.repeat_rounded,
-                        iconColor: AppColors.accent,
-                        title: 'Mua dinh ky BTC',
-                        subtitle:
-                            'Tu dong mua theo lich - Giam rui ro bien dong',
-                        onTap: () => context.go(AppRoutePaths.dca),
-                      ),
-                      _LinkCard(
-                        key: PairDetailPage.infoButtonKey,
-                        icon: Icons.info_outline_rounded,
-                        iconColor: _marketPrimary,
-                        title: 'Thong tin ${pair.baseAsset}',
-                        subtitle: 'Tokenomics - On-chain - Du an',
-                        onTap: () =>
-                            context.go(AppRoutePaths.pairInfo(pair.id)),
-                      ),
-                      _LinkCard(
-                        key: PairDetailPage.depthButtonKey,
-                        icon: Icons.layers_rounded,
-                        iconColor: AppAssetColors.cyanChain,
-                        title: 'Do sau thi truong',
-                        subtitle: 'Depth chart - Whale alerts - So lenh',
-                        onTap: () =>
-                            context.go(AppRoutePaths.pairDepth(pair.id)),
+                      VitPageSection(
+                        children: [
+                          _LinkCard(
+                            key: PairDetailPage.dcaButtonKey,
+                            icon: Icons.repeat_rounded,
+                            iconColor: AppColors.accent,
+                            title: 'Mua dinh ky BTC',
+                            subtitle:
+                                'Tu dong mua theo lich - Giam rui ro bien dong',
+                            onTap: () => context.go(AppRoutePaths.dca),
+                          ),
+                          _LinkCard(
+                            key: PairDetailPage.infoButtonKey,
+                            icon: Icons.info_outline_rounded,
+                            iconColor: _marketPrimary,
+                            title: 'Thong tin ${pair.baseAsset}',
+                            subtitle: 'Tokenomics - On-chain - Du an',
+                            onTap: () =>
+                                context.go(AppRoutePaths.pairInfo(pair.id)),
+                          ),
+                          _LinkCard(
+                            key: PairDetailPage.depthButtonKey,
+                            icon: Icons.layers_rounded,
+                            iconColor: AppAssetColors.cyanChain,
+                            title: 'Do sau thi truong',
+                            subtitle: 'Depth chart - Whale alerts - So lenh',
+                            onTap: () =>
+                                context.go(AppRoutePaths.pairDepth(pair.id)),
+                          ),
+                        ],
                       ),
                       _TradeCtas(pairId: pair.id),
                     ],

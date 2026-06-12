@@ -86,7 +86,7 @@ class _PointBars extends StatelessWidget {
       (largest, point) => valueFor(point) > largest ? valueFor(point) : largest,
     );
     return SizedBox(
-      height: 190,
+      height: AppSpacing.launchpadPerformanceSparklineHeight,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -99,7 +99,7 @@ class _PointBars extends StatelessWidget {
                     '${valueFor(point).round()}$suffix',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1,
+                      height: AppSpacing.launchpadLineHeightTight,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x2),
@@ -121,7 +121,7 @@ class _PointBars extends StatelessWidget {
                     point.month,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1,
+                      height: AppSpacing.launchpadLineHeightTight,
                     ),
                   ),
                 ],
@@ -162,7 +162,7 @@ class _PerformanceDisclaimer extends StatelessWidget {
               'Hiệu suất quá khứ không đảm bảo kết quả tương lai. Dữ liệu chỉ mang tính tham khảo. ROI được tính từ giá launch đến giá hiện tại hoặc ATH, chưa trừ phí và slippage. Nghiên cứu kỹ trước khi tham gia bất kỳ dự án nào.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.45,
+                height: AppSpacing.launchpadLineHeightReadable,
               ),
             ),
           ),
@@ -194,7 +194,7 @@ class _TinyPill extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          height: 1.1,
+          height: AppSpacing.launchpadLineHeightCompact,
         ),
       ),
     );

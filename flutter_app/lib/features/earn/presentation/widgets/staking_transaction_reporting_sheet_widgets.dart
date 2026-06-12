@@ -48,7 +48,8 @@ class _MethodSheet extends StatelessWidget {
                     'Once you choose a method for a tax year, use it consistently. Consult a tax professional for guidance.',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      height: 1.5,
+                      height: AppSpacing
+                          .stakingTransactionReportingNoticeLineHeight,
                     ),
                   ),
                 ),
@@ -100,7 +101,8 @@ class _MethodOption extends StatelessWidget {
                   method.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.45,
+                    height:
+                        AppSpacing.stakingTransactionReportingMethodLineHeight,
                   ),
                 ),
               ],
@@ -276,7 +278,7 @@ class _FooterNote extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: 1.55,
+          height: AppSpacing.stakingTransactionReportingBodyLineHeight,
         ),
       ),
     );

@@ -6,11 +6,13 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -72,8 +74,8 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 32
-            : DeviceMetrics.nativeBottomChrome + 32) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x6
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
     final filtered = _filteredAddresses();
     final favorites = filtered.where((address) => address.isFavorite).toList();
@@ -105,37 +107,39 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: AddressBookPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x4,
+                    AppSpacing.contentPad,
+                    bottomInset,
+                  ),
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: AppSpacing.x4,
+                    fullBleed: true,
                     children: [
                       _SearchBox(
                         controller: _searchController,
                         onChanged: () => setState(() {}),
                       ),
-                      const SizedBox(height: 17),
                       _WhitelistModeCard(
                         enabled: _whitelistOnly,
                         onTap: () =>
                             setState(() => _whitelistOnly = !_whitelistOnly),
                       ),
-                      const SizedBox(height: 16),
                       _NetworkFilterBar(
                         filters: snapshot.networkFilters,
                         active: _networkFilter,
                         onChanged: (filter) =>
                             setState(() => _networkFilter = filter),
                       ),
-                      const SizedBox(height: 17),
                       _AddressStats(addresses: _addresses),
-                      const SizedBox(height: 14),
                       if (favorites.isNotEmpty) ...[
                         const _SectionTitle(
                           icon: Icons.star_rounded,
                           iconColor: _bookAmber,
                           label: 'Yêu thích',
                         ),
-                        const SizedBox(height: 9),
                         for (final address in favorites) ...[
                           _AddressCard(
                             address: address,
@@ -144,13 +148,10 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
                             onFavorite: () => _toggleFavorite(address.id),
                             onDelete: () => _confirmDelete(address),
                           ),
-                          const SizedBox(height: 10),
                         ],
                       ],
                       if (others.isNotEmpty) ...[
-                        const SizedBox(height: 2),
                         const _SectionTitle(label: 'Tất cả địa chỉ'),
-                        const SizedBox(height: 9),
                         for (final address in others) ...[
                           _AddressCard(
                             address: address,
@@ -159,7 +160,6 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
                             onFavorite: () => _toggleFavorite(address.id),
                             onDelete: () => _confirmDelete(address),
                           ),
-                          const SizedBox(height: 10),
                         ],
                       ],
                       if (filtered.isEmpty)
@@ -167,8 +167,14 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
                           onAdd: () =>
                               context.go(AppRoutePaths.walletAddressBookAdd),
                         ),
-                      const SizedBox(height: 4),
                       const _SecurityTip(),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Address book state review',
+                        message:
+                            'Search, network filter, whitelist-only mode, favorites, copy state, delete confirmation, empty state, and add-address route remain visible before wallet address changes.',
+                        contractId: 'SC-144',
+                      ),
                     ],
                   ),
                 ),

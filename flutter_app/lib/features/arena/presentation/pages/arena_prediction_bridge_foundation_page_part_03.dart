@@ -21,7 +21,7 @@ class _ExampleCard extends StatelessWidget {
               Icon(
                 allowed ? Icons.check_rounded : Icons.close_rounded,
                 color: color,
-                size: 15,
+                size: AppSpacing.arenaBridgeChipIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -33,7 +33,7 @@ class _ExampleCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             example.title,
             style: AppTextStyles.body.copyWith(
@@ -41,25 +41,25 @@ class _ExampleCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Text(
             example.description,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.45,
+              height: AppSpacing.arenaBridgeBodyLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           _DemoFrame(
             title: example.frameTitle,
             meta: example.evidenceRows.first,
             tone: tone,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           for (final row in example.evidenceRows) ...[
             _InfoRow(text: row, tone: tone),
             if (row != example.evidenceRows.last)
-              const SizedBox(height: AppSpacing.x2),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           ],
         ],
       ),
@@ -82,7 +82,9 @@ class _DemoFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _toneColor(tone);
     return Container(
-      constraints: const BoxConstraints(minHeight: 76),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.arenaBridgeDemoMinHeight,
+      ),
       padding: const EdgeInsets.all(AppSpacing.x3),
       decoration: BoxDecoration(
         color: AppColors.surface2,
@@ -105,17 +107,17 @@ class _DemoFrame extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.25,
+                    height: AppSpacing.arenaBridgeTitleLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   meta,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.35,
+                    height: AppSpacing.arenaBridgeMetricLineHeight,
                   ),
                 ),
               ],
@@ -137,7 +139,11 @@ class _InlineTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: AppColors.primary, size: 16),
+        Icon(
+          icon,
+          color: AppColors.primary,
+          size: AppSpacing.arenaBridgeInlineIcon,
+        ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
@@ -167,7 +173,7 @@ class _MiniMetric extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 72,
+          width: AppSpacing.arenaBridgeMetricLabelWidth,
           child: Text(
             label,
             style: AppTextStyles.micro.copyWith(
@@ -181,7 +187,7 @@ class _MiniMetric extends StatelessWidget {
             value,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              height: 1.35,
+              height: AppSpacing.arenaBridgeMetricLineHeight,
             ),
           ),
         ),
@@ -200,7 +206,9 @@ class _BridgeBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _toneColor(tone);
     return Container(
-      constraints: const BoxConstraints(minHeight: 26),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.arenaBridgeBadgeMinHeight,
+      ),
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.x2,
         vertical: AppSpacing.x1,
@@ -213,7 +221,11 @@ class _BridgeBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(_toneIcon(tone), color: color, size: 12),
+          Icon(
+            _toneIcon(tone),
+            color: color,
+            size: AppSpacing.arenaBridgeBadgeIcon,
+          ),
           const SizedBox(width: AppSpacing.x1),
           Text(
             label,
@@ -240,14 +252,18 @@ class _InfoRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(_toneIcon(tone), color: color, size: 13),
+        Icon(
+          _toneIcon(tone),
+          color: color,
+          size: AppSpacing.arenaBridgeMicroIcon,
+        ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
             text,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.45,
+              height: AppSpacing.arenaBridgeBodyLineHeight,
             ),
           ),
         ),
@@ -265,16 +281,24 @@ class _ToneIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _toneColor(tone);
-    final size = small ? 30.0 : 36.0;
+    final size = small
+        ? AppSpacing.arenaBridgeCompactIconBox
+        : AppSpacing.arenaBridgeIconBox;
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
         border: Border.all(color: color.withValues(alpha: .20)),
-        borderRadius: BorderRadius.circular(small ? 12 : 14),
+        borderRadius: small ? AppRadii.inputRadius : AppRadii.mdRadius,
       ),
-      child: Icon(_toneIcon(tone), color: color, size: small ? 15 : 17),
+      child: Icon(
+        _toneIcon(tone),
+        color: color,
+        size: small
+            ? AppSpacing.arenaBridgeCompactGlyph
+            : AppSpacing.arenaBridgeGlyph,
+      ),
     );
   }
 }
@@ -292,14 +316,18 @@ class _DisclosureFooter extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.text3, size: 14),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.text3,
+            size: AppSpacing.arenaBridgeSmallIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1.45,
+                height: AppSpacing.arenaBridgeBodyLineHeight,
               ),
             ),
           ),

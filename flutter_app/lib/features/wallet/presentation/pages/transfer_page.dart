@@ -6,14 +6,17 @@ import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_transfer_sections.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 
 const _transferBackground = AppColors.bg;
@@ -63,8 +66,10 @@ class _TransferPageState extends ConsumerState<TransferPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 92
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.walletBottomInsetVisualChrome
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.walletBottomInsetNativeChrome) +
         MediaQuery.paddingOf(context).bottom;
     final fromWallet = _wallet(snapshot, _fromWalletId);
     final toWallet = _wallet(snapshot, _toWalletId);
@@ -79,8 +84,8 @@ class _TransferPageState extends ConsumerState<TransferPage> {
         color: _transferBackground,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Chuyển nội bộ',
-            subtitle: 'Chuyển tiền · Wallet',
+            title: 'Chuy\u1ec3n n\u1ed9i b\u1ed9',
+            subtitle: 'Chuy\u1ec3n ti\u1ec1n \u00b7 Wallet',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.wallet),
           ),
@@ -90,7 +95,9 @@ class _TransferPageState extends ConsumerState<TransferPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: TransferPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.contentInsets.copyWith(
+                    bottom: bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     customGap: 0,
@@ -98,44 +105,55 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                     children: [
                       if (_showSuccess) ...[
                         const TransferSuccessBanner(),
-                        const SizedBox(height: 14),
+                        const SizedBox(height: AppSpacing.rowPy),
                       ],
-                      TransferWalletCard(
-                        key: TransferPage.fromWalletKey,
-                        label: 'Từ',
-                        wallet: fromWallet,
-                        color: _transferPrimary,
-                        onTap: () => _showWalletPicker(
-                          title: 'Chọn ví nguồn',
-                          snapshot: snapshot,
-                          excludedWalletId: _toWalletId,
-                          selectedWalletId: _fromWalletId,
-                          onSelected: (id) =>
-                              setState(() => _fromWalletId = id),
+                      VitCard(
+                        variant: VitCardVariant.standard,
+                        radius: VitCardRadius.md,
+                        padding: AppSpacing.cardPaddingCompact,
+                        child: VitPageContent(
+                          padding: VitContentPadding.none,
+                          customGap: AppSpacing.transferCardGap,
+                          fullBleed: true,
+                          children: [
+                            TransferWalletCard(
+                              key: TransferPage.fromWalletKey,
+                              label: 'T\u1eeb',
+                              wallet: fromWallet,
+                              color: _transferPrimary,
+                              onTap: () => _showWalletPicker(
+                                title: 'Ch\u1ecdn v\u00ed ngu\u1ed3n',
+                                snapshot: snapshot,
+                                excludedWalletId: _toWalletId,
+                                selectedWalletId: _fromWalletId,
+                                onSelected: (id) =>
+                                    setState(() => _fromWalletId = id),
+                              ),
+                            ),
+                            TransferSwapButton(onTap: _swapWallets),
+                            TransferWalletCard(
+                              key: TransferPage.toWalletKey,
+                              label: '\u0110\u1ebfn',
+                              wallet: toWallet,
+                              color: _transferGreen,
+                              onTap: () => _showWalletPicker(
+                                title: 'Ch\u1ecdn v\u00ed nh\u1eadn',
+                                snapshot: snapshot,
+                                excludedWalletId: _fromWalletId,
+                                selectedWalletId: _toWalletId,
+                                onSelected: (id) =>
+                                    setState(() => _toWalletId = id),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 9),
-                      TransferSwapButton(onTap: _swapWallets),
-                      const SizedBox(height: 9),
-                      TransferWalletCard(
-                        key: TransferPage.toWalletKey,
-                        label: 'Đến',
-                        wallet: toWallet,
-                        color: _transferGreen,
-                        onTap: () => _showWalletPicker(
-                          title: 'Chọn ví nhận',
-                          snapshot: snapshot,
-                          excludedWalletId: _fromWalletId,
-                          selectedWalletId: _toWalletId,
-                          onSelected: (id) => setState(() => _toWalletId = id),
-                        ),
-                      ),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: AppSpacing.transferSectionGap),
                       TransferAssetCard(
                         asset: asset,
                         onTap: () => _showAssetPicker(snapshot),
                       ),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: AppSpacing.transferSectionGap),
                       TransferAmountCard(
                         controller: _amountController,
                         asset: asset,
@@ -148,19 +166,19 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                         },
                       ),
                       if (_amount > 0) ...[
-                        const SizedBox(height: 6),
+                        const SizedBox(height: AppSpacing.transferHintGap),
                         Text(
-                          '≈ ${formatTransferUsd(usdValue)}',
-                          style: AppTextStyles.caption.copyWith(
+                          '\u2248 ${formatTransferUsd(usdValue)}',
+                          style: AppTextStyles.control.copyWith(
                             color: AppColors.text3,
-                            fontSize: 12,
                           ),
                         ),
                       ],
-                      const SizedBox(height: 16),
+                      const SizedBox(height: AppSpacing.transferInputGap),
                       const TransferInfoNotice(),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: AppSpacing.transferInputGap),
                       TransferButton(
+                        key: TransferPage.submitKey,
                         enabled: canTransfer,
                         onTap: canTransfer
                             ? () => _showConfirmSheet(
@@ -172,7 +190,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                               )
                             : null,
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.rowGap),
                       VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Review transfer before confirmation',
@@ -181,7 +199,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                         contractId:
                             '${fromWallet.name} -> ${toWallet.name} / ${asset.symbol}',
                       ),
-                      const SizedBox(height: 19),
+                      const SizedBox(height: AppSpacing.transferInputGap),
                       RecentTransfersList(transfers: snapshot.recentTransfers),
                     ],
                   ),
@@ -230,22 +248,19 @@ class _TransferPageState extends ConsumerState<TransferPage> {
       context: context,
       backgroundColor: _transferPanel,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+            padding: AppSpacing.transferSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  title,
-                  style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
-                ),
-                const SizedBox(height: 12),
+                Text(title, style: AppTextStyles.baseMedium),
+                const SizedBox(height: AppSpacing.transferInfoGap),
                 for (final wallet in snapshot.wallets)
                   if (wallet.id != excludedWalletId)
                     TransferWalletPickerRow(
@@ -269,22 +284,22 @@ class _TransferPageState extends ConsumerState<TransferPage> {
       context: context,
       backgroundColor: _transferPanel,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+            padding: AppSpacing.transferSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Chọn tài sản',
-                  style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
+                  'Ch\u1ecdn t\u00e0i s\u1ea3n',
+                  style: AppTextStyles.baseMedium,
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.transferInfoGap),
                 for (final asset in snapshot.assets)
                   TransferAssetPickerRow(
                     asset: asset,
@@ -316,7 +331,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
       context: context,
       backgroundColor: _transferPanel,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) => TransferConfirmSheet(
         fromWallet: fromWallet,

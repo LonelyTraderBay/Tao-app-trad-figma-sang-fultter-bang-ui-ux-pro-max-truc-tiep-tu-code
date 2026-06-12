@@ -5,13 +5,10 @@ class _IntroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
-      decoration: BoxDecoration(
-        color: _apiPrimary.withValues(alpha: .08),
-        border: Border.all(color: _apiPrimary.withValues(alpha: .25)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _apiPrimary.withValues(alpha: .25),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,7 +25,6 @@ class _IntroCard extends StatelessWidget {
                   'Bot API Documentation',
                   style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.text1,
-                    fontSize: 17,
                     fontWeight: AppTextStyles.bold,
                     height: 1.1,
                   ),
@@ -40,7 +36,6 @@ class _IntroCard extends StatelessWidget {
                   'Available for Enterprise tier users.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1.55,
                   ),
                 ),
@@ -99,7 +94,6 @@ class _Tabs extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
                   color: active == tabs[i].id ? _apiPrimary : AppColors.text3,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),

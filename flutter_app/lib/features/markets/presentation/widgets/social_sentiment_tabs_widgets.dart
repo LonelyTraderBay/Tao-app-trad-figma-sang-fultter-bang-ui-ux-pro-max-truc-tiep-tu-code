@@ -156,18 +156,21 @@ class _SentimentHero extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           ClipRRect(
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.xlRadius,
             child: SizedBox(
               width: double.infinity,
               height: 8,
               child: Stack(
                 children: [
-                  Container(color: AppColors.surface2),
+                  const ColoredBox(
+                    color: AppColors.surface2,
+                    child: SizedBox.expand(),
+                  ),
                   FractionallySizedBox(
                     alignment: Alignment.centerLeft,
                     widthFactor: gaugePct.toDouble(),
-                    child: Container(
-                      decoration: const BoxDecoration(
+                    child: const DecoratedBox(
+                      decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
                             AppColors.sell,
@@ -176,6 +179,7 @@ class _SentimentHero extends StatelessWidget {
                           ],
                         ),
                       ),
+                      child: SizedBox.expand(),
                     ),
                   ),
                 ],
@@ -188,24 +192,15 @@ class _SentimentHero extends StatelessWidget {
             children: [
               Text(
                 'Cực sợ',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.sell,
-                  fontSize: 8,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.sell),
               ),
               Text(
                 'Trung lập',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 8,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
               Text(
                 'Cực tham',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.buy,
-                  fontSize: 8,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.buy),
               ),
             ],
           ),

@@ -20,6 +20,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 part '../widgets/riy_calculator_page_sections.dart';
 part '../widgets/riy_calculator_page_common.dart';
 
@@ -157,6 +159,18 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
                       ),
                       const _SectionLabel('Growth Comparison'),
                       _ChartCard(projections: projections),
+                      const TradeBodyReviewSection(
+                        title: 'RIY body review',
+                        message: 'RIY calculator body reviewed',
+                        detail:
+                            'Investment, return, cost, holding period, chart, empty, and result states stay visible.',
+                        primary:
+                            'Input assumptions remain above cost-impact outputs.',
+                        secondary:
+                            'Without-cost and with-cost values stay comparable.',
+                        tertiary:
+                            'Projection copy remains cost analysis, not performance advice.',
+                      ),
                     ],
                   ),
                 ),

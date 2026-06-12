@@ -199,7 +199,8 @@ class _SavingsProductCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text2,
-                              fontSize: 12,
+                              fontSize:
+                                  AppSpacing.savingsConsumerCaptionFontSize,
                             ),
                           ),
                         ),
@@ -217,7 +218,7 @@ class _SavingsProductCard extends StatelessWidget {
                     product.apy,
                     style: AppTextStyles.sectionTitle.copyWith(
                       color: AppColors.buy,
-                      fontSize: 22,
+                      fontSize: AppSpacing.savingsConsumerProductRateFontSize,
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
@@ -271,7 +272,7 @@ class _SavingsProductCard extends StatelessWidget {
               const Spacer(),
               VitCtaButton(
                 fullWidth: false,
-                height: 36,
+                height: AppSpacing.savingsConsumerActionHeight,
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
                 onPressed: () => HapticFeedback.selectionClick(),
                 child: const Text('Đăng ký'),

@@ -25,7 +25,7 @@ class _InfoBanner extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.55,
+                height: AppSpacing.savingsConsumerBodyLineHeight,
               ),
             ),
           ),
@@ -102,7 +102,7 @@ class _ResultView extends StatelessWidget {
                 result.description,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.55,
+                  height: AppSpacing.savingsConsumerBodyLineHeight,
                 ),
               ),
               const SizedBox(height: AppSpacing.x4),

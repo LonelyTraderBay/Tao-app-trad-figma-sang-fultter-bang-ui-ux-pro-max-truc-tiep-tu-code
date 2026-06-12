@@ -7,14 +7,11 @@ class _HighRiskBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       constraints: const BoxConstraints(minHeight: 153),
       padding: const EdgeInsets.fromLTRB(16, 19, 16, 17),
-      decoration: BoxDecoration(
-        color: _botRiskRed.withValues(alpha: .12),
-        border: Border.all(color: _botRiskRed.withValues(alpha: .58), width: 2),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _botRiskRed.withValues(alpha: .58),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -35,7 +32,6 @@ class _HighRiskBanner extends StatelessWidget {
                   snapshot.highRiskTitle,
                   style: AppTextStyles.baseMedium.copyWith(
                     color: _botRiskRed,
-                    fontSize: 16,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -45,7 +41,6 @@ class _HighRiskBanner extends StatelessWidget {
                   snapshot.highRiskBody,
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.medium,
                     height: 1.7,
                   ),
@@ -88,7 +83,6 @@ class _PastPerformanceCard extends StatelessWidget {
                   snapshot.pastPerformanceTitle,
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                     height: 1.15,
                   ),
@@ -98,7 +92,6 @@ class _PastPerformanceCard extends StatelessWidget {
                   snapshot.pastPerformanceBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1.62,
                   ),
                 ),
@@ -128,13 +121,13 @@ class _RiskCategoryCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              VitCard(
                 width: 48,
                 height: 48,
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: .14),
-                  borderRadius: AppRadii.cardLargeRadius,
-                ),
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.lg,
+                borderColor: color.withValues(alpha: .24),
+                alignment: Alignment.center,
                 child: Icon(
                   _iconForKind(category.kind),
                   color: color,
@@ -150,7 +143,6 @@ class _RiskCategoryCard extends StatelessWidget {
                       category.title,
                       style: AppTextStyles.body.copyWith(
                         color: color,
-                        fontSize: 14,
                         fontWeight: AppTextStyles.bold,
                         height: 1.15,
                       ),
@@ -160,7 +152,6 @@ class _RiskCategoryCard extends StatelessWidget {
                       category.description,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        fontSize: 12,
                         height: 1.5,
                       ),
                     ),
@@ -174,7 +165,6 @@ class _RiskCategoryCard extends StatelessWidget {
             'REAL EXAMPLES:',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 11,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -185,13 +175,10 @@ class _RiskCategoryCard extends StatelessWidget {
             if (example != category.examples.last) const SizedBox(height: 8),
           ],
           const SizedBox(height: 15),
-          Container(
+          VitCard(
             width: double.infinity,
             padding: const EdgeInsets.fromLTRB(14, 12, 14, 13),
-            decoration: BoxDecoration(
-              color: _botRiskPanel2,
-              borderRadius: AppRadii.cardRadius,
-            ),
+            variant: VitCardVariant.inner,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -199,7 +186,6 @@ class _RiskCategoryCard extends StatelessWidget {
                   'HOW TO MITIGATE:',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -209,7 +195,6 @@ class _RiskCategoryCard extends StatelessWidget {
                   category.mitigation,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1.5,
                   ),
                 ),
@@ -270,7 +255,6 @@ class _WarningBlock extends StatelessWidget {
                   warning.title,
                   style: AppTextStyles.caption.copyWith(
                     color: _botRiskRed,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1.18,
                   ),
@@ -283,7 +267,6 @@ class _WarningBlock extends StatelessWidget {
             warning.text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
               height: 1.55,
             ),
           ),
@@ -309,7 +292,6 @@ class _RegulatoryNoticeCard extends StatelessWidget {
             snapshot.regulatoryTitle,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 13,
               fontWeight: AppTextStyles.bold,
               height: 1.2,
             ),
@@ -319,7 +301,6 @@ class _RegulatoryNoticeCard extends StatelessWidget {
             snapshot.regulatoryBody,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
               height: 1.55,
             ),
           ),

@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_c
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_calendar_events.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_calendar_filters.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_calendar_month.dart';
+import '../widgets/market_body_review_widgets.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class MarketCalendarPage extends ConsumerStatefulWidget {
@@ -132,6 +133,18 @@ class _MarketCalendarPageState extends ConsumerState<MarketCalendarPage> {
                               _expandedId = event.id;
                             }),
                           ),
+                        const MarketBodyReviewSection(
+                          title: 'Calendar state review',
+                          message: 'Market calendar data reviewed',
+                          detail:
+                              'List, month, filter, empty, and refresh states remain visible for event planning.',
+                          primary:
+                              'Event type and impact filters stay above the list so users can recover from empty data.',
+                          secondary:
+                              'Expanded event rows preserve timing, asset, and impact context before navigation.',
+                          tertiary:
+                              'Month view and list view share the same bottom-safe scroll composition.',
+                        ),
                         if (snapshot.events.isEmpty)
                           const VitEmptyState(
                             icon: Icons.calendar_month_rounded,

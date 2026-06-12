@@ -111,8 +111,8 @@ class _EventLogCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontWeight: FontWeight.w800,
-                          height: 1.24,
+                          fontWeight: AppTextStyles.extraBold,
+                          height: AppSpacing.launchpadLineHeightEvent,
                         ),
                       ),
                       if (event.tags.isNotEmpty) ...[
@@ -138,7 +138,7 @@ class _EventLogCard extends StatelessWidget {
                         ? Icons.keyboard_arrow_up_rounded
                         : Icons.keyboard_arrow_down_rounded,
                     color: AppColors.text3,
-                    size: 18,
+                    size: AppSpacing.launchpadIcon2xl,
                   ),
                 ),
               ],
@@ -201,7 +201,7 @@ class _DetailRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 76,
+            width: AppSpacing.launchpadBox76,
             child: Text(
               label,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -213,8 +213,8 @@ class _DetailRow extends StatelessWidget {
               textAlign: TextAlign.right,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                fontWeight: FontWeight.w600,
-                height: 1.35,
+                fontWeight: AppTextStyles.medium,
+                height: AppSpacing.launchpadLineHeightDense,
               ),
             ),
           ),

@@ -68,7 +68,7 @@ class _CategorySection extends StatelessWidget {
               Icon(
                 savingsNotificationCategoryIcon(category),
                 color: color,
-                size: 18,
+                size: AppSpacing.savingsNotificationInlineIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -124,16 +124,16 @@ class _AlertCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: AppSpacing.savingsNotificationIconBox,
+            height: AppSpacing.savingsNotificationIconBox,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .14),
-              borderRadius: BorderRadius.circular(AppRadii.md),
+              borderRadius: AppRadii.mdRadius,
             ),
             child: Icon(
               savingsNotificationAlertIcon(alert.iconKey),
               color: color,
-              size: 19,
+              size: AppSpacing.savingsNotificationAlertIcon,
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -164,7 +164,7 @@ class _AlertCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.32,
+                    height: AppSpacing.savingsNotificationAlertLineHeight,
                   ),
                 ),
               ],

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -28,8 +29,10 @@ class P2PPaymentMethodHistoryPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pPaymentBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pPaymentBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -54,24 +57,29 @@ class P2PPaymentMethodHistoryPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodHistoryPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    padding: AppSpacing.p2pPaymentScrollPadding(bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      customGap: AppSpacing.x4,
                       children: [
                         _StatsCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
                         if (snapshot.transactions.isEmpty)
                           VitEmptyState(title: snapshot.emptyTitle)
                         else
-                          for (final transaction in snapshot.transactions) ...[
-                            _TransactionCard(transaction: transaction),
-                            const SizedBox(height: AppSpacing.x3),
-                          ],
+                          VitPageSection(
+                            customGap: AppSpacing.x3,
+                            children: [
+                              for (final transaction in snapshot.transactions)
+                                _TransactionCard(transaction: transaction),
+                            ],
+                          ),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Payment method history review',
+                          message:
+                              'P2P payment history keeps order direction, cancelled status, total volume, success rate, and next review context visible before users reuse or change a payment method.',
+                          contractId: 'SC-236',
+                        ),
                       ],
                     ),
                   ),
@@ -93,7 +101,7 @@ class _StatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pPaymentCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -180,7 +188,7 @@ class _TransactionCard extends StatelessWidget {
     return VitCard(
       key: P2PPaymentMethodHistoryPage.txKey(transaction.id),
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pPaymentCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -227,7 +235,7 @@ class _TransactionCard extends StatelessWidget {
                     const Icon(
                       Icons.schedule_rounded,
                       color: AppColors.text3,
-                      size: 11,
+                      size: AppSpacing.p2pPaymentMetaIcon,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Flexible(

@@ -363,7 +363,7 @@ class _MarketBreadthCard extends StatelessWidget {
         ),
         const SizedBox(height: 13),
         ClipRRect(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: AppRadii.xsRadius,
           child: SizedBox(
             height: 6,
             child: Row(

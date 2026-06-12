@@ -70,9 +70,9 @@ class _TokenSwitch extends StatelessWidget {
       onTap: onToggle,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 160),
-        width: 52,
-        height: 32,
-        padding: const EdgeInsets.all(3),
+        width: AppSpacing.dcaMultiToggleWidth,
+        height: AppSpacing.dcaMultiToggleHeight,
+        padding: const EdgeInsets.all(AppSpacing.dcaMultiTogglePadding),
         decoration: BoxDecoration(
           color: enabled ? AppColors.primary : AppColors.surface3,
           borderRadius: AppRadii.xlRadius,
@@ -82,8 +82,8 @@ class _TokenSwitch extends StatelessWidget {
         ),
         alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
         child: Container(
-          width: 24,
-          height: 24,
+          width: AppSpacing.dcaMultiToggleThumb,
+          height: AppSpacing.dcaMultiToggleThumb,
           decoration: const BoxDecoration(
             color: AppColors.onAccent,
             shape: BoxShape.circle,
@@ -148,7 +148,7 @@ class _PortfolioOverviewCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x5),
           SizedBox(
-            height: 200,
+            height: AppSpacing.dcaMultiAllocationChartHeight,
             child: CustomPaint(
               painter: _AllocationDonutPainter(
                 allocations: snapshot.allocations,
@@ -185,8 +185,8 @@ class _AssetDetailCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 12,
-                height: 12,
+                width: AppSpacing.dcaMultiLegendMarker,
+                height: AppSpacing.dcaMultiLegendMarker,
                 decoration: BoxDecoration(
                   color: accent,
                   borderRadius: AppRadii.xsRadius,
@@ -270,7 +270,7 @@ class _GrowthCard extends StatelessWidget {
           const _CardTitle('Investment Growth by Asset'),
           const SizedBox(height: AppSpacing.x5),
           SizedBox(
-            height: 240,
+            height: AppSpacing.dcaMultiGrowthChartHeight,
             width: double.infinity,
             child: CustomPaint(painter: _StackedBarsPainter(points: points)),
           ),
@@ -398,7 +398,7 @@ class _InfoCallout extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.primary, size: 18),
+          Icon(icon, color: AppColors.primary, size: AppSpacing.dcaMultiIcon),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(

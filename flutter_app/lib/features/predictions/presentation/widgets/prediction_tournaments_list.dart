@@ -32,7 +32,7 @@ class _TournamentTabBar extends StatelessWidget {
         border: Border(bottom: BorderSide(color: AppColors.border)),
       ),
       child: SizedBox(
-        height: 54,
+        height: AppSpacing.predictionTournamentTabsHeight,
         child: Row(
           children: [
             for (final item in tabs)
@@ -52,18 +52,20 @@ class _TournamentTabBar extends StatelessWidget {
                                   ? _predictionPrimary
                                   : AppColors.text3,
                               fontWeight: AppTextStyles.bold,
-                              fontSize: 12,
                             ),
                           ),
                         ),
                       ),
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 160),
-                        height: 2,
-                        width: activeTab == item.tab ? 116 : 0,
+                        height:
+                            AppSpacing.predictionTournamentTabIndicatorHeight,
+                        width: activeTab == item.tab
+                            ? AppSpacing.predictionTournamentTabIndicatorWidth
+                            : 0,
                         decoration: BoxDecoration(
                           color: _predictionPrimary,
-                          borderRadius: BorderRadius.circular(1),
+                          borderRadius: AppRadii.hairlineRadius,
                         ),
                       ),
                     ],
@@ -88,8 +90,14 @@ class _FeaturedTournamentBlock extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Icon(Icons.bolt_rounded, size: 16, color: AppColors.warn),
-            const SizedBox(width: 7),
+            const Icon(
+              Icons.bolt_rounded,
+              size: AppSpacing.predictionTournamentFeaturedIcon,
+              color: AppColors.warn,
+            ),
+            const SizedBox(
+              width: AppSpacing.predictionTournamentFeaturedIconGap,
+            ),
             Text(
               'Featured',
               style: AppTextStyles.caption.copyWith(
@@ -99,7 +107,7 @@ class _FeaturedTournamentBlock extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 9),
+        const SizedBox(height: AppSpacing.predictionTournamentFeaturedCardGap),
         _TournamentCard(tournament: tournament),
       ],
     );
@@ -152,7 +160,7 @@ class _TournamentCard extends StatelessWidget {
       onTap: () =>
           context.go(AppRoutePaths.marketsPredictionTournament(tournament.id)),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: AppSpacing.predictionTournamentCardPadding,
         child: Column(
           children: [
             Row(
@@ -168,9 +176,12 @@ class _TournamentCard extends StatelessWidget {
                             const Icon(
                               Icons.star_rounded,
                               color: AppColors.warn,
-                              size: 16,
+                              size: AppSpacing.predictionTournamentTitleIcon,
                             ),
-                            const SizedBox(width: 6),
+                            const SizedBox(
+                              width:
+                                  AppSpacing.predictionTournamentTitleIconGap,
+                            ),
                           ],
                           Expanded(
                             child: Text(
@@ -184,28 +195,29 @@ class _TournamentCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 3),
+                      const SizedBox(
+                        height: AppSpacing.predictionTournamentDescriptionGap,
+                      ),
                       Text(
                         tournament.description,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.micro.copyWith(
+                        style: AppTextStyles.numericMicro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 11,
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: AppSpacing.predictionTournamentStatusGap),
                 _StatusPill(status: tournament.status, color: statusColor),
               ],
             ),
             if (tournament.isJoined && tournament.myRank != null) ...[
-              const SizedBox(height: 14),
+              const SizedBox(height: AppSpacing.predictionTournamentRankGap),
               Container(
-                height: 35,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                height: AppSpacing.predictionTournamentRankHeight,
+                padding: AppSpacing.predictionTournamentRankPadding,
                 decoration: BoxDecoration(
                   color: AppColors.buy.withValues(alpha: .08),
                   borderRadius: AppRadii.cardRadius,
@@ -215,9 +227,8 @@ class _TournamentCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         'Your rank',
-                        style: AppTextStyles.micro.copyWith(
+                        style: AppTextStyles.numericMicro.copyWith(
                           color: AppColors.text2,
-                          fontSize: 11,
                         ),
                       ),
                     ),
@@ -232,30 +243,38 @@ class _TournamentCard extends StatelessWidget {
                 ),
               ),
             ],
-            const SizedBox(height: 14),
+            const SizedBox(height: AppSpacing.predictionTournamentStatsGap),
             _TournamentStatsGrid(tournament: tournament),
-            const SizedBox(height: 13),
-            const Divider(color: AppColors.border, height: 1),
-            const SizedBox(height: 12),
+            const SizedBox(
+              height: AppSpacing.predictionTournamentDividerTopGap,
+            ),
+            const Divider(
+              color: AppColors.border,
+              height: AppSpacing.predictionTournamentDividerHeight,
+            ),
+            const SizedBox(
+              height: AppSpacing.predictionTournamentDividerBottomGap,
+            ),
             Row(
               children: [
                 _CategoryChip(label: tournament.category),
                 const Spacer(),
                 Text(
                   tournament.isJoined ? 'Joined' : 'View Details',
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.numericMicro.copyWith(
                     color: tournament.isJoined
                         ? AppColors.buy
                         : AppColors.text3,
                     fontWeight: AppTextStyles.bold,
-                    fontSize: 11,
                   ),
                 ),
-                const SizedBox(width: 4),
+                const SizedBox(
+                  width: AppSpacing.predictionTournamentChevronGap,
+                ),
                 const Icon(
                   Icons.chevron_right_rounded,
                   color: AppColors.text3,
-                  size: 16,
+                  size: AppSpacing.predictionTournamentChevron,
                 ),
               ],
             ),

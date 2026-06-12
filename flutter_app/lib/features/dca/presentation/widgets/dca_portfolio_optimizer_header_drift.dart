@@ -56,15 +56,15 @@ class _DriftBanner extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   'Danh mục đã lệch ${snapshot.driftPercent.toStringAsFixed(1)}% so với phân bổ mục tiêu (ngưỡng: ${snapshot.driftThresholdPercent.toStringAsFixed(0)}%). Xem xét tái cân bằng.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.35,
+                    height: AppSpacing.dcaPortfolioOptimizerBodyLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                 Wrap(
                   spacing: AppSpacing.x3,
                   runSpacing: AppSpacing.x2,

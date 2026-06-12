@@ -32,7 +32,7 @@ class StakingSlashingStatisticsTab extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 172,
+                    height: AppSpacing.stakingSlashingStatsChartHeight,
                     child: CustomPaint(
                       painter: _TrendPainter(snapshot.trend),
                       child: const SizedBox.expand(),

@@ -84,8 +84,8 @@ class _QuestionCard extends StatelessWidget {
           Text(
             question.question,
             style: AppTextStyles.sectionTitle.copyWith(
-              fontSize: 18,
-              height: 1.35,
+              fontSize: AppSpacing.stakingAssessmentQuestionFontSize,
+              height: AppSpacing.stakingAssessmentQuestionLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x5),
@@ -147,7 +147,7 @@ class _OptionTile extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(
               color: selected ? AppColors.primary : AppColors.transparent,
-              width: 1.5,
+              width: AppSpacing.stakingAssessmentOptionBorderWidth,
             ),
             borderRadius: AppRadii.xlRadius,
           ),
@@ -171,7 +171,7 @@ class _OptionTile extends StatelessWidget {
                     label,
                     style: AppTextStyles.baseMedium.copyWith(
                       color: AppColors.text1,
-                      height: 1.3,
+                      height: AppSpacing.stakingAssessmentOptionLineHeight,
                     ),
                   ),
                 ),
@@ -342,7 +342,7 @@ class _InfoBanner extends StatelessWidget {
                   body,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.stakingAssessmentBodyLineHeight,
                   ),
                 ),
               ],

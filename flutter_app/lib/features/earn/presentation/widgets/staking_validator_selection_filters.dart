@@ -39,7 +39,7 @@ class StakingValidatorSelectionSearchAndFilter extends StatelessWidget {
                   const Icon(
                     Icons.search_rounded,
                     color: AppColors.text3,
-                    size: 20,
+                    size: AppSpacing.stakingValidatorSelectionSearchIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(

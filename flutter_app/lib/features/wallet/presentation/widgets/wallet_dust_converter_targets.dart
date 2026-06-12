@@ -23,7 +23,8 @@ class _TargetSelector extends StatelessWidget {
               onTap: () => onSelected(target.symbol),
             ),
           ),
-          if (target != targets.last) const SizedBox(width: 10),
+          if (target != targets.last)
+            const SizedBox(width: AppSpacing.walletDustTargetGap),
         ],
       ],
     );
@@ -49,8 +50,8 @@ class _TargetCard extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: AppSpacing.buttonStandard + AppSpacing.x2,
-        padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+        height: AppSpacing.walletDustTargetHeight,
+        padding: AppSpacing.walletDustTargetPadding,
         decoration: BoxDecoration(
           color: selected ? color.withValues(alpha: .11) : _dustPanel2,
           borderRadius: AppRadii.cardRadius,
@@ -60,8 +61,12 @@ class _TargetCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            _TokenLogo(symbol: target.symbol, color: color, size: 34),
-            const SizedBox(width: 11),
+            _TokenLogo(
+              symbol: target.symbol,
+              color: color,
+              size: AppSpacing.walletDustTokenLogo,
+            ),
+            const SizedBox(width: AppSpacing.walletDustTargetLogoGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -71,21 +76,15 @@ class _TargetCard extends StatelessWidget {
                     target.symbol,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w900,
-                      height: 1,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: 7),
+                  const SizedBox(height: AppSpacing.walletDustTargetTextGap),
                   Text(
                     target.name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: _dustMuted,
-                      fontSize: 10,
-                      height: 1,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: _dustMuted),
                   ),
                 ],
               ),
@@ -94,7 +93,7 @@ class _TargetCard extends StatelessWidget {
               const Icon(
                 Icons.check_circle_outline,
                 color: _dustGreen,
-                size: 18,
+                size: AppSpacing.walletDustCheckboxIcon,
               ),
           ],
         ),
@@ -126,8 +125,8 @@ class _SelectAllRow extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 34,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        height: AppSpacing.walletDustSelectAllHeight,
+        padding: AppSpacing.walletDustSelectAllPadding,
         decoration: BoxDecoration(
           color: _dustPanel2,
           borderRadius: AppRadii.cardRadius,
@@ -139,16 +138,14 @@ class _SelectAllRow extends StatelessWidget {
                   ? Icons.check_box_rounded
                   : Icons.check_box_outline_blank_rounded,
               color: selectedCount > 0 ? _dustPrimary : _dustMuted,
-              size: 17,
+              size: AppSpacing.walletDustSelectAllIcon,
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: AppSpacing.walletDustSelectAllGap),
             Text(
               label,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                fontSize: 12,
-                fontWeight: FontWeight.w800,
-                height: 1,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
           ],

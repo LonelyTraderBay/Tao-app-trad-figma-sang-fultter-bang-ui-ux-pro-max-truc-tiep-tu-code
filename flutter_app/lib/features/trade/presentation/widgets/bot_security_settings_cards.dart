@@ -28,7 +28,6 @@ class _TwoFaCard extends StatelessWidget {
                   '2FA for Bot Actions',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -38,7 +37,6 @@ class _TwoFaCard extends StatelessWidget {
                   'Required for creating/deleting bots',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
                     height: 1,
                   ),
                 ),
@@ -77,7 +75,6 @@ class _ApiKeyCard extends StatelessWidget {
                   apiKey.name,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -85,21 +82,10 @@ class _ApiKeyCard extends StatelessWidget {
                 const SizedBox(height: 11),
                 Row(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(9, 5, 9, 5),
-                      decoration: BoxDecoration(
-                        color: _securityPrimary.withValues(alpha: .14),
-                        borderRadius: BorderRadius.circular(9),
-                      ),
-                      child: Text(
-                        apiKey.permissions,
-                        style: AppTextStyles.micro.copyWith(
-                          color: _securityPrimary,
-                          fontSize: 12,
-                          fontWeight: AppTextStyles.bold,
-                          height: 1,
-                        ),
-                      ),
+                    VitStatusPill(
+                      label: apiKey.permissions,
+                      status: VitStatusPillStatus.info,
+                      size: VitStatusPillSize.sm,
                     ),
                     const SizedBox(width: 8),
                     Flexible(
@@ -109,7 +95,6 @@ class _ApiKeyCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
                           height: 1,
                         ),
                       ),
@@ -121,7 +106,6 @@ class _ApiKeyCard extends StatelessWidget {
                   'Last used: ${apiKey.lastUsed}',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
                     height: 1,
                   ),
                 ),
@@ -161,7 +145,6 @@ class _IpCard extends StatelessWidget {
                   entry.ip,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -171,7 +154,6 @@ class _IpCard extends StatelessWidget {
                   '${entry.label} - Added ${entry.added}',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
                     height: 1,
                   ),
                 ),
@@ -198,7 +180,9 @@ class _ActivityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Card(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
-      child: Column(
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 14,
         children: [
           for (final activity in activities) ...[
             Row(
@@ -212,7 +196,6 @@ class _ActivityCard extends StatelessWidget {
                         activity.action,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 12,
                           fontWeight: AppTextStyles.medium,
                           height: 1,
                         ),
@@ -222,33 +205,30 @@ class _ActivityCard extends StatelessWidget {
                         activity.time,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
                           height: 1,
                         ),
                       ),
                     ],
                   ),
                 ),
-                Container(
-                  width: 8,
-                  height: 8,
-                  margin: const EdgeInsets.only(top: 1),
-                  decoration: BoxDecoration(
-                    color:
-                        activity.status ==
-                            TradeBotSecurityActivityStatus.success
-                        ? _securityGreen
-                        : _securityAmber,
-                    shape: BoxShape.circle,
+                Padding(
+                  padding: const EdgeInsets.only(top: 1),
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color:
+                          activity.status ==
+                              TradeBotSecurityActivityStatus.success
+                          ? _securityGreen
+                          : _securityAmber,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const SizedBox(width: 8, height: 8),
                   ),
                 ),
               ],
             ),
-            if (activity != activities.last) ...[
-              const SizedBox(height: 14),
+            if (activity != activities.last)
               const Divider(color: AppColors.borderSolid, height: 1),
-              const SizedBox(height: 14),
-            ],
           ],
         ],
       ),
@@ -263,54 +243,60 @@ class _SecurityTipsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
-      decoration: BoxDecoration(
-        color: _securityPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      variant: VitCardVariant.inner,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 14,
         children: [
           Text(
             'Security Best Practices',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
           ),
-          const SizedBox(height: 17),
-          for (final tip in tips) ...[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '-',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 12,
-                    height: 1.35,
-                  ),
-                ),
-                const SizedBox(width: 9),
-                Expanded(
-                  child: Text(
-                    tip,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 12,
-                      height: 1.35,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            if (tip != tips.last) const SizedBox(height: 14),
-          ],
+          VitPageContent(
+            padding: VitContentPadding.none,
+            customGap: 14,
+            children: [for (final tip in tips) _SecurityTipRow(tip: tip)],
+          ),
         ],
       ),
+    );
+  }
+}
+
+class _SecurityTipRow extends StatelessWidget {
+  const _SecurityTipRow({required this.tip});
+
+  final String tip;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '-',
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text3,
+            height: 1.35,
+          ),
+        ),
+        const SizedBox(width: 9),
+        Expanded(
+          child: Text(
+            tip,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text3,
+              height: 1.35,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

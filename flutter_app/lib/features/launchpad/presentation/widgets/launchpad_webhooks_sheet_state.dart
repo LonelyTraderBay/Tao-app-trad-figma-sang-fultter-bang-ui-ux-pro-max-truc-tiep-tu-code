@@ -53,8 +53,8 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                   children: [
                     Center(
                       child: Container(
-                        width: 40,
-                        height: 4,
+                        width: AppSpacing.launchpadBox40,
+                        height: AppSpacing.launchpadSheetHandleHeight,
                         decoration: const BoxDecoration(
                           color: AppColors.borderSolid,
                           borderRadius: AppRadii.xsRadius,

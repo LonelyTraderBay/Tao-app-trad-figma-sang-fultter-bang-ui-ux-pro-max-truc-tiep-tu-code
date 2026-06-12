@@ -26,8 +26,8 @@ class _FunnelSelector extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: funnels.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisExtent: 82,
+            crossAxisCount: AppSpacing.adminGridColumns,
+            mainAxisExtent: AppSpacing.adminMetricTileExtent,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
           ),
@@ -66,7 +66,7 @@ class _FunnelSelector extends StatelessWidget {
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text1,
                             fontWeight: AppTextStyles.bold,
-                            height: 1.2,
+                            height: AppSpacing.adminLineHeightShort,
                           ),
                         ),
                         const SizedBox(height: AppSpacing.x1),
@@ -76,7 +76,7 @@ class _FunnelSelector extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            height: 1.2,
+                            height: AppSpacing.adminLineHeightShort,
                           ),
                         ),
                       ],
@@ -164,13 +164,17 @@ class _MetricCard extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: AppSpacing.adminBox40,
+                  height: AppSpacing.adminBox40,
                   decoration: BoxDecoration(
                     color: tint,
                     borderRadius: AppRadii.inputRadius,
                   ),
-                  child: Icon(icon, color: accent, size: 20),
+                  child: Icon(
+                    icon,
+                    color: accent,
+                    size: AppSpacing.adminIconXl,
+                  ),
                 ),
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
@@ -182,7 +186,7 @@ class _MetricCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 11,
+                          fontSize: AppSpacing.adminFontMd,
                         ),
                       ),
                       Text(
@@ -191,7 +195,7 @@ class _MetricCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.sectionTitle.copyWith(
                           color: accent,
-                          fontSize: 20,
+                          fontSize: AppSpacing.adminFont3xl,
                           fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
@@ -207,7 +211,7 @@ class _MetricCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 11,
+                fontSize: AppSpacing.adminFontMd,
               ),
             ),
             const SizedBox(height: AppSpacing.x2),
@@ -229,7 +233,7 @@ class _MetricCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
+                    fontSize: AppSpacing.adminFontSm,
                   ),
                 ),
               ],

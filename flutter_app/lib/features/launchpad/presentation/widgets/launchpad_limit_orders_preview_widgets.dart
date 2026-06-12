@@ -82,7 +82,7 @@ class _PreviewMetric extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
+              fontSize: AppSpacing.launchpadFontSm,
             ),
           ),
           Text(
@@ -110,7 +110,11 @@ class _EmptyOrders extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Icon(Icons.schedule_rounded, color: AppColors.text3, size: 42),
+          const Icon(
+            Icons.schedule_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.launchpadBox42,
+          ),
           const SizedBox(height: AppSpacing.x3),
           Text(
             'No active orders',

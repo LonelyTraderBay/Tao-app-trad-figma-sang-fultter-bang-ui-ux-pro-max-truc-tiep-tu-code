@@ -37,22 +37,21 @@ class _CreateSubAccountForm extends StatelessWidget {
           Text(
             'T\u1EA1o t\u00E0i kho\u1EA3n ph\u1EE5',
             style: AppTextStyles.baseMedium.copyWith(
-              fontSize: 14,
               fontWeight: FontWeight.w800,
               height: 1,
             ),
           ),
-          const SizedBox(height: 14),
+          const Padding(padding: EdgeInsets.only(top: 14)),
           const _FormFieldPreview(
             label: 'T\u00EAn t\u00E0i kho\u1EA3n',
             value: 'VD: Grid Bot #2',
           ),
-          const SizedBox(height: 12),
+          const Padding(padding: EdgeInsets.only(top: 12)),
           const _FormPillRow(
             label: 'Lo\u1EA1i t\u00E0i kho\u1EA3n',
             values: ['Spot', 'Margin', 'Futures', 'T\u1EA5t c\u1EA3'],
           ),
-          const SizedBox(height: 12),
+          const Padding(padding: EdgeInsets.only(top: 12)),
           const _FormPillRow(
             label: 'Quy\u1EC1n h\u1EA1n',
             values: [
@@ -65,7 +64,7 @@ class _CreateSubAccountForm extends StatelessWidget {
             ],
             wrap: true,
           ),
-          const SizedBox(height: 14),
+          const Padding(padding: EdgeInsets.only(top: 14)),
           VitCtaButton(
             onPressed: () {},
             child: const Text('T\u1EA1o t\u00E0i kho\u1EA3n'),
@@ -91,11 +90,10 @@ class _FormFieldPreview extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 11,
             height: 1,
           ),
         ),
-        const SizedBox(height: 7),
+        const Padding(padding: EdgeInsets.only(top: 7)),
         Container(
           height: AppSpacing.inputHeight,
           padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -109,7 +107,6 @@ class _FormFieldPreview extends StatelessWidget {
             value,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text3,
-              fontSize: 14,
               height: 1,
             ),
           ),
@@ -149,11 +146,10 @@ class _FormPillRow extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 11,
             height: 1,
           ),
         ),
-        const SizedBox(height: 8),
+        const Padding(padding: EdgeInsets.only(top: 8)),
         if (wrap)
           Wrap(spacing: 8, runSpacing: 8, children: children)
         else

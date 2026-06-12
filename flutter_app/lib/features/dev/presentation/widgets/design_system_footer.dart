@@ -31,7 +31,7 @@ class DesignSystemFooter extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 9,
+                fontSize: AppSpacing.devFontXs,
               ),
             ),
           ],

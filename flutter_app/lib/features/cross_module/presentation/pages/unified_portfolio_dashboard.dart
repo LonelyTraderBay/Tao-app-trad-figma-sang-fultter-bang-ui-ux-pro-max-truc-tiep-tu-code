@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class UnifiedPortfolioDashboard extends ConsumerStatefulWidget {
   const UnifiedPortfolioDashboard({super.key, this.shellRenderMode});
@@ -77,17 +78,32 @@ class _UnifiedPortfolioDashboardState
                     gap: VitContentGap.defaultGap,
                     children: [
                       if (_activeTab == UnifiedPortfolioTab.overview)
-                        UnifiedPortfolioOverview(
-                          snapshot: snapshot,
-                          refreshKey: UnifiedPortfolioDashboard.refreshKey,
-                          moduleKey: UnifiedPortfolioDashboard.moduleKey,
-                          onRefresh: () => HapticFeedback.lightImpact(),
-                          onOpenRoute: (route) => context.go(route),
+                        VitCard(
+                          radius: VitCardRadius.lg,
+                          padding: EdgeInsets.zero,
+                          clip: true,
+                          child: UnifiedPortfolioOverview(
+                            snapshot: snapshot,
+                            refreshKey: UnifiedPortfolioDashboard.refreshKey,
+                            moduleKey: UnifiedPortfolioDashboard.moduleKey,
+                            onRefresh: () => HapticFeedback.lightImpact(),
+                            onOpenRoute: (route) => context.go(route),
+                          ),
                         )
                       else if (_activeTab == UnifiedPortfolioTab.analysis)
-                        UnifiedPortfolioAnalysis(snapshot: snapshot)
+                        VitCard(
+                          radius: VitCardRadius.lg,
+                          padding: EdgeInsets.zero,
+                          clip: true,
+                          child: UnifiedPortfolioAnalysis(snapshot: snapshot),
+                        )
                       else
-                        UnifiedPortfolioHistory(snapshot: snapshot),
+                        VitCard(
+                          radius: VitCardRadius.lg,
+                          padding: EdgeInsets.zero,
+                          clip: true,
+                          child: UnifiedPortfolioHistory(snapshot: snapshot),
+                        ),
                     ],
                   ),
                 ),

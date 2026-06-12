@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -62,8 +63,10 @@ class _P2PPaymentMethodVerificationPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pPaymentBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pPaymentBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -96,21 +99,21 @@ class _P2PPaymentMethodVerificationPageState
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodVerificationPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
-                    child: _selectedMethodId == null
-                        ? _MethodChooser(
+                    padding: AppSpacing.p2pPaymentScrollPadding(bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      customGap: AppSpacing.x5,
+                      children: [
+                        if (_selectedMethodId == null)
+                          _MethodChooser(
                             snapshot: snapshot,
                             onSelected: (methodId) {
                               HapticFeedback.selectionClick();
                               setState(() => _selectedMethodId = methodId);
                             },
                           )
-                        : _VerificationFlow(
+                        else
+                          _VerificationFlow(
                             snapshot: snapshot,
                             methodId: _selectedMethodId!,
                             controller: _codeController,
@@ -120,6 +123,15 @@ class _P2PPaymentMethodVerificationPageState
                                 ? () => _confirmSubmit(context, snapshot)
                                 : null,
                           ),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Payment method verification review',
+                          message:
+                              'Micro-deposit confirmation, ownership check, warning note, and return path are reviewed before enabling a P2P payment method for escrow trades.',
+                          contractId: 'SC-233',
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

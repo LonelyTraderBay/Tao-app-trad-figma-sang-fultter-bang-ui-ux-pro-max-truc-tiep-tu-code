@@ -84,7 +84,7 @@ class _ProsConsList extends StatelessWidget {
               Icon(
                 icon,
                 color: warning ? AppColors.warn : AppColors.buy,
-                size: 12,
+                size: AppSpacing.dcaPerformanceCompareSmallIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -122,7 +122,11 @@ class _InfoCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.primary, size: 18),
+          Icon(
+            icon,
+            color: AppColors.primary,
+            size: AppSpacing.dcaPerformanceCompareInlineIcon,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
@@ -166,7 +170,7 @@ class _WarningCard extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.warn,
-            size: 18,
+            size: AppSpacing.dcaPerformanceCompareInlineIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

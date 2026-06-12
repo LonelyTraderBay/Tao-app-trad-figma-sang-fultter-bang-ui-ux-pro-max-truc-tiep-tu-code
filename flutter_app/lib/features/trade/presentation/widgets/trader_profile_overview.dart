@@ -50,7 +50,6 @@ class _SegmentTabs extends StatelessWidget {
                       color: activeId == tab.id
                           ? AppColors.onAccent
                           : AppColors.text3,
-                      fontSize: 12,
                       fontWeight: activeId == tab.id
                           ? AppTextStyles.bold
                           : AppTextStyles.medium,
@@ -129,7 +128,6 @@ class _ChartCard extends StatelessWidget {
                   title,
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.onAccent,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                     height: 1.1,
                   ),
@@ -140,7 +138,6 @@ class _ChartCard extends StatelessWidget {
                   trailing!,
                   style: AppTextStyles.caption.copyWith(
                     color: _profileGreen,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
                     height: 1,
@@ -201,7 +198,6 @@ class _DetailsCard extends StatelessWidget {
             'Chi tiết',
             style: AppTextStyles.body.copyWith(
               color: AppColors.onAccent,
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -256,7 +252,6 @@ class _DetailRow extends StatelessWidget {
                 item.label,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
                   height: 1.2,
                 ),
               ),
@@ -265,7 +260,6 @@ class _DetailRow extends StatelessWidget {
                 item.value,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.medium,
                   height: 1,
                 ),

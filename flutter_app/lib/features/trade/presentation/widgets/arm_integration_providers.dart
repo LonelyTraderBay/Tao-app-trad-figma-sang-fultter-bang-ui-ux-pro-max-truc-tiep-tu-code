@@ -61,7 +61,6 @@ class _ArmProviderCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.body.copyWith(
                               color: AppColors.text1,
-                              fontSize: 15,
                               fontWeight: AppTextStyles.bold,
                               height: 1,
                             ),
@@ -76,13 +75,12 @@ class _ArmProviderCard extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               color: _armPrimary.withValues(alpha: .15),
-                              borderRadius: BorderRadius.circular(6),
+                              borderRadius: AppRadii.smRadius,
                             ),
                             child: Text(
                               'PRIMARY',
                               style: AppTextStyles.micro.copyWith(
                                 color: _armPrimary,
-                                fontSize: 9,
                                 fontWeight: AppTextStyles.bold,
                                 height: 1,
                               ),
@@ -98,7 +96,6 @@ class _ArmProviderCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
                         height: 1,
                       ),
                     ),
@@ -119,7 +116,6 @@ class _ArmProviderCard extends StatelessWidget {
                   style.label,
                   style: AppTextStyles.caption.copyWith(
                     color: style.color,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -191,13 +187,10 @@ class _MetricBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       height: 55,
       padding: const EdgeInsets.fromLTRB(9, 9, 9, 8),
-      decoration: BoxDecoration(
-        color: _armPanel2,
-        borderRadius: AppRadii.mdRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -208,7 +201,6 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
               height: 1,
             ),
           ),
@@ -219,7 +211,6 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.body.copyWith(
               color: color,
-              fontSize: 16,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
@@ -238,12 +229,9 @@ class _ConnectionDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(10, 9, 10, 9),
-      decoration: BoxDecoration(
-        color: _armPanel2,
-        borderRadius: AppRadii.mdRadius,
-      ),
       child: Column(
         children: [
           _DetailRow(
@@ -280,7 +268,6 @@ class _DetailRow extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
             height: 1,
           ),
         ),
@@ -293,8 +280,7 @@ class _DetailRow extends StatelessWidget {
             textAlign: TextAlign.right,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              fontSize: 10,
-              fontFamily: mono ? 'monospace' : null,
+              fontFeatures: mono ? AppTextStyles.tabularFigures : null,
               height: 1,
             ),
           ),
@@ -331,7 +317,6 @@ class _TestButton extends StatelessWidget {
         isTesting ? 'Testing...' : 'Test Connection',
         style: AppTextStyles.caption.copyWith(
           color: isTesting ? AppColors.text3 : _armPrimary,
-          fontSize: 11,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -359,7 +344,6 @@ class _LogsButton extends StatelessWidget {
         'Logs',
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text2,
-          fontSize: 11,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),

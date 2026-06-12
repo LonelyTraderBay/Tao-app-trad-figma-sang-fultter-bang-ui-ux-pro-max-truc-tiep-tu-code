@@ -30,7 +30,7 @@ class _TermsList extends StatelessWidget {
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
                       fontWeight: AppTextStyles.bold,
-                      height: 1,
+                      height: AppSpacing.referralLineHeightTight,
                     ),
                   ),
                 ),
@@ -46,7 +46,7 @@ class _TermsList extends StatelessWidget {
               ],
             ),
             if (i < snapshot.terms.length - 1)
-              const SizedBox(height: AppSpacing.x3),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           ],
         ],
       ),
@@ -78,7 +78,7 @@ class _FaqList extends StatelessWidget {
             index: i,
           ),
           if (i < snapshot.faqs.length - 1)
-            const SizedBox(height: AppSpacing.x3),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ],
       ],
     );

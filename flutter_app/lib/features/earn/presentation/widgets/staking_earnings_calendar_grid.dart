@@ -83,7 +83,7 @@ class _CalendarCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x3),
           GridView.count(
-            crossAxisCount: 7,
+            crossAxisCount: AppSpacing.stakingEarningsCalendarColumns,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             mainAxisSpacing: AppSpacing.x1,
@@ -183,7 +183,9 @@ class _DayCell extends StatelessWidget {
                 children: [
                   for (final event in events.take(3)) ...[
                     _EventDot(color: _eventColor(event.type)),
-                    const SizedBox(width: 2),
+                    const SizedBox(
+                      width: AppSpacing.stakingEarningsEventDotGap,
+                    ),
                   ],
                 ],
               ),
@@ -249,7 +251,7 @@ class _LegendItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 148,
+      width: AppSpacing.stakingEarningsLegendWidth,
       child: Row(
         children: [
           _EventDot(color: color),

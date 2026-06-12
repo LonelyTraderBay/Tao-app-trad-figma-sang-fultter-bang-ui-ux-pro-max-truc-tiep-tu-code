@@ -18,8 +18,8 @@ class _AddressCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 162,
-      padding: const EdgeInsets.all(16),
+      height: AppSpacing.walletAddressCardHeight,
+      padding: AppSpacing.walletAddressCardPadding,
       borderColor: AppColors.overlayStroke,
       child: Column(
         children: [
@@ -27,7 +27,7 @@ class _AddressCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _ShieldBadge(whitelisted: address.isWhitelisted),
-              const SizedBox(width: 13),
+              const SizedBox(width: AppSpacing.walletAddressPrimaryGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,47 +40,41 @@ class _AddressCard extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.baseMedium.copyWith(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800,
-                              height: 1,
+                              fontWeight: AppTextStyles.bold,
                             ),
                           ),
                         ),
                         if (address.isWhitelisted) ...[
-                          const SizedBox(width: 8),
+                          const SizedBox(width: AppSpacing.rowGap),
                           const _WhitelistBadge(),
                         ],
                       ],
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: AppSpacing.walletAddressMetaGap),
                     Row(
                       children: [
                         _MiniTag(address.network),
-                        const SizedBox(width: 12),
+                        const SizedBox(width: AppSpacing.rowGapRegular),
                         _MiniTag(address.asset),
                       ],
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: AppSpacing.walletAddressMetaGap),
                     Text(
                       address.address,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
+                      style: AppTextStyles.numericMicro.copyWith(
                         color: AppColors.text3,
-                        fontFamily: 'Roboto',
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
-                        height: 1,
                       ),
                     ),
                     if (address.lastUsed != null) ...[
-                      const SizedBox(height: 8),
+                      const SizedBox(
+                        height: AppSpacing.walletAddressCompactGap,
+                      ),
                       Text(
                         'Dùng gần nhất: ${address.lastUsed}',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
-                          height: 1,
                         ),
                       ),
                     ],
@@ -99,7 +93,7 @@ class _AddressCard extends StatelessWidget {
                   addressId: address.id,
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.walletAddressActionGap),
               _RoundActionButton(
                 key: AddressBookPage.favoriteKey(address.id),
                 icon: address.isFavorite
@@ -109,14 +103,14 @@ class _AddressCard extends StatelessWidget {
                 filled: address.isFavorite,
                 onTap: onFavorite,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.walletAddressActionGap),
               _RoundActionButton(
                 key: AddressBookPage.editKey(address.id),
                 icon: Icons.edit_rounded,
                 color: AppColors.text2,
                 onTap: () {},
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.walletAddressActionGap),
               _RoundActionButton(
                 key: AddressBookPage.deleteKey(address.id),
                 icon: Icons.delete_outline_rounded,
@@ -140,8 +134,8 @@ class _ShieldBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.walletAddressIconSize,
+      height: AppSpacing.walletAddressIconSize,
       decoration: BoxDecoration(
         color: _bookPanel2,
         borderRadius: AppRadii.cardRadius,
@@ -150,7 +144,7 @@ class _ShieldBadge extends StatelessWidget {
       child: Icon(
         Icons.shield_outlined,
         color: whitelisted ? _bookGreen : AppColors.text3,
-        size: 19,
+        size: AppSpacing.walletAddressShieldIcon,
       ),
     );
   }
@@ -161,28 +155,11 @@ class _WhitelistBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-      decoration: BoxDecoration(
-        color: AppColors.buy10,
-        borderRadius: BorderRadius.circular(7),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.check_rounded, color: _bookGreen, size: 11),
-          const SizedBox(width: 2),
-          Text(
-            'Whitelist',
-            style: AppTextStyles.micro.copyWith(
-              color: _bookGreen,
-              fontSize: 11,
-              fontWeight: FontWeight.w800,
-              height: 1,
-            ),
-          ),
-        ],
-      ),
+    return const VitStatusPill(
+      label: 'Whitelist',
+      icon: Icons.check_rounded,
+      status: VitStatusPillStatus.success,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -198,9 +175,7 @@ class _MiniTag extends StatelessWidget {
       label,
       style: AppTextStyles.micro.copyWith(
         color: AppColors.text2,
-        fontSize: 12,
-        fontWeight: FontWeight.w800,
-        height: 1,
+        fontWeight: AppTextStyles.bold,
       ),
     );
   }
@@ -224,7 +199,7 @@ class _CopyButton extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 36,
+        height: AppSpacing.walletAddressCopyHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: AppColors.primary12,
@@ -237,16 +212,14 @@ class _CopyButton extends StatelessWidget {
             Icon(
               copied ? Icons.check_circle_outline_rounded : Icons.copy_rounded,
               color: _bookPrimary,
-              size: 14,
+              size: AppSpacing.iconSm,
             ),
-            const SizedBox(width: 7),
+            const SizedBox(width: AppSpacing.walletAddressSectionGap),
             Text(
               copied ? 'Đã copy' : 'Sao chép',
               style: AppTextStyles.caption.copyWith(
                 color: _bookPrimary,
-                fontSize: 12,
-                fontWeight: FontWeight.w800,
-                height: 1,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
           ],
@@ -274,29 +247,18 @@ class _RoundActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
+      width: AppSpacing.walletAddressActionSize,
+      height: AppSpacing.walletAddressActionSize,
+      variant: VitCardVariant.inner,
+      borderColor: danger
+          ? AppColors.sell15
+          : filled
+          ? AppColors.caution.withValues(alpha: .20)
+          : AppColors.borderSolid,
+      alignment: Alignment.center,
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        width: 36,
-        height: 36,
-        decoration: BoxDecoration(
-          color: danger
-              ? AppColors.sell.withValues(alpha: .08)
-              : filled
-              ? AppColors.caution.withValues(alpha: .10)
-              : _bookPanel2,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(
-            color: danger
-                ? AppColors.sell15
-                : filled
-                ? AppColors.caution.withValues(alpha: .20)
-                : AppColors.borderSolid,
-          ),
-        ),
-        child: Icon(icon, color: color, size: 17),
-      ),
+      child: Icon(icon, color: color, size: AppSpacing.walletAddressActionIcon),
     );
   }
 }
@@ -309,12 +271,12 @@ class _EmptyAddressState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 42),
+      padding: AppSpacing.walletAddressEmptyPadding,
       child: Column(
         children: [
           Container(
-            width: 64,
-            height: 64,
+            width: AppSpacing.walletAddressEmptyIconSize,
+            height: AppSpacing.walletAddressEmptyIconSize,
             decoration: BoxDecoration(
               color: _bookPanel2,
               borderRadius: AppRadii.lgRadius,
@@ -322,15 +284,15 @@ class _EmptyAddressState extends StatelessWidget {
             child: const Icon(
               Icons.shield_outlined,
               color: AppColors.text3,
-              size: 32,
+              size: AppSpacing.walletAddressEmptyIconGlyph,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.rowGapRegular),
           Text(
             'Không tìm thấy địa chỉ',
             style: AppTextStyles.body.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.walletAddressFilterGap),
           _AddAddressButton(onTap: onAdd),
         ],
       ),

@@ -13,9 +13,10 @@ class _PinnedSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return VitCard(
       key: AnnouncementsPage.pinnedKey,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
+      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
+      padding: const EdgeInsets.all(AppSpacing.x4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -32,14 +33,14 @@ class _PinnedSection extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
                   fontWeight: AppTextStyles.bold,
-                  fontSize: 12,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           for (var i = 0; i < announcements.length; i++) ...[
-            if (i > 0) const SizedBox(height: AppSpacing.x3),
+            if (i > 0)
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
             _AnnouncementCard(
               announcement: announcements[i],
               expanded: expandedId == announcements[i].id,
@@ -67,9 +68,10 @@ class _AnnouncementList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return VitCard(
       key: AnnouncementsPage.listKey,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
+      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
+      padding: const EdgeInsets.all(AppSpacing.x4),
       child: showEmpty
           ? const VitEmptyState(
               key: AnnouncementsPage.emptyKey,
@@ -80,7 +82,8 @@ class _AnnouncementList extends StatelessWidget {
           : Column(
               children: [
                 for (var i = 0; i < announcements.length; i++) ...[
-                  if (i > 0) const SizedBox(height: AppSpacing.x3),
+                  if (i > 0)
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                   _AnnouncementCard(
                     announcement: announcements[i],
                     expanded: expandedId == announcements[i].id,
@@ -134,7 +137,7 @@ class _AnnouncementCard extends StatelessWidget {
                     ],
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   announcement.title,
                   maxLines: expanded ? 2 : 1,
@@ -144,7 +147,7 @@ class _AnnouncementCard extends StatelessWidget {
                     height: 1.35,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   announcement.summary,
                   maxLines: expanded ? 4 : 2,
@@ -154,7 +157,7 @@ class _AnnouncementCard extends StatelessWidget {
                     height: 1.32,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                 Row(
                   children: [
                     const Icon(
@@ -167,15 +170,14 @@ class _AnnouncementCard extends StatelessWidget {
                       announcement.publishedDate,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
                       ),
                     ),
                   ],
                 ),
                 if (expanded) ...[
-                  const SizedBox(height: AppSpacing.x4),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
                   const Divider(color: AppColors.divider, height: 1),
-                  const SizedBox(height: AppSpacing.x4),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
                   Text(
                     announcement.content,
                     style: AppTextStyles.caption.copyWith(
@@ -183,7 +185,7 @@ class _AnnouncementCard extends StatelessWidget {
                       height: 1.55,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
                   Wrap(
                     spacing: AppSpacing.x2,
                     runSpacing: AppSpacing.x2,

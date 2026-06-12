@@ -8,17 +8,15 @@ class _MiniBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      borderColor: color.withValues(alpha: .18),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .10),
-        borderRadius: AppRadii.xsRadius,
-      ),
       child: Text(
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
           fontWeight: AppTextStyles.bold,
           height: 1.2,
         ),

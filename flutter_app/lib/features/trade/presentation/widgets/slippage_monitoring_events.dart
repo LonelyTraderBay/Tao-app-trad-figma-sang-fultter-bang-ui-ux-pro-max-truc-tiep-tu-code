@@ -65,7 +65,6 @@ class _SlippageEventCard extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTextStyles.body.copyWith(
                                     color: AppColors.text1,
-                                    fontSize: 13,
                                     fontWeight: AppTextStyles.bold,
                                     height: 1,
                                   ),
@@ -80,7 +79,6 @@ class _SlippageEventCard extends StatelessWidget {
                             '${event.provider} · ${event.time}',
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              fontSize: 10,
                               height: 1,
                             ),
                           ),
@@ -133,7 +131,6 @@ class _SlippageEventCard extends StatelessWidget {
                           'Cost Impact:',
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            fontSize: 10,
                           ),
                         ),
                       ),
@@ -141,7 +138,6 @@ class _SlippageEventCard extends StatelessWidget {
                         '\$${((event.executedPrice - event.expectedPrice).abs() * event.volume).toStringAsFixed(2)}',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text1,
-                          fontSize: 11,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
@@ -186,7 +182,6 @@ class _EventMetric extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
               height: 1,
             ),
           ),
@@ -197,7 +192,6 @@ class _EventMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: color,
-              fontSize: 11,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,

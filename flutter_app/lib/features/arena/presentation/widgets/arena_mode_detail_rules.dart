@@ -28,7 +28,7 @@ class ArenaModeDescriptionCard extends StatelessWidget {
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.medium,
-              height: 1.55,
+              height: AppSpacing.arenaModeDescriptionLineHeight,
             ),
           ),
         ),
@@ -81,7 +81,7 @@ class _RuleRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 112,
+          width: AppSpacing.arenaModeRuleLabelWidth,
           child: Text(
             row.label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -103,7 +103,7 @@ class _RuleRow extends StatelessWidget {
                     style: AppTextStyles.body.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
-                      height: 1.35,
+                      height: AppSpacing.arenaModeRuleValueLineHeight,
                     ),
                   ),
           ),

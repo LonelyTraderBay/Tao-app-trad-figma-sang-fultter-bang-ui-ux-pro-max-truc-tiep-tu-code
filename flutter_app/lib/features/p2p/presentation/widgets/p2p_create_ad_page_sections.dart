@@ -25,35 +25,31 @@ class _TradeTypePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x1),
-        child: Row(
-          children: [
-            Expanded(
-              child: _SegmentButton(
-                key: P2PCreateAdPage.adTypeKey(P2PTradeType.buy),
-                label: 'Tôi muốn MUA',
-                selected: value == P2PTradeType.buy,
-                color: AppColors.buy,
-                onTap: () => onChanged(P2PTradeType.buy),
-              ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      padding: const EdgeInsets.all(AppSpacing.x1),
+      child: Row(
+        children: [
+          Expanded(
+            child: _SegmentButton(
+              key: P2PCreateAdPage.adTypeKey(P2PTradeType.buy),
+              label: 'Tôi muốn MUA',
+              selected: value == P2PTradeType.buy,
+              color: AppColors.buy,
+              onTap: () => onChanged(P2PTradeType.buy),
             ),
-            Expanded(
-              child: _SegmentButton(
-                key: P2PCreateAdPage.adTypeKey(P2PTradeType.sell),
-                label: 'Tôi muốn BÁN',
-                selected: value == P2PTradeType.sell,
-                color: AppColors.sell,
-                onTap: () => onChanged(P2PTradeType.sell),
-              ),
+          ),
+          Expanded(
+            child: _SegmentButton(
+              key: P2PCreateAdPage.adTypeKey(P2PTradeType.sell),
+              label: 'Tôi muốn BÁN',
+              selected: value == P2PTradeType.sell,
+              color: AppColors.sell,
+              onTap: () => onChanged(P2PTradeType.sell),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -67,35 +63,31 @@ class _PriceTypePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x1),
-        child: Row(
-          children: [
-            Expanded(
-              child: _SegmentButton(
-                key: P2PCreateAdPage.priceTypeKey('fixed'),
-                label: 'Cố định',
-                selected: value == 'fixed',
-                color: AppColors.primary,
-                onTap: () => onChanged('fixed'),
-              ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      padding: const EdgeInsets.all(AppSpacing.x1),
+      child: Row(
+        children: [
+          Expanded(
+            child: _SegmentButton(
+              key: P2PCreateAdPage.priceTypeKey('fixed'),
+              label: 'Cố định',
+              selected: value == 'fixed',
+              color: AppColors.primary,
+              onTap: () => onChanged('fixed'),
             ),
-            Expanded(
-              child: _SegmentButton(
-                key: P2PCreateAdPage.priceTypeKey('floating'),
-                label: 'Thả nổi %',
-                selected: value == 'floating',
-                color: AppColors.accent,
-                onTap: () => onChanged('floating'),
-              ),
+          ),
+          Expanded(
+            child: _SegmentButton(
+              key: P2PCreateAdPage.priceTypeKey('floating'),
+              label: 'Thả nổi %',
+              selected: value == 'floating',
+              color: AppColors.accent,
+              onTap: () => onChanged('floating'),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

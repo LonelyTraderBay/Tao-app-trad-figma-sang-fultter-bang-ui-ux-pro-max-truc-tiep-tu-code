@@ -16,8 +16,8 @@ class _ProfileHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 216,
-      padding: const EdgeInsets.all(20),
+      height: AppSpacing.profileHeroHeight,
+      padding: AppSpacing.profileHeroPadding,
       radius: VitCardRadius.lg,
       variant: VitCardVariant.hero,
       child: Column(
@@ -25,8 +25,8 @@ class _ProfileHero extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 58,
-                height: 58,
+                width: AppSpacing.profileHeroAvatar,
+                height: AppSpacing.profileHeroAvatar,
                 decoration: BoxDecoration(
                   borderRadius: AppRadii.cardRadius,
                   gradient: const LinearGradient(
@@ -47,12 +47,10 @@ class _ProfileHero extends StatelessWidget {
                   user.fullName.characters.first,
                   style: AppTextStyles.sectionTitle.copyWith(
                     color: AppColors.onAccent,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w900,
                   ),
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: AppSpacing.profileMenuGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,27 +59,23 @@ class _ProfileHero extends StatelessWidget {
                       user.fullName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.baseMedium.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900,
-                        height: 1,
+                      style: AppTextStyles.control.copyWith(
+                        fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.profileHeroTextGap),
                     Text(
                       user.email,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption.copyWith(
+                      style: AppTextStyles.numericMicro.copyWith(
                         color: AppColors.text2,
-                        fontSize: 13,
-                        height: 1,
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.profileHeroEmailGap),
                     Wrap(
-                      spacing: 8,
-                      runSpacing: 6,
+                      spacing: AppSpacing.profileHeroPillGap,
+                      runSpacing: AppSpacing.profileHeroPillRunGap,
                       children: [
                         _HeroPill(label: user.vipLevel, color: _profileAmber),
                         _HeroPill(
@@ -98,8 +92,8 @@ class _ProfileHero extends StatelessWidget {
                 onTap: onEdit,
                 behavior: HitTestBehavior.opaque,
                 child: Container(
-                  width: 40,
-                  height: 40,
+                  width: AppSpacing.profileEditButton,
+                  height: AppSpacing.profileEditButton,
                   decoration: BoxDecoration(
                     color: AppColors.onAccent.withValues(alpha: .11),
                     borderRadius: AppRadii.lgRadius,
@@ -111,7 +105,7 @@ class _ProfileHero extends StatelessWidget {
                   child: const Icon(
                     Icons.person_outline_rounded,
                     color: AppColors.text2,
-                    size: 21,
+                    size: AppSpacing.profileEditIcon,
                   ),
                 ),
               ),
@@ -123,7 +117,7 @@ class _ProfileHero extends StatelessWidget {
               Expanded(
                 child: _HeroInfoBox(label: 'UID', value: user.id),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.profileHeroInfoGap),
               Expanded(
                 child: GestureDetector(
                   key: ProfilePage.copyReferralKey,
@@ -140,7 +134,7 @@ class _ProfileHero extends StatelessWidget {
                       color: copiedReferral
                           ? _profileGreen
                           : AppColors.primarySoft,
-                      size: 15,
+                      size: AppSpacing.profileModuleIcon,
                     ),
                   ),
                 ),
@@ -162,21 +156,13 @@ class _HeroPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      padding: AppSpacing.profileHeroPillPadding,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .16),
         borderRadius: AppRadii.smRadius,
         border: Border.all(color: color.withValues(alpha: .28)),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 11,
-          fontWeight: FontWeight.w900,
-          height: 1,
-        ),
-      ),
+      child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
     );
   }
 }
@@ -197,8 +183,8 @@ class _HeroInfoBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 66,
-      padding: const EdgeInsets.fromLTRB(14, 13, 14, 12),
+      height: AppSpacing.profileHeroInfoHeight,
+      padding: AppSpacing.profileHeroInfoPadding,
       decoration: BoxDecoration(
         color: AppColors.onAccent.withValues(alpha: .08),
         borderRadius: AppRadii.cardRadius,
@@ -209,12 +195,7 @@ class _HeroInfoBox extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text2,
-              fontSize: 10,
-              fontWeight: FontWeight.w800,
-              height: 1,
-            ),
+            style: AppTextStyles.badge.copyWith(color: AppColors.text2),
           ),
           const Spacer(),
           Row(
@@ -224,16 +205,17 @@ class _HeroInfoBox extends StatelessWidget {
                   value,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.control.copyWith(
                     color: valueColor,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
+                    fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
               ),
-              if (trailing != null) ...[const SizedBox(width: 6), trailing!],
+              if (trailing != null) ...[
+                const SizedBox(width: AppSpacing.profileHeroInfoTrailingGap),
+                trailing!,
+              ],
             ],
           ),
         ],

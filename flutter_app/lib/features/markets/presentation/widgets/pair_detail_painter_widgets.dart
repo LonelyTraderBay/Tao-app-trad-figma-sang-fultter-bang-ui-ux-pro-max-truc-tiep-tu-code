@@ -11,10 +11,7 @@ class _PairChartPainter extends CustomPainter {
     final gridPaint = Paint()
       ..color = AppColors.divider
       ..strokeWidth = 1;
-    final labelStyle = AppTextStyles.micro.copyWith(
-      color: AppColors.text3,
-      fontSize: 10,
-    );
+    final labelStyle = AppTextStyles.micro.copyWith(color: AppColors.text3);
     final values = series.isEmpty ? [0.0, 1.0] : series;
     final minValue = values.reduce(math.min) - 120;
     final maxValue = values.reduce(math.max) + 120;
@@ -85,7 +82,7 @@ class _PairChartPainter extends CustomPainter {
 }
 
 TextStyle _tableHeaderStyle() {
-  return AppTextStyles.micro.copyWith(color: AppColors.text3, fontSize: 10);
+  return AppTextStyles.micro.copyWith(color: AppColors.text3);
 }
 
 String _formatPrice(double value) {

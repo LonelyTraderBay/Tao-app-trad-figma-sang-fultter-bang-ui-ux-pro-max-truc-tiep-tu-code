@@ -143,6 +143,10 @@ void main() {
       const Offset(0, -760),
     );
     await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(P2PMyAdsPage.quickLinkKey('settings')),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(P2PMyAdsPage.quickLinkKey('settings')));
     await tester.pumpAndSettle();
     expect(find.byType(P2PSettingsPage), findsOneWidget);

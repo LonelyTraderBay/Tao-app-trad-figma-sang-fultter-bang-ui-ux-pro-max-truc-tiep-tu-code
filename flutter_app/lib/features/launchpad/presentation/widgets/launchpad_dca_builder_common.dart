@@ -21,8 +21,8 @@ class LaunchpadDcaHeaderCreateButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 36,
-      height: 36,
+      width: AppSpacing.launchpadBox36,
+      height: AppSpacing.launchpadBox36,
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: AppColors.searchBg,
@@ -33,7 +33,11 @@ class LaunchpadDcaHeaderCreateButton extends StatelessWidget {
           key: buttonKey,
           onPressed: onTap,
           padding: EdgeInsets.zero,
-          icon: const Icon(Icons.add_rounded, color: AppColors.text1, size: 20),
+          icon: const Icon(
+            Icons.add_rounded,
+            color: AppColors.text1,
+            size: AppSpacing.launchpadIcon3xl,
+          ),
         ),
       ),
     );

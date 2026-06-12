@@ -147,7 +147,10 @@ class _PlanCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x4),
-          const Divider(color: AppColors.divider, height: 1),
+          const Divider(
+            color: AppColors.divider,
+            height: AppSpacing.savingsConsumerDividerHeight,
+          ),
           const SizedBox(height: AppSpacing.x3),
           Row(
             children: [

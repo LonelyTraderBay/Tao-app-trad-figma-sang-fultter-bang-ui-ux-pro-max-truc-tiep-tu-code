@@ -20,7 +20,7 @@ class _QuickLinks extends StatelessWidget {
             onTap: onRewards,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.predictionDetailQuickLinkGap),
         Expanded(
           child: _QuickLinkCard(
             key: PredictionEventDetailPage.globalActivityKey,
@@ -56,11 +56,15 @@ class _QuickLinkCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      padding: const EdgeInsets.all(11),
+      padding: AppSpacing.predictionDetailQuickLinkPadding,
       child: Row(
         children: [
-          Icon(icon, color: color, size: 16),
-          const SizedBox(width: 8),
+          Icon(
+            icon,
+            color: color,
+            size: AppSpacing.predictionDetailQuickLinkIcon,
+          ),
+          const SizedBox(width: AppSpacing.predictionDetailQuickLinkGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +75,6 @@ class _QuickLinkCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -79,10 +82,7 @@ class _QuickLinkCard extends StatelessWidget {
                   subtitle,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 9,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -104,14 +104,15 @@ class _MetaItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: AppColors.text3, size: 11),
-        const SizedBox(width: 4),
+        Icon(
+          icon,
+          color: AppColors.text3,
+          size: AppSpacing.predictionHomeStatIcon,
+        ),
+        const SizedBox(width: AppSpacing.predictionHomeStatIconGap),
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 11,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
       ],
     );
@@ -132,7 +133,7 @@ class _ChangeLabel extends StatelessWidget {
         Icon(
           value >= 0 ? Icons.arrow_outward_rounded : Icons.south_east_rounded,
           color: color,
-          size: 12,
+          size: AppSpacing.predictionHomeTrendIcon,
         ),
         Text(
           _formatPercent(value),
@@ -160,20 +161,12 @@ class _TinyBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      padding: AppSpacing.predictionHomeBadgePadding,
       decoration: BoxDecoration(
         color: background,
-        borderRadius: BorderRadius.circular(7),
+        borderRadius: AppRadii.badgeRadius,
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 10,
-          fontWeight: AppTextStyles.bold,
-          height: 1.2,
-        ),
-      ),
+      child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
     );
   }
 }

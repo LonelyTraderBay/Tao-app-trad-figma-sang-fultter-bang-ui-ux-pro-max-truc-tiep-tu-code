@@ -11,13 +11,13 @@ class _QrStep extends StatelessWidget {
     return Column(
       children: [
         const _ShieldHero(),
-        const SizedBox(height: 18),
+        const Padding(padding: EdgeInsets.only(top: 18)),
         Text(
           'Bước 1: Quét mã QR',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text.rich(
           TextSpan(
             text: 'Mở ứng dụng ',
@@ -46,11 +46,11 @@ class _QrStep extends StatelessWidget {
             height: 1.5,
           ),
         ),
-        const SizedBox(height: 22),
+        const Padding(padding: EdgeInsets.only(top: 22)),
         const _QrPreview(),
-        const SizedBox(height: 20),
+        const Padding(padding: EdgeInsets.only(top: 20)),
         _SecretKeyCard(copied: copied, onCopy: onCopy),
-        const SizedBox(height: 20),
+        const Padding(padding: EdgeInsets.only(top: 20)),
         const _WarningBanner(text: 'Giữ bí mật khóa này.'),
       ],
     );
@@ -225,12 +225,9 @@ class _SecretKeyCard extends StatelessWidget {
         children: [
           Text(
             'Hoặc nhập thủ công khóa bí mật:',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           Row(
             children: [
               Expanded(

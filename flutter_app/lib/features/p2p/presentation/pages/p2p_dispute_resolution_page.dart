@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -45,8 +46,10 @@ class _P2PDisputeResolutionPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pDisputeBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pDisputeBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -73,14 +76,11 @@ class _P2PDisputeResolutionPageState
                   child: SingleChildScrollView(
                     key: P2PDisputeResolutionPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    padding: AppSpacing.p2pDisputeScrollPadding(bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      customGap: 0,
                       children: [
                         _DecisionHero(snapshot: snapshot),
                         const SizedBox(height: AppSpacing.x4),
@@ -101,7 +101,7 @@ class _P2PDisputeResolutionPageState
                         const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pDisputeCompactCardPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Dispute resolution review',
@@ -136,7 +136,7 @@ class _DecisionHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDisputeCardPadding,
       decoration: BoxDecoration(
         color: AppColors.buy10,
         border: Border.all(color: AppColors.buy15),
@@ -146,8 +146,8 @@ class _DecisionHero extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: AppSpacing.ctaHeight,
-            height: AppSpacing.ctaHeight,
+            width: AppSpacing.p2pDisputeHeroIconBox,
+            height: AppSpacing.p2pDisputeHeroIconBox,
             decoration: const BoxDecoration(
               color: AppColors.buy,
               borderRadius: AppRadii.inputRadius,
@@ -192,7 +192,7 @@ class _DecisionDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDisputeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -278,7 +278,7 @@ class _AppealCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDisputeCardPadding,
       decoration: BoxDecoration(
         color: AppColors.warn10,
         border: Border.all(color: AppColors.warn15),
@@ -316,9 +316,7 @@ class _AppealCard extends StatelessWidget {
                   variant: VitCtaButtonVariant.warning,
                   fullWidth: false,
                   height: AppSpacing.buttonCompact,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x3,
-                  ),
+                  padding: AppSpacing.p2pDisputeAppealButtonPadding,
                   child: Text(appealOpened ? 'Đang mở kháng cáo' : 'Kháng cáo'),
                 ),
                 if (appealOpened) ...[

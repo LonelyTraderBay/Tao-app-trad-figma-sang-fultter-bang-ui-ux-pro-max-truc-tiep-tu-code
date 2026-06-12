@@ -119,6 +119,13 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
                                 onSkip: () => _close(context),
                                 onSubmit: _submit,
                               ),
+                              const VitHighRiskStatePanel(
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'Order rating state review',
+                                message:
+                                    'Merchant summary, rating selection, quick tags, review text, skip path, disabled submit, submitting state, and success view remain visible before closing feedback.',
+                                contractId: 'SC-213',
+                              ),
                             ],
                           ),
                         ),

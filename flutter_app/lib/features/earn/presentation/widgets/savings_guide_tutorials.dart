@@ -114,7 +114,7 @@ class _HeroCard extends StatelessWidget {
                     snapshot.heroSubtitle,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.55,
+                      height: AppSpacing.earnGuideHeroLineHeight,
                     ),
                   ),
                 ],
@@ -257,7 +257,7 @@ class _TutorialCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      height: 1.35,
+                      height: AppSpacing.earnGuideCardLineHeight,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x2),
@@ -353,7 +353,7 @@ class _QuickTipCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.45,
+              height: AppSpacing.earnGuideBodyLineHeight,
             ),
           ),
         ],
@@ -381,7 +381,7 @@ class _StartSavingsCard extends StatelessWidget {
             'Khám phá các sản phẩm tiết kiệm đang có lãi suất hấp dẫn.',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              height: 1.5,
+              height: AppSpacing.earnGuideTipLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x4),

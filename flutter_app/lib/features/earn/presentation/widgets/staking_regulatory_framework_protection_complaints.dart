@@ -85,7 +85,7 @@ class _ProtectionCard extends StatelessWidget {
               scheme.description,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.5,
+                height: AppSpacing.stakingRegulatoryFooterLineHeight,
               ),
             ),
           ),
@@ -94,7 +94,7 @@ class _ProtectionCard extends StatelessWidget {
             'Eligibility: ${scheme.eligibility}',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.45,
+              height: AppSpacing.stakingRegulatoryNoteLineHeight,
             ),
           ),
         ],
@@ -152,7 +152,11 @@ class _ComplaintsTab extends StatelessWidget {
                   for (final contact in snapshot.authorityContacts) ...[
                     _AuthorityContact(contact: contact),
                     if (contact != snapshot.authorityContacts.last)
-                      const Divider(color: AppColors.divider, height: 24),
+                      const Divider(
+                        color: AppColors.divider,
+                        height:
+                            AppSpacing.stakingRegulatoryContactDividerHeight,
+                      ),
                   ],
                 ],
               ),
@@ -210,7 +214,7 @@ class _ComplaintStep extends StatelessWidget {
                 step.description,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: 1.45,
+                  height: AppSpacing.stakingRegulatoryNoteLineHeight,
                 ),
               ),
               const SizedBox(height: AppSpacing.x1),

@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/referral_controller_providers.dart';
@@ -82,36 +83,52 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
                       AppSpacing.contentPad,
                       bottomInset,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      customGap: 0,
+                      fullBleed: true,
                       children: [
                         const _SectionTitle(
                           title: 'Hệ thống hạng',
                           subtitle: 'Mời càng nhiều, thưởng càng lớn',
                           color: AppColors.warn,
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x3),
+                        ),
                         _TierTable(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x5),
+                        ),
                         const _SectionTitle(
                           title: 'Các loại thưởng',
                           color: AppModuleAccents.trade,
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x3),
+                        ),
                         _RewardTypes(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x5),
+                        ),
                         const _SectionTitle(
                           title: 'Điều khoản chương trình',
                           color: AppColors.text2,
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x3),
+                        ),
                         _TermsList(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x5),
+                        ),
                         const _SectionTitle(
                           title: 'Câu hỏi thường gặp',
                           color: AppColors.accent,
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x3),
+                        ),
                         _FaqList(
                           snapshot: snapshot,
                           openIndex: _openFaqIndex,
@@ -124,7 +141,9 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
                             });
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x4),
+                        ),
                         _Disclaimer(snapshot: snapshot),
                       ],
                     ),

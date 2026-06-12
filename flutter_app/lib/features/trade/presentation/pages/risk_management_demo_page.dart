@@ -21,8 +21,6 @@ part '../widgets/risk_management_tabs.dart';
 part '../widgets/risk_management_common.dart';
 
 const _riskPrimary = AppColors.primary;
-const _cardBackground = AppColors.surface2;
-const _chipBackground = AppColors.surface2;
 
 enum _RiskTab { oco, positions, calculator }
 

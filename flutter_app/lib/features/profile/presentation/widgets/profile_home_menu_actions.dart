@@ -16,7 +16,10 @@ class _MenuSection extends StatelessWidget {
           for (final item in section.items) ...[
             _MenuRow(item: item, accent: accent),
             if (item != section.items.last)
-              const Divider(height: 1, color: AppColors.divider),
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                color: AppColors.divider,
+              ),
           ],
         ],
       ),
@@ -33,11 +36,12 @@ class _ProfileProductHub extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final tileWidth = (constraints.maxWidth - 10) / 2;
+        final tileWidth =
+            (constraints.maxWidth - AppSpacing.profileProductGridGap) / 2;
         return Wrap(
           key: ProfilePage.productHubKey,
-          spacing: 10,
-          runSpacing: 10,
+          spacing: AppSpacing.profileProductGridGap,
+          runSpacing: AppSpacing.profileProductGridGap,
           children: [
             for (final shortcut in shortcuts)
               SizedBox(
@@ -62,22 +66,26 @@ class _ProfileProductTile extends StatelessWidget {
     return VitCard(
       key: ProfilePage.productShortcutKey(shortcut.id),
       onTap: () => context.go(shortcut.route),
-      height: 74,
-      padding: const EdgeInsets.all(12),
+      height: AppSpacing.profileProductTileHeight,
+      padding: AppSpacing.profileProductTilePadding,
       borderColor: accent.withValues(alpha: .22),
       child: Row(
         children: [
           Container(
-            width: 34,
-            height: 34,
+            width: AppSpacing.profileProductIconBox,
+            height: AppSpacing.profileProductIconBox,
             decoration: BoxDecoration(
               color: accent.withValues(alpha: .12),
               borderRadius: AppRadii.cardRadius,
             ),
             alignment: Alignment.center,
-            child: Icon(_iconFor(shortcut.iconKey), color: accent, size: 19),
+            child: Icon(
+              _iconFor(shortcut.iconKey),
+              color: accent,
+              size: AppSpacing.profileProductIcon,
+            ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.profileProductGap),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -89,22 +97,15 @@ class _ProfileProductTile extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(height: AppSpacing.profileProductLabelGap),
                 Text(
                   shortcut.stateLabel,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: accent,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.badge.copyWith(color: accent),
                 ),
               ],
             ),
@@ -128,21 +129,25 @@ class _MenuRow extends StatelessWidget {
       onTap: () => context.go(item.route),
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 62,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        height: AppSpacing.profileMenuRowHeight,
+        padding: AppSpacing.profileMenuRowPadding,
         child: Row(
           children: [
             Container(
-              width: 36,
-              height: 36,
+              width: AppSpacing.profileMenuIconBox,
+              height: AppSpacing.profileMenuIconBox,
               decoration: BoxDecoration(
                 color: accent.withValues(alpha: .12),
                 borderRadius: AppRadii.cardRadius,
               ),
               alignment: Alignment.center,
-              child: Icon(_iconFor(item.iconKey), color: accent, size: 20),
+              child: Icon(
+                _iconFor(item.iconKey),
+                color: accent,
+                size: AppSpacing.profileMenuIcon,
+              ),
             ),
-            const SizedBox(width: 14),
+            const SizedBox(width: AppSpacing.profileMenuGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -153,13 +158,11 @@ class _MenuRow extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w900,
-                      height: 1,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
                   if (item.subtitle != null) ...[
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.profileMenuSubtitleGap),
                     Text(
                       item.subtitle!,
                       maxLines: 1,
@@ -168,8 +171,6 @@ class _MenuRow extends StatelessWidget {
                         color: item.subtitleHex == null
                             ? _profileMuted
                             : Color(item.subtitleHex!),
-                        fontSize: 11,
-                        height: 1,
                       ),
                     ),
                   ],
@@ -179,7 +180,7 @@ class _MenuRow extends StatelessWidget {
             const Icon(
               Icons.chevron_right_rounded,
               color: _profileMuted,
-              size: 20,
+              size: AppSpacing.profileMenuChevron,
             ),
           ],
         ),
@@ -197,16 +198,12 @@ class _ActivityButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      height: 44,
+      height: AppSpacing.profileActivityButtonHeight,
       alignment: Alignment.center,
       borderColor: _profileBorder,
       child: Text(
         'Nh\u1EADt k\u00FD ho\u1EA1t \u0111\u1ED9ng',
-        style: AppTextStyles.caption.copyWith(
-          color: AppColors.text2,
-          fontSize: 14,
-          fontWeight: FontWeight.w800,
-        ),
+        style: AppTextStyles.control.copyWith(color: AppColors.text2),
       ),
     );
   }
@@ -222,20 +219,23 @@ class _LogoutButton extends StatelessWidget {
     return VitCard(
       key: ProfilePage.logoutKey,
       onTap: onTap,
-      height: 54,
+      height: AppSpacing.profileLogoutButtonHeight,
       alignment: Alignment.center,
       borderColor: _profileRed.withValues(alpha: .28),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.logout_rounded, color: _profileRed, size: 21),
-          const SizedBox(width: 10),
+          const Icon(
+            Icons.logout_rounded,
+            color: _profileRed,
+            size: AppSpacing.profileLogoutIcon,
+          ),
+          const SizedBox(width: AppSpacing.profileLogoutGap),
           Text(
             '\u0110\u0103ng xu\u1EA5t',
             style: AppTextStyles.baseMedium.copyWith(
               color: _profileRed,
-              fontSize: 16,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
         ],
@@ -255,22 +255,17 @@ class _SectionLabel extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 15,
+          width: AppSpacing.profileSectionAccentWidth,
+          height: AppSpacing.profileSectionAccentHeight,
           decoration: BoxDecoration(
             color: accent,
-            borderRadius: BorderRadius.circular(2),
+            borderRadius: AppRadii.hairlineRadius,
           ),
         ),
-        const SizedBox(width: 7),
+        const SizedBox(width: AppSpacing.profileSectionAccentGap),
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text2,
-            fontSize: 11,
-            fontWeight: FontWeight.w900,
-            height: 1,
-          ),
+          style: AppTextStyles.badge.copyWith(color: AppColors.text2),
         ),
       ],
     );

@@ -92,7 +92,6 @@ class _SummaryCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1,
                   ),
                 ),
@@ -106,7 +105,6 @@ class _SummaryCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
-              fontSize: 20,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
@@ -119,7 +117,6 @@ class _SummaryCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
               height: 1,
             ),
           ),
@@ -138,9 +135,9 @@ class _Tabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const tabs = [('current', 'Q1 2026 (Current)'), ('archive', 'Archive')];
-    return Container(
+    return VitCard(
       height: 52,
-      color: _bestPanel,
+      variant: VitCardVariant.inner,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -158,7 +155,6 @@ class _Tabs extends StatelessWidget {
                             color: activeId == tab.$1
                                 ? _bestPrimary
                                 : AppColors.text3,
-                            fontSize: 12,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),

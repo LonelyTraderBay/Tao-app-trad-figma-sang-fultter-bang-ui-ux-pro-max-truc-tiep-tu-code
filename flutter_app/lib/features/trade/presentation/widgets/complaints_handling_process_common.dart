@@ -57,7 +57,6 @@ class _ProcessStep extends StatelessWidget {
                 step.title,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -67,7 +66,6 @@ class _ProcessStep extends StatelessWidget {
                 step.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
                   height: 1.35,
                 ),
               ),
@@ -95,17 +93,13 @@ class _OmbudsmanCard extends StatelessWidget {
             ombudsman.description,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 11,
               height: 1.45,
             ),
           ),
           const SizedBox(height: 12),
-          Container(
+          VitCard(
+            variant: VitCardVariant.inner,
             padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: _complaintsPanel2,
-              borderRadius: AppRadii.mdRadius,
-            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -113,7 +107,6 @@ class _OmbudsmanCard extends StatelessWidget {
                   'Contact:',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 9,
                     height: 1,
                   ),
                 ),
@@ -122,7 +115,6 @@ class _OmbudsmanCard extends StatelessWidget {
                   'Phone: ${ombudsman.phone}',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     height: 1,
                   ),
                 ),
@@ -131,7 +123,6 @@ class _OmbudsmanCard extends StatelessWidget {
                   'Web: ${ombudsman.website}',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     height: 1,
                   ),
                 ),
@@ -150,7 +141,6 @@ class _OmbudsmanCard extends StatelessWidget {
               side: BorderSide(color: _complaintsBorder.withValues(alpha: .76)),
               shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
               textStyle: AppTextStyles.caption.copyWith(
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -170,12 +160,14 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: 4,
           height: 15,
-          decoration: BoxDecoration(
-            color: _complaintsPrimary,
-            borderRadius: BorderRadius.circular(3),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: _complaintsPrimary,
+              borderRadius: AppRadii.smRadius,
+            ),
           ),
         ),
         const SizedBox(width: 7),
@@ -183,7 +175,6 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -201,13 +192,9 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _complaintsPanel,
-        border: Border.all(color: _complaintsBorder.withValues(alpha: .76)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _complaintsBorder.withValues(alpha: .76),
       child: child,
     );
   }

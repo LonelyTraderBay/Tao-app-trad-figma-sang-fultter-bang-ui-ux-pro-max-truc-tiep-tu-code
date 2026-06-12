@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/withdraw_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_input.dart';
 
 part 'withdraw_amount_actions.dart';
 
@@ -21,33 +24,26 @@ class WithdrawBalanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 51,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: withdrawPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.inputRadius,
-      ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      height: AppSpacing.inputHeight,
+      padding: AppSpacing.walletWithdrawBalancePadding,
+      borderColor: AppColors.cardBorder,
       child: Row(
         children: [
           Expanded(
             child: Text(
               'Số dư khả dụng',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontSize: 13,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
           Text(
             '${formatWithdrawBalance(value)} $asset',
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.control.copyWith(
               color: AppColors.text1,
-              fontSize: 14,
-              fontWeight: FontWeight.w800,
-              fontFamily: 'Roboto',
               fontFeatures: AppTextStyles.tabularFigures,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
         ],
@@ -74,7 +70,7 @@ class WithdrawNetworkSelector extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const WithdrawSectionLabel('Mạng lưới'),
-        const SizedBox(height: 9),
+        const SizedBox(height: AppSpacing.x3 + AppSpacing.x1),
         Semantics(
           button: true,
           label:
@@ -83,16 +79,12 @@ class WithdrawNetworkSelector extends StatelessWidget {
             key: withdrawNetworkSelectorKey,
             onTap: onTap,
             behavior: HitTestBehavior.opaque,
-            child: Container(
-              height: 52,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: withdrawPanel2,
-                border: Border.all(
-                  color: withdrawPrimary.withValues(alpha: .34),
-                ),
-                borderRadius: AppRadii.inputRadius,
-              ),
+            child: VitCard(
+              variant: VitCardVariant.inner,
+              radius: VitCardRadius.md,
+              height: AppSpacing.inputHeight,
+              padding: AppSpacing.walletWithdrawSelectorPadding,
+              borderColor: withdrawPrimary.withValues(alpha: .34),
               child: Row(
                 children: [
                   Expanded(
@@ -102,19 +94,16 @@ class WithdrawNetworkSelector extends StatelessWidget {
                       children: [
                         Text(
                           network.name,
-                          style: AppTextStyles.body.copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w800,
-                            height: 1,
+                          style: AppTextStyles.control.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: AppSpacing.x2),
                         Text(
                           'Phí: ${formatWithdrawNetworkFee(network.fee)} $asset · Tối thiểu: ${formatWithdrawCompact(network.minWithdraw)}',
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text2,
-                            fontSize: 11,
-                            height: 1,
                           ),
                         ),
                       ],
@@ -123,35 +112,31 @@ class WithdrawNetworkSelector extends StatelessWidget {
                   const Icon(
                     Icons.keyboard_arrow_down_rounded,
                     color: AppColors.text2,
-                    size: 24,
+                    size: AppSpacing.transferActionIcon,
                   ),
                 ],
               ),
             ),
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.x2 + AppSpacing.x1),
         Row(
           children: [
             Container(
-              width: 6,
-              height: 6,
+              width: AppSpacing.x2,
+              height: AppSpacing.x2,
               decoration: const BoxDecoration(
                 color: withdrawGreen,
                 shape: BoxShape.circle,
               ),
             ),
-            const SizedBox(width: 7),
+            const SizedBox(width: AppSpacing.x3 - AppSpacing.x1),
             Expanded(
               child: Text(
                 'Mạng hoạt động tốt  ·  Phí: ${formatWithdrawNetworkFee(network.fee)} $asset',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 10,
-                  height: 1,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ),
           ],
@@ -186,69 +171,40 @@ class WithdrawAddressInput extends StatelessWidget {
             Semantics(
               button: true,
               label: 'Scan withdrawal address QR code',
-              child: GestureDetector(
-                onTap: onScan,
-                behavior: HitTestBehavior.opaque,
-                child: Container(
-                  height: 24,
-                  padding: const EdgeInsets.symmetric(horizontal: 9),
-                  decoration: BoxDecoration(
-                    color: withdrawPrimary.withValues(alpha: .14),
-                    borderRadius: AppRadii.mdRadius,
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.qr_code_scanner_rounded,
-                        color: withdrawPrimary,
-                        size: 13,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        'Quét QR',
-                        style: AppTextStyles.micro.copyWith(
-                          color: withdrawPrimary,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w800,
-                          height: 1,
-                        ),
-                      ),
-                    ],
+              child: VitCtaButton(
+                onPressed: onScan,
+                variant: VitCtaButtonVariant.ghost,
+                fullWidth: false,
+                height: AppSpacing.buttonCompact,
+                padding: AppSpacing.walletWithdrawScanButtonPadding,
+                leading: const Icon(
+                  Icons.qr_code_scanner_rounded,
+                  color: withdrawPrimary,
+                  size: AppSpacing.iconSm,
+                ),
+                child: Text(
+                  'Quét QR',
+                  style: AppTextStyles.control.copyWith(
+                    color: withdrawPrimary,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 9),
-        Container(
-          height: 47,
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          decoration: BoxDecoration(
-            color: withdrawPanel2,
-            border: Border.all(color: withdrawPrimary.withValues(alpha: .25)),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          alignment: Alignment.center,
-          child: Semantics(
-            textField: true,
-            label: 'Withdrawal destination address',
-            hint: 'Enter $asset address for ${network.name}',
-            child: TextField(
-              key: withdrawAddressFieldKey,
-              controller: controller,
-              style: AppTextStyles.body.copyWith(fontSize: 14),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                isCollapsed: true,
-                hintText:
-                    'Nhập địa chỉ $asset (${network.name.split(' ').first})',
-                hintStyle: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+        const SizedBox(height: AppSpacing.formFieldLabelGap),
+        VitInput(
+          fieldKey: withdrawAddressFieldKey,
+          controller: controller,
+          hintText: 'Nhập địa chỉ $asset (${network.name.split(' ').first})',
+          semanticLabel: 'Withdrawal destination address',
+          textStyle: AppTextStyles.control,
+          suffix: Padding(
+            padding: AppSpacing.walletWithdrawInputSuffixPadding,
+            child: Text(
+              asset,
+              style: AppTextStyles.control.copyWith(color: AppColors.text3),
             ),
           ),
         ),

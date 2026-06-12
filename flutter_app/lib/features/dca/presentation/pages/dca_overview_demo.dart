@@ -112,7 +112,9 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
                         child: Align(
                           alignment: Alignment.center,
                           child: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 360),
+                            constraints: const BoxConstraints(
+                              maxWidth: AppSpacing.dcaOverviewPreviewMaxWidth,
+                            ),
                             child: DecoratedBox(
                               decoration: BoxDecoration(
                                 border: Border.all(

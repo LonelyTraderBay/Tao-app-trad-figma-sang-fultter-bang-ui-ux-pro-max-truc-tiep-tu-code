@@ -75,7 +75,7 @@ class _OwnersSection extends StatelessWidget {
                     color: owner.role == LaunchpadMultisigSignerRole.owner
                         ? AppColors.accent
                         : AppColors.primary,
-                    size: 36,
+                    size: AppSpacing.launchpadBox36,
                   ),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(
@@ -122,7 +122,7 @@ class _OwnersSection extends StatelessWidget {
                       color: copiedField == owner.label
                           ? AppColors.buy
                           : AppColors.text3,
-                      size: 16,
+                      size: AppSpacing.launchpadIconXl,
                     ),
                   ),
                 ],
@@ -165,7 +165,10 @@ class _TxCard extends StatelessWidget {
           IntrinsicHeight(
             child: Row(
               children: [
-                Container(width: 3, color: status.color),
+                Container(
+                  width: AppSpacing.launchpadVerticalMarkerWidth,
+                  color: status.color,
+                ),
                 Expanded(
                   child: InkWell(
                     key: LaunchpadMultisigPage.txToggleKey(tx.id),
@@ -178,7 +181,7 @@ class _TxCard extends StatelessWidget {
                           _IconBubble(
                             icon: status.icon,
                             color: status.color,
-                            size: 34,
+                            size: AppSpacing.launchpadIcon7xl,
                           ),
                           const SizedBox(width: AppSpacing.x3),
                           Expanded(
@@ -209,7 +212,7 @@ class _TxCard extends StatelessWidget {
                                       '${tx.signedCount}/${tx.threshold} signed',
                                       style: AppTextStyles.micro.copyWith(
                                         color: AppColors.text3,
-                                        fontSize: 10,
+                                        fontSize: AppSpacing.launchpadFontSm,
                                       ),
                                     ),
                                     const SizedBox(width: AppSpacing.x2),
@@ -222,7 +225,7 @@ class _TxCard extends StatelessWidget {
                                       '#${tx.nonce}',
                                       style: AppTextStyles.micro.copyWith(
                                         color: AppColors.text3,
-                                        fontSize: 10,
+                                        fontSize: AppSpacing.launchpadFontSm,
                                       ),
                                     ),
                                   ],
@@ -237,7 +240,7 @@ class _TxCard extends StatelessWidget {
                                 ? Icons.keyboard_arrow_up_rounded
                                 : Icons.keyboard_arrow_down_rounded,
                             color: AppColors.text3,
-                            size: 18,
+                            size: AppSpacing.launchpadIcon2xl,
                           ),
                         ],
                       ),
@@ -406,7 +409,7 @@ class _DetailRow extends StatelessWidget {
                 icon: Icon(
                   copied ? Icons.check_rounded : Icons.copy_rounded,
                   color: copied ? AppColors.buy : AppColors.text3,
-                  size: 14,
+                  size: AppSpacing.launchpadIconMd,
                 ),
               ),
           ],
@@ -440,7 +443,7 @@ class _SignerRow extends StatelessWidget {
                 ? Icons.check_circle_outline_rounded
                 : Icons.schedule_rounded,
             color: signer.signed ? AppColors.buy : AppColors.text3,
-            size: 13,
+            size: AppSpacing.launchpadIconSm,
           ),
           const SizedBox(width: AppSpacing.x2),
           Text(
@@ -463,7 +466,7 @@ class _SignerRow extends StatelessWidget {
               signer.signedAt!,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.buy,
-                fontSize: 8,
+                fontSize: AppSpacing.launchpadFontXxs,
               ),
             ),
         ],

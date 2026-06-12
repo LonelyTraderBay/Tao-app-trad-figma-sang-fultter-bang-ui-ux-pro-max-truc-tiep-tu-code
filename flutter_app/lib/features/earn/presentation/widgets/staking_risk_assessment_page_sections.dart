@@ -96,7 +96,7 @@ class _QuestionCard extends StatelessWidget {
                   question.question,
                   style: AppTextStyles.baseMedium.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: 1.35,
+                    height: AppSpacing.stakingAssessmentQuestionLineHeight,
                   ),
                 ),
               ),
@@ -108,7 +108,7 @@ class _QuestionCard extends StatelessWidget {
               question.helpText!,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: 1.45,
+                height: AppSpacing.stakingAssessmentHelpLineHeight,
               ),
             ),
           ],
@@ -223,7 +223,8 @@ class _RiskOptionTile extends StatelessWidget {
                                 ? AppColors.primary
                                 : AppColors.text1,
                             fontWeight: AppTextStyles.bold,
-                            height: 1.35,
+                            height:
+                                AppSpacing.stakingAssessmentQuestionLineHeight,
                           ),
                         ),
                         if (option.description != null) ...[
@@ -232,7 +233,8 @@ class _RiskOptionTile extends StatelessWidget {
                             option.description!,
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              height: 1.45,
+                              height:
+                                  AppSpacing.stakingAssessmentHelpLineHeight,
                             ),
                           ),
                         ],
@@ -282,7 +284,7 @@ class _InfoBanner extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.55,
+                height: AppSpacing.stakingAssessmentBodyLineHeight,
               ),
             ),
           ),

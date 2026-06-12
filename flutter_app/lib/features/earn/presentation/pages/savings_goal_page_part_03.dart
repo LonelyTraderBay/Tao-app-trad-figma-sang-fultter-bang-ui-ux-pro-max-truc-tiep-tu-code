@@ -256,7 +256,7 @@ class _TinyPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1.2,
+            height: AppSpacing.savingsGoalSheetTitleLineHeight,
           ),
         ),
       ),

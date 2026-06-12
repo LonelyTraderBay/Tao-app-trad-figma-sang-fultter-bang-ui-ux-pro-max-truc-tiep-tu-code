@@ -387,7 +387,7 @@ class _HoldingsTab extends StatelessWidget {
                         Text(
                           _formatUsd(snapshot.holdingsValue),
                           style: AppTextStyles.heroNumber.copyWith(
-                            fontSize: 30,
+                            fontSize: AppSpacing.stakingProductMetricFontSize,
                           ),
                         ),
                       ],
@@ -399,7 +399,10 @@ class _HoldingsTab extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: AppColors.primary12,
                       borderRadius: AppRadii.xlRadius,
-                      border: Border.all(color: AppColors.primary30, width: 2),
+                      border: Border.all(
+                        color: AppColors.primary30,
+                        width: AppSpacing.stakingProductIconBorderWidth,
+                      ),
                     ),
                     child: const Icon(
                       Icons.water_drop_rounded,

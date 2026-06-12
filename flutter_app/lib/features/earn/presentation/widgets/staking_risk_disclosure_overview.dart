@@ -9,11 +9,16 @@ class _WarningBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       key: StakingRiskDisclosurePage.warningKey,
-      constraints: const BoxConstraints(minHeight: 144),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.stakingRiskDisclosureWarningMinHeight,
+      ),
       padding: const EdgeInsets.all(AppSpacing.x4),
       decoration: BoxDecoration(
         color: AppColors.sell10,
-        border: Border.all(color: AppColors.sell20, width: 1.5),
+        border: Border.all(
+          color: AppColors.sell20,
+          width: AppSpacing.stakingRiskDisclosureBorderWidth,
+        ),
         borderRadius: AppRadii.cardLargeRadius,
       ),
       child: Row(
@@ -22,7 +27,7 @@ class _WarningBanner extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.sell,
-            size: 26,
+            size: AppSpacing.stakingRiskDisclosureWarningIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -36,12 +41,12 @@ class _WarningBanner extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   snapshot.warningBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.6,
+                    height: AppSpacing.stakingRiskDisclosureBodyLineHeight,
                   ),
                 ),
               ],
@@ -68,7 +73,9 @@ class _RiskTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.surface2,
-      constraints: const BoxConstraints(minHeight: 54),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.stakingRiskDisclosureTabsMinHeight,
+      ),
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
       child: VitTabBar(
@@ -96,17 +103,17 @@ class _OverviewTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SectionLabel(snapshot.summaryTitle),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         _RiskSummaryCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         _SectionLabel(snapshot.productSectionTitle),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         for (final product in snapshot.products) ...[
           _RiskProductCard(product: product),
           if (product != snapshot.products.last)
-            const SizedBox(height: AppSpacing.x3),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ],
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         VitCard(
           variant: VitCardVariant.inner,
           radius: VitCardRadius.lg,
@@ -116,7 +123,7 @@ class _OverviewTab extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              height: 1.55,
+              height: AppSpacing.stakingRiskDisclosureNoticeLineHeight,
             ),
           ),
         ),
@@ -142,10 +149,10 @@ class _RiskSummaryCard extends StatelessWidget {
             snapshot.summaryBody,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.7,
+              height: AppSpacing.stakingRiskDisclosureSummaryLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           Row(
             children: [
               for (final count in snapshot.riskCounts) ...[
@@ -170,7 +177,9 @@ class _RiskCountTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _riskColor(count.level);
     return Container(
-      constraints: const BoxConstraints(minHeight: 70),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.stakingRiskDisclosureCountMinHeight,
+      ),
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.x3,
         vertical: AppSpacing.x4,
@@ -188,10 +197,10 @@ class _RiskCountTile extends StatelessWidget {
             style: AppTextStyles.sectionTitle.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.stakingRiskDisclosureCompactLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Text(
             count.label,
             maxLines: 2,
@@ -216,7 +225,9 @@ class _RiskProductCard extends StatelessWidget {
       key: StakingRiskDisclosurePage.productKey(product.name),
       radius: VitCardRadius.lg,
       constraints: BoxConstraints(
-        minHeight: product.risks.length > 3 ? 125 : 94,
+        minHeight: product.risks.length > 3
+            ? AppSpacing.stakingRiskDisclosureProductMinHeightTall
+            : AppSpacing.stakingRiskDisclosureProductMinHeight,
       ),
       padding: const EdgeInsets.all(AppSpacing.x4),
       child: Column(
@@ -236,7 +247,7 @@ class _RiskProductCard extends StatelessWidget {
               _RiskLevelBadge(level: product.level, prefix: true),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -255,8 +266,7 @@ class _RiskProductCard extends StatelessWidget {
                     risk,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      fontSize: 12,
-                      height: 1,
+                      height: AppSpacing.stakingRiskDisclosureCompactLineHeight,
                     ),
                   ),
                 ),

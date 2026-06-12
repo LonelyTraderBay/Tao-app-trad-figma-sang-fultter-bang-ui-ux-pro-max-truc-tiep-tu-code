@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class StakingDashboardPage extends ConsumerStatefulWidget {
   const StakingDashboardPage({super.key, this.shellRenderMode});
@@ -76,12 +77,17 @@ class _StakingDashboardPageState extends ConsumerState<StakingDashboardPage> {
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
-                      StakingDashboardSummaryCard(
-                        key: StakingDashboardPage.summaryKey,
-                        snapshot: snapshot,
-                        isRefreshing: _isRefreshing,
-                        onRefresh: _refresh,
-                        onExport: _exportReport,
+                      VitCard(
+                        variant: VitCardVariant.standard,
+                        radius: VitCardRadius.md,
+                        padding: EdgeInsets.zero,
+                        child: StakingDashboardSummaryCard(
+                          key: StakingDashboardPage.summaryKey,
+                          snapshot: snapshot,
+                          isRefreshing: _isRefreshing,
+                          onRefresh: _refresh,
+                          onExport: _exportReport,
+                        ),
                       ),
                       VitPageSection(
                         label: 'Biểu đồ Hiệu suất (6 tháng)',

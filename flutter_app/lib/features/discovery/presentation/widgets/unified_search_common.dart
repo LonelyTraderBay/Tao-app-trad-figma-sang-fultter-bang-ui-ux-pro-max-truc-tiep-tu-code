@@ -102,7 +102,6 @@ class _ModuleBadge extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: color,
-              fontSize: 9,
               fontWeight: AppTextStyles.bold,
             ),
           ),

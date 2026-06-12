@@ -129,7 +129,11 @@ class _Divider extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.symmetric(vertical: AppSpacing.x2),
-      child: Divider(height: 1, thickness: 1, color: AppColors.borderSolid),
+      child: Divider(
+        height: AppSpacing.devDividerHeight,
+        thickness: AppSpacing.devDividerThickness,
+        color: AppColors.borderSolid,
+      ),
     );
   }
 }

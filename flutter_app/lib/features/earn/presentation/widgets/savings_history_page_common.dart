@@ -33,7 +33,11 @@ class _TransactionCard extends StatelessWidget {
               child: SizedBox(
                 width: AppSpacing.x6,
                 height: AppSpacing.x6,
-                child: Icon(_typeIcon(tx.type), color: typeColor, size: 18),
+                child: Icon(
+                  _typeIcon(tx.type),
+                  color: typeColor,
+                  size: AppSpacing.savingsHistoryTransactionIcon,
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.x3),
@@ -71,7 +75,7 @@ class _TransactionCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      fontSize: 12,
+                      fontSize: AppSpacing.savingsHistoryMetaFontSize,
                     ),
                   ),
                 ],
@@ -126,7 +130,7 @@ class _StatusPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.savingsHistoryBadgeLineHeight,
           ),
         ),
       ),

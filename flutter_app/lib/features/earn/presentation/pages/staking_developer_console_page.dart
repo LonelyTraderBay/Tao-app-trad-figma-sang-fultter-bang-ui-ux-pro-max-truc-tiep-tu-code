@@ -107,6 +107,13 @@ class _StakingDeveloperConsolePageState
                         _LogsTab(snapshot: snapshot)
                       else
                         _DocsTab(snapshot: snapshot),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Developer API access review',
+                        message:
+                            'API keys, production request volume, uptime, docs, audit logs, and create-key confirmation remain reviewed before Earn automation access changes.',
+                        contractId: 'SC-396',
+                      ),
                     ],
                   ),
                 ),
@@ -144,7 +151,7 @@ class _ConsoleHero extends StatelessWidget {
             snapshot.heroBody,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.55,
+              height: AppSpacing.stakingDeveloperConsoleBodyLineHeight,
             ),
           ),
         ],

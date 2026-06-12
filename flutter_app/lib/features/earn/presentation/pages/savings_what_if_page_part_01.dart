@@ -30,7 +30,7 @@ class _WhatIfHero extends StatelessWidget {
               const Icon(
                 Icons.show_chart_rounded,
                 color: AppColors.primary,
-                size: 20,
+                size: AppSpacing.savingsWhatIfHeroIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -41,7 +41,7 @@ class _WhatIfHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           Text(
             'Danh mục hiện tại',
             style: AppTextStyles.micro.copyWith(
@@ -55,7 +55,7 @@ class _WhatIfHero extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
           Row(
             children: [
               Expanded(
@@ -110,7 +110,7 @@ class _HeroStat extends StatelessWidget {
               color: AppColors.portfolioTextMuted,
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Text(
             value,
             maxLines: 1,
@@ -185,10 +185,11 @@ class _ScenarioList extends StatelessWidget {
             selected: selected == scenario.id,
             onTap: () => onScenarioChanged(scenario.id),
           ),
-          if (scenario != scenarios.last) const SizedBox(height: AppSpacing.x3),
+          if (scenario != scenarios.last)
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ],
         if (selected == SavingsWhatIfScenarioId.custom) ...[
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           _CustomScenarioControls(
             multiplier: customMultiplier,
             volatility: customVolatility,
@@ -242,15 +243,12 @@ class _ScenarioCard extends StatelessWidget {
                     _RiskPill(level: scenario.riskLevel),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   scenario.description,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                 Wrap(
                   spacing: AppSpacing.x4,
                   runSpacing: AppSpacing.x1,
@@ -278,7 +276,7 @@ class _ScenarioCard extends StatelessWidget {
                 ? Icons.radio_button_checked_rounded
                 : Icons.visibility_outlined,
             color: selected ? color : AppColors.text3,
-            size: 18,
+            size: AppSpacing.savingsWhatIfInlineIcon,
           ),
         ],
       ),
@@ -316,7 +314,7 @@ class _CustomScenarioControls extends StatelessWidget {
             display: '${multiplier.toStringAsFixed(2)}x',
             onChanged: onMultiplierChanged,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           _SliderRow(
             label: 'Biến động',
             value: volatility,

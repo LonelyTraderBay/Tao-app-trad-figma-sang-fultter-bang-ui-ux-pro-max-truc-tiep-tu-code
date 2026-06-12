@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
+import '../widgets/market_body_review_widgets.dart';
 
 part '../widgets/price_alerts_page_overview.dart';
 part '../widgets/price_alerts_page_details.dart';
@@ -179,6 +180,19 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
                           const SizedBox(height: 10),
                           const _AddAlertNotice(),
                         ],
+                        const SizedBox(height: 16),
+                        const MarketBodyReviewSection(
+                          title: 'Price alert state review',
+                          message: 'Price alert data reviewed',
+                          detail:
+                              'Filter, toggle, delete, add notice, empty, and refresh states remain visible.',
+                          primary:
+                              'Alert counts stay visible before active and triggered alert rows.',
+                          secondary:
+                              'Toggle and delete actions preserve the selected pair context.',
+                          tertiary:
+                              'Add-alert notice remains secondary to the current alert list.',
+                        ),
                       ],
                     ),
                   ),

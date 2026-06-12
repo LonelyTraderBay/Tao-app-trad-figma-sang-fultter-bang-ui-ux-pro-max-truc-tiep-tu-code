@@ -38,12 +38,6 @@ class VitTopChrome extends StatelessWidget {
   static const double rootTopPadding = AppTopHeaderTokens.rootTopPadding;
   static const double rootBottomPadding = AppTopHeaderTokens.rootBottomPadding;
   static const double actionGap = AppTopHeaderTokens.actionGap;
-  static const double detailTitleSize = AppTopHeaderTokens.detailTitleSize;
-  static const double rootTitleSize = AppTopHeaderTokens.rootTitleSize;
-  static const double instrumentTitleSize =
-      AppTopHeaderTokens.instrumentTitleSize;
-  static const double subtitleSize = AppTopHeaderTokens.subtitleSize;
-
   final VitTopChromeType type;
   final String? title;
   final String? subtitle;
@@ -227,10 +221,7 @@ class _RootTitleBlock extends StatelessWidget {
                 maxLines: 1,
                 softWrap: false,
                 overflow: TextOverflow.visible,
-                style: AppTextStyles.pageTitle.copyWith(
-                  fontSize: VitTopChrome.rootTitleSize,
-                  height: AppTopHeaderTokens.rootTitleLineHeight,
-                ),
+                style: AppTextStyles.pageTitle,
               ),
             ),
           ),
@@ -244,10 +235,7 @@ class _RootTitleBlock extends StatelessWidget {
               maxLines: 1,
               softWrap: false,
               overflow: TextOverflow.visible,
-              style: AppTextStyles.caption.copyWith(
-                fontSize: VitTopChrome.subtitleSize,
-                height: AppTopHeaderTokens.rootSubtitleLineHeight,
-              ),
+              style: AppTextStyles.caption,
             ),
           ),
         ],
@@ -277,10 +265,7 @@ class _InstrumentTitleBlock extends StatelessWidget {
               maxLines: 1,
               softWrap: false,
               overflow: TextOverflow.visible,
-              style: AppTextStyles.sectionTitle.copyWith(
-                fontSize: VitTopChrome.instrumentTitleSize,
-                height: AppTopHeaderTokens.instrumentTitleLineHeight,
-              ),
+              style: AppTextStyles.sectionTitle,
             ),
           ),
         if (subtitle != null && subtitle!.isNotEmpty)
@@ -292,9 +277,7 @@ class _InstrumentTitleBlock extends StatelessWidget {
               maxLines: 1,
               softWrap: false,
               overflow: TextOverflow.visible,
-              style: AppTextStyles.micro.copyWith(
-                height: AppTopHeaderTokens.instrumentSubtitleLineHeight,
-              ),
+              style: AppTextStyles.micro,
             ),
           ),
       ],

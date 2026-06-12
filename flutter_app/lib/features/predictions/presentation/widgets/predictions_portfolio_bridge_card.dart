@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
@@ -15,12 +16,12 @@ class PredictionsPortfolioArenaBridgeCard extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.predictionPortfolioBridgePadding,
       child: Row(
         children: [
           Container(
-            width: 36,
-            height: 36,
+            width: AppSpacing.predictionPortfolioBridgeIconBox,
+            height: AppSpacing.predictionPortfolioBridgeIconBox,
             decoration: BoxDecoration(
               color: AppColors.warn10,
               borderRadius: AppRadii.mdRadius,
@@ -28,10 +29,10 @@ class PredictionsPortfolioArenaBridgeCard extends StatelessWidget {
             child: const Icon(
               Icons.sports_esports_rounded,
               color: AppColors.warn,
-              size: 17,
+              size: AppSpacing.predictionPortfolioBridgeIcon,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.predictionPortfolioBridgeGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,46 +50,44 @@ class PredictionsPortfolioArenaBridgeCard extends StatelessWidget {
                   'Social points-only · Không liên quan ví hay vị thế Prediction',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.numericMicro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 9,
                   ),
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(
+                  height: AppSpacing.predictionPortfolioBridgeTextGap,
+                ),
                 Text(
                   'Prediction positions and P/L stay separate from Arena Points.',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.numericMicro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 9,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.predictionPortfolioBridgeBadgeGap),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+            padding: AppSpacing.predictionPortfolioBridgeBadgePadding,
             decoration: BoxDecoration(
               color: AppColors.warn10,
-              borderRadius: BorderRadius.circular(6),
+              borderRadius: AppRadii.badgeRadius,
             ),
             child: Text(
               'Arena Points',
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.numericMicro.copyWith(
                 color: AppColors.warn,
-                fontSize: 8,
                 fontWeight: AppTextStyles.bold,
-                height: 1.1,
               ),
             ),
           ),
-          const SizedBox(width: 7),
+          const SizedBox(width: AppSpacing.predictionPortfolioBridgeChevronGap),
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.warn,
-            size: 17,
+            size: AppSpacing.predictionPortfolioBridgeChevron,
           ),
         ],
       ),

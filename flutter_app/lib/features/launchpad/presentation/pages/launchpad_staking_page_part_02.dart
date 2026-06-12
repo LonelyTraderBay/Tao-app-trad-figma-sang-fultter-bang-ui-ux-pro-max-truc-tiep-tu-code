@@ -38,7 +38,7 @@ class _PositionCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.baseMedium.copyWith(
                         color: AppColors.text1,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: AppTextStyles.extraBold,
                       ),
                     ),
                     Text(
@@ -343,7 +343,7 @@ class _HeroMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.baseMedium.copyWith(
               color: valueColor,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
@@ -372,15 +372,18 @@ class _LogoBadge extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
-        border: Border.all(color: color.withValues(alpha: .34), width: 1.5),
+        border: Border.all(
+          color: color.withValues(alpha: .34),
+          width: AppSpacing.launchpadBorderWidthFocus,
+        ),
         borderRadius: AppRadii.lgRadius,
       ),
       child: Text(
         label,
         style: AppTextStyles.caption.copyWith(
           color: color,
-          fontWeight: FontWeight.w800,
-          height: 1,
+          fontWeight: AppTextStyles.extraBold,
+          height: AppSpacing.launchpadLineHeightTight,
         ),
       ),
     );

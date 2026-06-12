@@ -106,7 +106,6 @@ class _TableHeader extends StatelessWidget {
               'Metric',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -119,7 +118,6 @@ class _TableHeader extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: AppTextStyles.micro.copyWith(
                   color: Color(strategy.colorHex),
-                  fontSize: 10,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -171,7 +169,6 @@ class _TableMetricRow extends StatelessWidget {
               row.label,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
                 height: 1,
               ),
             ),
@@ -225,9 +222,8 @@ class _TableValue extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: color,
-              fontSize: 11,
               fontWeight: AppTextStyles.bold,
-              fontFamily: 'Roboto',
+              fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
             ),
           ),

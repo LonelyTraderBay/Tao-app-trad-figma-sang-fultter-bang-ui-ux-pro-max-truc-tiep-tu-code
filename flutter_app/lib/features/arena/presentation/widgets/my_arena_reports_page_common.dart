@@ -9,13 +9,13 @@ class _ToneIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.myArenaReportsIconBox,
+      height: AppSpacing.myArenaReportsIconBox,
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
         borderRadius: AppRadii.mdRadius,
       ),
-      child: Icon(icon, color: color, size: 18),
+      child: Icon(icon, color: color, size: AppSpacing.myArenaReportsToneIcon),
     );
   }
 }

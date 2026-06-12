@@ -134,7 +134,7 @@ class _ContractProjectSummary extends StatelessWidget {
                   project.logo,
                   style: AppTextStyles.caption.copyWith(
                     color: project.accent,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
               ),

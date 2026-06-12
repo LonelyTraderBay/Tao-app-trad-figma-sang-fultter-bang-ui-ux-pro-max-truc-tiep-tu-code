@@ -25,7 +25,7 @@ class _SheetInputField extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.bold,
-            fontSize: 11,
+            fontSize: AppSpacing.launchpadFontMd,
           ),
         ),
         const SizedBox(height: AppSpacing.x2),
@@ -69,7 +69,7 @@ class _ChoiceGroup extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.bold,
-            fontSize: 11,
+            fontSize: AppSpacing.launchpadFontMd,
           ),
         ),
         const SizedBox(height: AppSpacing.x2),
@@ -137,7 +137,7 @@ class _SelectablePill extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: active ? color : AppColors.text3,
               fontWeight: AppTextStyles.bold,
-              fontSize: 10,
+              fontSize: AppSpacing.launchpadFontSm,
             ),
           ),
         ),
@@ -180,14 +180,14 @@ class _SmallActionButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, color: color, size: 14),
+              Icon(icon, color: color, size: AppSpacing.launchpadIconMd),
               const SizedBox(width: AppSpacing.x2),
               Text(
                 label,
                 style: AppTextStyles.micro.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  fontSize: 11,
+                  fontSize: AppSpacing.launchpadFontMd,
                 ),
               ),
             ],

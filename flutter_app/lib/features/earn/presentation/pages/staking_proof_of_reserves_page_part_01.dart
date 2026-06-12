@@ -104,12 +104,12 @@ class _InfoBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.stakingProofInfoLineHeight,
                   ),
                 ),
               ],
@@ -154,11 +154,13 @@ class _ReserveTabs extends StatelessWidget {
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x4),
+                        ),
                         AnimatedContainer(
                           duration: const Duration(milliseconds: 160),
                           width: active == tab ? AppSpacing.buttonHero : 0,
-                          height: 2,
+                          height: AppSpacing.stakingProofTabIndicatorHeight,
                           decoration: BoxDecoration(
                             color: active == tab
                                 ? AppColors.primarySoft
@@ -223,9 +225,9 @@ class _OverviewTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x5),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
                   Center(child: _ReserveProgress(ratio: overall.reserveRatio)),
-                  const SizedBox(height: AppSpacing.x5),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
                   Row(
                     children: [
                       Expanded(
@@ -245,7 +247,7 @@ class _OverviewTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                   Text(
                     'Last updated: ${overall.lastUpdated} - Live data',
                     textAlign: TextAlign.center,
@@ -267,13 +269,13 @@ class _OverviewTab extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 210,
+                    height: AppSpacing.stakingProofTrendChartHeight,
                     child: CustomPaint(
                       painter: _ReserveTrendPainter(snapshot.history),
                       child: const SizedBox.expand(),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -391,12 +393,14 @@ class _VerifyTab extends StatelessWidget {
                               'Merkle Tree Verification',
                               style: AppTextStyles.baseMedium,
                             ),
-                            const SizedBox(height: AppSpacing.x2),
+                            const Padding(
+                              padding: EdgeInsets.only(top: AppSpacing.x2),
+                            ),
                             Text(
                               'Prove your staked balance is included in our Proof of Reserves using cryptographic Merkle tree proofs.',
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text2,
-                                height: 1.45,
+                                height: AppSpacing.stakingProofBodyLineHeight,
                               ),
                             ),
                           ],
@@ -404,7 +408,7 @@ class _VerifyTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
                   SizedBox(
                     height: AppSpacing.ctaHeight,
                     child: FilledButton(
@@ -443,7 +447,7 @@ class _VerifyTab extends StatelessWidget {
                   snapshot.privacyNote,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.stakingProofInfoLineHeight,
                   ),
                 ),
               ),
@@ -463,8 +467,8 @@ class _ReserveProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 160,
-      height: 160,
+      width: AppSpacing.stakingProofProgressRing,
+      height: AppSpacing.stakingProofProgressRing,
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -479,7 +483,10 @@ class _ReserveProgress extends StatelessWidget {
                 width: AppSpacing.x6,
                 height: AppSpacing.x6,
                 decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.buy, width: 3),
+                  border: Border.all(
+                    color: AppColors.buy,
+                    width: AppSpacing.stakingProofProgressBorderWidth,
+                  ),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -488,7 +495,7 @@ class _ReserveProgress extends StatelessWidget {
                   size: AppSpacing.iconMd,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
               Text(
                 '${ratio.toStringAsFixed(1)}%',
                 style: AppTextStyles.pageTitle.copyWith(

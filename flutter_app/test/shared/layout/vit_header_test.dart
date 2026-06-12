@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_top_header_tokens.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 
@@ -107,10 +108,10 @@ void main() {
     final title = tester.widget<Text>(
       find.text('Very long detail title that should stay stable'),
     );
-    expect(title.style?.fontSize, AppTopHeaderTokens.detailTitleSize);
+    expect(title.style?.fontSize, AppTextStyles.baseMedium.fontSize);
 
     final subtitle = tester.widget<Text>(find.text('Subtitle'));
-    expect(subtitle.style?.fontSize, AppTopHeaderTokens.subtitleSize);
+    expect(subtitle.style?.fontSize, AppTextStyles.caption.fontSize);
   });
 
   testWidgets('long title and subtitle remain stable at 360px', (

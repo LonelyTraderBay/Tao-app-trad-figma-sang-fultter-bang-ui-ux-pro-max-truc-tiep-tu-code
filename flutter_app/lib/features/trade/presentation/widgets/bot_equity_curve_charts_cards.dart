@@ -32,7 +32,6 @@ class _EquityChartCard extends StatelessWidget {
                 'Bot',
                 style: AppTextStyles.micro.copyWith(
                   color: _equityGreen,
-                  fontSize: 11,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -109,35 +108,26 @@ class _MiniStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
-      decoration: BoxDecoration(
-        color: _equityPanel2,
-        borderRadius: BorderRadius.circular(9),
-      ),
       child: Column(
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 9,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           Text(
             value,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
             ),
           ),
           Text(
             status,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 9,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -164,7 +154,6 @@ class _MonthlyAlphaCard extends StatelessWidget {
                     month.month,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      fontSize: 11,
                     ),
                   ),
                 ),
@@ -172,7 +161,6 @@ class _MonthlyAlphaCard extends StatelessWidget {
                   'Bot: +${month.botReturn.toStringAsFixed(1)}%',
                   style: AppTextStyles.caption.copyWith(
                     color: _equityGreen,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -181,16 +169,15 @@ class _MonthlyAlphaCard extends StatelessWidget {
                   '${month.alpha >= 0 ? '+' : ''}${month.alpha.toStringAsFixed(1)}%',
                   style: AppTextStyles.caption.copyWith(
                     color: month.alpha >= 0 ? _equityGreen : _equityRed,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
-                    fontFamily: 'Roboto',
+                    fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 7),
             ClipRRect(
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: AppRadii.xsRadius,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: FractionallySizedBox(
@@ -246,12 +233,9 @@ class _PerformanceTile extends StatelessWidget {
       'average' => Icons.bar_chart_rounded,
       _ => Icons.trending_up_rounded,
     };
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(13, 12, 12, 11),
-      decoration: BoxDecoration(
-        color: _equityPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Row(
         children: [
           Icon(icon, color: color, size: 21),
@@ -267,7 +251,6 @@ class _PerformanceTile extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1,
                   ),
                 ),
@@ -276,9 +259,8 @@ class _PerformanceTile extends StatelessWidget {
                   stat.value,
                   style: AppTextStyles.caption.copyWith(
                     color: color,
-                    fontSize: 16,
                     fontWeight: AppTextStyles.bold,
-                    fontFamily: 'Roboto',
+                    fontFeatures: AppTextStyles.tabularFigures,
                     height: 1,
                   ),
                 ),

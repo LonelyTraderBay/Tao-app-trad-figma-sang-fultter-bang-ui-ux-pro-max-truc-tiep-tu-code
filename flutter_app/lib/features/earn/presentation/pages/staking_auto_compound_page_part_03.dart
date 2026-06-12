@@ -56,7 +56,7 @@ class _CheckBoxIndicator extends StatelessWidget {
         borderRadius: AppRadii.smRadius,
         border: Border.all(
           color: checked ? AppColors.buy : AppColors.borderSolid,
-          width: 1.5,
+          width: AppSpacing.stakingAutoCompoundCheckBorderWidth,
         ),
       ),
       child: checked
@@ -85,8 +85,8 @@ class _ToggleSwitch extends StatelessWidget {
         onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
-          width: 48,
-          height: 28,
+          width: AppSpacing.stakingAutoCompoundToggleWidth,
+          height: AppSpacing.stakingAutoCompoundToggleHeight,
           padding: const EdgeInsets.all(AppSpacing.x1),
           decoration: BoxDecoration(
             color: enabled ? AppColors.buy : AppColors.surface3,
@@ -149,10 +149,7 @@ class _CompoundChartPainter extends CustomPainter {
       final value = minValue + span * i / 4;
       labelPainter.text = TextSpan(
         text: '\$${(value / 1000).toStringAsFixed(1)}k',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: 9,
-        ),
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
       );
       labelPainter.layout(maxWidth: AppSpacing.x6 - AppSpacing.x2);
       labelPainter.paint(

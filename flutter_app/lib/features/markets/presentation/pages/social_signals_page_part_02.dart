@@ -348,7 +348,7 @@ class _TinyBadge extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: background,
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: AppRadii.xsRadius,
       ),
       child: Text(
         label,

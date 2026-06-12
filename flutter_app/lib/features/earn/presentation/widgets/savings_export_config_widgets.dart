@@ -49,7 +49,9 @@ class _ExportHero extends StatelessWidget {
                     ),
                     Text(
                       '${snapshot.createdReports}',
-                      style: AppTextStyles.heroNumber.copyWith(fontSize: 34),
+                      style: AppTextStyles.heroNumber.copyWith(
+                        fontSize: AppSpacing.earnExportHeroStatFontSize,
+                      ),
                     ),
                   ],
                 ),
@@ -186,8 +188,8 @@ class _SectionTitle extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 3,
-          height: 15,
+          width: AppSpacing.earnExportTitleMarkerWidth,
+          height: AppSpacing.earnExportTitleMarkerHeight,
           decoration: const BoxDecoration(
             color: AppColors.primary,
             borderRadius: AppRadii.xsRadius,
@@ -273,7 +275,7 @@ class _ReportTypeCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.28,
+                    height: AppSpacing.earnExportDescriptionLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),

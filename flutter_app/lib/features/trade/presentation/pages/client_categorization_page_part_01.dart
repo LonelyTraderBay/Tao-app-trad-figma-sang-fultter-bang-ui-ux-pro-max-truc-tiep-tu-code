@@ -42,17 +42,14 @@ class _ClientCategorizationPageState
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 0,
+                    customGap: 16,
                     children: [
                       _CurrentCategoryCard(category: current),
-                      const SizedBox(height: 30),
                       const _InfoNotice(),
-                      const SizedBox(height: 32),
                       _Tabs(
                         activeId: _tab!,
                         onChanged: (id) => setState(() => _tab = id),
                       ),
-                      const SizedBox(height: 25),
                       if (_tab == 'overview')
                         _OverviewTab(
                           categories: snapshot.categories,
@@ -67,12 +64,10 @@ class _ClientCategorizationPageState
                           categories: snapshot.categories,
                           history: snapshot.history,
                         ),
-                      const SizedBox(height: 24),
                       const VitPageSection(
                         customGap: 0,
                         children: [_QuickLinks()],
                       ),
-                      const SizedBox(height: 12),
                       const VitCard(
                         variant: VitCardVariant.inner,
                         padding: EdgeInsets.all(12),
@@ -169,10 +164,10 @@ class _ClientOptUpRequestPageState
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 0,
+                    customGap: 16,
                     children: [
                       if (_submitted) ...[
-                        _Card(
+                        VitCard(
                           key: ClientOptUpRequestPage.successKey,
                           padding: const EdgeInsets.all(16),
                           child: Row(
@@ -209,17 +204,14 @@ class _ClientOptUpRequestPageState
                             ],
                           ),
                         ),
-                        const SizedBox(height: 18),
                       ],
-                      _Card(
+                      VitCard(
                         padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                        child: VitPageSection(
+                          label: 'Professional Status Criteria',
+                          customGap: 10,
                           children: [
-                            const _SectionLabel('Professional Status Criteria'),
-                            const SizedBox(height: 12),
-                            for (final requirement
-                                in professional.requirements) ...[
+                            for (final requirement in professional.requirements)
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -240,13 +232,9 @@ class _ClientOptUpRequestPageState
                                   ),
                                 ],
                               ),
-                              if (requirement != professional.requirements.last)
-                                const SizedBox(height: 10),
-                            ],
                           ],
                         ),
                       ),
-                      const SizedBox(height: 16),
                       VitPageSection(
                         customGap: 10,
                         children: [
@@ -270,25 +258,14 @@ class _ClientOptUpRequestPageState
                           ),
                         ],
                       ),
-                      const SizedBox(height: 18),
-                      FilledButton(
+                      VitCtaButton(
                         key: ClientOptUpRequestPage.submitKey,
                         onPressed: _canSubmit
                             ? () => setState(() => _submitted = true)
                             : null,
-                        style: FilledButton.styleFrom(
-                          backgroundColor: _clientPrimary,
-                          foregroundColor: AppColors.text1,
-                          disabledBackgroundColor: AppColors.surface3,
-                          disabledForegroundColor: AppColors.text3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: AppRadii.inputRadius,
-                          ),
-                          minimumSize: const Size.fromHeight(48),
-                        ),
+                        height: 48,
                         child: const Text('Submit for Review'),
                       ),
-                      const SizedBox(height: 12),
                       const VitCard(
                         variant: VitCardVariant.inner,
                         padding: EdgeInsets.all(12),
@@ -339,7 +316,7 @@ class _OptUpChecklistTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
+    return VitCard(
       padding: EdgeInsets.zero,
       child: SwitchListTile(
         value: value,
@@ -369,9 +346,12 @@ class _CurrentCategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = _categoryStyle(category.id);
-    return _Card(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      child: Column(
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: 16,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -400,14 +380,12 @@ class _CurrentCategoryCard extends StatelessWidget {
                         _CurrentPill(color: style.color),
                       ],
                     ),
-                    const SizedBox(height: 8),
                     Text(
                       category.description,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 12,
                         height: 1.35,
                       ),
                     ),
@@ -418,13 +396,9 @@ class _CurrentCategoryCard extends StatelessWidget {
               Icon(Icons.check_circle_outline, color: style.color, size: 21),
             ],
           ),
-          const SizedBox(height: 28),
-          Container(
+          VitCard(
+            variant: VitCardVariant.inner,
             padding: const EdgeInsets.fromLTRB(12, 11, 12, 10),
-            decoration: BoxDecoration(
-              color: AppColors.transparent,
-              borderRadius: AppRadii.mdRadius,
-            ),
             child: Row(
               children: [
                 const Icon(
@@ -434,24 +408,23 @@ class _CurrentCategoryCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 6,
                     children: [
                       Text(
                         'Maximum Protection Active',
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 11,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
                       ),
-                      const SizedBox(height: 6),
                       Text(
                         'You have full MiFID II retail investor protections',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text2,
-                          fontSize: 9,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
@@ -473,32 +446,32 @@ class _InfoNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: const EdgeInsets.all(12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(Icons.info_outline, color: AppColors.text1, size: 16),
           const SizedBox(width: 10),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: VitPageContent(
+              padding: VitContentPadding.none,
+              fullBleed: true,
+              customGap: 8,
               children: [
                 Text(
                   'MiFID II Categorization',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
                 ),
-                const SizedBox(height: 8),
                 Text(
                   'Your client category determines the level of regulatory protection you receive. Retail clients have maximum protection.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                     height: 1.38,
                   ),
@@ -526,41 +499,22 @@ class _Tabs extends StatelessWidget {
       ('requirements', 'Requirements'),
       ('history', 'History'),
     ];
-    return Container(
-      height: 53,
-      color: _clientPanel,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: const EdgeInsets.all(6),
       child: Row(
         children: [
           for (final tab in tabs)
             Expanded(
-              child: InkWell(
-                key: ClientCategorizationPage.tabKey(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          tab.$2,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: activeId == tab.$1
-                                ? _clientPrimary
-                                : AppColors.text3,
-                            fontSize: 12,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: activeId == tab.$1 ? 70 : 0,
-                      height: 2,
-                      color: _clientPrimary,
-                    ),
-                  ],
+              child: Center(
+                child: VitStatusPill(
+                  key: ClientCategorizationPage.tabKey(tab.$1),
+                  label: tab.$2,
+                  status: activeId == tab.$1
+                      ? VitStatusPillStatus.info
+                      : VitStatusPillStatus.neutral,
+                  size: VitStatusPillSize.md,
+                  onTap: () => onChanged(tab.$1),
                 ),
               ),
             ),

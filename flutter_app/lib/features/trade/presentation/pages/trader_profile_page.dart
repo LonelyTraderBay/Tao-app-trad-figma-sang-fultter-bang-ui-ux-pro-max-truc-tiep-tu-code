@@ -27,7 +27,6 @@ const _profilePrimary = AppColors.primary;
 const _profileGreen = AppColors.buy;
 const _profileAmber = AppColors.caution;
 const _profileRed = AppColors.sell;
-const _profileCard = AppColors.surface;
 
 class TraderProfilePage extends ConsumerStatefulWidget {
   const TraderProfilePage({

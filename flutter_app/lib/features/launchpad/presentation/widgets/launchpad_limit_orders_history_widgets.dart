@@ -69,7 +69,10 @@ class _HistorySection extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: AppSpacing.x3),
-                  const Divider(height: 1, color: AppColors.border),
+                  const Divider(
+                    height: AppSpacing.launchpadDividerHeight,
+                    color: AppColors.border,
+                  ),
                   const SizedBox(height: AppSpacing.x3),
                   Row(
                     children: [
@@ -78,7 +81,7 @@ class _HistorySection extends StatelessWidget {
                           order.createdAt,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            fontSize: 10,
+                            fontSize: AppSpacing.launchpadFontSm,
                           ),
                         ),
                       ),
@@ -88,7 +91,7 @@ class _HistorySection extends StatelessWidget {
                             : order.status == LaunchpadLimitOrderStatus.expired
                             ? Icons.warning_amber_rounded
                             : Icons.cancel_rounded,
-                        size: 15,
+                        size: AppSpacing.launchpadIconLg,
                         color: order.status == LaunchpadLimitOrderStatus.filled
                             ? AppColors.buy
                             : order.status == LaunchpadLimitOrderStatus.expired

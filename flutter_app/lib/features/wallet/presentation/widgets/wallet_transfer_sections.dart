@@ -7,14 +7,14 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/controllers/wallet_controller.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 part 'wallet_transfer_confirm_sheet.dart';
 part 'wallet_transfer_wallet_cards.dart';
 part 'wallet_transfer_asset_amount.dart';
 part 'wallet_transfer_history_picker.dart';
 
-const _transferPanel = AppColors.surface;
-const _transferPanel2 = AppColors.surface2;
 const _transferPrimary = AppColors.primary;
 const _transferGreen = AppColors.buy;
 

@@ -144,7 +144,7 @@ class _BatchTabs extends StatelessWidget {
                         AnimatedContainer(
                           duration: const Duration(milliseconds: 160),
                           width: active == tab ? AppSpacing.buttonHero : 0,
-                          height: 2,
+                          height: AppSpacing.stakingProductTabIndicatorHeight,
                           decoration: BoxDecoration(
                             color: active == tab
                                 ? AppColors.primarySoft
@@ -239,7 +239,10 @@ class _BatchOperationCard extends StatelessWidget {
             ),
           ],
           const SizedBox(height: AppSpacing.x3),
-          const Divider(height: 1, color: AppColors.borderSolid),
+          const Divider(
+            height: AppSpacing.stakingProductDividerHeight,
+            color: AppColors.borderSolid,
+          ),
           const SizedBox(height: AppSpacing.x3),
           Row(
             children: [

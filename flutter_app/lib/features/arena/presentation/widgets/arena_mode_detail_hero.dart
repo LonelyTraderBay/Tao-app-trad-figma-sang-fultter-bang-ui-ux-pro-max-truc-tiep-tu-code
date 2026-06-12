@@ -38,7 +38,7 @@ class ArenaModeHero extends StatelessWidget {
               ArenaModeActionIcon(
                 icon: arenaTemplateIcon(snapshot.template.kind),
                 color: templateColor,
-                size: 48,
+                size: AppSpacing.arenaModeHeroIcon,
               ),
               const SizedBox(width: AppSpacing.x4),
               Expanded(
@@ -50,8 +50,8 @@ class ArenaModeHero extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.sectionTitle.copyWith(
-                        fontWeight: FontWeight.w900,
-                        height: 1.08,
+                        fontWeight: AppTextStyles.heavy,
+                        height: AppSpacing.arenaModeTitleLineHeight,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x1),
@@ -170,7 +170,7 @@ class _CreatorRow extends StatelessWidget {
               const ArenaModeActionIcon(
                 icon: Icons.person_rounded,
                 color: arenaModeAccent,
-                size: 34,
+                size: AppSpacing.arenaModeCreatorIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -202,7 +202,7 @@ class _CreatorRow extends StatelessWidget {
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: 18,
+                size: AppSpacing.arenaModeChevron,
               ),
             ],
           ),

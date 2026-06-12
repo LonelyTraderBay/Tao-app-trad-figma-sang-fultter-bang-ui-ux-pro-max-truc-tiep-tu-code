@@ -60,7 +60,7 @@ class _TopTab extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: () => onChanged(tab),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, AppSpacing.x4, 0, 0),
+          padding: const EdgeInsets.only(top: AppSpacing.x4),
           child: Column(
             children: [
               Text(
@@ -73,8 +73,8 @@ class _TopTab extends StatelessWidget {
               const SizedBox(height: AppSpacing.x4),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 160),
-                height: 2,
-                width: active ? 116 : 0,
+                height: AppSpacing.dcaSmartTabIndicatorHeight,
+                width: active ? AppSpacing.dcaSmartTabIndicatorWidth : 0,
                 decoration: BoxDecoration(
                   color: active ? AppColors.primary : AppColors.transparent,
                   borderRadius: AppRadii.xsRadius,
@@ -102,8 +102,8 @@ class _StatsCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 48,
-                height: 48,
+                width: AppSpacing.dcaSmartStatsIconBox,
+                height: AppSpacing.dcaSmartStatsIconBox,
                 decoration: const BoxDecoration(
                   color: AppColors.accent10,
                   borderRadius: AppRadii.inputRadius,
@@ -111,7 +111,7 @@ class _StatsCard extends StatelessWidget {
                 child: const Icon(
                   Icons.bolt_rounded,
                   color: AppColors.accent,
-                  size: 26,
+                  size: AppSpacing.dcaSmartStatsIcon,
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -121,7 +121,9 @@ class _StatsCard extends StatelessWidget {
                   children: [
                     Text(
                       'Smart Rules',
-                      style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
+                      style: AppTextStyles.sectionTitle.copyWith(
+                        fontSize: AppSpacing.dcaSmartSectionFontSize,
+                      ),
                     ),
                     Text(
                       'Automated DCA optimization',

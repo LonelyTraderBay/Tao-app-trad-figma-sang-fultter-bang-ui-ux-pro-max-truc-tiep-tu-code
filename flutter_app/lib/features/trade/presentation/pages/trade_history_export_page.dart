@@ -16,6 +16,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 part '../widgets/trade_history_export_summary_sections.dart';
 part '../widgets/trade_history_export_selectors_includes.dart';
 part '../widgets/trade_history_export_footer.dart';
@@ -151,6 +153,19 @@ class _TradeHistoryExportPageState
                                     'Format, period, included records, tax note, generated result and download next step are reviewed before export.',
                                 contractId: 'trade-history-export-review',
                               ),
+                            ),
+                            const SizedBox(height: 12),
+                            const TradeBodyReviewSection(
+                              title: 'Export body review',
+                              message: 'Trade export body reviewed',
+                              detail:
+                                  'Format, period, includes, tax note, export, download, and result states stay visible.',
+                              primary:
+                                  'Export selectors remain above generated result state.',
+                              secondary:
+                                  'Tax note stays visible before export confirmation.',
+                              tertiary:
+                                  'Download/new-export actions remain in the sticky footer.',
                             ),
                           ],
                         ),

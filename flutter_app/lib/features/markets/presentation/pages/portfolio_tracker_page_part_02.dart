@@ -15,7 +15,7 @@ class _SectionHeader extends StatelessWidget {
           height: 16,
           decoration: BoxDecoration(
             color: accentColor,
-            borderRadius: BorderRadius.circular(99),
+            borderRadius: AppRadii.xlRadius,
           ),
         ),
         const SizedBox(width: 6),
@@ -202,7 +202,7 @@ class _RiskCard extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           ClipRRect(
-            borderRadius: BorderRadius.circular(99),
+            borderRadius: AppRadii.xlRadius,
             child: SizedBox(
               height: 5,
               child: Stack(
@@ -439,10 +439,7 @@ class _HoldingMetric extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 9,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: 2),
           Text(

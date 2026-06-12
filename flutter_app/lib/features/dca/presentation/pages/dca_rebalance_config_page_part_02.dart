@@ -11,11 +11,12 @@ class _ThresholdCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       padding: const EdgeInsets.all(AppSpacing.contentPad),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: AppSpacing.x4,
+        fullBleed: true,
         children: [
           const _SectionHeader(icon: Icons.tune_rounded, title: 'Ngưỡng drift'),
-          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               Text(
@@ -139,7 +140,7 @@ class _FrequencyOptionTile extends StatelessWidget {
             borderRadius: AppRadii.inputRadius,
             border: Border.all(
               color: selected ? AppColors.accent : AppColors.transparent,
-              width: 2,
+              width: AppSpacing.dcaRebalanceConnectorWidth,
             ),
           ),
           padding: const EdgeInsets.symmetric(
@@ -207,7 +208,7 @@ class _AdvancedSettings extends StatelessWidget {
                   const Icon(
                     Icons.settings_suggest_outlined,
                     color: AppColors.text3,
-                    size: 16,
+                    size: AppSpacing.dcaRebalanceIconSm,
                   ),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(
@@ -225,7 +226,7 @@ class _AdvancedSettings extends StatelessWidget {
                     child: const Icon(
                       Icons.keyboard_arrow_down_rounded,
                       color: AppColors.text3,
-                      size: 18,
+                      size: AppSpacing.dcaRebalanceIcon,
                     ),
                   ),
                 ],
@@ -347,7 +348,7 @@ class _AdvancedSettings extends StatelessWidget {
                             const Icon(
                               Icons.error_outline_rounded,
                               color: AppColors.warn,
-                              size: 16,
+                              size: AppSpacing.dcaRebalanceIconSm,
                             ),
                             const SizedBox(width: AppSpacing.x3),
                             Expanded(
@@ -355,7 +356,7 @@ class _AdvancedSettings extends StatelessWidget {
                                 'Hệ thống sẽ tự động thực hiện giao dịch khi danh mục lệch. Bạn có thể tắt bất kỳ lúc nào.',
                                 style: AppTextStyles.micro.copyWith(
                                   color: AppColors.warningText,
-                                  height: 1.45,
+                                  height: AppSpacing.dcaRebalanceBodyLineHeight,
                                 ),
                               ),
                             ),
@@ -410,7 +411,7 @@ class _InlineRebalanceActions extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: valid ? AppColors.buy : AppColors.text3,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.35,
+                    height: AppSpacing.dcaRebalanceCompactLineHeight,
                   ),
                 ),
               ),

@@ -78,7 +78,7 @@ class _LicenseDetailSheet extends StatelessWidget {
                   scope,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.stakingRegulatoryNoteLineHeight,
                   ),
                 ),
               ),
@@ -154,7 +154,7 @@ class _InfoNote extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.45,
+                height: AppSpacing.stakingRegulatoryNoteLineHeight,
               ),
             ),
           ),
@@ -189,7 +189,7 @@ class _WarningNote extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.5,
+                height: AppSpacing.stakingRegulatoryFooterLineHeight,
               ),
             ),
           ),
@@ -215,7 +215,7 @@ class _FooterNote extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: 1.5,
+          height: AppSpacing.stakingRegulatoryFooterLineHeight,
         ),
       ),
     );
@@ -281,8 +281,8 @@ class _RoundIcon extends StatelessWidget {
         borderRadius: AppRadii.xlRadius,
       ),
       child: SizedBox(
-        width: 40,
-        height: 40,
+        width: AppSpacing.stakingRegulatoryIconBox,
+        height: AppSpacing.stakingRegulatoryIconBox,
         child: Icon(icon, color: color, size: AppSpacing.iconMd),
       ),
     );

@@ -17,15 +17,16 @@ class _AllocationComparisonCard extends StatelessWidget {
       key: SavingsAutoRebalancePage.allocationKey,
       radius: VitCardRadius.lg,
       padding: const EdgeInsets.all(AppSpacing.x4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.x4,
         children: [
           const _SectionTitle(
             icon: Icons.compare_arrows_rounded,
             iconColor: AppColors.primary,
             label: 'Hiện tại vs Mục tiêu',
           ),
-          const SizedBox(height: AppSpacing.x4),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -46,7 +47,7 @@ class _AllocationComparisonCard extends StatelessWidget {
                     const Icon(
                       Icons.compare_arrows_rounded,
                       color: AppColors.text3,
-                      size: 18,
+                      size: AppSpacing.savingsRebalanceInlineIcon,
                     ),
                     const SizedBox(height: AppSpacing.x1),
                     _TonePill(
@@ -65,11 +66,8 @@ class _AllocationComparisonCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
           for (final position in snapshot.positions) ...[
             _AssetDriftRow(position: position, strategy: strategy),
-            if (position != snapshot.positions.last)
-              const SizedBox(height: AppSpacing.x3),
           ],
         ],
       ),
@@ -90,7 +88,10 @@ class _AllocationRing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: AppSpacing.x2,
       children: [
         SizedBox.square(
           dimension: 118,
@@ -101,7 +102,6 @@ class _AllocationRing extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
         Text(
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -127,8 +127,8 @@ class _AssetDriftRow extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 32,
-          height: 32,
+          width: AppSpacing.savingsRebalanceAssetBadge,
+          height: AppSpacing.savingsRebalanceAssetBadge,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: color.withValues(alpha: .14),
@@ -159,7 +159,7 @@ class _AssetDriftRow extends StatelessWidget {
                   if (position.locked) ...[
                     const Icon(
                       Icons.lock_outline_rounded,
-                      size: 15,
+                      size: AppSpacing.savingsRebalanceLockIcon,
                       color: AppColors.text3,
                     ),
                     const SizedBox(width: AppSpacing.x1),
@@ -172,7 +172,7 @@ class _AssetDriftRow extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.x2),
               SizedBox(
-                height: 6,
+                height: AppSpacing.savingsRebalanceTrackHeight,
                 child: CustomPaint(
                   painter: _DriftTrackPainter(
                     color: color,
@@ -214,8 +214,8 @@ class _DriftStatusCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: AppSpacing.savingsRebalanceIconBox,
+            height: AppSpacing.savingsRebalanceIconBox,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .14),
               borderRadius: BorderRadius.circular(AppRadii.md),
@@ -225,7 +225,7 @@ class _DriftStatusCard extends StatelessWidget {
                   ? Icons.warning_amber_rounded
                   : Icons.check_circle_outline_rounded,
               color: color,
-              size: 20,
+              size: AppSpacing.savingsRebalanceIcon,
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -280,17 +280,20 @@ class _DriftHistoryCard extends StatelessWidget {
       key: SavingsAutoRebalancePage.driftChartKey,
       radius: VitCardRadius.lg,
       padding: const EdgeInsets.all(AppSpacing.x4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.x3,
         children: [
           const _SectionTitle(
             icon: Icons.bar_chart_rounded,
             iconColor: AppColors.primary,
             label: 'Lịch sử Drift',
           ),
-          const SizedBox(height: AppSpacing.x3),
-          SizedBox(height: 160, child: _DriftBarChart(points: points)),
-          const SizedBox(height: AppSpacing.x2),
+          SizedBox(
+            height: AppSpacing.savingsRebalanceDriftChartHeight,
+            child: _DriftBarChart(points: points),
+          ),
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -376,8 +379,8 @@ class _AutoStatusCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: AppSpacing.savingsRebalanceIconBox,
+            height: AppSpacing.savingsRebalanceIconBox,
             decoration: BoxDecoration(
               color: autoEnabled ? AppColors.buy10 : AppColors.hoverBg,
               borderRadius: BorderRadius.circular(AppRadii.md),

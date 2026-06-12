@@ -338,7 +338,7 @@ class _BacktestDisclaimer extends StatelessWidget {
                 'Backtest dựa trên dữ liệu lịch sử. Hiệu suất quá khứ không đảm bảo kết quả tương lai. Chỉ mang tính tham khảo.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.45,
+                  height: AppSpacing.dcaBacktesterBodyLineHeight,
                 ),
               ),
             ),

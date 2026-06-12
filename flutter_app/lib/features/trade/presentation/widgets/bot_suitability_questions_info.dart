@@ -69,7 +69,6 @@ class _ProgressBar extends StatelessWidget {
                 'Question $currentQuestion of $totalQuestions',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  fontSize: 12,
                   height: 1,
                 ),
               ),
@@ -78,7 +77,6 @@ class _ProgressBar extends StatelessWidget {
               '${(progress * 100).toStringAsFixed(0)}% Complete',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
@@ -87,7 +85,7 @@ class _ProgressBar extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         ClipRRect(
-          borderRadius: BorderRadius.circular(999),
+          borderRadius: AppRadii.xlRadius,
           child: SizedBox(
             height: 8,
             child: LinearProgressIndicator(
@@ -138,7 +136,6 @@ class _QuestionHeader extends StatelessWidget {
                 question.category.name.toUpperCase(),
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  fontSize: 12,
                   height: 1,
                 ),
               ),
@@ -147,7 +144,6 @@ class _QuestionHeader extends StatelessWidget {
                 question.question,
                 style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.text1,
-                  fontSize: 16,
                   height: 1.5,
                 ),
               ),
@@ -226,7 +222,6 @@ class _OptionCard extends StatelessWidget {
                   option.text,
                   style: AppTextStyles.caption.copyWith(
                     color: selected ? _assessmentPrimary : AppColors.text1,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.medium,
                     height: 1.5,
                   ),

@@ -58,7 +58,6 @@ class _SummaryCard extends StatelessWidget {
                   'Net Gain/Loss:',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 13,
                     fontWeight: FontWeight.w600,
                     height: 1,
                   ),
@@ -68,9 +67,7 @@ class _SummaryCard extends StatelessWidget {
                 '+${_formatUsd(summary.netGainLoss)}',
                 style: AppTextStyles.baseMedium.copyWith(
                   color: _taxGreen,
-                  fontSize: 20,
                   fontWeight: AppTextStyles.bold,
-                  fontFamily: 'Roboto',
                   height: 1,
                 ),
               ),
@@ -102,7 +99,6 @@ class _SummaryStat extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 11,
             height: 1,
           ),
         ),
@@ -111,9 +107,7 @@ class _SummaryStat extends StatelessWidget {
           value,
           style: AppTextStyles.baseMedium.copyWith(
             color: color,
-            fontSize: 20,
             fontWeight: AppTextStyles.bold,
-            fontFamily: 'Roboto',
             height: 1,
           ),
         ),
@@ -171,7 +165,6 @@ class _CostBasisPicker extends StatelessWidget {
                             color: selectedMethod == methods[i].$1
                                 ? _taxPrimary
                                 : AppColors.text1,
-                            fontSize: 13,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),
@@ -187,7 +180,6 @@ class _CostBasisPicker extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
                           height: 1.35,
                         ),
                       ),

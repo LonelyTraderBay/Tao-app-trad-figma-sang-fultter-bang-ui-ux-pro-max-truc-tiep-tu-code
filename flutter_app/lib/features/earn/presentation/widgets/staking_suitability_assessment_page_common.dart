@@ -37,12 +37,15 @@ class _ResultView extends ConsumerWidget {
               DecoratedBox(
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: 0.12),
-                  border: Border.all(color: color, width: 3),
+                  border: Border.all(
+                    color: color,
+                    width: AppSpacing.stakingAssessmentScoreBorderWidth,
+                  ),
                   shape: BoxShape.circle,
                 ),
                 child: SizedBox(
-                  width: 120,
-                  height: 120,
+                  width: AppSpacing.stakingAssessmentScoreRing,
+                  height: AppSpacing.stakingAssessmentScoreRing,
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -76,7 +79,7 @@ class _ResultView extends ConsumerWidget {
                 textAlign: TextAlign.center,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.55,
+                  height: AppSpacing.stakingAssessmentBodyLineHeight,
                 ),
               ),
             ],
@@ -99,7 +102,7 @@ class _ResultView extends ConsumerWidget {
               profile.warning!,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.55,
+                height: AppSpacing.stakingAssessmentBodyLineHeight,
               ),
             ),
           ),
@@ -124,7 +127,7 @@ class _ResultView extends ConsumerWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.5,
+              height: AppSpacing.stakingAssessmentFooterLineHeight,
             ),
           ),
         ),

@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -65,8 +66,10 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pPaymentBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pPaymentBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
     final pendingMethod = _pendingDeleteId == null
         ? null
@@ -86,8 +89,10 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
                 showBack: true,
                 onBack: () => context.go(AppRoutePaths.p2p),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              child: VitPageContent(
+                padding: VitContentPadding.none,
+                fullBleed: true,
+                customGap: 0,
                 children: [
                   Expanded(
                     child: ScrollConfiguration(
@@ -97,24 +102,25 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
                       child: SingleChildScrollView(
                         key: P2PPaymentMethodsPage.contentKey,
                         physics: const BouncingScrollPhysics(),
-                        padding: EdgeInsets.fromLTRB(
-                          AppSpacing.contentPad,
-                          AppSpacing.x4,
-                          AppSpacing.contentPad,
+                        padding: AppSpacing.p2pPaymentScrollPadding(
                           bottomInset,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             _AddMethodRow(snapshot: snapshot),
-                            const SizedBox(height: AppSpacing.x5),
+                            const SizedBox(
+                              height: AppSpacing.p2pPaymentSectionGap,
+                            ),
                             if (bankMethods.isNotEmpty) ...[
                               _SectionHeader(
                                 icon: Icons.credit_card_rounded,
                                 title:
                                     'Tài khoản ngân hàng (${bankMethods.length})',
                               ),
-                              const SizedBox(height: AppSpacing.x3),
+                              const SizedBox(
+                                height: AppSpacing.p2pPaymentCardGap,
+                              ),
                               for (final method in bankMethods) ...[
                                 _PaymentMethodCard(
                                   method: method,
@@ -122,16 +128,22 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
                                   onDelete: () => _requestDelete(method.id),
                                   onSetDefault: () => _setDefault(method.id),
                                 ),
-                                const SizedBox(height: AppSpacing.x3),
+                                const SizedBox(
+                                  height: AppSpacing.p2pPaymentCardGap,
+                                ),
                               ],
                             ],
                             if (ewalletMethods.isNotEmpty) ...[
-                              const SizedBox(height: AppSpacing.x2),
+                              const SizedBox(
+                                height: AppSpacing.p2pPaymentSmallGap,
+                              ),
                               _SectionHeader(
                                 icon: Icons.phone_android_rounded,
                                 title: 'Ví điện tử (${ewalletMethods.length})',
                               ),
-                              const SizedBox(height: AppSpacing.x3),
+                              const SizedBox(
+                                height: AppSpacing.p2pPaymentCardGap,
+                              ),
                               for (final method in ewalletMethods) ...[
                                 _PaymentMethodCard(
                                   method: method,
@@ -139,7 +151,9 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
                                   onDelete: () => _requestDelete(method.id),
                                   onSetDefault: () => _setDefault(method.id),
                                 ),
-                                const SizedBox(height: AppSpacing.x3),
+                                const SizedBox(
+                                  height: AppSpacing.p2pPaymentCardGap,
+                                ),
                               ],
                             ],
                             if (_methods.isEmpty)

@@ -20,16 +20,16 @@ class _StatusPill extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (icon != null) ...[
-              Icon(icon, color: color, size: 9),
-              const SizedBox(width: 3),
+              Icon(icon, color: color, size: AppSpacing.launchpadFontXs),
+              const SizedBox(width: AppSpacing.launchpadGapXs),
             ],
             Text(
               label,
               style: AppTextStyles.micro.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                fontSize: 9,
-                height: 1,
+                fontSize: AppSpacing.launchpadFontXs,
+                height: AppSpacing.launchpadLineHeightTight,
               ),
             ),
           ],
@@ -59,8 +59,8 @@ class _MiniPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: 9,
-            height: 1,
+            fontSize: AppSpacing.launchpadFontXs,
+            height: AppSpacing.launchpadLineHeightTight,
           ),
         ),
       ),
@@ -105,7 +105,11 @@ class _EmptySubscriptions extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.x6),
       child: Column(
         children: [
-          const Icon(Icons.hub_outlined, color: AppColors.text3, size: 32),
+          const Icon(
+            Icons.hub_outlined,
+            color: AppColors.text3,
+            size: AppSpacing.launchpadIconHuge,
+          ),
           const SizedBox(height: AppSpacing.x3),
           Text(
             'Chua co webhook nao',

@@ -120,12 +120,11 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: 0,
+                        customGap: 8,
                         children: [
                           _ClientCategoryCard(
                             category: snapshot.clientCategory,
                           ),
-                          const SizedBox(height: 12),
                           const VitCard(
                             variant: VitCardVariant.inner,
                             padding: EdgeInsets.all(12),
@@ -137,7 +136,6 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                               contractId: 'margin-trading-review',
                             ),
                           ),
-                          const SizedBox(height: 18),
                           _SegmentedTabs(
                             tabs: snapshot.modeTabs,
                             activeId: _mode,
@@ -146,12 +144,10 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                             onChanged: (id) => setState(() => _mode = id),
                             keyBuilder: MarginTradingPage.modeKey,
                           ),
-                          const SizedBox(height: 16),
                           _AccountHero(
                             account: snapshot.account,
                             totalPnl: totalPnl,
                           ),
-                          const SizedBox(height: 18),
                           _SegmentedTabs(
                             tabs: [
                               for (final tab in snapshot.contentTabs)
@@ -168,7 +164,6 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                             onChanged: (id) => setState(() => _tab = id),
                             keyBuilder: MarginTradingPage.tabKey,
                           ),
-                          const SizedBox(height: 16),
                           VitPageSection(
                             customGap: 0,
                             children: [

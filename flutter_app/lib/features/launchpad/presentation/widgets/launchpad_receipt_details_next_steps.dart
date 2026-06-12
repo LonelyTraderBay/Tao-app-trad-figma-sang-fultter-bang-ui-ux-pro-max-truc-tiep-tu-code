@@ -1,4 +1,4 @@
-﻿part of '../pages/launchpad_receipt_page.dart';
+part of '../pages/launchpad_receipt_page.dart';
 
 class _ProjectReceiptCard extends StatelessWidget {
   const _ProjectReceiptCard({required this.subscription, required this.status});
@@ -15,8 +15,8 @@ class _ProjectReceiptCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 48,
-            height: 48,
+            width: AppSpacing.launchpadBox48,
+            height: AppSpacing.launchpadBox48,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: subscription.accent.withValues(alpha: .12),
@@ -245,7 +245,7 @@ class _ReceiptNextSteps extends StatelessWidget {
                       _steps[i],
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1.45,
+                        height: AppSpacing.launchpadLineHeightReadable,
                       ),
                     ),
                   ),
@@ -277,7 +277,7 @@ class _ReceiptDisclosure extends StatelessWidget {
             'Phân bổ thực tế có thể khác dự kiến nếu tổng đăng ký vượt hard cap. Hiệu suất quá khứ không đảm bảo kết quả tương lai.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.5,
+              height: AppSpacing.launchpadLineHeightLong,
             ),
           ),
         ),

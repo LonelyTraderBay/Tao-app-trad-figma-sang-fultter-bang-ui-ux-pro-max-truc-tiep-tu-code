@@ -9,7 +9,7 @@ class _SmallBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: AppSpacing.tradeHistoryBadgePadding,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .16),
         borderRadius: AppRadii.xsRadius,
@@ -39,8 +39,10 @@ class _TypeBadge extends StatelessWidget {
       TradeOrderType.stop => 'Stop',
     };
     return Container(
-      constraints: const BoxConstraints(minWidth: 18),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      constraints: const BoxConstraints(
+        minWidth: AppSpacing.tradeHistoryTypeBadgeMinWidth,
+      ),
+      padding: AppSpacing.tradeHistoryBadgePadding,
       decoration: BoxDecoration(
         color: AppColors.surface3,
         borderRadius: AppRadii.xsRadius,
@@ -81,12 +83,11 @@ class _InfoColumn extends StatelessWidget {
             height: 1.15,
           ),
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: AppSpacing.tradeHistoryInfoGap),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
             color: valueColor,
-            fontFamily: 'monospace',
             fontWeight: AppTextStyles.bold,
             height: 1.15,
           ),
@@ -104,15 +105,15 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 84),
+      padding: AppSpacing.tradeHistoryEmptyPadding,
       child: Column(
         children: [
           const Icon(
             Icons.access_time_rounded,
             color: AppColors.borderSolid,
-            size: 48,
+            size: AppSpacing.tradeHistoryEmptyIcon,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeHistoryEmptyGap),
           Text(
             activeTab == 'open'
                 ? 'Không có lệnh đang mở'

@@ -91,7 +91,6 @@ class _SummaryCard extends StatelessWidget {
             data.label,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              fontSize: 11,
               height: 1,
             ),
           ),
@@ -100,8 +99,6 @@ class _SummaryCard extends StatelessWidget {
             data.value,
             style: AppTextStyles.baseMedium.copyWith(
               color: data.valueColor,
-              fontSize: 20,
-              fontFamily: 'Roboto',
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
             ),
@@ -112,8 +109,6 @@ class _SummaryCard extends StatelessWidget {
               data.caption!,
               style: AppTextStyles.micro.copyWith(
                 color: data.captionColor,
-                fontSize: 11,
-                fontFamily: 'Roboto',
                 height: 1,
               ),
             ),
@@ -209,7 +204,6 @@ class _AllocationLegend extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
-                  fontSize: 11,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -219,8 +213,6 @@ class _AllocationLegend extends StatelessWidget {
                 '\$${item.value.toStringAsFixed(0)}',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 9,
-                  fontFamily: 'Roboto',
                   height: 1,
                 ),
               ),
@@ -260,7 +252,6 @@ class _CorrelationCard extends StatelessWidget {
                     row.bot,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text1,
-                      fontSize: 11,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),
@@ -300,7 +291,6 @@ class _CorrelationCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -323,7 +313,6 @@ class _TableHeaderText extends StatelessWidget {
       textAlign: alignLeft ? TextAlign.left : TextAlign.center,
       style: AppTextStyles.micro.copyWith(
         color: AppColors.text3,
-        fontSize: 10,
         fontWeight: AppTextStyles.bold,
         height: 1,
       ),
@@ -347,15 +336,14 @@ class _CorrelationPill extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: AppRadii.smRadius,
       ),
       child: Text(
         value.toStringAsFixed(2),
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 12,
           fontWeight: AppTextStyles.bold,
-          fontFamily: 'Roboto',
+          fontFeatures: AppTextStyles.tabularFigures,
           height: 1,
         ),
       ),

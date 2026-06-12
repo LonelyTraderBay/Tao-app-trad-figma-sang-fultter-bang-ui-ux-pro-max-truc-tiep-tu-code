@@ -63,13 +63,13 @@ class _SummaryCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: AppSpacing.adminBox40,
+            height: AppSpacing.adminBox40,
             decoration: BoxDecoration(
               color: tint,
               borderRadius: AppRadii.inputRadius,
             ),
-            child: Icon(icon, color: accent, size: 20),
+            child: Icon(icon, color: accent, size: AppSpacing.adminIconXl),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -81,7 +81,7 @@ class _SummaryCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 11,
+                    fontSize: AppSpacing.adminFontMd,
                   ),
                 ),
                 Text(
@@ -89,7 +89,7 @@ class _SummaryCard extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.sectionTitle.copyWith(
-                    fontSize: 20,
+                    fontSize: AppSpacing.adminFont3xl,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
@@ -112,7 +112,7 @@ class _SummaryCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 10,
+                        fontSize: AppSpacing.adminFontSm,
                       ),
                     ),
                   ],
@@ -176,7 +176,10 @@ class _ABTestCard extends StatelessWidget {
             ],
             if (selected) ...[
               const SizedBox(height: AppSpacing.x4),
-              const Divider(height: 1, color: AppColors.divider),
+              const Divider(
+                height: AppSpacing.adminDividerHeight,
+                color: AppColors.divider,
+              ),
               const SizedBox(height: AppSpacing.x4),
               _ExpandedDetails(test: test),
             ],
@@ -197,7 +200,11 @@ class _TestHeader extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Icon(Icons.science_outlined, color: AppColors.accent, size: 16),
+        const Icon(
+          Icons.science_outlined,
+          color: AppColors.accent,
+          size: AppSpacing.adminIconMd,
+        ),
         const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Column(
@@ -349,7 +356,7 @@ class _VariantResult extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: SizedBox(
-              height: 7,
+              height: AppSpacing.adminProgressHeight,
               child: Stack(
                 children: [
                   const Positioned.fill(

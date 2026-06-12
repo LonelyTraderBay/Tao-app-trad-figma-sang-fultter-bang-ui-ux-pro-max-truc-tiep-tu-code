@@ -27,6 +27,14 @@ diff, tests, and CI output.
       variants are created.
 - [ ] No new direct runtime `Colors.*` usage is introduced outside established
       theme or token boundaries.
+- [ ] No new hardcoded numeric typography/spacing/radius/container patterns are
+      added in feature or shared code without documented exception.
+- [ ] Changed files do not increase design-token debt; `dart run
+      tool/design_token_consistency_audit.dart --check` passes.
+- [ ] P0 financial modules stay at or below the current design-token baseline
+      enforced by `tool/design_token_consistency_audit.dart --check`.
+- [ ] The CI design-token report artifact is reviewed when UI, theme, shared
+      layout, or feature presentation files change.
 
 ## Router Review
 
@@ -77,7 +85,18 @@ flutter test test/quality/navigation_route_guardrails_test.dart --reporter=compa
 flutter test test/quality/architecture_baseline_guardrails_test.dart --reporter=compact
 flutter test test/quality/product_copy_guardrails_test.dart --reporter=compact
 flutter test --reporter=compact
+``` 
+
+Design-token checks (required for every PR with UI changes):
+
+```bash
+cd flutter_app
+dart run tool/design_token_consistency_audit.dart --check
+flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact
 ```
+
+CI uploads `VitTrade-Design-Token-Consistency-Audit.md` and `.csv` as the
+`design-token-consistency-audit` artifact so reviewers can compare debt trends.
 
 ## Merge Criteria
 

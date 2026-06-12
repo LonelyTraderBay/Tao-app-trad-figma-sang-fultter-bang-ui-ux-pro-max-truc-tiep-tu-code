@@ -39,7 +39,7 @@ class StakingCustodyHeroCard extends StatelessWidget {
                   snapshot.heroBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.stakingCustodyBodyLineHeight,
                   ),
                 ),
               ],
@@ -148,8 +148,8 @@ class StakingCustodyCustodianSection extends StatelessWidget {
               GridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                childAspectRatio: 1.95,
+                crossAxisCount: AppSpacing.stakingCustodyMetricGridColumns,
+                childAspectRatio: AppSpacing.stakingCustodyMetricGridAspect,
                 crossAxisSpacing: AppSpacing.x3,
                 mainAxisSpacing: AppSpacing.x3,
                 children: [

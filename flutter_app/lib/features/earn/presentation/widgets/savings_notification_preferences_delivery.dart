@@ -54,8 +54,8 @@ class _ProductCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 40,
-                height: 40,
+                width: AppSpacing.savingsNotificationIconBox,
+                height: AppSpacing.savingsNotificationIconBox,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: .14),
@@ -65,7 +65,7 @@ class _ProductCard extends StatelessWidget {
                   product.asset,
                   style: AppTextStyles.micro.copyWith(
                     color: color,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
               ),
@@ -96,7 +96,7 @@ class _ProductCard extends StatelessWidget {
                 color: product.typeLabel == 'Linh hoạt'
                     ? AppColors.buy
                     : AppColors.primary,
-                size: 18,
+                size: AppSpacing.savingsNotificationInlineIcon,
               ),
             ],
           ),
@@ -199,16 +199,16 @@ class _ChannelCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: AppSpacing.savingsNotificationIconBox,
+            height: AppSpacing.savingsNotificationIconBox,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .14),
-              borderRadius: BorderRadius.circular(AppRadii.md),
+              borderRadius: AppRadii.mdRadius,
             ),
             child: Icon(
               savingsNotificationAlertIcon(channel.iconKey),
               color: color,
-              size: 19,
+              size: AppSpacing.savingsNotificationAlertIcon,
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -258,7 +258,11 @@ class _ActionSettingCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.x4),
       child: Row(
         children: [
-          Icon(icon, color: AppColors.primary, size: 20),
+          Icon(
+            icon,
+            color: AppColors.primary,
+            size: AppSpacing.savingsNotificationActionIcon,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
@@ -300,7 +304,11 @@ class _InfoCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.primary, size: 18),
+          Icon(
+            icon,
+            color: AppColors.primary,
+            size: AppSpacing.savingsNotificationInlineIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
@@ -333,7 +341,7 @@ class SavingsNotificationSmallChip extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(AppRadii.xs),
+        borderRadius: AppRadii.xsRadius,
       ),
       child: Text(label, style: AppTextStyles.micro.copyWith(color: color)),
     );

@@ -39,9 +39,7 @@ class _CurrentTierCard extends StatelessWidget {
                         Text(
                           'KYC Level ${tier.level}',
                           style: AppTextStyles.body.copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w900,
-                            height: 1.05,
+                            fontWeight: AppTextStyles.bold,
                           ),
                         ),
                         const SizedBox(width: 6),
@@ -57,11 +55,7 @@ class _CurrentTierCard extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       '\u0110\u00E3 x\u00E1c minh',
-                      style: AppTextStyles.micro.copyWith(
-                        color: _limitsMuted,
-                        fontSize: 11,
-                        height: 1,
-                      ),
+                      style: AppTextStyles.micro.copyWith(color: _limitsMuted),
                     ),
                   ],
                 ),
@@ -115,20 +109,14 @@ class _LimitProgress extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontSize: 12,
-                  height: 1,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
             ),
             Text(
               '${_formatUsd(used)} / ${_formatUsd(limit)}',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
-                fontSize: 12,
-                fontWeight: FontWeight.w900,
-                height: 1,
+                fontWeight: AppTextStyles.bold,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
@@ -152,19 +140,13 @@ class _LimitProgress extends StatelessWidget {
                 'C\u00F2n l\u1EA1i: ${_formatUsd(remaining)}',
                 style: AppTextStyles.micro.copyWith(
                   color: _limitsGreen,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w800,
-                  height: 1,
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
             ),
             Text(
               '${percent.toStringAsFixed(1)}% \u0111\u00E3 d\u00F9ng',
-              style: AppTextStyles.micro.copyWith(
-                color: _limitsMuted,
-                fontSize: 11,
-                height: 1,
-              ),
+              style: AppTextStyles.micro.copyWith(color: _limitsMuted),
             ),
           ],
         ),
@@ -204,8 +186,8 @@ class _QuickStats extends StatelessWidget {
           Expanded(
             child: VitCard(
               variant: VitCardVariant.inner,
-              height: 58,
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+              height: AppSpacing.walletNetworkSummaryStatHeight,
+              padding: AppSpacing.walletNetworkStatPadding,
               borderColor: _limitsBorder,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -216,30 +198,25 @@ class _QuickStats extends StatelessWidget {
                       stat.value,
                       style: AppTextStyles.caption.copyWith(
                         color: stat.color,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w900,
-                        height: 1,
+                        fontWeight: AppTextStyles.bold,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 9),
+                  const SizedBox(height: AppSpacing.walletNetworkStatTextGap),
                   Text(
                     stat.label,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.micro.copyWith(
-                      color: _limitsMuted,
-                      fontSize: 9,
-                      height: 1,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: _limitsMuted),
                   ),
                 ],
               ),
             ),
           ),
-          if (stat != stats.last) const SizedBox(width: 8),
+          if (stat != stats.last)
+            const SizedBox(width: AppSpacing.walletAddressStatsGap),
         ],
       ],
     );
@@ -276,17 +253,13 @@ class _LimitWarning extends StatelessWidget {
                         'R\u00FAt tr\u00EAn \$50,000.00 c\u1EA7n x\u00E1c minh video call.',
                     style: AppTextStyles.caption.copyWith(
                       color: _limitsAmber,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w900,
-                      height: 1.45,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
                 ],
               ),
               style: AppTextStyles.caption.copyWith(
                 color: _limitsAmber,
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
                 height: 1.45,
               ),
             ),
@@ -319,9 +292,7 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            fontSize: 11,
-            fontWeight: FontWeight.w900,
-            height: 1,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ],

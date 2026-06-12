@@ -27,7 +27,6 @@ class _CriticalAlert extends StatelessWidget {
                   '${summary.critical} Critical Slippage Event Detected',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -37,7 +36,6 @@ class _CriticalAlert extends StatelessWidget {
                   'Slippage exceeded 1% threshold. Review affected trades and consider provider adjustments.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                     height: 1.4,
                   ),
@@ -130,7 +128,6 @@ class _StatCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 9,
                     height: 1.15,
                   ),
                 ),
@@ -149,7 +146,6 @@ class _StatCard extends StatelessWidget {
                   card.$4,
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
-                    fontSize: 19,
                     fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
                     height: 1.22,
@@ -161,11 +157,7 @@ class _StatCard extends StatelessWidget {
           const Spacer(),
           Text(
             card.$5,
-            style: AppTextStyles.micro.copyWith(
-              color: card.$6,
-              fontSize: 9,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: card.$6, height: 1),
           ),
         ],
       ),
@@ -214,7 +206,6 @@ class _Tabs extends StatelessWidget {
                             color: activeId == tab.$1
                                 ? _slipPrimary
                                 : AppColors.text3,
-                            fontSize: 12,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),

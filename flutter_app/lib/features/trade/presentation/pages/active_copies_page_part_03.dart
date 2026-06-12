@@ -122,7 +122,6 @@ class _StopCopyModalState extends State<_StopCopyModal> {
                           Text(
                             'Dừng copy?',
                             style: AppTextStyles.baseMedium.copyWith(
-                              fontSize: 16,
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
@@ -130,7 +129,6 @@ class _StopCopyModalState extends State<_StopCopyModal> {
                             widget.copy.providerName,
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              fontSize: 12,
                             ),
                           ),
                         ],
@@ -150,7 +148,6 @@ class _StopCopyModalState extends State<_StopCopyModal> {
                     'Cảnh báo: khi dừng copy, các vị thế đang mở có thể được đóng. Hành động này cần xác nhận rõ ràng.',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.sell,
-                      fontSize: 12,
                       height: 1.45,
                     ),
                   ),
@@ -158,10 +155,7 @@ class _StopCopyModalState extends State<_StopCopyModal> {
                 const SizedBox(height: 12),
                 Text(
                   'Nhập STOP để xác nhận',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 11,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
                 const SizedBox(height: 6),
                 VitInput(

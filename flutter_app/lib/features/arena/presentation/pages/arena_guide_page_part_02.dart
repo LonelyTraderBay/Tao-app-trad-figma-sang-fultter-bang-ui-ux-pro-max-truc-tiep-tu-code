@@ -72,7 +72,7 @@ class _ExampleCard extends StatelessWidget {
                         ? Icons.check_circle_outline
                         : Icons.warning_amber_outlined,
                     color: color,
-                    size: 13,
+                    size: AppSpacing.arenaGuideReasonIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(
@@ -147,7 +147,7 @@ class _TipsHeader extends StatelessWidget {
           const Icon(
             Icons.lightbulb_outline,
             color: AppModuleAccents.arena,
-            size: 19,
+            size: AppSpacing.arenaGuideTipsHeaderIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -241,7 +241,10 @@ class _ShowMoreTipsButton extends StatelessWidget {
     return Center(
       child: TextButton.icon(
         onPressed: onPressed,
-        icon: const Icon(Icons.expand_more, size: 16),
+        icon: const Icon(
+          Icons.expand_more,
+          size: AppSpacing.arenaGuideShowMoreIcon,
+        ),
         label: Text('Xem thêm $remaining mẹo'),
       ),
     );
@@ -266,7 +269,7 @@ class _ChecklistCard extends StatelessWidget {
               const Icon(
                 Icons.check_circle_outline,
                 color: AppColors.buy,
-                size: 18,
+                size: AppSpacing.arenaGuideChecklistIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -286,8 +289,8 @@ class _ChecklistCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 18,
-                    height: 18,
+                    width: AppSpacing.arenaGuideChecklistBox,
+                    height: AppSpacing.arenaGuideChecklistBox,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       border: Border.all(color: AppColors.borderSolid),
@@ -297,7 +300,7 @@ class _ChecklistCard extends StatelessWidget {
                       '${index + 1}',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: 1,
+                        height: AppSpacing.arenaGuideChecklistLineHeight,
                       ),
                     ),
                   ),
@@ -328,7 +331,11 @@ class _SafetyHero extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.buy, size: 19),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.buy,
+            size: AppSpacing.arenaGuideSafetyHeroIcon,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
@@ -364,8 +371,8 @@ class _PointsOnlyBanner extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: AppSpacing.arenaGuideFeatureIconBox,
+            height: AppSpacing.arenaGuideFeatureIconBox,
             decoration: BoxDecoration(
               color: AppColors.accent12,
               borderRadius: AppRadii.mdRadius,
@@ -373,7 +380,7 @@ class _PointsOnlyBanner extends StatelessWidget {
             child: const Icon(
               Icons.info_outline,
               color: AppColors.accent,
-              size: 20,
+              size: AppSpacing.arenaGuideFeatureGlyph,
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -436,13 +443,17 @@ class _SafetyTipCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 38,
-            height: 38,
+            width: AppSpacing.arenaGuideSafetyTipIconBox,
+            height: AppSpacing.arenaGuideSafetyTipIconBox,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .12),
               borderRadius: AppRadii.mdRadius,
             ),
-            child: Icon(_iconFor(item.iconKey), color: color, size: 18),
+            child: Icon(
+              _iconFor(item.iconKey),
+              color: color,
+              size: AppSpacing.arenaGuideSafetyTipGlyph,
+            ),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

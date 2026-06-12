@@ -32,7 +32,7 @@ class _ApiKeyCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _ApiKeyHeader(apiKey: apiKey, onToggle: onToggle),
-            const SizedBox(height: 12),
+            const Padding(padding: EdgeInsets.only(top: 12)),
             _SecretRow(
               label: 'API KEY',
               value: _maskedKey(apiKey.key),
@@ -47,7 +47,7 @@ class _ApiKeyCard extends StatelessWidget {
                 onTap: () => onCopy('${apiKey.id}_key', apiKey.key),
               ),
             ),
-            const SizedBox(height: 8),
+            const Padding(padding: EdgeInsets.only(top: 8)),
             _SecretRow(
               label: 'SECRET',
               value: showSecret
@@ -81,11 +81,11 @@ class _ApiKeyCard extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 12),
+            const Padding(padding: EdgeInsets.only(top: 12)),
             _PermissionBadges(apiKey: apiKey),
-            const SizedBox(height: 13),
+            const Padding(padding: EdgeInsets.only(top: 13)),
             _UsageRow(apiKey: apiKey),
-            const SizedBox(height: 14),
+            const Padding(padding: EdgeInsets.only(top: 14)),
             Row(
               children: [
                 Expanded(child: _RegenerateButton(onTap: () {})),
@@ -146,7 +146,6 @@ class _ApiKeyHeader extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.baseMedium.copyWith(
-                        fontSize: 16,
                         fontWeight: FontWeight.w800,
                         height: 1.2,
                       ),
@@ -156,14 +155,13 @@ class _ApiKeyHeader extends StatelessWidget {
                   _StatusBadge(active: active),
                 ],
               ),
-              const SizedBox(height: 3),
+              const Padding(padding: EdgeInsets.only(top: 3)),
               Text(
                 'T\u1EA1o: ${apiKey.createdAt} \u2022 ${apiKey.expiresAt == null ? 'Kh\u00F4ng h\u1EBFt h\u1EA1n' : 'H\u1EBFt h\u1EA1n: ${apiKey.expiresAt}'}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.micro.copyWith(
                   color: _apiMuted,
-                  fontSize: 11,
                   height: 1.2,
                 ),
               ),

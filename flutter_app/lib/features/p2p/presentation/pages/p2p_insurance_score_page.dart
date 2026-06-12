@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -78,6 +79,19 @@ class P2PInsuranceScorePage extends ConsumerWidget {
                         _TierPathCard(snapshot: snapshot),
                         const SizedBox(height: AppSpacing.x5),
                         _DisclosureCard(text: snapshot.disclosure),
+                        VitPageContent(
+                          padding: VitContentPadding.compact,
+                          customGap: 0,
+                          children: const [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Insurance score state review',
+                              message:
+                                  'Protection score, factor breakdown, quick actions, tier path, and disclosure remain visible before changing P2P insurance readiness.',
+                              contractId: 'SC-240',
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

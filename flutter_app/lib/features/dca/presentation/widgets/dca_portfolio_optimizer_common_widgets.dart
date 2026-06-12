@@ -119,12 +119,12 @@ class _CardLabel extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         Text(
           subtitle,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
-            height: 1.35,
+            height: AppSpacing.dcaPortfolioOptimizerBodyLineHeight,
           ),
         ),
       ],

@@ -29,7 +29,7 @@ class _Disclaimer extends StatelessWidget {
                 text,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.35,
+                  height: AppSpacing.savingsBacktestWarningLineHeight,
                 ),
               ),
             ),
@@ -102,8 +102,8 @@ class _SelectionDot extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 160),
-      width: 20,
-      height: 20,
+      width: AppSpacing.savingsBacktestSelectionDot,
+      height: AppSpacing.savingsBacktestSelectionDot,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(color: selected ? color : AppColors.borderSolid),
@@ -111,8 +111,8 @@ class _SelectionDot extends StatelessWidget {
       child: selected
           ? Center(
               child: Container(
-                width: 10,
-                height: 10,
+                width: AppSpacing.savingsBacktestSelectionDotInner,
+                height: AppSpacing.savingsBacktestSelectionDotInner,
                 decoration: BoxDecoration(color: color, shape: BoxShape.circle),
               ),
             )

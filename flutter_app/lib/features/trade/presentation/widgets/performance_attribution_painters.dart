@@ -24,7 +24,6 @@ class _LegendRow extends StatelessWidget {
             item.label,
             style: AppTextStyles.micro.copyWith(
               color: item.color,
-              fontSize: 10,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -278,9 +277,8 @@ void _drawChartText(
   final painter = TextPainter(
     text: TextSpan(
       text: text,
-      style: const TextStyle(
+      style: AppTextStyles.micro.copyWith(
         color: AppColors.attributionText,
-        fontSize: 10,
         fontWeight: FontWeight.w500,
       ),
     ),

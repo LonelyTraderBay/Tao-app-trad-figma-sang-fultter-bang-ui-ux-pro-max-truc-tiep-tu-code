@@ -31,7 +31,7 @@ class _InfoBanner extends StatelessWidget {
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.stakingContingencyBodyLineHeight,
                   ),
                 ),
               ],
@@ -64,10 +64,10 @@ class _RecoveryMetrics extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: metrics.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+              crossAxisCount: AppSpacing.stakingContingencyMetricGridColumns,
               crossAxisSpacing: AppSpacing.x3,
               mainAxisSpacing: AppSpacing.x3,
-              childAspectRatio: 2.55,
+              childAspectRatio: AppSpacing.stakingContingencyMetricGridAspect,
             ),
             itemBuilder: (context, index) {
               return _MetricTile(metric: metrics[index]);
@@ -197,7 +197,8 @@ class _ScenarioCard extends StatelessWidget {
                             scenario.response[i],
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text2,
-                              height: 1.45,
+                              height: AppSpacing
+                                  .stakingContingencyResponseLineHeight,
                             ),
                           ),
                         ),

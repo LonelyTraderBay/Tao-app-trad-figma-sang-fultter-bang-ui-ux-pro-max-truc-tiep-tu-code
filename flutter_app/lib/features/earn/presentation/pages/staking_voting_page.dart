@@ -128,7 +128,7 @@ class _ProposalSummary extends StatelessWidget {
               snapshot.proposalBody,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.55,
+                height: AppSpacing.stakingCommunityBodyLineHeight,
               ),
             ),
           ),
@@ -366,7 +366,7 @@ class _VotingPowerNote extends StatelessWidget {
               ),
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.45,
+                height: AppSpacing.stakingCommunityDescriptionLineHeight,
               ),
             ),
           ),

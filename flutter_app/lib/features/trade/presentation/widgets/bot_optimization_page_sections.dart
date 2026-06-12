@@ -5,13 +5,10 @@ class _IntroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
-      decoration: BoxDecoration(
-        color: _optimizationPrimary.withValues(alpha: .08),
-        border: Border.all(color: _optimizationPrimary.withValues(alpha: .22)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _optimizationPrimary.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,7 +26,6 @@ class _IntroCard extends StatelessWidget {
                   'Automated Parameter Tuning',
                   style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.text1,
-                    fontSize: 15,
                     height: 1,
                   ),
                 ),
@@ -38,7 +34,6 @@ class _IntroCard extends StatelessWidget {
                   'Use genetic algorithms to find optimal bot parameters that maximize Sharpe ratio while minimizing drawdown. This typically takes 2-5 minutes.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 11,
                     height: 1.45,
                   ),
                 ),
@@ -149,7 +144,6 @@ class _TargetTile extends StatelessWidget {
                     target.label,
                     style: AppTextStyles.caption.copyWith(
                       color: selected ? _optimizationPrimary : AppColors.text1,
-                      fontSize: 13,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),
@@ -159,7 +153,6 @@ class _TargetTile extends StatelessWidget {
                     target.description,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 10,
                       height: 1,
                     ),
                   ),
@@ -240,7 +233,6 @@ class _RangeSliderRow extends StatelessWidget {
                 range.label,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  fontSize: 12,
                   height: 1,
                 ),
               ),
@@ -249,9 +241,7 @@ class _RangeSliderRow extends StatelessWidget {
               '${range.min.toStringAsFixed(0)} - ${range.max.toStringAsFixed(0)}$unit',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
-                fontSize: 10,
                 fontWeight: AppTextStyles.bold,
-                fontFamily: 'Roboto',
                 height: 1,
               ),
             ),
@@ -290,12 +280,9 @@ class _HowItWorksCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
-      decoration: BoxDecoration(
-        color: _optimizationPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -303,7 +290,6 @@ class _HowItWorksCard extends StatelessWidget {
             'How It Works',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -328,7 +314,6 @@ class _HowItWorksCard extends StatelessWidget {
                     step,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      fontSize: 11,
                       height: 1.45,
                     ),
                   ),
@@ -350,18 +335,14 @@ class _QueuedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
-      decoration: BoxDecoration(
-        color: _optimizationPrimary.withValues(alpha: .08),
-        border: Border.all(color: _optimizationPrimary.withValues(alpha: .24)),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      borderColor: _optimizationPrimary.withValues(alpha: .24),
       child: Text(
         'Optimization queued (${result.jobId}) - about ${result.estimatedMinutes} min',
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text2,
-          fontSize: 11,
           height: 1.35,
         ),
       ),

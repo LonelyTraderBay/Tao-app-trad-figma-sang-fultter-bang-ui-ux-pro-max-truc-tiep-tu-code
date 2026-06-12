@@ -1,4 +1,4 @@
-﻿part of '../pages/otp_page.dart';
+part of '../pages/otp_page.dart';
 
 class _OtpDigitRow extends StatelessWidget {
   const _OtpDigitRow({
@@ -76,7 +76,6 @@ class _OtpDigitField extends StatelessWidget {
             LengthLimitingTextInputFormatter(1),
           ],
           textStyle: AppTextStyles.sectionTitle.copyWith(
-            fontSize: 24,
             fontWeight: AppTextStyles.bold,
           ),
           errorText: hasError ? '' : null,

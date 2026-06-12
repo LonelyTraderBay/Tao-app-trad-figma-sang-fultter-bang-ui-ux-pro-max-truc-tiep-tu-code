@@ -62,7 +62,8 @@ class StakingRecommendationsStrategyCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        height: 1.45,
+                        height: AppSpacing
+                            .stakingRecommendationsDescriptionLineHeight,
                       ),
                     ),
                   ],
@@ -208,7 +209,8 @@ class StakingRecommendationsTipCard extends StatelessWidget {
                   tip.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.45,
+                    height:
+                        AppSpacing.stakingRecommendationsDescriptionLineHeight,
                   ),
                 ),
               ],
@@ -245,7 +247,7 @@ class StakingRecommendationsDisclaimer extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.55,
+                height: AppSpacing.stakingRecommendationsBodyLineHeight,
               ),
             ),
           ),

@@ -11,7 +11,7 @@ class _MiniHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: _arenaAccent, size: 16),
+        Icon(icon, color: _arenaAccent, size: AppSpacing.arenaGovernanceIcon),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
@@ -96,7 +96,9 @@ class _StatusPill extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: compact ? AppSpacing.x1 : AppSpacing.x2,
-          vertical: compact ? 1 : 3,
+          vertical: compact
+              ? AppSpacing.arenaGovernancePillPadCompactV
+              : AppSpacing.arenaGovernancePillPadV,
         ),
         child: Text(
           label,
@@ -126,7 +128,11 @@ class _NextActionChip extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.add_rounded, color: AppColors.accent, size: 15),
+          const Icon(
+            Icons.add_rounded,
+            color: AppColors.accent,
+            size: AppSpacing.arenaGovernanceAddIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
@@ -158,7 +164,7 @@ class _ModerationNote extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.accent,
-            size: 16,
+            size: AppSpacing.arenaGovernanceIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -166,7 +172,7 @@ class _ModerationNote extends StatelessWidget {
               'Governance Gate giúp bạn tạo room chất lượng, không cản bạn sáng tạo. Custom mode vẫn mở cho mọi lĩnh vực, nhưng room public cần rule rõ ràng để bảo vệ người tham gia.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: 1.45,
+                height: AppSpacing.arenaGovernanceNoticeLineHeight,
               ),
             ),
           ),

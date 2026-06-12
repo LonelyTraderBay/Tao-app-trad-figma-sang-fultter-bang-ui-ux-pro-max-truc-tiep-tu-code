@@ -143,7 +143,7 @@ class _CalendarTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 53,
+      height: AppSpacing.stakingEarningsTabHeight,
       child: ColoredBox(
         color: AppColors.surface,
         child: Center(

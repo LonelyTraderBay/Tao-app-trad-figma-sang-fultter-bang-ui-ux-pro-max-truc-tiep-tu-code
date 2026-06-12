@@ -25,16 +25,12 @@ class P2PDisputeSmallPill extends StatelessWidget {
         borderRadius: AppRadii.inputRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.p2pDisputePillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1.2,
           ),
         ),
       ),
@@ -66,11 +62,11 @@ class P2PDisputeSmallButton extends StatelessWidget {
         borderRadius: AppRadii.inputRadius,
         child: Container(
           height: AppSpacing.buttonCompact,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+          padding: AppSpacing.p2pDisputeEvidenceButtonPadding,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, color: color, size: 13),
+              Icon(icon, color: color, size: AppSpacing.iconSm),
               const SizedBox(width: AppSpacing.x1),
               Text(
                 label,

@@ -23,7 +23,7 @@ class _CategoriesTab extends StatelessWidget {
             onTap: () => onToggle(category.id),
           ),
           if (category != snapshot.categories.last)
-            const SizedBox(height: AppSpacing.x3),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ],
       ],
     );
@@ -60,20 +60,20 @@ class _RiskCategoryCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: 44,
-                      height: 44,
+                      width: AppSpacing.stakingRiskDisclosureCategoryIconBox,
+                      height: AppSpacing.stakingRiskDisclosureCategoryIconBox,
                       decoration: BoxDecoration(
                         color: _riskTint(category.level),
                         border: Border.all(
                           color: color.withValues(alpha: .28),
-                          width: 1.5,
+                          width: AppSpacing.stakingRiskDisclosureBorderWidth,
                         ),
                         borderRadius: AppRadii.lgRadius,
                       ),
                       child: Icon(
                         _categoryIcon(category.id),
                         color: color,
-                        size: 22,
+                        size: AppSpacing.stakingRiskDisclosureCategoryIcon,
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x3),
@@ -96,13 +96,15 @@ class _RiskCategoryCard extends StatelessWidget {
                               _RiskLevelBadge(level: category.level),
                             ],
                           ),
-                          const SizedBox(height: AppSpacing.x2),
+                          const Padding(
+                            padding: EdgeInsets.only(top: AppSpacing.x2),
+                          ),
                           Text(
                             category.description,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text2,
-                              fontSize: 12,
-                              height: 1.5,
+                              height: AppSpacing
+                                  .stakingRiskDisclosureBodyLineHeight,
                             ),
                           ),
                         ],
@@ -158,9 +160,9 @@ class _RiskCategoryDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _DetailGroup(label: 'Chi tiết:', items: category.details),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           _DetailGroup(label: 'Ví dụ thực tế:', items: category.examples),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           _DetailGroup(label: 'Cách giảm thiểu:', items: category.mitigation),
         ],
       ),
@@ -186,16 +188,18 @@ class _DetailGroup extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         for (final item in items) ...[
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 7),
+                padding: EdgeInsets.only(
+                  top: AppSpacing.stakingRiskDisclosureDetailBulletTop,
+                ),
                 child: SizedBox(
-                  width: 4,
-                  height: 4,
+                  width: AppSpacing.stakingRiskDisclosureDetailBullet,
+                  height: AppSpacing.stakingRiskDisclosureDetailBullet,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       color: AppColors.text3,
@@ -210,14 +214,14 @@ class _DetailGroup extends StatelessWidget {
                   item,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
-                    height: 1.5,
+                    height: AppSpacing.stakingRiskDisclosureBodyLineHeight,
                   ),
                 ),
               ),
             ],
           ),
-          if (item != items.last) const SizedBox(height: AppSpacing.x2),
+          if (item != items.last)
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         ],
       ],
     );

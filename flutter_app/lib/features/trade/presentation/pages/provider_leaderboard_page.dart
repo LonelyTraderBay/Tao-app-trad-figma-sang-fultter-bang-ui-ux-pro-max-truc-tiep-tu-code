@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -21,10 +22,8 @@ part '../widgets/provider_leaderboard_cards.dart';
 part '../widgets/provider_leaderboard_disclaimer.dart';
 
 const _leaderPrimary = AppColors.primary;
-const _leaderCard = AppColors.surface;
 const _leaderPanel = AppColors.surface2;
 const _leaderChip = AppColors.surface3;
-const _leaderWarningBackground = AppColors.warningBg;
 const _leaderWarningBorder = AppColors.warningBorder;
 const _leaderWarningText = AppColors.caution;
 
@@ -89,11 +88,12 @@ class _ProviderLeaderboardPageState
                 child: SingleChildScrollView(
                   key: ProviderLeaderboardPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 13,
                     children: [
                       _SurvivorshipWarning(snapshot: snapshot),
-                      const SizedBox(height: 12),
                       const VitCard(
                         variant: VitCardVariant.inner,
                         padding: EdgeInsets.all(12),
@@ -105,35 +105,29 @@ class _ProviderLeaderboardPageState
                           contractId: 'provider-leaderboard-review',
                         ),
                       ),
-                      const SizedBox(height: 23),
                       _SortTabs(
                         options: snapshot.sortOptions,
                         activeId: _sortId,
                         onChanged: (id) => setState(() => _sortId = id),
                       ),
-                      const SizedBox(height: 25),
                       _RiskFilters(
                         filters: snapshot.riskFilters,
                         activeId: _riskFilterId,
                         onChanged: (id) => setState(() => _riskFilterId = id),
                       ),
-                      const SizedBox(height: 12),
                       _VerifiedToggle(
                         label: snapshot.verifiedOnlyLabel,
                         checked: _verifiedOnly,
                         onChanged: (value) =>
                             setState(() => _verifiedOnly = value),
                       ),
-                      const SizedBox(height: 27),
                       Text(
                         'Hiển thị ${providers.length} providers',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 11,
                           height: 1,
                         ),
                       ),
-                      const SizedBox(height: 28),
                       for (final entry in providers.indexed) ...[
                         _ProviderRankCard(
                           rank: entry.$1 + 1,
@@ -145,10 +139,7 @@ class _ProviderLeaderboardPageState
                             ),
                           ),
                         ),
-                        if (entry.$2 != providers.last)
-                          const SizedBox(height: 13),
                       ],
-                      const SizedBox(height: 34),
                       _Disclaimer(text: snapshot.disclaimer),
                     ],
                   ),

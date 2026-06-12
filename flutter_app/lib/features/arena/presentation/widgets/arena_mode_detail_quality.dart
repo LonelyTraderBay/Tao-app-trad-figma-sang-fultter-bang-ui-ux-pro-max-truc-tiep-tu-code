@@ -34,10 +34,10 @@ class ArenaModeQualitySection extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: metrics.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+            crossAxisCount: AppSpacing.arenaModeQualityColumns,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
-            mainAxisExtent: 62,
+            mainAxisExtent: AppSpacing.arenaModeQualityExtent,
           ),
           itemBuilder: (context, index) {
             final metric = metrics[index];
@@ -50,7 +50,10 @@ class ArenaModeQualitySection extends StatelessWidget {
           child: TextButton.icon(
             key: infoKey,
             onPressed: onInfo,
-            icon: const Icon(Icons.info_outline_rounded, size: 14),
+            icon: const Icon(
+              Icons.info_outline_rounded,
+              size: AppSpacing.arenaModeQualityInfoIcon,
+            ),
             label: const Text('Hiểu chỉ số này'),
             style: TextButton.styleFrom(
               foregroundColor: AppColors.accent,
@@ -84,7 +87,7 @@ class _QualityMetricCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(icon, color: color, size: 17),
+          Icon(icon, color: color, size: AppSpacing.arenaModeQualityIcon),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
@@ -141,7 +144,7 @@ class ArenaModeTrustSheet extends StatelessWidget {
                 const ArenaModeActionIcon(
                   icon: Icons.shield_outlined,
                   color: AppColors.buy,
-                  size: 40,
+                  size: AppSpacing.arenaModeTrustIcon,
                 ),
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
@@ -179,7 +182,7 @@ class ArenaModeTrustSheet extends StatelessWidget {
                 'Các chỉ số dựa trên lịch sử challenge, báo cáo cộng đồng và hệ thống kiểm duyệt. Đây là tín hiệu an toàn của Open Arena, không phải chỉ số tài chính.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: 1.4,
+                  height: AppSpacing.arenaModeTrustTextLineHeight,
                 ),
               ),
             ),
@@ -203,7 +206,7 @@ class _TrustSheetRow extends StatelessWidget {
         Icon(
           arenaMetricIcon(metric.status, metric.label),
           color: color,
-          size: 17,
+          size: AppSpacing.arenaModeQualityIcon,
         ),
         const SizedBox(width: AppSpacing.x3),
         Expanded(

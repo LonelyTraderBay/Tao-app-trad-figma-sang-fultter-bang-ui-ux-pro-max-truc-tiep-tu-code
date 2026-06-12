@@ -113,7 +113,11 @@ class _StateRow extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.all(AppSpacing.x2),
-            child: Icon(icon, color: color, size: 18),
+            child: Icon(
+              icon,
+              color: color,
+              size: AppSpacing.arenaStateCardIcon,
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x3),
@@ -133,7 +137,7 @@ class _StateRow extends StatelessWidget {
                 description,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.45,
+                  height: AppSpacing.arenaStateCardBodyLineHeight,
                 ),
               ),
             ],

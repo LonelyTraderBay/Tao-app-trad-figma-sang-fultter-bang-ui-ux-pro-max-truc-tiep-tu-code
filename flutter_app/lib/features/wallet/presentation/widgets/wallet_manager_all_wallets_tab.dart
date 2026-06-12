@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_manager_common.dart';
@@ -33,11 +34,11 @@ class WalletAllWalletsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _PortfolioSummaryCard(snapshot: snapshot),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.walletManagerAllSummaryGap),
         WalletManagerDistributionCard(snapshot: snapshot),
-        const SizedBox(height: 17),
+        const SizedBox(height: AppSpacing.walletManagerAllDistributionGap),
         const WalletManagerSectionLabel(label: 'T\u1EA5t c\u1EA3 v\u00ED'),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.walletManagerAllSectionGap),
         for (var i = 0; i < snapshot.wallets.length; i++) ...[
           _WalletCard(
             wallet: snapshot.wallets[i],
@@ -48,11 +49,12 @@ class WalletAllWalletsTab extends StatelessWidget {
             onReveal: () => onRevealWallet(snapshot.wallets[i].id),
             onCopy: () => onCopyWallet(snapshot.wallets[i]),
           ),
-          if (i != snapshot.wallets.length - 1) const SizedBox(height: 14),
+          if (i != snapshot.wallets.length - 1)
+            const SizedBox(height: AppSpacing.walletManagerAllWalletGap),
         ],
-        const SizedBox(height: 18),
+        const SizedBox(height: AppSpacing.walletManagerAllAddTopGap),
         const WalletManagerAddWalletButton(),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.walletManagerAllSecurityTopGap),
         const WalletManagerSecurityNotice(),
       ],
     );
@@ -68,8 +70,8 @@ class _PortfolioSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final positive = snapshot.totalChangeUsd >= 0;
     return Container(
-      height: 148,
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+      height: AppSpacing.walletManagerSummaryHeight,
+      padding: AppSpacing.walletManagerSummaryPadding,
       decoration: BoxDecoration(
         color: walletManagerPanel,
         borderRadius: AppRadii.cardRadius,
@@ -80,41 +82,33 @@ class _PortfolioSummaryCard extends StatelessWidget {
         children: [
           Text(
             'Total Portfolio Value',
-            style: AppTextStyles.micro.copyWith(
+            style: AppTextStyles.badge.copyWith(
               color: AppColors.text3,
-              fontSize: 11,
               height: 1,
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.walletManagerSummaryTitleGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 formatWalletManagerUsd(snapshot.totalBalance, decimals: 0),
-                style: AppTextStyles.heroNumber.copyWith(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w900,
-                  fontFamily: 'Roboto',
-                  height: 1,
-                ),
+                style: AppTextStyles.amountMd.copyWith(height: 1),
               ),
-              const SizedBox(width: 9),
+              const SizedBox(width: AppSpacing.walletManagerSummaryValueGap),
               Icon(
                 positive
                     ? Icons.arrow_outward_rounded
                     : Icons.south_east_rounded,
                 color: positive ? walletManagerGreen : walletManagerRed,
-                size: 15,
+                size: AppSpacing.walletManagerSummaryTrendIcon,
               ),
-              const SizedBox(width: 4),
+              const SizedBox(width: AppSpacing.walletManagerSummaryTrendGap),
               Text(
                 formatWalletManagerPct(snapshot.totalChangePct),
                 style: AppTextStyles.caption.copyWith(
                   color: positive ? walletManagerGreen : walletManagerRed,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w900,
-                  fontFamily: 'Roboto',
+                  fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
               ),
@@ -168,18 +162,15 @@ class _SummaryMetric extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.walletManagerSummaryMetricGap),
           Text(
             value,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.control.copyWith(
               color: valueColor,
-              fontSize: 15,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'Roboto',
+              fontWeight: AppTextStyles.bold,
               height: 1,
             ),
           ),
@@ -218,8 +209,8 @@ class _WalletCard extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 200,
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+        height: AppSpacing.walletManagerWalletCardHeight,
+        padding: AppSpacing.walletManagerWalletCardPadding,
         decoration: BoxDecoration(
           color: selected ? accent.withValues(alpha: .045) : walletManagerPanel,
           borderRadius: AppRadii.cardRadius,
@@ -232,7 +223,7 @@ class _WalletCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _WalletTypeIcon(wallet: wallet),
-                const SizedBox(width: 10),
+                const SizedBox(width: AppSpacing.walletManagerWalletIconGap),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -244,28 +235,33 @@ class _WalletCard extends StatelessWidget {
                               wallet.name,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.baseMedium.copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w900,
+                              style: AppTextStyles.control.copyWith(
+                                fontWeight: AppTextStyles.bold,
                                 height: 1,
                               ),
                             ),
                           ),
                           if (wallet.isDefault) ...[
-                            const SizedBox(width: 7),
+                            const SizedBox(
+                              width: AppSpacing.walletManagerWalletBadgeGap,
+                            ),
                             const WalletManagerDefaultBadge(),
                           ],
                           if (wallet.isFavorite) ...[
-                            const SizedBox(width: 7),
+                            const SizedBox(
+                              width: AppSpacing.walletManagerWalletBadgeGap,
+                            ),
                             const Icon(
                               Icons.star_rounded,
                               color: AppColors.caution,
-                              size: 13,
+                              size: AppSpacing.walletManagerWalletFavoriteIcon,
                             ),
                           ],
                         ],
                       ),
-                      const SizedBox(height: 9),
+                      const SizedBox(
+                        height: AppSpacing.walletManagerWalletAddressGap,
+                      ),
                       Row(
                         children: [
                           Flexible(
@@ -275,13 +271,13 @@ class _WalletCard extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.micro.copyWith(
                                 color: AppColors.text3,
-                                fontSize: 10,
-                                fontFamily: 'Roboto',
                                 height: 1,
                               ),
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(
+                            width: AppSpacing.walletManagerWalletInlineGap,
+                          ),
                           WalletManagerTinyIconButton(
                             buttonKey: Key(
                               'sc148_multi_manager_reveal_${wallet.id}',
@@ -292,7 +288,9 @@ class _WalletCard extends StatelessWidget {
                             color: AppColors.text3,
                             onTap: onReveal,
                           ),
-                          const SizedBox(width: 7),
+                          const SizedBox(
+                            width: AppSpacing.walletManagerWalletActionGap,
+                          ),
                           WalletManagerTinyIconButton(
                             buttonKey: Key(
                               'sc148_multi_manager_copy_${wallet.id}',
@@ -310,77 +308,79 @@ class _WalletCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(width: AppSpacing.walletManagerWalletMoreGap),
                 const Icon(
                   Icons.more_vert_rounded,
                   color: AppColors.text3,
-                  size: 18,
+                  size: AppSpacing.walletManagerWalletMoreIcon,
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(
+              height: AppSpacing.walletManagerWalletBalanceBlockGap,
+            ),
             Text(
               'Balance',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
                 height: 1,
               ),
             ),
-            const SizedBox(height: 9),
+            const SizedBox(
+              height: AppSpacing.walletManagerWalletBalanceLabelGap,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   formatWalletManagerUsd(wallet.balanceUsd, decimals: 0),
-                  style: AppTextStyles.heroNumber.copyWith(
-                    fontSize: 21,
-                    fontWeight: FontWeight.w900,
-                    fontFamily: 'Roboto',
-                    height: 1,
-                  ),
+                  style: AppTextStyles.sectionTitle.copyWith(height: 1),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(
+                  width: AppSpacing.walletManagerWalletBalanceValueGap,
+                ),
                 Icon(
                   positive
                       ? Icons.trending_up_rounded
                       : Icons.south_east_rounded,
                   color: positive ? walletManagerGreen : walletManagerRed,
-                  size: 13,
+                  size: AppSpacing.walletManagerWalletTrendIcon,
                 ),
-                const SizedBox(width: 3),
+                const SizedBox(width: AppSpacing.walletManagerWalletTrendGap),
                 Text(
                   formatWalletManagerPct(wallet.change24hPct, decimals: 1),
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.badge.copyWith(
                     color: positive ? walletManagerGreen : walletManagerRed,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w900,
-                    fontFamily: 'Roboto',
                     height: 1,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 17),
+            const SizedBox(height: AppSpacing.walletManagerWalletAssetTopGap),
             Row(
               children: [
                 for (final asset in wallet.assets.take(3)) ...[
                   WalletManagerAssetChip(symbol: asset.symbol),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.walletManagerWalletAssetGap),
                 ],
               ],
             ),
             const Spacer(),
-            Container(height: 1, color: AppColors.border),
-            const SizedBox(height: 10),
+            Container(
+              height: AppSpacing.walletManagerWalletDividerHeight,
+              color: AppColors.border,
+            ),
+            const SizedBox(height: AppSpacing.walletManagerWalletFooterGap),
             Row(
               children: [
                 const Icon(
                   Icons.access_time_rounded,
                   color: AppColors.text3,
-                  size: 11,
+                  size: AppSpacing.walletManagerWalletFooterIcon,
                 ),
-                const SizedBox(width: 5),
+                const SizedBox(
+                  width: AppSpacing.walletManagerWalletFooterIconGap,
+                ),
                 Expanded(
                   child: Text(
                     wallet.lastActiveLabel,
@@ -388,7 +388,6 @@ class _WalletCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 10,
                       height: 1,
                     ),
                   ),
@@ -418,14 +417,18 @@ class _WalletTypeIcon extends StatelessWidget {
         ? Icons.account_balance_wallet_outlined
         : Icons.shield_outlined;
     return Container(
-      width: 36,
-      height: 36,
+      width: AppSpacing.walletManagerWalletTypeIconBox,
+      height: AppSpacing.walletManagerWalletTypeIconBox,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .16),
         borderRadius: AppRadii.smRadius,
       ),
       alignment: Alignment.center,
-      child: Icon(icon, color: color, size: 18),
+      child: Icon(
+        icon,
+        color: color,
+        size: AppSpacing.walletManagerWalletTypeIcon,
+      ),
     );
   }
 }

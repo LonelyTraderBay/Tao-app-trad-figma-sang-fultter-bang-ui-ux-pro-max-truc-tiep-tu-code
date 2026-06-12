@@ -48,77 +48,65 @@ class _StrategyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(strategy.colorHex);
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(13, 13, 13, 12),
-        decoration: BoxDecoration(
-          color: selected ? color.withValues(alpha: .10) : _comparePanel,
-          border: Border.all(
-            color: selected ? color : AppColors.borderSolid,
-            width: selected ? 2 : 1.5,
+      borderColor: selected ? color : AppColors.borderSolid,
+      padding: const EdgeInsets.fromLTRB(13, 13, 13, 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 20,
+                height: 20,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: selected ? color : AppColors.borderSolid,
+                    width: 2,
+                  ),
+                ),
+                child: selected
+                    ? Icon(Icons.check_circle_outline, color: color, size: 14)
+                    : null,
+              ),
+              const SizedBox(width: 9),
+              Expanded(
+                child: Text(
+                  strategy.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: selected ? color : AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                    height: 1,
+                  ),
+                ),
+              ),
+            ],
           ),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 20,
-                  height: 20,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: selected ? color : AppColors.borderSolid,
-                      width: 2,
-                    ),
-                  ),
-                  child: selected
-                      ? Icon(Icons.check_circle_outline, color: color, size: 14)
-                      : null,
+          const Spacer(),
+          Row(
+            children: [
+              Expanded(
+                child: _MiniMetric(
+                  label: 'Return',
+                  value: '+${strategy.metrics.totalReturn.toStringAsFixed(1)}%',
+                  color: _compareGreen,
                 ),
-                const SizedBox(width: 9),
-                Expanded(
-                  child: Text(
-                    strategy.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: selected ? color : AppColors.text1,
-                      fontSize: 13,
-                      fontWeight: AppTextStyles.bold,
-                      height: 1,
-                    ),
-                  ),
+              ),
+              Expanded(
+                child: _MiniMetric(
+                  label: 'Sharpe',
+                  value: strategy.metrics.sharpeRatio.toStringAsFixed(2),
+                  color: AppColors.text1,
                 ),
-              ],
-            ),
-            const Spacer(),
-            Row(
-              children: [
-                Expanded(
-                  child: _MiniMetric(
-                    label: 'Return',
-                    value:
-                        '+${strategy.metrics.totalReturn.toStringAsFixed(1)}%',
-                    color: _compareGreen,
-                  ),
-                ),
-                Expanded(
-                  child: _MiniMetric(
-                    label: 'Sharpe',
-                    value: strategy.metrics.sharpeRatio.toStringAsFixed(2),
-                    color: AppColors.text1,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -144,7 +132,6 @@ class _MiniMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 9,
             height: 1,
           ),
         ),
@@ -153,10 +140,9 @@ class _MiniMetric extends StatelessWidget {
           value,
           style: AppTextStyles.micro.copyWith(
             color: color,
-            fontSize: 11,
             fontWeight: AppTextStyles.bold,
             height: 1,
-            fontFamily: 'Roboto',
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
       ],
@@ -172,13 +158,10 @@ class _BestStrategyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(strategy.colorHex);
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      borderColor: color.withValues(alpha: .30),
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .05),
-        border: Border.all(color: color.withValues(alpha: .30), width: 1.5),
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -192,7 +175,6 @@ class _BestStrategyCard extends StatelessWidget {
                   'Best Risk-Adjusted Returns',
                   style: AppTextStyles.baseMedium.copyWith(
                     color: color,
-                    fontSize: 16,
                     height: 1,
                   ),
                 ),
@@ -212,7 +194,6 @@ class _BestStrategyCard extends StatelessWidget {
                   ),
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1.6,
                   ),
                 ),

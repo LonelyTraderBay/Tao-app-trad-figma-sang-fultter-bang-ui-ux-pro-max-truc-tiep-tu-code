@@ -54,14 +54,14 @@ class _PendingCommissionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           _ProgressBar(progress: item.progress / 100, color: AppColors.warn),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             item.reasonDetail,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Align(
             alignment: Alignment.centerLeft,
             child: _TinyPill(
@@ -117,7 +117,7 @@ class _RewardCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             value,
             style: AppTextStyles.sectionTitle.copyWith(
@@ -130,7 +130,7 @@ class _RewardCard extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           if (chip != null) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
             _TinyPill(
               label: chip!,
               color: AppColors.primarySoft,
@@ -153,7 +153,7 @@ class _LeaderboardRow extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 28,
+          width: AppSpacing.referralRankWidth,
           child: Text(
             '#${item.rank}',
             style: AppTextStyles.micro.copyWith(
@@ -312,8 +312,8 @@ class _StepRow extends StatelessWidget {
             ),
           ),
           Container(
-            width: 28,
-            height: 28,
+            width: AppSpacing.referralRankWidth,
+            height: AppSpacing.referralStepBox,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppColors.surface2,
@@ -368,17 +368,17 @@ class _CampaignHistoryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Text(
             item.dateRange,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             item.description,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           VitCard(
             variant: VitCardVariant.inner,
             padding: const EdgeInsets.all(AppSpacing.x3),
@@ -401,7 +401,7 @@ class _CampaignHistoryCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                 Text(
                   item.result,
                   style: AppTextStyles.caption.copyWith(
@@ -409,9 +409,9 @@ class _CampaignHistoryCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                 _ProgressBar(progress: progress, color: color),
-                const SizedBox(height: AppSpacing.x3),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                 Row(
                   children: [
                     Expanded(
@@ -433,7 +433,7 @@ class _CampaignHistoryCard extends StatelessWidget {
                   ],
                 ),
                 if (active) ...[
-                  const SizedBox(height: AppSpacing.x3),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                   const _NoticeCard(
                     icon: Icons.campaign_rounded,
                     text: 'Đang diễn ra - mời thêm bạn bè để nhận x2.',
@@ -480,7 +480,7 @@ class _HistoryDatum extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Text(
             value,
             maxLines: 2,
@@ -513,8 +513,8 @@ class _SectionTitle extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 18,
+          width: AppSpacing.referralSectionMarkerWidth,
+          height: AppSpacing.referralSectionMarkerHeight,
           decoration: BoxDecoration(
             color: color,
             borderRadius: AppRadii.xsRadius,

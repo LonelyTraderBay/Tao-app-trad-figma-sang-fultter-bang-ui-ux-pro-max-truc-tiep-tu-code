@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 const _walletBackground = AppColors.bg;
 
@@ -60,8 +61,10 @@ class _WalletPageState extends ConsumerState<WalletPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 92
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.walletBottomInsetVisualChrome
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.walletBottomInsetNativeChrome) +
         MediaQuery.paddingOf(context).bottom;
     final assets = _filteredAssets(snapshot.assets);
     final showBack = context.canPop();
@@ -101,21 +104,25 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                   onNavigate: _navigate,
                 ),
                 WalletSegmentedTabs(active: _tab, onChanged: _setTab),
-                if (_tab == 'assets')
-                  WalletAssetSection(
-                    controller: _searchController,
-                    filterActive: _hideSmallBalances,
-                    count: assets.length,
-                    assets: assets,
-                    hidden: _balanceHidden,
-                    onChanged: (value) => setState(() => _query = value),
-                    onFilter: () => setState(
-                      () => _hideSmallBalances = !_hideSmallBalances,
-                    ),
-                    onNavigate: _navigate,
-                  )
-                else
-                  WalletAllocationCard(assets: snapshot.assets),
+                VitCard(
+                  variant: VitCardVariant.standard,
+                  radius: VitCardRadius.md,
+                  padding: const EdgeInsets.all(AppSpacing.x3),
+                  child: _tab == 'assets'
+                      ? WalletAssetSection(
+                          controller: _searchController,
+                          filterActive: _hideSmallBalances,
+                          count: assets.length,
+                          assets: assets,
+                          hidden: _balanceHidden,
+                          onChanged: (value) => setState(() => _query = value),
+                          onFilter: () => setState(
+                            () => _hideSmallBalances = !_hideSmallBalances,
+                          ),
+                          onNavigate: _navigate,
+                        )
+                      : WalletAllocationCard(assets: snapshot.assets),
+                ),
                 WalletDcaCard(dca: snapshot.dca),
                 WalletToolGrid(tools: snapshot.tools, onNavigate: _navigate),
               ],

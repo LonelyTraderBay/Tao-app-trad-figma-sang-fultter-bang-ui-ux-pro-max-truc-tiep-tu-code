@@ -22,7 +22,6 @@ part '../widgets/bot_optimization_page_sections.dart';
 part '../widgets/bot_optimization_page_common.dart';
 
 const _optimizationBackground = AppColors.bg;
-const _optimizationPanel = AppColors.surface;
 const _optimizationPanel2 = AppColors.surface2;
 const _optimizationPrimary = AppColors.primary;
 
@@ -99,10 +98,9 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                             child: VitPageContent(
                               padding: VitContentPadding.none,
                               fullBleed: true,
-                              customGap: 0,
+                              customGap: 14,
                               children: [
                                 const _IntroCard(),
-                                const SizedBox(height: 12),
                                 const VitCard(
                                   variant: VitCardVariant.inner,
                                   padding: EdgeInsets.all(12),
@@ -126,9 +124,7 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                                     ],
                                   ),
                                 ),
-                                const SizedBox(height: 31),
                                 const _SectionLabel('Optimization Target'),
-                                const SizedBox(height: 10),
                                 VitPageSection(
                                   customGap: 0,
                                   children: [
@@ -140,9 +136,7 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 18),
                                 const _SectionLabel('Parameter Ranges'),
-                                const SizedBox(height: 10),
                                 _RangeCard(
                                   ranges: snapshot.parameterRanges,
                                   gridCount: _gridCount,
@@ -152,10 +146,8 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                                   onGridRangeChanged: (value) =>
                                       setState(() => _gridRange = value),
                                 ),
-                                const SizedBox(height: 18),
                                 _HowItWorksCard(steps: snapshot.steps),
                                 if (_lastResult != null) ...[
-                                  const SizedBox(height: 12),
                                   _QueuedCard(result: _lastResult!),
                                 ],
                               ],

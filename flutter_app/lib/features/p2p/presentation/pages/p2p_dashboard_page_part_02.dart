@@ -72,7 +72,7 @@ class _OrderBreakdownCard extends StatelessWidget {
     return VitCard(
       key: P2PDashboardPage.breakdownKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDashboardCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -101,7 +101,7 @@ class _TopMerchantsCard extends StatelessWidget {
     return VitCard(
       key: P2PDashboardPage.merchantsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDashboardCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -145,7 +145,7 @@ class _RecentActivityCard extends StatelessWidget {
     return VitCard(
       key: P2PDashboardPage.activityKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDashboardCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -203,7 +203,8 @@ class _QuickNavigation extends StatelessWidget {
               ),
             ],
           ),
-          if (row == 0) const SizedBox(height: AppSpacing.x3),
+          if (row == 0)
+            const SizedBox(height: AppSpacing.p2pDashboardMetricRowGap),
         ],
       ],
     );
@@ -229,7 +230,7 @@ class _QuickActionTile extends StatelessWidget {
         },
         borderRadius: AppRadii.cardRadius,
         child: Container(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pDashboardQuickActionPadding,
           decoration: BoxDecoration(
             border: Border.all(color: AppColors.border),
             borderRadius: AppRadii.cardRadius,
@@ -308,7 +309,13 @@ class _IconBubble extends StatelessWidget {
       child: SizedBox(
         width: size,
         height: size,
-        child: Icon(icon, color: color, size: small ? 16 : AppSpacing.iconMd),
+        child: Icon(
+          icon,
+          color: color,
+          size: small
+              ? AppSpacing.p2pDashboardIconBubbleSmallIcon
+              : AppSpacing.iconMd,
+        ),
       ),
     );
   }
@@ -324,7 +331,11 @@ class _TrendBadge extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Icon(Icons.arrow_outward_rounded, color: AppColors.buy, size: 11),
+        const Icon(
+          Icons.arrow_outward_rounded,
+          color: AppColors.buy,
+          size: AppSpacing.p2pDashboardTrendIcon,
+        ),
         const SizedBox(width: AppSpacing.x1),
         Text(
           value,
@@ -382,10 +393,7 @@ class _SmallPill extends StatelessWidget {
         borderRadius: AppRadii.inputRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
+        padding: AppSpacing.p2pDashboardPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -411,10 +419,7 @@ class _RequirementPill extends StatelessWidget {
         borderRadius: AppRadii.smRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.p2pDashboardRequirementPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -515,7 +520,7 @@ class _ComparisonLine extends StatelessWidget {
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
             value: (item.yours / 100).clamp(.02, 1),
-            minHeight: 5,
+            minHeight: AppSpacing.x2,
             backgroundColor: AppColors.surface2,
             valueColor: AlwaysStoppedAnimation<Color>(color),
           ),

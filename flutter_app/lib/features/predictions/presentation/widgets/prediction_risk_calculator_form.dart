@@ -32,7 +32,7 @@ class _RiskTabBar extends StatelessWidget {
         border: Border(bottom: BorderSide(color: AppColors.border)),
       ),
       child: SizedBox(
-        height: 54,
+        height: AppSpacing.predictionRiskTabsHeight,
         child: Row(
           children: [
             for (final item in tabs)
@@ -56,18 +56,19 @@ class _RiskTabBar extends StatelessWidget {
                                     ? _predictionPrimary
                                     : AppColors.text3,
                                 fontWeight: AppTextStyles.bold,
-                                fontSize: 12,
                               ),
                             ),
                           ),
                         ),
                         AnimatedContainer(
                           duration: const Duration(milliseconds: 160),
-                          height: 2,
-                          width: activeTab == item.tab ? 116 : 0,
+                          height: AppSpacing.predictionRiskTabIndicatorHeight,
+                          width: activeTab == item.tab
+                              ? AppSpacing.predictionRiskTabIndicatorWidth
+                              : 0,
                           decoration: BoxDecoration(
                             color: _predictionPrimary,
-                            borderRadius: BorderRadius.circular(1),
+                            borderRadius: AppRadii.hairlineRadius,
                           ),
                         ),
                       ],
@@ -108,13 +109,13 @@ class _PositionInfoCard extends StatelessWidget {
       accentColor: _predictionPrimary,
       children: [
         VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.predictionRiskCardPadding,
           child: Column(
             children: [
               _RiskInput(label: 'Event', controller: eventController),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.predictionRiskFieldGap),
               _OutcomeToggle(value: outcome, onChanged: onOutcomeChanged),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.predictionRiskFieldGap),
               Row(
                 children: [
                   Expanded(
@@ -125,7 +126,7 @@ class _PositionInfoCard extends StatelessWidget {
                       numeric: true,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.predictionRiskInputRowGap),
                   Expanded(
                     child: _RiskInput(
                       label: 'Entry Price (\$)',
@@ -136,7 +137,7 @@ class _PositionInfoCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.predictionRiskFieldGap),
               Row(
                 children: [
                   Expanded(
@@ -147,7 +148,7 @@ class _PositionInfoCard extends StatelessWidget {
                       numeric: true,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.predictionRiskInputRowGap),
                   Expanded(
                     child: _RiskInput(
                       label: 'Risk Budget (\$)',
@@ -185,12 +186,9 @@ class _RiskInput extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 12,
-          ),
+          style: AppTextStyles.badge.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.predictionRiskInputLabelGap),
         VitInput(
           fieldKey: fieldKey,
           controller: controller,
@@ -202,7 +200,6 @@ class _RiskInput extends StatelessWidget {
               : null,
           semanticLabel: label,
           textStyle: AppTextStyles.body.copyWith(
-            fontSize: 14,
             fontWeight: AppTextStyles.medium,
           ),
         ),
@@ -224,12 +221,9 @@ class _OutcomeToggle extends StatelessWidget {
       children: [
         Text(
           'Outcome',
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 12,
-          ),
+          style: AppTextStyles.badge.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.predictionRiskInputLabelGap),
         Row(
           children: [
             Expanded(
@@ -241,7 +235,7 @@ class _OutcomeToggle extends StatelessWidget {
                 onTap: () => onChanged('yes'),
               ),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: AppSpacing.predictionRiskOutcomeGap),
             Expanded(
               child: _OutcomeButton(
                 key: PredictionRiskCalculatorPage.noKey,
@@ -279,7 +273,7 @@ class _OutcomeButton extends StatelessWidget {
       selected: selected,
       label: '$label risk scenario',
       child: SizedBox(
-        height: 42,
+        height: AppSpacing.predictionRiskOutcomeButtonHeight,
         child: Material(
           color: selected ? selectedColor : AppColors.bg,
           borderRadius: AppRadii.lgRadius,
@@ -292,7 +286,6 @@ class _OutcomeButton extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  fontSize: 14,
                 ),
               ),
             ),
@@ -316,7 +309,7 @@ class _PositionSummary extends StatelessWidget {
     final pnlPct = cost > 0 ? (pnl / cost) * 100 : 0;
 
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionRiskCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -327,7 +320,7 @@ class _PositionSummary extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.predictionRiskSummaryTitleGap),
           Row(
             children: [
               Expanded(
@@ -344,7 +337,7 @@ class _PositionSummary extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.predictionRiskSummaryRowGap),
           Row(
             children: [
               Expanded(

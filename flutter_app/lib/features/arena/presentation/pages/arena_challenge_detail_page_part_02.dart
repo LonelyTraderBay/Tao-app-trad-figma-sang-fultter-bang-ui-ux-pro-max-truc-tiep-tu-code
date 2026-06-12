@@ -17,7 +17,7 @@ class _ClarityCard extends StatelessWidget {
               const Icon(
                 Icons.fact_check_outlined,
                 color: AppColors.buy,
-                size: 18,
+                size: AppSpacing.arenaChallengeLgIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -31,17 +31,17 @@ class _ClarityCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
-              minHeight: 7,
+              minHeight: AppSpacing.arenaChallengeClarityProgressHeight,
               value: score / 100,
               color: AppColors.buy,
               backgroundColor: AppColors.surface3,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Row(
             children: [
               Text(
@@ -99,7 +99,7 @@ class _CreatorCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Row(
                   children: [
                     Text(
@@ -113,7 +113,7 @@ class _CreatorCard extends StatelessWidget {
                       const Icon(
                         Icons.shield_outlined,
                         color: AppColors.buy,
-                        size: 11,
+                        size: AppSpacing.arenaChallengeFairPlayIcon,
                       ),
                       const SizedBox(width: AppSpacing.x1),
                       Text(
@@ -164,7 +164,7 @@ class _SafetyLinkCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   'Quy tắc, report vi phạm',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -255,7 +255,7 @@ class _RulesList extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 24,
+                  width: AppSpacing.arenaChallengeRuleNumberWidth,
                   child: Text(
                     '${index + 1}.',
                     style: AppTextStyles.caption.copyWith(
@@ -269,14 +269,14 @@ class _RulesList extends StatelessWidget {
                     rules[index],
                     style: AppTextStyles.body.copyWith(
                       color: AppColors.text1,
-                      height: 1.45,
+                      height: AppSpacing.arenaChallengeBodyLineHeight,
                     ),
                   ),
                 ),
               ],
             ),
             if (index != rules.length - 1)
-              const SizedBox(height: AppSpacing.x3),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           ],
         ],
       ),
@@ -358,20 +358,25 @@ class _ActivityPanel extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.circle, size: 8, color: AppColors.buy),
+                const Icon(
+                  Icons.circle,
+                  size: AppSpacing.arenaChallengeActivityDot,
+                  color: AppColors.buy,
+                ),
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: Text(
                     item,
                     style: AppTextStyles.body.copyWith(
                       color: AppColors.text2,
-                      height: 1.45,
+                      height: AppSpacing.arenaChallengeBodyLineHeight,
                     ),
                   ),
                 ),
               ],
             ),
-            if (item != activity.last) const SizedBox(height: AppSpacing.x3),
+            if (item != activity.last)
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           ],
         ],
       ),
@@ -397,7 +402,7 @@ class _WarningStack extends StatelessWidget {
                 : Icons.warning_amber_rounded,
           ),
           if (index != warnings.length - 1)
-            const SizedBox(height: AppSpacing.x2),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         ],
       ],
     );
@@ -427,7 +432,7 @@ class _PredictionBridgeCard extends StatelessWidget {
             children: [
               const Icon(
                 Icons.info_outline_rounded,
-                size: 14,
+                size: AppSpacing.arenaChallengeBridgeIcon,
                 color: _arenaAccent,
               ),
               const SizedBox(width: AppSpacing.x2),
@@ -437,7 +442,7 @@ class _PredictionBridgeCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: _arenaAccent,
                     fontWeight: AppTextStyles.bold,
-                    letterSpacing: .5,
+                    letterSpacing: AppSpacing.arenaChallengeBridgeLetterSpacing,
                   ),
                 ),
               ),
@@ -448,21 +453,21 @@ class _PredictionBridgeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           Text(
             'Bối cảnh thị trường',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Text(
             contextDraft.title,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1.25,
+              height: AppSpacing.arenaChallengeBridgeTitleLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Row(
             children: [
               Text(
@@ -479,29 +484,29 @@ class _PredictionBridgeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
-              minHeight: 6,
+              minHeight: AppSpacing.arenaChallengeBridgeProgressHeight,
               value: contextDraft.probability / 100,
               color: AppColors.sell,
               backgroundColor: AppColors.surface3,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           _InlineAction(
             label: 'Xem thị trường dự đoán',
             icon: Icons.open_in_new_rounded,
             color: _arenaAccent,
             onTap: onTap,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             'Thông tin chỉ mang tính tham khảo. Arena Points và Prediction Markets là 2 hệ thống hoàn toàn riêng biệt.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.35,
+              height: AppSpacing.arenaChallengeBridgeNoticeLineHeight,
             ),
           ),
         ],

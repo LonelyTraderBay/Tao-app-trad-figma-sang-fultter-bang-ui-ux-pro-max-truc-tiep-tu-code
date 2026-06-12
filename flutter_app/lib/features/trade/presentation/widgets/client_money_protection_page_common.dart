@@ -5,11 +5,10 @@ class _Reconciliation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Daily Reconciliation',
+      customGap: 12,
       children: [
-        const _SectionLabel('Daily Reconciliation'),
-        const SizedBox(height: 12),
         _Card(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -22,7 +21,6 @@ class _Reconciliation extends StatelessWidget {
                       'Latest Reconciliation',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
-                        fontSize: 13,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),
@@ -52,7 +50,6 @@ class _Reconciliation extends StatelessWidget {
                 'Last reconciled: Today at 09:00 UTC - Next: Tomorrow at 09:00 UTC',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 9,
                   height: 1.3,
                 ),
               ),
@@ -84,7 +81,6 @@ class _Reconciliation extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontSize: 13,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),
@@ -115,23 +111,21 @@ class _Documents extends StatelessWidget {
         AppColors.caution,
       ),
     ];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'CASS Documents',
+      customGap: 12,
       children: [
-        const _SectionLabel('CASS Documents'),
-        const SizedBox(height: 12),
-        for (final document in documents) ...[
+        for (final document in documents)
           _Card(
             padding: const EdgeInsets.all(13),
             child: Row(
               children: [
-                Container(
+                VitCard(
                   width: 40,
                   height: 40,
-                  decoration: BoxDecoration(
-                    color: document.$3.withValues(alpha: .13),
-                    borderRadius: AppRadii.inputRadius,
-                  ),
+                  variant: VitCardVariant.inner,
+                  alignment: Alignment.center,
+                  borderColor: document.$3.withValues(alpha: .35),
                   child: Icon(
                     document.$1 == 'Insolvency Protection Guide'
                         ? Icons.shield_outlined
@@ -149,7 +143,6 @@ class _Documents extends StatelessWidget {
                         document.$1,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 13,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
@@ -159,7 +152,6 @@ class _Documents extends StatelessWidget {
                         document.$2,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
                           height: 1,
                         ),
                       ),
@@ -174,8 +166,6 @@ class _Documents extends StatelessWidget {
               ],
             ),
           ),
-          if (document != documents.last) const SizedBox(height: 12),
-        ],
       ],
     );
   }
@@ -189,13 +179,11 @@ class _MetricBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       height: 53,
       padding: const EdgeInsets.fromLTRB(12, 10, 12, 9),
-      decoration: BoxDecoration(
-        color: _moneyPanel2,
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -203,7 +191,6 @@ class _MetricBox extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
               height: 1,
             ),
           ),
@@ -214,7 +201,6 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 13,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -239,12 +225,11 @@ class _ReconciliationRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = success ? _moneyGreen : AppColors.text1;
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      borderColor: success ? _moneyGreen.withValues(alpha: .35) : null,
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 9),
-      decoration: BoxDecoration(
-        color: success ? _moneyGreen.withValues(alpha: .13) : _moneyPanel2,
-        borderRadius: AppRadii.smRadius,
-      ),
       child: Row(
         children: [
           Expanded(
@@ -252,7 +237,6 @@ class _ReconciliationRow extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: success ? _moneyGreen : AppColors.text3,
-                fontSize: 11,
                 fontWeight: success ? AppTextStyles.bold : AppTextStyles.normal,
                 height: 1,
               ),
@@ -262,7 +246,6 @@ class _ReconciliationRow extends StatelessWidget {
             value,
             style: AppTextStyles.caption.copyWith(
               color: color,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -278,53 +261,10 @@ class _MatchedPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
-      decoration: BoxDecoration(
-        color: _moneyGreen.withValues(alpha: .13),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        'MATCHED',
-        style: AppTextStyles.micro.copyWith(
-          color: _moneyGreen,
-          fontSize: 10,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 14,
-          decoration: BoxDecoration(
-            color: _moneyPrimary,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          text,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text2,
-            fontSize: 11,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
+    return const VitStatusPill(
+      label: 'MATCHED',
+      status: VitStatusPillStatus.success,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -337,13 +277,9 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _moneyPanel,
-        border: Border.all(color: _moneyBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _moneyBorder.withValues(alpha: .72),
       child: child,
     );
   }

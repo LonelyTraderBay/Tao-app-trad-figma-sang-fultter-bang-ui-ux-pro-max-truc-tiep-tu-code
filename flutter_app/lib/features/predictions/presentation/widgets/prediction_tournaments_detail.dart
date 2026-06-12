@@ -22,8 +22,10 @@ class PredictionTournamentDetailPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 54
-            : DeviceMetrics.nativeBottomChrome + 20) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.predictionTournamentBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.predictionTournamentBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -45,10 +47,12 @@ class PredictionTournamentDetailPage extends ConsumerWidget {
                 child: SingleChildScrollView(
                   key: contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.predictionTournamentScrollPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.relaxed,
-                    customGap: 16,
+                    customGap: AppSpacing.predictionTournamentContentGap,
                     children: [
                       if (tournament == null)
                         const _EmptyStateCard(
@@ -94,7 +98,7 @@ class _TournamentDetailHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionTournamentCardPadding,
       borderColor: _predictionPrimary.withValues(alpha: .28),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +113,7 @@ class _TournamentDetailHero extends StatelessWidget {
               _CategoryChip(label: tournament.category),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.predictionTournamentDetailHeroGap),
           Text(
             tournament.name,
             style: AppTextStyles.sectionTitle.copyWith(
@@ -117,23 +121,24 @@ class _TournamentDetailHero extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(
+            height: AppSpacing.predictionTournamentDetailDescriptionGap,
+          ),
           Text(
             tournament.description,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              height: 1.45,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           if (tournament.isJoined && tournament.myRank != null) ...[
-            const SizedBox(height: 14),
+            const SizedBox(
+              height: AppSpacing.predictionTournamentDetailHeroGap,
+            ),
             DecoratedBox(
               decoration: BoxDecoration(
                 color: AppColors.buy.withValues(alpha: .08),
                 borderRadius: AppRadii.cardRadius,
               ),
               child: Padding(
-                padding: const EdgeInsets.all(12),
+                padding: AppSpacing.predictionTournamentInfoPadding,
                 child: Row(
                   children: [
                     Text(

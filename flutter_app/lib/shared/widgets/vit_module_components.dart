@@ -6,12 +6,51 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
+enum VitServiceTileDensity { compact, standard }
+
+extension VitServiceTileDensitySpacing on VitServiceTileDensity {
+  double get iconContainer {
+    return switch (this) {
+      VitServiceTileDensity.compact =>
+        AppSpacing.serviceTileIconContainerCompact,
+      VitServiceTileDensity.standard => AppSpacing.serviceTileIconContainer,
+    };
+  }
+
+  double get iconSize {
+    return switch (this) {
+      VitServiceTileDensity.compact => AppSpacing.serviceTileIconSizeCompact,
+      VitServiceTileDensity.standard => AppSpacing.serviceTileIconSize,
+    };
+  }
+
+  double get padding {
+    return switch (this) {
+      VitServiceTileDensity.compact =>
+        AppSpacing.serviceTileContentPaddingCompact,
+      VitServiceTileDensity.standard => AppSpacing.serviceTileContentPadding,
+    };
+  }
+
+  double get labelGap {
+    return AppSpacing.serviceTileLabelGap;
+  }
+
+  TextStyle get labelStyle {
+    return switch (this) {
+      VitServiceTileDensity.compact => AppTextStyles.micro.copyWith(height: 1),
+      VitServiceTileDensity.standard => AppTextStyles.caption,
+    };
+  }
+}
+
 class VitServiceTile extends StatelessWidget {
   const VitServiceTile({
     super.key,
     required this.icon,
     required this.label,
     required this.accentColor,
+    this.density = VitServiceTileDensity.standard,
     this.badgeLabel,
     this.onTap,
   });
@@ -19,6 +58,7 @@ class VitServiceTile extends StatelessWidget {
   final IconData icon;
   final String label;
   final Color accentColor;
+  final VitServiceTileDensity density;
   final String? badgeLabel;
   final VoidCallback? onTap;
 
@@ -39,7 +79,7 @@ class VitServiceTile extends StatelessWidget {
               top: 0,
               left: 0,
               right: 0,
-              height: 2,
+              height: AppSpacing.serviceTileTopStripeHeight,
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   color: accentColor.withValues(alpha: .56),
@@ -47,16 +87,21 @@ class VitServiceTile extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+              padding: EdgeInsets.symmetric(
+                vertical: density.padding,
+                horizontal: density.padding,
+              ),
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
                   if (badgeLabel != null)
                     Positioned(
-                      top: -2,
-                      right: -2,
+                      top: -AppSpacing.serviceTileBadgeOffset,
+                      right: -AppSpacing.serviceTileBadgeOffset,
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 52),
+                        constraints: const BoxConstraints(
+                          maxWidth: AppSpacing.serviceTileBadgeMaxWidth,
+                        ),
                         child: DecoratedBox(
                           decoration: BoxDecoration(
                             color: accentColor.withValues(alpha: .14),
@@ -67,8 +112,10 @@ class VitServiceTile extends StatelessWidget {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 2,
+                              horizontal:
+                                  AppSpacing.serviceTileBadgePaddingHorizontal,
+                              vertical:
+                                  AppSpacing.serviceTileBadgePaddingVertical,
                             ),
                             child: Text(
                               badgeLabel!,
@@ -77,9 +124,8 @@ class VitServiceTile extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: AppTextStyles.micro.copyWith(
                                 color: accentColor,
-                                fontSize: 8,
+                                fontSize: AppSpacing.serviceTileBadgeFont,
                                 fontWeight: AppTextStyles.bold,
-                                height: 1,
                               ),
                             ),
                           ),
@@ -88,11 +134,12 @@ class VitServiceTile extends StatelessWidget {
                     ),
                   Center(
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          width: 26,
-                          height: 26,
+                          width: density.iconContainer,
+                          height: density.iconContainer,
                           decoration: BoxDecoration(
                             color: accentColor.withValues(alpha: .16),
                             borderRadius: AppRadii.mdRadius,
@@ -100,18 +147,21 @@ class VitServiceTile extends StatelessWidget {
                               color: accentColor.withValues(alpha: .28),
                             ),
                           ),
-                          child: Icon(icon, color: accentColor, size: 20),
+                          child: Icon(
+                            icon,
+                            color: accentColor,
+                            size: density.iconSize,
+                          ),
                         ),
-                        const SizedBox(height: AppSpacing.x1),
+                        SizedBox(height: density.labelGap),
                         Text(
                           label,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
-                          style: AppTextStyles.caption.copyWith(
+                          style: density.labelStyle.copyWith(
                             color: AppColors.text1,
                             fontWeight: AppTextStyles.bold,
-                            height: 1,
                           ),
                         ),
                       ],
@@ -176,8 +226,8 @@ class VitMetricCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 4,
-            height: 28,
+            width: AppSpacing.serviceTileAccentBarThickness,
+            height: AppSpacing.serviceTileAccentBarHeight,
             decoration: BoxDecoration(
               color: accentColor,
               borderRadius: AppRadii.xsRadius,
@@ -237,8 +287,8 @@ class VitModuleSectionHeader extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 18,
+          width: AppSpacing.serviceTileAccentBarThickness,
+          height: AppSpacing.serviceTileSectionBarHeight,
           decoration: BoxDecoration(
             color: accentColor,
             borderRadius: AppRadii.xsRadius,

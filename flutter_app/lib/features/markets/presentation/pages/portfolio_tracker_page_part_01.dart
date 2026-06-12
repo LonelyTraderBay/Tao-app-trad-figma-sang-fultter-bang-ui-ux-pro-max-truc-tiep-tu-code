@@ -118,6 +118,18 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
                             hidden: _hideBalance,
                           ),
                         ],
+                        const MarketBodyReviewSection(
+                          title: 'Portfolio state review',
+                          message: 'Portfolio tracker data reviewed',
+                          detail:
+                              'Overview, assets, performance, hidden balance, empty, and refresh states remain visible.',
+                          primary:
+                              'Balance masking preserves user privacy across overview and asset rows.',
+                          secondary:
+                              'Sort and timeframe controls keep portfolio comparisons explicit.',
+                          tertiary:
+                              'Risk and PnL summaries stay separate from pair-level market navigation.',
+                        ),
                       ],
                     ),
                   ),

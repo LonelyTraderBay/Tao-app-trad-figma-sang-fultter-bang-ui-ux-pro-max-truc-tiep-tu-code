@@ -23,7 +23,9 @@ class _RelatedMarketsSection extends StatelessWidget {
               )
                 Padding(
                   padding: EdgeInsets.only(
-                    right: index == snapshot.relatedEvents.length - 1 ? 0 : 12,
+                    right: index == snapshot.relatedEvents.length - 1
+                        ? 0
+                        : AppSpacing.predictionDetailRelatedGap,
                   ),
                   child: _RelatedMarketCard(
                     event: snapshot.relatedEvents[index],
@@ -53,10 +55,10 @@ class _RelatedMarketCard extends StatelessWidget {
     final top = event.outcomes.first;
     return SizedBox(
       key: PredictionEventDetailPage.relatedKey(event.id),
-      width: 220,
+      width: AppSpacing.predictionDetailRelatedCardWidth,
       child: VitCard(
         onTap: onTap,
-        padding: const EdgeInsets.all(13),
+        padding: AppSpacing.predictionDetailRelatedCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -65,30 +67,28 @@ class _RelatedMarketCard extends StatelessWidget {
               color: _predictionPrimary,
               background: _predictionPrimary.withValues(alpha: .13),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.predictionDetailRelatedBadgeGap),
             Text(
               event.title,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
-                fontSize: 12,
-                height: 1.35,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: AppSpacing.predictionDetailRelatedMetaGap),
             Row(
               children: [
                 Container(
-                  width: 8,
-                  height: 8,
+                  width: AppSpacing.predictionDetailRelatedDot,
+                  height: AppSpacing.predictionDetailRelatedDot,
                   decoration: BoxDecoration(
                     color: top.color,
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(width: AppSpacing.predictionDetailRelatedDotGap),
                 Text(
                   '${top.chance}%',
                   style: AppTextStyles.body.copyWith(
@@ -97,7 +97,9 @@ class _RelatedMarketCard extends StatelessWidget {
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
-                const SizedBox(width: 4),
+                const SizedBox(
+                  width: AppSpacing.predictionDetailRelatedLabelGap,
+                ),
                 Text(
                   top.label,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -126,15 +128,15 @@ class _ArenaBridgeSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(15),
+      padding: AppSpacing.predictionDetailArenaPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Container(
-                width: 36,
-                height: 36,
+                width: AppSpacing.predictionDetailArenaIconBox,
+                height: AppSpacing.predictionDetailArenaIconBox,
                 decoration: BoxDecoration(
                   color: AppColors.warn10,
                   borderRadius: AppRadii.mdRadius,
@@ -142,10 +144,10 @@ class _ArenaBridgeSection extends StatelessWidget {
                 child: const Icon(
                   Icons.sports_esports_rounded,
                   color: AppColors.warn,
-                  size: 18,
+                  size: AppSpacing.predictionDetailArenaIcon,
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.predictionDetailArenaHeaderGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +160,7 @@ class _ArenaBridgeSection extends StatelessWidget {
                       ),
                     ),
                     Wrap(
-                      spacing: 6,
+                      spacing: AppSpacing.predictionDetailArenaBadgeGap,
                       children: const [
                         _ArenaBadge('Arena Points only'),
                         _ArenaBadge('Event context only'),
@@ -170,12 +172,14 @@ class _ArenaBridgeSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.predictionDetailArenaRoomsGap),
           for (final room in snapshot.arenaRooms)
             Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(
+                bottom: AppSpacing.predictionDetailArenaRoomBottomGap,
+              ),
               child: Container(
-                padding: const EdgeInsets.all(10),
+                padding: AppSpacing.predictionDetailArenaRoomPadding,
                 decoration: BoxDecoration(
                   color: AppColors.surface2,
                   border: Border.all(color: AppColors.borderSolid),
@@ -186,9 +190,11 @@ class _ArenaBridgeSection extends StatelessWidget {
                     const Icon(
                       Icons.gamepad_outlined,
                       color: AppColors.warn,
-                      size: 15,
+                      size: AppSpacing.predictionDetailArenaRoomIcon,
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(
+                      width: AppSpacing.predictionDetailArenaRoomGap,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,7 +205,6 @@ class _ArenaBridgeSection extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
-                              fontSize: 12,
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
@@ -226,7 +231,7 @@ class _ArenaBridgeSection extends StatelessWidget {
             onTap: onCreate,
             borderRadius: AppRadii.mdRadius,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
+              padding: AppSpacing.predictionDetailArenaCreatePadding,
               decoration: BoxDecoration(
                 color: AppColors.warn08,
                 border: Border.all(color: AppColors.warningBorder),
@@ -237,9 +242,11 @@ class _ArenaBridgeSection extends StatelessWidget {
                   const Icon(
                     Icons.auto_awesome_rounded,
                     color: AppColors.warn,
-                    size: 15,
+                    size: AppSpacing.predictionDetailArenaCreateIcon,
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(
+                    width: AppSpacing.predictionDetailArenaCreateGap,
+                  ),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,7 +255,6 @@ class _ArenaBridgeSection extends StatelessWidget {
                           'Tạo Arena từ event này',
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.warn,
-                            fontSize: 12,
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
@@ -256,18 +262,19 @@ class _ArenaBridgeSection extends StatelessWidget {
                           'Event chỉ là bối cảnh, không liên kết ví hay P/L.',
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            fontSize: 9,
                           ),
                         ),
                       ],
                     ),
                   ),
                   const _ArenaBadge('Arena Points only'),
-                  const SizedBox(width: 4),
+                  const SizedBox(
+                    width: AppSpacing.predictionDetailArenaCreateBadgeGap,
+                  ),
                   const Icon(
                     Icons.chevron_right_rounded,
                     color: AppColors.warn,
-                    size: 16,
+                    size: AppSpacing.predictionDetailArenaCreateChevron,
                   ),
                 ],
               ),
@@ -287,18 +294,14 @@ class _ArenaBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      padding: AppSpacing.predictionDetailArenaBadgePadding,
       decoration: BoxDecoration(
         color: AppColors.warn10,
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: AppRadii.xsRadius,
       ),
       child: Text(
         label,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.warn,
-          fontSize: 8,
-          fontWeight: AppTextStyles.bold,
-        ),
+        style: AppTextStyles.badge.copyWith(color: AppColors.warn),
       ),
     );
   }

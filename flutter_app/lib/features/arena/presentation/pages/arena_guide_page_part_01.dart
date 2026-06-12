@@ -95,7 +95,10 @@ class _ArenaGuidePageState extends ConsumerState<ArenaGuidePage> {
         _ChecklistCard(items: snapshot.checklist),
         VitCtaButton(
           onPressed: () => context.go(AppRoutePaths.arenaStudio),
-          leading: const Icon(Icons.auto_awesome, size: 16),
+          leading: const Icon(
+            Icons.auto_awesome,
+            size: AppSpacing.arenaGuideCtaIcon,
+          ),
           child: const Text('Áp dụng ngay - Tạo Challenge'),
         ),
       ],
@@ -224,7 +227,7 @@ class _GuideHero extends StatelessWidget {
               const Icon(
                 Icons.menu_book_outlined,
                 color: AppModuleAccents.arena,
-                size: 17,
+                size: AppSpacing.arenaGuideHeroIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -322,7 +325,7 @@ class _ModeButton extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                size: 16,
+                size: AppSpacing.arenaGuideModeIcon,
                 color: active ? AppColors.onAccent : AppColors.text3,
               ),
               const SizedBox(width: AppSpacing.x2),
@@ -355,10 +358,13 @@ class _StepsTimeline extends StatelessWidget {
     return Stack(
       children: [
         Positioned(
-          left: 18,
-          top: 26,
-          bottom: 26,
-          child: Container(width: 2, color: AppColors.divider),
+          left: AppSpacing.arenaGuideTimelineLeft,
+          top: AppSpacing.arenaGuideTimelineInset,
+          bottom: AppSpacing.arenaGuideTimelineInset,
+          child: Container(
+            width: AppSpacing.arenaGuideTimelineLineWidth,
+            color: AppColors.divider,
+          ),
         ),
         Column(
           children: [
@@ -388,19 +394,28 @@ class _StepRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          width: 38,
-          height: 38,
+          width: AppSpacing.arenaGuideStepIconBox,
+          height: AppSpacing.arenaGuideStepIconBox,
           decoration: BoxDecoration(
             color: color.withValues(alpha: .12),
             shape: BoxShape.circle,
-            border: Border.all(color: color, width: 2),
+            border: Border.all(
+              color: color,
+              width: AppSpacing.arenaGuideStepBorderWidth,
+            ),
           ),
-          child: Icon(_iconFor(step.iconKey), color: color, size: 17),
+          child: Icon(
+            _iconFor(step.iconKey),
+            color: color,
+            size: AppSpacing.arenaGuideStepGlyph,
+          ),
         ),
         const SizedBox(width: AppSpacing.x4),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(top: 2),
+            padding: const EdgeInsets.only(
+              top: AppSpacing.arenaGuideStepTextTopPadding,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -424,7 +439,7 @@ class _StepRow extends StatelessWidget {
                   step.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.arenaGuideStepBodyLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -455,8 +470,8 @@ class _StartCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 40,
-                height: 40,
+                width: AppSpacing.arenaGuideStartIconBox,
+                height: AppSpacing.arenaGuideStartIconBox,
                 decoration: BoxDecoration(
                   color: AppColors.primary12,
                   borderRadius: AppRadii.mdRadius,
@@ -464,7 +479,7 @@ class _StartCard extends StatelessWidget {
                 child: const Icon(
                   Icons.bolt_outlined,
                   color: AppColors.primary,
-                  size: 20,
+                  size: AppSpacing.arenaGuideStartGlyph,
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),

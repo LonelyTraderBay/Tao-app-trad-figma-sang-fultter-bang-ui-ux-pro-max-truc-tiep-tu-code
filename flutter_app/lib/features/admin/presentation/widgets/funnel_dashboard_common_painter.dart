@@ -12,7 +12,7 @@ class _EmptyFunnelCard extends StatelessWidget {
           const Icon(
             Icons.filter_alt_outlined,
             color: AppColors.text3,
-            size: 48,
+            size: AppSpacing.adminIconHero,
           ),
           const SizedBox(height: AppSpacing.x4),
           Text(
@@ -43,7 +43,7 @@ class _CardTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: AppColors.text1, size: 18),
+        Icon(icon, color: AppColors.text1, size: AppSpacing.adminIconLg),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
@@ -66,8 +66,8 @@ class _StepNumber extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 24,
-      height: 24,
+      width: AppSpacing.adminBox24,
+      height: AppSpacing.adminBox24,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: AppColors.accent30,
@@ -116,7 +116,7 @@ class _DropoutChartPainter extends CustomPainter {
         '${4 - i}',
         Offset(2, y - 7),
         color: AppColors.text3,
-        fontSize: 10,
+        fontSize: AppSpacing.adminFontSm,
       );
     }
 
@@ -147,12 +147,12 @@ class _DropoutChartPainter extends CustomPainter {
         style: TextStyle(
           color: color,
           fontSize: fontSize,
-          height: 1,
+          height: AppSpacing.adminLineHeightTight,
           fontFeatures: AppTextStyles.tabularFigures,
         ),
       ),
       textDirection: TextDirection.ltr,
-    )..layout(maxWidth: 42);
+    )..layout(maxWidth: AppSpacing.adminPainterLabelMaxWidth);
     painter.paint(canvas, offset);
   }
 
@@ -163,12 +163,16 @@ class _DropoutChartPainter extends CustomPainter {
     final painter = TextPainter(
       text: TextSpan(
         text: text,
-        style: const TextStyle(color: AppColors.text3, fontSize: 9, height: 1),
+        style: const TextStyle(
+          color: AppColors.text3,
+          fontSize: AppSpacing.adminFontXs,
+          height: AppSpacing.adminLineHeightTight,
+        ),
       ),
       textDirection: TextDirection.ltr,
       maxLines: 1,
       ellipsis: '...',
-    )..layout(maxWidth: 70);
+    )..layout(maxWidth: AppSpacing.adminPainterWideLabelMaxWidth);
     painter.paint(canvas, Offset.zero);
     canvas.restore();
   }

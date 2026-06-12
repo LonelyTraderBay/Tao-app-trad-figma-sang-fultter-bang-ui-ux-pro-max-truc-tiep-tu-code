@@ -23,70 +23,63 @@ class TransferConfirmSheet extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          20,
-          16,
-          20,
-          24 + DeviceMetrics.nativeBottomChrome,
+        padding: AppSpacing.transferSheetPaddingWithAdditionalBottom(
+          DeviceMetrics.nativeBottomChrome,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Xác nhận chuyển nội bộ',
-              style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
+              'X\u00e1c nh\u1eadn chuy\u1ec3n n\u1ed9i b\u1ed9',
+              style: AppTextStyles.baseMedium,
             ),
-            const SizedBox(height: 14),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: _transferPanel2,
-                borderRadius: AppRadii.cardRadius,
-              ),
+            const SizedBox(height: AppSpacing.transferInfoGap),
+            VitCard(
+              variant: VitCardVariant.inner,
+              padding: AppSpacing.transferCardInnerPadding,
               child: Column(
                 children: [
-                  _ConfirmRow(label: 'Từ', value: fromWallet.name),
-                  _ConfirmRow(label: 'Đến', value: toWallet.name),
-                  _ConfirmRow(label: 'Tài sản', value: asset.symbol),
+                  _ConfirmRow(label: 'T\u1eeba', value: fromWallet.name),
+                  _ConfirmRow(label: '\u0110\u1ebfn', value: toWallet.name),
+                  _ConfirmRow(label: 'T\u00e0i s\u1ea3n', value: asset.symbol),
                   _ConfirmRow(
-                    label: 'Số lượng',
+                    label: 'S\u1ed1 l\u01b0\u1ee3ng',
                     value:
                         '${formatTransferAssetAmount(amount)} ${asset.symbol}',
                     highlight: true,
                   ),
                   _ConfirmRow(
-                    label: 'Giá trị',
+                    label: 'Gi\u00e1 tr\u1ecb',
                     value: formatTransferUsd(usdValue),
                   ),
                   const _ConfirmRow(
-                    label: 'Phí',
-                    value: 'Miễn phí',
+                    label: 'Ph\u00ed',
+                    value: 'Mi\u1ec5n ph\u00ed',
                     valueColor: _transferGreen,
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: AppSpacing.rowGap),
             const _ConfirmNote(),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.transferInputGap),
             Row(
               children: [
                 Expanded(
                   child: _SheetButton(
-                    label: 'Huỷ',
-                    background: _transferPanel2,
-                    color: AppColors.text2,
+                    label: 'Hu\u1ef7',
                     onTap: () => Navigator.of(context).pop(),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(
+                  width: AppSpacing.searchBarHorizontalTrailingPadding,
+                ),
                 Expanded(
                   child: _SheetButton(
                     buttonKey: const Key('sc146_transfer_confirm'),
-                    label: 'Xác nhận',
-                    background: _transferPrimary,
-                    color: AppColors.onAccent,
+                    label: 'X\u00e1c nh\u1eadn',
+                    primary: true,
                     onTap: onConfirm,
                   ),
                 ),
@@ -115,26 +108,21 @@ class _ConfirmRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 7),
+      padding: AppSpacing.walletTransferConfirmRowPadding,
       child: Row(
         children: [
           Expanded(
             child: Text(
               label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontSize: 13,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
             ),
           ),
           Text(
             value,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.control.copyWith(
               color:
                   valueColor ??
                   (highlight ? _transferPrimary : AppColors.text1),
-              fontSize: 13,
-              fontWeight: FontWeight.w800,
             ),
           ),
         ],
@@ -149,7 +137,7 @@ class _ConfirmNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.transferNoticePadding,
       decoration: BoxDecoration(
         color: _transferPrimary.withValues(alpha: .08),
         borderRadius: AppRadii.inputRadius,
@@ -157,23 +145,19 @@ class _ConfirmNote extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 2),
+          Padding(
+            padding: AppSpacing.walletTransferNoteIconPadding,
             child: Icon(
               Icons.info_outline_rounded,
               color: _transferPrimary,
-              size: 13,
+              size: AppSpacing.transferActionIcon,
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
-              'Chuyển nội bộ xử lý ngay lập tức, không mất phí.',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontSize: 12,
-                height: 1.45,
-              ),
+              'Chuy\u1ec3n n\u1ed9i b\u1ed9 x\u1eed l\u00fd ngay l\u1eadp t\u1ee5c, kh\u00f4ng m\u1ea5t ph\u00ed.',
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],
@@ -186,39 +170,25 @@ class _SheetButton extends StatelessWidget {
   const _SheetButton({
     this.buttonKey,
     required this.label,
-    required this.background,
-    required this.color,
+    this.primary = false,
     required this.onTap,
   });
 
   final Key? buttonKey;
   final String label;
-  final Color background;
-  final Color color;
+  final bool primary;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCtaButton(
       key: buttonKey,
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: AppSpacing.inputHeight,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: background,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.baseMedium.copyWith(
-            color: color,
-            fontSize: 15,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-      ),
+      onPressed: onTap,
+      variant: primary
+          ? VitCtaButtonVariant.primary
+          : VitCtaButtonVariant.secondary,
+      height: AppSpacing.inputHeight,
+      child: Text(label),
     );
   }
 }

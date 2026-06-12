@@ -34,13 +34,12 @@ class _TradeCard extends StatelessWidget {
                           padding: const EdgeInsets.fromLTRB(9, 5, 9, 5),
                           decoration: BoxDecoration(
                             color: sideColor.withValues(alpha: .14),
-                            borderRadius: BorderRadius.circular(9),
+                            borderRadius: AppRadii.smRadius,
                           ),
                           child: Text(
                             trade.side.name.toUpperCase(),
                             style: AppTextStyles.micro.copyWith(
                               color: sideColor,
-                              fontSize: 12,
                               fontWeight: AppTextStyles.bold,
                               height: 1,
                             ),
@@ -51,7 +50,6 @@ class _TradeCard extends StatelessWidget {
                           trade.pair,
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text1,
-                            fontSize: 12,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),
@@ -63,7 +61,6 @@ class _TradeCard extends StatelessWidget {
                       '${trade.botName} - ${trade.strategy}',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 10,
                         height: 1,
                       ),
                     ),
@@ -78,7 +75,6 @@ class _TradeCard extends StatelessWidget {
                       '${trade.pnl >= 0 ? '+' : ''}${trade.pnl.toStringAsFixed(2)}',
                       style: AppTextStyles.caption.copyWith(
                         color: trade.pnl >= 0 ? _historyGreen : _historyRed,
-                        fontSize: 13,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),
@@ -88,7 +84,6 @@ class _TradeCard extends StatelessWidget {
                       'PnL',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 10,
                         height: 1,
                       ),
                     ),
@@ -128,7 +123,6 @@ class _TradeCard extends StatelessWidget {
                   trade.timestamp,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1,
                   ),
                 ),
@@ -137,13 +131,12 @@ class _TradeCard extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(9, 5, 9, 5),
                 decoration: BoxDecoration(
                   color: _historyGreen.withValues(alpha: .12),
-                  borderRadius: BorderRadius.circular(9),
+                  borderRadius: AppRadii.smRadius,
                 ),
                 child: Text(
                   trade.status,
                   style: AppTextStyles.micro.copyWith(
                     color: _historyGreen,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -165,13 +158,10 @@ class _DetailBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       height: 48,
       padding: const EdgeInsets.fromLTRB(10, 8, 10, 7),
-      decoration: BoxDecoration(
-        color: _historyPanel2,
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -179,7 +169,6 @@ class _DetailBox extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -190,8 +179,6 @@ class _DetailBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
-              fontFamily: 'Roboto',
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -209,12 +196,9 @@ class _ExportNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
-      decoration: BoxDecoration(
-        color: _historyPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -222,7 +206,6 @@ class _ExportNote extends StatelessWidget {
             'Export Options',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -232,7 +215,6 @@ class _ExportNote extends StatelessWidget {
             'Download your complete trade history for tax reporting, accounting, or analysis. Available formats: CSV, PDF, Excel.',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              fontSize: 12,
               height: 1.55,
             ),
           ),
@@ -244,16 +226,13 @@ class _ExportNote extends StatelessWidget {
               onPressed: onTap,
               style: FilledButton.styleFrom(
                 backgroundColor: _historyPrimary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(999),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
               ),
               icon: const Icon(Icons.download_rounded, size: 15),
               label: Text(
                 'Export All Trades',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -279,10 +258,7 @@ class _EmptyHistory extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             'No trades found',
-            style: AppTextStyles.body.copyWith(
-              color: AppColors.text3,
-              fontSize: 14,
-            ),
+            style: AppTextStyles.body.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -298,13 +274,9 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _historyPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: child,
     );
   }
@@ -324,7 +296,7 @@ class _SectionLabel extends StatelessWidget {
           height: 15,
           decoration: BoxDecoration(
             color: _historyPrimary,
-            borderRadius: BorderRadius.circular(3),
+            borderRadius: AppRadii.xsRadius,
           ),
         ),
         const SizedBox(width: 7),
@@ -332,7 +304,6 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

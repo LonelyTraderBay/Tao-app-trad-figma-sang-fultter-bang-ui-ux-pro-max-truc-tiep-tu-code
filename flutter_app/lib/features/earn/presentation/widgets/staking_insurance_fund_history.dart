@@ -30,7 +30,7 @@ class StakingInsuranceFundHistoryTab extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 220,
+                    height: AppSpacing.stakingProductHistoryChartHeight,
                     child: CustomPaint(
                       painter: StakingInsuranceFundHistoryPainter(
                         history: snapshot.history,

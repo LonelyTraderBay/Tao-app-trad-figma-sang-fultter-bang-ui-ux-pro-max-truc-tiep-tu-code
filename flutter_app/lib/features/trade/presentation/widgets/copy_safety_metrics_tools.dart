@@ -24,7 +24,6 @@ class _WarningCard extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.warn,
-                fontSize: 10,
                 fontWeight: AppTextStyles.bold,
                 height: 1.35,
               ),
@@ -54,10 +53,7 @@ class _MetricsTab extends StatelessWidget {
       children: [
         Text(
           'Understanding trust metrics:',
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 12,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
         const SizedBox(height: 13),
         for (final metric in metrics) ...[
@@ -105,7 +101,6 @@ class _MetricCard extends StatelessWidget {
                           metric.name,
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text1,
-                            fontSize: 13,
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
@@ -114,7 +109,6 @@ class _MetricCard extends StatelessWidget {
                           metric.description,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            fontSize: 10,
                           ),
                         ),
                       ],
@@ -186,7 +180,6 @@ class _MetricInfo extends StatelessWidget {
         '$label\n$text',
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 10,
           fontWeight: AppTextStyles.bold,
           height: 1.35,
         ),
@@ -340,7 +333,6 @@ class _ToolButton extends StatelessWidget {
                   tool.title,
                   style: AppTextStyles.caption.copyWith(
                     color: tool.id == 'emergency' ? color : AppColors.text1,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -349,7 +341,6 @@ class _ToolButton extends StatelessWidget {
                   tool.description,
                   style: AppTextStyles.micro.copyWith(
                     color: tool.id == 'emergency' ? color : AppColors.text3,
-                    fontSize: 10,
                   ),
                 ),
               ],

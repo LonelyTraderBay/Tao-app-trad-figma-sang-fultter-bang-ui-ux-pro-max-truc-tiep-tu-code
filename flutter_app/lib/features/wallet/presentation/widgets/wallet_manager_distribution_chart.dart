@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_manager_common.dart';
@@ -16,8 +17,8 @@ class WalletManagerDistributionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 245,
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
+      height: AppSpacing.walletManagerDistributionHeight,
+      padding: AppSpacing.walletManagerDistributionPadding,
       decoration: BoxDecoration(
         color: walletManagerPanel,
         borderRadius: AppRadii.cardRadius,
@@ -29,12 +30,11 @@ class WalletManagerDistributionCard extends StatelessWidget {
           Text(
             'Portfolio Distribution',
             style: AppTextStyles.baseMedium.copyWith(
-              fontSize: 13,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.bold,
               height: 1,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.walletManagerDistributionTitleGap),
           Expanded(
             child: CustomPaint(
               painter: _DistributionPainter(wallets: _chartWallets(snapshot)),
@@ -61,9 +61,14 @@ class _DistributionPainter extends CustomPainter {
     );
     if (total <= 0) return;
 
-    final center = Offset(size.width / 2, size.height * .54);
-    final radius = math.min(size.width, size.height) * .315;
-    const strokeWidth = 27.0;
+    final center = Offset(
+      size.width / 2,
+      size.height * AppSpacing.walletManagerDistributionCenterY,
+    );
+    final radius =
+        math.min(size.width, size.height) *
+        AppSpacing.walletManagerDistributionRadiusFactor;
+    const strokeWidth = AppSpacing.walletManagerDistributionStroke;
     final rect = Rect.fromCircle(center: center, radius: radius);
 
     final gapPaint = Paint()
@@ -74,7 +79,7 @@ class _DistributionPainter extends CustomPainter {
     canvas.drawCircle(center, radius, gapPaint);
 
     var start = -math.pi / 2;
-    const gap = .033;
+    const gap = AppSpacing.walletManagerDistributionArcGap;
     for (final wallet in wallets) {
       final sweep = (wallet.balanceUsd / total) * math.pi * 2;
       final paint = Paint()

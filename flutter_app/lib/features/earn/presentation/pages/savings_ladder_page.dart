@@ -137,6 +137,13 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                           annualInterest: annualInterest,
                           liquidityScore: liquidityScore,
                         ),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Savings ladder confirmation review',
+                        message:
+                            'Capital allocation, rung schedule, APY estimate, liquidity score, auto-renew flags, confirmation sheet, success state, and risk disclaimer are reviewed before a ladder is created.',
+                        contractId: 'SC-351',
+                      ),
                     ],
                   ),
                 ),
@@ -296,7 +303,9 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
           child: DecoratedBox(
             decoration: const BoxDecoration(
               color: AppColors.surface,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(AppSpacing.savingsLadderSheetRadius),
+              ),
             ),
             child: Padding(
               padding: const EdgeInsets.all(AppSpacing.x5),

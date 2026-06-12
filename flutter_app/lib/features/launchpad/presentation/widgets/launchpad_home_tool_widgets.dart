@@ -16,8 +16,8 @@ class _StakingEntry extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 48,
-            height: 48,
+            width: AppSpacing.launchpadBox48,
+            height: AppSpacing.launchpadBox48,
             alignment: Alignment.center,
             decoration: const BoxDecoration(
               color: AppColors.buy10,
@@ -72,12 +72,12 @@ class _ToolSection extends StatelessWidget {
       accentColor: AppModuleAccents.launchpad,
       children: [
         GridView.count(
-          crossAxisCount: 2,
+          crossAxisCount: AppSpacing.launchpadGridColumns,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           mainAxisSpacing: AppSpacing.x3,
           crossAxisSpacing: AppSpacing.x3,
-          childAspectRatio: 1.72,
+          childAspectRatio: AppSpacing.launchpadGridAspectTile,
           padding: EdgeInsets.zero,
           children: [
             for (final tool in tools)
@@ -126,7 +126,7 @@ class _ToolTile extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1.2,
+              height: AppSpacing.launchpadLineHeightShort,
             ),
           ),
           Text(
@@ -135,8 +135,8 @@ class _ToolTile extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
-              height: 1.2,
+              fontSize: AppSpacing.launchpadFontXs,
+              height: AppSpacing.launchpadLineHeightShort,
             ),
           ),
         ],
@@ -183,7 +183,7 @@ class _SafetyWarning extends StatelessWidget {
                   'Chỉ tham gia qua app chính thức. Không gửi token cho bất kỳ ai yêu cầu. Kiểm tra contract address trước khi tương tác.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.launchpadLineHeightReadable,
                   ),
                 ),
               ],

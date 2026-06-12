@@ -292,8 +292,10 @@ class _ExpandedCategorySettings extends StatelessWidget {
                     const Spacer(),
                     for (var i = 0; i < 4; i++)
                       Container(
-                        width: 3,
-                        height: 8 + i * 2,
+                        width: AppSpacing.launchpadVerticalMarkerWidth,
+                        height:
+                            AppSpacing.launchpadSoundBarBaseHeight +
+                            i * AppSpacing.launchpadSoundBarHeightStep,
                         margin: const EdgeInsets.only(left: AppSpacing.x1),
                         decoration: BoxDecoration(
                           color: category.accent,

@@ -12,7 +12,7 @@ class _Podium extends StatelessWidget {
       if (traders.isNotEmpty) traders[0],
       if (traders.length > 2) traders[2],
     ];
-    const heights = [90.0, 110.0, 75.0];
+    final heights = AppSpacing.predictionLeaderboardPodiumHeights;
     const colors = [
       AppColors.medalSilver,
       AppColors.medalGold,
@@ -21,9 +21,9 @@ class _Podium extends StatelessWidget {
     const labels = ['2nd', '1st', '3rd'];
 
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(14, 16, 14, 0),
+      padding: AppSpacing.predictionLeaderboardPodiumPadding,
       child: SizedBox(
-        height: 198,
+        height: AppSpacing.predictionLeaderboardPodiumHeight,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -64,8 +64,13 @@ class _PodiumColumn extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Text(trader.avatar, style: const TextStyle(fontSize: 22)),
-        const SizedBox(height: 4),
+        Text(
+          trader.avatar,
+          style: const TextStyle(
+            fontSize: AppSpacing.predictionLeaderboardPodiumAvatar,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.predictionLeaderboardPodiumAvatarGap),
         Text(
           trader.user,
           maxLines: 1,
@@ -73,26 +78,24 @@ class _PodiumColumn extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text1,
-            fontSize: 11,
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: 2),
+        const SizedBox(height: AppSpacing.predictionLeaderboardPodiumUserGap),
         Text(
           _formatSignedCompact(trader.pnl),
           style: AppTextStyles.caption.copyWith(
             color: AppColors.buy,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.predictionLeaderboardPodiumValueGap),
         Container(
           height: height,
-          margin: const EdgeInsets.symmetric(horizontal: 5),
+          margin: AppSpacing.predictionLeaderboardPodiumColumnMargin,
           alignment: Alignment.bottomCenter,
-          padding: const EdgeInsets.only(bottom: 13),
+          padding: AppSpacing.predictionLeaderboardPodiumColumnPadding,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -103,7 +106,9 @@ class _PodiumColumn extends StatelessWidget {
               ],
             ),
             border: Border.all(color: color.withValues(alpha: .28)),
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
+            borderRadius: const BorderRadius.vertical(
+              top: AppRadii.inputCorner,
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -112,9 +117,11 @@ class _PodiumColumn extends StatelessWidget {
                 const Icon(
                   Icons.workspace_premium_rounded,
                   color: AppColors.medalGold,
-                  size: 14,
+                  size: AppSpacing.predictionLeaderboardWinnerIcon,
                 ),
-                const SizedBox(width: 4),
+                const SizedBox(
+                  width: AppSpacing.predictionLeaderboardWinnerGap,
+                ),
               ],
               Text(
                 label,
@@ -172,17 +179,20 @@ class _RankingHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      height: AppSpacing.predictionLeaderboardRankingHeaderHeight,
+      padding: AppSpacing.predictionLeaderboardRankingPadding,
       decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: Row(
         children: [
-          const SizedBox(width: 32, child: _HeaderLabel('#')),
+          const SizedBox(
+            width: AppSpacing.predictionLeaderboardRankWidth,
+            child: _HeaderLabel('#'),
+          ),
           const Expanded(child: _HeaderLabel('TRADER')),
           SizedBox(
-            width: 84,
+            width: AppSpacing.predictionLeaderboardMetricWidth,
             child: Align(
               alignment: Alignment.centerRight,
               child: _HeaderLabel(
@@ -191,7 +201,7 @@ class _RankingHeader extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            width: 58,
+            width: AppSpacing.predictionLeaderboardWinRateWidth,
             child: Align(
               alignment: Alignment.centerRight,
               child: _HeaderLabel('WIN %'),
@@ -214,7 +224,6 @@ class _HeaderLabel extends StatelessWidget {
       text,
       style: AppTextStyles.micro.copyWith(
         color: AppColors.text3,
-        fontSize: 10,
         fontWeight: AppTextStyles.bold,
       ),
     );

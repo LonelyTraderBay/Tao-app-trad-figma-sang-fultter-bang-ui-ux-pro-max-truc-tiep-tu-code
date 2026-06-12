@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -80,7 +81,7 @@ class _P2PPaymentMethodAddPageState
       bankType: _type == P2PPaymentAddType.bank,
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    const bottomInset = AppSpacing.x4;
+    const bottomInset = AppSpacing.p2pPaymentAddBottomInset;
     final footerInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome
@@ -112,12 +113,7 @@ class _P2PPaymentMethodAddPageState
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodAddPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pPaymentAddScrollPadding(bottomInset),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -181,6 +177,19 @@ class _P2PPaymentMethodAddPageState
                             type: _type,
                           ),
                         ],
+                        VitPageContent(
+                          padding: VitContentPadding.compact,
+                          customGap: 0,
+                          children: const [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Payment method add state review',
+                              message:
+                                  'Payment type, selected method, masked account preview, ownership risk, limit message, confirmation dialog, and submitting state remain visible before saving.',
+                              contractId: 'SC-232',
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -189,7 +198,7 @@ class _P2PPaymentMethodAddPageState
               VitStickyFooter(
                 backgroundColor: AppColors.surface.withValues(alpha: 0.96),
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: footerInset),
+                  padding: AppSpacing.p2pPaymentFooterPadding(footerInset),
                   child: Semantics(
                     label: 'Preview and add P2P payment method',
                     button: true,

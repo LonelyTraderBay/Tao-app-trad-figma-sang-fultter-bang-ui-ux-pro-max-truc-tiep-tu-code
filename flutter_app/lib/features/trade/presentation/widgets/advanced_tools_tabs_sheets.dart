@@ -13,13 +13,10 @@ class _ToolsTabs extends StatelessWidget {
       (_ToolsTab.bulk, 'Bulk Ops'),
       (_ToolsTab.shortcuts, 'Shortcuts'),
     ];
-    return Container(
+    return VitCard(
       height: 44,
       padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: _chipBackground,
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.inner,
       child: Row(
         children: [
           for (var i = 0; i < tabs.length; i++) ...[
@@ -63,10 +60,7 @@ class _ActionTab extends StatelessWidget {
       children: [
         Text(
           description,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text3,
-            fontSize: 12,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: 12),
         _GradientButton(
@@ -95,10 +89,7 @@ class _LadderSheet extends StatelessWidget {
         children: [
           Text(
             'BTC/USDT DOM · click price level to place instant order.',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: 12),
           for (final offset in const [150, 100, 50, 0, -50, -100]) ...[
@@ -141,10 +132,7 @@ class _BulkSheet extends StatelessWidget {
         children: [
           Text(
             '${orders.length} open orders selected for batch action.',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: 12),
           for (final order in orders) ...[
@@ -206,13 +194,12 @@ class _LadderLevel extends StatelessWidget {
   Widget build(BuildContext context) {
     final isAsk = price > 69000;
     final color = isAsk ? AppColors.sell : AppColors.buy;
-    return Container(
+    return VitCard(
       height: 32,
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .10),
-        borderRadius: AppRadii.xsRadius,
-      ),
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      borderColor: color.withValues(alpha: .35),
       child: Row(
         children: [
           Expanded(
@@ -227,7 +214,7 @@ class _LadderLevel extends StatelessWidget {
           Text(
             '\$${_formatMoney(price.toDouble())}',
             style: AppTextStyles.caption.copyWith(
-              fontFamily: 'monospace',
+              fontFeatures: AppTextStyles.tabularFigures,
               fontWeight: AppTextStyles.bold,
             ),
           ),

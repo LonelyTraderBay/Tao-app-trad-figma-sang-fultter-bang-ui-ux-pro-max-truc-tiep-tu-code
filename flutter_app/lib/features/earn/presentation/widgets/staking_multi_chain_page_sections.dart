@@ -67,7 +67,9 @@ class _TotalStats extends StatelessWidget {
                   fit: BoxFit.scaleDown,
                   child: Text(
                     _formatUsd(snapshot.totalValue, decimals: 0),
-                    style: AppTextStyles.heroNumber.copyWith(fontSize: 30),
+                    style: AppTextStyles.heroNumber.copyWith(
+                      fontSize: AppSpacing.stakingProductMetricFontSize,
+                    ),
                   ),
                 ),
               ),
@@ -183,7 +185,7 @@ class _AllocationCard extends StatelessWidget {
           Text('Chain Allocation', style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: 170,
+            height: AppSpacing.stakingProductDonutChartHeight,
             child: CustomPaint(
               painter: _DonutPainter(
                 positions: snapshot.positions,
@@ -219,7 +221,7 @@ class _LegendItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 160,
+      width: AppSpacing.stakingProductLegendWidth,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

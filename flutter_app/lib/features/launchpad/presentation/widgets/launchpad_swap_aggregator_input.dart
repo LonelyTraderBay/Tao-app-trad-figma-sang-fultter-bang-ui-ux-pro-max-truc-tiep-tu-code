@@ -72,7 +72,7 @@ class _SwapInputCard extends StatelessWidget {
                   hintText: '0.00',
                   textStyle: AppTextStyles.base.copyWith(
                     color: AppColors.text1,
-                    fontSize: 18,
+                    fontSize: AppSpacing.launchpadFontXl,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -88,7 +88,10 @@ class _SwapInputCard extends StatelessWidget {
                 backgroundColor: AppColors.primary,
                 foregroundColor: AppColors.onAccent,
               ),
-              icon: const Icon(Icons.swap_horiz_rounded, size: 18),
+              icon: const Icon(
+                Icons.swap_horiz_rounded,
+                size: AppSpacing.launchpadIcon2xl,
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.x2),
@@ -109,7 +112,7 @@ class _SwapInputCard extends StatelessWidget {
                       '~${output.toStringAsFixed(4)}',
                       style: AppTextStyles.base.copyWith(
                         color: AppColors.text1,
-                        fontSize: 18,
+                        fontSize: AppSpacing.launchpadFontXl,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -152,8 +155,8 @@ class _TokenButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 24,
-            height: 24,
+            width: AppSpacing.launchpadBox24,
+            height: AppSpacing.launchpadBox24,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .16),
@@ -164,7 +167,7 @@ class _TokenButton extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                fontSize: 9,
+                fontSize: AppSpacing.launchpadFontXs,
               ),
             ),
           ),
@@ -201,7 +204,11 @@ class _BestRouteAlert extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.bolt_rounded, color: AppColors.buy, size: 19),
+          const Icon(
+            Icons.bolt_rounded,
+            color: AppColors.buy,
+            size: AppSpacing.launchpadIcon2xl + AppSpacing.hairlineStroke,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(

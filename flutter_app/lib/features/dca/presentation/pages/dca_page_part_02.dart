@@ -40,7 +40,7 @@ class _NextPurchaseRow extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.portfolioTextMuted,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.dcaMainTightLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -51,7 +51,7 @@ class _NextPurchaseRow extends StatelessWidget {
                   style: AppTextStyles.base.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.dcaMainTightLineHeight,
                   ),
                 ),
               ],
@@ -108,7 +108,7 @@ class _OverviewAction extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.dcaMainTightLineHeight,
               ),
             ),
           ],
@@ -192,19 +192,23 @@ class _ToolCard extends StatelessWidget {
       onTap: onTap,
       padding: const EdgeInsets.all(AppSpacing.x5),
       child: SizedBox(
-        height: 98,
+        height: AppSpacing.dcaMainToolCardHeight,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 42,
-              height: 42,
+              width: AppSpacing.dcaMainToolIconBox,
+              height: AppSpacing.dcaMainToolIconBox,
               decoration: BoxDecoration(
                 color: color.withValues(alpha: .13),
                 borderRadius: AppRadii.mdRadius,
                 border: Border.all(color: color.withValues(alpha: .2)),
               ),
-              child: Icon(_toolIcon(tool.icon), color: color, size: 22),
+              child: Icon(
+                _toolIcon(tool.icon),
+                color: color,
+                size: AppSpacing.dcaMainToolIcon,
+              ),
             ),
             const Spacer(),
             Text(
@@ -214,7 +218,7 @@ class _ToolCard extends StatelessWidget {
               style: AppTextStyles.body.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.dcaMainTightLineHeight,
               ),
             ),
             const SizedBox(height: AppSpacing.x3),
@@ -224,7 +228,7 @@ class _ToolCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.2,
+                height: AppSpacing.dcaMainToolSubtitleLineHeight,
               ),
             ),
           ],
@@ -314,7 +318,7 @@ class _DcaPlanCard extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 3,
+            height: AppSpacing.dcaMainPlanStatusBarHeight,
             color: plan.status == DcaPlanStatus.active
                 ? AppColors.buy
                 : AppColors.warn,
@@ -341,7 +345,7 @@ class _DcaPlanCard extends StatelessWidget {
                                   style: AppTextStyles.base.copyWith(
                                     color: AppColors.text1,
                                     fontWeight: AppTextStyles.bold,
-                                    height: 1,
+                                    height: AppSpacing.dcaMainTightLineHeight,
                                   ),
                                 ),
                               ),
@@ -360,7 +364,7 @@ class _DcaPlanCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text2,
-                              height: 1,
+                              height: AppSpacing.dcaMainTightLineHeight,
                             ),
                           ),
                         ],
@@ -463,7 +467,7 @@ class _DcaPlanCard extends StatelessWidget {
                       child: VitCtaButton(
                         onPressed: onPause,
                         variant: VitCtaButtonVariant.secondary,
-                        height: 44,
+                        height: AppSpacing.dcaMainActionHeight,
                         leading: const Icon(Icons.pause_rounded),
                         child: const Text('Tạm dừng'),
                       ),

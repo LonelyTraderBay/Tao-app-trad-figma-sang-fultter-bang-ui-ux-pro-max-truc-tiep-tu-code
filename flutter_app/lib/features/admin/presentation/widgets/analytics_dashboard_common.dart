@@ -18,7 +18,7 @@ class _DistributionCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: 260,
+            height: AppSpacing.adminAnalyticsChartHeight,
             child: events.isEmpty
                 ? const Center(
                     child: AdminInlineEmptyState(
@@ -113,7 +113,7 @@ class _CardTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: AppColors.text1, size: 18),
+        Icon(icon, color: AppColors.text1, size: AppSpacing.adminIconLg),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
@@ -161,7 +161,7 @@ class _EventVolumePainter extends CustomPainter {
         '${4 - i}',
         Offset(0, y - 8),
         color: AppColors.text3,
-        fontSize: 11,
+        fontSize: AppSpacing.adminFontMd,
       );
     }
 
@@ -174,7 +174,7 @@ class _EventVolumePainter extends CustomPainter {
         stats[i].label,
         Offset(x - 22, chartBottom + 6),
         color: AppColors.text3,
-        fontSize: 10,
+        fontSize: AppSpacing.adminFontSm,
       );
     }
 
@@ -197,7 +197,7 @@ class _EventVolumePainter extends CustomPainter {
         style: TextStyle(
           color: color,
           fontSize: fontSize,
-          height: 1,
+          height: AppSpacing.adminLineHeightTight,
           fontFeatures: AppTextStyles.tabularFigures,
         ),
       ),

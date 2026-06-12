@@ -23,7 +23,6 @@ part '../widgets/bot_api_documentation_websocket_examples.dart';
 part '../widgets/bot_api_documentation_support_common.dart';
 
 const _apiBackground = AppColors.bg;
-const _apiPanel = AppColors.surface;
 const _apiPanel2 = AppColors.surface2;
 const _apiPrimary = AppColors.primary;
 const _apiGreen = AppColors.buy;

@@ -22,12 +22,12 @@ class _FeaturedModesSection extends StatelessWidget {
           actionLabel: 'Xem tất cả',
           onAction: onViewAll,
         ),
-        const SizedBox(height: AppSpacing.x1),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
         Text(
           'Được cộng đồng yêu thích',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
@@ -35,7 +35,7 @@ class _FeaturedModesSection extends StatelessWidget {
             children: [
               for (final item in modes) ...[
                 SizedBox(
-                  width: 220,
+                  width: AppSpacing.arenaHomeModeCardWidth,
                   child: _ModeCard(mode: item, onTap: () => onMode(item.id)),
                 ),
                 if (item != modes.last) const SizedBox(width: AppSpacing.x3),
@@ -60,7 +60,9 @@ class _ModeCard extends StatelessWidget {
       key: ArenaHomePage.modeKey(mode.id),
       onTap: onTap,
       padding: const EdgeInsets.all(AppSpacing.x4),
-      constraints: const BoxConstraints(minHeight: 132),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.arenaHomeModeCardMinHeight,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -78,13 +80,13 @@ class _ModeCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: 1.15,
+                    height: AppSpacing.arenaHomeModeTitleLineHeight,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             mode.creatorName,
             maxLines: 1,
@@ -94,7 +96,7 @@ class _ModeCard extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Row(
             children: [
               _MetaText('${mode.cloneCount} clone'),
@@ -102,7 +104,7 @@ class _ModeCard extends StatelessWidget {
               _MetaText('${mode.completionRate}%'),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -158,12 +160,12 @@ class _LiveRoomsSection extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x1),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
         Text(
           'Tham gia ngay hoặc xem',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         VitCard(
           clip: true,
           padding: EdgeInsets.zero,
@@ -172,7 +174,10 @@ class _LiveRoomsSection extends StatelessWidget {
               for (var i = 0; i < rooms.length; i++) ...[
                 _RoomRow(room: rooms[i], onTap: () => onRoom(rooms[i].id)),
                 if (i < rooms.length - 1)
-                  const Divider(height: 1, color: AppColors.divider),
+                  const Divider(
+                    height: AppSpacing.arenaHomeDividerHeight,
+                    color: AppColors.divider,
+                  ),
               ],
             ],
           ),
@@ -217,7 +222,9 @@ class _RoomRow extends StatelessWidget {
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x1),
+                      const Padding(
+                        padding: EdgeInsets.only(top: AppSpacing.x1),
+                      ),
                       Row(
                         children: [
                           Flexible(child: _MetaText(room.format)),
@@ -239,7 +246,7 @@ class _RoomRow extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x1),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                     Text(
                       '${room.entryPoints} pts',
                       style: AppTextStyles.micro.copyWith(
@@ -251,14 +258,14 @@ class _RoomRow extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
             Row(
               children: [
                 Expanded(
                   child: ClipRRect(
                     borderRadius: AppRadii.xsRadius,
                     child: LinearProgressIndicator(
-                      minHeight: 6,
+                      minHeight: AppSpacing.arenaHomeRoomProgressHeight,
                       value: progress,
                       backgroundColor: AppColors.surface3,
                       color: color,
@@ -300,7 +307,7 @@ class _CreatorSpotlightSection extends StatelessWidget {
           title: 'Creator nổi bật',
           accentColor: AppColors.buy,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
@@ -308,7 +315,7 @@ class _CreatorSpotlightSection extends StatelessWidget {
             children: [
               for (final creator in creators) ...[
                 SizedBox(
-                  width: 140,
+                  width: AppSpacing.arenaHomeCreatorCardWidth,
                   child: _CreatorCard(
                     creator: creator,
                     onTap: () => onCreator(creator.id),
@@ -337,12 +344,14 @@ class _CreatorCard extends StatelessWidget {
       key: ArenaHomePage.creatorKey(creator.id),
       onTap: onTap,
       padding: const EdgeInsets.all(AppSpacing.x4),
-      constraints: const BoxConstraints(minHeight: 148),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.arenaHomeCreatorCardMinHeight,
+      ),
       child: Column(
         children: [
           Container(
-            width: 44,
-            height: 44,
+            width: AppSpacing.arenaHomeCreatorAvatar,
+            height: AppSpacing.arenaHomeCreatorAvatar,
             decoration: BoxDecoration(
               color: AppColors.surface2,
               border: Border.all(color: AppColors.cardBorder),
@@ -351,10 +360,10 @@ class _CreatorCard extends StatelessWidget {
             child: const Icon(
               Icons.person_rounded,
               color: AppColors.warn,
-              size: 22,
+              size: AppSpacing.arenaHomeCreatorIcon,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             creator.name,
             maxLines: 1,
@@ -365,7 +374,7 @@ class _CreatorCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Text(
             '${creator.modesCreated} modes · ${creator.totalChallenges} challenges',
             maxLines: 2,
@@ -373,7 +382,7 @@ class _CreatorCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Wrap(
             alignment: WrapAlignment.center,
             spacing: AppSpacing.x1,
@@ -427,7 +436,7 @@ class _PredictionBridge extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Row(
                   children: [
                     Expanded(
@@ -447,14 +456,14 @@ class _PredictionBridge extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   'Theo dõi các prediction events liên quan',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   'Xem Prediction Markets',
                   style: AppTextStyles.micro.copyWith(
@@ -469,7 +478,7 @@ class _PredictionBridge extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.accent,
-            size: 18,
+            size: AppSpacing.arenaHomeBridgeChevron,
           ),
         ],
       ),

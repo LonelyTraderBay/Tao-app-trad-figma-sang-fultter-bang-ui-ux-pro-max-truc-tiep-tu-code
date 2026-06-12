@@ -84,26 +84,28 @@ class _InlineStudioActions extends StatelessWidget {
             children: [
               if (onBack != null)
                 SizedBox(
-                  width: 44,
-                  height: 44,
+                  width: AppSpacing.arenaStudioFooterButton,
+                  height: AppSpacing.arenaStudioFooterButton,
                   child: VitCtaButton(
                     key: ArenaStudioPage.backStepKey,
                     onPressed: onBack,
                     variant: VitCtaButtonVariant.secondary,
                     fullWidth: false,
-                    height: 44,
+                    height: AppSpacing.arenaStudioFooterButton,
                     padding: EdgeInsets.zero,
                     child: const Icon(Icons.chevron_left_rounded),
                   ),
                 ),
               const Spacer(),
               SizedBox(
-                width: isLastStep ? 172 : 148,
+                width: isLastStep
+                    ? AppSpacing.arenaStudioFooterSubmitWidth
+                    : AppSpacing.arenaStudioFooterContinueWidth,
                 child: VitCtaButton(
                   key: ArenaStudioPage.continueKey,
                   onPressed: canContinue ? onContinue : null,
                   fullWidth: true,
-                  height: 44,
+                  height: AppSpacing.arenaStudioFooterButton,
                   padding: const EdgeInsets.symmetric(
                     horizontal: AppSpacing.x4,
                   ),
@@ -140,7 +142,7 @@ class _InlineStudioStateLine extends StatelessWidget {
 
     return Row(
       children: [
-        Icon(icon, color: color, size: 15),
+        Icon(icon, color: color, size: AppSpacing.arenaStudioFooterStateIcon),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
@@ -181,8 +183,8 @@ class _FooterToolButton extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadii.smRadius,
           child: SizedBox(
-            width: 36,
-            height: 36,
+            width: AppSpacing.arenaStudioFooterToolButton,
+            height: AppSpacing.arenaStudioFooterToolButton,
             child: Icon(icon, color: AppColors.text3, size: AppSpacing.iconSm),
           ),
         ),

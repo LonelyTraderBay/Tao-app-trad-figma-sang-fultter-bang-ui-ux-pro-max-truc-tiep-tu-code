@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class StakingSlashingHistoryPage extends ConsumerStatefulWidget {
   const StakingSlashingHistoryPage({super.key, this.shellRenderMode});
@@ -78,7 +79,14 @@ class _StakingSlashingHistoryPageState
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
-                      StakingSlashingInsuranceBanner(snapshot: snapshot),
+                      VitCard(
+                        variant: VitCardVariant.standard,
+                        radius: VitCardRadius.md,
+                        padding: EdgeInsets.zero,
+                        child: StakingSlashingInsuranceBanner(
+                          snapshot: snapshot,
+                        ),
+                      ),
                       StakingSlashingSummaryStats(stats: snapshot.stats),
                       StakingSlashingTabs(
                         active: _activeTab,

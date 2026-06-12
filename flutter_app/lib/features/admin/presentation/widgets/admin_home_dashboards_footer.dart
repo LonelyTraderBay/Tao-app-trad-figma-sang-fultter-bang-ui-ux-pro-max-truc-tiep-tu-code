@@ -46,7 +46,11 @@ class _DashboardCard extends StatelessWidget {
               color: _accentTint(dashboard.accent),
               borderRadius: AppRadii.inputRadius,
             ),
-            child: Icon(_metricIcon(dashboard.icon), color: accent, size: 24),
+            child: Icon(
+              _metricIcon(dashboard.icon),
+              color: accent,
+              size: AppSpacing.adminIcon2xl,
+            ),
           ),
           const SizedBox(width: AppSpacing.x4),
           Expanded(
@@ -86,7 +90,7 @@ class _DashboardCard extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: 20,
+            size: AppSpacing.adminIconXl,
           ),
         ],
       ),
@@ -116,7 +120,7 @@ class _FooterCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
+              fontSize: AppSpacing.adminFontSm,
             ),
           ),
         ],
@@ -135,7 +139,7 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: AppColors.text1, size: 18),
+        Icon(icon, color: AppColors.text1, size: AppSpacing.adminIconLg),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(

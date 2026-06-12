@@ -39,7 +39,7 @@ class StakingTaxWarningNote extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: 18,
+            size: AppSpacing.stakingTaxWarningIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -47,7 +47,7 @@ class StakingTaxWarningNote extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.55,
+                height: AppSpacing.stakingTaxWarningLineHeight,
               ),
             ),
           ),
@@ -73,7 +73,7 @@ class StakingTaxFooterCard extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: 1.6,
+          height: AppSpacing.stakingTaxFooterLineHeight,
         ),
       ),
     );
@@ -94,7 +94,11 @@ class StakingTaxCodeBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = large ? 48.0 : (small ? 24.0 : 36.0);
+    final size = large
+        ? AppSpacing.stakingTaxCodeBadgeLarge
+        : (small
+              ? AppSpacing.stakingTaxCodeBadgeSmall
+              : AppSpacing.stakingTaxCodeBadgeRegular);
     return Container(
       width: size,
       height: size,
@@ -108,7 +112,11 @@ class StakingTaxCodeBadge extends StatelessWidget {
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text1,
           fontWeight: AppTextStyles.bold,
-          fontSize: small ? 10 : (large ? 16 : 14),
+          fontSize: small
+              ? AppSpacing.stakingTaxCodeFontSmall
+              : (large
+                    ? AppSpacing.stakingTaxCodeFontLarge
+                    : AppSpacing.stakingTaxCodeFontRegular),
         ),
       ),
     );

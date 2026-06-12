@@ -9,7 +9,7 @@ class _CommentsContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: const EdgeInsets.all(11),
+          padding: AppSpacing.predictionDetailCommentWarningPadding,
           decoration: BoxDecoration(
             color: AppColors.warn08,
             border: Border.all(color: AppColors.warningBorder),
@@ -20,22 +20,23 @@ class _CommentsContent extends StatelessWidget {
               const Icon(
                 Icons.warning_amber_rounded,
                 color: AppColors.warn,
-                size: 15,
+                size: AppSpacing.predictionDetailCommentWarningIcon,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(
+                width: AppSpacing.predictionDetailCommentWarningGap,
+              ),
               Expanded(
                 child: Text(
                   'Beware of external links. Do not share personal or financial information.',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.warn,
-                    fontSize: 11,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.warn),
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 13),
+        const Padding(
+          padding: AppSpacing.predictionDetailCommentAfterWarningGap,
+        ),
         _CommentRow(
           name: 'MacroAlpha',
           side: 'Yes',
@@ -48,10 +49,10 @@ class _CommentsContent extends StatelessWidget {
           text: 'Watch macro rates and exchange liquidity before sizing up.',
           likes: 9,
         ),
-        const SizedBox(height: 10),
+        const Padding(padding: AppSpacing.predictionDetailCommentInputTopGap),
         Container(
-          height: 42,
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          height: AppSpacing.predictionDetailCommentInputHeight,
+          padding: AppSpacing.predictionDetailCommentInputPadding,
           decoration: BoxDecoration(
             color: AppColors.surface2,
             border: Border.all(color: AppColors.borderSolid),
@@ -62,10 +63,7 @@ class _CommentsContent extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Add a comment...',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ),
               Text(
@@ -100,12 +98,12 @@ class _CommentRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = side == 'Yes' ? AppColors.buy : AppColors.sell;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 13),
+      padding: AppSpacing.predictionDetailCommentRowPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            radius: 16,
+            radius: AppSpacing.predictionDetailCommentAvatarRadius,
             backgroundColor: AppColors.surface2,
             child: Text(
               name[0],
@@ -115,20 +113,19 @@ class _CommentRow extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.predictionDetailCommentAvatarGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Wrap(
-                  spacing: 7,
+                  spacing: AppSpacing.predictionDetailCommentHeaderGap,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
                       name,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
-                        fontSize: 12,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -145,30 +142,35 @@ class _CommentRow extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 4),
+                const Padding(
+                  padding: AppSpacing.predictionDetailCommentBodyGap,
+                ),
                 Text(
                   text,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: 4),
+                const Padding(
+                  padding: AppSpacing.predictionDetailCommentActionGap,
+                ),
                 Row(
                   children: [
                     const Icon(
                       Icons.thumb_up_alt_outlined,
                       color: AppColors.text3,
-                      size: 12,
+                      size: AppSpacing.predictionDetailCommentLikeIcon,
                     ),
-                    const SizedBox(width: 4),
+                    const SizedBox(
+                      width: AppSpacing.predictionDetailCommentLikeGap,
+                    ),
                     Text(
                       '$likes',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(
+                      width: AppSpacing.predictionDetailCommentReportGap,
+                    ),
                     Text(
                       'Báo cáo',
                       style: AppTextStyles.micro.copyWith(

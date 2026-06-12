@@ -95,7 +95,10 @@ class DesignSystemDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Divider(height: 1, color: AppColors.divider);
+    return const Divider(
+      height: AppSpacing.devDividerHeight,
+      color: AppColors.divider,
+    );
   }
 }
 

@@ -33,8 +33,8 @@ class _RoundIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.savingsLadderRoundIcon,
+      height: AppSpacing.savingsLadderRoundIcon,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.mdRadius,
@@ -104,7 +104,7 @@ class _Disclaimer extends StatelessWidget {
               text,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.35,
+                height: AppSpacing.savingsLadderDisclaimerLineHeight,
               ),
             ),
           ),

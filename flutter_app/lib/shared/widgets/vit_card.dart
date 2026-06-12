@@ -63,9 +63,9 @@ class VitCard extends StatelessWidget {
           boxShadow: const [
             BoxShadow(
               color: AppColors.primary08,
-              blurRadius: 12,
-              spreadRadius: -4,
-              offset: Offset(0, 4),
+              blurRadius: AppSpacing.ctaElevationBlur,
+              spreadRadius: AppSpacing.ctaElevationSpread,
+              offset: Offset(0, AppSpacing.ctaElevationYOffset),
             ),
           ],
         );

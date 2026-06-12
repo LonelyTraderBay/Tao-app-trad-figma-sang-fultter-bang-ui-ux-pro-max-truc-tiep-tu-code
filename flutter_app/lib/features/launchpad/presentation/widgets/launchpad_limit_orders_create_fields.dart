@@ -115,7 +115,7 @@ class _ExpiryButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.inputRadius,
       child: Container(
-        height: 40,
+        height: AppSpacing.launchpadBox40,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active ? AppColors.primary : AppColors.bg,

@@ -29,17 +29,17 @@ class _RiskParameter extends StatelessWidget {
               Text(value, style: _captionBold.copyWith(color: color)),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           ClipRRect(
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(
-              minHeight: 5,
+              minHeight: AppSpacing.savingsAutoPilotRiskProgressHeight,
               value: .42,
               color: color,
               backgroundColor: AppColors.surface3,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Row(
             children: [
               Expanded(child: Text(minLabel, style: AppTextStyles.micro)),
@@ -72,7 +72,7 @@ class _ActionDetailSheet extends StatelessWidget {
       child: DecoratedBox(
         decoration: const BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          borderRadius: AppRadii.sheetTopLargeRadius,
         ),
         child: Padding(
           padding: const EdgeInsets.all(AppSpacing.x5),
@@ -107,12 +107,12 @@ class _ActionDetailSheet extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
               Text(
                 action.description,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
               VitCard(
                 variant: VitCardVariant.inner,
                 padding: const EdgeInsets.all(AppSpacing.x3),
@@ -141,7 +141,7 @@ class _ActionDetailSheet extends StatelessWidget {
                 ),
               ),
               if (onApprove != null && onSkip != null) ...[
-                const SizedBox(height: AppSpacing.x4),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
                 Row(
                   children: [
                     Expanded(
@@ -179,8 +179,8 @@ class _IconBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.savingsAutoPilotIconBadge,
+      height: AppSpacing.savingsAutoPilotIconBadge,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.mdRadius,
@@ -257,11 +257,11 @@ class _SectionTitle extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 18,
+          width: AppSpacing.savingsAutoPilotSectionMarkerWidth,
+          height: AppSpacing.savingsAutoPilotSectionMarkerHeight,
           decoration: BoxDecoration(
             color: AppColors.primary,
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.pillRadius,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),

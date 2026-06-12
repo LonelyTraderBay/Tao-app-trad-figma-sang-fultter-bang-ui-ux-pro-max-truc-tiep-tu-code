@@ -11,8 +11,8 @@ class _ArenaCard extends StatelessWidget {
     return VitCard(
       key: ProfilePage.arenaCardKey,
       onTap: onTap,
-      height: 137,
-      padding: const EdgeInsets.all(16),
+      height: AppSpacing.profileModuleCardHeight,
+      padding: AppSpacing.profileModuleCardPadding,
       borderColor: _profileAmber.withValues(alpha: .34),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,22 +22,20 @@ class _ArenaCard extends StatelessWidget {
               const Icon(
                 Icons.sports_esports_outlined,
                 color: _profileAmber,
-                size: 15,
+                size: AppSpacing.profileModuleIcon,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.profileModuleGap),
               Expanded(
                 child: Text(
                   'Open Arena',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
+                  style: AppTextStyles.control.copyWith(
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.profileModuleGap),
               _TinyTag(label: 'Points only', color: _profileAmber),
             ],
           ),
@@ -51,14 +49,14 @@ class _ArenaCard extends StatelessWidget {
                   valueColor: _profileAmber,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.profileModuleStatGap),
               Expanded(
                 child: _ModuleStat(
                   label: 'Ph\u00F2ng',
                   value: '${arena.rooms}',
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.profileModuleStatGap),
               Expanded(
                 child: _ModuleStat(
                   label: 'Creator',
@@ -76,30 +74,29 @@ class _ArenaCard extends StatelessWidget {
                   'V\u00E0o s\u00E2n ch\u01A1i c\u1EE7a t\u00F4i',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: _profileAmber,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w900,
-                  ),
+                  style: AppTextStyles.badge.copyWith(color: _profileAmber),
                 ),
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: AppSpacing.profileHeroInfoTrailingGap),
               const Icon(
                 Icons.chevron_right_rounded,
                 color: _profileAmber,
-                size: 14,
+                size: AppSpacing.profileModuleLinkIcon,
               ),
-              const SizedBox(width: 18),
-              const Icon(Icons.shield_outlined, color: _profileMuted, size: 14),
-              const SizedBox(width: 6),
+              const SizedBox(width: AppSpacing.profileModuleEndGap),
+              const Icon(
+                Icons.shield_outlined,
+                color: _profileMuted,
+                size: AppSpacing.profileModuleLinkIcon,
+              ),
+              const SizedBox(width: AppSpacing.profileHeroInfoTrailingGap),
               Flexible(
                 child: Text(
                   'An to\u00E0n & B\u00E1o c\u00E1o',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.numericMicro.copyWith(
                     color: _profileMuted,
-                    fontSize: 11,
                   ),
                 ),
               ),
@@ -131,22 +128,16 @@ class _ModuleStat extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(
-            color: _profileMuted,
-            fontSize: 10,
-            height: 1,
-          ),
+          style: AppTextStyles.numericMicro.copyWith(color: _profileMuted),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.profileModuleGap),
         Text(
           value,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.control.copyWith(
             color: valueColor,
-            fontSize: 13,
-            fontWeight: FontWeight.w900,
-            height: 1,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ],
@@ -163,20 +154,12 @@ class _TinyTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+      padding: AppSpacing.profileTinyTagPadding,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: AppRadii.pillRadius,
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 9,
-          fontWeight: FontWeight.w900,
-          height: 1,
-        ),
-      ),
+      child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
     );
   }
 }

@@ -32,7 +32,7 @@ class _EarnHero extends StatelessWidget {
                       snapshot.totalEarnedUsd,
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: AppColors.buy,
-                        fontSize: 24,
+                        fontSize: AppSpacing.stakingEarnHeroAmountFontSize,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
@@ -40,7 +40,7 @@ class _EarnHero extends StatelessWidget {
                       'Tich luy tu truoc den nay',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 12,
+                        fontSize: AppSpacing.stakingEarnHeroCaptionFontSize,
                       ),
                     ),
                   ],
@@ -58,7 +58,7 @@ class _EarnHero extends StatelessWidget {
                       '${snapshot.activePositions}',
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: AppColors.buy,
-                        fontSize: 20,
+                        fontSize: AppSpacing.stakingEarnHeroActiveFontSize,
                       ),
                     ),
                     Text(
@@ -149,7 +149,7 @@ class _HeroPill extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.2,
+                    height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
                   ),
                 ),
               ),

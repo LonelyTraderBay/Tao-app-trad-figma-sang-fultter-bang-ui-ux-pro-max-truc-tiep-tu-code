@@ -61,7 +61,7 @@ class _SafetyFooter extends StatelessWidget {
           const Icon(
             Icons.menu_book_outlined,
             color: AppColors.primary,
-            size: 14,
+            size: AppSpacing.arenaSafetyFooterIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Text(
@@ -86,8 +86,8 @@ class _ToneIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.arenaSafetyIconBox,
+      height: AppSpacing.arenaSafetyIconBox,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .14),
         borderRadius: AppRadii.mdRadius,

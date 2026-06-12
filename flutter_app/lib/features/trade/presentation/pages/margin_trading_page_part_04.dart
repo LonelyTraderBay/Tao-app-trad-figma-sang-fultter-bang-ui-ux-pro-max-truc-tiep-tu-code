@@ -7,13 +7,10 @@ class _InfoBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
-      decoration: BoxDecoration(
-        color: _marginPrimary.withValues(alpha: .07),
-        border: Border.all(color: _marginPrimary.withValues(alpha: .28)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.inner,
+      borderColor: _marginPrimary.withValues(alpha: .28),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,7 +25,6 @@ class _InfoBanner extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: _marginPrimary,
-                fontSize: 10,
                 height: 1.45,
                 fontWeight: AppTextStyles.bold,
               ),
@@ -57,16 +53,15 @@ class _Panel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       constraints: minHeight == null
           ? null
           : BoxConstraints(minHeight: minHeight!),
       padding: padding,
-      decoration: BoxDecoration(
-        color: color,
-        border: Border.all(color: borderColor),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: color == _marginPanel
+          ? VitCardVariant.inner
+          : VitCardVariant.standard,
+      borderColor: borderColor,
       child: child,
     );
   }
@@ -85,24 +80,17 @@ class _MiniBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: large ? 10 : 8,
-        vertical: large ? 7 : 5,
-      ),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .13),
-        borderRadius: BorderRadius.circular(large ? 13 : 9),
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: large ? 15 : 10,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    final status = color == _marginGreen
+        ? VitStatusPillStatus.success
+        : color == _marginRed
+        ? VitStatusPillStatus.error
+        : color == _marginAmber
+        ? VitStatusPillStatus.warning
+        : VitStatusPillStatus.info;
+    return VitStatusPill(
+      label: label,
+      status: status,
+      size: large ? VitStatusPillSize.md : VitStatusPillSize.sm,
     );
   }
 }
@@ -120,11 +108,7 @@ class _Bullet extends StatelessWidget {
       children: [
         Text(
           '•',
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontSize: 11,
-            height: 1.45,
-          ),
+          style: AppTextStyles.micro.copyWith(color: color, height: 1.45),
         ),
         const SizedBox(width: 8),
         Expanded(
@@ -132,7 +116,6 @@ class _Bullet extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
               height: 1.45,
             ),
           ),
@@ -158,7 +141,6 @@ class _ValueText extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 3),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
@@ -184,47 +166,22 @@ class _NoticeSheet extends StatelessWidget {
         decoration: const BoxDecoration(color: AppColors.modalScrim),
         child: Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
+          child: VitCard(
             padding: const EdgeInsets.all(20),
-            decoration: const BoxDecoration(
-              color: AppColors.bg,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            radius: VitCardRadius.lg,
+            child: VitPageContent(
+              padding: VitContentPadding.none,
+              customGap: 12,
               children: [
-                Text(
-                  'Margin trading',
-                  style: AppTextStyles.baseMedium.copyWith(fontSize: 16),
-                ),
-                const SizedBox(height: 10),
+                Text('Margin trading', style: AppTextStyles.baseMedium),
                 Text(
                   text,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: 16),
-                InkWell(
-                  onTap: onClose,
-                  borderRadius: AppRadii.inputRadius,
-                  child: Container(
-                    height: 44,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: _marginPrimary,
-                      borderRadius: AppRadii.inputRadius,
-                    ),
-                    child: Text(
-                      'Done',
-                      style: AppTextStyles.body.copyWith(
-                        color: AppColors.onAccent,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ),
+                VitCtaButton(
+                  height: 44,
+                  onPressed: onClose,
+                  child: const Text('Done'),
                 ),
               ],
             ),

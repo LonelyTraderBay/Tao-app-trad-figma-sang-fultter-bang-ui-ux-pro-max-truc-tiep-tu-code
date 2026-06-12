@@ -13,7 +13,6 @@ class _SectionLabel extends StatelessWidget {
         text,
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text2,
-          fontSize: 12,
           fontWeight: AppTextStyles.bold,
           height: 1.2,
         ),

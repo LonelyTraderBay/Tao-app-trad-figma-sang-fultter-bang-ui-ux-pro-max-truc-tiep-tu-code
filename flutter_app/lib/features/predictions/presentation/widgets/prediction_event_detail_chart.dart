@@ -17,7 +17,7 @@ class _ChartSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const _ChartPeriodTabs(),
-              const SizedBox(height: 10),
+              const Padding(padding: EdgeInsets.only(top: 10)),
               SizedBox(
                 height: 178,
                 child: CustomPaint(
@@ -26,12 +26,12 @@ class _ChartSection extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 9),
+              const Padding(padding: EdgeInsets.only(top: 9)),
               Text(
                 'Volume (24h)',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: 5),
+              const Padding(padding: EdgeInsets.only(top: 5)),
               SizedBox(
                 height: 42,
                 child: _VolumeBars(values: snapshot.volumeHistory),

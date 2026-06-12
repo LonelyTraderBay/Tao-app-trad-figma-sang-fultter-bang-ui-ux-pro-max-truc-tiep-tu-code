@@ -51,7 +51,11 @@ class _EventCard extends StatelessWidget {
             child: SizedBox(
               width: AppSpacing.buttonCompact + AppSpacing.x2,
               height: AppSpacing.buttonCompact + AppSpacing.x2,
-              child: Icon(_eventIcon(event.type), color: color, size: 19),
+              child: Icon(
+                _eventIcon(event.type),
+                color: color,
+                size: AppSpacing.stakingEarningsEventIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -133,7 +137,7 @@ class _TimingPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.primarySoft,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.stakingEarningsPillLineHeight,
           ),
         ),
       ),
@@ -229,7 +233,7 @@ class _InfoBanner extends StatelessWidget {
                       bullet,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1.35,
+                        height: AppSpacing.stakingEarningsInfoLineHeight,
                       ),
                     ),
                   ),

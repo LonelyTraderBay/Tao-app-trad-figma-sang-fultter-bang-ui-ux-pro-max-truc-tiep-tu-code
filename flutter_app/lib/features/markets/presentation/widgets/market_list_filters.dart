@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_common.dart';
@@ -22,10 +23,10 @@ class MarketListSortSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.marketFilterSheetPadding,
       child: Wrap(
-        spacing: 8,
-        runSpacing: 8,
+        spacing: AppSpacing.marketFilterGap,
+        runSpacing: AppSpacing.marketFilterGap,
         children: [
           for (final option in sortOptions)
             _FilterChipButton(
@@ -54,12 +55,13 @@ class MarketListCategoryTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 38,
+      height: AppSpacing.marketCategoryHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         clipBehavior: Clip.none,
         itemCount: categories.length,
-        separatorBuilder: (_, _) => const SizedBox(width: 9),
+        separatorBuilder: (_, _) =>
+            const SizedBox(width: AppSpacing.marketCategoryGap),
         itemBuilder: (context, index) {
           final category = categories[index];
           return _FilterChipButton(
@@ -67,7 +69,7 @@ class MarketListCategoryTabs extends StatelessWidget {
             label: category,
             active: category == activeCategory,
             activeColor: marketListPrimary,
-            minHeight: 36,
+            minHeight: AppSpacing.marketCategoryChipMinHeight,
             onTap: () => onSelected(category),
           );
         },
@@ -83,7 +85,7 @@ class _FilterChipButton extends StatelessWidget {
     required this.active,
     required this.onTap,
     this.activeColor = marketListPrimary,
-    this.minHeight = 34,
+    this.minHeight = AppSpacing.marketFilterChipMinHeight,
   });
 
   final String label;
@@ -104,7 +106,7 @@ class _FilterChipButton extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 160),
           constraints: BoxConstraints(minHeight: minHeight),
-          padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 8),
+          padding: AppSpacing.marketFilterChipPadding,
           decoration: BoxDecoration(
             color: active
                 ? activeColor.withValues(alpha: 0.16)
@@ -121,7 +123,6 @@ class _FilterChipButton extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: active ? activeColor : AppColors.text2,
               fontWeight: AppTextStyles.medium,
-              height: 1.1,
             ),
           ),
         ),

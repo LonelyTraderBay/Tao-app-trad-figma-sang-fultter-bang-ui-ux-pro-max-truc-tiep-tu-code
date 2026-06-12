@@ -20,7 +20,6 @@ class _StartFooter extends StatelessWidget {
             'Start Optimization',
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.onAccent,
-              fontSize: 14,
               height: 1,
             ),
           ),
@@ -44,13 +43,9 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _optimizationPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: child,
     );
   }
@@ -70,7 +65,7 @@ class _SectionLabel extends StatelessWidget {
           height: 15,
           decoration: BoxDecoration(
             color: _optimizationPrimary,
-            borderRadius: BorderRadius.circular(3),
+            borderRadius: AppRadii.xsRadius,
           ),
         ),
         const SizedBox(width: 7),
@@ -78,7 +73,6 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

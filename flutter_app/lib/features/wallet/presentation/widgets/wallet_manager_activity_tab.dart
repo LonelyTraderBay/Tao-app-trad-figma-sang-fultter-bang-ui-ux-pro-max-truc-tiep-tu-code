@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_manager_common.dart';
@@ -17,10 +18,11 @@ class WalletActivityTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const WalletManagerSectionLabel(label: 'Recent Activity'),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.walletManagerActivitySectionGap),
         for (var i = 0; i < snapshot.wallets.length; i++) ...[
           _ActivityRow(wallet: snapshot.wallets[i]),
-          if (i != snapshot.wallets.length - 1) const SizedBox(height: 10),
+          if (i != snapshot.wallets.length - 1)
+            const SizedBox(height: AppSpacing.walletManagerActivityRowGap),
         ],
       ],
     );
@@ -39,8 +41,8 @@ class _ActivityRow extends StatelessWidget {
     final time = parts.isNotEmpty ? parts.first : wallet.lastActiveLabel;
     final date = parts.length > 1 ? parts.skip(1).join(' ') : '';
     return Container(
-      height: 62,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      height: AppSpacing.walletManagerActivityRowHeight,
+      padding: AppSpacing.walletManagerActivityRowPadding,
       decoration: BoxDecoration(
         color: walletManagerPanel,
         borderRadius: AppRadii.inputRadius,
@@ -49,20 +51,20 @@ class _ActivityRow extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 32,
-            height: 32,
+            width: AppSpacing.walletManagerActivityIconBox,
+            height: AppSpacing.walletManagerActivityIconBox,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .16),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: AppRadii.smRadius,
             ),
             alignment: Alignment.center,
             child: Icon(
               Icons.account_balance_wallet_outlined,
               color: color,
-              size: 16,
+              size: AppSpacing.walletManagerActivityIcon,
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.walletManagerActivityIconGap),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -72,18 +74,15 @@ class _ActivityRow extends StatelessWidget {
                   wallet.name,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(height: AppSpacing.walletManagerActivityTextGap),
                 Text(
                   wallet.maskedAddress,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
-                    fontFamily: 'Roboto',
                     height: 1,
                   ),
                 ),
@@ -96,18 +95,16 @@ class _ActivityRow extends StatelessWidget {
             children: [
               Text(
                 date,
-                style: AppTextStyles.micro.copyWith(
+                style: AppTextStyles.badge.copyWith(
                   color: AppColors.text2,
-                  fontSize: 11,
                   height: 1,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.walletManagerActivityTimeGap),
               Text(
                 time,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
                   height: 1,
                 ),
               ),

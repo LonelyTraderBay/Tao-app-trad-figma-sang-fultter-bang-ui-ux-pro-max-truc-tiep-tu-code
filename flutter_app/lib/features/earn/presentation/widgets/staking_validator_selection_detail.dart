@@ -52,7 +52,7 @@ class StakingValidatorSelectionDetailCard extends StatelessWidget {
             validator.description,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.5,
+              height: AppSpacing.stakingValidatorSelectionDetailLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -82,7 +82,7 @@ class StakingValidatorSelectionDetailCard extends StatelessWidget {
               'Khi chọn validator riêng, bạn chịu rủi ro slashing nếu validator vi phạm. Ưu tiên validator Top Tier hoặc Recommended.',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.5,
+                height: AppSpacing.stakingValidatorSelectionDetailLineHeight,
               ),
             ),
           ),
@@ -111,7 +111,7 @@ class StakingValidatorSelectionFooterNote extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text3,
-          height: 1.5,
+          height: AppSpacing.stakingValidatorSelectionDetailLineHeight,
         ),
       ),
     );

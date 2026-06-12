@@ -7,8 +7,12 @@ class _MerchantSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
+    return VitCard(
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.x4,
+        vertical: AppSpacing.x6,
+      ),
       child: Column(
         children: [
           Container(
@@ -283,7 +287,8 @@ class _SuccessView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Padding(
+      child: VitCard(
+        radius: VitCardRadius.lg,
         padding: const EdgeInsets.all(AppSpacing.contentPad),
         child: Column(
           mainAxisSize: MainAxisSize.min,

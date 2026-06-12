@@ -154,7 +154,7 @@ class _FilterButton extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: active ? AppColors.primary : AppColors.text2,
               fontWeight: AppTextStyles.medium,
-              height: 1,
+              height: AppSpacing.arenaPointsCompactLineHeight,
             ),
           ),
         ),
@@ -178,7 +178,10 @@ class _LedgerList extends StatelessWidget {
           for (var i = 0; i < entries.length; i++) ...[
             _LedgerRow(entry: entries[i]),
             if (i < entries.length - 1)
-              const Divider(height: 1, color: AppColors.divider),
+              const Divider(
+                height: AppSpacing.arenaPointsDividerHeight,
+                color: AppColors.divider,
+              ),
           ],
         ],
       ),
@@ -237,7 +240,7 @@ class _LedgerRow extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              height: 1,
+                              height: AppSpacing.arenaPointsCompactLineHeight,
                             ),
                           ),
                         ),
@@ -255,7 +258,7 @@ class _LedgerRow extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: _amountColor(entry.amount),
                       fontWeight: AppTextStyles.bold,
-                      height: 1,
+                      height: AppSpacing.arenaPointsCompactLineHeight,
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
@@ -266,14 +269,16 @@ class _LedgerRow extends StatelessWidget {
                       const Icon(
                         Icons.arrow_forward_rounded,
                         color: AppColors.text3,
-                        size: 9,
+                        size: AppSpacing.arenaPointsLedgerBalanceArrowIcon,
                       ),
-                      const SizedBox(width: 2),
+                      const SizedBox(
+                        width: AppSpacing.arenaPointsLedgerBalanceArrowGap,
+                      ),
                       Text(
                         formatArenaPoints(entry.balanceAfter),
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: 1,
+                          height: AppSpacing.arenaPointsCompactLineHeight,
                           fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
@@ -298,13 +303,17 @@ class _LedgerIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 36,
-      height: 36,
+      width: AppSpacing.arenaPointsLedgerIconBox,
+      height: AppSpacing.arenaPointsLedgerIconBox,
       decoration: BoxDecoration(
         color: _entryTint(typeId),
         borderRadius: AppRadii.mdRadius,
       ),
-      child: Icon(_entryIcon(typeId), color: color, size: 17),
+      child: Icon(
+        _entryIcon(typeId),
+        color: color,
+        size: AppSpacing.arenaPointsLedgerGlyph,
+      ),
     );
   }
 }
@@ -320,7 +329,7 @@ class _TypeBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.x2,
-        vertical: 2,
+        vertical: AppSpacing.arenaPointsTypeBadgeVerticalPadding,
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .14),
@@ -331,7 +340,7 @@ class _TypeBadge extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.arenaPointsCompactLineHeight,
         ),
       ),
     );
@@ -350,14 +359,18 @@ class _AuditNotice extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.accent, size: 16),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.accent,
+            size: AppSpacing.arenaPointsInlineIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               disclaimer,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1.45,
+                height: AppSpacing.arenaPointsNoticeLineHeight,
               ),
             ),
           ),

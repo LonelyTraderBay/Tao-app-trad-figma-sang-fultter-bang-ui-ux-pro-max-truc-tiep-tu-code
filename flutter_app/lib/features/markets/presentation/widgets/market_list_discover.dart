@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -20,7 +21,7 @@ class MarketListDiscoverMoreSection extends StatelessWidget {
           title: 'Khám phá thêm',
           accentColor: marketListPredictionAccent,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.marketDiscoverLabelGap),
         VitCard(
           clip: true,
           padding: EdgeInsets.zero,
@@ -34,7 +35,11 @@ class MarketListDiscoverMoreSection extends StatelessWidget {
                 color: marketListPredictionAccent,
                 onTap: () => context.go(AppRoutePaths.marketsPredictions),
               ),
-              const Divider(height: 1, thickness: 1, color: AppColors.divider),
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                thickness: AppSpacing.dividerHairline,
+                color: AppColors.divider,
+              ),
               _DiscoverRow(
                 icon: Icons.sports_esports_outlined,
                 title: 'Open Arena',
@@ -62,20 +67,19 @@ class _SectionLabel extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 17,
+          width: AppSpacing.marketDiscoverAccentWidth,
+          height: AppSpacing.marketDiscoverAccentHeight,
           decoration: BoxDecoration(
             color: accentColor,
-            borderRadius: BorderRadius.circular(2),
+            borderRadius: AppRadii.hairlineRadius,
           ),
         ),
-        const SizedBox(width: 7),
+        const SizedBox(width: AppSpacing.marketDiscoverLabelTextGap),
         Text(
           title,
           style: AppTextStyles.body.copyWith(
             color: AppColors.text1,
             fontWeight: AppTextStyles.bold,
-            height: 1.1,
           ),
         ),
       ],
@@ -105,19 +109,23 @@ class _DiscoverRow extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        padding: AppSpacing.marketDiscoverRowPadding,
         child: Row(
           children: [
             Container(
-              width: 40,
-              height: 40,
+              width: AppSpacing.marketDiscoverIconBox,
+              height: AppSpacing.marketDiscoverIconBox,
               decoration: BoxDecoration(
                 color: color.withValues(alpha: 0.12),
                 borderRadius: AppRadii.mdRadius,
               ),
-              child: Icon(icon, color: color, size: 18),
+              child: Icon(
+                icon,
+                color: color,
+                size: AppSpacing.marketDiscoverIcon,
+              ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.marketDiscoverRowGap),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,16 +139,14 @@ class _DiscoverRow extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.body.copyWith(
                             fontWeight: AppTextStyles.bold,
-                            height: 1.1,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 7),
+                      const SizedBox(
+                        width: AppSpacing.marketDiscoverTitleBadgeGap,
+                      ),
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
+                        padding: AppSpacing.marketDiscoverBadgePadding,
                         decoration: BoxDecoration(
                           color: color.withValues(alpha: 0.10),
                           borderRadius: AppRadii.xsRadius,
@@ -149,23 +155,18 @@ class _DiscoverRow extends StatelessWidget {
                           badge,
                           style: AppTextStyles.micro.copyWith(
                             color: color,
-                            fontSize: 8,
                             fontWeight: AppTextStyles.bold,
-                            height: 1,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: AppSpacing.marketDiscoverSubtitleGap),
                   Text(
                     subtitle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      height: 1.2,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
@@ -173,7 +174,7 @@ class _DiscoverRow extends StatelessWidget {
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.text3,
-              size: 16,
+              size: AppSpacing.marketDiscoverChevron,
             ),
           ],
         ),

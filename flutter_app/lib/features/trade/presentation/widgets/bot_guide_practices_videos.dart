@@ -7,20 +7,17 @@ class _BestPracticesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Best Practices',
+      customGap: 12,
       children: [
-        const _SectionLabel('Best Practices'),
-        const SizedBox(height: 10),
-        for (final item in items) ...[
+        for (final item in items)
           _InfoCard(
             icon: _practiceIcon(item.iconKey),
             iconColor: _guidePrimary,
             title: item.title,
             description: item.description,
           ),
-          if (item != items.last) const SizedBox(height: 12),
-        ],
       ],
     );
   }
@@ -33,16 +30,10 @@ class _MistakesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const _SectionLabel('Common Mistakes to Avoid'),
-        const SizedBox(height: 10),
-        for (final item in items) ...[
-          _MistakeCard(item: item),
-          if (item != items.last) const SizedBox(height: 12),
-        ],
-      ],
+    return VitPageSection(
+      label: 'Common Mistakes to Avoid',
+      customGap: 12,
+      children: [for (final item in items) _MistakeCard(item: item)],
     );
   }
 }
@@ -77,7 +68,6 @@ class _InfoCard extends StatelessWidget {
                   title,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -86,7 +76,6 @@ class _InfoCard extends StatelessWidget {
                   description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1.55,
                   ),
                 ),
@@ -108,8 +97,9 @@ class _MistakeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Card(
       padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 12,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,58 +111,46 @@ class _MistakeCard extends StatelessWidget {
                   item.mistake,
                   style: AppTextStyles.caption.copyWith(
                     color: _guideRed,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
           Padding(
             padding: const EdgeInsets.only(left: 27),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            child: VitPageContent(
+              padding: VitContentPadding.none,
+              customGap: 9,
               children: [
                 Text(
                   "WHY IT'S BAD:",
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 10,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
                 const SizedBox(height: 3),
                 Text(
                   item.why,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: 9),
-                Container(
+                VitCard(
                   padding: const EdgeInsets.all(9),
-                  decoration: BoxDecoration(
-                    color: _guideGreen.withValues(alpha: .08),
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  variant: VitCardVariant.inner,
+                  borderColor: _guideGreen.withValues(alpha: .24),
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 4,
                     children: [
                       Text(
                         'HOW TO FIX:',
                         style: AppTextStyles.micro.copyWith(
                           color: _guideGreen,
-                          fontSize: 10,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(height: 4),
                       Text(
                         item.fix,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text2,
-                          fontSize: 11,
                           height: 1.35,
                         ),
                       ),
@@ -193,14 +171,12 @@ class _VideoTutorialsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 14),
-      decoration: BoxDecoration(
-        color: _guidePanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      variant: VitCardVariant.inner,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 10,
         children: [
           Row(
             children: [
@@ -214,39 +190,23 @@ class _VideoTutorialsCard extends StatelessWidget {
                 'Video Tutorials',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
           Text(
             'Watch our step-by-step video guides to master each bot strategy.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 11,
               height: 1.45,
             ),
           ),
-          const SizedBox(height: 8),
-          Container(
+          VitCtaButton(
             height: 32,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: _guidePrimary,
-              borderRadius: AppRadii.cardRadius,
-            ),
-            child: Text(
-              'View All Tutorials',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.onAccent,
-                fontSize: 12,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
-            ),
+            onPressed: () {},
+            child: const Text('View All Tutorials'),
           ),
         ],
       ),

@@ -136,7 +136,7 @@ class _SelectedRouteFooter extends StatelessWidget {
               _ProviderBadge(
                 label: route.providerIcon,
                 accent: route.accent,
-                size: 34,
+                size: AppSpacing.launchpadIcon7xl,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -217,8 +217,8 @@ class _RouteConfirmOverlay extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  width: 40,
-                  height: 4,
+                  width: AppSpacing.launchpadBox40,
+                  height: AppSpacing.launchpadSheetHandleHeight,
                   decoration: BoxDecoration(
                     color: AppColors.borderSolid,
                     borderRadius: AppRadii.inputRadius,
@@ -249,7 +249,7 @@ class _RouteConfirmOverlay extends StatelessWidget {
                 _ProviderBadge(
                   label: route.providerIcon,
                   accent: route.accent,
-                  size: 56,
+                  size: AppSpacing.launchpadBox56,
                 ),
                 const SizedBox(height: AppSpacing.x3),
                 Text(

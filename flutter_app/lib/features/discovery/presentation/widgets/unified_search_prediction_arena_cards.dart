@@ -20,7 +20,7 @@ class _PredictionResultCard extends StatelessWidget {
             icon: Icons.track_changes_rounded,
             color: AppModuleAccents.predictions,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             event.title,
             style: AppTextStyles.body.copyWith(
@@ -28,7 +28,7 @@ class _PredictionResultCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Row(
             children: [
               Text(
@@ -90,7 +90,7 @@ class _ArenaModeResultCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             mode.title,
             style: AppTextStyles.body.copyWith(
@@ -98,14 +98,14 @@ class _ArenaModeResultCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Text(
             mode.description,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Row(
             children: [
               Expanded(

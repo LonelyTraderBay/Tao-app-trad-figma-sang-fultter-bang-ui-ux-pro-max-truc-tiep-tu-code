@@ -48,7 +48,7 @@ class StakingSlashingPreventionTab extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
                       fontWeight: AppTextStyles.bold,
-                      height: 1.55,
+                      height: AppSpacing.stakingSlashingBodyLineHeight,
                     ),
                     children: [
                       TextSpan(
@@ -56,7 +56,7 @@ class StakingSlashingPreventionTab extends StatelessWidget {
                             'Our multi-layered prevention system has reduced slashing events by 40% year-over-year. Continuous monitoring and automated rebalancing ensure your stake is always protected.',
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text2,
-                          height: 1.55,
+                          height: AppSpacing.stakingSlashingBodyLineHeight,
                         ),
                       ),
                     ],
@@ -118,7 +118,7 @@ class _PreventionCard extends StatelessWidget {
                   measure.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.45,
+                    height: AppSpacing.stakingSlashingMeasureLineHeight,
                   ),
                 ),
               ],

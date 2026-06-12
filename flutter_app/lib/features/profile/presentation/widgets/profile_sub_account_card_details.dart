@@ -14,7 +14,7 @@ class _SubAccountDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Divider(height: 1, color: AppColors.divider),
-          const SizedBox(height: 14),
+          const Padding(padding: EdgeInsets.only(top: 14)),
           Row(
             children: [
               Expanded(
@@ -40,7 +40,7 @@ class _SubAccountDetails extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 13),
+          const Padding(padding: EdgeInsets.only(top: 13)),
           Text(
             'Quy\u1EC1n h\u1EA1n:',
             style: AppTextStyles.micro.copyWith(
@@ -48,7 +48,7 @@ class _SubAccountDetails extends StatelessWidget {
               height: 1,
             ),
           ),
-          const SizedBox(height: 8),
+          const Padding(padding: EdgeInsets.only(top: 8)),
           Wrap(
             spacing: 7,
             runSpacing: 7,
@@ -62,14 +62,11 @@ class _SubAccountDetails extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: 13),
+          const Padding(padding: EdgeInsets.only(top: 13)),
           Text.rich(
             TextSpan(
               text: 'Email: ',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: 11,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               children: [
                 TextSpan(
                   text: account.email,
@@ -78,7 +75,7 @@ class _SubAccountDetails extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 13),
+          const Padding(padding: EdgeInsets.only(top: 13)),
           Row(
             children: [
               Expanded(
@@ -137,11 +134,10 @@ class _DetailMetric extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 9,
             height: 1,
           ),
         ),
-        const SizedBox(height: 7),
+        const Padding(padding: EdgeInsets.only(top: 7)),
         Text(
           value,
           maxLines: 1,
@@ -149,7 +145,6 @@ class _DetailMetric extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: 12,
             height: 1,
           ),
         ),
@@ -192,7 +187,6 @@ class _ActionChip extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                fontSize: 11,
                 height: 1,
               ),
             ),

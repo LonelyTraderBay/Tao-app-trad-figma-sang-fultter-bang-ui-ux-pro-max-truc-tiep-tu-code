@@ -135,7 +135,7 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
                         child: VitPageContent(
                           padding: VitContentPadding.none,
                           fullBleed: true,
-                          customGap: 0,
+                          customGap: AppSpacing.x3,
                           children: [
                             VitPageSection(
                               customGap: 0,
@@ -145,7 +145,6 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
                                     : _ClaimsContent(snapshot: snapshot),
                               ],
                             ),
-                            const SizedBox(height: AppSpacing.x3),
                             const VitCard(
                               variant: VitCardVariant.inner,
                               padding: EdgeInsets.all(AppSpacing.x3),

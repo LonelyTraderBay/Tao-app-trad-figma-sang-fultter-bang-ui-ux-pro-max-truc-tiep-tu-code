@@ -21,7 +21,7 @@ class _SocialDominanceCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           ClipRRect(
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.xlRadius,
             child: SizedBox(
               width: double.infinity,
               height: 20,
@@ -29,15 +29,15 @@ class _SocialDominanceCard extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: (global.socialDominanceBtc * 10).round(),
-                    child: Container(color: AppAssetColors.btc),
+                    child: const ColoredBox(color: AppAssetColors.btc),
                   ),
                   Expanded(
                     flex: (global.socialDominanceEth * 10).round(),
-                    child: Container(color: AppAssetColors.eth),
+                    child: const ColoredBox(color: AppAssetColors.eth),
                   ),
                   Expanded(
                     flex: (global.socialDominanceOther * 10).round(),
-                    child: Container(color: AppColors.surface3),
+                    child: const ColoredBox(color: AppColors.surface3),
                   ),
                 ],
               ),
@@ -123,19 +123,23 @@ class _TimelineCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(999),
+                      borderRadius: AppRadii.xlRadius,
                       child: SizedBox(
                         height: 6,
                         child: Stack(
                           children: [
-                            Container(color: AppColors.surface2),
+                            const ColoredBox(
+                              color: AppColors.surface2,
+                              child: SizedBox.expand(),
+                            ),
                             FractionallySizedBox(
                               alignment: Alignment.centerLeft,
                               widthFactor: ((point.score + 100) / 200)
                                   .clamp(0, 1)
                                   .toDouble(),
-                              child: Container(
+                              child: ColoredBox(
                                 color: _sentimentColor(point.score),
+                                child: const SizedBox.expand(),
                               ),
                             ),
                           ],
@@ -179,7 +183,7 @@ class _SectionHeader extends StatelessWidget {
           height: 16,
           decoration: BoxDecoration(
             color: accentColor,
-            borderRadius: BorderRadius.circular(99),
+            borderRadius: AppRadii.xlRadius,
           ),
         ),
         const SizedBox(width: 6),

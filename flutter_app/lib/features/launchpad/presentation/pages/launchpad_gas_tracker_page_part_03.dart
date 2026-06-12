@@ -44,7 +44,7 @@ class _SelectablePill extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: active ? color : AppColors.text3,
                 fontWeight: AppTextStyles.bold,
-                fontSize: 11,
+                fontSize: AppSpacing.launchpadFontMd,
               ),
             ),
           ),
@@ -62,8 +62,8 @@ class _ChainBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 32,
-      height: 32,
+      width: AppSpacing.launchpadBox32,
+      height: AppSpacing.launchpadBox32,
       decoration: BoxDecoration(
         color: price.accent.withValues(alpha: .14),
         borderRadius: AppRadii.mdRadius,
@@ -74,7 +74,7 @@ class _ChainBadge extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: price.accent,
           fontWeight: AppTextStyles.bold,
-          fontSize: 10,
+          fontSize: AppSpacing.launchpadFontSm,
         ),
       ),
     );
@@ -99,15 +99,19 @@ class _TrendPill extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(_trendIcon(price.trend), color: color, size: 10),
-            const SizedBox(width: 3),
+            Icon(
+              _trendIcon(price.trend),
+              color: color,
+              size: AppSpacing.launchpadIconXxs,
+            ),
+            const SizedBox(width: AppSpacing.launchpadGapXs),
             Text(
               _formatChange(price.change24h),
               style: AppTextStyles.micro.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                fontSize: 9,
-                height: 1,
+                fontSize: AppSpacing.launchpadFontXs,
+                height: AppSpacing.launchpadLineHeightTight,
               ),
             ),
           ],
@@ -128,14 +132,18 @@ class _TrendInline extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(_trendIcon(price.trend), color: color, size: 13),
-        const SizedBox(width: 4),
+        Icon(
+          _trendIcon(price.trend),
+          color: color,
+          size: AppSpacing.launchpadIconSm,
+        ),
+        const SizedBox(width: AppSpacing.x1 + AppSpacing.hairlineStroke),
         Text(
           _formatChange(price.change24h),
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: 10,
+            fontSize: AppSpacing.launchpadFontSm,
           ),
         ),
       ],
@@ -153,7 +161,10 @@ class _Legend extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
-      style: AppTextStyles.micro.copyWith(color: color, fontSize: 8),
+      style: AppTextStyles.micro.copyWith(
+        color: color,
+        fontSize: AppSpacing.launchpadFontXxs,
+      ),
     );
   }
 }
@@ -172,7 +183,7 @@ class _CostText extends StatelessWidget {
         color: color,
         fontFamily: 'monospace',
         fontWeight: AppTextStyles.medium,
-        fontSize: 10,
+        fontSize: AppSpacing.launchpadFontSm,
       ),
     );
   }
@@ -190,7 +201,7 @@ class _EmptyAlerts extends StatelessWidget {
           const Icon(
             Icons.notifications_none_rounded,
             color: AppColors.text3,
-            size: 32,
+            size: AppSpacing.launchpadIconHuge,
           ),
           const SizedBox(height: AppSpacing.x3),
           Text(
@@ -263,7 +274,7 @@ class _GasChartPainter extends CustomPainter {
         text: label,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          fontSize: 9,
+          fontSize: AppSpacing.launchpadFontXs,
         ),
       );
       labelPainter.layout();

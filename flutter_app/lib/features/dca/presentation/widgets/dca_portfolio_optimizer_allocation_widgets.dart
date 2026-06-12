@@ -9,7 +9,7 @@ class _FrontierChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 118,
+      width: AppSpacing.dcaPortfolioOptimizerFrontierChipWidth,
       padding: const EdgeInsets.all(AppSpacing.x3),
       decoration: BoxDecoration(
         color: active ? AppColors.accent10 : AppColors.surface,
@@ -31,7 +31,7 @@ class _FrontierChip extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Row(
             children: [
               Text(
@@ -164,12 +164,12 @@ class _SuggestionRow extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   suggestion.reason,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.35,
+                    height: AppSpacing.dcaPortfolioOptimizerBodyLineHeight,
                   ),
                 ),
               ],

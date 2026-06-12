@@ -22,8 +22,6 @@ part '../widgets/complaints_handling_overview_complaints.dart';
 part '../widgets/complaints_handling_process_common.dart';
 
 const _complaintsBackground = AppColors.bg;
-const _complaintsPanel = AppColors.surface;
-const _complaintsPanel2 = AppColors.surface2;
 const _complaintsBorder = AppColors.borderSolid;
 const _complaintsPrimary = AppColors.primary;
 const _complaintsGreen = AppColors.buy;

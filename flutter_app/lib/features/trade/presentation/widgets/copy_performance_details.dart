@@ -36,7 +36,6 @@ class _TradesTab extends StatelessWidget {
                       trade.timestamp,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 10,
                       ),
                     ),
                   ],
@@ -205,12 +204,9 @@ class _InfoBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       padding: const EdgeInsets.all(13),
-      decoration: BoxDecoration(
-        color: _performancePanel,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -224,10 +220,7 @@ class _InfoBox extends StatelessWidget {
               const SizedBox(width: 6),
               Text(
                 title,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 10,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -239,7 +232,6 @@ class _InfoBox extends StatelessWidget {
                 '• $line',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  fontSize: 10,
                   height: 1.25,
                 ),
               ),
@@ -263,21 +255,15 @@ class _SmallMetricCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: _performancePanel,
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 10,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: 4),
           Text(

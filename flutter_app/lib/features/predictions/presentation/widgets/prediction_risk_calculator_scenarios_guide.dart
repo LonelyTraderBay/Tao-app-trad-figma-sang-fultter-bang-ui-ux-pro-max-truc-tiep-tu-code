@@ -29,7 +29,7 @@ class _ScenariosTab extends StatelessWidget {
       children: [
         for (final scenario in scenarios)
           VitCard(
-            padding: const EdgeInsets.all(16),
+            padding: AppSpacing.predictionRiskCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -47,9 +47,8 @@ class _ScenariosTab extends StatelessWidget {
                           ),
                           Text(
                             'Implied probability: ${scenario.probability.toStringAsFixed(1)}%',
-                            style: AppTextStyles.micro.copyWith(
+                            style: AppTextStyles.numericMicro.copyWith(
                               color: AppColors.text3,
-                              fontSize: 11,
                             ),
                           ),
                         ],
@@ -63,7 +62,9 @@ class _ScenariosTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(
+                  height: AppSpacing.predictionRiskScenarioTitleGap,
+                ),
                 _RiskMetricRow(
                   label: 'Settlement value',
                   value: _formatMoney(scenario.settlementValue),
@@ -82,7 +83,7 @@ class _ScenariosTab extends StatelessWidget {
             ),
           ),
         VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.predictionRiskCardPadding,
           child: _RiskMetricRow(
             label: 'Net Expected Value',
             value:
@@ -141,7 +142,7 @@ class _GuideCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.predictionRiskGuidePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -152,13 +153,10 @@ class _GuideCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: AppSpacing.predictionRiskGuideTitleGap),
           Text(
             body,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.badge.copyWith(color: AppColors.text2),
           ),
         ],
       ),
@@ -184,12 +182,9 @@ class _SummaryMetric extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 11,
-          ),
+          style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.predictionRiskMetricGap),
         Text(
           value,
           style: AppTextStyles.baseMedium.copyWith(
@@ -222,27 +217,31 @@ class _RiskMetricRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: compact ? 4 : 7),
+      padding: EdgeInsets.symmetric(
+        vertical: compact
+            ? AppSpacing.predictionRiskMetricCompactVertical
+            : AppSpacing.predictionRiskMetricVertical,
+      ),
       child: Row(
         children: [
           if (icon != null) ...[
-            Icon(icon, color: iconColor, size: 16),
-            const SizedBox(width: 8),
+            Icon(
+              icon,
+              color: iconColor,
+              size: AppSpacing.predictionRiskMetricIcon,
+            ),
+            const SizedBox(width: AppSpacing.predictionRiskMetricIconGap),
           ],
           Expanded(
             child: Text(
               label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontSize: 13,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
           Text(
             value,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.control.copyWith(
               color: valueColor,
-              fontSize: 15,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
             ),

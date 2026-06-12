@@ -62,8 +62,8 @@ class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
                 children: [
                   Center(
                     child: Container(
-                      width: 40,
-                      height: 4,
+                      width: AppSpacing.launchpadBox40,
+                      height: AppSpacing.launchpadSheetHandleHeight,
                       decoration: const BoxDecoration(
                         color: AppColors.borderSolid,
                         borderRadius: AppRadii.xsRadius,
@@ -76,7 +76,7 @@ class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
                       const Icon(
                         Icons.check_circle_outline_rounded,
                         color: AppColors.buy,
-                        size: 21,
+                        size: AppSpacing.launchpadIcon4xl,
                       ),
                       const SizedBox(width: AppSpacing.x2),
                       Text(

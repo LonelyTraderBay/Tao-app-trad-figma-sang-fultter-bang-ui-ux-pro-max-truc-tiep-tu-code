@@ -9,12 +9,14 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: 3,
           height: 16,
-          decoration: BoxDecoration(
-            color: _venuePrimary,
-            borderRadius: BorderRadius.circular(999),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: _venuePrimary,
+              borderRadius: AppRadii.smRadius,
+            ),
           ),
         ),
         const SizedBox(width: 7),
@@ -23,7 +25,6 @@ class _SectionLabel extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 11,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -79,10 +80,7 @@ class _NoticePanel extends StatelessWidget {
               Expanded(
                 child: Text(
                   text,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text1),
                 ),
               ),
               IconButton(

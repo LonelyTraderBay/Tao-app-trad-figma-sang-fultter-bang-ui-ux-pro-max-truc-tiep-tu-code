@@ -27,7 +27,7 @@ class _LeaderboardRow extends StatelessWidget {
           children: [
             if (!rising) ...[
               SizedBox(
-                width: 28,
+                width: AppSpacing.arenaLeaderboardRowRankWidth,
                 child: Text(
                   '${entry.rank}',
                   textAlign: TextAlign.center,
@@ -41,8 +41,8 @@ class _LeaderboardRow extends StatelessWidget {
               const SizedBox(width: AppSpacing.x3),
             ],
             Container(
-              width: 40,
-              height: 40,
+              width: AppSpacing.arenaLeaderboardRowAvatar,
+              height: AppSpacing.arenaLeaderboardRowAvatar,
               decoration: BoxDecoration(
                 color: (rising ? AppColors.warn : AppColors.accent).withValues(
                   alpha: .14,
@@ -52,7 +52,7 @@ class _LeaderboardRow extends StatelessWidget {
               child: Icon(
                 _leaderboardIcon(entry.icon),
                 color: rising ? AppColors.warn : AppColors.accent,
-                size: 20,
+                size: AppSpacing.arenaLeaderboardRowIcon,
               ),
             ),
             const SizedBox(width: AppSpacing.x3),
@@ -76,7 +76,7 @@ class _LeaderboardRow extends StatelessWidget {
                           const Icon(
                             Icons.shield_outlined,
                             color: AppColors.buy,
-                            size: 10,
+                            size: AppSpacing.arenaLeaderboardFairPlayIcon,
                           ),
                           const SizedBox(width: AppSpacing.x1),
                         ],
@@ -104,7 +104,7 @@ class _LeaderboardRow extends StatelessWidget {
                   const Icon(
                     Icons.local_fire_department_outlined,
                     color: AppColors.warn,
-                    size: 13,
+                    size: AppSpacing.arenaLeaderboardRisingIcon,
                   ),
                   const SizedBox(width: AppSpacing.x1),
                   Text(
@@ -148,7 +148,7 @@ class _CompactLeaderboardState extends StatelessWidget {
                 ? Icons.groups_rounded
                 : Icons.diversity_3_rounded,
             color: AppColors.text3,
-            size: 30,
+            size: AppSpacing.arenaLeaderboardCompactIcon,
           ),
           const SizedBox(height: AppSpacing.x3),
           Text(
@@ -194,7 +194,7 @@ class _ArenaFooter extends StatelessWidget {
                   const Icon(
                     Icons.menu_book_outlined,
                     color: AppColors.primary,
-                    size: 16,
+                    size: AppSpacing.arenaLeaderboardFooterIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Text(
@@ -202,7 +202,7 @@ class _ArenaFooter extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.primary,
                       fontWeight: AppTextStyles.medium,
-                      height: 1,
+                      height: AppSpacing.arenaLeaderboardLineHeight,
                     ),
                   ),
                 ],
@@ -219,7 +219,7 @@ class _ArenaFooter extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: AppColors.accent,
-                size: 17,
+                size: AppSpacing.arenaLeaderboardFooterShieldIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -227,7 +227,7 @@ class _ArenaFooter extends StatelessWidget {
                   disclaimer,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.35,
+                    height: AppSpacing.arenaLeaderboardFooterLineHeight,
                   ),
                 ),
               ),

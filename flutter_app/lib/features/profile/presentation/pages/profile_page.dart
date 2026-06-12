@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dar
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -58,8 +59,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 92
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.profileBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.profileBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -74,7 +76,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           ),
           child: SingleChildScrollView(
             key: ProfilePage.contentKey,
-            padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+            padding: AppSpacing.profileScrollPadding(bottomInset),
             physics: const BouncingScrollPhysics(),
             child: VitPageContent(
               padding: VitContentPadding.none,
@@ -92,29 +94,29 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     setState(() => _copiedReferral = true);
                   },
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: AppSpacing.profileHeroToVipGap),
                 _VipCard(vip: snapshot.vip),
-                const SizedBox(height: 26),
+                const SizedBox(height: AppSpacing.profileVipToSectionGap),
                 const _SectionLabel(
                   label: 'D\u1EF1 \u0111o\u00E1n & Th\u00E1ch \u0111\u1EA5u',
                   accent: _profilePurple,
                 ),
-                const SizedBox(height: 11),
+                const SizedBox(height: AppSpacing.profileSectionLabelGap),
                 _PredictionCard(
                   prediction: snapshot.prediction,
                   onTap: () => context.go(AppRoutePaths.profilePredictions),
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: AppSpacing.profilePredictionToArenaGap),
                 _ArenaCard(
                   arena: snapshot.arena,
                   onTap: () => context.go(AppRoutePaths.profileArena),
                 ),
-                const SizedBox(height: 25),
+                const SizedBox(height: AppSpacing.profileSectionGap),
                 const _SectionLabel(
                   label: 'S\u1EA2N PH\u1EA8M & H\u1ED6 TR\u1EE2',
                   accent: _profileAmber,
                 ),
-                const SizedBox(height: 11),
+                const SizedBox(height: AppSpacing.profileSectionLabelGap),
                 if (snapshot.productShortcuts.isEmpty)
                   const VitEmptyState(
                     title: 'Ch\u01B0a c\u00F3 s\u1EA3n ph\u1EA9m',
@@ -124,7 +126,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   )
                 else
                   _ProfileProductHub(shortcuts: snapshot.productShortcuts),
-                const SizedBox(height: 25),
+                const SizedBox(height: AppSpacing.profileSectionGap),
                 if (snapshot.sections.isEmpty)
                   const VitEmptyState(
                     title: 'Ch\u01B0a c\u00F3 m\u1EE5c t\u00E0i kho\u1EA3n',
@@ -138,24 +140,20 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       label: section.label,
                       accent: Color(section.accentHex),
                     ),
-                    const SizedBox(height: 11),
+                    const SizedBox(height: AppSpacing.profileSectionLabelGap),
                     _MenuSection(section: section),
-                    const SizedBox(height: 25),
+                    const SizedBox(height: AppSpacing.profileSectionGap),
                   ],
                 _ActivityButton(
                   onTap: () => context.go(AppRoutePaths.profileActivity),
                 ),
-                const SizedBox(height: 28),
+                const SizedBox(height: AppSpacing.profileActivityGap),
                 _LogoutButton(onTap: () => context.go(AppRoutePaths.authLogin)),
-                const SizedBox(height: 38),
+                const SizedBox(height: AppSpacing.profileFooterGap),
                 Text(
                   'VitTrade v2.4.1 \u2022 Tham gia t\u1EEB ${snapshot.user.joinDate}',
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.micro.copyWith(
-                    color: _profileMuted,
-                    fontSize: 11,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: _profileMuted),
                 ),
               ],
             ),

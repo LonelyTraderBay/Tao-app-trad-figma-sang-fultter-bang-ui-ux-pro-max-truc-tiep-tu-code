@@ -23,7 +23,6 @@ class _CopyHeroCard extends StatelessWidget {
                   'ASSET UNDER MANAGEMENT',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -31,7 +30,7 @@ class _CopyHeroCard extends StatelessWidget {
                 Text(
                   _formatCompact(snapshot.totalAum, prefix: r'$'),
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.heroNumber.copyWith(fontSize: 32),
+                  style: AppTextStyles.heroNumber,
                 ),
                 const SizedBox(height: 10),
                 _TrendPill(value: snapshot.aumTrendPct),
@@ -66,7 +65,6 @@ class _CopyHeroCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3.withValues(alpha: .70),
-              fontSize: 10,
             ),
           ),
         ],
@@ -109,7 +107,6 @@ class _HeroMetric extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -120,7 +117,6 @@ class _HeroMetric extends StatelessWidget {
           Text(
             value,
             style: AppTextStyles.sectionTitle.copyWith(
-              fontSize: 24,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
@@ -146,7 +142,7 @@ class _TrendPill extends StatelessWidget {
         decoration: BoxDecoration(
           color: color.withValues(alpha: .08),
           border: Border.all(color: color.withValues(alpha: .18)),
-          borderRadius: BorderRadius.circular(999),
+          borderRadius: AppRadii.xlRadius,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -163,17 +159,13 @@ class _TrendPill extends StatelessWidget {
               '${value.abs().toStringAsFixed(1)}%',
               style: AppTextStyles.caption.copyWith(
                 color: color,
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
             const SizedBox(width: 4),
             Text(
               'vs last month',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: 10,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ],
         ),

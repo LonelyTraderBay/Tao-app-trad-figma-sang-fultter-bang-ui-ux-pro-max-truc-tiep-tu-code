@@ -23,7 +23,7 @@ class _HoldersContent extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        const Padding(padding: EdgeInsets.only(top: 8)),
         for (var index = 0; index < snapshot.topHolders.length; index += 1)
           _HolderRow(rank: index + 1, holder: snapshot.topHolders[index]),
       ],
@@ -57,7 +57,6 @@ class _HolderRow extends StatelessWidget {
               holder.name,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -80,7 +79,6 @@ class _HolderRow extends StatelessWidget {
               textAlign: TextAlign.end,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
@@ -127,7 +125,6 @@ class _ActivityContent extends StatelessWidget {
                         '${item.actor} ${item.action}',
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 12,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),

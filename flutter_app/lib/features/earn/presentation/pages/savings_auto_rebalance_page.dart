@@ -163,6 +163,13 @@ class _SavingsAutoRebalancePageState
                               onAutoChanged: (value) =>
                                   setState(() => _autoEnabled = value),
                             ),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Savings rebalance review',
+                            message:
+                                'Target allocation, drift threshold, locked-position handling, estimated trade amount, preview sheet, confirmation, and result feedback are reviewed before auto-rebalance changes run.',
+                            contractId: 'SC-344',
+                          ),
                         ],
                       ),
                     ),

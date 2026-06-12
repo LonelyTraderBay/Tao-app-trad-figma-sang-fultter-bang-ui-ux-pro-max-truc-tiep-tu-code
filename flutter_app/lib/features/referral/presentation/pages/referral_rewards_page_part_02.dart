@@ -16,7 +16,7 @@ class _RewardChart extends StatelessWidget {
         AppSpacing.x3,
       ),
       child: SizedBox(
-        height: 140,
+        height: AppSpacing.referralChartHeight,
         child: CustomPaint(
           painter: _ReferralRewardChartPainter(snapshot.chartPoints),
           child: Align(
@@ -60,7 +60,7 @@ class _RewardTabs extends StatelessWidget {
           for (final filter in filters)
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(1.5),
+                padding: const EdgeInsets.all(AppSpacing.referralFinePadding),
                 child: _FilterButton(
                   filter: filter,
                   active: filter.filter == active,
@@ -135,7 +135,11 @@ class _SortRail extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          const Icon(Icons.swap_vert_rounded, color: AppColors.text3, size: 15),
+          const Icon(
+            Icons.swap_vert_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.referralSortIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Text(
             'Sắp xếp:',
@@ -234,7 +238,10 @@ class _RewardLedger extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: AppColors.divider),
+          const Divider(
+            height: AppSpacing.referralDividerHeight,
+            color: AppColors.divider,
+          ),
           if (snapshot.records.isEmpty)
             const Padding(
               padding: EdgeInsets.all(AppSpacing.x6),
@@ -251,7 +258,10 @@ class _RewardLedger extends StatelessWidget {
                 onReport: () => onReport(snapshot.records[i]),
               ),
               if (i < snapshot.records.length - 1)
-                const Divider(height: 1, color: AppColors.divider),
+                const Divider(
+                  height: AppSpacing.referralDividerHeight,
+                  color: AppColors.divider,
+                ),
             ],
         ],
       ),
@@ -289,7 +299,7 @@ class _PendingPill extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.warn,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.referralLineHeightTight,
               ),
             ),
           ],
@@ -351,7 +361,7 @@ class _RewardRecordRow extends StatelessWidget {
                       ],
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x1),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                   Text(
                     '${record.action} ${record.date}',
                     maxLines: 1,
@@ -452,7 +462,7 @@ class _StatusPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.warn,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.referralLineHeightTight,
           ),
         ),
       ),

@@ -8,8 +8,9 @@ class _TopTradersCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _AnalyticsCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 14,
         children: [
           _CardHeader(
             icon: Icons.visibility_rounded,
@@ -17,15 +18,11 @@ class _TopTradersCard extends StatelessWidget {
             title: 'Top Traders',
             badge: 'Long',
           ),
-          const SizedBox(height: 16),
-          Container(
+          VitCard(
             height: 113,
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: _analyticsGreen.withValues(alpha: .09),
-              border: Border.all(color: _analyticsGreen.withValues(alpha: .2)),
-              borderRadius: AppRadii.cardRadius,
-            ),
+            variant: VitCardVariant.inner,
+            borderColor: _analyticsGreen.withValues(alpha: .2),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -33,43 +30,32 @@ class _TopTradersCard extends StatelessWidget {
                   'Top traders dang Long',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
                     height: 1,
                   ),
                 ),
-                const SizedBox(height: 8),
                 Text(
                   '${data.longPct.toStringAsFixed(1)}%',
                   style: AppTextStyles.heroNumber.copyWith(
                     color: _analyticsGreen,
-                    fontSize: 36,
                     fontWeight: AppTextStyles.bold,
-                    fontFamily: 'monospace',
                     fontFeatures: AppTextStyles.tabularFigures,
                     height: 1,
                   ),
                 ),
-                const SizedBox(height: 9),
                 Text(
                   'of top traders are long',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 11,
                     height: 1,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 14),
           _RatioBar(longPct: data.longPct),
-          const SizedBox(height: 12),
-          Container(
+          VitCard(
             padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
-            decoration: BoxDecoration(
-              color: _analyticsPanel2,
-              borderRadius: AppRadii.cardRadius,
-            ),
+            variant: VitCardVariant.inner,
             child: Row(
               children: [
                 Expanded(
@@ -80,7 +66,6 @@ class _TopTradersCard extends StatelessWidget {
                         '24h Change',
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          fontSize: 12,
                           height: 1,
                         ),
                       ),
@@ -89,7 +74,6 @@ class _TopTradersCard extends StatelessWidget {
                         'Shifted ${data.change24h.toStringAsFixed(1)}% to Long',
                         style: AppTextStyles.body.copyWith(
                           color: AppColors.text1,
-                          fontSize: 14,
                           fontWeight: AppTextStyles.bold,
                           height: 1.2,
                         ),
@@ -97,23 +81,24 @@ class _TopTradersCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  width: 42,
-                  height: 42,
+                DecoratedBox(
                   decoration: BoxDecoration(
                     color: _analyticsGreen.withValues(alpha: .12),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
-                    Icons.trending_up_rounded,
-                    color: _analyticsGreen,
-                    size: 23,
+                  child: const SizedBox(
+                    width: 42,
+                    height: 42,
+                    child: Icon(
+                      Icons.trending_up_rounded,
+                      color: _analyticsGreen,
+                      size: 23,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 14),
           _InfoStrip(
             iconColor: _analyticsAmber,
             bg: _analyticsAmber.withValues(alpha: .06),
@@ -134,8 +119,9 @@ class _FundingRateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _AnalyticsCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 12,
         children: [
           _CardHeader(
             icon: Icons.attach_money_rounded,
@@ -144,39 +130,37 @@ class _FundingRateCard extends StatelessWidget {
             badge: '+${data.currentRatePct.toStringAsFixed(3)}%',
             badgeColor: _analyticsRed,
           ),
-          const SizedBox(height: 16),
-          Container(
+          VitCard(
             height: 54,
             padding: const EdgeInsets.symmetric(horizontal: 14),
-            decoration: BoxDecoration(
-              color: _analyticsSurface3,
-              borderRadius: AppRadii.cardRadius,
-            ),
+            variant: VitCardVariant.inner,
             child: Row(
               children: [
-                Text(
-                  'Next funding in',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 12,
+                Expanded(
+                  child: Text(
+                    'Next funding in',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                    ),
                   ),
                 ),
-                const Spacer(),
-                Text(
-                  data.nextFundingLabel,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: _analyticsPrimary,
-                    fontSize: 18,
-                    fontWeight: AppTextStyles.bold,
-                    fontFamily: 'monospace',
-                    fontFeatures: AppTextStyles.tabularFigures,
-                    height: 1,
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    data.nextFundingLabel,
+                    style: AppTextStyles.baseMedium.copyWith(
+                      color: _analyticsPrimary,
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                      height: 1,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 12),
           Row(
             children: [
               Expanded(
@@ -203,19 +187,14 @@ class _FundingRateCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 13),
-          Container(
+          VitCard(
             height: 67,
             padding: const EdgeInsets.fromLTRB(0, 8, 0, 6),
-            decoration: BoxDecoration(
-              color: _analyticsPanel2,
-              borderRadius: AppRadii.cardRadius,
-            ),
+            variant: VitCardVariant.inner,
             child: CustomPaint(
               painter: _FundingLinePainter(values: data.historyPct),
             ),
           ),
-          const SizedBox(height: 12),
           _InfoStrip(
             text:
                 'Funding rate duong (do) = Long tra Short. Am (xanh) = Short tra Long. Thanh toan moi 8 gio.',
@@ -234,18 +213,20 @@ class _LiquidationsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stats = snapshot.liquidationStats;
-    return Column(
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      customGap: 12,
       children: [
         _AnalyticsCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: VitPageContent(
+            padding: VitContentPadding.none,
+            customGap: 10,
             children: [
               const _CardHeader(
                 icon: Icons.flash_on_rounded,
                 iconColor: _analyticsAmber,
                 title: 'Liquidation Stats',
               ),
-              const SizedBox(height: 14),
               Row(
                 children: [
                   Expanded(
@@ -273,12 +254,10 @@ class _LiquidationsTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
               _ValueRow(
                 label: 'Largest liquidation',
                 value: _formatCompactUsd(stats.largest24h),
               ),
-              const SizedBox(height: 8),
               _ValueRow(
                 label: 'Liquidation count',
                 value: _formatInt(stats.count24h),
@@ -286,29 +265,25 @@ class _LiquidationsTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 12),
         _AnalyticsCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: VitPageContent(
+            padding: VitContentPadding.none,
+            customGap: 8,
             children: [
               const _CardHeader(
                 icon: Icons.grid_view_rounded,
                 iconColor: _analyticsRed,
                 title: 'Liquidation Heatmap',
               ),
-              const SizedBox(height: 14),
-              for (final cluster in snapshot.liquidationClusters) ...[
+              for (final cluster in snapshot.liquidationClusters)
                 _HeatmapRow(cluster: cluster),
-                if (cluster != snapshot.liquidationClusters.last)
-                  const SizedBox(height: 8),
-              ],
             ],
           ),
         ),
-        const SizedBox(height: 12),
         _AnalyticsCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: VitPageContent(
+            padding: VitContentPadding.none,
+            customGap: 8,
             children: [
               const _CardHeader(
                 icon: Icons.history_rounded,
@@ -316,12 +291,8 @@ class _LiquidationsTab extends StatelessWidget {
                 title: 'Recent Liquidations',
                 badge: 'Live',
               ),
-              const SizedBox(height: 12),
-              for (final liquidation in snapshot.recentLiquidations) ...[
+              for (final liquidation in snapshot.recentLiquidations)
                 _LiquidationRow(liquidation: liquidation),
-                if (liquidation != snapshot.recentLiquidations.last)
-                  const SizedBox(height: 8),
-              ],
             ],
           ),
         ),
@@ -338,18 +309,20 @@ class _SentimentTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sentiment = snapshot.sentiment;
-    return Column(
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      customGap: 12,
       children: [
         _AnalyticsCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: VitPageContent(
+            padding: VitContentPadding.none,
+            customGap: 16,
             children: [
               const _CardHeader(
                 icon: Icons.psychology_outlined,
                 iconColor: _analyticsPurple,
                 title: 'Market Sentiment',
               ),
-              const SizedBox(height: 18),
               Center(
                 child: Stack(
                   alignment: Alignment.center,
@@ -371,7 +344,6 @@ class _SentimentTab extends StatelessWidget {
                           '${sentiment.score}',
                           style: AppTextStyles.heroNumber.copyWith(
                             color: _analyticsAmber,
-                            fontSize: 35,
                             height: 1,
                           ),
                         ),
@@ -379,7 +351,6 @@ class _SentimentTab extends StatelessWidget {
                           sentiment.overall.toUpperCase(),
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text2,
-                            fontSize: 10,
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
@@ -391,47 +362,37 @@ class _SentimentTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 12),
         _AnalyticsCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: VitPageContent(
+            padding: VitContentPadding.none,
+            customGap: 8,
             children: [
               Text(
                 'How Sentiment is Calculated',
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text1,
-                  fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: 12),
-              for (final component in sentiment.components) ...[
+              for (final component in sentiment.components)
                 _SentimentComponentRow(component: component),
-                if (component != sentiment.components.last)
-                  const SizedBox(height: 8),
-              ],
             ],
           ),
         ),
-        const SizedBox(height: 12),
         _AnalyticsCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: VitPageContent(
+            padding: VitContentPadding.none,
+            customGap: 8,
             children: [
               Text(
                 'Trading Implications',
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text1,
-                  fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: 12),
-              for (final implication in sentiment.implications) ...[
+              for (final implication in sentiment.implications)
                 _ImplicationRow(implication: implication),
-                if (implication != sentiment.implications.last)
-                  const SizedBox(height: 8),
-              ],
             ],
           ),
         ),
@@ -468,7 +429,6 @@ class _CardHeader extends StatelessWidget {
             title,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
-              fontSize: 15,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -479,7 +439,6 @@ class _CardHeader extends StatelessWidget {
             trailing!,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           )

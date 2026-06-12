@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_common.dart';
 
@@ -27,8 +28,8 @@ class AddressWhitelistCard extends StatelessWidget {
         onTap: onTap,
         behavior: HitTestBehavior.opaque,
         child: Container(
-          height: 80,
-          padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+          height: AppSpacing.walletAddressAddWhitelistHeight,
+          padding: AppSpacing.walletAddressSecurityPadding,
           decoration: BoxDecoration(
             color: addressAddPanel,
             borderRadius: AppRadii.cardRadius,
@@ -37,8 +38,8 @@ class AddressWhitelistCard extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                width: 40,
-                height: 40,
+                width: AppSpacing.walletAddressIconSize,
+                height: AppSpacing.walletAddressIconSize,
                 decoration: BoxDecoration(
                   color: enabled ? AppColors.buy10 : addressAddPanel2,
                   borderRadius: AppRadii.cardRadius,
@@ -51,10 +52,10 @@ class AddressWhitelistCard extends StatelessWidget {
                 child: Icon(
                   Icons.shield_outlined,
                   color: enabled ? addressAddGreen : AppColors.text3,
-                  size: 18,
+                  size: AppSpacing.walletAddressAddIcon,
                 ),
               ),
-              const SizedBox(width: 13),
+              const SizedBox(width: AppSpacing.walletAddressPrimaryGap),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -62,21 +63,19 @@ class AddressWhitelistCard extends StatelessWidget {
                   children: [
                     Text(
                       'Thêm vào Whitelist',
-                      style: AppTextStyles.body.copyWith(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w800,
-                        height: 1,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       'Chỉ rút tiền đến địa chỉ whitelist',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 12,
-                        height: 1,
                       ),
                     ),
                   ],
@@ -99,23 +98,23 @@ class _SwitchPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 44,
-      height: 24,
+      width: AppSpacing.walletAddressAddSwitchWidth,
+      height: AppSpacing.walletAddressAddSwitchHeight,
       decoration: BoxDecoration(
         color: enabled ? addressAddGreen : addressAddPanel2,
         borderRadius: AppRadii.mdRadius,
         border: Border.all(
           color: enabled ? addressAddGreen : AppColors.borderSolid,
-          width: 1.5,
+          width: AppSpacing.walletAddressAddSwitchBorder,
         ),
       ),
       child: AnimatedAlign(
         alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
         duration: const Duration(milliseconds: 160),
         child: Container(
-          width: 18,
-          height: 18,
-          margin: const EdgeInsets.symmetric(horizontal: 3),
+          width: AppSpacing.walletAddressAddSwitchKnob,
+          height: AppSpacing.walletAddressAddSwitchKnob,
+          margin: AppSpacing.walletAddressAddSwitchKnobMargin,
           decoration: const BoxDecoration(
             color: AppColors.onAccent,
             shape: BoxShape.circle,
@@ -132,7 +131,7 @@ class AddressWarningCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+      padding: AppSpacing.walletAddressSecurityPadding,
       decoration: BoxDecoration(
         color: AppColors.caution.withValues(alpha: .06),
         borderRadius: AppRadii.cardRadius,
@@ -142,14 +141,14 @@ class AddressWarningCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(top: 2),
+            padding: AppSpacing.walletAddressAddWarningIconPadding,
             child: Icon(
               Icons.warning_amber_rounded,
               color: addressAddAmber,
-              size: 18,
+              size: AppSpacing.walletAddressAddIcon,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.rowGapRegular),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,17 +157,14 @@ class AddressWarningCard extends StatelessWidget {
                   'Lưu ý quan trọng',
                   style: AppTextStyles.caption.copyWith(
                     color: addressAddAmber,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w800,
-                    height: 1,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.rowGap),
                 Text(
                   'Kiểm tra kỹ địa chỉ và mạng lưới trước khi lưu. Rút tiền sai địa chỉ hoặc sai mạng sẽ mất vĩnh viễn và không thể khôi phục.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1.58,
                   ),
                 ),
@@ -206,34 +202,35 @@ class AddressAgreementRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 24,
-              height: 24,
-              margin: const EdgeInsets.only(top: 2),
+              width: AppSpacing.walletAddressAddAgreementBox,
+              height: AppSpacing.walletAddressAddAgreementBox,
+              margin: AppSpacing.walletAddressAddAgreementBoxMargin,
               decoration: BoxDecoration(
                 color: agreed ? addressAddGreen : AppColors.transparent,
-                borderRadius: BorderRadius.circular(9),
+                borderRadius: BorderRadius.circular(
+                  AppSpacing.walletAddressAddAgreementRadius,
+                ),
                 border: Border.all(
                   color: agreed ? addressAddGreen : AppColors.borderSolid,
-                  width: 2,
+                  width: AppSpacing.walletAddressAddAgreementBorder,
                 ),
               ),
               child: agreed
                   ? const Icon(
                       Icons.check_rounded,
                       color: AppColors.onAccent,
-                      size: 16,
+                      size: AppSpacing.walletAddressAddAgreementIcon,
                     )
                   : null,
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.rowGapRegular),
             Expanded(
               child: Text(
                 'Tôi xác nhận địa chỉ ví và mạng lưới chính xác. Tôi hiểu rằng gửi tiền sai địa chỉ sẽ không thể hoàn lại.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  fontSize: 13,
                   height: 1.5,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: AppTextStyles.medium,
                 ),
               ),
             ),

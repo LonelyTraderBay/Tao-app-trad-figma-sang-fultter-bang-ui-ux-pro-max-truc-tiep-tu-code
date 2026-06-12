@@ -73,20 +73,24 @@ class _AssetTransactions extends StatelessWidget {
       );
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          'Lịch sử giao dịch',
-          style: AppTextStyles.baseMedium.copyWith(
-            fontSize: 14,
-            fontWeight: FontWeight.w800,
+    return VitCard(
+      padding: AppSpacing.cardPadding,
+      borderColor: AppColors.overlayStroke,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.walletAssetTransactionsGap,
+        children: [
+          Text(
+            'Lịch sử giao dịch',
+            style: AppTextStyles.baseMedium.copyWith(
+              fontWeight: AppTextStyles.bold,
+            ),
           ),
-        ),
-        const SizedBox(height: 14),
-        for (final tx in transactions)
-          _AssetTransactionRow(tx: tx, onTap: () => onNavigate(tx.route)),
-      ],
+          for (final tx in transactions)
+            _AssetTransactionRow(tx: tx, onTap: () => onNavigate(tx.route)),
+        ],
+      ),
     );
   }
 }
@@ -100,81 +104,69 @@ class _AssetTransactionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = tx.isIncoming ? _assetGreen : _assetRed;
-    return GestureDetector(
+    return VitCard(
       key: AssetDetailPage.transactionKey(tx.id),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.walletTransactionDetailsPadVertical,
+      ),
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Row(
-          children: [
-            Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: .12),
-                borderRadius: AppRadii.cardRadius,
-              ),
-              alignment: Alignment.center,
-              child: Icon(
-                tx.isIncoming
-                    ? Icons.trending_up_rounded
-                    : Icons.trending_down_rounded,
-                color: color,
-                size: 18,
-              ),
+      child: Row(
+        children: [
+          Container(
+            width: AppSpacing.walletAssetTransactionIcon,
+            height: AppSpacing.walletAssetTransactionIcon,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: .12),
+              borderRadius: AppRadii.cardRadius,
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    tx.label,
-                    style: AppTextStyles.caption.copyWith(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w800,
-                      height: 1,
-                    ),
-                  ),
-                  const SizedBox(height: 7),
-                  Text(
-                    tx.createdAt,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 11,
-                      height: 1,
-                    ),
-                  ),
-                ],
-              ),
+            alignment: Alignment.center,
+            child: Icon(
+              tx.isIncoming
+                  ? Icons.trending_up_rounded
+                  : Icons.trending_down_rounded,
+              color: color,
+              size: AppSpacing.walletAssetTransactionGlyph,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+          ),
+          const SizedBox(width: AppSpacing.walletHistoryFilterGap),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${tx.isIncoming ? '+' : '-'}${_formatFixed(tx.amount, 6)} ${tx.asset}',
+                  tx.label,
                   style: AppTextStyles.caption.copyWith(
-                    color: color,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w800,
-                    fontFamily: 'Roboto',
-                    height: 1,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(height: AppSpacing.walletAssetSmallGap),
                 Text(
-                  tx.status,
-                  style: AppTextStyles.micro.copyWith(
-                    color: color,
-                    fontSize: 10,
-                    height: 1,
-                  ),
+                  tx.createdAt,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '${tx.isIncoming ? '+' : '-'}${_formatFixed(tx.amount, 6)} ${tx.asset}',
+                style: AppTextStyles.caption.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.walletAssetSmallGap),
+              Text(
+                tx.status,
+                style: AppTextStyles.micro.copyWith(color: color),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

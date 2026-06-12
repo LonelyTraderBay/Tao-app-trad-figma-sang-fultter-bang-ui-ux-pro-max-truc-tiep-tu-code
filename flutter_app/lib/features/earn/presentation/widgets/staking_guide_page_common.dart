@@ -27,7 +27,7 @@ class _StepDetail extends StatelessWidget {
           step.description,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            height: 1.65,
+            height: AppSpacing.earnGuideParagraphLineHeight,
           ),
         ),
       ],
@@ -71,10 +71,10 @@ class _TipPanel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
-                  padding: EdgeInsets.only(top: 7),
+                  padding: EdgeInsets.only(top: AppSpacing.earnGuideBulletTop),
                   child: SizedBox(
-                    width: 4,
-                    height: 4,
+                    width: AppSpacing.earnGuideBulletSize,
+                    height: AppSpacing.earnGuideBulletSize,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         color: AppColors.text3,
@@ -89,7 +89,7 @@ class _TipPanel extends StatelessWidget {
                     tip,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.5,
+                      height: AppSpacing.earnGuideTipLineHeight,
                     ),
                   ),
                 ),
@@ -126,7 +126,7 @@ class _DifficultyPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.earnGuidePillLineHeight,
           ),
         ),
       ),

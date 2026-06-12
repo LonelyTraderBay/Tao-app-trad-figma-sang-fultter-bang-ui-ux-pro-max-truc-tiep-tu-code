@@ -71,8 +71,10 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 78
-            : DeviceMetrics.nativeBottomChrome + 24) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.myArenaBottomInsetVisualExtra
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.myArenaBottomInsetNativeExtra) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -100,7 +102,7 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
                   child: SingleChildScrollView(
                     key: MyArenaPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.myArenaScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
                       customGap: AppSpacing.x5,

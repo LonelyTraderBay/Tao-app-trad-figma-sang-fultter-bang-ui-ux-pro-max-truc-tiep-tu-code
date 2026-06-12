@@ -113,7 +113,7 @@ class _DueDiligenceCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 58,
+                width: AppSpacing.launchpadBox58,
                 child: _ScoreProgress(value: score, color: color),
               ),
               const SizedBox(width: AppSpacing.x2),

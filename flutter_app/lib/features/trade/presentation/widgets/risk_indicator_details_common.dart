@@ -1,4 +1,4 @@
-﻿part of '../pages/risk_indicator_explainer_page.dart';
+part of '../pages/risk_indicator_explainer_page.dart';
 
 class _SriExplanationCard extends StatelessWidget {
   const _SriExplanationCard({required this.holdingPeriodYears});
@@ -19,7 +19,6 @@ class _SriExplanationCard extends StatelessWidget {
             'the markets or because we are not able to pay you.',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 11,
               height: 1.55,
             ),
           ),
@@ -43,7 +42,6 @@ class _SriExplanationCard extends StatelessWidget {
                   'significantly if you cash in at an early stage.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                     height: 1.28,
                   ),
@@ -86,7 +84,6 @@ class _RiskLevelCard extends StatelessWidget {
                 '${level.level}',
                 style: AppTextStyles.baseMedium.copyWith(
                   color: color,
-                  fontSize: 18,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -106,7 +103,6 @@ class _RiskLevelCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text1,
-                            fontSize: 12,
                             fontWeight: AppTextStyles.bold,
                             height: 1.1,
                           ),
@@ -118,7 +114,6 @@ class _RiskLevelCard extends StatelessWidget {
                           'THIS PRODUCT',
                           style: AppTextStyles.micro.copyWith(
                             color: _riskPrimary,
-                            fontSize: 9,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),
@@ -133,7 +128,6 @@ class _RiskLevelCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 10,
                       height: 1.1,
                     ),
                   ),
@@ -144,7 +138,6 @@ class _RiskLevelCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 9,
                       height: 1,
                     ),
                   ),
@@ -210,7 +203,6 @@ class _AdditionalRiskRow extends StatelessWidget {
                 risk.title,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 11,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -220,7 +212,6 @@ class _AdditionalRiskRow extends StatelessWidget {
                 risk.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
                   height: 1.25,
                 ),
               ),
@@ -246,7 +237,7 @@ class _SectionLabel extends StatelessWidget {
           height: 15,
           decoration: BoxDecoration(
             color: _riskPrimary,
-            borderRadius: BorderRadius.circular(3),
+            borderRadius: AppRadii.xsRadius,
           ),
         ),
         const SizedBox(width: 7),
@@ -257,7 +248,6 @@ class _SectionLabel extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -276,13 +266,9 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _riskPanel,
-        border: Border.all(color: _riskBorder.withValues(alpha: .76)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _riskBorder.withValues(alpha: .76),
       child: child,
     );
   }

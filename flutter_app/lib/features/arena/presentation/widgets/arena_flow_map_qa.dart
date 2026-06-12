@@ -125,7 +125,10 @@ class _QaCategory extends StatelessWidget {
                   onTap: () => onToggle(item.id),
                 ),
                 if (item != items.last)
-                  const Divider(height: 1, color: AppColors.divider),
+                  const Divider(
+                    height: AppSpacing.arenaFlowMapDividerHeight,
+                    color: AppColors.divider,
+                  ),
               ],
             ],
           ),
@@ -160,7 +163,7 @@ class _QaRow extends StatelessWidget {
               Icon(
                 checked ? Icons.check_circle_rounded : Icons.circle_outlined,
                 color: checked ? AppColors.buy : AppColors.text3,
-                size: 18,
+                size: AppSpacing.arenaFlowMapInlineIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -168,7 +171,7 @@ class _QaRow extends StatelessWidget {
                   item.label,
                   style: AppTextStyles.caption.copyWith(
                     color: checked ? AppColors.text1 : AppColors.text2,
-                    height: 1.35,
+                    height: AppSpacing.arenaFlowMapQaLineHeight,
                   ),
                 ),
               ),
@@ -195,7 +198,7 @@ class _FlowDisclaimer extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.accent,
-            size: 17,
+            size: AppSpacing.arenaFlowMapSectionIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -203,7 +206,7 @@ class _FlowDisclaimer extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1.35,
+                height: AppSpacing.arenaFlowMapQaLineHeight,
               ),
             ),
           ),
@@ -229,8 +232,8 @@ class _SectionLabel extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 17,
+          width: AppSpacing.arenaFlowMapMarkerWidth,
+          height: AppSpacing.arenaFlowMapMarkerHeight,
           decoration: BoxDecoration(
             color: color,
             borderRadius: AppRadii.xsRadius,

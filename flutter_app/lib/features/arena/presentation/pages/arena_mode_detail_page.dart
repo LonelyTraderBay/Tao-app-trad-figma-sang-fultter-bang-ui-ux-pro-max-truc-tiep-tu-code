@@ -21,6 +21,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class ArenaModeDetailPage extends ConsumerStatefulWidget {
   const ArenaModeDetailPage({
@@ -89,21 +90,30 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
                       padding: VitContentPadding.compact,
                       customGap: AppSpacing.x5,
                       children: [
-                        ArenaModeHero(
-                          creatorKey: ArenaModeDetailPage.creatorKey,
-                          trustKey: ArenaModeDetailPage.trustKey,
-                          snapshot: snapshot,
-                          onCreator: () => _go(
-                            AppRoutePaths.arenaCreator(snapshot.creator.id),
-                          ),
-                          onTrust: () => _go(
-                            AppRoutePaths.arenaTrust(snapshot.creator.id),
+                        VitCard(
+                          padding: EdgeInsets.zero,
+                          child: ArenaModeHero(
+                            creatorKey: ArenaModeDetailPage.creatorKey,
+                            trustKey: ArenaModeDetailPage.trustKey,
+                            snapshot: snapshot,
+                            onCreator: () => _go(
+                              AppRoutePaths.arenaCreator(snapshot.creator.id),
+                            ),
+                            onTrust: () => _go(
+                              AppRoutePaths.arenaTrust(snapshot.creator.id),
+                            ),
                           ),
                         ),
-                        ArenaModeDescriptionCard(
-                          description: snapshot.mode.description,
+                        VitCard(
+                          padding: EdgeInsets.zero,
+                          child: ArenaModeDescriptionCard(
+                            description: snapshot.mode.description,
+                          ),
                         ),
-                        ArenaModeRulesSummary(rows: snapshot.ruleRows),
+                        VitCard(
+                          padding: EdgeInsets.zero,
+                          child: ArenaModeRulesSummary(rows: snapshot.ruleRows),
+                        ),
                         ArenaModeQualitySection(
                           infoKey: ArenaModeDetailPage.infoKey,
                           metrics: snapshot.qualityMetrics,

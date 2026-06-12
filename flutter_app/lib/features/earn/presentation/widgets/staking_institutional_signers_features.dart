@@ -84,10 +84,11 @@ class _EnterpriseFeatures extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+            crossAxisCount: AppSpacing.stakingProductGridColumns,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
-            childAspectRatio: 1.55,
+            childAspectRatio:
+                AppSpacing.stakingProductInstitutionalFeatureAspect,
           ),
           itemBuilder: (context, index) =>
               _FeatureCard(feature: snapshot.features[index]),

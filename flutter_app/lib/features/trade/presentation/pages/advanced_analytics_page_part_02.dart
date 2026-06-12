@@ -60,7 +60,6 @@ class _SignalCard extends StatelessWidget {
                           signal.timeframe,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            fontSize: 10,
                             height: 1,
                           ),
                         ),
@@ -134,7 +133,6 @@ class _SignalCard extends StatelessWidget {
                     reason,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      fontSize: 10,
                       height: 1.45,
                     ),
                   ),
@@ -162,7 +160,6 @@ class _SignalCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1,
                   ),
                 ),
@@ -173,7 +170,6 @@ class _SignalCard extends StatelessWidget {
                   color: signal.accuracy >= 70
                       ? _advancedGreen
                       : _advancedAmber,
-                  fontSize: 10,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -195,7 +191,7 @@ class _ConfidenceBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 58,
+      height: 62,
       padding: const EdgeInsets.fromLTRB(10, 9, 10, 9),
       variant: VitCardVariant.inner,
       child: Column(
@@ -206,7 +202,6 @@ class _ConfidenceBox extends StatelessWidget {
             'Confidence',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -235,7 +230,6 @@ class _ConfidenceBox extends StatelessWidget {
                 '$confidence%',
                 style: AppTextStyles.caption.copyWith(
                   color: color,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -279,7 +273,6 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -290,9 +283,7 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: valueColor,
-              fontSize: 13,
               fontWeight: AppTextStyles.bold,
-              fontFamily: 'monospace',
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
             ),
@@ -329,7 +320,6 @@ class _MiniStatBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -338,7 +328,6 @@ class _MiniStatBox extends StatelessWidget {
             value,
             style: AppTextStyles.baseMedium.copyWith(
               color: valueColor,
-              fontSize: 18,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
@@ -370,7 +359,6 @@ class _PriceTarget extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
             height: 1,
           ),
         ),
@@ -381,9 +369,7 @@ class _PriceTarget extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.caption.copyWith(
             color: color,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
-            fontFamily: 'monospace',
             fontFeatures: AppTextStyles.tabularFigures,
             height: 1,
           ),
@@ -401,21 +387,12 @@ class _SignalBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .15),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 10,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    return VitStatusPill(
+      label: label,
+      status: label == 'LONG'
+          ? VitStatusPillStatus.success
+          : VitStatusPillStatus.error,
+      size: VitStatusPillSize.sm,
     );
   }
 }

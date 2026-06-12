@@ -16,8 +16,8 @@ class _ClaimableBanner extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 36,
-            height: 36,
+            width: AppSpacing.launchpadBox36,
+            height: AppSpacing.launchpadBox36,
             alignment: Alignment.center,
             decoration: const BoxDecoration(
               color: AppColors.buy15,
@@ -39,7 +39,7 @@ class _ClaimableBanner extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.buy,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.2,
+                    height: AppSpacing.launchpadLineHeightShort,
                   ),
                 ),
                 Text(
@@ -54,7 +54,7 @@ class _ClaimableBanner extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 150,
+            width: AppSpacing.launchpadBox150,
             child: VitCtaButton(
               onPressed: onClaim,
               variant: VitCtaButtonVariant.success,

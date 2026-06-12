@@ -24,7 +24,6 @@ class _ProvidersTab extends StatelessWidget {
                         provider.provider,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 14,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
@@ -35,7 +34,6 @@ class _ProvidersTab extends StatelessWidget {
                         color: provider.criticalCount > 0
                             ? _slipRed
                             : _slipGreen,
-                        fontSize: 16,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -101,7 +99,6 @@ class _HistoryTab extends StatelessWidget {
                         point.date,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
                         ),
                       ),
                     ),
@@ -129,7 +126,6 @@ class _HistoryTab extends StatelessWidget {
                       '${point.max.toStringAsFixed(1)} bps',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        fontSize: 10,
                       ),
                     ),
                   ],
@@ -208,7 +204,6 @@ class _AlertSetting extends StatelessWidget {
                       title,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
-                        fontSize: 13,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -217,7 +212,6 @@ class _AlertSetting extends StatelessWidget {
                       subtitle,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 10,
                       ),
                     ),
                   ],
@@ -236,10 +230,7 @@ class _AlertSetting extends StatelessWidget {
             ),
             child: Text(
               value,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: 10,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ),
         ],

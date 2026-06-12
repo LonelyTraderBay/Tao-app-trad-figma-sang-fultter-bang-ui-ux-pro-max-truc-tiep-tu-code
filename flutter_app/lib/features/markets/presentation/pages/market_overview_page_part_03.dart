@@ -40,7 +40,6 @@ class _FearGreedHistory extends StatelessWidget {
                     '7 ngày trước',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 8,
                       height: 1,
                     ),
                   ),
@@ -48,7 +47,6 @@ class _FearGreedHistory extends StatelessWidget {
                     'Hôm nay',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 8,
                       height: 1,
                     ),
                   ),
@@ -281,13 +279,12 @@ class _ChangePill extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(9),
+        borderRadius: AppRadii.smRadius,
       ),
       child: Text(
         '${positive ? '▲' : '▼'} ${value.abs().toStringAsFixed(2)}%',
         style: AppTextStyles.caption.copyWith(
           color: color,
-          fontSize: 12,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),

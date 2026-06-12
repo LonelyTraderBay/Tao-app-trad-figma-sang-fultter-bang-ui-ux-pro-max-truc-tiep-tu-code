@@ -99,7 +99,10 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
                         : VitPageContent(
                             padding: VitContentPadding.defaultPadding,
                             children: [
-                              _BlockInfoBanner(snapshot: snapshot),
+                              VitCard(
+                                padding: EdgeInsets.zero,
+                                child: _BlockInfoBanner(snapshot: snapshot),
+                              ),
                               _BlockedUsersCard(
                                 users: _blockedUsers,
                                 onUnblock: (user) => _requestUnblock(user),
@@ -180,12 +183,12 @@ class _BlockInfoBanner extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   snapshot.bannerDescription,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.arenaBlockedBodyLineHeight,
                   ),
                 ),
               ],
@@ -275,14 +278,22 @@ class _BlockedUserRow extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  const Padding(
+                    padding: EdgeInsets.only(
+                      top: AppSpacing.arenaBlockedTinyGap,
+                    ),
+                  ),
                   Text(
                     user.reason,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
-                  const SizedBox(height: 2),
+                  const Padding(
+                    padding: EdgeInsets.only(
+                      top: AppSpacing.arenaBlockedTinyGap,
+                    ),
+                  ),
                   Text(
                     '${user.blockedAt} · ${_sourceLabel(user.source)}',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -300,7 +311,7 @@ class _BlockedUserRow extends StatelessWidget {
                   accentColor: AppColors.warn,
                   onTap: onUnblock,
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 _SmallActionButton(
                   key: ArenaBlockedUsersPage.viewProfileKey(user.id),
                   label: 'Xem hồ sơ',
@@ -331,13 +342,17 @@ class _BlockedAvatar extends StatelessWidget {
         : Icons.smart_toy_outlined;
 
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.arenaBlockedAvatarBox,
+      height: AppSpacing.arenaBlockedAvatarBox,
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
         borderRadius: AppRadii.mdRadius,
       ),
-      child: Icon(icon, color: color.withValues(alpha: 0.78), size: 20),
+      child: Icon(
+        icon,
+        color: color.withValues(alpha: 0.78),
+        size: AppSpacing.arenaBlockedAvatarIcon,
+      ),
     );
   }
 }
@@ -362,8 +377,10 @@ class _SmallActionButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
         child: Container(
-          height: 30,
-          constraints: const BoxConstraints(minWidth: 74),
+          height: AppSpacing.arenaBlockedActionHeight,
+          constraints: const BoxConstraints(
+            minWidth: AppSpacing.arenaBlockedActionMinWidth,
+          ),
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
           decoration: BoxDecoration(
@@ -401,7 +418,10 @@ class _UnblockDialog extends StatelessWidget {
       ),
       content: Text(
         'Người này sẽ có thể thấy và tương tác với bạn trong Open Arena. Bạn có thể chặn lại bất cứ lúc nào.',
-        style: AppTextStyles.body.copyWith(color: AppColors.text2, height: 1.5),
+        style: AppTextStyles.body.copyWith(
+          color: AppColors.text2,
+          height: AppSpacing.arenaBlockedDialogLineHeight,
+        ),
       ),
       actions: [
         TextButton(
@@ -436,13 +456,13 @@ class _ToneIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 36,
-      height: 36,
+      width: AppSpacing.arenaBlockedToneIconBox,
+      height: AppSpacing.arenaBlockedToneIconBox,
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
         borderRadius: AppRadii.mdRadius,
       ),
-      child: Icon(icon, color: color, size: 18),
+      child: Icon(icon, color: color, size: AppSpacing.arenaBlockedToneIcon),
     );
   }
 }

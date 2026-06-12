@@ -37,7 +37,7 @@ class _SubscriptionExpanded extends StatelessWidget {
               'Events',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 9,
+                fontSize: AppSpacing.launchpadFontXs,
               ),
             ),
             const SizedBox(height: AppSpacing.x2),
@@ -152,7 +152,7 @@ class _MetadataRows extends StatelessWidget {
                     row.label,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 10,
+                      fontSize: AppSpacing.launchpadFontSm,
                     ),
                   ),
                   const SizedBox(width: AppSpacing.x3),
@@ -265,13 +265,17 @@ class _DeliveryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 30,
-            height: 30,
+            width: AppSpacing.launchpadBox30,
+            height: AppSpacing.launchpadBox30,
             decoration: BoxDecoration(
               color: eventColor.withValues(alpha: .12),
               borderRadius: AppRadii.mdRadius,
             ),
-            child: Icon(Icons.bolt_rounded, color: eventColor, size: 15),
+            child: Icon(
+              Icons.bolt_rounded,
+              color: eventColor,
+              size: AppSpacing.launchpadIconLg,
+            ),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -288,7 +292,7 @@ class _DeliveryCard extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        fontSize: 12,
+                        fontSize: AppSpacing.launchpadFontLg,
                       ),
                     ),
                     _StatusPill(
@@ -306,7 +310,7 @@ class _DeliveryCard extends StatelessWidget {
                       delivery.timestamp,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 10,
+                        fontSize: AppSpacing.launchpadFontSm,
                       ),
                     ),
                     if (delivery.statusCode != null)
@@ -317,7 +321,7 @@ class _DeliveryCard extends StatelessWidget {
                               ? AppColors.buy
                               : AppColors.sell,
                           fontFamily: 'monospace',
-                          fontSize: 10,
+                          fontSize: AppSpacing.launchpadFontSm,
                         ),
                       ),
                     if (delivery.responseTime != null)
@@ -325,7 +329,7 @@ class _DeliveryCard extends StatelessWidget {
                         '${delivery.responseTime}ms',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
+                          fontSize: AppSpacing.launchpadFontSm,
                         ),
                       ),
                   ],
@@ -342,14 +346,14 @@ class _DeliveryCard extends StatelessWidget {
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
                             fontFamily: 'monospace',
-                            fontSize: 9,
+                            fontSize: AppSpacing.launchpadFontXs,
                           ),
                         ),
                       ),
                       _CopyButton(
                         key: LaunchpadWebhooksPage.deliveryCopyKey(delivery.id),
                         active: copiedField == delivery.id,
-                        size: 18,
+                        size: AppSpacing.launchpadIcon2xl,
                         onTap: () => onCopy(delivery.txHash!, delivery.id),
                       ),
                     ],

@@ -30,7 +30,7 @@ class _HeroCard extends StatelessWidget {
                   snapshot.heroSubtitle,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.earnGuideHeroLineHeight,
                   ),
                 ),
               ],
@@ -226,7 +226,7 @@ class _FAQCard extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: 1.25,
+                        height: AppSpacing.earnFaqQuestionLineHeight,
                       ),
                     ),
                   ),
@@ -259,11 +259,14 @@ class _FAQCard extends StatelessWidget {
                     item.answer,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.6,
+                      height: AppSpacing.earnFaqAnswerLineHeight,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x3),
-                  const Divider(color: AppColors.divider, height: 1),
+                  const Divider(
+                    color: AppColors.divider,
+                    height: AppSpacing.earnFaqDividerHeight,
+                  ),
                   const SizedBox(height: AppSpacing.x2),
                   Row(
                     children: [

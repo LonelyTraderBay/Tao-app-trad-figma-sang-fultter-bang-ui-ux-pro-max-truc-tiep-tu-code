@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_entities.dart';
@@ -23,7 +24,7 @@ class LaunchpadRebalanceDeviationCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              fontSize: 12,
+              fontSize: AppSpacing.launchpadFontLg,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -49,13 +50,13 @@ class _DeviationRow extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: 44,
+            width: AppSpacing.launchpadBox44,
             child: Text(
               asset.symbol,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                fontSize: 10,
+                fontSize: AppSpacing.launchpadFontSm,
               ),
             ),
           ),
@@ -67,7 +68,7 @@ class _DeviationRow extends StatelessWidget {
                   maxValue: maxPercent,
                   color: asset.accent,
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: AppSpacing.launchpadGapXs),
                 _DeviationBar(
                   value: asset.targetPercent,
                   maxValue: maxPercent,
@@ -102,10 +103,10 @@ class _DeviationBar extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Container(
             width: width,
-            height: 5,
+            height: AppSpacing.launchpadDotXs,
             decoration: BoxDecoration(
               color: color,
-              borderRadius: BorderRadius.circular(3),
+              borderRadius: AppRadii.swatchRadius,
             ),
           ),
         );

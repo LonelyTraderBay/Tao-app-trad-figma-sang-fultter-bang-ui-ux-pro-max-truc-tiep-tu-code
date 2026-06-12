@@ -21,7 +21,7 @@ class _BenefitsTab extends StatelessWidget {
             tier: tier,
             unlocked: snapshot.currentLevel >= tier.level,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         ],
         if (nextTier != null) _UpgradeCta(nextTier: nextTier, onTrade: onTrade),
       ],
@@ -69,14 +69,15 @@ class _BenefitTierCard extends StatelessWidget {
                             height: 1,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x3),
+                        ),
                         Text(
                           'Volume >= ${_formatUsd(tier.monthlyVolume)}/th\u00E1ng ho\u1EB7c T\u00E0i s\u1EA3n >= ${_formatUsd(tier.assetHold)}',
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.micro.copyWith(
                             color: _vipMuted,
-                            fontSize: 11,
                             height: 1.25,
                           ),
                         ),
@@ -104,11 +105,13 @@ class _BenefitTierCard extends StatelessWidget {
                       unlocked: unlocked,
                     ),
                     if (feature != tier.features.last)
-                      const SizedBox(height: AppSpacing.x3),
+                      const Padding(
+                        padding: EdgeInsets.only(top: AppSpacing.x3),
+                      ),
                   ],
-                  const SizedBox(height: AppSpacing.x4),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
                   const Divider(height: 1, color: AppColors.divider),
-                  const SizedBox(height: AppSpacing.x4),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
                   Row(
                     children: [
                       _BenefitMetric(
@@ -177,7 +180,6 @@ class _FeatureLine extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: unlocked ? AppColors.text1 : _vipMuted,
-              fontSize: 13,
               height: 1.25,
             ),
           ),
@@ -207,7 +209,7 @@ class _BenefitMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: _vipMuted, fontSize: 10),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         Text(
           value,
           maxLines: 1,
@@ -265,14 +267,13 @@ class _UpgradeCta extends StatelessWidget {
                     height: 1,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                 Text(
                   'T\u0103ng kh\u1ED1i l\u01B0\u1EE3ng giao d\u1ECBch \u0111\u1EC3 ti\u1EBFt ki\u1EC7m th\u00EAm',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1.2,
                   ),
                 ),
@@ -296,7 +297,6 @@ class _UpgradeCta extends StatelessWidget {
                 'Giao d\u1ECBch',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: 12,
                   fontWeight: FontWeight.w900,
                   height: 1,
                 ),

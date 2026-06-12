@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -116,7 +117,9 @@ class _PredictionRiskCalculatorPageState
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.predictionRiskBottomInsetVisual
+            : AppSpacing.predictionRiskBottomInsetNative);
     final inputs = _RiskInputs(
       shares: _parse(_sharesController.text),
       entryPrice: _parse(_entryPriceController.text),
@@ -150,33 +153,45 @@ class _PredictionRiskCalculatorPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionRiskCalculatorPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.predictionRiskScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 16,
-                      children: _activeTab == _RiskTab.calculator
-                          ? [
-                              _PositionInfoCard(
-                                eventController: _eventController,
-                                sharesController: _sharesController,
-                                entryPriceController: _entryPriceController,
-                                currentPriceController: _currentPriceController,
-                                riskBudgetController: _riskBudgetController,
-                                outcome: _outcome,
-                                onOutcomeChanged: (value) =>
-                                    setState(() => _outcome = value),
-                              ),
-                              _PositionSummary(inputs: inputs),
-                              _RiskAnalysis(metrics: metrics),
-                              _KellyRecommendation(
-                                metrics: metrics,
-                                riskBudget: inputs.riskBudget,
-                              ),
-                              const _RiskWarning(),
-                            ]
-                          : _activeTab == _RiskTab.scenarios
-                          ? [_ScenariosTab(inputs: inputs, metrics: metrics)]
-                          : const [_GuideTab()],
+                      customGap: AppSpacing.predictionRiskContentGap,
+                      children: [
+                        ...(_activeTab == _RiskTab.calculator
+                            ? [
+                                _PositionInfoCard(
+                                  eventController: _eventController,
+                                  sharesController: _sharesController,
+                                  entryPriceController: _entryPriceController,
+                                  currentPriceController:
+                                      _currentPriceController,
+                                  riskBudgetController: _riskBudgetController,
+                                  outcome: _outcome,
+                                  onOutcomeChanged: (value) =>
+                                      setState(() => _outcome = value),
+                                ),
+                                _PositionSummary(inputs: inputs),
+                                _RiskAnalysis(metrics: metrics),
+                                _KellyRecommendation(
+                                  metrics: metrics,
+                                  riskBudget: inputs.riskBudget,
+                                ),
+                                const _RiskWarning(),
+                              ]
+                            : _activeTab == _RiskTab.scenarios
+                            ? [_ScenariosTab(inputs: inputs, metrics: metrics)]
+                            : const [_GuideTab()]),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Prediction risk-calculator review',
+                          message:
+                              'Outcome side, shares, entry/current probability, risk budget, max loss, result range, scenario table, and guidance states are reviewed before sizing a prediction position.',
+                          contractId: 'SC-036',
+                        ),
+                      ],
                     ),
                   ),
                 ),

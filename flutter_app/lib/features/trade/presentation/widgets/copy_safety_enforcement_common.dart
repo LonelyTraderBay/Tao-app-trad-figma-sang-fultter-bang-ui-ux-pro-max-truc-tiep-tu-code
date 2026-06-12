@@ -12,10 +12,7 @@ class _EnforcementTab extends StatelessWidget {
       children: [
         Text(
           'Recent enforcement actions taken to protect users:',
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 12,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
         const SizedBox(height: 14),
         for (final action in actions) ...[
@@ -62,7 +59,6 @@ class _EnforcementCard extends StatelessWidget {
                   action.action.toUpperCase(),
                   style: AppTextStyles.micro.copyWith(
                     color: color,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -71,17 +67,13 @@ class _EnforcementCard extends StatelessWidget {
                   action.providerName,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   '${action.date} - ${action.reason}',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 11,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -112,7 +104,6 @@ class _SectionPanel extends StatelessWidget {
           title,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
           ),
         ),
@@ -147,10 +138,7 @@ class _IconTextRow extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                fontSize: 11,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
             ),
           ),
         ],
@@ -182,7 +170,6 @@ class _SimpleCard extends StatelessWidget {
             title,
             style: AppTextStyles.micro.copyWith(
               color: accent,
-              fontSize: 11,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -191,7 +178,6 @@ class _SimpleCard extends StatelessWidget {
             body,
             style: AppTextStyles.micro.copyWith(
               color: color ?? AppColors.text3,
-              fontSize: 10,
             ),
           ),
         ],
@@ -229,10 +215,7 @@ class _EmergencyPanel extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   'All copies would be stopped and positions queued for close in the backend flow.',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
                 const SizedBox(height: 16),
                 VitCtaButton(

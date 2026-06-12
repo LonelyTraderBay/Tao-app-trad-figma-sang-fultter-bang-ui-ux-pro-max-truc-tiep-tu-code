@@ -238,7 +238,10 @@ class _FAQCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       item.question,
-                      style: AppTextStyles.baseMedium.copyWith(height: 1.35),
+                      style: AppTextStyles.baseMedium.copyWith(
+                        height:
+                            AppSpacing.stakingCommunityFaqQuestionLineHeight,
+                      ),
                     ),
                   ),
                   AnimatedRotation(
@@ -267,7 +270,7 @@ class _FAQCard extends StatelessWidget {
                 item.answer,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.65,
+                  height: AppSpacing.stakingCommunityFaqAnswerLineHeight,
                 ),
               ),
             ),

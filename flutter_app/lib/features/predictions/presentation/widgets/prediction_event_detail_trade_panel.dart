@@ -37,7 +37,7 @@ class _TradeSection extends StatelessWidget {
       accentColor: _predictionPrimary,
       children: [
         VitCard(
-          padding: const EdgeInsets.all(14),
+          padding: AppSpacing.predictionDetailTradeCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -51,22 +51,25 @@ class _TradeSection extends StatelessWidget {
                 onRight: () => onSideChanged(false),
               ),
               if (event.outcomes.length > 2) ...[
-                const SizedBox(height: 13),
+                const SizedBox(
+                  height: AppSpacing.predictionDetailTradeSectionGap,
+                ),
                 Text(
                   'Outcome',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 11,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(
+                  height: AppSpacing.predictionDetailTradeLabelGap,
+                ),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
                       for (final option in event.outcomes)
                         Padding(
-                          padding: const EdgeInsets.only(right: 7),
+                          padding: const EdgeInsets.only(
+                            right: AppSpacing.predictionDetailTradeLabelGap,
+                          ),
                           child: _SmallToggleChip(
                             label: option.label,
                             color: option.color,
@@ -78,15 +81,14 @@ class _TradeSection extends StatelessWidget {
                   ),
                 ),
               ],
-              const SizedBox(height: 13),
+              const SizedBox(
+                height: AppSpacing.predictionDetailTradeSectionGap,
+              ),
               Text(
                 'Order Type',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 11,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: 7),
+              const SizedBox(height: AppSpacing.predictionDetailTradeLabelGap),
               _SegmentedToggle(
                 leftLabel: 'Market',
                 rightLabel: 'Limit',
@@ -96,24 +98,25 @@ class _TradeSection extends StatelessWidget {
                 onLeft: () => onOrderTypeChanged(true),
                 onRight: () => onOrderTypeChanged(false),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.predictionDetailTradeHelperGap),
               Text(
                 isMarket
                     ? 'Execute at current best available price'
                     : 'Set your desired entry price',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: 13),
+              const SizedBox(
+                height: AppSpacing.predictionDetailTradeSectionGap,
+              ),
               Text(
                 'Amount',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 11,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: 7),
+              const SizedBox(height: AppSpacing.predictionDetailTradeLabelGap),
               _TradeAmountInput(amount: amount, onChanged: onAmountChanged),
-              const SizedBox(height: 8),
+              const SizedBox(
+                height: AppSpacing.predictionDetailTradeAmountPresetGap,
+              ),
               Row(
                 children: [
                   for (final preset in const ['10', '25', '50', '100']) ...[
@@ -124,22 +127,26 @@ class _TradeSection extends StatelessWidget {
                         onTap: () => onAmountChanged(preset),
                       ),
                     ),
-                    if (preset != '100') const SizedBox(width: 6),
+                    if (preset != '100')
+                      const SizedBox(
+                        width: AppSpacing.predictionDetailTradePresetGap,
+                      ),
                   ],
                 ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(
+                height: AppSpacing.predictionDetailTradePreviewGap,
+              ),
               PredictionOrderPreviewCard(preview: preview),
-              const SizedBox(height: 12),
+              const SizedBox(
+                height: AppSpacing.predictionDetailTradeDisclaimerGap,
+              ),
               Text(
                 'Đây không phải lời khuyên đầu tư. Xác suất không phải sự chắc chắn.',
                 textAlign: TextAlign.center,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 9,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: AppSpacing.predictionDetailTradeCtaGap),
               VitCtaButton(
                 variant: isBuy
                     ? VitCtaButtonVariant.success

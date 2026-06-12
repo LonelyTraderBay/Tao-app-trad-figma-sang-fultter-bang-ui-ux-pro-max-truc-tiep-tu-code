@@ -37,7 +37,7 @@ class _FlowHero extends StatelessWidget {
             'Flow map hoàn chỉnh cho toàn bộ module Open Arena — 10 pages, 10 routes, 4 shared component files, 12+ challenge states.',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.45,
+              height: AppSpacing.arenaFlowMapHeroLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x4),
@@ -128,7 +128,11 @@ class _CollapsibleSection extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
               child: Row(
                 children: [
-                  Icon(icon, color: color, size: 17),
+                  Icon(
+                    icon,
+                    color: color,
+                    size: AppSpacing.arenaFlowMapSectionIcon,
+                  ),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(
                     child: Text(
@@ -153,7 +157,7 @@ class _CollapsibleSection extends StatelessWidget {
                     child: const Icon(
                       Icons.chevron_right_rounded,
                       color: AppColors.text3,
-                      size: 18,
+                      size: AppSpacing.arenaFlowMapInlineIcon,
                     ),
                   ),
                 ],
@@ -235,7 +239,10 @@ class _RouteRegistry extends StatelessWidget {
               for (final route in routes) ...[
                 _RouteRow(route: route),
                 if (route != routes.last)
-                  const Divider(height: 1, color: AppColors.divider),
+                  const Divider(
+                    height: AppSpacing.arenaFlowMapDividerHeight,
+                    color: AppColors.divider,
+                  ),
               ],
             ],
           ),

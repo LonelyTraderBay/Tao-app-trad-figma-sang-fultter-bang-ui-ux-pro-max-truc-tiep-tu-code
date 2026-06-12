@@ -44,6 +44,9 @@ search/discovery, and profile sections with clear separation.
 ## Flutter Visual System
 
 - Use Flutter theme tokens in `flutter_app/lib/app/theme/`.
+- Use `docs/03_DESIGN_SYSTEM/VitTrade-Flutter-Enterprise-Tokenization-Plan.md`
+  as the tracking plan for tokenizing typography, spacing, sizing, radii,
+  surfaces, and visual-density consistency.
 - Use shared layout/widgets in `flutter_app/lib/shared/`.
 - Dark theme is the active baseline.
 - Home establishes the global app chrome, neutral surfaces, shared card/CTA
@@ -103,6 +106,8 @@ For UI changes run:
 
 ```bash
 cd flutter_app
+dart run tool/design_token_consistency_audit.dart --check
+flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact
 flutter analyze
 flutter test
 ```

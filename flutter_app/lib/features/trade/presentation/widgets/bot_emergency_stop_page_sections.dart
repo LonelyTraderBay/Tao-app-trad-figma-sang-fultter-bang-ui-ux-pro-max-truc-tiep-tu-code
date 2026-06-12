@@ -7,14 +7,11 @@ class _WarningBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       constraints: const BoxConstraints(minHeight: 160),
       padding: const EdgeInsets.fromLTRB(20, 23, 18, 20),
-      decoration: BoxDecoration(
-        color: _stopRed.withValues(alpha: .14),
-        border: Border.all(color: _stopRed.withValues(alpha: .62), width: 2),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _stopRed.withValues(alpha: .62),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,7 +34,6 @@ class _WarningBanner extends StatelessWidget {
                   snapshot.warningTitle,
                   style: AppTextStyles.sectionTitle.copyWith(
                     color: _stopRed,
-                    fontSize: 20,
                     letterSpacing: .8,
                     height: 1,
                   ),
@@ -47,7 +43,6 @@ class _WarningBanner extends StatelessWidget {
                   snapshot.warningDescription,
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.bold,
                     height: 1.55,
                   ),
@@ -69,14 +64,10 @@ class _BotCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profitColor = bot.profit >= 0 ? _stopGreen : _stopRed;
-    return Container(
+    return VitCard(
       constraints: const BoxConstraints(minHeight: 70),
       padding: const EdgeInsets.fromLTRB(12, 14, 13, 13),
-      decoration: BoxDecoration(
-        color: _stopPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: Row(
         children: [
           Expanded(
@@ -93,7 +84,6 @@ class _BotCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 13,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
@@ -104,13 +94,12 @@ class _BotCard extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
                       decoration: BoxDecoration(
                         color: _stopGreen.withValues(alpha: .12),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: AppRadii.smRadius,
                       ),
                       child: Text(
                         bot.statusLabel,
                         style: AppTextStyles.micro.copyWith(
                           color: _stopGreen,
-                          fontSize: 11,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
@@ -123,7 +112,6 @@ class _BotCard extends StatelessWidget {
                   bot.pair,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
                     height: 1,
                   ),
                 ),
@@ -135,7 +123,6 @@ class _BotCard extends StatelessWidget {
             '${bot.profit >= 0 ? '+' : ''}${bot.profit.toStringAsFixed(2)} USDT',
             style: AppTextStyles.caption.copyWith(
               color: profitColor,
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -163,17 +150,11 @@ class _ReasonOption extends StatelessWidget {
       key: BotEmergencyStopPage.reasonKey(reason.id),
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
-      child: Container(
+      child: VitCard(
+        variant: selected ? VitCardVariant.ghost : VitCardVariant.standard,
         constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
         padding: const EdgeInsets.fromLTRB(14, 13, 14, 13),
-        decoration: BoxDecoration(
-          color: selected ? _stopRed.withValues(alpha: .08) : _stopPanel,
-          border: Border.all(
-            color: selected ? _stopRed : _stopOptionBorder,
-            width: 2,
-          ),
-          borderRadius: AppRadii.cardRadius,
-        ),
+        borderColor: selected ? _stopRed : _stopOptionBorder,
         child: Row(
           children: [
             _RadioMark(selected: selected, danger: selected),
@@ -189,7 +170,6 @@ class _ReasonOption extends StatelessWidget {
                 reason.label,
                 style: AppTextStyles.caption.copyWith(
                   color: selected ? _stopRed : AppColors.text1,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.bold,
                   height: 1.25,
                 ),
@@ -224,20 +204,12 @@ class _CheckActionCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
-      child: Container(
+      child: VitCard(
+        variant: VitCardVariant.ghost,
         padding: const EdgeInsets.fromLTRB(15, 14, 14, 15),
-        decoration: BoxDecoration(
-          color: danger
-              ? _stopRed.withValues(alpha: .08)
-              : _stopPanel2.withValues(alpha: .9),
-          border: Border.all(
-            color: danger
-                ? _stopRed.withValues(alpha: .48)
-                : AppColors.transparent,
-            width: 2,
-          ),
-          borderRadius: AppRadii.cardRadius,
-        ),
+        borderColor: danger
+            ? _stopRed.withValues(alpha: .48)
+            : AppColors.transparent,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -251,7 +223,6 @@ class _CheckActionCard extends StatelessWidget {
                     title,
                     style: AppTextStyles.caption.copyWith(
                       color: danger ? _stopRed : AppColors.text1,
-                      fontSize: 13,
                       fontWeight: AppTextStyles.bold,
                       height: 1.25,
                     ),
@@ -261,7 +232,6 @@ class _CheckActionCard extends StatelessWidget {
                     description,
                     style: AppTextStyles.caption.copyWith(
                       color: danger ? AppColors.text2 : AppColors.text3,
-                      fontSize: 12,
                       height: 1.5,
                     ),
                   ),
@@ -282,12 +252,9 @@ class _SupportNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-      decoration: BoxDecoration(
-        color: _stopPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -301,7 +268,6 @@ class _SupportNotice extends StatelessWidget {
                   snapshot.supportTitle,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -311,7 +277,6 @@ class _SupportNotice extends StatelessWidget {
                   snapshot.supportDescription,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
                     height: 1.55,
                   ),
                 ),

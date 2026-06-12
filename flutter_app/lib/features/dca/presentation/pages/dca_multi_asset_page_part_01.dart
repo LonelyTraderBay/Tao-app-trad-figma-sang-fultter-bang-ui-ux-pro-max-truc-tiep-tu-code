@@ -120,6 +120,13 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
         text:
             'Multi-asset DCA giup da dang hoa danh muc. Tu dong phan bo theo ti le muc tieu moi ky.',
       ),
+      const VitHighRiskStatePanel(
+        state: VitHighRiskUiState.riskReview,
+        title: 'Multi-asset DCA setup state review',
+        message:
+            'Budget, frequency, target allocations, asset removal notice, rebalance threshold, and disabled automation state remain visible before saving multi-asset DCA settings.',
+        contractId: 'SC-177',
+      ),
     ];
   }
 
@@ -143,6 +150,13 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
           text:
               'Some allocations deviate from target. Next purchase will rebalance automatically.',
         ),
+      const VitHighRiskStatePanel(
+        state: VitHighRiskUiState.riskReview,
+        title: 'Multi-asset portfolio state review',
+        message:
+            'Portfolio value, per-asset allocation, rebalance requirement, and automatic rebalance toggle remain visible before the next DCA execution.',
+        contractId: 'SC-177',
+      ),
     ];
   }
 
@@ -168,6 +182,13 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
         ],
       ),
       _DiversificationCard(assetCount: snapshot.allocations.length),
+      const VitHighRiskStatePanel(
+        state: VitHighRiskUiState.riskReview,
+        title: 'Multi-asset performance state review',
+        message:
+            'Growth chart, ranked asset returns, diversification count, and performance context remain visible before adjusting DCA allocation strategy.',
+        contractId: 'SC-177',
+      ),
     ];
   }
 
@@ -252,7 +273,7 @@ class _TopTab extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: () => onChanged(tab),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, AppSpacing.x4, 0, 0),
+          padding: const EdgeInsets.only(top: AppSpacing.x4),
           child: Column(
             children: [
               Text(
@@ -265,8 +286,8 @@ class _TopTab extends StatelessWidget {
               const SizedBox(height: AppSpacing.x4),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 160),
-                height: 2,
-                width: active ? 116 : 0,
+                height: AppSpacing.dcaMultiTabIndicatorHeight,
+                width: active ? AppSpacing.dcaMultiTabIndicatorWidth : 0,
                 decoration: BoxDecoration(
                   color: active ? AppColors.primary : AppColors.transparent,
                   borderRadius: AppRadii.xsRadius,
@@ -373,7 +394,7 @@ class _FrequencyButton extends StatelessWidget {
                 label,
                 style: AppTextStyles.baseMedium.copyWith(
                   color: active ? AppColors.onAccent : AppColors.text1,
-                  height: 1,
+                  height: AppSpacing.dcaMultiTightLineHeight,
                 ),
               ),
             ),
@@ -480,7 +501,7 @@ class _DeleteButton extends StatelessWidget {
           padding: EdgeInsets.zero,
           icon: const Icon(
             Icons.delete_outline_rounded,
-            size: 18,
+            size: AppSpacing.dcaMultiIcon,
             color: AppColors.sell,
           ),
         ),

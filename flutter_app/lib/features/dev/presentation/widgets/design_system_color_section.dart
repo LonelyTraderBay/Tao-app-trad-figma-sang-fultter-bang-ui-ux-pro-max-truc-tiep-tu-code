@@ -76,7 +76,7 @@ class _Swatch extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
+              fontSize: AppSpacing.devFontXs,
             ),
           ),
         ],

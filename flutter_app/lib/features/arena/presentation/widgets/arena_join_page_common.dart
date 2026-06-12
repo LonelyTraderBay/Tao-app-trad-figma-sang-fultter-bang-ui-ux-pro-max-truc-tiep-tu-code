@@ -56,26 +56,28 @@ class _AcknowledgementRow extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 44),
+          constraints: const BoxConstraints(
+            minHeight: AppSpacing.arenaJoinAcknowledgementMinHeight,
+          ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AnimatedContainer(
                 duration: const Duration(milliseconds: 160),
-                width: 26,
-                height: 26,
+                width: AppSpacing.arenaJoinCheckboxSize,
+                height: AppSpacing.arenaJoinCheckboxSize,
                 decoration: BoxDecoration(
                   color: checked ? AppColors.primary : AppColors.transparent,
                   borderRadius: AppRadii.smRadius,
                   border: Border.all(
                     color: checked ? AppColors.primary : AppColors.borderSolid,
-                    width: 1.5,
+                    width: AppSpacing.arenaJoinCheckboxBorderWidth,
                   ),
                 ),
                 child: checked
                     ? const Icon(
                         Icons.check_rounded,
-                        size: 18,
+                        size: AppSpacing.arenaJoinCheckboxIcon,
                         color: AppColors.onAccent,
                       )
                     : null,
@@ -86,7 +88,7 @@ class _AcknowledgementRow extends StatelessWidget {
                   label,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.arenaJoinAcknowledgementLineHeight,
                   ),
                 ),
               ),

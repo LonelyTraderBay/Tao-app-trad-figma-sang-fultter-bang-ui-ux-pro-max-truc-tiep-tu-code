@@ -41,7 +41,10 @@ class _BridgeTimeline extends StatelessWidget {
                 left: 15,
                 top: AppSpacing.x3,
                 bottom: AppSpacing.x3,
-                child: Container(width: 1, color: AppColors.borderSolid),
+                child: Container(
+                  width: AppSpacing.launchpadDividerWidth,
+                  color: AppColors.borderSolid,
+                ),
               ),
               Column(
                 children: [
@@ -82,7 +85,7 @@ class _BridgeTimelineStep extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 31,
+            width: AppSpacing.launchpadBox31,
             child: Padding(
               padding: const EdgeInsets.only(top: AppSpacing.x3),
               child: Icon(
@@ -172,8 +175,8 @@ class _LiveBadge extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 6,
-            height: 6,
+            width: AppSpacing.launchpadDotSm,
+            height: AppSpacing.launchpadDotSm,
             decoration: const BoxDecoration(
               color: AppColors.primary,
               shape: BoxShape.circle,

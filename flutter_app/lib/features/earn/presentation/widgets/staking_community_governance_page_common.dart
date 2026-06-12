@@ -59,7 +59,7 @@ class _VotingPower extends StatelessWidget {
                 Text(
                   power.value,
                   style: AppTextStyles.sectionTitle.copyWith(
-                    fontSize: 26,
+                    fontSize: AppSpacing.stakingGovernanceVotingPowerFontSize,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
@@ -163,7 +163,7 @@ class _Pill extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.stakingGovernancePillLineHeight,
         ),
       ),
     );

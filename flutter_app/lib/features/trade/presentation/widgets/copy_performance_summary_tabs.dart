@@ -27,7 +27,6 @@ class _PerformanceSummary extends StatelessWidget {
                   value: '+${snapshot.yourReturnPct.toStringAsFixed(1)}%',
                   range:
                       '\$${snapshot.initialCapital.toStringAsFixed(0)} → \$${snapshot.yourCurrentValue.toStringAsFixed(0)}',
-                  background: AppColors.surfaceInfoLight,
                   border: _performancePrimary,
                   foreground: _performancePrimary,
                   textColor: AppColors.infoTextStrong,
@@ -40,7 +39,6 @@ class _PerformanceSummary extends StatelessWidget {
                   value: '+${snapshot.providerReturnPct.toStringAsFixed(1)}%',
                   range:
                       '\$${snapshot.initialCapital.toStringAsFixed(0)} → \$${snapshot.providerTheoreticalValue.toStringAsFixed(0)}',
-                  background: AppColors.surfaceAccentLight,
                   border: _performancePurple,
                   foreground: _performancePurple,
                   textColor: AppColors.accentTextStrong,
@@ -49,13 +47,10 @@ class _PerformanceSummary extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          Container(
+          VitCard(
+            variant: VitCardVariant.ghost,
             padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: AppColors.surfaceSuccessLight,
-              border: Border.all(color: _performanceGreen),
-              borderRadius: AppRadii.inputRadius,
-            ),
+            borderColor: _performanceGreen,
             child: Column(
               children: [
                 Row(
@@ -69,7 +64,7 @@ class _PerformanceSummary extends StatelessWidget {
                     const Expanded(
                       child: Text(
                         'Chênh lệch hiệu suất',
-                        style: TextStyle(color: AppColors.buy20, fontSize: 12),
+                        style: TextStyle(color: AppColors.buy20),
                       ),
                     ),
                     Text(
@@ -86,10 +81,7 @@ class _PerformanceSummary extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Nguyên nhân chính: slippage (${snapshot.avgSlippagePct.toStringAsFixed(2)}%) và chi phí (\$${snapshot.totalCosts.toStringAsFixed(0)})',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.buy20,
-                      fontSize: 10,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.buy20),
                   ),
                 ),
               ],
@@ -106,7 +98,6 @@ class _ReturnCard extends StatelessWidget {
     required this.title,
     required this.value,
     required this.range,
-    required this.background,
     required this.border,
     required this.foreground,
     required this.textColor,
@@ -115,21 +106,17 @@ class _ReturnCard extends StatelessWidget {
   final String title;
   final String value;
   final String range;
-  final Color background;
   final Color border;
   final Color foreground;
   final Color textColor;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       height: 92,
       padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
-      decoration: BoxDecoration(
-        color: background,
-        border: Border.all(color: border),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: border,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +125,7 @@ class _ReturnCard extends StatelessWidget {
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: textColor, fontSize: 11),
+            style: AppTextStyles.micro.copyWith(color: textColor),
           ),
           const SizedBox(height: 6),
           Text(
@@ -146,14 +133,10 @@ class _ReturnCard extends StatelessWidget {
             style: AppTextStyles.sectionTitle.copyWith(
               color: foreground,
               fontWeight: FontWeight.w800,
-              fontSize: 20,
             ),
           ),
           const SizedBox(height: 3),
-          Text(
-            range,
-            style: AppTextStyles.micro.copyWith(color: textColor, fontSize: 9),
-          ),
+          Text(range, style: AppTextStyles.micro.copyWith(color: textColor)),
         ],
       ),
     );
@@ -174,9 +157,10 @@ class _PerformanceTabs extends StatelessWidget {
       ('costs', 'Chi phí'),
       ('metrics', 'Metrics'),
     ];
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       height: 52,
-      color: AppColors.surface,
+      padding: EdgeInsets.zero,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -198,7 +182,6 @@ class _PerformanceTabs extends StatelessWidget {
                             fontWeight: activeTab == tab.$1
                                 ? FontWeight.w800
                                 : FontWeight.w600,
-                            fontSize: 12,
                           ),
                         ),
                       ),
@@ -233,7 +216,6 @@ class _OverviewTab extends StatelessWidget {
           'Đường vốn so sánh (30 ngày)',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: FontWeight.w800,
           ),
         ),
@@ -259,7 +241,6 @@ class _OverviewTab extends StatelessWidget {
           'Phân bổ Slippage',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: FontWeight.w800,
           ),
         ),

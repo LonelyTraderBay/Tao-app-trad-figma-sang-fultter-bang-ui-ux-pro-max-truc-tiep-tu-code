@@ -16,6 +16,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 const _providerPrimary = AppColors.primary;
 const _providerGreen = AppColors.buy;
 const _providerRed = AppColors.sell;
@@ -133,6 +135,19 @@ class CopyProviderDetailPage extends ConsumerWidget {
                           fontSize: 10,
                           height: 1.45,
                         ),
+                      ),
+                      const SizedBox(height: 14),
+                      const TradeBodyReviewSection(
+                        title: 'Provider detail body review',
+                        message: 'Copy provider detail body reviewed',
+                        detail:
+                            'Risk warning, provider profile, metrics, assessment CTA, not-found, and review states stay visible.',
+                        primary:
+                            'Risk warning and review panel remain above provider performance data.',
+                        secondary:
+                            'Assessment CTA stays after provider metrics and before follow-up review.',
+                        tertiary:
+                            'Not-found state remains routed through the same safe back behavior.',
                       ),
                     ],
                   ),

@@ -43,7 +43,12 @@ class SavingsReceiptPage extends ConsumerWidget {
                 padding: VitContentPadding.compact,
                 children: [
                   const SizedBox(height: AppSpacing.x7),
-                  _EmptyReceiptState(snapshot: snapshot),
+                  VitCard(
+                    variant: VitCardVariant.standard,
+                    radius: VitCardRadius.md,
+                    padding: EdgeInsets.zero,
+                    child: _EmptyReceiptState(snapshot: snapshot),
+                  ),
                   const Spacer(),
                 ],
               ),
@@ -76,7 +81,7 @@ class _EmptyReceiptState extends StatelessWidget {
           child: VitCtaButton(
             key: SavingsReceiptPage.savingsButtonKey,
             fullWidth: false,
-            height: 45,
+            height: AppSpacing.savingsFlowHeroHeight,
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x5),
             onPressed: () {
               HapticFeedback.selectionClick();

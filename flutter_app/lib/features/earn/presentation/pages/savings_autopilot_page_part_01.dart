@@ -51,7 +51,7 @@ class _AutoPilotHero extends StatelessWidget {
               _StatusButton(status: status, onPressed: onToggleStatus),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -65,7 +65,7 @@ class _AutoPilotHero extends StatelessWidget {
                         color: AppColors.portfolioTextMuted,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x1),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                     Text(
                       mode.label,
                       maxLines: 1,
@@ -86,7 +86,7 @@ class _AutoPilotHero extends StatelessWidget {
                       color: AppColors.portfolioTextMuted,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x1),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                   Text(
                     _money(monthlyBudgetUsd),
                     style: AppTextStyles.base.copyWith(
@@ -99,7 +99,7 @@ class _AutoPilotHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           Row(
             children: [
               Expanded(
@@ -140,11 +140,11 @@ class _StatusButton extends StatelessWidget {
     final color = _statusColor(status);
     return Material(
       color: color.withValues(alpha: .12),
-      borderRadius: BorderRadius.circular(999),
+      borderRadius: AppRadii.pillRadius,
       child: InkWell(
         key: SavingsAutoPilotPage.statusButtonKey,
         onTap: onPressed,
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: AppRadii.pillRadius,
         child: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.x3,
@@ -152,7 +152,7 @@ class _StatusButton extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             border: Border.all(color: color.withValues(alpha: .3)),
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.pillRadius,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -192,7 +192,7 @@ class _HeroStat extends StatelessWidget {
               color: AppColors.portfolioTextMuted,
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Text(
             value,
             maxLines: 1,
@@ -267,27 +267,27 @@ class _OverviewTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _MetricGrid(metrics: snapshot.metrics),
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         const _SectionTitle(label: 'Modules đang hoạt động'),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         for (final module in snapshot.modules) ...[
           _ModuleTile(
             module: module,
             enabled: moduleStates[module.id] ?? module.enabled,
             onTap: () => onOpenModule(module.route),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         ],
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         const _SectionTitle(label: 'Hành động gần đây'),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         for (final action in snapshot.actions.take(3)) ...[
           _ActionTile(
             action: action,
             status: actionStatusFor(action),
             onTap: () => onOpenAction(action),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         ],
         OutlinedButton.icon(
           onPressed: onShowActions,
@@ -299,7 +299,7 @@ class _OverviewTab extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         _InfoCallout(text: snapshot.disclaimer, tone: EarnRiskLevel.medium),
       ],
     );
@@ -318,10 +318,10 @@ class _MetricGrid extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+        crossAxisCount: AppSpacing.savingsAutoPilotMetricGridColumns,
         mainAxisSpacing: AppSpacing.x3,
         crossAxisSpacing: AppSpacing.x3,
-        childAspectRatio: 1.95,
+        childAspectRatio: AppSpacing.savingsAutoPilotMetricGridAspect,
       ),
       itemBuilder: (context, index) {
         final metric = metrics[index];
@@ -350,7 +350,7 @@ class _MetricGrid extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
               Text(
                 metric.value,
                 maxLines: 1,
@@ -462,7 +462,7 @@ class _ActionsTab extends StatelessWidget {
       children: [
         if (pending.isNotEmpty) ...[
           _SectionTitle(label: 'Cần phê duyệt (${pending.length})'),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           for (final action in pending) ...[
             _ApprovalCard(
               action: action,
@@ -470,12 +470,12 @@ class _ActionsTab extends StatelessWidget {
               onApprove: () => onApprove(action.id),
               onSkip: () => onSkip(action.id),
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ],
         const _SectionTitle(label: 'Lịch sử hành động'),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         for (final action in snapshot.actions) ...[
           _ActionTile(
             action: action,
@@ -483,7 +483,7 @@ class _ActionsTab extends StatelessWidget {
             onTap: () => onOpenAction(action),
             showImpact: true,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         ],
       ],
     );

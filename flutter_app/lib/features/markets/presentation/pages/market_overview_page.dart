@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
+import '../widgets/market_body_review_widgets.dart';
 
 part 'market_overview_page_part_01.dart';
 part 'market_overview_page_part_02.dart';
@@ -93,6 +94,18 @@ class MarketOverviewPage extends ConsumerWidget {
                         _SectorPerformance(sectors: snapshot.sectors),
                         _FearGreedHistory(points: snapshot.fearGreedHistory),
                         const _MarketTools(),
+                        const MarketBodyReviewSection(
+                          title: 'Overview state review',
+                          message: 'Market overview data reviewed',
+                          detail:
+                              'Global stats, movers, sectors, heatmap links, empty, and refresh states remain visible.',
+                          primary:
+                              'Global cap and breadth metrics stay above exploratory market tools.',
+                          secondary:
+                              'Gainers, losers, and sectors preserve direction before pair navigation.',
+                          tertiary:
+                              'Tools remain grouped below market context so scanning is not interrupted.',
+                        ),
                       ],
                     ),
                   ),

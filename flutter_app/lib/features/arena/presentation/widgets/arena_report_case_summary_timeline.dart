@@ -84,7 +84,11 @@ class _ReportReasonCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Icon(Icons.flag_outlined, color: AppColors.sell, size: 18),
+            const Icon(
+              Icons.flag_outlined,
+              color: AppColors.sell,
+              size: AppSpacing.arenaReportInlineIcon,
+            ),
             const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: Text(
@@ -92,7 +96,7 @@ class _ReportReasonCard extends StatelessWidget {
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.35,
+                  height: AppSpacing.arenaReportBodyLineHeight,
                 ),
               ),
             ),
@@ -142,25 +146,28 @@ class _TimelineRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 20,
+          width: AppSpacing.arenaReportTimelineColumnWidth,
           child: Column(
             children: [
               Container(
-                width: 12,
-                height: 12,
+                width: AppSpacing.arenaReportTimelineDot,
+                height: AppSpacing.arenaReportTimelineDot,
                 margin: const EdgeInsets.only(top: AppSpacing.x1),
                 decoration: BoxDecoration(
                   color: dotColor,
                   shape: BoxShape.circle,
                   border: step.done
                       ? null
-                      : Border.all(color: AppColors.borderSolid, width: 2),
+                      : Border.all(
+                          color: AppColors.borderSolid,
+                          width: AppSpacing.arenaReportTimelineBorderWidth,
+                        ),
                 ),
               ),
               if (!isLast)
                 Container(
-                  width: 1,
-                  height: 28,
+                  width: AppSpacing.arenaReportTimelineLineWidth,
+                  height: AppSpacing.arenaReportTimelineLineHeight,
                   color: step.done ? AppColors.buy20 : AppColors.divider,
                 ),
             ],
@@ -180,11 +187,11 @@ class _TimelineRow extends StatelessWidget {
                     fontWeight: step.done
                         ? AppTextStyles.medium
                         : AppTextStyles.normal,
-                    height: 1.35,
+                    height: AppSpacing.arenaReportBodyLineHeight,
                   ),
                 ),
                 if (step.date.isNotEmpty) ...[
-                  const SizedBox(height: 2),
+                  const SizedBox(height: AppSpacing.arenaReportTimelineDateGap),
                   Text(
                     step.date,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -234,7 +241,7 @@ class _ActionTakenCard extends StatelessWidget {
                         reportCase.actionTaken!,
                         style: AppTextStyles.body.copyWith(
                           color: AppColors.text1,
-                          height: 1.5,
+                          height: AppSpacing.arenaReportActionLineHeight,
                         ),
                       ),
                     ],

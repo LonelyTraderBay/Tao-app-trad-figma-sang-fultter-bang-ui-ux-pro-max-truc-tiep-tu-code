@@ -61,10 +61,7 @@ class _AddMethodButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.p2pPaymentButtonPadding,
           decoration: BoxDecoration(
             color: color == AppColors.accent
                 ? AppColors.accent08
@@ -153,7 +150,7 @@ class _PaymentMethodCard extends StatelessWidget {
       key: P2PPaymentMethodsPage.methodKey(method.id),
       radius: VitCardRadius.sm,
       borderColor: method.isDefault ? AppColors.warningBorder : null,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pPaymentCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -181,7 +178,7 @@ class _PaymentMethodCard extends StatelessWidget {
                           const Icon(
                             Icons.shield_outlined,
                             color: AppColors.buy,
-                            size: 13,
+                            size: AppSpacing.p2pPaymentVerifiedIcon,
                           ),
                         if (method.isDefault)
                           const VitStatusPill(
@@ -235,11 +232,11 @@ class _PaymentMethodCard extends StatelessWidget {
             ],
           ),
           if (!method.isDefault) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.p2pPaymentCardGap),
             _SetDefaultButton(methodId: method.id, onTap: onSetDefault),
           ],
           if (!method.isVerified) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.p2pPaymentCardGap),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -252,10 +249,7 @@ class _PaymentMethodCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     'Chưa xác minh — Cần xác minh để sử dụng trên P2P',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.warn,
-                      height: 1.35,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.warn),
                   ),
                 ),
               ],
@@ -306,10 +300,7 @@ class _SetDefaultButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
+          padding: AppSpacing.p2pPaymentSetDefaultPadding,
           decoration: BoxDecoration(
             color: AppColors.surface2,
             border: Border.all(color: AppColors.borderSolid),
@@ -353,7 +344,7 @@ class _SecurityNotice extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.sm,
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pPaymentCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -369,7 +360,6 @@ class _SecurityNotice extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppModuleAccents.p2p,
                 fontWeight: AppTextStyles.medium,
-                height: 1.45,
               ),
             ),
           ),

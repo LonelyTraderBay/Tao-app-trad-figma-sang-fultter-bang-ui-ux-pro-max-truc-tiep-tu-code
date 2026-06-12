@@ -114,6 +114,13 @@ class _StakingAdvancedOrdersPageState
                       ),
                       _HowItWorks(snapshot: snapshot),
                       _RiskDisclosure(snapshot: snapshot),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Advanced staking order review',
+                        message:
+                            'Order type, trigger condition, asset amount, risk disclosure, create-order preview, submitting state, and result handling are reviewed before an advanced staking order is placed.',
+                        contractId: 'SC-366',
+                      ),
                     ],
                   ),
                 ),

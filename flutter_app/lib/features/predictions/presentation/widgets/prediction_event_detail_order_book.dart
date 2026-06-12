@@ -71,13 +71,13 @@ class _OrderBookSection extends StatelessWidget {
           ),
         ),
         if (expanded) ...[
-          const SizedBox(height: 8),
+          const Padding(padding: EdgeInsets.only(top: 8)),
           VitCard(
             padding: const EdgeInsets.all(14),
             child: Column(
               children: [
                 _OrderBookHeader(),
-                const SizedBox(height: 6),
+                const Padding(padding: EdgeInsets.only(top: 6)),
                 for (final ask in snapshot.orderBook.asks.reversed)
                   _OrderBookRow(entry: ask, isBid: false),
                 Container(
@@ -161,7 +161,6 @@ class _OrderBookRow extends StatelessWidget {
               _formatPrice(entry.price),
               style: AppTextStyles.micro.copyWith(
                 color: color,
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
@@ -174,7 +173,6 @@ class _OrderBookRow extends StatelessWidget {
               textAlign: TextAlign.end,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
@@ -186,7 +184,6 @@ class _OrderBookRow extends StatelessWidget {
               textAlign: TextAlign.end,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 11,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),

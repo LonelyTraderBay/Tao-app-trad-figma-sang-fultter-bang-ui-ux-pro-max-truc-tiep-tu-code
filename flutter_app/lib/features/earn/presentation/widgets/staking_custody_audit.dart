@@ -35,7 +35,7 @@ class StakingCustodyReconciliationSection extends StatelessWidget {
                 snapshot.reconciliationBody,
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text2,
-                  height: 1.55,
+                  height: AppSpacing.stakingCustodyBodyLineHeight,
                 ),
               ),
               const SizedBox(height: AppSpacing.x4),
@@ -95,7 +95,7 @@ class StakingCustodyTransparencySection extends StatelessWidget {
                       snapshot.transparencyBody,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1.55,
+                        height: AppSpacing.stakingCustodyBodyLineHeight,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x4),

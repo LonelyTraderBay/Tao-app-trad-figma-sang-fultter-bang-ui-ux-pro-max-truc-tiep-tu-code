@@ -171,7 +171,7 @@ class _RiskDropdown extends StatelessWidget {
       backgroundColor: AppColors.surface,
       barrierColor: AppColors.bg.withValues(alpha: 0.72),
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(21)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) {
         return SafeArea(

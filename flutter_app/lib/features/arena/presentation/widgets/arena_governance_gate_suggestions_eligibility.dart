@@ -34,7 +34,7 @@ class _SuggestedFallbackCard extends StatelessWidget {
                     const Icon(
                       Icons.auto_fix_high_rounded,
                       color: _arenaAccent,
-                      size: 16,
+                      size: AppSpacing.arenaGovernanceIcon,
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(
@@ -62,7 +62,7 @@ class _SuggestedFallbackCard extends StatelessWidget {
                     const Icon(
                       Icons.chevron_right_rounded,
                       color: AppColors.text3,
-                      size: 16,
+                      size: AppSpacing.arenaGovernanceIcon,
                     ),
                   ],
                 ),
@@ -90,7 +90,11 @@ class _EligibilityPanel extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(_tierIcon(result.tier), color: color, size: 16),
+              Icon(
+                _tierIcon(result.tier),
+                color: color,
+                size: AppSpacing.arenaGovernanceIcon,
+              ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
@@ -115,7 +119,7 @@ class _EligibilityPanel extends StatelessWidget {
                         ? Icons.check_circle_rounded
                         : Icons.radio_button_unchecked_rounded,
                     color: check.passed ? AppColors.buy : AppColors.text3,
-                    size: 18,
+                    size: AppSpacing.arenaGovernanceLargeIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(

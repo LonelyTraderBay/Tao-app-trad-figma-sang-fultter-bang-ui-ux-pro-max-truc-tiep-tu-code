@@ -200,61 +200,67 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
   }
 
   List<Widget> _formContent(PasswordResetChallenge challenge) => [
-    const _ResetHero(),
-    Column(
-      children: [
-        VitInput(
-          controller: _newPasswordController,
-          fieldKey: ResetPasswordPage.newPasswordFieldKey,
-          label: 'Mật khẩu mới',
-          hintText: '••••••••',
-          prefix: const Icon(Icons.lock_outline_rounded),
-          suffix: VitIconButton(
-            key: ResetPasswordPage.newPasswordToggleKey,
-            icon: _showNewPassword
-                ? Icons.visibility_off_outlined
-                : Icons.visibility_outlined,
-            tooltip: _showNewPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu',
-            onPressed: () {
-              setState(() => _showNewPassword = !_showNewPassword);
-            },
-            variant: VitIconButtonVariant.transparent,
-            size: VitIconButtonSize.sm,
+    const VitCard(padding: EdgeInsets.zero, child: _ResetHero()),
+    VitCard(
+      padding: EdgeInsets.zero,
+      child: Column(
+        children: [
+          VitInput(
+            controller: _newPasswordController,
+            fieldKey: ResetPasswordPage.newPasswordFieldKey,
+            label: 'Mật khẩu mới',
+            hintText: '••••••••',
+            prefix: const Icon(Icons.lock_outline_rounded),
+            suffix: VitIconButton(
+              key: ResetPasswordPage.newPasswordToggleKey,
+              icon: _showNewPassword
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined,
+              tooltip: _showNewPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu',
+              onPressed: () {
+                setState(() => _showNewPassword = !_showNewPassword);
+              },
+              variant: VitIconButtonVariant.transparent,
+              size: VitIconButtonSize.sm,
+            ),
+            errorText: _newPassword.isNotEmpty && !_allRulesPass ? ' ' : null,
+            obscureText: !_showNewPassword,
+            textInputAction: TextInputAction.next,
+            autofillHints: const [AutofillHints.newPassword],
+            onChanged: (_) => _handleNewPasswordChanged(),
           ),
-          errorText: _newPassword.isNotEmpty && !_allRulesPass ? ' ' : null,
-          obscureText: !_showNewPassword,
-          textInputAction: TextInputAction.next,
-          autofillHints: const [AutofillHints.newPassword],
-          onChanged: (_) => _handleNewPasswordChanged(),
-        ),
-        const SizedBox(height: 12),
-        _PasswordRulesList(password: _newPassword),
-      ],
-    ),
-    VitInput(
-      controller: _confirmPasswordController,
-      fieldKey: ResetPasswordPage.confirmPasswordFieldKey,
-      label: 'Nhập lại mật khẩu',
-      hintText: '••••••••',
-      prefix: const Icon(Icons.lock_outline_rounded),
-      suffix: VitIconButton(
-        key: ResetPasswordPage.confirmPasswordToggleKey,
-        icon: _showConfirmPassword
-            ? Icons.visibility_off_outlined
-            : Icons.visibility_outlined,
-        tooltip: _showConfirmPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu',
-        onPressed: () {
-          setState(() => _showConfirmPassword = !_showConfirmPassword);
-        },
-        variant: VitIconButtonVariant.transparent,
-        size: VitIconButtonSize.sm,
+          const Padding(padding: EdgeInsets.only(top: 12)),
+          _PasswordRulesList(password: _newPassword),
+        ],
       ),
-      errorText: _showMismatch ? 'Mật khẩu không khớp' : null,
-      obscureText: !_showConfirmPassword,
-      textInputAction: TextInputAction.done,
-      autofillHints: const [AutofillHints.newPassword],
-      onChanged: (_) => _handleConfirmPasswordChanged(),
-      onSubmitted: (_) => _handleSubmit(),
+    ),
+    VitCard(
+      padding: EdgeInsets.zero,
+      child: VitInput(
+        controller: _confirmPasswordController,
+        fieldKey: ResetPasswordPage.confirmPasswordFieldKey,
+        label: 'Nhập lại mật khẩu',
+        hintText: '••••••••',
+        prefix: const Icon(Icons.lock_outline_rounded),
+        suffix: VitIconButton(
+          key: ResetPasswordPage.confirmPasswordToggleKey,
+          icon: _showConfirmPassword
+              ? Icons.visibility_off_outlined
+              : Icons.visibility_outlined,
+          tooltip: _showConfirmPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu',
+          onPressed: () {
+            setState(() => _showConfirmPassword = !_showConfirmPassword);
+          },
+          variant: VitIconButtonVariant.transparent,
+          size: VitIconButtonSize.sm,
+        ),
+        errorText: _showMismatch ? 'Mật khẩu không khớp' : null,
+        obscureText: !_showConfirmPassword,
+        textInputAction: TextInputAction.done,
+        autofillHints: const [AutofillHints.newPassword],
+        onChanged: (_) => _handleConfirmPasswordChanged(),
+        onSubmitted: (_) => _handleSubmit(),
+      ),
     ),
     if (_showMatch) const _InlinePasswordState(success: true),
     if (_error.isNotEmpty) _InlinePasswordState(error: _error),

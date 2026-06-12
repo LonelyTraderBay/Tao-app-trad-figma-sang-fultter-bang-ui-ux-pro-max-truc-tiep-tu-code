@@ -17,11 +17,16 @@ class StakingTaxDisclaimerBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       key: StakingTaxGuideKeys.disclaimer,
-      constraints: const BoxConstraints(minHeight: 136),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.stakingTaxDisclaimerMinHeight,
+      ),
       padding: const EdgeInsets.all(AppSpacing.x4),
       decoration: BoxDecoration(
         color: AppColors.sell10,
-        border: Border.all(color: AppColors.sell20, width: 1.5),
+        border: Border.all(
+          color: AppColors.sell20,
+          width: AppSpacing.stakingTaxBorderWidth,
+        ),
         borderRadius: AppRadii.cardLargeRadius,
       ),
       child: Row(
@@ -30,7 +35,7 @@ class StakingTaxDisclaimerBanner extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.sell,
-            size: 24,
+            size: AppSpacing.stakingTaxDisclaimerIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -49,7 +54,7 @@ class StakingTaxDisclaimerBanner extends StatelessWidget {
                   snapshot.disclaimerBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.6,
+                    height: AppSpacing.stakingTaxFooterLineHeight,
                   ),
                 ),
               ],
@@ -77,7 +82,9 @@ class StakingTaxTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.surface2,
-      constraints: const BoxConstraints(minHeight: 54),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.stakingTaxTabsMinHeight,
+      ),
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
       child: VitTabBar(

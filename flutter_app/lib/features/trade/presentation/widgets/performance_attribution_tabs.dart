@@ -186,12 +186,11 @@ class _InfoPanel extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: _attributionPrimary,
                   height: 1.45,
-                  fontSize: 10,
                 ),
                 children: [
                   const TextSpan(
                     text: 'Giải thích\n',
-                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800),
+                    style: TextStyle(fontWeight: FontWeight.w800),
                   ),
                   const TextSpan(
                     text:
@@ -247,7 +246,6 @@ class _ContributionBar extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: color,
                   fontWeight: FontWeight.w900,
-                  fontSize: 13,
                 ),
               ),
             ],
@@ -281,12 +279,10 @@ class _ProjectionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .10),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      borderColor: color.withValues(alpha: .24),
       child: Column(
         children: [
           Text(
@@ -294,7 +290,7 @@ class _ProjectionTile extends StatelessWidget {
             maxLines: 2,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: color, fontSize: 9),
+            style: AppTextStyles.micro.copyWith(color: color),
           ),
           const SizedBox(height: 7),
           Text(

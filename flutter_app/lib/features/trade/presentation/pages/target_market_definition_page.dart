@@ -15,6 +15,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 const _targetBackground = AppColors.bg;
 const _targetPanel = AppColors.surface;
 const _targetBorder = AppColors.borderSolid;
@@ -89,6 +91,19 @@ class TargetMarketDefinitionPage extends ConsumerWidget {
                               'Suitable audience, exclusions, knowledge level, capital capacity and distribution limits are reviewed before product action.',
                           contractId: 'target-market-review',
                         ),
+                      ),
+                      const SizedBox(height: 12),
+                      const TradeBodyReviewSection(
+                        title: 'Target market body review',
+                        message: 'Target market definition body reviewed',
+                        detail:
+                            'Product summary, suitability criteria, exclusions, review, empty, and result states stay visible.',
+                        primary:
+                            'Product summary stays above target-market criteria.',
+                        secondary:
+                            'Suitable and unsuitable audience criteria remain visibly separated.',
+                        tertiary:
+                            'Distribution limits stay framed as governance review, not execution advice.',
                       ),
                     ],
                   ),

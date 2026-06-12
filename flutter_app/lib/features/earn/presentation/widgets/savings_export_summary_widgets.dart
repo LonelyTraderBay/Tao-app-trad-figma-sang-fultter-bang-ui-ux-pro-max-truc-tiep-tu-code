@@ -140,7 +140,7 @@ class _SensitiveNotice extends StatelessWidget {
                 text,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.35,
+                  height: AppSpacing.earnExportWarningLineHeight,
                 ),
               ),
             ),
@@ -329,8 +329,8 @@ class _SelectionDot extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 160),
-      width: 20,
-      height: 20,
+      width: AppSpacing.earnExportSelectionDot,
+      height: AppSpacing.earnExportSelectionDot,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(color: selected ? color : AppColors.borderSolid),
@@ -338,8 +338,8 @@ class _SelectionDot extends StatelessWidget {
       child: selected
           ? Center(
               child: Container(
-                width: 10,
-                height: 10,
+                width: AppSpacing.earnExportSelectionDotInner,
+                height: AppSpacing.earnExportSelectionDotInner,
                 decoration: BoxDecoration(color: color, shape: BoxShape.circle),
               ),
             )

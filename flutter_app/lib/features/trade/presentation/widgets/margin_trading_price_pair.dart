@@ -49,7 +49,6 @@ class _PriceComparison extends StatelessWidget {
                     'Dùng cho thanh lý',
                     style: AppTextStyles.micro.copyWith(
                       color: _marginPrimary,
-                      fontSize: 9,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),
@@ -70,10 +69,7 @@ class _PriceComparison extends StatelessWidget {
               ),
               Text(
                 'Giá khớp lệnh gần nhất',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 9.5,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -90,10 +86,7 @@ class _PriceComparison extends StatelessWidget {
               ),
               Text(
                 'Avg của các sàn',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 9.5,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -128,17 +121,13 @@ class _PriceColumn extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 10,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: 4),
         Text(
           value,
           style: AppTextStyles.body.copyWith(
             color: dim ? AppColors.text2 : AppColors.onAccent,
-            fontSize: large ? 20 : 16,
             fontWeight: large ? AppTextStyles.bold : AppTextStyles.medium,
             fontFeatures: AppTextStyles.tabularFigures,
             height: 1.1,
@@ -167,7 +156,6 @@ class _PairCard extends StatelessWidget {
               Text(
                 snapshot.pair.symbol,
                 style: AppTextStyles.baseMedium.copyWith(
-                  fontSize: 17,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -194,17 +182,13 @@ class _PairCard extends StatelessWidget {
                 '--',
                 style: AppTextStyles.sectionTitle.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: 28,
                   height: 1,
                 ),
               ),
               const SizedBox(width: 9),
               Text(
                 snapshot.pair.quoteAsset,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 12,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -235,7 +219,6 @@ class _SectionHeader extends StatelessWidget {
           title,
           style: AppTextStyles.body.copyWith(
             color: AppColors.onAccent,
-            fontSize: 15,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

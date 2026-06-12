@@ -93,7 +93,6 @@ class _ProgressRow extends StatelessWidget {
                 label,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  fontSize: 12,
                   height: 1,
                 ),
               ),
@@ -102,7 +101,6 @@ class _ProgressRow extends StatelessWidget {
               value,
               style: AppTextStyles.caption.copyWith(
                 color: _armGreen,
-                fontSize: 14,
                 fontWeight: AppTextStyles.bold,
                 fontFeatures: AppTextStyles.tabularFigures,
                 height: 1,
@@ -112,7 +110,7 @@ class _ProgressRow extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         ClipRRect(
-          borderRadius: BorderRadius.circular(999),
+          borderRadius: AppRadii.xlRadius,
           child: SizedBox(
             height: 8,
             child: Stack(
@@ -193,7 +191,6 @@ class _QuickAction extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text1,
-          fontSize: 12,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -216,7 +213,7 @@ class _SectionLabel extends StatelessWidget {
           height: 16,
           decoration: BoxDecoration(
             color: _armPrimary,
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.xlRadius,
           ),
         ),
         const SizedBox(width: 7),
@@ -227,7 +224,6 @@ class _SectionLabel extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 11,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -258,7 +254,6 @@ class _LegendDot extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
             height: 1,
           ),
         ),

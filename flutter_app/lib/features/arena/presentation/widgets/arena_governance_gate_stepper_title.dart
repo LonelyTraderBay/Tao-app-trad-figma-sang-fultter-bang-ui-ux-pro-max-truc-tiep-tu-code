@@ -17,7 +17,7 @@ class _GovernanceStepper extends StatelessWidget {
           if (i != steps.length - 1)
             Container(
               width: AppSpacing.x5,
-              height: 2,
+              height: AppSpacing.arenaGovernanceStepperLineHeight,
               margin: const EdgeInsets.only(bottom: AppSpacing.x5),
               decoration: BoxDecoration(
                 color: steps[i].index < step
@@ -45,8 +45,12 @@ class _StepMarker extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: active ? 31 : 28,
-          height: active ? 31 : 28,
+          width: active
+              ? AppSpacing.arenaGovernanceStepActive
+              : AppSpacing.arenaGovernanceStepDefault,
+          height: active
+              ? AppSpacing.arenaGovernanceStepActive
+              : AppSpacing.arenaGovernanceStepDefault,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: done
@@ -60,7 +64,7 @@ class _StepMarker extends StatelessWidget {
               ? const Icon(
                   Icons.check_rounded,
                   color: AppColors.onAccent,
-                  size: 16,
+                  size: AppSpacing.arenaGovernanceIcon,
                 )
               : Text(
                   '${item.index}',
@@ -106,7 +110,7 @@ class _GovernanceTitle extends StatelessWidget {
           'Governance Gate tự động kiểm tra rule trước khi publish',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
-            height: 1.3,
+            height: AppSpacing.arenaGovernanceSubtitleLineHeight,
           ),
         ),
       ],

@@ -77,7 +77,7 @@ class _ModesTab extends StatelessWidget {
                 key: ArenaCreatorPage.viewModeKey,
                 onPressed: () => onMode(firstMode.id),
                 variant: VitCtaButtonVariant.secondary,
-                height: 44,
+                height: AppSpacing.arenaCreatorTabButtonHeight,
                 child: const Text('Xem mode'),
               ),
             ),
@@ -86,7 +86,7 @@ class _ModesTab extends StatelessWidget {
               child: VitCtaButton(
                 key: ArenaCreatorPage.useModeKey,
                 onPressed: onUseMode,
-                height: 44,
+                height: AppSpacing.arenaCreatorTabButtonHeight,
                 child: const Text('Dùng mode'),
               ),
             ),
@@ -116,8 +116,8 @@ class _ModeRow extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              width: 40,
-              height: 40,
+              width: AppSpacing.arenaCreatorModeIconBox,
+              height: AppSpacing.arenaCreatorModeIconBox,
               decoration: const BoxDecoration(
                 color: AppColors.primary12,
                 borderRadius: AppRadii.mdRadius,
@@ -125,7 +125,7 @@ class _ModeRow extends StatelessWidget {
               child: const Icon(
                 Icons.calculate_rounded,
                 color: AppColors.primary,
-                size: 20,
+                size: AppSpacing.arenaCreatorModeGlyph,
               ),
             ),
             const SizedBox(width: AppSpacing.x3),
@@ -158,7 +158,7 @@ class _ModeRow extends StatelessWidget {
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.text3,
-              size: 20,
+              size: AppSpacing.arenaCreatorModeChevron,
             ),
           ],
         ),
@@ -208,7 +208,7 @@ class _AboutTab extends StatelessWidget {
             creator.bio,
             style: AppTextStyles.base.copyWith(
               color: AppColors.text2,
-              height: 1.45,
+              height: AppSpacing.arenaCreatorAboutLineHeight,
             ),
           ),
         ),

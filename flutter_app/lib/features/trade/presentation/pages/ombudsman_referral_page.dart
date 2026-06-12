@@ -16,6 +16,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 const _ombudsmanBackground = AppColors.bg;
 const _ombudsmanPanel2 = AppColors.surface3;
 const _ombudsmanBorder = AppColors.borderSolid;
@@ -82,6 +84,18 @@ class OmbudsmanReferralPage extends ConsumerWidget {
                       for (final step in snapshot.processSteps)
                         _ProcessStepCard(step: step),
                       _VisitButton(snapshot: snapshot),
+                      const TradeBodyReviewSection(
+                        title: 'Ombudsman body review',
+                        message: 'Ombudsman referral body reviewed',
+                        detail:
+                            'Eligibility, contact, process, visit CTA, empty, and result states stay visible.',
+                        primary:
+                            'Eligibility remains above external referral actions.',
+                        secondary:
+                            'Contact and process steps stay separated for regulated escalation.',
+                        tertiary:
+                            'Visit CTA remains framed as external dispute resolution.',
+                      ),
                     ],
                   ),
                 ),

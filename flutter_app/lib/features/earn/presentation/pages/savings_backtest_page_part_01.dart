@@ -193,8 +193,8 @@ class _SectionTitle extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 3,
-          height: 15,
+          width: AppSpacing.savingsBacktestSectionMarkerWidth,
+          height: AppSpacing.savingsBacktestSectionMarkerHeight,
           decoration: const BoxDecoration(
             color: AppColors.primary,
             borderRadius: AppRadii.xsRadius,
@@ -455,11 +455,13 @@ class _AllocationCard extends StatelessWidget {
           Row(
             children: [
               CustomPaint(
-                size: const Size(86, 86),
+                size: const Size.square(
+                  AppSpacing.savingsBacktestAllocationRing,
+                ),
                 painter: _AllocationRingPainter(slots: preset.slots),
                 child: SizedBox(
-                  width: 86,
-                  height: 86,
+                  width: AppSpacing.savingsBacktestAllocationRing,
+                  height: AppSpacing.savingsBacktestAllocationRing,
                   child: Center(
                     child: Text(
                       '${preset.slots.length}',

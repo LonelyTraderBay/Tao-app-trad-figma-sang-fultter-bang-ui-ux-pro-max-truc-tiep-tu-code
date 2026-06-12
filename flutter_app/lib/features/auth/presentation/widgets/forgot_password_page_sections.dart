@@ -16,13 +16,13 @@ class _EmailStep extends StatelessWidget {
     return Column(
       children: [
         const _KeyHero(),
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         Text(
           'Đặt lại mật khẩu',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text(
           'Nhập email đã đăng ký. Chúng tôi sẽ gửi mã xác minh để đặt lại\n'
           'mật khẩu.',
@@ -32,7 +32,7 @@ class _EmailStep extends StatelessWidget {
             height: 1.6,
           ),
         ),
-        const SizedBox(height: 17),
+        const Padding(padding: EdgeInsets.only(top: 17)),
         VitInput(
           controller: controller,
           fieldKey: ForgotPasswordPage.emailFieldKey,
@@ -126,7 +126,7 @@ class _OtpStep extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text.rich(
           TextSpan(
             text: 'Mã 6 số đã được gửi đến ',
@@ -140,21 +140,18 @@ class _OtpStep extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x1),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
         Text(
           '(Demo: nhập 123456)',
           textAlign: TextAlign.center,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text3,
-            fontSize: 12,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x6),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x6)),
         Text(
           'Mã OTP',
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: 6),
+        const Padding(padding: EdgeInsets.only(top: 6)),
         TextField(
           key: ForgotPasswordPage.otpFieldKey,
           controller: controller,
@@ -166,7 +163,6 @@ class _OtpStep extends StatelessWidget {
             LengthLimitingTextInputFormatter(6),
           ],
           style: AppTextStyles.sectionTitle.copyWith(
-            fontSize: 24,
             fontWeight: AppTextStyles.bold,
             letterSpacing: 8,
           ),
@@ -189,13 +185,10 @@ class _OtpStep extends StatelessWidget {
           onChanged: onChanged,
         ),
         if (error.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Text(
             error,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.sell,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.sell),
           ),
         ],
       ],
@@ -240,13 +233,13 @@ class _ResetStep extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text(
           'Tạo mật khẩu mạnh để bảo vệ tài khoản',
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x6),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x6)),
         VitInput(
           controller: newPasswordController,
           fieldKey: ForgotPasswordPage.newPasswordFieldKey,
@@ -268,7 +261,7 @@ class _ResetStep extends StatelessWidget {
           autofillHints: const [AutofillHints.newPassword],
           onChanged: (_) => onChanged(),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         VitInput(
           controller: confirmPasswordController,
           fieldKey: ForgotPasswordPage.confirmPasswordFieldKey,
@@ -282,13 +275,10 @@ class _ResetStep extends StatelessWidget {
           onChanged: (_) => onChanged(),
         ),
         if (error.isNotEmpty && !confirmMismatch) ...[
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             error,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.sell,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.sell),
           ),
         ],
       ],
@@ -319,13 +309,13 @@ class _SuccessStep extends StatelessWidget {
               size: 48,
             ),
           ),
-          const SizedBox(height: AppSpacing.x6),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x6)),
           Text(
             'Thành công!',
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             'Mật khẩu của bạn đã được đặt lại thành công.\n'
             'Vui lòng đăng nhập với mật khẩu mới.',

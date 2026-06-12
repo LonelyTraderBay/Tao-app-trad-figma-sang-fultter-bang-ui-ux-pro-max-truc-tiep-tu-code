@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_common.dart';
 
@@ -83,12 +84,13 @@ class MarketListTools extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 36,
+      height: AppSpacing.marketToolsHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         clipBehavior: Clip.none,
         itemCount: tools.length,
-        separatorBuilder: (_, _) => const SizedBox(width: 8),
+        separatorBuilder: (_, _) =>
+            const SizedBox(width: AppSpacing.marketToolGap),
         itemBuilder: (context, index) {
           final tool = tools[index];
           return _ToolChip(
@@ -127,8 +129,8 @@ class _ToolChip extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
       child: Container(
-        height: 34,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        height: AppSpacing.marketToolHeight,
+        padding: AppSpacing.marketToolPadding,
         decoration: BoxDecoration(
           color: tool.color.withValues(alpha: 0.08),
           border: Border.all(color: tool.color.withValues(alpha: 0.22)),
@@ -136,14 +138,13 @@ class _ToolChip extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(tool.icon, color: tool.color, size: 14),
-            const SizedBox(width: 7),
+            Icon(tool.icon, color: tool.color, size: AppSpacing.marketToolIcon),
+            const SizedBox(width: AppSpacing.marketToolIconGap),
             Text(
               tool.label,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
                 fontWeight: AppTextStyles.medium,
-                height: 1,
               ),
             ),
           ],

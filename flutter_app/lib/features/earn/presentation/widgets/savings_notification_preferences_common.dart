@@ -37,17 +37,17 @@ class SavingsNotificationSeverityPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.x2,
-        vertical: 2,
+        vertical: AppSpacing.savingsNotificationSeverityPadV,
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(AppRadii.xs),
+        borderRadius: AppRadii.xsRadius,
       ),
       child: Text(
         savingsNotificationSeverityLabel(severity),
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontWeight: FontWeight.w700,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -82,12 +82,14 @@ class SavingsNotificationTokenSwitch extends StatelessWidget {
           opacity: disabled ? .55 : 1,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 160),
-            width: 46,
-            height: 26,
-            padding: const EdgeInsets.all(3),
+            width: AppSpacing.savingsNotificationTokenSwitchWidth,
+            height: AppSpacing.savingsNotificationTokenSwitchHeight,
+            padding: const EdgeInsets.all(
+              AppSpacing.savingsNotificationTokenSwitchPadding,
+            ),
             decoration: BoxDecoration(
               color: trackColor,
-              borderRadius: BorderRadius.circular(AppRadii.xl),
+              borderRadius: AppRadii.xlRadius,
               border: Border.all(
                 color: value ? AppColors.buy : AppColors.borderSolid,
               ),
@@ -96,8 +98,8 @@ class SavingsNotificationTokenSwitch extends StatelessWidget {
               alignment: value ? Alignment.centerRight : Alignment.centerLeft,
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 160),
-                width: 20,
-                height: 20,
+                width: AppSpacing.savingsNotificationTokenSwitchThumb,
+                height: AppSpacing.savingsNotificationTokenSwitchThumb,
                 decoration: BoxDecoration(
                   color: thumbColor,
                   shape: BoxShape.circle,

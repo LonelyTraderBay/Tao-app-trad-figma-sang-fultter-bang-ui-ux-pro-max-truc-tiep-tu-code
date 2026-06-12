@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/domain/entities/predictions_entities.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
@@ -38,7 +39,9 @@ class PredictionPortfolioOpenOrdersSection extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(
+              width: AppSpacing.predictionPortfolioOrdersHeaderGap,
+            ),
             Text(
               '${orders.length}',
               style: AppTextStyles.micro.copyWith(
@@ -46,11 +49,11 @@ class PredictionPortfolioOpenOrdersSection extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(width: 6),
+            const SizedBox(width: AppSpacing.predictionPortfolioOrdersHelpGap),
             const Icon(
               Icons.help_outline_rounded,
               color: AppColors.text3,
-              size: 13,
+              size: AppSpacing.predictionPortfolioOrdersHelpIcon,
             ),
           ],
         ),
@@ -86,7 +89,7 @@ class PredictionPortfolioOpenOrderCard extends StatelessWidget {
     final fillPct = order.shares == 0 ? 0.0 : (order.filled / order.shares);
 
     return VitCard(
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.predictionPortfolioOrderCardPadding,
       child: InkWell(
         onTap: () =>
             context.go(AppRoutePaths.marketsPredictionReceipt(order.receiptId)),
@@ -95,15 +98,19 @@ class PredictionPortfolioOpenOrderCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 32,
-              height: 32,
+              width: AppSpacing.predictionPortfolioOrderIconBox,
+              height: AppSpacing.predictionPortfolioOrderIconBox,
               decoration: BoxDecoration(
                 color: color.withValues(alpha: .12),
                 borderRadius: AppRadii.mdRadius,
               ),
-              child: Icon(Icons.attach_money_rounded, color: color, size: 17),
+              child: Icon(
+                Icons.attach_money_rounded,
+                color: color,
+                size: AppSpacing.predictionPortfolioOrderIcon,
+              ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.predictionPortfolioOrderGap),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,16 +119,17 @@ class PredictionPortfolioOpenOrderCard extends StatelessWidget {
                     event.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.badge.copyWith(
                       color: AppColors.text1,
-                      fontSize: 12,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(
+                    height: AppSpacing.predictionPortfolioOrderTitleGap,
+                  ),
                   Wrap(
-                    spacing: 8,
-                    runSpacing: 4,
+                    spacing: AppSpacing.predictionPortfolioChipGap,
+                    runSpacing: AppSpacing.predictionPortfolioChipRunGap,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       PredictionPortfolioTinyBadge(
@@ -132,26 +140,26 @@ class PredictionPortfolioOpenOrderCard extends StatelessWidget {
                       Text(
                         '${formatPredictionPortfolioShares(order.shares)} @ '
                         '\$${order.price.toStringAsFixed(2)}',
-                        style: AppTextStyles.micro.copyWith(
+                        style: AppTextStyles.numericMicro.copyWith(
                           color: AppColors.text2,
-                          fontSize: 10,
                           fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
                       Text(
                         'Filled: ${(fillPct * 100).round()}%',
-                        style: AppTextStyles.micro.copyWith(
+                        style: AppTextStyles.numericMicro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(
+                    height: AppSpacing.predictionPortfolioOrderProgressGap,
+                  ),
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(999),
+                    borderRadius: AppRadii.pillRadius,
                     child: SizedBox(
-                      height: 5,
+                      height: AppSpacing.predictionPortfolioOrderProgressHeight,
                       child: LinearProgressIndicator(
                         value: fillPct,
                         backgroundColor: AppColors.surface3,
@@ -162,23 +170,27 @@ class PredictionPortfolioOpenOrderCard extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(
+              width: AppSpacing.predictionPortfolioOrderTrailingGap,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 const Icon(
                   Icons.chevron_right_rounded,
                   color: AppColors.text3,
-                  size: 14,
+                  size: AppSpacing.predictionPortfolioOrderChevron,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(
+                  height: AppSpacing.predictionPortfolioOrderCancelGap,
+                ),
                 InkWell(
                   key: predictionPortfolioCancelOrderKey(order.id),
                   onTap: onCancel,
                   borderRadius: AppRadii.mdRadius,
                   child: Container(
-                    height: 32,
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    height: AppSpacing.predictionPortfolioOrderCancelHeight,
+                    padding: AppSpacing.predictionPortfolioOrderCancelPadding,
                     decoration: BoxDecoration(
                       color: AppColors.sell10,
                       border: Border.all(color: AppColors.sell20),
@@ -190,9 +202,12 @@ class PredictionPortfolioOpenOrderCard extends StatelessWidget {
                         const Icon(
                           Icons.close_rounded,
                           color: AppColors.sell,
-                          size: 12,
+                          size: AppSpacing.predictionPortfolioOrderCancelIcon,
                         ),
-                        const SizedBox(width: 4),
+                        const SizedBox(
+                          width:
+                              AppSpacing.predictionPortfolioOrderCancelIconGap,
+                        ),
                         Text(
                           'Cancel',
                           style: AppTextStyles.micro.copyWith(

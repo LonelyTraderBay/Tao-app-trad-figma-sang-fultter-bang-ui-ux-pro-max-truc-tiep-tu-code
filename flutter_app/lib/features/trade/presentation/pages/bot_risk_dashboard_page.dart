@@ -25,7 +25,6 @@ part '../widgets/bot_risk_dashboard_controls.dart';
 
 const _riskBackground = AppColors.bg;
 const _riskPanel = AppColors.surface;
-const _riskPanel2 = AppColors.surface2;
 const _riskPrimary = AppColors.primary;
 const _riskGreen = AppColors.buy;
 const _riskAmber = AppColors.caution;

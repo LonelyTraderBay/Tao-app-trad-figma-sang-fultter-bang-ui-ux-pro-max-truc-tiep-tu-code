@@ -24,11 +24,10 @@ class _CompactMetric extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
-            height: 1.2,
+            height: AppSpacing.predictionDataMetricLineHeight,
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: AppSpacing.predictionDataMetricValueGap),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -40,14 +39,17 @@ class _CompactMetric extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  fontSize: 12,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ),
             if (trailingIcon != null) ...[
-              const SizedBox(width: 5),
-              Icon(trailingIcon, color: color, size: 12),
+              const SizedBox(width: AppSpacing.predictionDataMetricIconGap),
+              Icon(
+                trailingIcon,
+                color: color,
+                size: AppSpacing.predictionDataMetricIcon,
+              ),
             ],
           ],
         ),
@@ -65,7 +67,7 @@ class _MiniStatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: AppSpacing.predictionDataStatusPillPadding,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .14),
         borderRadius: AppRadii.smRadius,
@@ -74,9 +76,8 @@ class _MiniStatusPill extends StatelessWidget {
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.predictionDataStatusPillLineHeight,
         ),
       ),
     );
@@ -91,7 +92,7 @@ class _NeutralChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      padding: AppSpacing.predictionDataNeutralChipPadding,
       decoration: BoxDecoration(
         color: AppColors.surface2,
         borderRadius: AppRadii.smRadius,
@@ -119,12 +120,16 @@ class _InlineIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 30,
-      height: 30,
+      width: AppSpacing.predictionDataInlineButtonSize,
+      height: AppSpacing.predictionDataInlineButtonSize,
       child: IconButton(
         onPressed: onTap,
         padding: EdgeInsets.zero,
-        icon: Icon(icon, color: color, size: 15),
+        icon: Icon(
+          icon,
+          color: color,
+          size: AppSpacing.predictionDataInlineIcon,
+        ),
       ),
     );
   }
@@ -144,13 +149,17 @@ class _IconBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 32,
-      height: 32,
+      width: AppSpacing.predictionDataIconBubble,
+      height: AppSpacing.predictionDataIconBubble,
       decoration: BoxDecoration(
         color: background,
         borderRadius: AppRadii.mdRadius,
       ),
-      child: Icon(icon, color: color, size: 16),
+      child: Icon(
+        icon,
+        color: color,
+        size: AppSpacing.predictionDataIconBubbleIcon,
+      ),
     );
   }
 }
@@ -167,29 +176,11 @@ class _PrimaryBlueButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 48,
-      width: double.infinity,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: _predictionPrimary,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: AppColors.onAccent, size: 18),
-            const SizedBox(width: 8),
-            Text(
-              label,
-              style: AppTextStyles.body.copyWith(
-                color: AppColors.onAccent,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
+    return VitCtaButton(
+      height: AppSpacing.predictionDataPrimaryButtonHeight,
+      leading: Icon(icon),
+      onPressed: () {},
+      child: Text(label),
     );
   }
 }
@@ -237,18 +228,18 @@ class _NoticeCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: .18),
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.predictionDataNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color, size: 15),
-          const SizedBox(width: 8),
+          Icon(icon, color: color, size: AppSpacing.predictionDataNoticeIcon),
+          const SizedBox(width: AppSpacing.predictionDataNoticeGap),
           Expanded(
             child: Text(
               message,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.5,
+                height: AppSpacing.predictionDataNoticeLineHeight,
               ),
             ),
           ),

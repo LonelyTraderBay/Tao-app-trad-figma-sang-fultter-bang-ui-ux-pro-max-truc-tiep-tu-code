@@ -41,7 +41,7 @@ class _EarningsTab extends StatelessWidget {
                 hideBalance ? '••••••' : '+\$77.72',
                 style: AppTextStyles.heroNumber.copyWith(
                   color: AppColors.buy,
-                  fontSize: 30,
+                  fontSize: AppSpacing.savingsPortfolioEarningsFontSize,
                 ),
               ),
               const SizedBox(height: AppSpacing.x2),
@@ -86,9 +86,12 @@ class _SectionLabel extends StatelessWidget {
         DecoratedBox(
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(2),
+            borderRadius: AppRadii.hairlineRadius,
           ),
-          child: const SizedBox(width: 4, height: 16),
+          child: const SizedBox(
+            width: AppSpacing.savingsPortfolioSectionMarkerWidth,
+            height: AppSpacing.savingsPortfolioSectionMarkerHeight,
+          ),
         ),
         const SizedBox(width: AppSpacing.x2),
         Text(
@@ -268,7 +271,7 @@ class _DaysPill extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: color,
-              height: 1.1,
+              height: AppSpacing.savingsPortfolioDaysLineHeight,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -336,7 +339,7 @@ class _SecondaryButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
         child: Container(
-          height: 38,
+          height: AppSpacing.savingsPortfolioSecondaryButtonHeight,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: AppRadii.xlRadius,
@@ -411,11 +414,11 @@ class _DonutPainter extends CustomPainter {
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.butt
-      ..strokeWidth = 26;
+      ..strokeWidth = AppSpacing.savingsPortfolioDonutStrokeWidth;
     final rect = Rect.fromCenter(
       center: Offset(size.width / 2, size.height / 2),
-      width: 116,
-      height: 116,
+      width: AppSpacing.savingsPortfolioDonutDiameter,
+      height: AppSpacing.savingsPortfolioDonutDiameter,
     );
     var start = -math.pi / 2;
     for (final segment in segments) {

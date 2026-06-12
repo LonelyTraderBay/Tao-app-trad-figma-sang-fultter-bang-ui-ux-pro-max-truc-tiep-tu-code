@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_top_header_tokens.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
@@ -86,7 +87,7 @@ void main() {
     final title = tester.widget<Text>(
       find.text('Markets and portfolio workspace'),
     );
-    expect(title.style?.fontSize, AppTopHeaderTokens.rootTitleSize);
+    expect(title.style?.fontSize, AppTextStyles.pageTitle.fontSize);
   });
 
   testWidgets('root module back requires an actionable callback', (
@@ -185,13 +186,6 @@ void main() {
       AppTopHeaderTokens.instrumentMinHeight,
     );
     expect(VitTopChrome.actionGap, AppTopHeaderTokens.actionGap);
-    expect(VitTopChrome.detailTitleSize, AppTopHeaderTokens.detailTitleSize);
-    expect(VitTopChrome.rootTitleSize, AppTopHeaderTokens.rootTitleSize);
-    expect(
-      VitTopChrome.instrumentTitleSize,
-      AppTopHeaderTokens.instrumentTitleSize,
-    );
-    expect(VitTopChrome.subtitleSize, AppTopHeaderTokens.subtitleSize);
   });
 
   testWidgets('status slot renders below chrome when explicitly provided', (

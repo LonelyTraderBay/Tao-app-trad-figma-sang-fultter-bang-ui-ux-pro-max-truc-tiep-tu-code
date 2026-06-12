@@ -38,17 +38,14 @@ class _MarketDataAnalyticsPageState
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 0,
+                    customGap: 16,
                     children: [
                       _PairSelector(snapshot: snapshot),
-                      const SizedBox(height: 12),
                       _MarketAnalyticsRiskPanel(snapshot: snapshot),
-                      const SizedBox(height: 16),
                       _UnderlineTabs(
                         activeId: _tab,
                         onChanged: (id) => setState(() => _tab = id),
                       ),
-                      const SizedBox(height: 16),
                       if (_tab == 'market')
                         _MarketDataTab(snapshot: snapshot)
                       else if (_tab == 'liquidations')
@@ -143,18 +140,14 @@ class _HeaderValue extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
-            fontSize: 12,
             height: 1.2,
           ),
         ),
-        const SizedBox(height: 8),
         Text(
           value,
           style: AppTextStyles.baseMedium.copyWith(
             color: valueColor,
-            fontSize: 20,
             fontWeight: AppTextStyles.bold,
-            fontFamily: monospace ? 'monospace' : null,
             fontFeatures: AppTextStyles.tabularFigures,
             height: 1,
           ),
@@ -180,43 +173,23 @@ class _UnderlineTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       height: 54,
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
         children: [
-          for (final tab in _tabs)
+          for (final tab in _tabs) ...[
             Expanded(
-              child: InkWell(
+              child: VitStatusPill(
                 key: MarketDataAnalyticsPage.tabKey(tab.$1),
+                label: tab.$2,
+                status: activeId == tab.$1
+                    ? VitStatusPillStatus.info
+                    : VitStatusPillStatus.neutral,
+                size: VitStatusPillSize.lg,
                 onTap: () => onChanged(tab.$1),
-                child: Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.symmetric(horizontal: 28),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: activeId == tab.$1
-                            ? _analyticsPrimary
-                            : AppColors.transparent,
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                  child: Text(
-                    tab.$2,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: activeId == tab.$1
-                          ? _analyticsPrimary
-                          : AppColors.text3,
-                      fontSize: 12,
-                      fontWeight: AppTextStyles.bold,
-                      height: 1,
-                    ),
-                  ),
-                ),
               ),
             ),
+            if (tab != _tabs.last) const SizedBox(width: 8),
+          ],
         ],
       ),
     );
@@ -230,17 +203,16 @@ class _MarketDataTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      customGap: 12,
       children: [
         _OpenInterestCard(
           pair: snapshot.selectedPair,
           data: snapshot.openInterest,
         ),
-        const SizedBox(height: 12),
         _LongShortRatioCard(data: snapshot.longShortRatio),
-        const SizedBox(height: 12),
         _TopTradersCard(data: snapshot.topTraders),
-        const SizedBox(height: 12),
         _FundingRateCard(data: snapshot.fundingRate),
       ],
     );
@@ -256,8 +228,9 @@ class _OpenInterestCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _AnalyticsCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 14,
         children: [
           _CardHeader(
             icon: Icons.show_chart_rounded,
@@ -265,27 +238,29 @@ class _OpenInterestCard extends StatelessWidget {
             title: 'Open Interest',
             trailing: '$pair >',
           ),
-          const SizedBox(height: 18),
           Text(
             'Total Open Interest',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              fontSize: 12,
               height: 1,
             ),
           ),
-          const SizedBox(height: 12),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                _formatMillions(data.current),
-                style: AppTextStyles.sectionTitle.copyWith(
-                  color: AppColors.text1,
-                  fontSize: 26,
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
-                  height: 1,
+              Expanded(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    _formatMillions(data.current),
+                    style: AppTextStyles.sectionTitle.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                      height: 1,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: 8),
@@ -295,7 +270,6 @@ class _OpenInterestCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 18),
           Row(
             children: [
               Expanded(
@@ -321,7 +295,6 @@ class _OpenInterestCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
           _InfoStrip(
             text:
                 'OI tang + gia tang = bullish strong. OI tang + gia giam = bearish momentum. OI giam = positions dong.',
@@ -340,8 +313,9 @@ class _LongShortRatioCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _AnalyticsCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 12,
         children: [
           _CardHeader(
             icon: Icons.groups_2_outlined,
@@ -349,51 +323,57 @@ class _LongShortRatioCard extends StatelessWidget {
             title: 'Long/Short Ratio',
             badge: 'Long',
           ),
-          const SizedBox(height: 16),
           _ToggleBar(left: 'By Accounts', right: 'By Volume'),
-          const SizedBox(height: 16),
           Row(
             children: [
-              _PctLabel(
-                label: 'Long ${data.longPct.toStringAsFixed(1)}%',
-                color: _analyticsGreen,
-                icon: Icons.trending_up_rounded,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: _PctLabel(
+                      label: 'Long ${data.longPct.toStringAsFixed(1)}%',
+                      color: _analyticsGreen,
+                      icon: Icons.trending_up_rounded,
+                    ),
+                  ),
+                ),
               ),
-              const Spacer(),
-              _PctLabel(
-                label: 'Short ${data.shortPct.toStringAsFixed(1)}%',
-                color: _analyticsRed,
-                icon: Icons.trending_down_rounded,
-                iconAfter: true,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: _PctLabel(
+                      label: 'Short ${data.shortPct.toStringAsFixed(1)}%',
+                      color: _analyticsRed,
+                      icon: Icons.trending_down_rounded,
+                      iconAfter: true,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
-          const SizedBox(height: 9),
           _RatioBar(longPct: data.longPct),
-          const SizedBox(height: 10),
           Text(
             'Long/Short Ratio',
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
-          const SizedBox(height: 6),
           Text(
             data.ratio.toStringAsFixed(2),
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle.copyWith(
               color: _analyticsGreen,
-              fontSize: 21,
               fontWeight: AppTextStyles.bold,
-              fontFamily: 'monospace',
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
             ),
           ),
-          const SizedBox(height: 20),
           Row(
             children: [
               Expanded(

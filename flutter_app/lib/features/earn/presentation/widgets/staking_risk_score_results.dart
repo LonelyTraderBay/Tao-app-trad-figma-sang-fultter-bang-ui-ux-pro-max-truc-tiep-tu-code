@@ -32,7 +32,10 @@ class _RiskScoreCard extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: color.withValues(alpha: 0.12),
-              border: Border.all(color: color, width: 4),
+              border: Border.all(
+                color: color,
+                width: AppSpacing.stakingRiskScoreBorderWidth,
+              ),
             ),
             alignment: Alignment.center,
             child: Column(
@@ -60,12 +63,16 @@ class _RiskScoreCard extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.16),
-              borderRadius: BorderRadius.circular(999),
+              borderRadius: AppRadii.pillRadius,
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.warning_amber_rounded, color: color, size: 17),
+                Icon(
+                  Icons.warning_amber_rounded,
+                  color: color,
+                  size: AppSpacing.stakingRiskScorePillIcon,
+                ),
                 const SizedBox(width: AppSpacing.x2),
                 Text(
                   label,
@@ -80,7 +87,7 @@ class _RiskScoreCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           SizedBox(
             key: StakingRiskScoreCalculatorPage.radarKey,
-            height: 220,
+            height: AppSpacing.stakingRiskScoreRadarHeight,
             child: _RiskRadarChart(axes: axes, color: color),
           ),
         ],
@@ -146,7 +153,7 @@ class _RecommendationCard extends StatelessWidget {
                   recommendation.body,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.stakingAssessmentHelpLineHeight,
                   ),
                 ),
               ],

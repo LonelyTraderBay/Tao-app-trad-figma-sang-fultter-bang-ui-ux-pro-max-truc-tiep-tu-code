@@ -84,7 +84,7 @@ class _StatCell extends StatelessWidget {
             value,
             style: AppTextStyles.base.copyWith(
               color: color,
-              fontSize: 20,
+              fontSize: AppSpacing.launchpadFont2xl,
               fontWeight: AppTextStyles.bold,
             ),
           ),

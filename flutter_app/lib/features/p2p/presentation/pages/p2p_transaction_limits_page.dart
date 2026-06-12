@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -92,6 +93,19 @@ class P2PTransactionLimitsPage extends ConsumerWidget {
                         _UpgradeCard(snapshot: snapshot),
                         const SizedBox(height: AppSpacing.x6),
                         _LimitInfoNotice(items: snapshot.infoBullets),
+                        VitPageContent(
+                          padding: VitContentPadding.compact,
+                          customGap: 0,
+                          children: const [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Transaction limits state review',
+                              message:
+                                  'Current tier, used limits, tracker link, limit details, upgrade CTA, and policy notes remain visible before increasing P2P trading capacity.',
+                              contractId: 'SC-266',
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

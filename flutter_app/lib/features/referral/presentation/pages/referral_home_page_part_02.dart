@@ -27,7 +27,7 @@ class _EarningCalculator extends StatelessWidget {
             title: 'Thu nhập nháp ước tính',
             color: AppColors.primary,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             'Kéo để ước tính thêm bạn mới trong tháng',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -90,10 +90,10 @@ class _PendingCommissionSection extends StatelessWidget {
           trailing: '~${_formatUsd(total)}',
           color: AppColors.warn,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         for (final item in items) ...[
           _PendingCommissionCard(item: item),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ],
       ],
     );
@@ -112,7 +112,7 @@ class _RewardHighlights extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionTitle(title: 'Thưởng của bạn', color: AppColors.buy),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Row(
           children: [
             Expanded(
@@ -159,12 +159,13 @@ class _LeaderboardSection extends StatelessWidget {
             trailing: 'Tháng 3/2026',
             color: AppColors.accent,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           for (final item in items) ...[
             _LeaderboardRow(item: item),
-            if (item != items.last) const SizedBox(height: AppSpacing.x3),
+            if (item != items.last)
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           ],
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           const _NoticeCard(
             icon: Icons.info_outline_rounded,
             text:
@@ -238,7 +239,7 @@ class _HowItWorksSection extends StatelessWidget {
             title: 'Cách thức hoạt động',
             color: AppColors.primary,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           for (final step in steps) ...[
             _StepRow(step: step),
             if (step != steps.last) const Divider(color: AppColors.divider),
@@ -260,7 +261,7 @@ class _MonthStats extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionTitle(title: 'Tháng này', color: AppColors.warn),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Row(
           children: [
             Expanded(
@@ -300,10 +301,10 @@ class _CampaignHistorySection extends StatelessWidget {
           trailing: '${items.length} sự kiện',
           color: AppColors.accent,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         for (final item in items) ...[
           _CampaignHistoryCard(item: item),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ],
       ],
     );
@@ -343,7 +344,7 @@ class _HeroMetric extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Text(
             label,
             textAlign: TextAlign.center,
@@ -359,7 +360,6 @@ class _HeroMetric extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
-              fontSize: 9,
             ),
           ),
         ],
@@ -382,7 +382,6 @@ class _SplitReward extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.portfolioTextMuted,
-            fontSize: 9,
           ),
         ),
         Text(
@@ -433,10 +432,7 @@ class _SocialProofPill extends StatelessWidget {
               ),
               Text(
                 item.label,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 9,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -465,7 +461,7 @@ class _MilestoneCard extends StatelessWidget {
         : AppColors.text3;
     return SizedBox(
       key: ReferralHomePage.milestoneKey(item.id),
-      width: 122,
+      width: AppSpacing.referralLeaderboardWidth,
       child: VitCard(
         borderColor: color.withValues(alpha: .24),
         padding: const EdgeInsets.all(AppSpacing.x3),
@@ -491,7 +487,7 @@ class _MilestoneCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
             Text(
               '${item.friends} bạn bè',
               style: AppTextStyles.caption.copyWith(
@@ -499,7 +495,7 @@ class _MilestoneCard extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(height: AppSpacing.x1),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
             Text(
               item.reward,
               maxLines: 2,

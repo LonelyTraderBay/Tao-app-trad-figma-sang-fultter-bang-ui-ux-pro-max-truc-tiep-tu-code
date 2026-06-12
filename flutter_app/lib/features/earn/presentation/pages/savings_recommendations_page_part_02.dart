@@ -211,7 +211,7 @@ class _InsightCard extends StatelessWidget {
                   insight.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.45,
+                    height: AppSpacing.savingsRecommendationsInsightLineHeight,
                   ),
                 ),
               ],
@@ -289,7 +289,7 @@ class _Disclaimer extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.55,
+                height: AppSpacing.savingsRecommendationsNoteLineHeight,
               ),
             ),
           ),

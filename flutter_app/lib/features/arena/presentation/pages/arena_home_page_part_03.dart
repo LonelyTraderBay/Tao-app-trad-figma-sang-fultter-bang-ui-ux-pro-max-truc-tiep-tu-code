@@ -43,14 +43,14 @@ class _VerifiedTeaser extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                   Text(
                     'Sẽ mở trong tương lai cho challenge xác thực cao hơn',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1.3,
+                      height: AppSpacing.arenaHomeVerifiedLineHeight,
                     ),
                   ),
                 ],
@@ -74,7 +74,10 @@ class _ArenaFooter extends StatelessWidget {
       children: [
         TextButton.icon(
           onPressed: onRules,
-          icon: const Icon(Icons.menu_book_outlined, size: 16),
+          icon: const Icon(
+            Icons.menu_book_outlined,
+            size: AppSpacing.arenaHomeFooterIcon,
+          ),
           label: const Text('Quy tắc cộng đồng'),
           style: TextButton.styleFrom(
             foregroundColor: AppColors.primary,
@@ -83,7 +86,7 @@ class _ArenaFooter extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         VitCard(
           padding: const EdgeInsets.all(AppSpacing.x4),
           child: Row(
@@ -92,7 +95,7 @@ class _ArenaFooter extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: AppColors.accent,
-                size: 17,
+                size: AppSpacing.arenaHomeFooterShieldIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -100,7 +103,7 @@ class _ArenaFooter extends StatelessWidget {
                   'Arena Points chỉ dùng trong Open Arena, không phải tài sản tài chính. Không thỏa thuận giao dịch ngoài nền tảng.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.35,
+                    height: AppSpacing.arenaHomeFooterLineHeight,
                   ),
                 ),
               ),
@@ -159,13 +162,13 @@ class _SearchResults extends StatelessWidget {
               : '$total kết quả cho "$query"',
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         if (modes.isNotEmpty) ...[
           VitModuleSectionHeader(
             title: 'Modes (${modes.length})',
             accentColor: AppColors.primary,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           for (final mode in modes) ...[
             _SearchRow(
               icon: _templateIcon(_kindForMode(mode.templateId)),
@@ -174,7 +177,7 @@ class _SearchResults extends StatelessWidget {
               color: AppColors.primary,
               onTap: () => onMode(mode.id),
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           ],
         ],
         if (rooms.isNotEmpty) ...[
@@ -182,7 +185,7 @@ class _SearchResults extends StatelessWidget {
             title: 'Phòng (${rooms.length})',
             accentColor: AppColors.warn,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           for (final room in rooms) ...[
             _SearchRow(
               icon: Icons.groups_2_outlined,
@@ -192,7 +195,7 @@ class _SearchResults extends StatelessWidget {
               color: _challengeStateColor(room.state),
               onTap: () => onRoom(room.id),
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           ],
         ],
         if (creators.isNotEmpty) ...[
@@ -200,7 +203,7 @@ class _SearchResults extends StatelessWidget {
             title: 'Creators (${creators.length})',
             accentColor: AppColors.buy,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           for (final creator in creators) ...[
             _SearchRow(
               icon: Icons.person_rounded,
@@ -210,7 +213,7 @@ class _SearchResults extends StatelessWidget {
               color: AppColors.buy,
               onTap: () => onCreator(creator.id),
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           ],
         ],
         if (total == 0)
@@ -260,7 +263,7 @@ class _SearchRow extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   subtitle,
                   maxLines: 1,
@@ -273,7 +276,7 @@ class _SearchRow extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: 18,
+            size: AppSpacing.arenaHomeSearchChevron,
           ),
         ],
       ),
@@ -290,14 +293,14 @@ class _ActionIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 32,
-      height: 32,
+      width: AppSpacing.arenaHomeActionIconBox,
+      height: AppSpacing.arenaHomeActionIconBox,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.mdRadius,
         border: Border.all(color: color.withValues(alpha: .18)),
       ),
-      child: Icon(icon, color: color, size: 17),
+      child: Icon(icon, color: color, size: AppSpacing.arenaHomeActionIcon),
     );
   }
 }
@@ -310,8 +313,10 @@ class _MiniCountBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minWidth: 16),
-      height: 16,
+      constraints: const BoxConstraints(
+        minWidth: AppSpacing.arenaHomeCountBadgeMinWidth,
+      ),
+      height: AppSpacing.arenaHomeCountBadgeHeight,
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x1),
       decoration: BoxDecoration(
         color: AppColors.sell,
@@ -322,9 +327,8 @@ class _MiniCountBadge extends StatelessWidget {
         count > 99 ? '99+' : '$count',
         style: AppTextStyles.micro.copyWith(
           color: AppColors.onAccent,
-          fontSize: 9,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.arenaHomeCountBadgeLineHeight,
         ),
       ),
     );

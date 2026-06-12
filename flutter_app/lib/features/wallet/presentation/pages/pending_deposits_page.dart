@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -56,8 +57,10 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 92
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.walletPendingBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.walletPendingBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -77,11 +80,11 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: PendingDepositsPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
+                  padding: AppSpacing.walletPendingScrollPadding(bottomInset),
                   physics: const BouncingScrollPhysics(),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 16,
+                    customGap: AppSpacing.walletPendingContentGap,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(
@@ -110,7 +113,9 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                                 setState(() => _copiedId = deposit.id),
                           ),
                           if (deposit != deposits.last)
-                            const SizedBox(height: 12),
+                            const SizedBox(
+                              height: AppSpacing.walletPendingRowGap,
+                            ),
                         ],
                       const _InfoNotice(),
                     ],

@@ -62,8 +62,8 @@ class _AssetBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 31,
-      height: 31,
+      width: AppSpacing.savingsWhatIfAssetBadge,
+      height: AppSpacing.savingsWhatIfAssetBadge,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .14),
@@ -73,7 +73,10 @@ class _AssetBadge extends StatelessWidget {
         fit: BoxFit.scaleDown,
         child: Text(
           asset,
-          style: _microBold.copyWith(color: color, fontSize: 8),
+          style: _microBold.copyWith(
+            color: color,
+            fontSize: AppSpacing.savingsWhatIfAssetFontSize,
+          ),
         ),
       ),
     );

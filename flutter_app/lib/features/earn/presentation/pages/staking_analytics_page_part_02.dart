@@ -14,10 +14,10 @@ class _AssetEarningsGrid extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         itemCount: products.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+          crossAxisCount: AppSpacing.earnAnalyticsGridColumns,
           mainAxisSpacing: AppSpacing.x3,
           crossAxisSpacing: AppSpacing.x3,
-          childAspectRatio: 2.55,
+          childAspectRatio: AppSpacing.stakingAnalyticsMetricGridAspect,
         ),
         itemBuilder: (context, index) {
           final product = products[index];
@@ -33,9 +33,12 @@ class _AssetEarningsGrid extends StatelessWidget {
                     DecoratedBox(
                       decoration: BoxDecoration(
                         color: color,
-                        borderRadius: BorderRadius.circular(4),
+                        borderRadius: AppRadii.swatchRadius,
                       ),
-                      child: const SizedBox(width: 8, height: 8),
+                      child: const SizedBox(
+                        width: AppSpacing.earnAnalyticsAssetDot,
+                        height: AppSpacing.earnAnalyticsAssetDot,
+                      ),
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(
@@ -85,7 +88,7 @@ class _ApyTab extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
-                height: 220,
+                height: AppSpacing.earnAnalyticsChartHeight,
                 child: Row(
                   children: [
                     const _YAxisLabels(
@@ -153,7 +156,7 @@ class _RoiTab extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: 220,
+                height: AppSpacing.earnAnalyticsChartHeight,
                 child: CustomPaint(
                   painter: _RoiBarPainter(points: snapshot.roiComparison),
                   size: Size.infinite,
@@ -260,7 +263,7 @@ class _ProductPerformanceCard extends StatelessWidget {
                     '+${product.roi.toStringAsFixed(2)}%',
                     style: AppTextStyles.baseMedium.copyWith(
                       color: AppColors.buy,
-                      fontSize: 19,
+                      fontSize: AppSpacing.earnAnalyticsRoiFontSize,
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
@@ -293,9 +296,9 @@ class _ProductPerformanceCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x3),
           ClipRRect(
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(
-              minHeight: 6,
+              minHeight: AppSpacing.earnAnalyticsProgressMinHeight,
               value: progress,
               backgroundColor: AppColors.borderSolid,
               valueColor: AlwaysStoppedAnimation<Color>(color),
@@ -362,8 +365,8 @@ class _AssetAvatar extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: SizedBox(
-        width: 42,
-        height: 42,
+        width: AppSpacing.earnAnalyticsAvatarBox,
+        height: AppSpacing.earnAnalyticsAvatarBox,
         child: Center(
           child: Text(
             asset.length > 3 ? asset.substring(0, 3) : asset,
@@ -398,7 +401,7 @@ class _InsightBox extends StatelessWidget {
             const Icon(
               Icons.lightbulb_outline_rounded,
               color: AppColors.primary,
-              size: 17,
+              size: AppSpacing.earnAnalyticsInsightIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -406,7 +409,7 @@ class _InsightBox extends StatelessWidget {
                 text,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.45,
+                  height: AppSpacing.earnAnalyticsInsightLineHeight,
                 ),
               ),
             ),
@@ -432,7 +435,7 @@ class _FooterNote extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text3,
-          height: 1.5,
+          height: AppSpacing.earnAnalyticsFooterLineHeight,
         ),
       ),
     );
@@ -447,7 +450,7 @@ class _YAxisLabels extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 42,
+      width: AppSpacing.earnAnalyticsAxisWidth,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,

@@ -241,7 +241,7 @@ class _RewardMetricCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(icon, color: color, size: 13),
+              Icon(icon, color: color, size: AppSpacing.arenaPointsMicroIcon),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
@@ -405,7 +405,11 @@ class _ExpiringBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.timer_outlined, color: AppColors.sell, size: 14),
+          const Icon(
+            Icons.timer_outlined,
+            color: AppColors.sell,
+            size: AppSpacing.arenaPointsSmallIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(

@@ -105,12 +105,12 @@ class _PositionCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           GridView.count(
-            crossAxisCount: 2,
+            crossAxisCount: AppSpacing.stakingCommunityGridColumns,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             mainAxisSpacing: AppSpacing.x2,
             crossAxisSpacing: AppSpacing.x2,
-            childAspectRatio: 2.7,
+            childAspectRatio: AppSpacing.stakingCommunityPositionsGridAspect,
             children: [
               _PositionMetric(label: 'Dang staking', value: position.amount),
               _PositionMetric(

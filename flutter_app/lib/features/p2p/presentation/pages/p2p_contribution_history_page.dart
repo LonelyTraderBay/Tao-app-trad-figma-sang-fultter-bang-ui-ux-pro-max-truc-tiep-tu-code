@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -98,6 +99,19 @@ class _P2PContributionHistoryPageState
                         const SizedBox(height: AppSpacing.x5),
                         _MonthlyContributionGroups(
                           groups: snapshot.monthlyGroups,
+                        ),
+                        VitPageContent(
+                          padding: VitContentPadding.compact,
+                          customGap: 0,
+                          children: const [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Contribution history state review',
+                              message:
+                                  'Contribution export, monthly grouping, insurance fee rate, totals, and success feedback remain visible before P2P insurance reporting actions.',
+                              contractId: 'SC-242',
+                            ),
+                          ],
                         ),
                       ],
                     ),

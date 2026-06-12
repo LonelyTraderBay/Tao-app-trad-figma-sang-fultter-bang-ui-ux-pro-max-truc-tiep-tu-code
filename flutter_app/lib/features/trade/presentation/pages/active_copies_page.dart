@@ -123,7 +123,7 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
                                   context.go(AppRoutePaths.tradeCopyTrading),
                             )
                           else
-                            for (final copy in copies) ...[
+                            for (final copy in copies)
                               _ActiveCopyCard(
                                 key: ActiveCopiesPage.copyKey(copy.id),
                                 copy: copy,
@@ -154,9 +154,6 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
                                         _confirmText = '';
                                       }),
                               ),
-                              if (copy != copies.last)
-                                const SizedBox(height: 12),
-                            ],
                           if (_actionStatus != null) ...[
                             _ActionStatusBanner(text: _actionStatus!),
                           ],

@@ -32,7 +32,6 @@ class _AdIdentityCard extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: typeColor,
                   fontWeight: AppTextStyles.bold,
-                  fontSize: 12,
                 ),
               ),
             ),
@@ -49,7 +48,6 @@ class _AdIdentityCard extends StatelessWidget {
                     style: AppTextStyles.base.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
-                      fontFamily: 'Roboto',
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
@@ -191,7 +189,7 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.buttonHero + AppSpacing.x4 + AppSpacing.x1,
+      height: AppSpacing.buttonHero + AppSpacing.x4 + AppSpacing.x3,
       padding: const EdgeInsets.all(AppSpacing.x4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,8 +227,6 @@ class _MetricCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.sectionTitle.copyWith(
               color: AppColors.text1,
-              fontSize: 19,
-              fontFamily: 'Roboto',
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
@@ -239,10 +235,7 @@ class _MetricCard extends StatelessWidget {
             item.subtitle,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 9,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -330,7 +323,6 @@ class _QuickStatView extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text1,
             fontWeight: AppTextStyles.bold,
-            fontFamily: 'Roboto',
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
@@ -338,10 +330,7 @@ class _QuickStatView extends StatelessWidget {
           item.label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 8,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
       ],
     );
@@ -505,10 +494,7 @@ class _PerformanceCard extends StatelessWidget {
           ),
           Text(
             'Lượt xem & Đơn hàng theo ngày',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 9,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(

@@ -45,8 +45,10 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                       AppSpacing.contentPad,
                       bottomInset,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      customGap: 0,
+                      fullBleed: true,
                       children: [
                         _RewardHero(
                           snapshot: snapshot,
@@ -54,15 +56,21 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                           onDisputes: () =>
                               _showDisputeHistorySheet(context, snapshot),
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x5),
+                        ),
                         _SectionTitle(
                           title: 'Hoa hồng theo tháng',
                           trailing:
                               '+${_formatUsd(snapshot.thisMonthCommission)} tháng này',
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x3),
+                        ),
                         _RewardChart(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x5),
+                        ),
                         _RewardTabs(
                           filters: snapshot.filters,
                           active: snapshot.filter,
@@ -71,7 +79,9 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                             setState(() => _filter = value);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x4),
+                        ),
                         _SortRail(
                           options: snapshot.sortOptions,
                           active: snapshot.sort,
@@ -80,13 +90,17 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                             setState(() => _sort = value);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x4),
+                        ),
                         _RewardLedger(
                           snapshot: snapshot,
                           onReport: (record) =>
                               _showReportSheet(context, snapshot, record),
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x4),
+                        ),
                         const _DisputeInfo(),
                       ],
                     ),
@@ -130,12 +144,12 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                     color: AppColors.text1,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                 Text(
                   '${snapshot.records.length} bản ghi · ${_formatUsd(snapshot.totalCommission)} tổng',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
                 Wrap(
                   spacing: AppSpacing.x3,
                   runSpacing: AppSpacing.x3,
@@ -144,7 +158,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                       _TinyPill(label: range.label),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x5),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
                 VitCtaButton(
                   onPressed: () => Navigator.of(context).pop(),
                   leading: const Icon(Icons.download_rounded),
@@ -189,14 +203,14 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                     color: AppColors.text1,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                 _SheetRecord(record: record),
-                const SizedBox(height: AppSpacing.x4),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
                 for (final type in snapshot.disputeTypes) ...[
                   _DisputeTypeRow(type: type),
-                  const SizedBox(height: AppSpacing.x2),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 ],
-                const SizedBox(height: AppSpacing.x4),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
                 VitCtaButton(
                   onPressed: () => Navigator.of(context).pop(),
                   variant: VitCtaButtonVariant.warning,
@@ -241,7 +255,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                     color: AppColors.text1,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
                 for (final dispute in snapshot.disputes)
                   _DisputeHistoryCard(dispute: dispute),
               ],
@@ -289,14 +303,14 @@ class _RewardHero extends StatelessWidget {
               _TierPill(snapshot: snapshot),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Text(
             _formatUsd(snapshot.totalCommission),
             style: AppTextStyles.heroNumber.copyWith(
               color: AppColors.portfolioTextDim,
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Text(
             'USDT · Đã cộng vào ví',
             style: AppTextStyles.caption.copyWith(
@@ -304,7 +318,7 @@ class _RewardHero extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Row(
             children: [
               const Icon(
@@ -322,7 +336,7 @@ class _RewardHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           Row(
             children: [
               Expanded(
@@ -344,7 +358,7 @@ class _RewardHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           Row(
             children: [
               Expanded(
@@ -453,7 +467,7 @@ class _HeroStat extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Text(
             _formatUsd(amount),
             style: AppTextStyles.body.copyWith(

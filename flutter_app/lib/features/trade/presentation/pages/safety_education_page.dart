@@ -20,7 +20,6 @@ part '../widgets/safety_education_page_sections.dart';
 part '../widgets/safety_education_page_common.dart';
 
 const _safetyPrimary = AppColors.primary;
-const _safetyTabs = AppColors.surface;
 
 class SafetyEducationPage extends ConsumerStatefulWidget {
   const SafetyEducationPage({super.key, this.shellRenderMode});

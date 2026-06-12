@@ -11,8 +11,8 @@ class _ScoreCard extends StatelessWidget {
 
     return VitCard(
       key: SecurityPage.scoreCardKey,
-      height: 140,
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+      height: AppSpacing.securityScoreHeight,
+      padding: AppSpacing.securityCardPadding,
       borderColor: _securityBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -21,47 +21,42 @@ class _ScoreCard extends StatelessWidget {
             children: [
               Text(
                 '\u0110i\u1EC3m b\u1EA3o m\u1EADt',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontSize: 13,
-                  height: 1,
-                ),
+                style: AppTextStyles.control.copyWith(color: AppColors.text2),
               ),
               const Spacer(),
               Text(
                 '${snapshot.scoreLabel} (${snapshot.score}/4)',
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.control.copyWith(
                   color: scoreColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w900,
-                  height: 1,
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 17),
+          const SizedBox(height: AppSpacing.securityScoreBarsGap),
           Row(
             children: [
               for (var i = 0; i < 4; i++) ...[
                 Expanded(
                   child: Container(
-                    height: 7,
+                    height: AppSpacing.securityScoreBarHeight,
                     decoration: BoxDecoration(
                       color: i < snapshot.score
                           ? scoreColor
                           : AppColors.surface3,
-                      borderRadius: BorderRadius.circular(999),
+                      borderRadius: AppRadii.pillRadius,
                     ),
                   ),
                 ),
-                if (i < 3) const SizedBox(width: 8),
+                if (i < 3)
+                  const SizedBox(width: AppSpacing.securityScoreBarGap),
               ],
             ],
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.securityScoreAlertGap),
           Container(
-            height: 53,
-            padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+            height: AppSpacing.securityScoreAlertHeight,
+            padding: AppSpacing.securityScoreAlertPadding,
             decoration: BoxDecoration(
               color: _securityAmber.withValues(alpha: .12),
               borderRadius: AppRadii.cardRadius,
@@ -73,18 +68,16 @@ class _ScoreCard extends StatelessWidget {
                 const Icon(
                   Icons.warning_amber_rounded,
                   color: _securityAmber,
-                  size: 14,
+                  size: AppSpacing.securitySmallIcon,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.securityIconGap),
                 Expanded(
                   child: Text(
                     'B\u1EADt t\u1EA5t c\u1EA3 t\u00EDnh n\u0103ng b\u1EA3o m\u1EADt \u0111\u1EC3 b\u1EA3o v\u1EC7 t\u00E0i s\u1EA3n c\u1EE7a b\u1EA1n\n'
                     't\u1ED1t nh\u1EA5t.',
-                    style: AppTextStyles.micro.copyWith(
+                    style: AppTextStyles.numericMicro.copyWith(
                       color: _securityAmber,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      height: 1.48,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
                 ),
@@ -115,7 +108,10 @@ class _SecurityList extends StatelessWidget {
             for (final item in items) ...[
               _SecurityRow(item: item, onTap: () => onItemTap(item)),
               if (item != items.last)
-                const Divider(height: 1, color: _securityDivider),
+                const Divider(
+                  height: AppSpacing.dividerHairline,
+                  color: _securityDivider,
+                ),
             ],
           ],
         ),
@@ -139,21 +135,25 @@ class _SecurityRow extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 76,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        height: AppSpacing.securityRowHeight,
+        padding: AppSpacing.securityRowPadding,
         child: Row(
           children: [
             Container(
-              width: 40,
-              height: 40,
+              width: AppSpacing.securityRowIconBox,
+              height: AppSpacing.securityRowIconBox,
               decoration: BoxDecoration(
                 color: accent.withValues(alpha: .13),
                 borderRadius: AppRadii.lgRadius,
               ),
               alignment: Alignment.center,
-              child: Icon(_iconFor(item.iconKey), color: accent, size: 21),
+              child: Icon(
+                _iconFor(item.iconKey),
+                color: accent,
+                size: AppSpacing.securityRowIcon,
+              ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: AppSpacing.securityRowGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -163,37 +163,33 @@ class _SecurityRow extends StatelessWidget {
                     item.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.control.copyWith(
                       color: AppColors.text1,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w900,
-                      height: 1,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.securityRowSubtitleGap),
                   Text(
                     item.description,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
+                    style: AppTextStyles.numericMicro.copyWith(
                       color: _securityMuted,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.12,
+                      fontWeight: AppTextStyles.medium,
                     ),
                   ),
                 ],
               ),
             ),
             if (item.status != null) ...[
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.securityStatusGap),
               _StatusPill(label: item.status!, color: Color(item.statusHex!)),
             ],
-            const SizedBox(width: 11),
+            const SizedBox(width: AppSpacing.securityChevronGap),
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.text3,
-              size: 19,
+              size: AppSpacing.securityChevron,
             ),
           ],
         ),
@@ -211,20 +207,12 @@ class _StatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      padding: AppSpacing.securityStatusPillPadding,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: AppRadii.pillRadius,
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 11,
-          fontWeight: FontWeight.w900,
-          height: 1,
-        ),
-      ),
+      child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
     );
   }
 }
@@ -241,14 +229,9 @@ class _DeviceList extends StatelessWidget {
       children: [
         Text(
           'THI\u1EBET B\u1ECA \u0110\u0102NG NH\u1EACP',
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text2,
-            fontSize: 11,
-            fontWeight: FontWeight.w900,
-            height: 1,
-          ),
+          style: AppTextStyles.badge.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.securityDeviceHeaderGap),
         VitCard(
           borderColor: _securityBorder,
           clip: true,
@@ -259,7 +242,10 @@ class _DeviceList extends StatelessWidget {
                 for (final device in devices) ...[
                   _DeviceRow(device: device),
                   if (device != devices.last)
-                    const Divider(height: 1, color: _securityDivider),
+                    const Divider(
+                      height: AppSpacing.dividerHairline,
+                      color: _securityDivider,
+                    ),
                 ],
               ],
             ),
@@ -278,17 +264,19 @@ class _DeviceRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minHeight: 73),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.securityDeviceMinHeight,
+      ),
+      padding: AppSpacing.securityDevicePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.laptop_mac_rounded,
             color: AppColors.text3,
-            size: 20,
+            size: AppSpacing.securityDeviceIcon,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.securityDeviceGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -300,16 +288,14 @@ class _DeviceRow extends StatelessWidget {
                         device.name,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
+                        style: AppTextStyles.control.copyWith(
                           color: AppColors.text1,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w900,
-                          height: 1,
+                          fontWeight: AppTextStyles.bold,
                         ),
                       ),
                     ),
                     if (device.isCurrent) ...[
-                      const SizedBox(width: 8),
+                      const SizedBox(width: AppSpacing.securityStatusGap),
                       _StatusPill(
                         label: 'Hi\u1EC7n t\u1EA1i',
                         color: _securityGreen,
@@ -317,45 +303,36 @@ class _DeviceRow extends StatelessWidget {
                     ],
                   ],
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(height: AppSpacing.securityDeviceNameGap),
                 Text(
                   '${device.os} \u2022 ${device.location}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.numericMicro.copyWith(
                     color: _securityMuted,
-                    fontSize: 11,
-                    height: 1,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.securityDeviceMetaGap),
                 Text(
                   device.lastSeen,
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.numericMicro.copyWith(
                     color: _securityMuted,
-                    fontSize: 11,
-                    height: 1,
                   ),
                 ),
               ],
             ),
           ),
           if (!device.isCurrent) ...[
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.securityStatusGap),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+              padding: AppSpacing.securityStatusPillPadding,
               decoration: BoxDecoration(
                 color: _securityRed.withValues(alpha: .1),
-                borderRadius: BorderRadius.circular(9),
+                borderRadius: AppRadii.badgeRadius,
               ),
               child: Text(
                 '\u0110\u0103ng xu\u1EA5t',
-                style: AppTextStyles.micro.copyWith(
-                  color: _securityRed,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w900,
-                  height: 1,
-                ),
+                style: AppTextStyles.badge.copyWith(color: _securityRed),
               ),
             ),
           ],

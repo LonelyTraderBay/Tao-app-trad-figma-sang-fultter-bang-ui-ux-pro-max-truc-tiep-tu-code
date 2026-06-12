@@ -61,7 +61,7 @@ class _OptimizerTabButton extends StatelessWidget {
               color: active ? AppColors.accent : AppColors.text3,
               size: AppSpacing.iconSm,
             ),
-            const SizedBox(height: AppSpacing.x1),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
             Text(
               _tabLabel(tab),
               maxLines: 1,

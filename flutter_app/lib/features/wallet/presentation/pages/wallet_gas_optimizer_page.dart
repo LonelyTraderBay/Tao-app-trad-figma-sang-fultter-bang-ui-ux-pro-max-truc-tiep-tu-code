@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -59,8 +60,9 @@ class _WalletGasOptimizerPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 92
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.walletGasBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.walletGasBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -84,7 +86,7 @@ class _WalletGasOptimizerPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: WalletGasOptimizerPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  padding: AppSpacing.walletGasScrollPadding(bottomInset),
                   child: _contentForTab(snapshot),
                 ),
               ),

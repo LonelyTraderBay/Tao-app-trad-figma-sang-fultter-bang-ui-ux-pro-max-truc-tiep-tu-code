@@ -36,7 +36,6 @@ class _RecommendationCard extends StatelessWidget {
                   recommendation.title,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1,
                   ),
                 ),
@@ -45,7 +44,6 @@ class _RecommendationCard extends StatelessWidget {
                   recommendation.strategy,
                   style: AppTextStyles.caption.copyWith(
                     color: color,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -55,7 +53,6 @@ class _RecommendationCard extends StatelessWidget {
                   recommendation.reason,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 11,
                     height: 1.5,
                   ),
                 ),
@@ -75,12 +72,9 @@ class _AnalysisPeriodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
-      decoration: BoxDecoration(
-        color: _comparePanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -88,7 +82,6 @@ class _AnalysisPeriodCard extends StatelessWidget {
             'Analysis Period',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -98,7 +91,6 @@ class _AnalysisPeriodCard extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              fontSize: 11,
               height: 1.6,
             ),
           ),
@@ -116,46 +108,6 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        color: _comparePanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: child,
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 15,
-          decoration: BoxDecoration(
-            color: _comparePrimary,
-            borderRadius: BorderRadius.circular(3),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 12,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
-    );
+    return VitCard(padding: padding, child: child);
   }
 }

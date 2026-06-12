@@ -9,7 +9,7 @@ class _GasTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 54,
+      height: AppSpacing.walletGasTabsHeight,
       decoration: const BoxDecoration(
         color: _gasPanel,
         border: Border(bottom: BorderSide(color: _gasBorder)),
@@ -31,19 +31,18 @@ class _GasTabs extends StatelessWidget {
                           color: activeTab == tab
                               ? _gasPrimary
                               : AppColors.textDisabled,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
                       ),
                     ),
                     Positioned(
-                      left: 7,
-                      right: 7,
+                      left: AppSpacing.walletGasTabIndicatorInset,
+                      right: AppSpacing.walletGasTabIndicatorInset,
                       bottom: 0,
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 150),
-                        height: 2,
+                        height: AppSpacing.walletGasTabIndicatorHeight,
                         color: activeTab == tab
                             ? _gasPrimary
                             : AppColors.transparent,
@@ -72,24 +71,21 @@ class _CurrentGasTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: AppSpacing.walletGasContentGap,
       children: [
         _GasStatusCard(snapshot: snapshot),
-        const SizedBox(height: 19),
         const _SectionLabel(label: 'Chon toc do giao dich'),
-        const SizedBox(height: 11),
         for (var i = 0; i < snapshot.levels.length; i++) ...[
           _GasLevelCard(
             level: snapshot.levels[i],
             selected: selectedSpeed == snapshot.levels[i].speed,
             onTap: () => onSelectSpeed(snapshot.levels[i].speed),
           ),
-          if (i != snapshot.levels.length - 1) const SizedBox(height: 11),
         ],
-        const SizedBox(height: 18),
         _ComparisonCard(comparisons: snapshot.comparisons),
-        const SizedBox(height: 17),
         const _RefreshButton(),
       ],
     );
@@ -112,16 +108,20 @@ class _GasStatusCard extends StatelessWidget {
         : (isHigh ? 'High Gas Prices' : 'Normal Gas Prices');
 
     return VitCard(
-      height: 76,
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 14),
+      height: AppSpacing.walletGasStatusHeight,
+      padding: AppSpacing.walletGasStatusPadding,
       borderColor: color.withValues(alpha: .22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.bolt_rounded, color: color, size: 17),
-              const SizedBox(width: 8),
+              Icon(
+                Icons.bolt_rounded,
+                color: color,
+                size: AppSpacing.walletGasIcon,
+              ),
+              const SizedBox(width: AppSpacing.walletGasIconGap),
               Expanded(
                 child: Text(
                   title,
@@ -129,8 +129,7 @@ class _GasStatusCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
                 ),
@@ -145,14 +144,16 @@ class _GasStatusCard extends StatelessWidget {
                 TextSpan(
                   text:
                       '${vsAverage.abs().toStringAsFixed(0)}% ${vsAverage < 0 ? 'below' : 'above'}',
-                  style: TextStyle(color: color, fontWeight: FontWeight.w900),
+                  style: TextStyle(
+                    color: color,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
                 const TextSpan(text: ' 24h average'),
               ],
             ),
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 11,
               height: 1.35,
             ),
           ),
@@ -172,20 +173,19 @@ class _SectionLabel extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 14,
+          width: AppSpacing.walletGasSectionMarkerWidth,
+          height: AppSpacing.walletGasSectionMarkerHeight,
           decoration: BoxDecoration(
             color: _gasPrimary,
-            borderRadius: BorderRadius.circular(2),
+            borderRadius: AppRadii.hairlineRadius,
           ),
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: AppSpacing.walletGasSectionLabelGap),
         Text(
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.textMutedBlue,
-            fontSize: 12,
-            fontWeight: FontWeight.w900,
+            fontWeight: AppTextStyles.bold,
             height: 1,
           ),
         ),
@@ -213,8 +213,8 @@ class _GasLevelCard extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 85,
-        padding: const EdgeInsets.fromLTRB(16, 17, 16, 15),
+        height: AppSpacing.walletGasLevelHeight,
+        padding: AppSpacing.walletGasLevelPadding,
         decoration: BoxDecoration(
           color: selected ? _gasPrimary.withValues(alpha: .045) : _gasPanel,
           borderRadius: AppRadii.cardRadius,
@@ -231,26 +231,30 @@ class _GasLevelCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            level.label,
-                            style: AppTextStyles.baseMedium.copyWith(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w900,
-                              height: 1,
+                          Expanded(
+                            child: Text(
+                              level.label,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyles.baseMedium.copyWith(
+                                fontWeight: AppTextStyles.bold,
+                                height: 1,
+                              ),
                             ),
                           ),
                           if (level.recommended) ...[
-                            const SizedBox(width: 8),
+                            const SizedBox(
+                              width: AppSpacing.walletGasLevelBadgeGap,
+                            ),
                             const _RecommendedBadge(),
                           ],
                         ],
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.walletGasLevelMetaGap),
                       Text(
                         level.timeEstimate,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          fontSize: 11,
                           height: 1,
                         ),
                       ),
@@ -263,18 +267,15 @@ class _GasLevelCard extends StatelessWidget {
                     Text(
                       '${level.gwei} Gwei',
                       style: AppTextStyles.sectionTitle.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w900,
-                        fontFamily: 'Roboto',
+                        fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: AppSpacing.walletGasLevelValueGap),
                     Text(
                       '~\$${level.usd.toStringAsFixed(2)}',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
                         height: 1,
                       ),
                     ),
@@ -284,9 +285,9 @@ class _GasLevelCard extends StatelessWidget {
             ),
             const Spacer(),
             ClipRRect(
-              borderRadius: BorderRadius.circular(2),
+              borderRadius: AppRadii.hairlineRadius,
               child: LinearProgressIndicator(
-                minHeight: 4,
+                minHeight: AppSpacing.walletGasLevelProgressHeight,
                 value: level.gwei / 50,
                 color: color,
                 backgroundColor: _gasBackground,
@@ -305,19 +306,18 @@ class _RecommendedBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 17,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      height: AppSpacing.walletGasRecommendedBadgeHeight,
+      padding: AppSpacing.walletGasBadgePadding,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: _gasGreen.withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: AppRadii.smRadius,
       ),
       child: Text(
         'RECOMMENDED',
         style: AppTextStyles.micro.copyWith(
           color: _gasGreen,
-          fontSize: 9,
-          fontWeight: FontWeight.w900,
+          fontWeight: AppTextStyles.bold,
           height: 1,
         ),
       ),
@@ -333,8 +333,8 @@ class _ComparisonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 233,
-      padding: const EdgeInsets.fromLTRB(16, 20, 16, 17),
+      height: AppSpacing.walletGasComparisonHeight,
+      padding: AppSpacing.walletGasComparisonPadding,
       borderColor: _gasBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -342,15 +342,15 @@ class _ComparisonCard extends StatelessWidget {
           Text(
             'Transaction Type Comparison',
             style: AppTextStyles.baseMedium.copyWith(
-              fontSize: 13,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.bold,
               height: 1,
             ),
           ),
-          const SizedBox(height: 17),
+          const SizedBox(height: AppSpacing.walletGasComparisonTitleGap),
           for (var i = 0; i < comparisons.length; i++) ...[
             _ComparisonRow(comparison: comparisons[i]),
-            if (i != comparisons.length - 1) const SizedBox(height: 15),
+            if (i != comparisons.length - 1)
+              const SizedBox(height: AppSpacing.walletGasComparisonRowGap),
           ],
         ],
       ),
@@ -375,17 +375,15 @@ class _ComparisonRow extends StatelessWidget {
                 comparison.type,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
               ),
-              const SizedBox(height: 7),
+              const SizedBox(height: AppSpacing.walletGasComparisonTextGap),
               Text(
                 '${_withCommas(comparison.gas.toString())} gas',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
                   height: 1,
                 ),
               ),
@@ -396,9 +394,7 @@ class _ComparisonRow extends StatelessWidget {
           '~\$${comparison.usd.toStringAsFixed(2)}',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text1,
-            fontSize: 13,
-            fontWeight: FontWeight.w900,
-            fontFamily: 'Roboto',
+            fontWeight: AppTextStyles.bold,
             height: 1,
           ),
         ),
@@ -417,7 +413,7 @@ class _RefreshButton extends StatelessWidget {
       onTap: () {},
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 41,
+        height: AppSpacing.walletGasRefreshHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: _gasBackground,
@@ -427,14 +423,17 @@ class _RefreshButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.refresh_rounded, color: AppColors.text1, size: 15),
-            const SizedBox(width: 8),
+            const Icon(
+              Icons.refresh_rounded,
+              color: AppColors.text1,
+              size: AppSpacing.walletGasRefreshIcon,
+            ),
+            const SizedBox(width: AppSpacing.walletGasIconGap),
             Text(
               'Refresh Prices',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
-                fontSize: 13,
-                fontWeight: FontWeight.w900,
+                fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
             ),

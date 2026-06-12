@@ -21,7 +21,7 @@ class _ReceiptErrorState extends StatelessWidget {
       ),
       messageStyle: AppTextStyles.caption.copyWith(
         color: AppColors.text3,
-        height: 1.5,
+        height: AppSpacing.launchpadLineHeightLong,
       ),
     );
   }
@@ -80,8 +80,8 @@ class _SuccessHero extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 64,
-            height: 64,
+            width: AppSpacing.launchpadBox64,
+            height: AppSpacing.launchpadBox64,
             decoration: BoxDecoration(
               color: AppColors.buy15,
               border: Border.all(color: AppColors.buy.withValues(alpha: .30)),
@@ -90,7 +90,7 @@ class _SuccessHero extends StatelessWidget {
             child: const Icon(
               Icons.check_circle_outline_rounded,
               color: AppColors.buy,
-              size: 32,
+              size: AppSpacing.launchpadIconHuge,
             ),
           ),
           const SizedBox(height: AppSpacing.x4),
@@ -108,7 +108,7 @@ class _SuccessHero extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.45,
+              height: AppSpacing.launchpadLineHeightReadable,
             ),
           ),
         ],

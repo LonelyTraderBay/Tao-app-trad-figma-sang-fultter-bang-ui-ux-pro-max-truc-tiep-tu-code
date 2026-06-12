@@ -147,7 +147,7 @@ class _Disclaimer extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.primary,
-                height: 1.45,
+                height: AppSpacing.earnGuideBodyLineHeight,
               ),
             ),
           ),

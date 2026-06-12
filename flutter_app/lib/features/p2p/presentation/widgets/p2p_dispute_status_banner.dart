@@ -17,7 +17,7 @@ class P2PDisputeStatusBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = p2pDisputeStatusColor(dispute.status);
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDisputeCardPadding,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .08),
         border: Border.all(color: color.withValues(alpha: .22)),
@@ -26,8 +26,8 @@ class P2PDisputeStatusBanner extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 50,
-            height: 50,
+            width: AppSpacing.p2pDisputeStatusIconBox,
+            height: AppSpacing.p2pDisputeStatusIconBox,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .12),
               borderRadius: AppRadii.inputRadius,
@@ -35,7 +35,7 @@ class P2PDisputeStatusBanner extends StatelessWidget {
             child: Icon(
               p2pDisputeStatusIcon(dispute.status),
               color: color,
-              size: 24,
+              size: AppSpacing.p2pDisputeStatusIcon,
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -45,10 +45,7 @@ class P2PDisputeStatusBanner extends StatelessWidget {
               children: [
                 Text(
                   dispute.statusLabel,
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    color: color,
-                    fontSize: 20,
-                  ),
+                  style: AppTextStyles.amountSm.copyWith(color: color),
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
@@ -72,7 +69,7 @@ class P2PDisputeReasonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDisputeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -89,7 +86,10 @@ class P2PDisputeReasonCard extends StatelessWidget {
             style: AppTextStyles.body.copyWith(color: AppColors.text2),
           ),
           const SizedBox(height: AppSpacing.x3),
-          const Divider(color: AppColors.divider, height: 1),
+          const Divider(
+            color: AppColors.divider,
+            height: AppSpacing.dividerHairline,
+          ),
           const SizedBox(height: AppSpacing.x3),
           Text(
             'Mô tả chi tiết',

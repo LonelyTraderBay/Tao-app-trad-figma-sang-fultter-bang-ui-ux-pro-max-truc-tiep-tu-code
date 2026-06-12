@@ -30,7 +30,7 @@ class _ViewTabs extends StatelessWidget {
     ];
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 10, 20, 8),
+      padding: AppSpacing.pairViewTabsPadding,
       child: Row(
         children: [
           for (final tab in tabs) ...[
@@ -43,7 +43,8 @@ class _ViewTabs extends StatelessWidget {
                 onTap: () => onChanged(tab.view),
               ),
             ),
-            if (tab.view != _PairView.trades) const SizedBox(width: 8),
+            if (tab.view != _PairView.trades)
+              const SizedBox(width: AppSpacing.pairViewTabGap),
           ],
         ],
       ),
@@ -76,8 +77,8 @@ class _ViewTab extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
         child: Container(
-          height: 38,
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          height: AppSpacing.pairViewTabHeight,
+          padding: AppSpacing.pairViewTabPadding,
           decoration: BoxDecoration(
             borderRadius: AppRadii.cardRadius,
             border: Border.all(
@@ -92,9 +93,9 @@ class _ViewTab extends StatelessWidget {
               Icon(
                 icon,
                 color: selected ? _marketPrimary : AppColors.text3,
-                size: 15,
+                size: AppSpacing.pairViewTabIcon,
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: AppSpacing.pairViewTabIconGap),
               Flexible(
                 child: Text(
                   label,
@@ -124,7 +125,7 @@ class _TimeframeRow extends StatelessWidget {
   Widget build(BuildContext context) {
     const items = ['15m', '1H', '4H', '1D', '1W', '1M'];
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 0, 20, 5),
+      padding: AppSpacing.pairTimeframePadding,
       child: Row(
         children: [
           for (final item in items)
@@ -133,7 +134,7 @@ class _TimeframeRow extends StatelessWidget {
                 onTap: () => onChanged(item),
                 borderRadius: AppRadii.cardRadius,
                 child: Container(
-                  height: 36,
+                  height: AppSpacing.pairTimeframeHeight,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: active == item
@@ -143,9 +144,8 @@ class _TimeframeRow extends StatelessWidget {
                   ),
                   child: Text(
                     item,
-                    style: AppTextStyles.micro.copyWith(
+                    style: AppTextStyles.badge.copyWith(
                       color: active == item ? _marketPrimary : AppColors.text3,
-                      fontSize: 11,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -173,9 +173,9 @@ class _IndicatorRow extends StatelessWidget {
   Widget build(BuildContext context) {
     const items = ['MA', 'EMA', 'BOLL', 'MACD', 'RSI', 'Vol'];
     return SizedBox(
-      height: 42,
+      height: AppSpacing.pairIndicatorHeight,
       child: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: AppSpacing.pairIndicatorListPadding,
         scrollDirection: Axis.horizontal,
         children: [
           for (final item in items) ...[
@@ -184,7 +184,7 @@ class _IndicatorRow extends StatelessWidget {
               selected: active.contains(item),
               onTap: () => onToggle(item),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.pairIndicatorGap),
           ],
           _AdvancedChip(onTap: onAdvanced),
         ],
@@ -215,8 +215,8 @@ class _IndicatorChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
         child: Container(
-          height: 36,
-          padding: const EdgeInsets.symmetric(horizontal: 13),
+          height: AppSpacing.pairIndicatorChipHeight,
+          padding: AppSpacing.pairIndicatorChipPadding,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             border: Border.all(
@@ -228,10 +228,9 @@ class _IndicatorChip extends StatelessWidget {
           ),
           child: Text(
             label,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.badge.copyWith(
               color: selected ? _marketPrimary : AppColors.text3,
               fontWeight: AppTextStyles.bold,
-              fontSize: 12,
             ),
           ),
         ),
@@ -254,8 +253,8 @@ class _AdvancedChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
         child: Container(
-          height: 36,
-          padding: const EdgeInsets.symmetric(horizontal: 13),
+          height: AppSpacing.pairIndicatorChipHeight,
+          padding: AppSpacing.pairIndicatorChipPadding,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             border: Border.all(color: AppColors.warn.withValues(alpha: .32)),
@@ -263,10 +262,9 @@ class _AdvancedChip extends StatelessWidget {
           ),
           child: Text(
             'Nang cao',
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.badge.copyWith(
               color: AppColors.warn,
               fontWeight: AppTextStyles.bold,
-              fontSize: 12,
             ),
           ),
         ),
@@ -283,7 +281,7 @@ class _PairChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 230,
+      height: AppSpacing.pairChartHeight,
       child: CustomPaint(
         painter: _PairChartPainter(series),
         child: const SizedBox.expand(),
@@ -298,8 +296,8 @@ class _RiskWarning extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(20, 10, 20, 13),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      margin: AppSpacing.pairRiskMargin,
+      padding: AppSpacing.pairRiskPadding,
       decoration: BoxDecoration(
         color: AppColors.warn.withValues(alpha: .08),
         border: Border.all(color: AppColors.warn.withValues(alpha: .24)),
@@ -311,16 +309,13 @@ class _RiskWarning extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: 14,
+            size: AppSpacing.pairRiskIcon,
           ),
-          const SizedBox(width: 9),
+          const SizedBox(width: AppSpacing.pairRiskGap),
           Expanded(
             child: Text(
               'Giao dich crypto co rui ro cao. Chi dau tu so tien ban co the chiu mat.',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.warn,
-                height: 1.45,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.warn),
             ),
           ),
         ],
@@ -348,25 +343,29 @@ class _LinkCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 13),
+      padding: AppSpacing.pairLinkMargin,
       child: VitCard(
         borderColor: iconColor.withValues(alpha: .18),
         padding: EdgeInsets.zero,
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          padding: AppSpacing.pairLinkPadding,
           child: Row(
             children: [
               Container(
-                width: 40,
-                height: 40,
+                width: AppSpacing.pairLinkIconBox,
+                height: AppSpacing.pairLinkIconBox,
                 decoration: BoxDecoration(
                   color: iconColor.withValues(alpha: .12),
                   borderRadius: AppRadii.mdRadius,
                 ),
-                child: Icon(icon, color: iconColor, size: 19),
+                child: Icon(
+                  icon,
+                  color: iconColor,
+                  size: AppSpacing.pairLinkIcon,
+                ),
               ),
-              const SizedBox(width: 13),
+              const SizedBox(width: AppSpacing.pairLinkGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -377,20 +376,23 @@ class _LinkCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: AppSpacing.pairLinkSubtitleGap),
                     Text(
                       subtitle,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 12,
                       ),
                     ),
                   ],
                 ),
               ),
-              Icon(Icons.chevron_right_rounded, color: iconColor, size: 20),
+              Icon(
+                Icons.chevron_right_rounded,
+                color: iconColor,
+                size: AppSpacing.pairLinkChevron,
+              ),
             ],
           ),
         ),
@@ -407,7 +409,7 @@ class _TradeCtas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+      padding: AppSpacing.pairTradeCtaPadding,
       child: Row(
         children: [
           Expanded(
@@ -420,7 +422,7 @@ class _TradeCtas extends StatelessWidget {
                   context.go('${AppRoutePaths.tradePair(pairId)}?side=buy'),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.pairTradeCtaGap),
           Expanded(
             child: _TradeButton(
               key: PairDetailPage.sellButtonKey,
@@ -462,7 +464,7 @@ class _TradeButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
         child: SizedBox(
-          height: 55,
+          height: AppSpacing.pairTradeButtonHeight,
           child: Center(
             child: Text(
               label,

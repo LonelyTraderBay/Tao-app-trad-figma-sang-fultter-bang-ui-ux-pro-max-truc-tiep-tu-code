@@ -160,6 +160,13 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
                               onPreview: _openPreview,
                               onSave: _openPreview,
                             ),
+                            const VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'DCA rebalance configuration state review',
+                              message:
+                                  'Target allocations, strategy, threshold, frequency, advanced settings, auto-execute risk, preview sheet, fees, and disabled save state remain visible before saving rebalance automation.',
+                              contractId: 'SC-170',
+                            ),
                           ],
                         ),
                       ),

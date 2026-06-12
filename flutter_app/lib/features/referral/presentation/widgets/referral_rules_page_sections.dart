@@ -68,7 +68,10 @@ class _TierTable extends StatelessWidget {
               current: i == snapshot.currentTierIndex,
             ),
             if (i < snapshot.tiers.length - 1)
-              const Divider(height: 1, color: AppColors.divider),
+              const Divider(
+                height: AppSpacing.referralDividerHeight,
+                color: AppColors.divider,
+              ),
           ],
         ],
       ),
@@ -261,7 +264,7 @@ class _RewardTypes extends StatelessWidget {
         for (var i = 0; i < snapshot.rewardTypes.length; i++) ...[
           _RewardTypeCard(rule: snapshot.rewardTypes[i]),
           if (i < snapshot.rewardTypes.length - 1)
-            const SizedBox(height: AppSpacing.x3),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ],
       ],
     );
@@ -308,12 +311,12 @@ class _RewardTypeCard extends StatelessWidget {
                     color: AppColors.text1,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   rule.body,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                 DecoratedBox(
                   decoration: BoxDecoration(
                     color: isKyc ? AppColors.primary12 : AppColors.buy10,
@@ -329,7 +332,7 @@ class _RewardTypeCard extends StatelessWidget {
                       style: AppTextStyles.micro.copyWith(
                         color: color,
                         fontWeight: AppTextStyles.bold,
-                        height: 1,
+                        height: AppSpacing.referralLineHeightTight,
                       ),
                     ),
                   ),

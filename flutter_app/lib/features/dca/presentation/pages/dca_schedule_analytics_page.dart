@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 
 class DCAScheduleAnalytics extends ConsumerWidget {
@@ -44,11 +45,30 @@ class DCAScheduleAnalytics extends ConsumerWidget {
           key: contentKey,
           padding: VitContentPadding.none,
           children: [
-            Center(
+            VitCard(
+              padding: EdgeInsets.zero,
+              child: Center(
+                child: Text(
+                  snapshot.message,
+                  key: missingConfigKey,
+                  style: AppTextStyles.base.copyWith(color: AppColors.text2),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            VitCard(
+              padding: EdgeInsets.zero,
               child: Text(
-                snapshot.message,
-                key: missingConfigKey,
-                style: AppTextStyles.base.copyWith(color: AppColors.text2),
+                'Select a schedule to inspect cadence, completion quality, and missed-run context.',
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            VitCard(
+              padding: EdgeInsets.zero,
+              child: Text(
+                'Analytics stay read-only here; execution changes remain in the schedule configuration flow.',
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 textAlign: TextAlign.center,
               ),
             ),

@@ -15,6 +15,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 part '../widgets/copy_notifications_page_sections.dart';
 part '../widgets/copy_notifications_page_common.dart';
 
@@ -132,6 +134,19 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
                               'Unread risk alerts, action routes, copy-trading updates and next steps are reviewed before navigation or bulk read changes.',
                           contractId: 'copy-notifications-review',
                         ),
+                      ),
+                      const SizedBox(height: 12),
+                      const TradeBodyReviewSection(
+                        title: 'Notification body review',
+                        message: 'Copy notification body reviewed',
+                        detail:
+                            'Unread summary, filters, cards, empty, bulk read, and navigation states stay visible.',
+                        primary:
+                            'Unread risk alerts remain separated from general copy updates.',
+                        secondary:
+                            'Filter state stays visible before notification actions.',
+                        tertiary:
+                            'Navigation stays scoped to copy-trading review screens.',
                       ),
                     ],
                   ),

@@ -112,16 +112,16 @@ class _SearchAndActions extends StatelessWidget {
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
-        _RoundIconButton(
+        _RoundActionButton(
           key: StakingHistoryPage.filterButtonKey,
-          icon: Icons.filter_alt_outlined,
+          type: VitHeaderActionType.filter,
           active: filtersActive,
           onTap: onFilter,
         ),
         const SizedBox(width: AppSpacing.x2),
-        _RoundIconButton(
+        _RoundActionButton(
           key: StakingHistoryPage.exportButtonKey,
-          icon: Icons.file_download_outlined,
+          type: VitHeaderActionType.export,
           onTap: onExport,
         ),
       ],
@@ -129,36 +129,25 @@ class _SearchAndActions extends StatelessWidget {
   }
 }
 
-class _RoundIconButton extends StatelessWidget {
-  const _RoundIconButton({
+class _RoundActionButton extends StatelessWidget {
+  const _RoundActionButton({
     super.key,
-    required this.icon,
+    required this.type,
     required this.onTap,
     this.active = false,
   });
 
-  final IconData icon;
+  final VitHeaderActionType type;
   final VoidCallback onTap;
   final bool active;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active ? AppColors.primary : AppColors.surface3,
-      borderRadius: AppRadii.xlRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.xlRadius,
-        child: SizedBox(
-          width: 44,
-          height: 44,
-          child: Icon(
-            icon,
-            color: active ? AppColors.onAccent : AppColors.text1,
-            size: 20,
-          ),
-        ),
-      ),
+    return VitHeaderActionButton(
+      type: type,
+      active: active,
+      tone: active ? VitHeaderActionTone.primary : VitHeaderActionTone.neutral,
+      onPressed: onTap,
     );
   }
 }

@@ -111,41 +111,33 @@ class _OverviewTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      customGap: AppSpacing.x3,
       children: [
         _PortfolioHero(
           snapshot: snapshot,
           hideBalance: hideBalance,
           onToggleBalance: onToggleBalance,
         ),
-        const SizedBox(height: AppSpacing.x4),
         _SectionLabel(label: 'Phân bổ tài sản', color: AppColors.primary),
-        const SizedBox(height: AppSpacing.x3),
         _AllocationCard(
           positions: snapshot.positions,
           total: snapshot.totalDepositedUsd,
         ),
-        const SizedBox(height: AppSpacing.x4),
         _SectionLabel(label: 'Dự phóng thu nhập', color: AppColors.buy),
-        const SizedBox(height: AppSpacing.x3),
         _IncomeProjectionRow(items: snapshot.incomeProjections),
-        const SizedBox(height: AppSpacing.x3),
         _InfoBanner(
           text:
               'Ước tính dựa trên APY hiện tại. Lãi suất có thể thay đổi theo điều kiện thị trường.',
         ),
-        const SizedBox(height: AppSpacing.x4),
         _SectionLabel(label: 'Lịch đáo hạn', color: AppColors.warn),
-        const SizedBox(height: AppSpacing.x3),
         _MaturitySummary(events: snapshot.maturityEvents),
-        const SizedBox(height: AppSpacing.x3),
         for (final event in snapshot.maturityEvents) ...[
           _MaturityCard(event: event),
           if (event != snapshot.maturityEvents.last)
             const SizedBox(height: AppSpacing.x3),
         ],
-        const SizedBox(height: AppSpacing.x3),
         _WarningBanner(
           text:
               'Khi đáo hạn, bạn có thể gia hạn để tiếp tục nhận lãi hoặc rút về ví. Rút trước hạn có thể mất lãi tích lũy.',
@@ -207,7 +199,7 @@ class _PortfolioHero extends StatelessWidget {
             balance,
             style: AppTextStyles.heroNumber.copyWith(
               color: AppColors.text1,
-              fontSize: 27,
+              fontSize: AppSpacing.savingsPortfolioHeroFontSize,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -307,8 +299,8 @@ class _HeroIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 32,
-      height: 32,
+      width: AppSpacing.savingsPortfolioHeroIconButton,
+      height: AppSpacing.savingsPortfolioHeroIconButton,
       child: IconButton(
         onPressed: onPressed,
         padding: EdgeInsets.zero,
@@ -444,44 +436,18 @@ class _HeroAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: primary ? AppColors.buy : AppColors.portfolioBtnGhost,
-      borderRadius: AppRadii.mdRadius,
-      child: InkWell(
-        onTap: () {
-          HapticFeedback.selectionClick();
-          onTap();
-        },
-        borderRadius: AppRadii.mdRadius,
-        child: Container(
-          height: 44,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            border: primary
-                ? null
-                : Border.all(color: AppColors.portfolioBtnGhostBorder),
-            borderRadius: AppRadii.mdRadius,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: AppSpacing.iconSm, color: AppColors.text1),
-              const SizedBox(width: AppSpacing.x2),
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitCtaButton(
+      variant: primary
+          ? VitCtaButtonVariant.success
+          : VitCtaButtonVariant.secondary,
+      height: AppSpacing.savingsPortfolioActionHeight,
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
+      onPressed: () {
+        HapticFeedback.selectionClick();
+        onTap();
+      },
+      leading: Icon(icon),
+      child: Text(label),
     );
   }
 }

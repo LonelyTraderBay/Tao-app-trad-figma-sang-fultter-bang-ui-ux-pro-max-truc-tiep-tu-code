@@ -15,8 +15,9 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.p2pOrderBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pOrderBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
     final order = snapshot.order;
 
@@ -56,28 +57,23 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
                   child: SingleChildScrollView(
                     key: P2POrderPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(
-                      left: AppSpacing.contentPad,
-                      right: AppSpacing.contentPad,
-                      bottom: bottomInset,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    padding: AppSpacing.p2pOrderScrollPadding(bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      customGap: AppSpacing.p2pOrderContentGap,
+                      fullBleed: true,
                       children: [
                         _SafetyBanner(
                           title: snapshot.safetyTitle,
                           bullets: snapshot.safetyBullets,
                         ),
-                        const SizedBox(height: AppSpacing.x4),
                         _EscrowBanner(
                           order: order,
                           onTap: () =>
                               context.go(AppRoutePaths.p2pEscrow(order.id)),
                         ),
-                        const SizedBox(height: AppSpacing.x4),
                         _OrderInfoCard(order: order),
-                        if (_step == _P2POrderUiStep.payment) ...[
-                          const SizedBox(height: AppSpacing.x4),
+                        if (_step == _P2POrderUiStep.payment)
                           _PaymentInfoCard(
                             order: order,
                             fields: snapshot.paymentFields,
@@ -92,26 +88,20 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
                             onCopyAll: () => _markCopied('all'),
                             onCopy: _markCopied,
                           ),
-                        ],
-                        const SizedBox(height: AppSpacing.x4),
                         _ProofCard(
                           step: _step,
                           onUpload: () =>
                               context.go(AppRoutePaths.p2pOrderProof(order.id)),
                         ),
-                        const SizedBox(height: AppSpacing.x4),
                         _TimelineCard(timeline: snapshot.timeline),
-                        const SizedBox(height: AppSpacing.x4),
                         _PaymentWarning(message: snapshot.paymentWarning),
-                        const SizedBox(height: AppSpacing.x4),
                         _PrimaryActions(
                           step: _step,
                           onChat: () =>
                               context.go(AppRoutePaths.p2pChat(order.id)),
                           onPaid: _markPaid,
                         ),
-                        if (_step == _P2POrderUiStep.payment) ...[
-                          const SizedBox(height: AppSpacing.x3),
+                        if (_step == _P2POrderUiStep.payment)
                           _TextActionButton(
                             key: P2POrderPage.cancelKey,
                             onPressed: () => context.go(
@@ -121,10 +111,14 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
                             label: 'Hủy đơn hàng',
                             color: AppColors.sell,
                           ),
-                        ],
-                        const SizedBox(height: AppSpacing.x4),
                         _QuickActions(actions: snapshot.quickActions),
-                        const SizedBox(height: AppSpacing.x5),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'P2P order state review',
+                          message:
+                              'Status timer, escrow amount, payment details, proof upload, timeline, warnings, chat, paid state, cancel route, and quick actions remain visible before order progression.',
+                          contractId: 'SC-216',
+                        ),
                       ],
                     ),
                   ),
@@ -166,10 +160,7 @@ class _StatusBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.contentPad,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.p2pOrderStatusPadding,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .08),
         border: Border(bottom: BorderSide(color: color.withValues(alpha: .15))),
@@ -208,10 +199,7 @@ class _OrderStepper extends StatelessWidget {
   Widget build(BuildContext context) {
     final activeIndex = step == _P2POrderUiStep.payment ? 1 : 2;
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.contentPad,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.p2pOrderStepperPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -226,7 +214,7 @@ class _OrderStepper extends StatelessWidget {
             if (index < 2)
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: AppSpacing.x3 + 2),
+                  padding: AppSpacing.p2pOrderStepperConnectorPadding,
                   child: Container(
                     height: 2,
                     color: index < activeIndex - 1
@@ -307,7 +295,7 @@ class _SafetyBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.sell20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pOrderCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -339,7 +327,7 @@ class _SafetyBanner extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x2),
                 for (final item in bullets)
                   Padding(
-                    padding: const EdgeInsets.only(bottom: AppSpacing.x1),
+                    padding: AppSpacing.p2pOrderBulletPadding,
                     child: Text(
                       item,
                       style: AppTextStyles.micro.copyWith(
@@ -373,7 +361,7 @@ class _EscrowBanner extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
         child: Container(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pOrderCardPadding,
           decoration: BoxDecoration(
             border: Border.all(color: AppColors.buy20),
             borderRadius: AppRadii.cardRadius,
@@ -414,10 +402,7 @@ class _EscrowBanner extends StatelessWidget {
                   borderRadius: AppRadii.inputRadius,
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x3,
-                    vertical: AppSpacing.x2,
-                  ),
+                  padding: AppSpacing.p2pOrderEscrowActionPadding,
                   child: Row(
                     children: [
                       Text(
@@ -453,7 +438,7 @@ class _OrderInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pOrderCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

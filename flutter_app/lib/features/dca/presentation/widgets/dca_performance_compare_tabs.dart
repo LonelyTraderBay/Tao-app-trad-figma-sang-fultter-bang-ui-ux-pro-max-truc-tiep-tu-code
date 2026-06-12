@@ -60,7 +60,7 @@ class _TopTab extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: () => onChanged(tab),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, AppSpacing.x4, 0, 0),
+          padding: const EdgeInsets.only(top: AppSpacing.x4),
           child: Column(
             children: [
               Text(
@@ -73,8 +73,10 @@ class _TopTab extends StatelessWidget {
               const SizedBox(height: AppSpacing.x4),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 160),
-                height: 2,
-                width: active ? 116 : 0,
+                height: AppSpacing.dcaPerformanceCompareTabIndicatorHeight,
+                width: active
+                    ? AppSpacing.dcaPerformanceCompareTabIndicatorWidth
+                    : 0,
                 decoration: BoxDecoration(
                   color: active ? AppColors.primary : AppColors.transparent,
                   borderRadius: AppRadii.xsRadius,

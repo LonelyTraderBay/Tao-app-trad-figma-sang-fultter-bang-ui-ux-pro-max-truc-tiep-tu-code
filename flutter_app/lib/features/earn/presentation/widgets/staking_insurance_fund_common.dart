@@ -77,7 +77,7 @@ class StakingInsuranceFundFooterNote extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: 1.55,
+          height: AppSpacing.stakingProductBodyLineHeight,
         ),
       ),
     );

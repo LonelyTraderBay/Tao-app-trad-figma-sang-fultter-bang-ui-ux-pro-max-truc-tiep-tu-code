@@ -31,7 +31,7 @@ class _InfoBanner extends StatelessWidget {
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.stakingCommunityBodyLineHeight,
                   ),
                 ),
               ],
@@ -202,7 +202,10 @@ class _PostCard extends StatelessWidget {
             ),
           ],
           const SizedBox(height: AppSpacing.x4),
-          const Divider(height: 1, color: AppColors.divider),
+          const Divider(
+            height: AppSpacing.stakingCommunityDividerHeight,
+            color: AppColors.divider,
+          ),
           const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
@@ -281,7 +284,10 @@ class _TypeChip extends StatelessWidget {
           const SizedBox(width: AppSpacing.x1),
           Text(
             meta.label,
-            style: AppTextStyles.micro.copyWith(color: meta.color, height: 1),
+            style: AppTextStyles.micro.copyWith(
+              color: meta.color,
+              height: AppSpacing.stakingCommunityPillLineHeight,
+            ),
           ),
         ],
       ),

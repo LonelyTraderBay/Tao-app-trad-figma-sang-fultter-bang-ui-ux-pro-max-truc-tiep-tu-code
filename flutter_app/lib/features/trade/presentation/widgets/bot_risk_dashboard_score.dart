@@ -22,7 +22,6 @@ class _RiskScoreCard extends StatelessWidget {
                       'Portfolio Risk Score',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 12,
                         height: 1,
                       ),
                     ),
@@ -31,7 +30,6 @@ class _RiskScoreCard extends StatelessWidget {
                       '${snapshot.riskScore}/100',
                       style: AppTextStyles.heroNumber.copyWith(
                         color: color,
-                        fontSize: 28,
                         height: 1,
                       ),
                     ),
@@ -40,7 +38,6 @@ class _RiskScoreCard extends StatelessWidget {
                       snapshot.riskLabel,
                       style: AppTextStyles.caption.copyWith(
                         color: color,
-                        fontSize: 13,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),
@@ -77,19 +74,15 @@ class _RiskScoreCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          Container(
+          VitCard(
+            variant: VitCardVariant.ghost,
             width: double.infinity,
             padding: const EdgeInsets.fromLTRB(13, 12, 13, 13),
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .08),
-              border: Border.all(color: color.withValues(alpha: .28)),
-              borderRadius: AppRadii.cardRadius,
-            ),
+            borderColor: color.withValues(alpha: .28),
             child: Text(
               snapshot.riskMessage,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
                 height: 1.5,
               ),
             ),

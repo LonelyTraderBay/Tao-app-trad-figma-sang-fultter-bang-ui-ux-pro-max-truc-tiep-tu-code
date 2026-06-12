@@ -56,7 +56,7 @@ class _ConditionBuilder extends StatelessWidget {
                     const Icon(
                       Icons.track_changes_rounded,
                       color: AppColors.accent,
-                      size: 16,
+                      size: AppSpacing.arenaSmartRuleIcon,
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(
@@ -118,7 +118,7 @@ class _ConditionBuilder extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: 1.4,
+                        height: AppSpacing.arenaSmartRuleBodyLineHeight,
                       ),
                     ),
                   ),
@@ -162,7 +162,7 @@ class _BuilderBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: wide ? double.infinity : 181,
+      width: wide ? double.infinity : AppSpacing.arenaSmartRuleOptionWidth,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -205,7 +205,7 @@ class _BuilderBox extends StatelessWidget {
                 const Icon(
                   Icons.keyboard_arrow_down_rounded,
                   color: AppColors.text3,
-                  size: 16,
+                  size: AppSpacing.arenaSmartRuleIcon,
                 ),
               ],
             ),
@@ -253,7 +253,7 @@ class _QuickSuggestions extends StatelessWidget {
             const Icon(
               Icons.lightbulb_outline_rounded,
               color: _arenaAccent,
-              size: 14,
+              size: AppSpacing.arenaSmartRuleSmallIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Text(
@@ -328,7 +328,7 @@ class _TimingRulesCard extends StatelessWidget {
               const Icon(
                 Icons.schedule_outlined,
                 color: AppColors.buy,
-                size: 16,
+                size: AppSpacing.arenaSmartRuleIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -351,7 +351,7 @@ class _TimingRulesCard extends StatelessWidget {
               suffix: const Icon(
                 Icons.calendar_today_outlined,
                 color: AppColors.text3,
-                size: 16,
+                size: AppSpacing.arenaSmartRuleIcon,
               ),
               onChanged: (value) => onDate(_normalizeArenaRuleDateInput(value)),
             ),

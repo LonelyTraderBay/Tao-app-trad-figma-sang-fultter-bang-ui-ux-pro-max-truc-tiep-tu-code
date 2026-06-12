@@ -66,7 +66,7 @@ class _StatCard extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Text(
             label,
             textAlign: TextAlign.center,
@@ -128,7 +128,7 @@ class _FilterChip extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.mdRadius,
       child: Container(
-        height: 44,
+        height: AppSpacing.referralHistoryFilterHeight,
         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
         alignment: Alignment.center,
         decoration: BoxDecoration(
@@ -168,7 +168,11 @@ class _SortRail extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          const Icon(Icons.swap_vert_rounded, color: AppColors.text3, size: 15),
+          const Icon(
+            Icons.swap_vert_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.referralSortIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Text(
             'Sắp xếp:',
@@ -207,7 +211,7 @@ class _SortChip extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
       child: Container(
-        height: 28,
+        height: AppSpacing.referralStepBox,
         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
         alignment: Alignment.center,
         decoration: BoxDecoration(

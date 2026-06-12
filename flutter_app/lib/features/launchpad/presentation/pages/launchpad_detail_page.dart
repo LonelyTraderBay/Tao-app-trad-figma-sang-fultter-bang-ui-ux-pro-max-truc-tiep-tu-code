@@ -94,7 +94,7 @@ class _LaunchpadDetailError extends StatelessWidget {
       ),
       messageStyle: AppTextStyles.caption.copyWith(
         color: AppColors.text3,
-        height: 1.5,
+        height: AppSpacing.launchpadLineHeightLong,
       ),
     );
   }

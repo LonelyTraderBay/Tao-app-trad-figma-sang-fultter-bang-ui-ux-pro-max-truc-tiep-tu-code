@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -54,7 +55,9 @@ class _PredictionsGlobalActivityPageState
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.predictionActivityBottomInsetVisual
+            : AppSpacing.predictionActivityBottomInsetNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -79,26 +82,40 @@ class _PredictionsGlobalActivityPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionsGlobalActivityPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.predictionActivityScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 16,
+                      customGap: AppSpacing.predictionActivityContentGap,
                       children: [
-                        _LiveStats(snapshot: snapshot),
-                        _AmountFilters(
-                          active: _minAmount,
-                          onSelected: (value) => setState(() {
-                            _minAmount = value;
-                          }),
+                        VitCard(
+                          padding: EdgeInsets.zero,
+                          child: _LiveStats(snapshot: snapshot),
+                        ),
+                        VitCard(
+                          padding: EdgeInsets.zero,
+                          child: _AmountFilters(
+                            active: _minAmount,
+                            onSelected: (value) => setState(() {
+                              _minAmount = value;
+                            }),
+                          ),
                         ),
                         if (snapshot.activities.isEmpty)
-                          const VitEmptyState(
-                            title: 'No activity found',
-                            message: 'Lower the minimum amount filter',
-                            icon: Icons.timeline_rounded,
+                          const VitCard(
+                            padding: EdgeInsets.zero,
+                            child: VitEmptyState(
+                              title: 'No activity found',
+                              message: 'Lower the minimum amount filter',
+                              icon: Icons.timeline_rounded,
+                            ),
                           )
                         else
-                          _ActivityList(snapshot: snapshot),
+                          VitCard(
+                            padding: EdgeInsets.zero,
+                            child: _ActivityList(snapshot: snapshot),
+                          ),
                       ],
                     ),
                   ),

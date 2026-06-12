@@ -24,7 +24,7 @@ class _ValidationSection extends StatelessWidget {
                 body,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.55,
+                  height: AppSpacing.stakingContingencyBodyLineHeight,
                 ),
               ),
             ],
@@ -143,7 +143,7 @@ class _DocumentRow extends StatelessWidget {
           const Icon(
             Icons.open_in_new_rounded,
             color: AppColors.text3,
-            size: 17,
+            size: AppSpacing.stakingContingencyExternalIcon,
           ),
         ],
       ),
@@ -167,7 +167,7 @@ class _FooterNote extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: 1.55,
+          height: AppSpacing.stakingContingencyFooterLineHeight,
         ),
       ),
     );

@@ -28,14 +28,9 @@ class _EndpointCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       key: BotApiDocumentationPage.endpointKey(endpoint.method, endpoint.path),
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
-      decoration: BoxDecoration(
-        color: _apiPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,7 +45,6 @@ class _EndpointCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -63,7 +57,6 @@ class _EndpointCard extends StatelessWidget {
             endpoint.description,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
               height: 1,
             ),
           ),
@@ -93,7 +86,6 @@ class _Parameters extends StatelessWidget {
           'PARAMETERS:',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -122,7 +114,6 @@ class _ParameterRow extends StatelessWidget {
           param.name,
           style: AppTextStyles.micro.copyWith(
             color: _apiPrimary,
-            fontSize: 11,
             fontWeight: FontWeight.w600,
             height: 1.2,
           ),
@@ -132,7 +123,6 @@ class _ParameterRow extends StatelessWidget {
           '(${param.type})',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 11,
             height: 1.2,
           ),
         ),
@@ -141,7 +131,6 @@ class _ParameterRow extends StatelessWidget {
             ' *',
             style: AppTextStyles.micro.copyWith(
               color: _apiRed,
-              fontSize: 11,
               fontWeight: AppTextStyles.bold,
               height: 1.2,
             ),
@@ -154,7 +143,6 @@ class _ParameterRow extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1.3,
             ),
           ),
@@ -179,7 +167,6 @@ class _ResponseBlock extends StatelessWidget {
               'RESPONSE:',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),

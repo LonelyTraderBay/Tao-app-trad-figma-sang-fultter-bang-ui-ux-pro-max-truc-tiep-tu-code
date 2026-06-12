@@ -39,7 +39,7 @@ class StakingApiDocumentationInfoBanner extends StatelessWidget {
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.stakingApiBodyLineHeight,
                   ),
                 ),
               ],
@@ -81,7 +81,7 @@ class _StatCard extends StatelessWidget {
     return VitCard(
       padding: const EdgeInsets.all(AppSpacing.x3),
       child: SizedBox(
-        height: 66,
+        height: AppSpacing.stakingApiStatTileHeight,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -152,7 +152,7 @@ class StakingApiDocumentationTabs extends StatelessWidget {
                         AnimatedContainer(
                           duration: const Duration(milliseconds: 160),
                           width: active == tab ? AppSpacing.buttonHero : 0,
-                          height: 2,
+                          height: AppSpacing.stakingApiTabIndicatorHeight,
                           decoration: BoxDecoration(
                             color: active == tab
                                 ? AppColors.primarySoft

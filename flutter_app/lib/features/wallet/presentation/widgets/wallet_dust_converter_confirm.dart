@@ -7,7 +7,7 @@ class _ConvertFooter extends StatelessWidget {
     required this.targetSymbol,
     required this.enabled,
     required this.onTap,
-    this.horizontalPadding = 20,
+    this.horizontalPadding = AppSpacing.walletDustFooterHorizontalPadding,
   });
 
   final double bottomSpace;
@@ -22,9 +22,9 @@ class _ConvertFooter extends StatelessWidget {
     return Container(
       padding: EdgeInsets.fromLTRB(
         horizontalPadding,
-        16,
+        AppSpacing.walletDustFooterTopPadding,
         horizontalPadding,
-        bottomSpace + 6,
+        bottomSpace + AppSpacing.walletDustFooterBottomPadding,
       ),
       decoration: const BoxDecoration(
         color: AppColors.modalScrimStrong,
@@ -60,7 +60,7 @@ class _PrimaryButton extends StatelessWidget {
       onTap: enabled ? onTap : null,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 52,
+        height: AppSpacing.walletDustButtonHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: enabled ? _dustPrimary : AppColors.surface3,
@@ -72,9 +72,7 @@ class _PrimaryButton extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.baseMedium.copyWith(
             color: enabled ? AppColors.onAccent : AppColors.text3,
-            fontSize: 16,
-            fontWeight: FontWeight.w900,
-            height: 1,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ),
@@ -98,24 +96,22 @@ class _PreviewRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: last ? 0 : 11),
+      padding: EdgeInsets.only(
+        bottom: last ? 0 : AppSpacing.walletDustPreviewRowGap,
+      ),
       child: Row(
         children: [
           Expanded(
             child: Text(
               label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontSize: 12,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
           Text(
             value,
             style: AppTextStyles.caption.copyWith(
               color: valueColor,
-              fontSize: 12,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
@@ -133,19 +129,22 @@ class _ConvertedBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(13),
+      padding: AppSpacing.walletDustConvertedPadding,
       borderColor: _dustGreen.withValues(alpha: .28),
       child: Row(
         children: [
-          const Icon(Icons.check_circle_outline, color: _dustGreen, size: 19),
-          const SizedBox(width: 10),
+          const Icon(
+            Icons.check_circle_outline,
+            color: _dustGreen,
+            size: AppSpacing.walletDustConvertedIcon,
+          ),
+          const SizedBox(width: AppSpacing.walletDustConvertedGap),
           Expanded(
             child: Text(
               '\u0110\u00E3 chuy\u1EC3n \u0111\u1ED5i sang $targetSymbol',
               style: AppTextStyles.caption.copyWith(
                 color: _dustGreen,
-                fontSize: 12,
-                fontWeight: FontWeight.w800,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
           ),
@@ -165,21 +164,19 @@ class _SectionLabel extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 15,
+          width: AppSpacing.walletDustSectionMarkerWidth,
+          height: AppSpacing.walletDustSectionMarkerHeight,
           decoration: BoxDecoration(
             color: _dustPrimary,
-            borderRadius: BorderRadius.circular(2),
+            borderRadius: AppRadii.xsRadius,
           ),
         ),
-        const SizedBox(width: 7),
+        const SizedBox(width: AppSpacing.walletDustSectionLabelGap),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            fontSize: 11,
-            fontWeight: FontWeight.w900,
-            height: 1,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ],

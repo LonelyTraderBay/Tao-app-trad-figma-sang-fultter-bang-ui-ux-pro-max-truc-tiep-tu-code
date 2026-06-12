@@ -16,8 +16,8 @@ class _TimeFilters extends StatelessWidget {
     ];
 
     return Container(
-      height: 42,
-      padding: const EdgeInsets.all(4),
+      height: AppSpacing.predictionLeaderboardTimeFilterHeight,
+      padding: AppSpacing.predictionLeaderboardTimeFilterPadding,
       decoration: BoxDecoration(
         color: AppColors.surface2,
         borderRadius: AppRadii.lgRadius,
@@ -68,7 +68,6 @@ class _TimeFilterButton extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.caption.copyWith(
             color: active ? AppColors.text1 : AppColors.text3,
-            fontSize: 12,
             fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
           ),
         ),
@@ -101,18 +100,18 @@ class _MetricTabs extends StatelessWidget {
           trailing: InkWell(
             key: PredictionsLeaderboardPage.infoKey,
             onTap: onInfoTap,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: AppRadii.smRadius,
             child: const Padding(
-              padding: EdgeInsets.only(left: 4),
+              padding: AppSpacing.predictionLeaderboardInfoPadding,
               child: Icon(
                 Icons.help_outline_rounded,
                 color: AppColors.text3,
-                size: 12,
+                size: AppSpacing.predictionLeaderboardInfoIcon,
               ),
             ),
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.predictionLeaderboardMetricGap),
         _MetricTab(
           key: PredictionsLeaderboardPage.volumeMetricKey,
           label: 'Volume',
@@ -147,8 +146,8 @@ class _MetricTab extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.mdRadius,
       child: Container(
-        height: 32,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        height: AppSpacing.predictionLeaderboardMetricHeight,
+        padding: AppSpacing.predictionLeaderboardMetricPadding,
         decoration: BoxDecoration(
           color: active
               ? _predictionPrimary.withValues(alpha: .14)
@@ -166,14 +165,15 @@ class _MetricTab extends StatelessWidget {
             Icon(
               icon,
               color: active ? _predictionPrimary : AppColors.text3,
-              size: 13,
+              size: AppSpacing.predictionLeaderboardMetricIcon,
             ),
-            const SizedBox(width: 5),
+            const SizedBox(
+              width: AppSpacing.predictionLeaderboardMetricIconGap,
+            ),
             Text(
               label,
               style: AppTextStyles.caption.copyWith(
                 color: active ? _predictionPrimary : AppColors.text3,
-                fontSize: 12,
                 fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
               ),
             ),

@@ -64,7 +64,10 @@ class _BridgeEventLog extends StatelessWidget {
             ),
           ),
           if (expanded) ...[
-            const Divider(height: 1, color: AppColors.divider),
+            const Divider(
+              height: AppSpacing.launchpadDividerHeight,
+              color: AppColors.divider,
+            ),
             Container(
               width: double.infinity,
               color: AppColors.bg,
@@ -73,7 +76,10 @@ class _BridgeEventLog extends StatelessWidget {
                 children: [for (final event in events) _EventRow(event: event)],
               ),
             ),
-            const Divider(height: 1, color: AppColors.divider),
+            const Divider(
+              height: AppSpacing.launchpadDividerHeight,
+              color: AppColors.divider,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: AppSpacing.x4,
@@ -82,8 +88,8 @@ class _BridgeEventLog extends StatelessWidget {
               child: Row(
                 children: [
                   Container(
-                    width: 6,
-                    height: 6,
+                    width: AppSpacing.launchpadDotSm,
+                    height: AppSpacing.launchpadDotSm,
                     decoration: const BoxDecoration(
                       color: AppColors.buy,
                       shape: BoxShape.circle,
@@ -128,7 +134,7 @@ class _EventRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 68,
+            width: AppSpacing.launchpadBox68,
             child: Text(
               event.timestamp,
               style: AppTextStyles.micro.copyWith(
@@ -138,7 +144,7 @@ class _EventRow extends StatelessWidget {
             ),
           ),
           Container(
-            width: 36,
+            width: AppSpacing.launchpadBox36,
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(vertical: 1),
             decoration: BoxDecoration(
@@ -195,7 +201,7 @@ class _ConnectionBadge extends StatelessWidget {
           Icon(
             connected ? Icons.wifi_rounded : Icons.wifi_find_rounded,
             color: connected ? AppColors.buy : AppColors.warn,
-            size: 9,
+            size: AppSpacing.launchpadFontXs,
           ),
           const SizedBox(width: AppSpacing.x1),
           Text(

@@ -57,7 +57,9 @@ class SavingsSmartSummary extends StatelessWidget {
                     ),
                     Text(
                       '${snapshot.pendingCount}',
-                      style: AppTextStyles.heroNumber.copyWith(fontSize: 32),
+                      style: AppTextStyles.heroNumber.copyWith(
+                        fontSize: AppSpacing.savingsConsumerStatFontSize,
+                      ),
                     ),
                   ],
                 ),
@@ -265,7 +267,7 @@ class SavingsSmartFilterChip extends StatelessWidget {
             label,
             style: savingsSmartCaptionBold.copyWith(
               color: active ? tone : AppColors.text2,
-              height: 1,
+              height: AppSpacing.savingsConsumerPillLineHeight,
             ),
           ),
         ),

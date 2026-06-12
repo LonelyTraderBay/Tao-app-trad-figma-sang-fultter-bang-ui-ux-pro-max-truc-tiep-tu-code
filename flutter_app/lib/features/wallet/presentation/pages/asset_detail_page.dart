@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -21,7 +22,6 @@ part '../widgets/asset_detail_page_sections.dart';
 part '../widgets/asset_detail_page_common.dart';
 
 const _assetBackground = AppColors.bg;
-const _assetPanel = AppColors.surface;
 const _assetGreen = AppColors.buy;
 const _assetRed = AppColors.sell;
 const _assetPrimary = AppColors.primary;
@@ -54,8 +54,10 @@ class _AssetDetailPageState extends ConsumerState<AssetDetailPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 92
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.walletBottomInsetVisualChrome
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.walletBottomInsetNativeChrome) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -76,25 +78,32 @@ class _AssetDetailPageState extends ConsumerState<AssetDetailPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: AssetDetailPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.pageHorizontalPadding,
+                    AppSpacing.rowPy,
+                    AppSpacing.pageHorizontalPadding,
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     customGap: 0,
                     fullBleed: true,
                     children: [
                       _AssetHero(snapshot: snapshot),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: AppSpacing.walletAssetSectionGap),
                       _AssetActionGrid(
                         actions: snapshot.actions,
                         onNavigate: (route) => context.go(route),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: AppSpacing.walletAssetSectionGap),
                       _PriceChartCard(
                         snapshot: snapshot,
                         activePeriod: _period,
                         onPeriod: (period) => setState(() => _period = period),
                       ),
-                      const SizedBox(height: 19),
+                      const SizedBox(
+                        height: AppSpacing.walletAssetTransactionsTopPad,
+                      ),
                       _AssetTransactions(
                         transactions: snapshot.transactions,
                         onNavigate: (route) => context.go(route),

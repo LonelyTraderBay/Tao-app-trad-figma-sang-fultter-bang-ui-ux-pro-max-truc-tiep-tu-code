@@ -164,12 +164,7 @@ void _drawSmallText(
   final painter = TextPainter(
     text: TextSpan(
       text: text,
-      style: AppTextStyles.micro.copyWith(
-        color: AppColors.text3,
-        fontSize: 10,
-        fontFamily: 'Roboto',
-        height: 1,
-      ),
+      style: AppTextStyles.micro.copyWith(color: AppColors.text3, height: 1),
     ),
     textDirection: TextDirection.ltr,
   )..layout();

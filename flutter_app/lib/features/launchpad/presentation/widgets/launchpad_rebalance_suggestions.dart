@@ -57,7 +57,10 @@ class _SuggestionCard extends StatelessWidget {
       child: IntrinsicHeight(
         child: Row(
           children: [
-            Container(width: 3, color: color),
+            Container(
+              width: AppSpacing.launchpadVerticalMarkerWidth,
+              color: color,
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(AppSpacing.x3),
@@ -78,7 +81,7 @@ class _SuggestionCard extends StatelessWidget {
                                 style: AppTextStyles.caption.copyWith(
                                   color: AppColors.text1,
                                   fontWeight: AppTextStyles.bold,
-                                  fontSize: 12,
+                                  fontSize: AppSpacing.launchpadFontLg,
                                 ),
                               ),
                               _ActionPill(
@@ -94,7 +97,7 @@ class _SuggestionCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              fontSize: 10,
+                              fontSize: AppSpacing.launchpadFontSm,
                             ),
                           ),
                         ],
@@ -109,14 +112,14 @@ class _SuggestionCard extends StatelessWidget {
                             style: AppTextStyles.caption.copyWith(
                               color: color,
                               fontWeight: AppTextStyles.bold,
-                              fontSize: 12,
+                              fontSize: AppSpacing.launchpadFontLg,
                             ),
                           ),
                           Text(
                             '${launchpadRebalanceAmount(suggestion.suggestedAmount)} ${suggestion.asset.symbol}',
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              fontSize: 9,
+                              fontSize: AppSpacing.launchpadFontXs,
                             ),
                           ),
                         ],
@@ -140,8 +143,8 @@ class _AssetBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 34,
-      height: 34,
+      width: AppSpacing.launchpadBox34,
+      height: AppSpacing.launchpadBox34,
       decoration: BoxDecoration(
         color: asset.accent.withValues(alpha: .14),
         borderRadius: AppRadii.mdRadius,
@@ -176,15 +179,19 @@ class _ActionPill extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(launchpadRebalanceActionIcon(action), color: color, size: 9),
-            const SizedBox(width: 3),
+            Icon(
+              launchpadRebalanceActionIcon(action),
+              color: color,
+              size: AppSpacing.launchpadFontXs,
+            ),
+            const SizedBox(width: AppSpacing.launchpadGapXs),
             Text(
               launchpadRebalanceActionLabel(action),
               style: AppTextStyles.micro.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                fontSize: 9,
-                height: 1,
+                fontSize: AppSpacing.launchpadFontXs,
+                height: AppSpacing.launchpadLineHeightTight,
               ),
             ),
           ],

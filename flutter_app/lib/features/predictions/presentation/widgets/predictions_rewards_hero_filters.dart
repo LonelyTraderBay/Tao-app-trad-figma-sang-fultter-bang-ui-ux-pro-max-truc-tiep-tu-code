@@ -8,7 +8,7 @@ class _RewardsHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: AppSpacing.predictionRewardsHeroPadding,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
@@ -24,8 +24,8 @@ class _RewardsHero extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 48,
-                height: 48,
+                width: AppSpacing.predictionRewardsHeroIconBox,
+                height: AppSpacing.predictionRewardsHeroIconBox,
                 decoration: BoxDecoration(
                   color: AppColors.warn10,
                   borderRadius: AppRadii.cardRadius,
@@ -33,10 +33,10 @@ class _RewardsHero extends StatelessWidget {
                 child: const Icon(
                   Icons.card_giftcard_rounded,
                   color: AppColors.warn,
-                  size: 23,
+                  size: AppSpacing.predictionRewardsHeroIcon,
                 ),
               ),
-              const SizedBox(width: 13),
+              const SizedBox(width: AppSpacing.predictionRewardsHeroTitleGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +45,6 @@ class _RewardsHero extends StatelessWidget {
                       'Daily Rewards',
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: AppColors.onAccent,
-                        fontSize: 20,
                       ),
                     ),
                     Text(
@@ -54,7 +53,6 @@ class _RewardsHero extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.portfolioTextDim,
-                        fontSize: 12,
                       ),
                     ),
                   ],
@@ -62,28 +60,30 @@ class _RewardsHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 15),
+          const Padding(
+            padding: EdgeInsets.only(
+              top: AppSpacing.predictionRewardsHeroPoolGap,
+            ),
+          ),
           Row(
             children: [
               const Icon(
                 Icons.help_outline_rounded,
                 color: AppColors.portfolioTextMuted,
-                size: 13,
+                size: AppSpacing.predictionRewardsPoolIcon,
               ),
-              const SizedBox(width: 7),
+              const SizedBox(width: AppSpacing.predictionRewardsPoolGap),
               Text(
                 'Total daily pool:',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.portfolioTextMuted,
-                  fontSize: 11,
                 ),
               ),
-              const SizedBox(width: 7),
+              const SizedBox(width: AppSpacing.predictionRewardsPoolGap),
               Text(
                 '\$${snapshot.totalDailyPool.toStringAsFixed(0)}',
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.warn,
-                  fontSize: 16,
                   fontWeight: AppTextStyles.bold,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
@@ -102,7 +102,7 @@ class _HowItWorksNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
+      padding: AppSpacing.predictionRewardsNotePadding,
       decoration: BoxDecoration(
         color: _predictionPrimary.withValues(alpha: .07),
         border: Border.all(color: _predictionPrimary.withValues(alpha: .18)),
@@ -114,9 +114,9 @@ class _HowItWorksNote extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: _predictionPrimary,
-            size: 15,
+            size: AppSpacing.predictionRewardsNoteIcon,
           ),
-          const SizedBox(width: 9),
+          const SizedBox(width: AppSpacing.predictionRewardsNoteGap),
           Expanded(
             child: Text.rich(
               const TextSpan(
@@ -146,8 +146,7 @@ class _HowItWorksNote extends StatelessWidget {
               ),
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
-                height: 1.45,
+                height: AppSpacing.predictionRewardsNoteLineHeight,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -176,7 +175,7 @@ class _CategoryFilters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 31,
+      height: AppSpacing.predictionRewardsFilterHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
@@ -202,7 +201,8 @@ class _CategoryFilters extends StatelessWidget {
             onTap: () => onCategoryChanged(category),
           );
         },
-        separatorBuilder: (_, _) => const SizedBox(width: 8),
+        separatorBuilder: (_, _) =>
+            const SizedBox(width: AppSpacing.predictionRewardsFilterGap),
         itemCount: categories.length + 1,
       ),
     );
@@ -231,8 +231,8 @@ class _FilterChip extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
       child: Container(
-        height: 31,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        height: AppSpacing.predictionRewardsFilterHeight,
+        padding: AppSpacing.predictionRewardsFilterPadding,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
@@ -251,15 +251,14 @@ class _FilterChip extends StatelessWidget {
               Icon(
                 icon,
                 color: active ? activeColor : AppColors.text3,
-                size: 11,
+                size: AppSpacing.predictionRewardsFilterIcon,
               ),
-              const SizedBox(width: 5),
+              const SizedBox(width: AppSpacing.predictionRewardsFilterIconGap),
             ],
             Text(
               label,
               style: AppTextStyles.micro.copyWith(
                 color: active ? activeColor : AppColors.text3,
-                fontSize: 11,
                 fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
               ),
             ),

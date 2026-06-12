@@ -50,7 +50,7 @@ class _StressTab extends StatelessWidget {
                   const Icon(
                     Icons.stacked_line_chart_rounded,
                     color: AppColors.primary,
-                    size: 18,
+                    size: AppSpacing.savingsWhatIfInlineIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Text(
@@ -59,18 +59,19 @@ class _StressTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
               _StressBars(results: results),
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         const _SectionTitle(label: 'Xếp hạng theo ảnh hưởng'),
         for (final entry in results) ...[
           _StressRankCard(entry: entry),
-          if (entry != results.last) const SizedBox(height: AppSpacing.x3),
+          if (entry != results.last)
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ],
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         VitCard(
           radius: VitCardRadius.lg,
           padding: const EdgeInsets.all(AppSpacing.x4),
@@ -80,7 +81,11 @@ class _StressTab extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(Icons.shield_outlined, color: scoreColor, size: 18),
+                  Icon(
+                    Icons.shield_outlined,
+                    color: scoreColor,
+                    size: AppSpacing.savingsWhatIfInlineIcon,
+                  ),
                   const SizedBox(width: AppSpacing.x2),
                   Text(
                     'Đánh giá chống chịu',
@@ -88,7 +93,7 @@ class _StressTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
               Row(
                 children: [
                   _ScoreRing(score: score, color: scoreColor),
@@ -105,12 +110,13 @@ class _StressTab extends StatelessWidget {
                               : 'Rủi ro cao',
                           style: _captionBold.copyWith(color: AppColors.text1),
                         ),
-                        const SizedBox(height: AppSpacing.x1),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x1),
+                        ),
                         Text(
                           'Xấu nhất (${worst.scenario.label}): ${worst.result.differencePct.toStringAsFixed(1)}%. Tốt nhất (${best.scenario.label}): +${best.result.differencePct.toStringAsFixed(1)}%.',
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text3,
-                            fontSize: 12,
                           ),
                         ),
                       ],
@@ -118,7 +124,7 @@ class _StressTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
               Row(
                 children: [
                   Expanded(
@@ -152,7 +158,7 @@ class _StressTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         const _InfoCallout(
           icon: Icons.auto_awesome_rounded,
           color: AppColors.primary,
@@ -160,7 +166,7 @@ class _StressTab extends StatelessWidget {
           text:
               'Đa dạng hóa tài sản và pha trộn sản phẩm linh hoạt với cố định giúp giảm rủi ro trong kịch bản bất lợi. Cân nhắc tăng tỷ trọng stablecoin để đảm bảo ổn định.',
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         _Disclaimer(text: snapshot.stressDisclaimer, tone: AppColors.warn),
       ],
     );

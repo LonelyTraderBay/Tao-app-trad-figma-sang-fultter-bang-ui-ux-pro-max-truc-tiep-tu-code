@@ -96,7 +96,6 @@ class _CategoryCard extends StatelessWidget {
                   title,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -106,7 +105,6 @@ class _CategoryCard extends StatelessWidget {
                 amount,
                 style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.text1,
-                  fontSize: 16,
                   height: 1,
                 ),
               ),
@@ -119,7 +117,6 @@ class _CategoryCard extends StatelessWidget {
               description,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
                 height: 1,
               ),
             ),
@@ -162,7 +159,6 @@ class _RiyCard extends StatelessWidget {
                       'Reduction in Yield (RIY)',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
-                        fontSize: 14,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),
@@ -173,7 +169,6 @@ class _RiyCard extends StatelessWidget {
                       '${snapshot.holdingPeriodYears} years',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
                         height: 1.3,
                       ),
                     ),
@@ -184,7 +179,6 @@ class _RiyCard extends StatelessWidget {
                 '${snapshot.reductionInYield.toStringAsFixed(2)}%',
                 style: AppTextStyles.heroNumber.copyWith(
                   color: _costRed,
-                  fontSize: 20,
                   height: 1,
                 ),
               ),
@@ -240,7 +234,6 @@ class _CostItemCard extends StatelessWidget {
             cost.type,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -249,7 +242,6 @@ class _CostItemCard extends StatelessWidget {
             cost.description,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1.35,
             ),
           ),

@@ -45,7 +45,7 @@ class _PrivacyCard extends StatelessWidget {
                     const Icon(
                       Icons.help_outline_rounded,
                       color: AppColors.accent,
-                      size: 14,
+                      size: AppSpacing.arenaGovernanceSmallIcon,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Text(
@@ -82,7 +82,7 @@ class _PrivacyCard extends StatelessWidget {
               'Public room yêu cầu tất cả mục rule bắt buộc. Governance Gate sẽ kiểm tra tự động.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: 1.4,
+                height: AppSpacing.arenaGovernanceBodyLineHeight,
               ),
             ),
           ],
@@ -117,7 +117,7 @@ class _PrivacyChip extends StatelessWidget {
           Icon(
             _privacyIcon(option.id),
             color: active ? AppColors.accent : AppColors.text3,
-            size: 16,
+            size: AppSpacing.arenaGovernanceIcon,
           ),
           const SizedBox(height: AppSpacing.x1),
           Text(
@@ -149,7 +149,11 @@ class _ClarityScoreCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.shield_outlined, color: color, size: 16),
+              Icon(
+                Icons.shield_outlined,
+                color: color,
+                size: AppSpacing.arenaGovernanceIcon,
+              ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
@@ -175,7 +179,7 @@ class _ClarityScoreCard extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
-              minHeight: 7,
+              minHeight: AppSpacing.arenaGovernanceClarityProgressHeight,
               value: result.clarity / 100,
               backgroundColor: AppColors.surface3,
               color: color,

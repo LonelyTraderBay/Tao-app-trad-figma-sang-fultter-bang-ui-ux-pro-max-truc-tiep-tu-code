@@ -43,7 +43,6 @@ class _StickyActions extends StatelessWidget {
                   'Cancel',
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -95,7 +94,6 @@ class _StickyActions extends StatelessWidget {
                     color: canSubmit
                         ? AppColors.onAccent
                         : AppColors.text3.withValues(alpha: .32),
-                    fontSize: 13,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -123,7 +121,7 @@ class _SectionLabel extends StatelessWidget {
           height: 15,
           decoration: BoxDecoration(
             color: _stopPrimary,
-            borderRadius: BorderRadius.circular(3),
+            borderRadius: AppRadii.xsRadius,
           ),
         ),
         const SizedBox(width: 7),
@@ -131,7 +129,6 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -188,7 +185,7 @@ class _CheckboxMark extends StatelessWidget {
           color: selected ? color : _stopOptionBorder,
           width: 2,
         ),
-        borderRadius: BorderRadius.circular(7),
+        borderRadius: AppRadii.mdRadius,
       ),
       child: selected
           ? const Icon(Icons.check_rounded, color: AppColors.onAccent, size: 16)

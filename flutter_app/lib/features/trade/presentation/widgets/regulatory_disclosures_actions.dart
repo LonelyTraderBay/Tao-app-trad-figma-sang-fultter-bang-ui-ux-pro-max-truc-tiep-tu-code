@@ -18,13 +18,10 @@ class _ActionTile extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
-      child: Container(
+      child: VitCard(
+        variant: VitCardVariant.ghost,
         padding: const EdgeInsets.all(13),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: .12),
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: color, width: 2),
-        ),
+        borderColor: color,
         child: Row(
           children: [
             Icon(icon, color: color, size: 16),
@@ -34,7 +31,6 @@ class _ActionTile extends StatelessWidget {
                 title,
                 style: AppTextStyles.caption.copyWith(
                   color: color,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -59,13 +55,8 @@ class _ContactTile extends StatelessWidget {
       key: RegulatoryDisclosuresPage.contactKey(contact.title),
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
-      child: Container(
+      child: VitCard(
         padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: _legalCard,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: AppColors.cardBorder),
-        ),
         child: Row(
           children: [
             Icon(_contactIcon(contact.icon), color: _legalPrimary, size: 20),
@@ -78,7 +69,6 @@ class _ContactTile extends StatelessWidget {
                     contact.title,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontSize: 12,
                       fontWeight: AppTextStyles.bold,
                       height: 1.2,
                     ),
@@ -88,7 +78,6 @@ class _ContactTile extends StatelessWidget {
                     contact.subtitle,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 10,
                       height: 1.2,
                     ),
                   ),
@@ -118,13 +107,8 @@ class _DocumentTile extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
-      child: Container(
+      child: VitCard(
         padding: const EdgeInsets.all(13),
-        decoration: BoxDecoration(
-          color: _legalCard,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: AppColors.cardBorder),
-        ),
         child: Row(
           children: [
             Icon(_documentIcon(document.icon), color: _legalPrimary, size: 16),
@@ -134,7 +118,6 @@ class _DocumentTile extends StatelessWidget {
                 document.title,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -164,39 +147,27 @@ class _RegulatoryNoticePanel extends StatelessWidget {
         decoration: const BoxDecoration(color: AppColors.modalScrim),
         child: Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
+          child: VitCard(
             padding: const EdgeInsets.all(20),
-            decoration: const BoxDecoration(
-              color: AppColors.bg,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-            ),
+            radius: VitCardRadius.lg,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'Regulatory document',
-                  style: AppTextStyles.baseMedium.copyWith(fontSize: 16),
-                ),
+                Text('Regulatory document', style: AppTextStyles.baseMedium),
                 const SizedBox(height: 10),
                 Text(
                   text,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
                 const SizedBox(height: 16),
                 InkWell(
                   onTap: onClose,
                   borderRadius: AppRadii.inputRadius,
-                  child: Container(
+                  child: VitCard(
+                    variant: VitCardVariant.hero,
                     height: 44,
                     alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: _legalPrimary,
-                      borderRadius: AppRadii.inputRadius,
-                    ),
                     child: Text(
                       'Done',
                       style: AppTextStyles.body.copyWith(

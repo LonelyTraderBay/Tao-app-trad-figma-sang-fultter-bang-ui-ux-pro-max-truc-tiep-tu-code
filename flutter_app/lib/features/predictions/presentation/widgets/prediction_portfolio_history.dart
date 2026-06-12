@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/domain/entities/predictions_entities.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
@@ -60,13 +61,13 @@ class PredictionPortfolioReceiptCard extends StatelessWidget {
     return VitCard(
       onTap: () =>
           context.go(AppRoutePaths.marketsPredictionReceipt(receipt.id)),
-      padding: const EdgeInsets.all(13),
+      padding: AppSpacing.predictionPortfolioReceiptCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 36,
-            height: 36,
+            width: AppSpacing.predictionPortfolioReceiptIconBox,
+            height: AppSpacing.predictionPortfolioReceiptIconBox,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .12),
               borderRadius: AppRadii.mdRadius,
@@ -76,10 +77,10 @@ class PredictionPortfolioReceiptCard extends StatelessWidget {
                   ? Icons.check_circle_outline_rounded
                   : Icons.cancel_outlined,
               color: color,
-              size: 17,
+              size: AppSpacing.predictionPortfolioReceiptIcon,
             ),
           ),
-          const SizedBox(width: 11),
+          const SizedBox(width: AppSpacing.predictionPortfolioReceiptGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,16 +89,17 @@ class PredictionPortfolioReceiptCard extends StatelessWidget {
                   receipt.eventTitle,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.badge.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(
+                  height: AppSpacing.predictionPortfolioReceiptTitleGap,
+                ),
                 Wrap(
-                  spacing: 8,
-                  runSpacing: 4,
+                  spacing: AppSpacing.predictionPortfolioChipGap,
+                  runSpacing: AppSpacing.predictionPortfolioChipRunGap,
                   children: [
                     PredictionPortfolioTinyBadge(
                       label: '${isBuy ? 'Buy' : 'Sell'} ${receipt.outcome}',
@@ -112,14 +114,15 @@ class PredictionPortfolioReceiptCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(
+                  height: AppSpacing.predictionPortfolioReceiptMetaGap,
+                ),
                 Text(
                   '${formatPredictionPortfolioShares(receipt.filledShares)}/'
                   '${formatPredictionPortfolioShares(receipt.shares)} shares \u00b7 '
                   '${formatPredictionPortfolioMoney(receipt.total)} \u00b7 ${receipt.createdAt}',
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.numericMicro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
@@ -129,7 +132,7 @@ class PredictionPortfolioReceiptCard extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: 15,
+            size: AppSpacing.predictionPortfolioReceiptChevron,
           ),
         ],
       ),

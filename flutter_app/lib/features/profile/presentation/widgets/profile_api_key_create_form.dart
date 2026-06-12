@@ -21,14 +21,13 @@ class _NameSection extends StatelessWidget {
             maxLength: 30,
             onChanged: (_) => onChanged(),
           ),
-          const SizedBox(height: 8),
+          const Padding(padding: EdgeInsets.only(top: 8)),
           Row(
             children: [
               Text(
                 'T\u1ED1i thi\u1EC3u 3 k\u00FD t\u1EF1',
                 style: AppTextStyles.micro.copyWith(
                   color: _apiMuted,
-                  fontSize: 11,
                   height: 1,
                 ),
               ),
@@ -37,7 +36,6 @@ class _NameSection extends StatelessWidget {
                 '${controller.text.length}/30',
                 style: AppTextStyles.micro.copyWith(
                   color: _apiMuted,
-                  fontSize: 11,
                   height: 1,
                 ),
               ),
@@ -73,7 +71,8 @@ class _PermissionsSection extends StatelessWidget {
               selected: selected.contains(permission.id),
               onTap: () => onToggle(permission.id),
             ),
-            if (permission != permissions.last) const SizedBox(height: 12),
+            if (permission != permissions.last)
+              const Padding(padding: EdgeInsets.only(top: 12)),
           ],
         ],
       ),
@@ -139,7 +138,6 @@ class _PermissionCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: selected ? AppColors.text1 : AppColors.text2,
-                            fontSize: 14,
                             fontWeight: FontWeight.w700,
                             height: 1,
                           ),
@@ -150,20 +148,18 @@ class _PermissionCard extends StatelessWidget {
                           ' (b\u1EAFt bu\u1ED9c)',
                           style: AppTextStyles.caption.copyWith(
                             color: _apiMuted,
-                            fontSize: 14,
                             height: 1,
                           ),
                         ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  const Padding(padding: EdgeInsets.only(top: 8)),
                   Text(
                     permission.description,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: _apiMuted,
-                      fontSize: 12,
                       height: 1,
                     ),
                   ),
@@ -257,18 +253,17 @@ class _IpWhitelistSection extends StatelessWidget {
             ],
           ),
           if (ips.isEmpty) ...[
-            const SizedBox(height: 8),
+            const Padding(padding: EdgeInsets.only(top: 8)),
             Text(
               'Kh\u00F4ng c\u00F3 IP whitelist \u2014 key c\u00F3 th\u1EC3 \u0111\u01B0\u1EE3c d\u00F9ng t\u1EEB b\u1EA5t k\u1EF3 \u0111\u00E2u',
               style: AppTextStyles.micro.copyWith(
                 color: _apiAmber,
-                fontSize: 11,
                 fontWeight: FontWeight.w600,
                 height: 1,
               ),
             ),
           ] else ...[
-            const SizedBox(height: 10),
+            const Padding(padding: EdgeInsets.only(top: 10)),
             Wrap(
               spacing: 6,
               runSpacing: 6,
@@ -292,7 +287,6 @@ class _IpWhitelistSection extends StatelessWidget {
                         ip,
                         style: AppTextStyles.micro.copyWith(
                           color: _apiGreen,
-                          fontSize: 12,
                           fontWeight: FontWeight.w700,
                           height: 1,
                         ),
@@ -363,19 +357,17 @@ class _ExpirySection extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: isSelected ? _apiPrimary : AppColors.text2,
-                      fontSize: 13,
                       fontWeight: FontWeight.w700,
                       height: 1,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const Padding(padding: EdgeInsets.only(top: 8)),
                   Text(
                     option.description,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: _apiMuted,
-                      fontSize: 10,
                       height: 1,
                     ),
                   ),
@@ -411,14 +403,13 @@ class _SecurityTips extends StatelessWidget {
                 'M\u1EB9o b\u1EA3o m\u1EADt',
                 style: AppTextStyles.caption.copyWith(
                   color: _apiPrimary,
-                  fontSize: 13,
                   fontWeight: FontWeight.w700,
                   height: 1,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const Padding(padding: EdgeInsets.only(top: 14)),
           for (var i = 0; i < tips.length; i++) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -435,7 +426,6 @@ class _SecurityTips extends StatelessWidget {
                     '${i + 1}',
                     style: AppTextStyles.micro.copyWith(
                       color: _apiPrimary,
-                      fontSize: 9,
                       fontWeight: FontWeight.w700,
                       height: 1,
                     ),
@@ -449,14 +439,14 @@ class _SecurityTips extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      fontSize: 12,
                       height: 1.35,
                     ),
                   ),
                 ),
               ],
             ),
-            if (i != tips.length - 1) const SizedBox(height: 9),
+            if (i != tips.length - 1)
+              const Padding(padding: EdgeInsets.only(top: 9)),
           ],
         ],
       ),

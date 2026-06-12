@@ -14,8 +14,8 @@ class _SafetyCenterCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: AppSpacing.arenaGuideFeatureIconBox,
+            height: AppSpacing.arenaGuideFeatureIconBox,
             decoration: BoxDecoration(
               color: AppColors.primary12,
               borderRadius: AppRadii.mdRadius,
@@ -23,7 +23,7 @@ class _SafetyCenterCard extends StatelessWidget {
             child: const Icon(
               Icons.shield_outlined,
               color: AppColors.primary,
-              size: 20,
+              size: AppSpacing.arenaGuideFeatureGlyph,
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -45,7 +45,11 @@ class _SafetyCenterCard extends StatelessWidget {
               ],
             ),
           ),
-          const Icon(Icons.chevron_right, color: AppColors.text3, size: 18),
+          const Icon(
+            Icons.chevron_right,
+            color: AppColors.text3,
+            size: AppSpacing.arenaGuideChevron,
+          ),
         ],
       ),
     );
@@ -61,7 +65,11 @@ class _FaqHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Icon(Icons.help_outline, color: AppModuleAccents.arena, size: 18),
+        const Icon(
+          Icons.help_outline,
+          color: AppModuleAccents.arena,
+          size: AppSpacing.arenaGuideChevron,
+        ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
@@ -126,8 +134,8 @@ class _SupportCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: AppSpacing.arenaGuideFeatureIconBox,
+            height: AppSpacing.arenaGuideFeatureIconBox,
             decoration: BoxDecoration(
               color: AppColors.primary12,
               borderRadius: AppRadii.mdRadius,
@@ -135,7 +143,7 @@ class _SupportCard extends StatelessWidget {
             child: const Icon(
               Icons.help_outline,
               color: AppColors.primary,
-              size: 20,
+              size: AppSpacing.arenaGuideFeatureGlyph,
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -161,7 +169,10 @@ class _SupportCard extends StatelessWidget {
           TextButton.icon(
             key: ArenaGuidePage.supportKey,
             onPressed: onPressed,
-            icon: const Icon(Icons.chevron_right, size: 14),
+            icon: const Icon(
+              Icons.chevron_right,
+              size: AppSpacing.arenaGuideSupportChevron,
+            ),
             label: const Text('Hỗ trợ'),
           ),
         ],
@@ -200,8 +211,8 @@ class _AccordionCard extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  width: 30,
-                  height: 30,
+                  width: AppSpacing.arenaGuideAccordionIconBox,
+                  height: AppSpacing.arenaGuideAccordionIconBox,
                   decoration: BoxDecoration(
                     color: open
                         ? badgeColor.withValues(alpha: .12)
@@ -211,7 +222,7 @@ class _AccordionCard extends StatelessWidget {
                   child: Icon(
                     icon,
                     color: open ? badgeColor : AppColors.text3,
-                    size: 16,
+                    size: AppSpacing.arenaGuideAccordionGlyph,
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x3),
@@ -228,8 +239,8 @@ class _AccordionCard extends StatelessWidget {
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Container(
-                  width: 8,
-                  height: 8,
+                  width: AppSpacing.arenaGuideAccordionDot,
+                  height: AppSpacing.arenaGuideAccordionDot,
                   decoration: BoxDecoration(
                     color: badgeColor,
                     shape: BoxShape.circle,
@@ -242,7 +253,7 @@ class _AccordionCard extends StatelessWidget {
                   child: Icon(
                     Icons.expand_more,
                     color: open ? badgeColor : AppColors.text3,
-                    size: 18,
+                    size: AppSpacing.arenaGuideAccordionChevron,
                   ),
                 ),
               ],
@@ -267,7 +278,7 @@ class _AccordionCard extends StatelessWidget {
                   description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.arenaGuideAccordionBodyLineHeight,
                   ),
                 ),
               ),
@@ -297,13 +308,16 @@ class _SmallBadge extends StatelessWidget {
         borderRadius: AppRadii.xsRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.arenaGuideSmallBadgePadH,
+          vertical: AppSpacing.arenaGuideSmallBadgePadV,
+        ),
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.arenaGuideSmallBadgeLineHeight,
           ),
         ),
       ),
@@ -324,7 +338,10 @@ class _MetaChip extends StatelessWidget {
         borderRadius: AppRadii.xsRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.arenaGuideMetaChipPadH,
+          vertical: AppSpacing.arenaGuideMetaChipPadV,
+        ),
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -359,7 +376,11 @@ class _TipPill extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(Icons.lightbulb_outline, color: color, size: 12),
+            Icon(
+              Icons.lightbulb_outline,
+              color: color,
+              size: AppSpacing.arenaGuideTipPillIcon,
+            ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: Text(
@@ -386,8 +407,8 @@ class _LegendDot extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 8,
-          height: 8,
+          width: AppSpacing.arenaGuideLegendDot,
+          height: AppSpacing.arenaGuideLegendDot,
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         const SizedBox(width: AppSpacing.x1),

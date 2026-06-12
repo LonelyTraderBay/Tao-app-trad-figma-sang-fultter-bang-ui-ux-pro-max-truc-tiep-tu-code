@@ -26,7 +26,6 @@ class _ComplianceNotice extends StatelessWidget {
                   'All Products Compliant',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -36,7 +35,6 @@ class _ComplianceNotice extends StatelessWidget {
                   '${snapshot.products.length}/3 products have approved target markets. Next review: ${snapshot.nextReviewLabel}.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -115,7 +113,6 @@ class _StatCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -124,7 +121,6 @@ class _StatCard extends StatelessWidget {
             value,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
-              fontSize: 20,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -134,11 +130,7 @@ class _StatCard extends StatelessWidget {
             helper,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: helperColor,
-              fontSize: 9,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: helperColor, height: 1),
           ),
         ],
       ),
@@ -179,7 +171,6 @@ class _Tabs extends StatelessWidget {
                             color: activeId == tab.$1
                                 ? _govPrimary
                                 : AppColors.text3,
-                            fontSize: 12,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),

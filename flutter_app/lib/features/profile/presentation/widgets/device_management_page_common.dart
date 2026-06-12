@@ -15,11 +15,7 @@ class _MetaItem extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           value,
-          style: AppTextStyles.micro.copyWith(
-            color: _devicesMuted,
-            fontSize: 11,
-            height: 1,
-          ),
+          style: AppTextStyles.micro.copyWith(color: _devicesMuted, height: 1),
         ),
       ],
     );
@@ -66,7 +62,6 @@ class _TrustButton extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.micro.copyWith(
                   color: color,
-                  fontSize: 12,
                   fontWeight: FontWeight.w900,
                   height: 1,
                 ),
@@ -112,7 +107,6 @@ class _LogoutButton extends StatelessWidget {
               '\u0110\u0103ng xu\u1EA5t',
               style: AppTextStyles.micro.copyWith(
                 color: _devicesRed,
-                fontSize: 12,
                 fontWeight: FontWeight.w900,
                 height: 1,
               ),
@@ -142,7 +136,6 @@ class _TinyPill extends StatelessWidget {
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 10,
           fontWeight: FontWeight.w900,
           height: 1,
         ),

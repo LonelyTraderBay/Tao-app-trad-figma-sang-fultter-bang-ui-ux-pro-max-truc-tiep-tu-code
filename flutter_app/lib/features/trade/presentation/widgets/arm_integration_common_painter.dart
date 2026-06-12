@@ -75,10 +75,7 @@ class _LatencyPainter extends CustomPainter {
       );
       textPainter.text = TextSpan(
         text: '$label',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: 9,
-        ),
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
       );
       textPainter.layout();
       textPainter.paint(
@@ -125,10 +122,7 @@ class _LatencyPainter extends CustomPainter {
       final x = chartRect.left + chartRect.width * i / (points.length - 1);
       textPainter.text = TextSpan(
         text: points[i].time,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: 9,
-        ),
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
       );
       textPainter.layout();
       textPainter.paint(

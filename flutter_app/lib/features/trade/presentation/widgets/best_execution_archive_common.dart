@@ -38,7 +38,6 @@ class _ReportActions extends StatelessWidget {
                       'Q1 2026 Best Execution Report',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
-                        fontSize: 14,
                         fontWeight: AppTextStyles.bold,
                         height: 1.2,
                       ),
@@ -48,7 +47,6 @@ class _ReportActions extends StatelessWidget {
                       'Report period: Jan 1 - Mar 31, 2026. Due date: April 15, 2026. Status: Draft.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
                         height: 1.35,
                       ),
                     ),
@@ -98,12 +96,11 @@ class _ArchiveReport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Historical Reports',
+      customGap: 12,
       children: [
-        const _SectionLabel('Historical Reports'),
-        const SizedBox(height: 12),
-        for (final report in reports) ...[
+        for (final report in reports)
           _Card(
             padding: const EdgeInsets.all(13),
             child: Row(
@@ -130,7 +127,6 @@ class _ArchiveReport extends StatelessWidget {
                         '${report.quarter} ${report.year}',
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 13,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
@@ -139,7 +135,6 @@ class _ArchiveReport extends StatelessWidget {
                         report.period,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
                         ),
                       ),
                     ],
@@ -156,8 +151,6 @@ class _ArchiveReport extends StatelessWidget {
               ],
             ),
           ),
-          if (report != reports.last) const SizedBox(height: 12),
-        ],
       ],
     );
   }
@@ -171,21 +164,12 @@ class _ReportStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final published = status == 'published';
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-      decoration: BoxDecoration(
-        color: published ? _bestGreen.withValues(alpha: .14) : _bestPanel2,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        published ? 'Published' : 'Draft',
-        style: AppTextStyles.micro.copyWith(
-          color: published ? _bestGreen : AppColors.text3,
-          fontSize: 10,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    return VitStatusPill(
+      label: published ? 'Published' : 'Draft',
+      status: published
+          ? VitStatusPillStatus.success
+          : VitStatusPillStatus.neutral,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -223,45 +207,10 @@ class _ActionButton extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: AppTextStyles.caption.copyWith(
           color: foreground,
-          fontSize: 12,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
       ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 3,
-          height: 16,
-          decoration: BoxDecoration(
-            color: _bestPrimary,
-            borderRadius: BorderRadius.circular(999),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Expanded(
-          child: Text(
-            text,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 11,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
@@ -296,20 +245,10 @@ class _NoticePanel extends StatelessWidget {
       top: MediaQuery.paddingOf(context).top + 18,
       child: Material(
         color: AppColors.transparent,
-        child: Container(
+        child: VitCard(
+          variant: VitCardVariant.inner,
+          borderColor: _bestBorder,
           padding: const EdgeInsets.fromLTRB(12, 9, 8, 9),
-          decoration: BoxDecoration(
-            color: _bestPanel2,
-            border: Border.all(color: _bestBorder),
-            borderRadius: AppRadii.inputRadius,
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.dynamicIslandBg.withValues(alpha: .25),
-                blurRadius: 18,
-                offset: const Offset(0, 8),
-              ),
-            ],
-          ),
           child: Row(
             children: [
               const Icon(
@@ -321,10 +260,7 @@ class _NoticePanel extends StatelessWidget {
               Expanded(
                 child: Text(
                   text,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text1),
                 ),
               ),
               IconButton(

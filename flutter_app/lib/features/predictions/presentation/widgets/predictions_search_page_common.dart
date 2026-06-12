@@ -18,7 +18,7 @@ class _CategoryChip extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        padding: AppSpacing.predictionSearchCategoryChipPadding,
         decoration: BoxDecoration(
           color: active
               ? _predictionPrimary.withValues(alpha: .12)
@@ -65,13 +65,13 @@ class _SearchResultCard extends StatelessWidget {
 
     return VitCard(
       onTap: onTap,
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionSearchResultPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 48,
-            height: 48,
+            width: AppSpacing.predictionSearchChanceBox,
+            height: AppSpacing.predictionSearchChanceBox,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: chanceColor.withValues(alpha: .14),
@@ -85,7 +85,7 @@ class _SearchResultCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.predictionSearchResultGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,15 +94,14 @@ class _SearchResultCard extends StatelessWidget {
                   event.title,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 13,
-                    height: 1.35,
+                    height: AppSpacing.predictionSearchTitleLineHeight,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 7),
+                const Padding(padding: AppSpacing.predictionSearchMetaTopGap),
                 Wrap(
-                  spacing: 8,
-                  runSpacing: 4,
+                  spacing: AppSpacing.predictionSearchMetaSpacing,
+                  runSpacing: AppSpacing.predictionSearchMetaRunSpacing,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     _TinyBadge(label: event.category),
@@ -114,7 +113,6 @@ class _SearchResultCard extends StatelessWidget {
                         _formatPercent(event.change24h),
                         style: AppTextStyles.caption.copyWith(
                           color: changeColor,
-                          fontSize: 16,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
@@ -138,18 +136,17 @@ class _TinyBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+      padding: AppSpacing.predictionSearchTinyBadgePadding,
       decoration: BoxDecoration(
         color: muted
             ? AppColors.surface2
             : _predictionPrimary.withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: AppRadii.xsRadius,
       ),
       child: Text(
         label,
         style: AppTextStyles.micro.copyWith(
           color: muted ? AppColors.text3 : _predictionPrimary,
-          fontSize: 9,
           fontWeight: AppTextStyles.bold,
         ),
       ),
@@ -166,7 +163,7 @@ class _MetaText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: AppTextStyles.micro.copyWith(color: AppColors.text3, fontSize: 10),
+      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
     );
   }
 }
@@ -177,7 +174,7 @@ class _SearchEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 240,
+      height: AppSpacing.predictionSearchEmptyHeight,
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -185,9 +182,9 @@ class _SearchEmptyState extends StatelessWidget {
             Icon(
               Icons.search_rounded,
               color: AppColors.text3.withValues(alpha: .42),
-              size: 42,
+              size: AppSpacing.predictionSearchEmptyIcon,
             ),
-            const SizedBox(height: 12),
+            const Padding(padding: AppSpacing.predictionSearchEmptyTitleGap),
             Text(
               'No events match filters',
               style: AppTextStyles.body.copyWith(
@@ -195,7 +192,7 @@ class _SearchEmptyState extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(height: 4),
+            const Padding(padding: AppSpacing.predictionSearchEmptyMessageGap),
             Text(
               'Try adjusting your search or filter criteria',
               textAlign: TextAlign.center,

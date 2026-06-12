@@ -8,8 +8,8 @@ class _VipCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 92,
-      padding: const EdgeInsets.all(16),
+      height: AppSpacing.profileVipCardHeight,
+      padding: AppSpacing.profileModuleCardPadding,
       borderColor: _profileBorder,
       child: Column(
         children: [
@@ -17,34 +17,25 @@ class _VipCard extends StatelessWidget {
             children: [
               Text(
                 'VIP Progress',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontSize: 13,
-                  height: 1,
-                ),
+                style: AppTextStyles.control.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.profileModuleStatGap),
               Flexible(
                 child: Text(
                   '${vip.label} \u2192 ${vip.nextLabel}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.end,
-                  style: AppTextStyles.micro.copyWith(
-                    color: _profileAmber,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.badge.copyWith(color: _profileAmber),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.profileVipProgressGap),
           ClipRRect(
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(
-              minHeight: 8,
+              minHeight: AppSpacing.profileVipProgressHeight,
               value: vip.progress,
               color: AppColors.primary,
               backgroundColor: _profilePanel2,
@@ -55,11 +46,7 @@ class _VipCard extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               vip.volumeLabel,
-              style: AppTextStyles.micro.copyWith(
-                color: _profileMuted,
-                fontSize: 10,
-                height: 1,
-              ),
+              style: AppTextStyles.numericMicro.copyWith(color: _profileMuted),
             ),
           ),
         ],
@@ -79,29 +66,31 @@ class _PredictionCard extends StatelessWidget {
     return VitCard(
       key: ProfilePage.predictionCardKey,
       onTap: onTap,
-      height: 137,
-      padding: const EdgeInsets.all(16),
+      height: AppSpacing.profileModuleCardHeight,
+      padding: AppSpacing.profileModuleCardPadding,
       borderColor: _profilePurple.withValues(alpha: .38),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const Icon(Icons.adjust_rounded, color: _profilePurple, size: 15),
-              const SizedBox(width: 8),
+              const Icon(
+                Icons.adjust_rounded,
+                color: _profilePurple,
+                size: AppSpacing.profileModuleIcon,
+              ),
+              const SizedBox(width: AppSpacing.profileModuleGap),
               Expanded(
                 child: Text(
                   'Prediction Portfolio',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
+                  style: AppTextStyles.control.copyWith(
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.profileModuleGap),
               _TinyTag(label: 'Prediction Market', color: _profilePurple),
             ],
           ),
@@ -114,14 +103,14 @@ class _PredictionCard extends StatelessWidget {
                   value: '${prediction.positions}',
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.profileModuleStatGap),
               Expanded(
                 child: _ModuleStat(
                   label: 'L\u1EC7nh m\u1EDF',
                   value: '${prediction.openOrders}',
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.profileModuleStatGap),
               Expanded(
                 child: _ModuleStat(
                   label: 'P/L',
@@ -139,34 +128,29 @@ class _PredictionCard extends StatelessWidget {
                   'Xem portfolio',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: _profilePurple,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w900,
-                  ),
+                  style: AppTextStyles.badge.copyWith(color: _profilePurple),
                 ),
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: AppSpacing.profileHeroInfoTrailingGap),
               const Icon(
                 Icons.chevron_right_rounded,
                 color: _profilePurple,
-                size: 14,
+                size: AppSpacing.profileModuleLinkIcon,
               ),
-              const SizedBox(width: 20),
+              const SizedBox(width: AppSpacing.profileModuleEndGap),
               const Icon(
                 Icons.emoji_events_outlined,
                 color: _profileMuted,
-                size: 14,
+                size: AppSpacing.profileModuleLinkIcon,
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: AppSpacing.profileHeroInfoTrailingGap),
               Flexible(
                 child: Text(
                   'Leaderboard',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.numericMicro.copyWith(
                     color: _profileMuted,
-                    fontSize: 11,
                   ),
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_common.dart';
 
@@ -17,7 +18,7 @@ class WalletTokenApprovalTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 54,
+      height: AppSpacing.walletTokenTabsHeight,
       decoration: const BoxDecoration(
         color: walletTokenApprovalPanel,
         border: Border(bottom: BorderSide(color: walletTokenApprovalBorder)),
@@ -48,19 +49,17 @@ class WalletTokenApprovalTabs extends StatelessWidget {
                             color: activeTab == tab
                                 ? walletTokenApprovalPrimary
                                 : AppColors.textDisabled,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w800,
-                            height: 1,
+                            fontWeight: AppTextStyles.bold,
                           ),
                         ),
                       ),
                       Positioned(
-                        left: 7,
-                        right: 7,
+                        left: AppSpacing.walletTokenTabIndicatorInset,
+                        right: AppSpacing.walletTokenTabIndicatorInset,
                         bottom: 0,
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 150),
-                          height: 2,
+                          height: AppSpacing.tabBarUnderlineHeight,
                           color: activeTab == tab
                               ? walletTokenApprovalPrimary
                               : AppColors.transparent,

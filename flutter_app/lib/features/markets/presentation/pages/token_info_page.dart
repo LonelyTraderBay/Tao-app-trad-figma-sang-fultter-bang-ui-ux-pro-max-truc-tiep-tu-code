@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
+import '../widgets/market_body_review_widgets.dart';
 
 part '../widgets/token_info_tabs_widgets.dart';
 part '../widgets/token_info_market_widgets.dart';
@@ -96,6 +97,18 @@ class _TokenInfoPageState extends ConsumerState<TokenInfoPage> {
                         else
                           _ProjectTab(snapshot: snapshot),
                         const _Disclaimer(),
+                        const MarketBodyReviewSection(
+                          title: 'Token state review',
+                          message: 'Token information data reviewed',
+                          detail:
+                              'Overview, on-chain, project, chart link, empty, and refresh states remain visible.',
+                          primary:
+                              'Market metrics stay separated from project fundamentals.',
+                          secondary:
+                              'On-chain health remains informational before pair navigation.',
+                          tertiary:
+                              'Disclaimer content stays visible before the shared status review.',
+                        ),
                       ],
                     ),
                   ),

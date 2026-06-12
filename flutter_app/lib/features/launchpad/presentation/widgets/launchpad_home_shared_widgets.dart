@@ -79,7 +79,7 @@ class _MiniPill extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          height: 1.1,
+          height: AppSpacing.launchpadLineHeightCompact,
         ),
       ),
     );
@@ -105,7 +105,10 @@ class _SoftChip extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: AppTextStyles.micro.copyWith(color: color, height: 1.25),
+        style: AppTextStyles.micro.copyWith(
+          color: color,
+          height: AppSpacing.launchpadLineHeightBody,
+        ),
       ),
     );
   }
@@ -145,7 +148,7 @@ class _Badge extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.medium,
-              height: 1.1,
+              height: AppSpacing.launchpadLineHeightCompact,
             ),
           ),
         ],
@@ -212,16 +215,16 @@ class _RoiBadge extends StatelessWidget {
             '+$value%',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.buy,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
+              height: AppSpacing.launchpadLineHeightTight,
             ),
           ),
           Text(
             'ROI',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.1,
+              height: AppSpacing.launchpadLineHeightCompact,
             ),
           ),
         ],

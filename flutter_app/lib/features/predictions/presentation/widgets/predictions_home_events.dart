@@ -16,13 +16,13 @@ class _PredictionEventCard extends StatelessWidget {
     final isMulti = event.outcomes.length > 2;
     return VitCard(
       onTap: onTap,
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionHomeEventPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Wrap(
-            spacing: 6,
-            runSpacing: 5,
+            spacing: AppSpacing.predictionHomeBadgeGap,
+            runSpacing: AppSpacing.predictionHomeBadgeRunGap,
             children: [
               _SmallBadge(
                 label: event.category,
@@ -49,27 +49,26 @@ class _PredictionEventCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.predictionHomeEventTitleGap),
           Text(
             event.title,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1.4,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.predictionHomeEventTitleGap),
           if (isMulti)
             _MultiOutcomeRow(event: event)
           else
             _BinaryOutcomeBar(outcomes: outcomes),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.predictionHomeSectionGap),
           _EventStatsRow(event: event),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.predictionHomeSectionGap),
           Row(
             children: [
               Expanded(child: _OutcomeActionButton(outcome: outcomes.first)),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.predictionHomeActionGap),
               Expanded(child: _OutcomeActionButton(outcome: outcomes.last)),
             ],
           ),
@@ -95,27 +94,19 @@ class _BinaryOutcomeBar extends StatelessWidget {
           children: [
             Text(
               '${yes.label} ${yes.chance}%',
-              style: AppTextStyles.caption.copyWith(
-                color: yes.color,
-                fontSize: 12,
-                fontWeight: AppTextStyles.bold,
-              ),
+              style: AppTextStyles.badge.copyWith(color: yes.color),
             ),
             Text(
               '${no.label} ${no.chance}%',
-              style: AppTextStyles.caption.copyWith(
-                color: no.color,
-                fontSize: 12,
-                fontWeight: AppTextStyles.bold,
-              ),
+              style: AppTextStyles.badge.copyWith(color: no.color),
             ),
           ],
         ),
-        const SizedBox(height: 7),
+        const SizedBox(height: AppSpacing.predictionHomeChanceLabelGap),
         ClipRRect(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: AppRadii.xsRadius,
           child: SizedBox(
-            height: 8,
+            height: AppSpacing.predictionHomeChanceBarHeight,
             child: Row(
               children: [
                 Expanded(
@@ -143,12 +134,12 @@ class _MultiOutcomeRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 6,
-      runSpacing: 6,
+      spacing: AppSpacing.predictionHomeOutcomeGap,
+      runSpacing: AppSpacing.predictionHomeOutcomeGap,
       children: [
         for (final outcome in event.outcomes.take(3))
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+            padding: AppSpacing.predictionHomeOutcomeChipPadding,
             decoration: BoxDecoration(
               color: outcome.color.withValues(alpha: .12),
               border: Border.all(color: outcome.color.withValues(alpha: .25)),
@@ -158,30 +149,22 @@ class _MultiOutcomeRow extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  width: 8,
-                  height: 8,
+                  width: AppSpacing.predictionHomeOutcomeDot,
+                  height: AppSpacing.predictionHomeOutcomeDot,
                   decoration: BoxDecoration(
                     color: outcome.color,
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(width: AppSpacing.predictionHomeOutcomeGap),
                 Text(
                   outcome.label,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text1,
-                    fontSize: 11,
-                    fontWeight: AppTextStyles.bold,
-                  ),
+                  style: AppTextStyles.badge.copyWith(color: AppColors.text1),
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(width: AppSpacing.predictionHomeOutcomeGap),
                 Text(
                   '${outcome.chance}%',
-                  style: AppTextStyles.micro.copyWith(
-                    color: outcome.color,
-                    fontSize: 11,
-                    fontWeight: AppTextStyles.bold,
-                  ),
+                  style: AppTextStyles.badge.copyWith(color: outcome.color),
                 ),
               ],
             ),
@@ -210,12 +193,12 @@ class _EventStatsRow extends StatelessWidget {
           icon: Icons.bar_chart_rounded,
           label: 'Vol: ${_formatVolume(event.volume24h)}',
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.predictionHomeStatGap),
         _StatText(
           icon: Icons.group_outlined,
           label: _formatInt(event.participants),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.predictionHomeStatGap),
         _StatText(
           icon: Icons.schedule_rounded,
           label: _timeRemaining(event.endDate),
@@ -225,7 +208,7 @@ class _EventStatsRow extends StatelessWidget {
           event.change24h >= 0
               ? Icons.trending_up_rounded
               : Icons.trending_down_rounded,
-          size: 12,
+          size: AppSpacing.predictionHomeTrendIcon,
           color: changeColor,
         ),
         Text(
@@ -253,17 +236,18 @@ class _StatText extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 11, color: AppColors.text3),
-          const SizedBox(width: 4),
+          Icon(
+            icon,
+            size: AppSpacing.predictionHomeStatIcon,
+            color: AppColors.text3,
+          ),
+          const SizedBox(width: AppSpacing.predictionHomeStatIconGap),
           Flexible(
             child: Text(
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: 11,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ),
         ],
@@ -280,7 +264,7 @@ class _OutcomeActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 42,
+      height: AppSpacing.predictionHomeActionHeight,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: outcome.color.withValues(alpha: .12),
@@ -312,10 +296,10 @@ class _SmallBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      padding: AppSpacing.predictionHomeBadgePadding,
       decoration: BoxDecoration(
         color: background,
-        borderRadius: BorderRadius.circular(7),
+        borderRadius: AppRadii.badgeRadius,
       ),
       child: Text(
         label,
@@ -334,7 +318,7 @@ class _PredictionsEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 220,
+      height: AppSpacing.predictionHomeEmptyHeight,
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -342,9 +326,9 @@ class _PredictionsEmptyState extends StatelessWidget {
             Icon(
               Icons.search_rounded,
               color: AppColors.text3.withValues(alpha: .40),
-              size: 40,
+              size: AppSpacing.predictionHomeEmptyIcon,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.predictionHomeEmptyTitleGap),
             Text(
               'No events found',
               style: AppTextStyles.body.copyWith(
@@ -352,7 +336,7 @@ class _PredictionsEmptyState extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.predictionHomeEmptySubtitleGap),
             Text(
               'Try adjusting your filters or search terms',
               textAlign: TextAlign.center,

@@ -99,8 +99,10 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                       AppSpacing.contentPad,
                       bottomInset,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      customGap: AppSpacing.x4,
                       children: [
                         if (showOfflineWithCache) ...[
                           Padding(
@@ -116,7 +118,6 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                           ),
                         ],
                         _QuickHub(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
                         if (snapshot.highRiskContractId != null) ...[
                           VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
@@ -125,7 +126,6 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                                 'KYC, payment readiness, preview, confirmation, order status, dispute and support states are bound to one P2P contract.',
                             contractId: snapshot.highRiskContractId,
                           ),
-                          const SizedBox(height: AppSpacing.x4),
                         ],
                         _TradeTabs(
                           active: _tradeType,
@@ -134,7 +134,6 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                             setState(() => _tradeType = value);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
                         _AssetFiatRail(
                           snapshot: snapshot,
                           selectedAsset: _asset,
@@ -148,7 +147,6 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                             setState(() => _fiat = value);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
                         VitSearchBar(
                           key: P2PHomePage.searchKey,
                           controller: _searchController,
@@ -162,7 +160,6 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                           onChanged: (value) => setState(() => _query = value),
                         ),
                         if (_filtersOpen) ...[
-                          const SizedBox(height: AppSpacing.x3),
                           _FilterPanel(
                             merchantFilter: _merchantFilter,
                             paymentFilter: _paymentFilter,
@@ -177,13 +174,11 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                             }),
                           ),
                         ],
-                        const SizedBox(height: AppSpacing.x4),
                         _ResultsHeader(count: ads.length),
-                        const SizedBox(height: AppSpacing.x3),
                         if (ads.isEmpty)
                           _EmptyOffers(snapshot: snapshot)
                         else
-                          for (final ad in ads) ...[
+                          for (final ad in ads)
                             _OfferCard(
                               ad: ad,
                               tradeType: _tradeType,
@@ -196,8 +191,6 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                                 AppRoutePaths.p2pReport(ad.merchantId),
                               ),
                             ),
-                            const SizedBox(height: AppSpacing.x3),
-                          ],
                       ],
                     ),
                   ),
@@ -268,7 +261,6 @@ class _QuickHub extends StatelessWidget {
                 child: Text(
                   'Thao tác nhanh',
                   style: AppTextStyles.baseMedium.copyWith(
-                    fontSize: 14,
                     color: AppColors.text1,
                   ),
                 ),

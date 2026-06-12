@@ -12,7 +12,7 @@ class _EarningsTab extends StatelessWidget {
       accentColor: _predictionPrimary,
       children: [
         VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.predictionMarketMakerCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -22,16 +22,21 @@ class _EarningsTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(
+                height: AppSpacing.predictionMarketMakerEarningsTitleGap,
+              ),
               SizedBox(
-                height: 160,
+                height: AppSpacing.predictionMarketMakerEarningsChartHeight,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     for (final point in snapshot.earningsHistory)
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing
+                                .predictionMarketMakerEarningsBarHorizontal,
+                          ),
                           child: _FeeBar(point: point),
                         ),
                       ),
@@ -42,7 +47,7 @@ class _EarningsTab extends StatelessWidget {
           ),
         ),
         VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.predictionMarketMakerCardPadding,
           child: Column(
             children: [
               _AnalysisRow(
@@ -84,16 +89,15 @@ class _FeeBar extends StatelessWidget {
           height: height,
           decoration: const BoxDecoration(
             color: _predictionPrimary,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
+            borderRadius: BorderRadius.vertical(top: AppRadii.smCorner),
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(
+          height: AppSpacing.predictionMarketMakerEarningsBarLabelGap,
+        ),
         Text(
           point.date,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 9,
-          ),
+          style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         ),
       ],
     );
@@ -120,12 +124,11 @@ class _OverviewMetric extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 11,
-          ),
+          style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(
+          height: AppSpacing.predictionMarketMakerOverviewMetricGap,
+        ),
         Text(
           value,
           style: (small ? AppTextStyles.caption : AppTextStyles.baseMedium)
@@ -156,11 +159,19 @@ class _AnalysisRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.predictionMarketMakerAnalysisRowVertical,
+      ),
       child: Row(
         children: [
-          Icon(icon, color: AppColors.text3, size: 16),
-          const SizedBox(width: 8),
+          Icon(
+            icon,
+            color: AppColors.text3,
+            size: AppSpacing.predictionMarketMakerAnalysisIcon,
+          ),
+          const SizedBox(
+            width: AppSpacing.predictionMarketMakerAnalysisIconGap,
+          ),
           Expanded(
             child: Text(
               label,

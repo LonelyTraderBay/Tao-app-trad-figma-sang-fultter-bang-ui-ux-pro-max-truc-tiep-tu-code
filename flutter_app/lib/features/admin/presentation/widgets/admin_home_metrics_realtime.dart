@@ -36,7 +36,11 @@ class _MetricCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(_metricIcon(metric.icon), color: accent, size: 14),
+                Icon(
+                  _metricIcon(metric.icon),
+                  color: accent,
+                  size: AppSpacing.adminIconSm,
+                ),
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Text(
@@ -53,7 +57,7 @@ class _MetricCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.baseMedium.copyWith(
-                fontSize: 18,
+                fontSize: AppSpacing.adminFont2xl,
                 fontWeight: AppTextStyles.bold,
                 color: metric.label == 'Health'
                     ? AppColors.buy
@@ -80,7 +84,7 @@ class _MetricCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
+                    fontSize: AppSpacing.adminFontSm,
                   ),
                 ),
               ],
@@ -141,7 +145,7 @@ class _RealTimeMetricsSection extends StatelessWidget {
                   const Icon(
                     Icons.offline_bolt_rounded,
                     color: AppColors.text1,
-                    size: 16,
+                    size: AppSpacing.adminIconMd,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(
@@ -177,7 +181,7 @@ class _RealTimeMetricsSection extends StatelessWidget {
             const Icon(
               Icons.access_time_rounded,
               color: AppColors.text3,
-              size: 12,
+              size: AppSpacing.adminIconXs,
             ),
             const SizedBox(width: AppSpacing.x2),
             Text(
@@ -236,7 +240,7 @@ class _PauseButton extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
                 fontWeight: AppTextStyles.bold,
-                fontSize: 11,
+                fontSize: AppSpacing.adminFontMd,
               ),
             ),
           ),

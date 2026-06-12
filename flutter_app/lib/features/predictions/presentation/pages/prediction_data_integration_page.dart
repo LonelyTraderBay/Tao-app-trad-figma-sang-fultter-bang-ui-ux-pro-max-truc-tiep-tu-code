@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -82,7 +83,9 @@ class _PredictionDataIntegrationPageState
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.predictionDataBottomInsetVisual
+            : AppSpacing.predictionDataBottomInsetNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -109,10 +112,12 @@ class _PredictionDataIntegrationPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionDataIntegrationPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.predictionDataScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 16,
+                      customGap: AppSpacing.predictionDataContentGap,
                       children: switch (_activeTab) {
                         _DataIntegrationTab.sources => [
                           _SourcesOverview(snapshot: snapshot),

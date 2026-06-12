@@ -22,7 +22,7 @@ class _SegmentedToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(4),
+      padding: AppSpacing.predictionDetailSegmentPadding,
       decoration: BoxDecoration(
         color: AppColors.surface2,
         borderRadius: AppRadii.cardRadius,
@@ -37,7 +37,7 @@ class _SegmentedToggle extends StatelessWidget {
               onTap: onLeft,
             ),
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: AppSpacing.predictionDetailSegmentGap),
           Expanded(
             child: _SegmentButton(
               label: rightLabel,
@@ -71,7 +71,7 @@ class _SegmentButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.mdRadius,
       child: Container(
-        height: 38,
+        height: AppSpacing.predictionDetailSegmentHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active ? color.withValues(alpha: .12) : AppColors.transparent,
@@ -113,7 +113,7 @@ class _SmallToggleChip extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
+        padding: AppSpacing.predictionDetailToggleChipPadding,
         decoration: BoxDecoration(
           color: active ? color.withValues(alpha: .12) : AppColors.surface2,
           border: Border.all(
@@ -152,7 +152,7 @@ class _AmountChip extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
       child: Container(
-        height: 31,
+        height: AppSpacing.predictionDetailAmountChipHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active
@@ -189,13 +189,17 @@ class _RiskLink extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.mdRadius,
       child: Container(
-        height: 38,
+        height: AppSpacing.predictionDetailRiskLinkHeight,
         alignment: Alignment.center,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.shield_outlined, color: AppColors.warn, size: 13),
-            const SizedBox(width: 6),
+            const Icon(
+              Icons.shield_outlined,
+              color: AppColors.warn,
+              size: AppSpacing.predictionDetailRiskIcon,
+            ),
+            const SizedBox(width: AppSpacing.predictionDetailRiskIconGap),
             Flexible(
               child: Text(
                 'Hiểu rủi ro trước khi giao dịch',
@@ -203,16 +207,15 @@ class _RiskLink extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.warn,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
             ),
-            const SizedBox(width: 3),
+            const SizedBox(width: AppSpacing.predictionDetailRiskChevronGap),
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.warn,
-              size: 14,
+              size: AppSpacing.predictionDetailRiskChevron,
             ),
           ],
         ),

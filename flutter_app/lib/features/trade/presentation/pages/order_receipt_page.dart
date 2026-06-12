@@ -18,6 +18,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 part '../widgets/order_receipt_page_sections.dart';
 part '../widgets/order_receipt_page_common.dart';
 
@@ -71,14 +73,16 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.only(bottom: 22),
+                  padding: const EdgeInsets.only(
+                    bottom: AppSpacing.tradeReceiptScrollBottom,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _SuccessHero(receipt: receipt),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.tradeReceiptRiskPadding,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.success,
                           title: 'Order receipt confirmed',
@@ -88,10 +92,23 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
                         ),
                       ),
                       _ReceiptCard(receipt: receipt),
-                      const SizedBox(height: 28),
+                      const SizedBox(height: AppSpacing.tradeSectionGap),
                       _WarningNotice(),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.tradeReceiptFooterGap),
                       _OrderSupportLink(supportRoute: snapshot.supportRoute),
+                      const SizedBox(height: AppSpacing.tradeReceiptFooterGap),
+                      const TradeBodyReviewSection(
+                        title: 'Receipt body review',
+                        message: 'Order receipt body reviewed',
+                        detail:
+                            'Fill status, fees, risk impact, support, copy, share, and next-step states stay visible.',
+                        primary:
+                            'Execution success remains above receipt details and warnings.',
+                        secondary:
+                            'Support path stays visible before footer actions.',
+                        tertiary:
+                            'Continue-trading CTA remains separated from receipt verification.',
+                      ),
                     ],
                   ),
                 ),

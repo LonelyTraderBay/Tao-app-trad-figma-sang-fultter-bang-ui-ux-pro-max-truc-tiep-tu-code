@@ -20,14 +20,14 @@ class _CoinAvatar extends StatelessWidget {
       _ => Icons.token_rounded,
     };
     return Container(
-      width: 46,
-      height: 46,
+      width: AppSpacing.dcaMainAssetIconBox,
+      height: AppSpacing.dcaMainAssetIconBox,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
         shape: BoxShape.circle,
         border: Border.all(color: color.withValues(alpha: .24)),
       ),
-      child: Icon(icon, color: color, size: 27),
+      child: Icon(icon, color: color, size: AppSpacing.dcaMainAssetIcon),
     );
   }
 }
@@ -59,7 +59,7 @@ class _PlanMetric extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.dcaMainTightLineHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.x3),
@@ -78,7 +78,7 @@ class _PlanMetric extends StatelessWidget {
                   color: color,
                   fontWeight: AppTextStyles.bold,
                   fontFeatures: AppTextStyles.tabularFigures,
-                  height: 1,
+                  height: AppSpacing.dcaMainTightLineHeight,
                 ),
               ),
             ),
@@ -88,7 +88,7 @@ class _PlanMetric extends StatelessWidget {
                 unit,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1,
+                  height: AppSpacing.dcaMainTightLineHeight,
                 ),
               ),
             ],
@@ -114,7 +114,7 @@ class _PlanIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: AppSpacing.ctaHeight,
-      height: 44,
+      height: AppSpacing.dcaMainActionHeight,
       child: VitCard(
         variant: VitCardVariant.inner,
         radius: VitCardRadius.sm,
@@ -163,7 +163,7 @@ class _HistoryPanel extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x5),
           SizedBox(
-            height: 220,
+            height: AppSpacing.dcaMainHistoryChartHeight,
             child: CustomPaint(
               painter: _HistoryChartPainter(
                 values: snapshot.history,
@@ -253,8 +253,8 @@ class _CreatePlanSheet extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        width: 42,
-                        height: 42,
+                        width: AppSpacing.dcaMainToolIconBox,
+                        height: AppSpacing.dcaMainToolIconBox,
                         decoration: const BoxDecoration(
                           color: AppColors.primary12,
                           shape: BoxShape.circle,
@@ -262,7 +262,7 @@ class _CreatePlanSheet extends StatelessWidget {
                         child: const Icon(
                           Icons.add_chart_rounded,
                           color: AppColors.primary,
-                          size: 22,
+                          size: AppSpacing.dcaMainToolIcon,
                         ),
                       ),
                       const SizedBox(width: AppSpacing.x4),

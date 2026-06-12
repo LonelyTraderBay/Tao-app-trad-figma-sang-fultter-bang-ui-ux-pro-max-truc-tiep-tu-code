@@ -50,7 +50,7 @@ class _DcaSummaryCard extends StatelessWidget {
             snapshot.totalInvestedUsd,
             style: AppTextStyles.heroNumber.copyWith(
               color: AppColors.text1,
-              fontSize: 32,
+              fontSize: AppSpacing.savingsConsumerStatFontSize,
             ),
           ),
           const SizedBox(height: AppSpacing.x2),

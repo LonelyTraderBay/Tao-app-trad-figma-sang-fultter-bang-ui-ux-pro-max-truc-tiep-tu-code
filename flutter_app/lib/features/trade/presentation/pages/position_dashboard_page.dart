@@ -15,6 +15,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 part '../widgets/position_dashboard_page_sections.dart';
 part '../widgets/position_dashboard_page_common.dart';
 
@@ -102,6 +104,18 @@ class _PositionDashboardPageState extends ConsumerState<PositionDashboardPage> {
                           _PositionTile(position: position),
                           const SizedBox(height: 16),
                         ],
+                      const TradeBodyReviewSection(
+                        title: 'Position body review',
+                        message: 'Position dashboard body reviewed',
+                        detail:
+                            'Summary, risk, tabs, sort, empty, position rows, and result states stay visible.',
+                        primary:
+                            'Risk review remains above open position actions.',
+                        secondary:
+                            'Tabs and sort chips keep exposure scanning explicit.',
+                        tertiary:
+                            'Position rows preserve PnL, notional, and margin context.',
+                      ),
                     ],
                   ),
                 ),

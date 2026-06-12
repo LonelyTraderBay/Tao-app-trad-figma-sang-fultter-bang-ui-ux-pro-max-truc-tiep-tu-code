@@ -70,17 +70,14 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: 0,
+                      customGap: AppSpacing.x4,
                       children: [
                         _ClaimHeroCard(claim: claim),
-                        const SizedBox(height: AppSpacing.x5),
                         VitPageSection(
                           customGap: 0,
                           children: [_ClaimBenchmarksCard(snapshot: snapshot)],
                         ),
-                        const SizedBox(height: AppSpacing.x5),
                         _DescriptionCard(description: claim.description),
-                        const SizedBox(height: AppSpacing.x4),
                         _ClaimSectionTabs(
                           active: _section,
                           claim: claim,
@@ -89,9 +86,7 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                             setState(() => _section = section);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
                         _ClaimSectionBody(section: _section, claim: claim),
-                        const SizedBox(height: AppSpacing.x5),
                         _NotificationsCard(
                           enabled: _notificationsEnabled,
                           onChanged: (value) {
@@ -104,7 +99,6 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                             });
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
                         _ActionRow(
                           key: P2PClaimDetailPage.orderLinkKey,
                           icon: Icons.open_in_new_rounded,
@@ -114,7 +108,6 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                             context.go(snapshot.orderRoute);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x3),
                         _ActionRow(
                           key: P2PClaimDetailPage.supportLinkKey,
                           icon: Icons.help_outline_rounded,
@@ -124,11 +117,8 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                             context.go(snapshot.supportRoute);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
-                        if (_feedback != null) ...[
+                        if (_feedback != null)
                           _FeedbackBanner(message: _feedback!),
-                          const SizedBox(height: AppSpacing.x4),
-                        ],
                         if (claim.status == P2PInsuranceClaimStatus.paid)
                           VitCtaButton(
                             key: P2PClaimDetailPage.receiptKey,
@@ -143,7 +133,6 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                             },
                             child: const Text('Tải biên lai'),
                           ),
-                        const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
                           padding: EdgeInsets.all(AppSpacing.x3),
@@ -179,8 +168,10 @@ class _ClaimHeroCard extends StatelessWidget {
       key: P2PClaimDetailPage.heroKey,
       radius: VitCardRadius.lg,
       padding: const EdgeInsets.all(AppSpacing.x5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.x4,
         children: [
           Row(
             children: [
@@ -199,11 +190,8 @@ class _ClaimHeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
           _ClaimProgress(status: claim.status),
-          const SizedBox(height: AppSpacing.x5),
           const Divider(height: 1, color: AppColors.divider),
-          const SizedBox(height: AppSpacing.x4),
           _InfoRow(
             label: 'Lệnh P2P',
             value: claim.orderId,
@@ -220,9 +208,7 @@ class _ClaimHeroCard extends StatelessWidget {
             value: '${claim.coveragePct}%',
             valueColor: AppModuleAccents.p2p,
           ),
-          const SizedBox(height: AppSpacing.x3),
           const Divider(height: 1, color: AppColors.divider),
-          const SizedBox(height: AppSpacing.x3),
           if (claim.paidAmount != null)
             _InfoRow(
               label: claim.statusLabel,

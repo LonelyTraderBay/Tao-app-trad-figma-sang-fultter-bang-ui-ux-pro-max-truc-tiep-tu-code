@@ -35,7 +35,7 @@ class _DataIntegrationTabBar extends StatelessWidget {
         border: Border(bottom: BorderSide(color: AppColors.border)),
       ),
       child: SizedBox(
-        height: 54,
+        height: AppSpacing.predictionDataTabBarHeight,
         child: Row(
           children: [
             for (final item in tabs)
@@ -55,18 +55,19 @@ class _DataIntegrationTabBar extends StatelessWidget {
                                   ? _predictionPrimary
                                   : AppColors.text3,
                               fontWeight: AppTextStyles.bold,
-                              fontSize: 12,
                             ),
                           ),
                         ),
                       ),
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 160),
-                        height: 2,
-                        width: activeTab == item.tab ? 116 : 0,
+                        height: AppSpacing.predictionDataTabIndicatorHeight,
+                        width: activeTab == item.tab
+                            ? AppSpacing.predictionDataTabIndicatorWidth
+                            : 0,
                         decoration: BoxDecoration(
                           color: _predictionPrimary,
-                          borderRadius: BorderRadius.circular(1),
+                          borderRadius: AppRadii.hairlineRadius,
                         ),
                       ),
                     ],
@@ -88,14 +89,14 @@ class _SourcesOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionDataCardPadding,
       child: Column(
         children: [
           Row(
             children: [
               Container(
-                width: 48,
-                height: 48,
+                width: AppSpacing.predictionDataHeroIconBox,
+                height: AppSpacing.predictionDataHeroIconBox,
                 decoration: BoxDecoration(
                   color: AppColors.buy.withValues(alpha: .1),
                   borderRadius: AppRadii.inputRadius,
@@ -103,10 +104,10 @@ class _SourcesOverview extends StatelessWidget {
                 child: const Icon(
                   Icons.storage_rounded,
                   color: AppColors.buy,
-                  size: 26,
+                  size: AppSpacing.predictionDataHeroIcon,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.predictionDataHeroGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,12 +118,13 @@ class _SourcesOverview extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(
+                      height: AppSpacing.predictionDataHeroTitleGap,
+                    ),
                     Text(
                       'External data feeds for event resolution',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 12,
                       ),
                     ),
                   ],
@@ -130,7 +132,7 @@ class _SourcesOverview extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.predictionDataOverviewMetricsGap),
           Row(
             children: [
               Expanded(
@@ -180,12 +182,9 @@ class _OverviewMetric extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 10,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: AppSpacing.predictionDataMetricValueGap),
         Text(
           value,
           maxLines: 1,
@@ -193,7 +192,6 @@ class _OverviewMetric extends StatelessWidget {
           style: AppTextStyles.baseMedium.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: 17,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
@@ -227,7 +225,7 @@ class _SourceCard extends StatelessWidget {
     final color = _sourceStatusColor(source.status);
     return VitCard(
       key: PredictionDataIntegrationPage.sourceKey(source.id),
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionDataCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -239,8 +237,8 @@ class _SourceCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Wrap(
-                      spacing: 8,
-                      runSpacing: 5,
+                      spacing: AppSpacing.predictionDataHeaderWrapGap,
+                      runSpacing: AppSpacing.predictionDataHeaderRunGap,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         Text(
@@ -255,20 +253,21 @@ class _SourceCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(
+                      height: AppSpacing.predictionDataSmallTopGap,
+                    ),
                     Text(
                       '${source.provider} - ${source.category}',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
                       ),
                     ),
                   ],
                 ),
               ),
               Container(
-                width: 32,
-                height: 32,
+                width: AppSpacing.predictionDataIconBubble,
+                height: AppSpacing.predictionDataIconBubble,
                 decoration: const BoxDecoration(
                   color: AppColors.bg,
                   shape: BoxShape.circle,
@@ -276,12 +275,12 @@ class _SourceCard extends StatelessWidget {
                 child: const Icon(
                   Icons.refresh_rounded,
                   color: AppColors.text3,
-                  size: 16,
+                  size: AppSpacing.predictionDataIconBubbleIcon,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: AppSpacing.predictionDataSourceMetricsGap),
           Row(
             children: [
               Expanded(
@@ -306,25 +305,21 @@ class _SourceCard extends StatelessWidget {
             ],
           ),
           if (source.apiUrl != null) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.predictionDataSourceUrlGap),
             Row(
               children: [
                 const Icon(
                   Icons.link_rounded,
                   color: AppColors.text3,
-                  size: 12,
+                  size: AppSpacing.predictionDataSourceLinkIcon,
                 ),
-                const SizedBox(width: 7),
+                const SizedBox(width: AppSpacing.predictionDataSourceLinkGap),
                 Expanded(
                   child: Text(
                     source.apiUrl!,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontFamily: 'monospace',
-                      fontSize: 10,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ),
               ],

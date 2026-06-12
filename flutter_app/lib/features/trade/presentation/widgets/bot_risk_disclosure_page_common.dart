@@ -55,7 +55,6 @@ class _AcknowledgmentCard extends StatelessWidget {
                     snapshot.acknowledgmentTitle,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontSize: 13,
                       fontWeight: AppTextStyles.bold,
                       height: 1.28,
                     ),
@@ -65,7 +64,6 @@ class _AcknowledgmentCard extends StatelessWidget {
                     snapshot.acknowledgmentDescription,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      fontSize: 12,
                       height: 1.38,
                     ),
                   ),
@@ -107,8 +105,6 @@ class _RiskCta extends StatelessWidget {
           acknowledged ? snapshot.enabledCta : snapshot.disabledCta,
           style: AppTextStyles.body.copyWith(
             color: acknowledged ? AppColors.onAccent : AppColors.text3,
-            fontFamily: 'Roboto',
-            fontSize: 14,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -125,12 +121,9 @@ class _HelpCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 15),
-      decoration: BoxDecoration(
-        color: _botRiskPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -138,7 +131,6 @@ class _HelpCard extends StatelessWidget {
             snapshot.helpTitle,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1.2,
             ),
@@ -148,7 +140,6 @@ class _HelpCard extends StatelessWidget {
             snapshot.helpDescription,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              fontSize: 12,
               height: 1.45,
             ),
           ),
@@ -157,7 +148,6 @@ class _HelpCard extends StatelessWidget {
             snapshot.helpCta,
             style: AppTextStyles.caption.copyWith(
               color: _botRiskPrimary,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -177,12 +167,14 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: 4,
           height: 15,
-          decoration: BoxDecoration(
-            color: _botRiskPrimary,
-            borderRadius: BorderRadius.circular(3),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: _botRiskPrimary,
+              borderRadius: AppRadii.smRadius,
+            ),
           ),
         ),
         const SizedBox(width: 7),
@@ -190,7 +182,6 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -213,21 +204,13 @@ class _BulletText extends StatelessWidget {
       children: [
         Text(
           '•',
-          style: AppTextStyles.caption.copyWith(
-            color: color,
-            fontSize: 12,
-            height: 1.45,
-          ),
+          style: AppTextStyles.caption.copyWith(color: color, height: 1.45),
         ),
         const SizedBox(width: 9),
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.caption.copyWith(
-              color: color,
-              fontSize: 12,
-              height: 1.45,
-            ),
+            style: AppTextStyles.caption.copyWith(color: color, height: 1.45),
           ),
         ),
       ],
@@ -243,15 +226,7 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        color: _botRiskPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: child,
-    );
+    return VitCard(padding: padding, child: child);
   }
 }
 

@@ -209,8 +209,8 @@ class _GoalSummaryCard extends StatelessWidget {
               _ProgressRing(
                 progress: progress,
                 color: AppColors.primary,
-                size: 76,
-                strokeWidth: 5,
+                size: AppSpacing.savingsGoalHeroProgressRing,
+                strokeWidth: AppSpacing.savingsGoalHeroProgressStroke,
               ),
             ],
           ),
@@ -361,8 +361,8 @@ class _GoalCard extends StatelessWidget {
               _ProgressRing(
                 progress: progress,
                 color: accent,
-                size: 52,
-                strokeWidth: 4,
+                size: AppSpacing.savingsGoalCardProgressRing,
+                strokeWidth: AppSpacing.savingsGoalCardProgressStroke,
                 centerLabel: '${(progress * 100).round()}%',
               ),
             ],
@@ -473,7 +473,7 @@ class _MilestoneRail extends StatelessWidget {
           if (milestone != goal.milestones.last)
             Expanded(
               child: Container(
-                height: 1,
+                height: AppSpacing.savingsGoalTimelineDividerHeight,
                 margin: const EdgeInsets.symmetric(horizontal: AppSpacing.x1),
                 color: milestone.unlocked ? color : AppColors.borderSolid,
               ),

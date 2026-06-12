@@ -118,7 +118,7 @@ class _SettingCard extends StatelessWidget {
                   setting.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.45,
+                    height: AppSpacing.stakingNotificationsLineHeight,
                   ),
                 ),
               ],
@@ -308,7 +308,7 @@ class _NotificationCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.stakingNotificationsLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),

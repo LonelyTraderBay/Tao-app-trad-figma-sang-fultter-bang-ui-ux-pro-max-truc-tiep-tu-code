@@ -55,7 +55,7 @@ class _PnlBreakdown extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(99),
+                        borderRadius: AppRadii.xlRadius,
                         child: SizedBox(
                           height: 4,
                           child: Stack(

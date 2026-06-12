@@ -21,8 +21,6 @@ part '../widgets/advanced_tools_tabs_sheets.dart';
 part '../widgets/advanced_tools_common.dart';
 
 const _toolsPrimary = AppColors.primary;
-const _cardBackground = AppColors.surface2;
-const _chipBackground = AppColors.surface2;
 
 enum _ToolsTab { ladder, bulk, shortcuts }
 
@@ -89,10 +87,9 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: 0,
+                        customGap: 12,
                         children: [
                           const _IntroCard(),
-                          const SizedBox(height: 12),
                           VitPageSection(
                             customGap: 12,
                             children: [
@@ -104,16 +101,12 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                             ],
                           ),
                           const _SpeedCard(),
-                          const SizedBox(height: 12),
                           const _BenefitsCard(),
-                          const SizedBox(height: 12),
                           _ProgressCard(items: snapshot.statusItems),
-                          const SizedBox(height: 18),
                           _ToolsTabs(
                             active: _tab,
                             onChanged: (tab) => setState(() => _tab = tab),
                           ),
-                          const SizedBox(height: 14),
                           if (_tab == _ToolsTab.ladder)
                             _ActionTab(
                               description:
@@ -151,12 +144,13 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                               ],
                               onOpen: _openShortcutsSheet,
                             ),
-                          const SizedBox(height: 12),
                           const VitCard(
                             variant: VitCardVariant.inner,
                             padding: EdgeInsets.all(12),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: VitPageContent(
+                              padding: VitContentPadding.none,
+                              fullBleed: true,
+                              customGap: 8,
                               children: [
                                 VitHighRiskStatePanel(
                                   state: VitHighRiskUiState.riskReview,
@@ -165,7 +159,6 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                                       'Ladder, bulk cancel and shortcut actions keep order preview, confirmation, affected count, result toast and next step visible before execution.',
                                   contractId: 'advanced-tools-review',
                                 ),
-                                SizedBox(height: 8),
                                 VitStatusPill(
                                   label: 'Preview before submit',
                                   status: VitStatusPillStatus.info,

@@ -55,9 +55,7 @@ class _KycTierCard extends StatelessWidget {
                         'Level ${tier.level}',
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w900,
-                          height: 1,
+                          fontWeight: AppTextStyles.bold,
                         ),
                       ),
                       const SizedBox(width: 9),
@@ -68,9 +66,7 @@ class _KycTierCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.micro.copyWith(
                             color: tierColor,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w900,
-                            height: 1,
+                            fontWeight: AppTextStyles.bold,
                           ),
                         ),
                       ),
@@ -91,11 +87,7 @@ class _KycTierCard extends StatelessWidget {
                         : 'Kh\u00F4ng c\u00F3 h\u1EA1n m\u1EE9c',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: _limitsMuted,
-                      fontSize: 11,
-                      height: 1,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: _limitsMuted),
                   ),
                 ],
               ),
@@ -128,9 +120,8 @@ class _FaqCard extends StatelessWidget {
           Text(
             'C\u00E2u h\u1ECFi th\u01B0\u1EDDng g\u1EB7p',
             style: AppTextStyles.body.copyWith(
-              fontSize: 14,
-              fontWeight: FontWeight.w900,
-              height: 1,
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
           const SizedBox(height: 16),
@@ -139,19 +130,13 @@ class _FaqCard extends StatelessWidget {
               faqs[i].question,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
-                fontSize: 13,
-                fontWeight: FontWeight.w900,
-                height: 1.1,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               faqs[i].answer,
-              style: AppTextStyles.caption.copyWith(
-                color: _limitsMuted,
-                fontSize: 12,
-                height: 1.45,
-              ),
+              style: AppTextStyles.micro.copyWith(color: _limitsMuted),
             ),
             if (i != faqs.length - 1) ...[
               const SizedBox(height: 14),
@@ -181,7 +166,7 @@ class _Pill extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .16),
-        borderRadius: BorderRadius.circular(7),
+        borderRadius: AppRadii.mdRadius,
       ),
       child: Text(
         label,
@@ -189,9 +174,7 @@ class _Pill extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: compact ? 10 : 11,
-          fontWeight: FontWeight.w900,
-          height: 1,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );

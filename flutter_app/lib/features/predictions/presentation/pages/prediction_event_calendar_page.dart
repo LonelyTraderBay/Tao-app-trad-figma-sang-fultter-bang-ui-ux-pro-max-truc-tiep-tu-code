@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -61,7 +62,9 @@ class _PredictionEventCalendarPageState
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.predictionCalendarBottomInsetVisual
+            : AppSpacing.predictionCalendarBottomInsetNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -96,10 +99,12 @@ class _PredictionEventCalendarPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionEventCalendarPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.predictionCalendarScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 16,
+                      customGap: AppSpacing.predictionCalendarContentGap,
                       children: [
                         if (_showFilter)
                           _CategoryFilters(
@@ -123,6 +128,13 @@ class _PredictionEventCalendarPageState
                             const _NotificationInfo(),
                           ],
                         },
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Prediction event-calendar review',
+                          message:
+                              'Category filters, upcoming catalysts, watched events, notification settings, empty results, and calendar state are reviewed before users act on prediction-market timing signals.',
+                          contractId: 'SC-039',
+                        ),
                       ],
                     ),
                   ),

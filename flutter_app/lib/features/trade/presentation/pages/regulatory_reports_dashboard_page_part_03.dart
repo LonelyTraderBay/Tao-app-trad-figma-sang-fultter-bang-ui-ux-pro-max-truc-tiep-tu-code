@@ -16,40 +16,33 @@ class _QuickAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
+      height: AppSpacing.inputHeight,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      variant: VitCardVariant.inner,
+      borderColor: _dashBorder,
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: AppSpacing.inputHeight,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-          color: _dashPanel2,
-          border: Border.all(color: _dashBorder),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Row(
-          children: [
-            Icon(icon, color: color, size: 17),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontSize: 12,
-                  fontWeight: AppTextStyles.bold,
-                ),
+      child: Row(
+        children: [
+          Icon(icon, color: color, size: 17),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: 17,
-            ),
-          ],
-        ),
+          ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: 17,
+          ),
+        ],
       ),
     );
   }
@@ -75,7 +68,6 @@ class _SmallMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 9,
             height: 1,
           ),
         ),
@@ -86,7 +78,6 @@ class _SmallMetric extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.caption.copyWith(
             color: color,
-            fontSize: 13,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -104,76 +95,29 @@ class _SmallPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 10,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 3,
-          height: 16,
-          decoration: BoxDecoration(
-            color: _dashPrimary,
-            borderRadius: BorderRadius.circular(999),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Expanded(
-          child: Text(
-            text,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 11,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
-            ),
-          ),
-        ),
-      ],
+    return VitStatusPill(
+      label: label,
+      status: color == _dashGreen
+          ? VitStatusPillStatus.success
+          : VitStatusPillStatus.error,
+      size: VitStatusPillSize.sm,
     );
   }
 }
 
 class _Card extends StatelessWidget {
-  const _Card({required this.child, required this.padding});
+  const _Card({required this.child, required this.padding, this.onTap});
 
   final Widget child;
   final EdgeInsetsGeometry padding;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _dashPanel,
-        border: Border.all(color: _dashBorder.withValues(alpha: .7)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _dashBorder.withValues(alpha: .7),
+      onTap: onTap,
       child: child,
     );
   }
@@ -193,20 +137,9 @@ class _NoticePanel extends StatelessWidget {
       bottom: 108 + MediaQuery.paddingOf(context).bottom,
       child: Material(
         color: AppColors.transparent,
-        child: Container(
+        child: VitCard(
           padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
-          decoration: BoxDecoration(
-            color: _dashPanel,
-            border: Border.all(color: _dashGreen.withValues(alpha: .35)),
-            borderRadius: AppRadii.cardRadius,
-            boxShadow: const [
-              BoxShadow(
-                color: AppColors.modalScrim,
-                blurRadius: 18,
-                offset: Offset(0, 8),
-              ),
-            ],
-          ),
+          borderColor: _dashGreen.withValues(alpha: .35),
           child: Row(
             children: [
               const Icon(
@@ -218,10 +151,7 @@ class _NoticePanel extends StatelessWidget {
               Expanded(
                 child: Text(
                   text,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text1),
                 ),
               ),
               IconButton(
@@ -265,10 +195,7 @@ class _TrendPainter extends CustomPainter {
       );
       textPainter.text = TextSpan(
         text: '$label',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: 9,
-        ),
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
       );
       textPainter.layout();
       textPainter.paint(
@@ -316,10 +243,7 @@ class _TrendPainter extends CustomPainter {
       final x = chartRect.left + chartRect.width * i / (stats.length - 1);
       textPainter.text = TextSpan(
         text: stats[i].date,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: 9,
-        ),
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
       );
       textPainter.layout();
       textPainter.paint(
@@ -422,7 +346,6 @@ class _DonutPainter extends CustomPainter {
         text: _formatInt(total),
         style: AppTextStyles.sectionTitle.copyWith(
           color: AppColors.text1,
-          fontSize: 20,
           fontWeight: AppTextStyles.bold,
         ),
       ),

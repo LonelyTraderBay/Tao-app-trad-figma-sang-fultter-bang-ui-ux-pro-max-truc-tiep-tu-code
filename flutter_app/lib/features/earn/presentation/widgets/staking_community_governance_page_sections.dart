@@ -31,7 +31,7 @@ class _InfoBanner extends StatelessWidget {
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.stakingGovernanceInfoLineHeight,
                   ),
                 ),
               ],
@@ -65,10 +65,10 @@ class _OverviewCard extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: stats.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+              crossAxisCount: AppSpacing.stakingGovernanceGridColumns,
               crossAxisSpacing: AppSpacing.x3,
               mainAxisSpacing: AppSpacing.x3,
-              childAspectRatio: 1.75,
+              childAspectRatio: AppSpacing.stakingGovernanceGridAspect,
             ),
             itemBuilder: (context, index) {
               return _StatTile(stat: stats[index]);
@@ -104,7 +104,7 @@ class _StatTile extends StatelessWidget {
             stat.value,
             style: AppTextStyles.sectionTitle.copyWith(
               color: stat.tone == 'neutral' ? AppColors.text1 : color,
-              fontSize: 20,
+              fontSize: AppSpacing.stakingGovernanceStatFontSize,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
@@ -245,7 +245,10 @@ class _GovernanceSteps extends StatelessWidget {
                 if (i != steps.length - 1)
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: AppSpacing.x3),
-                    child: Divider(height: 1, color: AppColors.divider),
+                    child: Divider(
+                      height: AppSpacing.stakingGovernanceDividerHeight,
+                      color: AppColors.divider,
+                    ),
                   ),
               ],
             ],
@@ -279,7 +282,7 @@ class _StepRow extends StatelessWidget {
             style: AppTextStyles.body.copyWith(
               color: AppColors.navCenterIcon,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.stakingGovernancePillLineHeight,
             ),
           ),
         ),
@@ -294,7 +297,7 @@ class _StepRow extends StatelessWidget {
                 step.description,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: 1.45,
+                  height: AppSpacing.stakingGovernanceStepLineHeight,
                 ),
               ),
             ],

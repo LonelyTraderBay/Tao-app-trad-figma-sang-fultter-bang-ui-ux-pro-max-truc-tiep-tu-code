@@ -18,16 +18,13 @@ class _SummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: AppSpacing.predictionReceiptSummaryRowPadding,
       child: Row(
         children: [
           Expanded(
             child: Text(
               label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text3,
-                fontSize: 12,
-              ),
+              style: AppTextStyles.badge.copyWith(color: AppColors.text3),
             ),
           ),
           Flexible(
@@ -48,8 +45,14 @@ class _SummaryRow extends StatelessWidget {
                   ),
                 ),
                 if (trailingIcon != null) ...[
-                  const SizedBox(width: 5),
-                  Icon(trailingIcon, color: valueColor, size: 12),
+                  const SizedBox(
+                    width: AppSpacing.predictionReceiptSummaryTrailingGap,
+                  ),
+                  Icon(
+                    trailingIcon,
+                    color: valueColor,
+                    size: AppSpacing.predictionReceiptSummaryTrailingIcon,
+                  ),
                 ],
               ],
             ),
@@ -68,13 +71,17 @@ class _FillProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 12),
+      padding: const EdgeInsets.only(
+        top: AppSpacing.predictionReceiptFillDividerGap,
+      ),
       child: DecoratedBox(
         decoration: const BoxDecoration(
           border: Border(top: BorderSide(color: AppColors.divider)),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 12),
+          padding: const EdgeInsets.only(
+            top: AppSpacing.predictionReceiptFillDividerGap,
+          ),
           child: Column(
             children: [
               Row(
@@ -93,12 +100,12 @@ class _FillProgress extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 7),
+              const SizedBox(height: AppSpacing.predictionReceiptFillBarGap),
               ClipRRect(
-                borderRadius: BorderRadius.circular(999),
+                borderRadius: AppRadii.pillRadius,
                 child: LinearProgressIndicator(
                   value: percent / 100,
-                  minHeight: 8,
+                  minHeight: AppSpacing.predictionReceiptFillBarHeight,
                   color: percent == 100 ? AppColors.buy : AppColors.warn,
                   backgroundColor: AppColors.surface2,
                 ),
@@ -128,8 +135,8 @@ class _TimelineStep extends StatelessWidget {
           Column(
             children: [
               Container(
-                width: 18,
-                height: 18,
+                width: AppSpacing.predictionReceiptTimelineDot,
+                height: AppSpacing.predictionReceiptTimelineDot,
                 decoration: BoxDecoration(
                   color: step.done ? AppColors.buy15 : AppColors.surface2,
                   shape: BoxShape.circle,
@@ -139,24 +146,28 @@ class _TimelineStep extends StatelessWidget {
                 ),
                 child: Icon(
                   step.done ? Icons.check_rounded : Icons.schedule_rounded,
-                  size: 12,
+                  size: AppSpacing.predictionReceiptTimelineIcon,
                   color: color,
                 ),
               ),
               if (!isLast)
                 Expanded(
                   child: Container(
-                    width: 1,
-                    margin: const EdgeInsets.symmetric(vertical: 3),
+                    width: AppSpacing.predictionReceiptTimelineLineWidth,
+                    margin: AppSpacing.predictionReceiptTimelineLineMargin,
                     color: AppColors.borderSolid,
                   ),
                 ),
             ],
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.predictionReceiptTimelineGap),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(bottom: isLast ? 0 : 14),
+              padding: EdgeInsets.only(
+                bottom: isLast
+                    ? 0
+                    : AppSpacing.predictionReceiptTimelineItemBottomGap,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -198,8 +209,8 @@ class _SoftPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 27,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      height: AppSpacing.predictionReceiptSoftPillHeight,
+      padding: AppSpacing.predictionReceiptSoftPillPadding,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: background,
@@ -207,11 +218,9 @@ class _SoftPill extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: AppTextStyles.caption.copyWith(
+        style: AppTextStyles.badge.copyWith(
           color: color,
-          fontSize: 13,
           fontWeight: AppTextStyles.bold,
-          height: 1,
         ),
       ),
     );

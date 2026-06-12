@@ -17,7 +17,7 @@ class _CenteredStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pDashboardCompactCardPadding,
       child: Column(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconMd),
@@ -98,7 +98,7 @@ class _BreakdownLine extends StatelessWidget {
                 borderRadius: AppRadii.xsRadius,
                 child: LinearProgressIndicator(
                   value: pct / 100,
-                  minHeight: 5,
+                  minHeight: AppSpacing.x2,
                   backgroundColor: AppColors.surface2,
                   valueColor: AlwaysStoppedAnimation<Color>(row.color),
                 ),
@@ -132,7 +132,7 @@ class _MerchantRow extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+          padding: AppSpacing.p2pDashboardMerchantPadding,
           child: Row(
             children: [
               SizedBox(
@@ -169,7 +169,11 @@ class _MerchantRow extends StatelessWidget {
                   ],
                 ),
               ),
-              const Icon(Icons.star_rounded, color: AppColors.warn, size: 12),
+              const Icon(
+                Icons.star_rounded,
+                color: AppColors.warn,
+                size: AppSpacing.p2pDashboardMerchantStar,
+              ),
               const SizedBox(width: AppSpacing.x1),
               Text(
                 merchant.rating.toStringAsFixed(1),
@@ -232,7 +236,7 @@ class _ActivityRow extends StatelessWidget {
     final color = buy ? AppColors.buy : AppColors.sell;
     final status = _statusInfo(activity.status);
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+      padding: AppSpacing.p2pDashboardActivityPadding,
       decoration: BoxDecoration(
         border: last
             ? null
@@ -299,10 +303,7 @@ class _TextLinkButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.p2pDashboardTextLinkPadding,
         child: Row(
           children: [
             Text(
@@ -316,7 +317,7 @@ class _TextLinkButton extends StatelessWidget {
             const Icon(
               Icons.chevron_right_rounded,
               color: AppModuleAccents.p2p,
-              size: 12,
+              size: AppSpacing.p2pDashboardMerchantStar,
             ),
           ],
         ),

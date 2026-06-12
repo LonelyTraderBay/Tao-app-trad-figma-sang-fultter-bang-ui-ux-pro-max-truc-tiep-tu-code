@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/controllers/wallet_controller.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class AddressNetworkGrid extends StatelessWidget {
   const AddressNetworkGrid({
@@ -21,8 +22,8 @@ class AddressNetworkGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 10,
-      runSpacing: 8,
+      spacing: AppSpacing.walletAddressAddNetworkSpacing,
+      runSpacing: AppSpacing.walletAddressAddNetworkRunSpacing,
       children: [
         for (final network in networks)
           Semantics(
@@ -52,29 +53,23 @@ class _NetworkChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 126.5,
-      height: 40,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        color: selected ? AppColors.primary15 : addressAddPanel2,
-        borderRadius: AppRadii.lgRadius,
-        border: Border.all(
-          color: selected ? AppColors.primary60 : AppColors.borderSolid,
-          width: 1,
-        ),
-      ),
+    return VitCard(
+      width: AppSpacing.walletAddressAddNetworkChipWidth,
+      height: AppSpacing.walletAddressAddNetworkChipHeight,
+      padding: AppSpacing.walletAddressAddNetworkChipPadding,
+      variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
+      borderColor: selected ? AppColors.primary60 : AppColors.borderSolid,
       child: Row(
         children: [
           Container(
-            width: 12,
-            height: 12,
+            width: AppSpacing.walletAddressAddNetworkDot,
+            height: AppSpacing.walletAddressAddNetworkDot,
             decoration: BoxDecoration(
               color: Color(network.colorHex),
               shape: BoxShape.circle,
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.rowGap),
           Expanded(
             child: Text(
               network.label,
@@ -82,9 +77,7 @@ class _NetworkChip extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: selected ? addressAddPrimary : AppColors.text2,
-                fontSize: 12,
-                fontWeight: FontWeight.w800,
-                height: 1,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
           ),
@@ -109,8 +102,8 @@ class AddressAssetSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 17,
-      runSpacing: 12,
+      spacing: AppSpacing.walletAddressAddAssetSpacing,
+      runSpacing: AppSpacing.walletAddressAddAssetRunSpacing,
       children: [
         for (final asset in assets)
           Semantics(
@@ -121,30 +114,25 @@ class AddressAssetSelector extends StatelessWidget {
               key: Key('sc143_address_asset_$asset'),
               onTap: () => onChanged(asset),
               behavior: HitTestBehavior.opaque,
-              child: Container(
-                width: asset == 'MATIC' ? 64 : 53,
-                height: 34,
+              child: VitCard(
+                width: asset == 'MATIC'
+                    ? AppSpacing.walletAddressAddAssetChipWideWidth
+                    : AppSpacing.walletAddressAddAssetChipWidth,
+                height: AppSpacing.walletAddressAddAssetChipHeight,
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: asset == selectedAsset
-                      ? AppColors.primary15
-                      : AppColors.transparent,
-                  borderRadius: AppRadii.cardRadius,
-                  border: Border.all(
-                    color: asset == selectedAsset
-                        ? AppColors.primary60
-                        : AppColors.transparent,
-                  ),
-                ),
+                variant: asset == selectedAsset
+                    ? VitCardVariant.standard
+                    : VitCardVariant.ghost,
+                borderColor: asset == selectedAsset
+                    ? AppColors.primary60
+                    : AppColors.transparent,
                 child: Text(
                   asset,
                   style: AppTextStyles.caption.copyWith(
                     color: asset == selectedAsset
                         ? addressAddPrimary
                         : AppColors.text2,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w800,
-                    height: 1,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
               ),

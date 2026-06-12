@@ -135,7 +135,7 @@ class _ExportHero extends StatelessWidget {
             snapshot.heroBody,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.55,
+              height: AppSpacing.stakingDataExportBodyLineHeight,
             ),
           ),
         ],
@@ -166,10 +166,10 @@ class _QuickExports extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: snapshot.quickExports.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+            crossAxisCount: AppSpacing.stakingDataExportGridColumns,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
-            childAspectRatio: 1.95,
+            childAspectRatio: AppSpacing.stakingDataExportGridAspect,
           ),
           itemBuilder: (context, index) {
             final item = snapshot.quickExports[index];
@@ -207,7 +207,11 @@ class _QuickExportCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(_iconFor(item.iconKey), color: AppColors.text3, size: 20),
+          Icon(
+            _iconFor(item.iconKey),
+            color: AppColors.text3,
+            size: AppSpacing.stakingDataExportQuickIcon,
+          ),
           const Spacer(),
           Text(
             item.name,
@@ -412,7 +416,7 @@ class _FooterNote extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: 1.55,
+          height: AppSpacing.stakingDataExportBodyLineHeight,
         ),
       ),
     );

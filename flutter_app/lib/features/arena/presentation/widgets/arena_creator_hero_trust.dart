@@ -16,8 +16,8 @@ class _CreatorHero extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 64,
-                height: 64,
+                width: AppSpacing.arenaCreatorAvatar,
+                height: AppSpacing.arenaCreatorAvatar,
                 decoration: const BoxDecoration(
                   color: AppColors.surface2,
                   borderRadius: AppRadii.cardRadius,
@@ -25,7 +25,7 @@ class _CreatorHero extends StatelessWidget {
                 child: const Icon(
                   Icons.person_rounded,
                   color: _arenaAccent,
-                  size: 34,
+                  size: AppSpacing.arenaCreatorAvatarGlyph,
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -209,8 +209,8 @@ class _TrustHeader extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 16,
+          width: AppSpacing.arenaCreatorSectionMarkerWidth,
+          height: AppSpacing.arenaCreatorSectionMarkerHeight,
           decoration: const BoxDecoration(
             color: AppColors.buy,
             borderRadius: AppRadii.xsRadius,
@@ -253,7 +253,7 @@ class _TrustHeader extends StatelessWidget {
                   const Icon(
                     Icons.chevron_right_rounded,
                     color: AppColors.buy,
-                    size: 16,
+                    size: AppSpacing.arenaCreatorChevron,
                   ),
                 ],
               ),
@@ -280,13 +280,17 @@ class _TrustMetricCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 36,
-            height: 36,
+            width: AppSpacing.arenaCreatorMetricIconBox,
+            height: AppSpacing.arenaCreatorMetricIconBox,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .14),
               borderRadius: AppRadii.mdRadius,
             ),
-            child: Icon(_metricIcon(metric.kind), color: color, size: 18),
+            child: Icon(
+              _metricIcon(metric.kind),
+              color: color,
+              size: AppSpacing.arenaCreatorMetricGlyph,
+            ),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

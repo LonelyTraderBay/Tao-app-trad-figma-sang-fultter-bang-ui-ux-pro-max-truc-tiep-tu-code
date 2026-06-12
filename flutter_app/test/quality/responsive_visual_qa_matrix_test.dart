@@ -129,8 +129,68 @@ final _priorityRoutes = [
     'SC-044 PairDetailPage',
   ),
   _PriorityRoute('Trade', AppRoutePaths.trade, 'SC-048 TradePage'),
+  _PriorityRoute(
+    'Orders History',
+    AppRoutePaths.tradeOrdersHistory,
+    'SC-050 OrdersHistoryPage',
+  ),
+  _PriorityRoute(
+    'Order Receipt',
+    AppRoutePaths.tradeOrderReceipt,
+    'SC-051 OrderReceiptPage',
+  ),
   _PriorityRoute('Wallet', AppRoutePaths.wallet, 'SC-135 WalletPage'),
+  _PriorityRoute(
+    'Asset Detail',
+    AppRoutePaths.walletAsset('btc'),
+    'SC-147 AssetDetailPage',
+  ),
+  _PriorityRoute(
+    'Transaction Detail',
+    AppRoutePaths.walletTransaction('tx001'),
+    'SC-141 TransactionDetailPage',
+  ),
   _PriorityRoute('Deposit', AppRoutePaths.walletDeposit, 'SC-137 DepositPage'),
+  _PriorityRoute(
+    'Pending Deposits',
+    AppRoutePaths.walletPendingDeposits,
+    'SC-152 PendingDepositsPage',
+  ),
+  _PriorityRoute(
+    'Portfolio Analytics',
+    AppRoutePaths.walletPortfolioAnalytics,
+    'SC-142 PortfolioAnalyticsPage',
+  ),
+  _PriorityRoute(
+    'Wallet Health',
+    AppRoutePaths.walletHealthScore,
+    'SC-151 WalletHealthScorePage',
+  ),
+  _PriorityRoute(
+    'Dust Converter',
+    AppRoutePaths.walletDustConverter,
+    'SC-154 DustConverterPage',
+  ),
+  _PriorityRoute(
+    'Withdraw',
+    AppRoutePaths.walletWithdraw,
+    'SC-139 WithdrawPage',
+  ),
+  _PriorityRoute(
+    'Transfer',
+    AppRoutePaths.walletTransfer,
+    'SC-146 TransferPage',
+  ),
+  _PriorityRoute(
+    'Address Book',
+    AppRoutePaths.walletAddressBook,
+    'SC-144 AddressBookPage',
+  ),
+  _PriorityRoute(
+    'Address Add',
+    AppRoutePaths.walletAddressBookAdd,
+    'SC-143 AddressAddPage',
+  ),
   _PriorityRoute('Profile', AppRoutePaths.profile, 'SC-156 ProfilePage'),
   _PriorityRoute(
     'Prediction Home',
@@ -169,19 +229,19 @@ final _priorityRoutes = [
     'SC-191 ArenaJoinPage',
   ),
   _PriorityRoute(
-    'Address Add',
-    AppRoutePaths.walletAddressBookAdd,
-    'SC-143 AddressAddPage',
-  ),
-  _PriorityRoute(
-    'Withdraw',
-    AppRoutePaths.walletWithdraw,
-    'SC-139 WithdrawPage',
-  ),
-  _PriorityRoute(
     'Token Approval',
     AppRoutePaths.walletTokenApproval,
     'SC-150 WalletTokenApprovalPage',
+  ),
+  _PriorityRoute(
+    'P2P Dashboard',
+    AppRoutePaths.p2pDashboard,
+    'SC-274 P2PDashboardPage',
+  ),
+  _PriorityRoute(
+    'P2P Payment Methods',
+    AppRoutePaths.p2pPaymentMethods,
+    'SC-237 P2PPaymentMethodsPage',
   ),
   _PriorityRoute(
     'P2P Payment Add',

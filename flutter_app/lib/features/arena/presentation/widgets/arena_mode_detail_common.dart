@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.dart';
 
 const arenaModeAccent = AppModuleAccents.arena;
@@ -12,7 +13,7 @@ class ArenaModeActionIcon extends StatelessWidget {
     super.key,
     required this.icon,
     required this.color,
-    this.size = 32,
+    this.size = AppSpacing.arenaModeActionIconDefaultSize,
   });
 
   final IconData icon;
@@ -26,12 +27,18 @@ class ArenaModeActionIcon extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(
-          size >= 40 ? AppRadii.card : AppRadii.md,
-        ),
+        borderRadius: size >= AppSpacing.arenaModeActionIconLargeThreshold
+            ? AppRadii.cardRadius
+            : AppRadii.mdRadius,
         border: Border.all(color: color.withValues(alpha: .20)),
       ),
-      child: Icon(icon, color: color, size: size >= 40 ? 22 : 17),
+      child: Icon(
+        icon,
+        color: color,
+        size: size >= AppSpacing.arenaModeActionIconLargeThreshold
+            ? AppSpacing.arenaModeActionIconLargeGlyph
+            : AppSpacing.arenaModeActionIconGlyph,
+      ),
     );
   }
 }

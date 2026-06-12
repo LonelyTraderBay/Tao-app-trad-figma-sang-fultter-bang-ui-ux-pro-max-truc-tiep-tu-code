@@ -7,12 +7,9 @@ class _AnalysisCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 23),
-      decoration: BoxDecoration(
-        color: _drawdownPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -20,7 +17,6 @@ class _AnalysisCard extends StatelessWidget {
             'Drawdown Analysis',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -38,7 +34,6 @@ class _AnalysisCard extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: AppTextStyles.caption.copyWith(
                             color: Color(insight.colorHex),
-                            fontSize: 15,
                             height: 1,
                           ),
                         )
@@ -54,7 +49,6 @@ class _AnalysisCard extends StatelessWidget {
                     insight.text,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      fontSize: 11,
                       height: 1.35,
                     ),
                   ),
@@ -77,13 +71,9 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _drawdownPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: child,
     );
   }
@@ -103,17 +93,20 @@ class _SectionLabel extends StatelessWidget {
           height: 15,
           decoration: BoxDecoration(
             color: _drawdownPrimary,
-            borderRadius: BorderRadius.circular(3),
+            borderRadius: AppRadii.xsRadius,
           ),
         ),
         const SizedBox(width: 7),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 12,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
+        Expanded(
+          child: Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text2,
+              fontWeight: AppTextStyles.bold,
+              height: 1,
+            ),
           ),
         ),
       ],
@@ -283,7 +276,6 @@ void _paintText(
       style: TextStyle(
         color: color,
         fontSize: fontSize,
-        fontFamily: 'Roboto',
         fontWeight: FontWeight.w500,
         height: 1,
         decoration: TextDecoration.none,

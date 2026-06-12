@@ -50,7 +50,9 @@ class PredictionOrderReceiptPage extends ConsumerWidget {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.predictionReceiptBottomInsetVisual
+            : AppSpacing.predictionReceiptBottomInsetNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

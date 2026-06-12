@@ -148,6 +148,14 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
                         const SizedBox(height: 18),
                       ],
                       _SummaryCard(draft: draft),
+                      const SizedBox(height: 18),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Copy configuration state review',
+                        message:
+                            'Provider summary, capital allocation, copy mode, risk controls, fee preview, validation messages, and disabled confirmation state remain visible before copy-trading confirmation.',
+                        contractId: 'SC-072',
+                      ),
                     ],
                   ),
                 ),

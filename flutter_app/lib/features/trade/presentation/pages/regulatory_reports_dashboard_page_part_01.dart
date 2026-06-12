@@ -49,26 +49,22 @@ class _RegulatoryReportsDashboardPageState
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: 0,
+                        customGap: 18,
                         children: [
                           _ComplianceAlert(totals: snapshot.totals),
-                          const SizedBox(height: 35),
                           VitPageSection(
                             customGap: 0,
                             children: [_KpiGrid(totals: snapshot.totals)],
                           ),
-                          const SizedBox(height: 24),
                           _RangeSelector(
                             ranges: snapshot.timeRanges,
                             activeId: _range,
                             onChanged: (id) => setState(() => _range = id),
                           ),
-                          const SizedBox(height: 20),
                           _Tabs(
                             activeId: _tab,
                             onChanged: (id) => setState(() => _tab = id),
                           ),
-                          const SizedBox(height: 26),
                           if (_tab == 'overview')
                             _OverviewTab(snapshot: snapshot)
                           else if (_tab == 'queue')
@@ -80,7 +76,6 @@ class _RegulatoryReportsDashboardPageState
                               onNotice: (text) =>
                                   setState(() => _notice = text),
                             ),
-                          const SizedBox(height: 14),
                           _QuickActions(
                             onQueue: () => context.go(
                               AppRoutePaths.tradeCopyTransactionReporting,
@@ -89,12 +84,12 @@ class _RegulatoryReportsDashboardPageState
                               AppRoutePaths.tradeCopyArmIntegrationStatus,
                             ),
                           ),
-                          const SizedBox(height: 12),
                           const VitCard(
                             variant: VitCardVariant.inner,
                             padding: EdgeInsets.all(12),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: VitPageContent(
+                              padding: VitContentPadding.none,
+                              customGap: 8,
                               children: [
                                 VitHighRiskStatePanel(
                                   state: VitHighRiskUiState.riskReview,
@@ -103,7 +98,6 @@ class _RegulatoryReportsDashboardPageState
                                       'Report queue, confirmed count, failed count, export action, ARM route and remediation next step are reviewed before submission follow-up.',
                                   contractId: 'regulatory-reports-review',
                                 ),
-                                SizedBox(height: 8),
                                 VitStatusPill(
                                   label: 'SLA and failures visible',
                                   status: VitStatusPillStatus.warning,
@@ -138,12 +132,9 @@ class _ComplianceAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-      decoration: BoxDecoration(
-        color: AppColors.transparent,
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.inner,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -161,7 +152,6 @@ class _ComplianceAlert extends StatelessWidget {
                   '100% SLA Compliance (Last 7 Days)',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -171,7 +161,6 @@ class _ComplianceAlert extends StatelessWidget {
                   'All reports submitted within T+1. Zero regulatory breaches. Avg latency: ${totals.avgLatency.round()}s.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    fontSize: 10,
                     height: 1.4,
                   ),
                 ),
@@ -240,14 +229,10 @@ class _KpiCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 124,
       padding: const EdgeInsets.fromLTRB(9, 11, 9, 10),
-      decoration: BoxDecoration(
-        color: _dashPanel,
-        border: Border.all(color: _dashBorder.withValues(alpha: .68)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _dashBorder.withValues(alpha: .68),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -262,7 +247,6 @@ class _KpiCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1,
                   ),
                 ),
@@ -276,7 +260,6 @@ class _KpiCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.sectionTitle.copyWith(
               color: AppColors.text1,
-              fontSize: 20,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
@@ -289,7 +272,6 @@ class _KpiCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: item.$4 == _dashAmber ? _dashGreen : item.$4,
-              fontSize: 9,
               height: 1,
             ),
           ),
@@ -315,32 +297,14 @@ class _RangeSelector extends StatelessWidget {
     return Row(
       children: [
         for (final range in ranges) ...[
-          InkWell(
+          VitStatusPill(
             key: RegulatoryReportsDashboardPage.rangeKey(range),
+            label: range,
+            status: activeId == range
+                ? VitStatusPillStatus.info
+                : VitStatusPillStatus.neutral,
+            size: VitStatusPillSize.lg,
             onTap: () => onChanged(range),
-            borderRadius: BorderRadius.circular(999),
-            child: Container(
-              height: 34,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: activeId == range ? _dashPrimary : _dashPanel2,
-                borderRadius: BorderRadius.circular(999),
-              ),
-              child: Text(
-                range,
-                style: AppTextStyles.caption.copyWith(
-                  color: activeId == range
-                      ? AppColors.onAccent
-                      : AppColors.text2,
-                  fontSize: 12,
-                  fontWeight: activeId == range
-                      ? AppTextStyles.bold
-                      : AppTextStyles.medium,
-                  height: 1,
-                ),
-              ),
-            ),
           ),
           if (range != ranges.last) const SizedBox(width: 8),
         ],
@@ -364,9 +328,8 @@ class _Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 54,
-      color: _dashPanel,
       child: Row(
         children: [
           for (final tab in _tabs)
@@ -386,17 +349,16 @@ class _Tabs extends StatelessWidget {
                             color: activeId == tab.$1
                                 ? _dashPrimary
                                 : AppColors.text3,
-                            fontSize: 11,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),
                         ),
                       ),
                     ),
-                    Container(
-                      height: 2,
+                    SizedBox(
                       width: activeId == tab.$1 ? 58 : 0,
-                      color: _dashPrimary,
+                      height: 2,
+                      child: const ColoredBox(color: _dashPrimary),
                     ),
                   ],
                 ),
@@ -415,54 +377,63 @@ class _OverviewTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      customGap: 18,
       children: [
-        _SectionLabel('Submission Trend (Last 7 Days)'),
-        const SizedBox(height: 12),
-        _Card(
-          padding: const EdgeInsets.all(14),
-          child: SizedBox(
-            height: 200,
-            child: CustomPaint(
-              painter: _TrendPainter(stats: snapshot.dailyStats),
-              child: const SizedBox.expand(),
-            ),
-          ),
-        ),
-        const SizedBox(height: 18),
-        _SectionLabel('Report Distribution by Regulation'),
-        const SizedBox(height: 12),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        VitPageSection(
+          label: 'Submission Trend (Last 7 Days)',
+          customGap: 12,
           children: [
-            Expanded(
-              child: _Card(
-                padding: const EdgeInsets.all(12),
-                child: SizedBox(
-                  height: 180,
-                  child: CustomPaint(
-                    painter: _DonutPainter(items: snapshot.distribution),
-                  ),
+            _Card(
+              padding: const EdgeInsets.all(14),
+              child: SizedBox(
+                height: 200,
+                child: CustomPaint(
+                  painter: _TrendPainter(stats: snapshot.dailyStats),
+                  child: const SizedBox.expand(),
                 ),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _DistributionLegend(
-                items: snapshot.distribution,
-                total: snapshot.totals.distributionTotal,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 18),
-        _SectionLabel('ARM Provider Performance'),
-        const SizedBox(height: 12),
-        for (final provider in snapshot.providers) ...[
-          _ProviderCard(provider: provider),
-          if (provider != snapshot.providers.last) const SizedBox(height: 10),
-        ],
+        VitPageSection(
+          label: 'Report Distribution by Regulation',
+          customGap: 12,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: _Card(
+                    padding: const EdgeInsets.all(12),
+                    child: SizedBox(
+                      height: 180,
+                      child: CustomPaint(
+                        painter: _DonutPainter(items: snapshot.distribution),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _DistributionLegend(
+                    items: snapshot.distribution,
+                    total: snapshot.totals.distributionTotal,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        VitPageSection(
+          label: 'ARM Provider Performance',
+          customGap: 10,
+          children: [
+            for (final provider in snapshot.providers)
+              _ProviderCard(provider: provider),
+          ],
+        ),
       ],
     );
   }

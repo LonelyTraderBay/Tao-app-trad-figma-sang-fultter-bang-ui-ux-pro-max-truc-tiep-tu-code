@@ -50,7 +50,6 @@ class _CurrentLevelHero extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.pageTitle.copyWith(
                                 color: AppColors.text1,
-                                fontSize: 25,
                                 height: 1.15,
                               ),
                             ),

@@ -18,7 +18,7 @@ class _RewardAnalyticsSection extends StatelessWidget {
           title: 'Phân tích phần thưởng',
           accentColor: AppColors.warn,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         VitCard(
           padding: const EdgeInsets.all(AppSpacing.x4),
           child: Column(
@@ -29,7 +29,7 @@ class _RewardAnalyticsSection extends StatelessWidget {
                   const Icon(
                     Icons.query_stats_rounded,
                     color: AppColors.warn,
-                    size: 18,
+                    size: AppSpacing.myArenaAnalyticsIcon,
                   ),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(
@@ -37,13 +37,13 @@ class _RewardAnalyticsSection extends StatelessWidget {
                       'Phân tích phần thưởng',
                       style: AppTextStyles.body.copyWith(
                         fontWeight: AppTextStyles.bold,
-                        height: 1.2,
+                        height: AppSpacing.myArenaTextLineHeight,
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
               Row(
                 children: [
                   Expanded(
@@ -71,7 +71,7 @@ class _RewardAnalyticsSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
               Text(
                 'TỈ LỆ THẮNG THEO LOẠI CHIA THƯỞNG',
                 style: AppTextStyles.micro.copyWith(
@@ -79,16 +79,16 @@ class _RewardAnalyticsSection extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
               for (var i = 0; i < history.distribution.length; i++) ...[
                 _DistributionRow(
                   item: history.distribution[i],
                   color: _distributionColor(i),
                 ),
                 if (i < history.distribution.length - 1)
-                  const SizedBox(height: AppSpacing.x3),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
               ],
-              const SizedBox(height: AppSpacing.x5),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
               InkWell(
                 onTap: onViewChallenge,
                 borderRadius: AppRadii.smRadius,
@@ -108,7 +108,7 @@ class _RewardAnalyticsSection extends StatelessWidget {
                       const Icon(
                         Icons.keyboard_arrow_down_rounded,
                         color: AppColors.text3,
-                        size: 18,
+                        size: AppSpacing.myArenaAnalyticsIcon,
                       ),
                     ],
                   ),
@@ -152,19 +152,19 @@ class _RewardMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.base.copyWith(
               color: color,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.heavy,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
+              height: AppSpacing.myArenaRewardMetricLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Text(
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.myArenaRewardMetricLineHeight,
             ),
           ),
         ],
@@ -185,7 +185,7 @@ class _DistributionRow extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 112,
+          width: AppSpacing.myArenaDistributionLabelWidth,
           child: Text(
             item.label,
             maxLines: 1,
@@ -193,7 +193,7 @@ class _DistributionRow extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.myArenaRewardMetricLineHeight,
             ),
           ),
         ),
@@ -201,7 +201,7 @@ class _DistributionRow extends StatelessWidget {
           child: ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
-              minHeight: 10,
+              minHeight: AppSpacing.myArenaDistributionProgressHeight,
               value: ratio,
               backgroundColor: AppColors.surface3,
               color: color,
@@ -210,7 +210,7 @@ class _DistributionRow extends StatelessWidget {
         ),
         const SizedBox(width: AppSpacing.x3),
         SizedBox(
-          width: 30,
+          width: AppSpacing.myArenaDistributionValueWidth,
           child: Text(
             '${item.wins}/${item.total}',
             textAlign: TextAlign.right,
@@ -218,7 +218,7 @@ class _DistributionRow extends StatelessWidget {
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
+              height: AppSpacing.myArenaRewardMetricLineHeight,
             ),
           ),
         ),
@@ -247,7 +247,7 @@ class _SafetySection extends StatelessWidget {
           title: 'An toàn & quản lý',
           accentColor: AppColors.buy,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         _SafetyActionCard(
           key: MyArenaPage.reportsKey,
           icon: Icons.outlined_flag_rounded,
@@ -256,7 +256,7 @@ class _SafetySection extends StatelessWidget {
           color: AppColors.sell,
           onTap: onReports,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         _SafetyActionCard(
           key: MyArenaPage.blockedKey,
           icon: Icons.block_rounded,
@@ -265,7 +265,7 @@ class _SafetySection extends StatelessWidget {
           color: AppColors.warn,
           onTap: onBlocked,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         _SafetyActionCard(
           key: MyArenaPage.safetyKey,
           icon: Icons.shield_outlined,
@@ -314,17 +314,17 @@ class _SafetyActionCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: 1.2,
+                    height: AppSpacing.myArenaTextLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   subtitle,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.2,
+                    height: AppSpacing.myArenaTextLineHeight,
                   ),
                 ),
               ],
@@ -333,7 +333,7 @@ class _SafetyActionCard extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: 20,
+            size: AppSpacing.myArenaSafetyChevron,
           ),
         ],
       ),
@@ -366,7 +366,7 @@ class _ArenaFooter extends StatelessWidget {
                   const Icon(
                     Icons.menu_book_outlined,
                     color: AppColors.primary,
-                    size: 16,
+                    size: AppSpacing.myArenaFooterIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Text(
@@ -381,7 +381,7 @@ class _ArenaFooter extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         VitCard(
           padding: const EdgeInsets.all(AppSpacing.x4),
           child: Row(
@@ -390,7 +390,7 @@ class _ArenaFooter extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: AppColors.accent,
-                size: 17,
+                size: AppSpacing.myArenaFooterShieldIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -398,7 +398,7 @@ class _ArenaFooter extends StatelessWidget {
                   'Arena Points chỉ dùng trong Open Arena, không phải tài sản tài chính. Không thỏa thuận giao dịch ngoài nền tảng.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.35,
+                    height: AppSpacing.myArenaFooterLineHeight,
                   ),
                 ),
               ),
@@ -429,8 +429,8 @@ class _EmptyCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.x5),
       child: Column(
         children: [
-          Icon(icon, color: _arenaAccent, size: 26),
-          const SizedBox(height: AppSpacing.x3),
+          Icon(icon, color: _arenaAccent, size: AppSpacing.myArenaEmptyIcon),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             title,
             style: AppTextStyles.body.copyWith(
@@ -438,7 +438,7 @@ class _EmptyCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           _AccentPillButton(
             icon: Icons.add_rounded,
             label: actionLabel,
@@ -460,13 +460,13 @@ class _ActionIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.myArenaActionIconBox,
+      height: AppSpacing.myArenaActionIconBox,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.mdRadius,
       ),
-      child: Icon(icon, color: color, size: 18),
+      child: Icon(icon, color: color, size: AppSpacing.myArenaActionIcon),
     );
   }
 }
@@ -496,7 +496,7 @@ class _ArenaStatusPill extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.myArenaStatusPillLineHeight,
         ),
       ),
     );

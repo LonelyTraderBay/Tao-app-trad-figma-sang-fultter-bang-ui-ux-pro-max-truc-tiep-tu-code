@@ -162,8 +162,8 @@ class _HeroStat extends StatelessWidget {
             children: [
               if (dot) ...[
                 Container(
-                  width: 6,
-                  height: 6,
+                  width: AppSpacing.savingsLadderHeroDot,
+                  height: AppSpacing.savingsLadderHeroDot,
                   decoration: const BoxDecoration(
                     color: AppColors.buy,
                     shape: BoxShape.circle,
@@ -237,8 +237,11 @@ class _AmountSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return VitPageContent(
       key: SavingsLadderPage.amountKey,
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: AppSpacing.x3,
       children: [
         VitCard(
           variant: VitCardVariant.inner,
@@ -275,7 +278,6 @@ class _AmountSelector extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
         Row(
           children: [
             for (final amount in quickAmounts) ...[
@@ -312,8 +314,11 @@ class _TemplateList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return VitPageContent(
       key: SavingsLadderPage.templatesKey,
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: AppSpacing.x3,
       children: [
         for (final template in templates) ...[
           _TemplateCard(
@@ -322,7 +327,6 @@ class _TemplateList extends StatelessWidget {
             amountUsd: amountUsd,
             onTap: () => onChanged(template.id),
           ),
-          if (template != templates.last) const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -360,8 +364,10 @@ class _TemplateCard extends StatelessWidget {
           _RoundIcon(icon: _iconFor(template.iconKey), color: color),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: VitPageContent(
+              padding: VitContentPadding.none,
+              fullBleed: true,
+              customGap: AppSpacing.x2,
               children: [
                 Text(
                   template.label,
@@ -369,17 +375,15 @@ class _TemplateCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: _captionBold.copyWith(color: AppColors.text1),
                 ),
-                const SizedBox(height: AppSpacing.x1),
                 Text(
                   template.description,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.25,
+                    height: AppSpacing.savingsLadderTemplateLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
                 Text(
                   '${template.intervals.length} bậc · APY TB: ${apy.toStringAsFixed(1)}%',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -436,8 +440,11 @@ class _RungList extends StatelessWidget {
       );
     }
 
-    return Column(
+    return VitPageContent(
       key: SavingsLadderPage.rungsKey,
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: AppSpacing.x3,
       children: [
         for (var i = 0; i < rungs.length; i++) ...[
           _RungTile(
@@ -446,7 +453,6 @@ class _RungList extends StatelessWidget {
             onToggleRenew: () => onToggleRenew(rungs[i].id),
             onRemove: () => onRemove(rungs[i].id),
           ),
-          if (i != rungs.length - 1) const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );

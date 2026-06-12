@@ -45,7 +45,7 @@ class StakingInsuranceFundClaimsTab extends StatelessWidget {
                   'Claim Processing: All claims are reviewed within 24 hours. Approved claims are paid out within 7 business days. Average approval rate: 94%.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.5,
+                    height: AppSpacing.stakingProductCompactBodyLineHeight,
                   ),
                 ),
               ),

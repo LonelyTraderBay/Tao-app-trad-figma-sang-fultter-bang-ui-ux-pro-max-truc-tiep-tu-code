@@ -18,6 +18,8 @@ import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart'
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 part '../widgets/trade_settings_page_sections.dart';
 part '../widgets/trade_settings_page_common.dart';
 
@@ -132,6 +134,19 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
                       _ResetButton(onReset: _resetSettings),
                       const SizedBox(height: 24),
                       const _InfoNote(),
+                      const SizedBox(height: 12),
+                      const TradeBodyReviewSection(
+                        title: 'Settings body review',
+                        message: 'Trade settings body reviewed',
+                        detail:
+                            'Order defaults, confirmations, feedback, display, reset, and result states stay visible.',
+                        primary:
+                            'Safety review remains above settings mutations.',
+                        secondary:
+                            'Confirmation and slippage settings stay grouped by risk intent.',
+                        tertiary:
+                            'Reset remains separated from informational guidance.',
+                      ),
                     ],
                   ),
                 ),

@@ -18,7 +18,6 @@ class _RateLimitsCard extends StatelessWidget {
                     item.label,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      fontSize: 12,
                     ),
                   ),
                 ),
@@ -26,7 +25,6 @@ class _RateLimitsCard extends StatelessWidget {
                   item.value,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -47,12 +45,9 @@ class _AuthCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
-      decoration: BoxDecoration(
-        color: _apiPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -64,7 +59,6 @@ class _AuthCard extends StatelessWidget {
                 'Authentication',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -77,7 +71,6 @@ class _AuthCard extends StatelessWidget {
             'Settings. Include in header:',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 11,
               height: 1.55,
             ),
           ),
@@ -96,15 +89,7 @@ class _InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _apiPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: child,
-    );
+    return VitCard(padding: const EdgeInsets.all(16), child: child);
   }
 }
 
@@ -123,7 +108,8 @@ class _CodeBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: dark ? VitCardVariant.standard : VitCardVariant.inner,
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(
         12,
@@ -131,19 +117,13 @@ class _CodeBlock extends StatelessWidget {
         12,
         compact ? 11 : 13,
       ),
-      decoration: BoxDecoration(
-        color: dark ? _apiPanel : _apiPanel2,
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Text(
           text,
           style: AppTextStyles.micro.copyWith(
             color: compact ? _apiPrimary : AppColors.text2,
-            fontSize: example ? 11 : 10,
             height: example ? 1.7 : 1.58,
-            fontFamily: 'Roboto',
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -159,22 +139,14 @@ class _MethodBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = _methodColor(method);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .13),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        method,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 12,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    return VitStatusPill(
+      label: method,
+      status: switch (method) {
+        'GET' => VitStatusPillStatus.success,
+        'POST' => VitStatusPillStatus.info,
+        _ => VitStatusPillStatus.warning,
+      },
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -188,12 +160,14 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: 4,
           height: 15,
-          decoration: BoxDecoration(
-            color: _apiPrimary,
-            borderRadius: BorderRadius.circular(3),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: _apiPrimary,
+              borderRadius: AppRadii.smRadius,
+            ),
           ),
         ),
         const SizedBox(width: 7),
@@ -201,7 +175,6 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -210,10 +183,3 @@ class _SectionLabel extends StatelessWidget {
     );
   }
 }
-
-Color _methodColor(String method) => switch (method) {
-  'GET' => _apiGreen,
-  'POST' => _apiPrimary,
-  'DELETE' => _apiRed,
-  _ => AppColors.text2,
-};

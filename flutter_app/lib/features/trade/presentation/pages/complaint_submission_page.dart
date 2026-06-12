@@ -18,6 +18,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 part '../widgets/complaint_submission_page_sections.dart';
 part '../widgets/complaint_submission_page_common.dart';
 
@@ -132,6 +134,18 @@ class _ComplaintSubmissionPageState
                         accepted: _acceptTerms,
                         onChanged: (value) =>
                             setState(() => _acceptTerms = value),
+                      ),
+                      const TradeBodyReviewSection(
+                        title: 'Complaint submission body review',
+                        message: 'Complaint submission body reviewed',
+                        detail:
+                            'Category, subject, description, evidence, consent, submitting, and result states stay visible.',
+                        primary:
+                            'Process notice remains above the regulated complaint form.',
+                        secondary:
+                            'Evidence and terms stay visible before the sticky submit action.',
+                        tertiary:
+                            'Submission copy remains regulatory and non-promotional.',
                       ),
                     ],
                   ),

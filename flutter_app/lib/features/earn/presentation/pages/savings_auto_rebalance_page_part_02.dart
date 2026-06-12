@@ -26,8 +26,8 @@ class _StrategyCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 40,
-                height: 40,
+                width: AppSpacing.savingsRebalanceIconBox,
+                height: AppSpacing.savingsRebalanceIconBox,
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: .14),
                   borderRadius: BorderRadius.circular(AppRadii.md),
@@ -59,7 +59,7 @@ class _StrategyCard extends StatelessWidget {
                           Icon(
                             Icons.check_circle_rounded,
                             color: color,
-                            size: 16,
+                            size: AppSpacing.savingsRebalanceSelectedIcon,
                           ),
                         ],
                       ],
@@ -101,7 +101,9 @@ class _StrategyCard extends StatelessWidget {
                       flex: entry.value.round().clamp(1, 100).toInt(),
                       child: ColoredBox(
                         color: _assetColorName(entry.key),
-                        child: const SizedBox(height: 6),
+                        child: const SizedBox(
+                          height: AppSpacing.savingsRebalanceTrackHeight,
+                        ),
                       ),
                     ),
                 ],
@@ -124,15 +126,16 @@ class _StrategyComparison extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       padding: const EdgeInsets.all(AppSpacing.x4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.x3,
         children: [
           const _SectionTitle(
             icon: Icons.info_outline_rounded,
             iconColor: AppColors.primary,
             label: 'So sánh chiến lược',
           ),
-          const SizedBox(height: AppSpacing.x3),
           for (final row in [
             ('APY', [for (final item in strategies) '${item.expectedApy}%']),
             (
@@ -191,13 +194,17 @@ class _HistoryCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: AppSpacing.savingsRebalanceIconBox,
+            height: AppSpacing.savingsRebalanceIconBox,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .14),
               borderRadius: BorderRadius.circular(AppRadii.md),
             ),
-            child: Icon(_historyIcon(event.status), color: color, size: 20),
+            child: Icon(
+              _historyIcon(event.status),
+              color: color,
+              size: AppSpacing.savingsRebalanceIcon,
+            ),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -245,14 +252,16 @@ class _SettingsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: AppSpacing.x3,
       children: [
         _AutoStatusCard(
           autoEnabled: autoEnabled,
           settings: settings,
           onChanged: onAutoChanged,
         ),
-        const SizedBox(height: AppSpacing.x3),
         VitCard(
           radius: VitCardRadius.lg,
           padding: const EdgeInsets.all(AppSpacing.x4),
@@ -362,7 +371,7 @@ class _PreviewSheet extends StatelessWidget {
                           color: action.increase
                               ? AppColors.buy
                               : AppColors.sell,
-                          size: 18,
+                          size: AppSpacing.savingsRebalanceInlineIcon,
                         ),
                         const SizedBox(width: AppSpacing.x2),
                         Expanded(
@@ -414,7 +423,11 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: iconColor, size: 18),
+        Icon(
+          icon,
+          color: iconColor,
+          size: AppSpacing.savingsRebalanceInlineIcon,
+        ),
         const SizedBox(width: AppSpacing.x2),
         Text(label, style: _captionMedium.copyWith(color: AppColors.text1)),
       ],
@@ -442,7 +455,7 @@ class _MetricCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.x3),
       child: Column(
         children: [
-          Icon(icon, color: color, size: 18),
+          Icon(icon, color: color, size: AppSpacing.savingsRebalanceInlineIcon),
           const SizedBox(height: AppSpacing.x2),
           FittedBox(
             fit: BoxFit.scaleDown,
@@ -482,7 +495,7 @@ class _TonePill extends StatelessWidget {
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontWeight: FontWeight.w700,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -501,8 +514,8 @@ class _LegendDot extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 7,
-          height: 7,
+          width: AppSpacing.savingsRebalanceLegendDot,
+          height: AppSpacing.savingsRebalanceLegendDot,
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         const SizedBox(width: AppSpacing.x1),

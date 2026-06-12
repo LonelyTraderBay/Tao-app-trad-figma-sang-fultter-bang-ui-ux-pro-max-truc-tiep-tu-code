@@ -52,13 +52,20 @@ class StakingCustodyLargeIconBox extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
-        border: Border.all(color: color.withValues(alpha: 0.32), width: 1.5),
+        border: Border.all(
+          color: color.withValues(alpha: 0.32),
+          width: AppSpacing.stakingCustodyActionBorderWidth,
+        ),
         borderRadius: AppRadii.xlRadius,
       ),
       child: SizedBox(
-        width: 64,
-        height: 64,
-        child: Icon(icon, color: color, size: 34),
+        width: AppSpacing.stakingCustodyActionIconBox,
+        height: AppSpacing.stakingCustodyActionIconBox,
+        child: Icon(
+          icon,
+          color: color,
+          size: AppSpacing.stakingCustodyActionIcon,
+        ),
       ),
     );
   }
@@ -116,7 +123,7 @@ class StakingCustodyFooterNote extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: 1.5,
+          height: AppSpacing.stakingCustodyFooterLineHeight,
         ),
       ),
     );

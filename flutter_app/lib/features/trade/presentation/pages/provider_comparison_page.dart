@@ -15,6 +15,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 const _comparisonPrimary = AppColors.primary;
 const _comparisonRed = AppColors.sell;
 const _comparisonAmber = AppColors.caution;
@@ -104,6 +106,19 @@ class ProviderComparisonPage extends ConsumerWidget {
                               'Performance, risk, execution, fees, drawdown and provider limits are reviewed before adding or copying.',
                           contractId: 'provider-comparison-review',
                         ),
+                      ),
+                      const SizedBox(height: 12),
+                      const TradeBodyReviewSection(
+                        title: 'Provider comparison body review',
+                        message: 'Provider comparison body reviewed',
+                        detail:
+                            'Disclaimer, selected providers, metrics, legend, add action, and review states stay visible.',
+                        primary:
+                            'Disclaimer remains before provider comparison metrics.',
+                        secondary:
+                            'Risk, execution, cost, and performance groups stay separated for scanning.',
+                        tertiary:
+                            'Add-provider actions remain gated by comparison limits and review copy.',
                       ),
                     ],
                   ),

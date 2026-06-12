@@ -221,7 +221,7 @@ class _TabButton extends StatelessWidget {
               AnimatedContainer(
                 duration: const Duration(milliseconds: 160),
                 width: selected ? AppSpacing.buttonHero : 0,
-                height: 2,
+                height: AppSpacing.stakingProductTabIndicatorHeight,
                 decoration: BoxDecoration(
                   color: selected ? AppColors.primary : AppColors.transparent,
                   borderRadius: AppRadii.xsRadius,

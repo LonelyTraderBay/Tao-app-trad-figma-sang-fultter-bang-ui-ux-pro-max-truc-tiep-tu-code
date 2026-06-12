@@ -36,28 +36,32 @@ class _StatsGrid extends StatelessWidget {
 
     return GridView.count(
       crossAxisCount: 2,
-      crossAxisSpacing: 8,
-      mainAxisSpacing: 8,
-      childAspectRatio: 2.7,
+      crossAxisSpacing: AppSpacing.predictionDetailStatsGap,
+      mainAxisSpacing: AppSpacing.predictionDetailStatsGap,
+      childAspectRatio: AppSpacing.predictionDetailStatsAspectRatio,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       children: [
         for (final stat in stats)
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(10),
+            padding: AppSpacing.predictionDetailStatPadding,
             child: Row(
               children: [
                 Container(
-                  width: 32,
-                  height: 32,
+                  width: AppSpacing.predictionDetailStatIconBox,
+                  height: AppSpacing.predictionDetailStatIconBox,
                   decoration: BoxDecoration(
                     color: stat.color.withValues(alpha: .12),
                     borderRadius: AppRadii.smRadius,
                   ),
-                  child: Icon(stat.icon, color: stat.color, size: 15),
+                  child: Icon(
+                    stat.icon,
+                    color: stat.color,
+                    size: AppSpacing.predictionDetailStatIcon,
+                  ),
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: AppSpacing.predictionDetailStatGap),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,14 +120,18 @@ class _PositionBanner extends StatelessWidget {
     final color = position.pnl >= 0 ? AppColors.buy : AppColors.sell;
     return VitCard(
       borderColor: color.withValues(alpha: .22),
-      padding: const EdgeInsets.all(13),
+      padding: AppSpacing.predictionDetailPositionPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const Icon(Icons.bolt_rounded, color: AppColors.warn, size: 13),
-              const SizedBox(width: 6),
+              const Icon(
+                Icons.bolt_rounded,
+                color: AppColors.warn,
+                size: AppSpacing.predictionDetailPositionIcon,
+              ),
+              const SizedBox(width: AppSpacing.predictionDetailPositionIconGap),
               Text(
                 'Your Position',
                 style: AppTextStyles.caption.copyWith(
@@ -133,7 +141,7 @@ class _PositionBanner extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 9),
+          const SizedBox(height: AppSpacing.predictionDetailPositionTopGap),
           Row(
             children: [
               _TinyBadge(
@@ -145,15 +153,14 @@ class _PositionBanner extends StatelessWidget {
                     ? AppColors.buy10
                     : AppColors.sell10,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(
+                width: AppSpacing.predictionDetailPositionBadgeGap,
+              ),
               Expanded(
                 child: Text(
                   '${position.shares.toStringAsFixed(0)} shares @ '
                   '${_formatPrice(position.avgPrice)}',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 11,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
               ),
               Column(

@@ -83,20 +83,23 @@ class VitInput extends StatelessWidget {
   Widget build(BuildContext context) {
     final input = Container(
       height: AppSpacing.inputHeight,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
       decoration: BoxDecoration(
         color: AppColors.surface2,
         borderRadius: AppRadii.inputRadius,
         border: Border.all(
           color: _hasError ? AppColors.sell : AppColors.borderSolid,
-          width: 1.5,
+          width: AppSpacing.borderWidth,
         ),
       ),
       child: Row(
         children: [
           if (prefix != null) ...[
             IconTheme(
-              data: const IconThemeData(color: AppColors.text3, size: 18),
+              data: const IconThemeData(
+                color: AppColors.text3,
+                size: AppSpacing.inputPrefixIcon,
+              ),
               child: prefix!,
             ),
             const SizedBox(width: AppSpacing.x3),
@@ -116,14 +119,13 @@ class VitInput extends StatelessWidget {
               autofillHints: autofillHints,
               textAlign: textAlign,
               cursorColor: AppColors.primary,
-              style: textStyle ?? AppTextStyles.body.copyWith(fontSize: 15),
+              style: textStyle ?? AppTextStyles.control,
               onChanged: onChanged,
               onSubmitted: onSubmitted,
               decoration: InputDecoration.collapsed(
                 hintText: hintText,
-                hintStyle: AppTextStyles.body.copyWith(
+                hintStyle: AppTextStyles.control.copyWith(
                   color: AppColors.text3,
-                  fontSize: 15,
                 ),
               ),
             ),
@@ -144,7 +146,7 @@ class VitInput extends StatelessWidget {
             label!,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.formFieldLabelGap),
         ],
         Semantics(
           textField: true,
@@ -157,10 +159,7 @@ class VitInput extends StatelessWidget {
           const SizedBox(height: AppSpacing.x2),
           Text(
             errorText!,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.sell,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.sell),
           ),
         ],
       ],

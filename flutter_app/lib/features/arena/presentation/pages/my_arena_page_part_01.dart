@@ -49,27 +49,26 @@ class _PointsHero extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
                       formatArenaPoints(stats.currentBalance),
                       style: AppTextStyles.heroNumber.copyWith(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w900,
-                        height: 1,
+                        fontWeight: AppTextStyles.heavy,
+                        height: AppSpacing.myArenaBalanceLineHeight,
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 2),
+                      padding: AppSpacing.myArenaBalanceSuffixPadding,
                       child: Text(
                         'pts',
                         style: AppTextStyles.base.copyWith(
                           color: AppColors.text3,
                           fontWeight: AppTextStyles.medium,
-                          height: 1,
+                          height: AppSpacing.myArenaBalanceLineHeight,
                         ),
                       ),
                     ),
@@ -78,7 +77,10 @@ class _PointsHero extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: AppColors.divider),
+          const Divider(
+            height: AppSpacing.myArenaDividerHeight,
+            color: AppColors.divider,
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(
               AppSpacing.contentPad,
@@ -96,7 +98,7 @@ class _PointsHero extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 36,
+                  height: AppSpacing.myArenaPointsDeltaDividerHeight,
                   child: VerticalDivider(
                     width: AppSpacing.x5,
                     color: AppColors.divider,
@@ -144,8 +146,8 @@ class _PointsDelta extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: 8,
-              height: 8,
+              height: AppSpacing.myArenaDeltaDot,
+              width: AppSpacing.myArenaDeltaDot,
               decoration: BoxDecoration(color: color, shape: BoxShape.circle),
             ),
             const SizedBox(width: AppSpacing.x2),
@@ -162,14 +164,14 @@ class _PointsDelta extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         Text(
           value,
           style: AppTextStyles.base.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: 1,
+            height: AppSpacing.myArenaBalanceLineHeight,
           ),
         ),
       ],
@@ -224,7 +226,7 @@ class _StatsGrid extends StatelessWidget {
             Expanded(child: _ArenaStatCard(item: items[1])),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         Row(
           children: [
             Expanded(child: _ArenaStatCard(item: items[2])),
@@ -263,20 +265,26 @@ class _ArenaStatCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.md,
       padding: const EdgeInsets.all(AppSpacing.x4),
-      constraints: const BoxConstraints(minHeight: 116),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.myArenaStatCardMinHeight,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Container(
-                width: 32,
-                height: 32,
+                height: AppSpacing.myArenaStatIconBox,
+                width: AppSpacing.myArenaStatIconBox,
                 decoration: BoxDecoration(
                   color: item.color.withValues(alpha: .14),
                   borderRadius: AppRadii.mdRadius,
                 ),
-                child: Icon(item.icon, color: item.color, size: 17),
+                child: Icon(
+                  item.icon,
+                  color: item.color,
+                  size: AppSpacing.myArenaStatIcon,
+                ),
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -292,20 +300,19 @@ class _ArenaStatCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           Text(
             item.value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.sectionTitle.copyWith(
               color: item.color,
-              fontSize: 23,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.heavy,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
+              height: AppSpacing.myArenaBalanceLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Text(
             item.subtitle,
             maxLines: 2,
@@ -371,7 +378,7 @@ class _QuickLinkButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
         child: Container(
-          height: 44,
+          height: AppSpacing.myArenaQuickLinkHeight,
           decoration: BoxDecoration(
             color: AppColors.surface2,
             border: Border.all(color: AppColors.cardBorder),
@@ -380,7 +387,11 @@ class _QuickLinkButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, color: AppColors.text2, size: 14),
+              Icon(
+                icon,
+                color: AppColors.text2,
+                size: AppSpacing.myArenaQuickLinkIcon,
+              ),
               const SizedBox(width: AppSpacing.x2),
               Flexible(
                 child: Text(
@@ -499,7 +510,7 @@ class _ArenaTabPill extends StatelessWidget {
         borderRadius: AppRadii.inputRadius,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 160),
-          height: 36,
+          height: AppSpacing.myArenaTabHeight,
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
           decoration: BoxDecoration(
             color: active ? AppColors.warn08 : AppColors.surface2,
@@ -511,14 +522,14 @@ class _ArenaTabPill extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(config.icon, color: color, size: 14),
+              Icon(config.icon, color: color, size: AppSpacing.myArenaTabIcon),
               const SizedBox(width: AppSpacing.x2),
               Text(
                 config.label,
                 style: AppTextStyles.micro.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.myArenaBalanceLineHeight,
                 ),
               ),
             ],

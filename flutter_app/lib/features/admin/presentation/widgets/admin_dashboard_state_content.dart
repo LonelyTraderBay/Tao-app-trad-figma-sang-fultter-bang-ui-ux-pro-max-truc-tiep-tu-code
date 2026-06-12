@@ -84,14 +84,14 @@ class AdminInlineEmptyState extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.surface2,
           border: Border.all(color: AppColors.borderSolid),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppSpacing.adminStateRadius),
         ),
         child: Padding(
           padding: const EdgeInsets.all(AppSpacing.x4),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, color: AppColors.text3, size: 18),
+              Icon(icon, color: AppColors.text3, size: AppSpacing.adminIconLg),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(
@@ -109,7 +109,7 @@ class AdminInlineEmptyState extends StatelessWidget {
                       message,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: 1.35,
+                        height: AppSpacing.adminLineHeightDense,
                       ),
                     ),
                   ],

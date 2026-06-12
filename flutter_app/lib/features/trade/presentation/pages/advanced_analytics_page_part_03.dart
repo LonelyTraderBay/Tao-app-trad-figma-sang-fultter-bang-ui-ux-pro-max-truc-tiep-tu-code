@@ -8,12 +8,15 @@ class _RiskAnalysisTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final risk = snapshot.risk;
-    return Column(
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      customGap: 12,
       children: [
         _Card(
           padding: const EdgeInsets.all(18),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: VitPageContent(
+            padding: VitContentPadding.none,
+            customGap: 14,
             children: [
               const _SectionHeader(
                 icon: Icons.shield_outlined,
@@ -21,7 +24,6 @@ class _RiskAnalysisTab extends StatelessWidget {
                 title: 'Portfolio Risk Analyzer',
                 subtitle: 'VaR, Sharpe Ratio, Max Drawdown, Beta',
               ),
-              const SizedBox(height: 16),
               VitCard(
                 variant: VitCardVariant.inner,
                 padding: const EdgeInsets.all(14),
@@ -48,7 +50,6 @@ class _RiskAnalysisTab extends StatelessWidget {
                             '${risk.riskLevel} risk',
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text3,
-                              fontSize: 12,
                             ),
                           ),
                         ],
@@ -58,7 +59,6 @@ class _RiskAnalysisTab extends StatelessWidget {
                       '${risk.riskScore}',
                       style: AppTextStyles.heroNumber.copyWith(
                         color: _advancedAmber,
-                        fontSize: 34,
                         height: 1,
                       ),
                     ),
@@ -66,13 +66,11 @@ class _RiskAnalysisTab extends StatelessWidget {
                       '/100',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 10,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 12),
               Row(
                 children: [
                   Expanded(
@@ -103,7 +101,6 @@ class _RiskAnalysisTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 12),
         const _InfoCard(
           color: _advancedPrimary,
           icon: Icons.shield_outlined,
@@ -124,12 +121,15 @@ class _TradeJournalTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final journal = snapshot.journal;
-    return Column(
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      customGap: 12,
       children: [
         _Card(
           padding: const EdgeInsets.all(18),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: VitPageContent(
+            padding: VitContentPadding.none,
+            customGap: 12,
             children: [
               const _SectionHeader(
                 icon: Icons.menu_book_rounded,
@@ -137,7 +137,6 @@ class _TradeJournalTab extends StatelessWidget {
                 title: 'Trade Journal',
                 subtitle: 'Detailed tracking and performance attribution',
               ),
-              const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
@@ -156,7 +155,6 @@ class _TradeJournalTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
               Row(
                 children: [
                   Expanded(
@@ -187,7 +185,6 @@ class _TradeJournalTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 12),
         const _InfoCard(
           color: _advancedGreen,
           icon: Icons.menu_book_rounded,
@@ -209,12 +206,15 @@ class _PositionSizingTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final sizing = snapshot.sizing;
     final riskAmount = sizing.accountBalance * sizing.recommendedRiskPct / 100;
-    return Column(
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      customGap: 12,
       children: [
         _Card(
           padding: const EdgeInsets.all(18),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: VitPageContent(
+            padding: VitContentPadding.none,
+            customGap: 14,
             children: [
               const _SectionHeader(
                 icon: Icons.calculate_outlined,
@@ -222,7 +222,6 @@ class _PositionSizingTab extends StatelessWidget {
                 title: 'Position Sizing Calculator',
                 subtitle: 'Kelly Criterion optimization',
               ),
-              const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
@@ -249,7 +248,6 @@ class _PositionSizingTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
               _MetricBox(
                 label: 'Suggested Position Size',
                 value: '${sizing.positionSize.toStringAsFixed(2)} BTC',
@@ -259,7 +257,6 @@ class _PositionSizingTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 12),
         const _InfoCard(
           color: _advancedAmber,
           icon: Icons.calculate_outlined,
@@ -296,8 +293,9 @@ class _FeaturesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Card(
       padding: const EdgeInsets.fromLTRB(20, 19, 20, 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 14,
         children: [
           Text(
             'P3 Features Included',
@@ -307,7 +305,6 @@ class _FeaturesCard extends StatelessWidget {
               height: 1,
             ),
           ),
-          const SizedBox(height: 14),
           GridView.builder(
             itemCount: features.length,
             physics: const NeverScrollableScrollPhysics(),
@@ -340,7 +337,6 @@ class _FeaturesCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text2,
-                          fontSize: 10,
                           height: 1.2,
                         ),
                       ),
@@ -395,7 +391,6 @@ class _SectionHeader extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.text1,
-                  fontSize: 18,
                   fontWeight: AppTextStyles.bold,
                   height: 1.15,
                 ),
@@ -407,7 +402,6 @@ class _SectionHeader extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  fontSize: 12,
                   height: 1.25,
                 ),
               ),
@@ -451,7 +445,6 @@ class _InfoCard extends StatelessWidget {
                   title,
                   style: AppTextStyles.caption.copyWith(
                     color: color,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1.2,
                   ),
@@ -461,7 +454,6 @@ class _InfoCard extends StatelessWidget {
                   body,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1.45,
                   ),
                 ),

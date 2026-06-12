@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -124,6 +125,19 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                           loading: _isSubmitting,
                           leading: const Icon(Icons.upload_outlined),
                           child: Text('Xác nhận (${_proofs.length} ảnh)'),
+                        ),
+                        VitPageContent(
+                          padding: VitContentPadding.compact,
+                          customGap: 0,
+                          children: const [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Payment proof state review',
+                              message:
+                                  'Order summary, upload source, attachment count, remove actions, tips, warning, disabled confirmation, upload state, and submitting state remain visible before proof submission.',
+                              contractId: 'SC-215',
+                            ),
+                          ],
                         ),
                       ],
                     ),

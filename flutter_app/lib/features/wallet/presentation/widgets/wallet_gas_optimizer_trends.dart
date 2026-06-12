@@ -7,25 +7,25 @@ class _TrendsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: AppSpacing.walletGasSecondaryContentGap,
       children: [
         _ChartCard(
           title: '24h Gas Price Trends',
-          height: 254,
+          height: AppSpacing.walletGasChartLargeHeight,
           child: CustomPaint(
             painter: _GasLineChartPainter(points: snapshot.history),
           ),
         ),
-        const SizedBox(height: 14),
         _ChartCard(
           title: 'Network Activity',
-          height: 194,
+          height: AppSpacing.walletGasChartSmallHeight,
           child: CustomPaint(
             painter: _NetworkBarChartPainter(points: snapshot.networkActivity),
           ),
         ),
-        const SizedBox(height: 14),
         const _BestTimeCard(),
       ],
     );
@@ -47,20 +47,20 @@ class _ChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       height: height,
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
+      padding: AppSpacing.walletGasChartPadding,
       borderColor: _gasBorder,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.walletGasChartGap,
         children: [
           Text(
             title,
             style: AppTextStyles.baseMedium.copyWith(
-              fontSize: 13,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.bold,
               height: 1,
             ),
           ),
-          const SizedBox(height: 14),
           Expanded(child: child),
         ],
       ),
@@ -74,7 +74,7 @@ class _BestTimeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.walletGasBestTimePadding,
       borderColor: _gasGreen.withValues(alpha: .22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -82,8 +82,12 @@ class _BestTimeCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(Icons.schedule_rounded, color: _gasGreen, size: 17),
-              const SizedBox(width: 9),
+              const Icon(
+                Icons.schedule_rounded,
+                color: _gasGreen,
+                size: AppSpacing.walletGasIcon,
+              ),
+              const SizedBox(width: AppSpacing.walletGasQuickActionIconGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,16 +96,14 @@ class _BestTimeCard extends StatelessWidget {
                       'Best Time to Transact',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    const SizedBox(height: AppSpacing.walletGasBestTimeTextGap),
                     Text(
                       'Gas fees are typically lowest between 2 AM - 6 AM UTC.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        fontSize: 11,
                         height: 1.45,
                       ),
                     ),
@@ -110,7 +112,7 @@ class _BestTimeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.walletGasBestTimeMetricGap),
           Row(
             children: const [
               Expanded(
@@ -119,7 +121,7 @@ class _BestTimeCard extends StatelessWidget {
                   value: '12 Gwei',
                 ),
               ),
-              SizedBox(width: 12),
+              SizedBox(width: AppSpacing.walletGasBestTimeColumnGap),
               Expanded(
                 child: _BestTimeMetric(
                   label: 'Potential Saving',
@@ -149,18 +151,15 @@ class _BestTimeMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
             height: 1,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.walletGasBestTimeValueGap),
         Text(
           value,
           style: AppTextStyles.sectionTitle.copyWith(
             color: _gasGreen,
-            fontSize: 16,
-            fontWeight: FontWeight.w900,
-            fontFamily: 'Roboto',
+            fontWeight: AppTextStyles.bold,
             height: 1,
           ),
         ),

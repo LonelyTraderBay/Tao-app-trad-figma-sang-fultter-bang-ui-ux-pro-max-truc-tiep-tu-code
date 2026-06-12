@@ -52,7 +52,7 @@ class _GovernanceSummary extends StatelessWidget {
                 const Icon(
                   Icons.lightbulb_outline_rounded,
                   color: AppColors.warn,
-                  size: 16,
+                  size: AppSpacing.arenaGovernanceIcon,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(
@@ -62,7 +62,7 @@ class _GovernanceSummary extends StatelessWidget {
                         : 'Nên chuyển sang Private hoặc Unlisted cho đến khi rule rõ ràng hơn.',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.4,
+                      height: AppSpacing.arenaGovernanceBodyLineHeight,
                     ),
                   ),
                 ),
@@ -121,7 +121,7 @@ class _GovernanceFooter extends StatelessWidget {
                   child: const Icon(
                     Icons.chevron_left_rounded,
                     color: AppColors.text2,
-                    size: 22,
+                    size: AppSpacing.arenaGovernanceFooterIcon,
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x3),
@@ -139,7 +139,7 @@ class _GovernanceFooter extends StatelessWidget {
                           color: canContinue
                               ? AppColors.onAccent
                               : AppColors.text3,
-                          size: 16,
+                          size: AppSpacing.arenaGovernanceIcon,
                         ),
                       ],
                     ),
@@ -163,7 +163,7 @@ class _GovernanceFooter extends StatelessWidget {
                       const Icon(
                         Icons.save_outlined,
                         color: AppColors.text3,
-                        size: 14,
+                        size: AppSpacing.arenaGovernanceSmallIcon,
                       ),
                       const SizedBox(width: AppSpacing.x1),
                       Text(

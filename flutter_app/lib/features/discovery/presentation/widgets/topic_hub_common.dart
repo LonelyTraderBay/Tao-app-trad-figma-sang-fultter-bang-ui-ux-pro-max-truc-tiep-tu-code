@@ -46,7 +46,7 @@ List<Widget> _withSectionGaps(List<Widget> children) {
   if (children.isEmpty) return const [];
   return [
     for (var i = 0; i < children.length; i++) ...[
-      if (i > 0) const SizedBox(height: AppSpacing.x3),
+      if (i > 0) const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
       children[i],
     ],
   ];
@@ -84,7 +84,6 @@ class _ModuleBadge extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: color,
-              fontSize: 9,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -115,7 +114,6 @@ class _StatusMini extends StatelessWidget {
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
           fontWeight: AppTextStyles.bold,
         ),
       ),

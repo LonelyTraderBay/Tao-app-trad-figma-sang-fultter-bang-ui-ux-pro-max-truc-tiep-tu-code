@@ -75,7 +75,7 @@ class _DetailRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 88,
+            width: AppSpacing.stakingHistoryDetailLabelWidth,
             child: Text(
               label,
               style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -226,9 +226,13 @@ class _TypeIcon extends StatelessWidget {
         borderRadius: AppRadii.lgRadius,
       ),
       child: SizedBox(
-        width: 40,
-        height: 40,
-        child: Icon(_typeIcon(type), color: color, size: 20),
+        width: AppSpacing.stakingHistoryIconBox,
+        height: AppSpacing.stakingHistoryIconBox,
+        child: Icon(
+          _typeIcon(type),
+          color: color,
+          size: AppSpacing.stakingHistoryIcon,
+        ),
       ),
     );
   }
@@ -250,14 +254,14 @@ class _StatusPill extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.x2,
-          vertical: 3,
+          vertical: AppSpacing.stakingHistoryPillPadV,
         ),
         child: Text(
           _statusLabel(status),
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.stakingHistoryPillLineHeight,
           ),
         ),
       ),
@@ -280,7 +284,7 @@ class _FooterNote extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text3,
-          height: 1.5,
+          height: AppSpacing.stakingHistoryFooterLineHeight,
         ),
       ),
     );

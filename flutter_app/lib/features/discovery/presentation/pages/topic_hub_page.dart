@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
@@ -137,7 +138,11 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
                       AppSpacing.contentPad,
                       bottomInset,
                     ),
-                    child: _TopicContent(snapshot: snapshot),
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      children: [_TopicContent(snapshot: snapshot)],
+                    ),
                   ),
                 ),
               ),

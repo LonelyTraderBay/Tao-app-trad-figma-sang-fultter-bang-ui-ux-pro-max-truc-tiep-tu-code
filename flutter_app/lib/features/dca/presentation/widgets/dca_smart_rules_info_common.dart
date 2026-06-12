@@ -59,7 +59,11 @@ class _InfoCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.primary, size: 18),
+          Icon(
+            icon,
+            color: AppColors.primary,
+            size: AppSpacing.dcaSmartInlineIcon,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
@@ -90,7 +94,7 @@ class _SuccessCard extends StatelessWidget {
           const Icon(
             Icons.check_circle_outline_rounded,
             color: AppColors.buy,
-            size: 18,
+            size: AppSpacing.dcaSmartInlineIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -171,13 +175,16 @@ class _TinyBadge extends StatelessWidget {
         borderRadius: AppRadii.smRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.x3,
+          vertical: AppSpacing.x1,
+        ),
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.dcaSmartBadgeLineHeight,
           ),
         ),
       ),
@@ -205,7 +212,7 @@ class _DeleteButton extends StatelessWidget {
           padding: EdgeInsets.zero,
           icon: const Icon(
             Icons.delete_outline_rounded,
-            size: 18,
+            size: AppSpacing.dcaSmartInlineIcon,
             color: AppColors.sell,
           ),
         ),

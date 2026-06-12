@@ -47,7 +47,6 @@ class _StatsTab extends StatelessWidget {
                 'Tỷ lệ thắng/thua',
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -83,7 +82,6 @@ class _StatsTab extends StatelessWidget {
                       textAlign: TextAlign.right,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        fontSize: 12,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -111,7 +109,6 @@ class _StatsTab extends StatelessWidget {
                 'Thống kê chi tiết',
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -153,7 +150,6 @@ class _StatsLine extends StatelessWidget {
               row.label,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                fontSize: 12,
                 height: 1,
               ),
             ),
@@ -162,7 +158,6 @@ class _StatsLine extends StatelessWidget {
             row.value,
             style: AppTextStyles.caption.copyWith(
               color: row.color,
-              fontSize: 13,
               fontWeight: AppTextStyles.medium,
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
@@ -194,7 +189,6 @@ class _LegendDot extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
             height: 1,
           ),
         ),
@@ -221,7 +215,6 @@ class _MiniBadge extends StatelessWidget {
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -238,15 +231,7 @@ class _Panel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        color: _profileCard,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: child,
-    );
+    return VitCard(padding: padding, child: child);
   }
 }
 

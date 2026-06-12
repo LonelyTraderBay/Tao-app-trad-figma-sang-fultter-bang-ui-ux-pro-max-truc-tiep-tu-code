@@ -39,12 +39,11 @@ class _FieldSection extends StatelessWidget {
           ),
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 13,
             fontWeight: FontWeight.w700,
             height: 1,
           ),
         ),
-        const SizedBox(height: 10),
+        const Padding(padding: EdgeInsets.only(top: 10)),
         child,
       ],
     );
@@ -186,7 +185,7 @@ class _SuccessIcon extends StatelessWidget {
             size: 42,
           ),
         ),
-        const SizedBox(height: 14),
+        const Padding(padding: EdgeInsets.only(top: 14)),
         Text(
           title,
           textAlign: TextAlign.center,
@@ -217,7 +216,6 @@ class _SummaryCard extends StatelessWidget {
                     row.label,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      fontSize: 13,
                     ),
                   ),
                 ),
@@ -227,7 +225,6 @@ class _SummaryCard extends StatelessWidget {
                     textAlign: TextAlign.right,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontSize: 13,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -263,11 +260,7 @@ class _WarningCard extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: AppTextStyles.caption.copyWith(
-                color: color,
-                fontSize: 12,
-                height: 1.45,
-              ),
+              style: AppTextStyles.caption.copyWith(color: color, height: 1.45),
             ),
           ),
         ],
@@ -294,16 +287,14 @@ class _KeyResultCard extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 11,
               fontWeight: FontWeight.w700,
             ),
           ),
-          const SizedBox(height: 8),
+          const Padding(padding: EdgeInsets.only(top: 8)),
           Text(
             value,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               height: 1.45,
             ),
           ),

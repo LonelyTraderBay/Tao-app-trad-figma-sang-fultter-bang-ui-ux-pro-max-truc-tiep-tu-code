@@ -140,7 +140,7 @@ class _SuccessStep extends StatelessWidget {
               const Icon(
                 Icons.check_circle_outline_rounded,
                 color: AppColors.buy,
-                size: 48,
+                size: AppSpacing.launchpadBox48,
               ),
               const SizedBox(height: AppSpacing.x4),
               Text(

@@ -95,38 +95,50 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                     customGap: 0,
                     fullBleed: true,
                     children: [
-                      _AvatarEditor(
-                        initial: snapshot.user.fullName.substring(0, 1),
-                        selected: _cameraSelected,
-                        onTap: () {
-                          HapticFeedback.selectionClick();
-                          setState(() => _cameraSelected = !_cameraSelected);
-                        },
+                      VitCard(
+                        padding: EdgeInsets.zero,
+                        child: _AvatarEditor(
+                          initial: snapshot.user.fullName.substring(0, 1),
+                          selected: _cameraSelected,
+                          onTap: () {
+                            HapticFeedback.selectionClick();
+                            setState(() => _cameraSelected = !_cameraSelected);
+                          },
+                        ),
                       ),
-                      const SizedBox(height: 52),
-                      _EditProfileField(
-                        label: 'H\u1ECC V\u00C0 T\u00CAN',
-                        controller: _nameController,
-                        keyValue: EditProfilePage.fullNameFieldKey,
-                        onChanged: (_) => setState(() {}),
+                      const Padding(padding: EdgeInsets.only(top: 52)),
+                      VitCard(
+                        padding: EdgeInsets.zero,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            _EditProfileField(
+                              label: 'H\u1ECC V\u00C0 T\u00CAN',
+                              controller: _nameController,
+                              keyValue: EditProfilePage.fullNameFieldKey,
+                              onChanged: (_) => setState(() {}),
+                            ),
+                            const Padding(padding: EdgeInsets.only(top: 18)),
+                            _EditProfileField(
+                              label: 'EMAIL',
+                              controller: _emailController,
+                              readOnly: true,
+                              note:
+                                  'Email kh\u00F4ng th\u1EC3 thay \u0111\u1ED5i',
+                              muted: true,
+                            ),
+                            const Padding(padding: EdgeInsets.only(top: 18)),
+                            _EditProfileField(
+                              label: 'S\u1ED0 \u0110I\u1EC6N THO\u1EA0I',
+                              controller: _phoneController,
+                              keyValue: EditProfilePage.phoneFieldKey,
+                              keyboardType: TextInputType.phone,
+                              onChanged: (_) => setState(() {}),
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 18),
-                      _EditProfileField(
-                        label: 'EMAIL',
-                        controller: _emailController,
-                        readOnly: true,
-                        note: 'Email kh\u00F4ng th\u1EC3 thay \u0111\u1ED5i',
-                        muted: true,
-                      ),
-                      const SizedBox(height: 18),
-                      _EditProfileField(
-                        label: 'S\u1ED0 \u0110I\u1EC6N THO\u1EA0I',
-                        controller: _phoneController,
-                        keyValue: EditProfilePage.phoneFieldKey,
-                        keyboardType: TextInputType.phone,
-                        onChanged: (_) => setState(() {}),
-                      ),
-                      const SizedBox(height: 18),
+                      const Padding(padding: EdgeInsets.only(top: 18)),
                       KeyedSubtree(
                         key: EditProfilePage.saveKey,
                         child: VitCtaButton(
@@ -141,12 +153,15 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 14),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review profile changes',
-                        message:
-                            'Confirm name, phone number, avatar change, and account notification details before saving.',
+                      const Padding(padding: EdgeInsets.only(top: 14)),
+                      const VitCard(
+                        padding: EdgeInsets.zero,
+                        child: VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Review profile changes',
+                          message:
+                              'Confirm name, phone number, avatar change, and account notification details before saving.',
+                        ),
                       ),
                     ],
                   ),
@@ -214,7 +229,6 @@ class _AvatarEditor extends StatelessWidget {
                 initial,
                 style: AppTextStyles.sectionTitle.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: 36,
                   fontWeight: FontWeight.w900,
                   height: 1,
                 ),
@@ -248,15 +262,11 @@ class _AvatarEditor extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        const Padding(padding: EdgeInsets.only(top: 10)),
         Text(
           'Nh\u1EA5n v\u00E0o bi\u1EC3u t\u01B0\u1EE3ng camera \u0111\u1EC3 thay \u0111\u1ED5i',
           textAlign: TextAlign.center,
-          style: AppTextStyles.micro.copyWith(
-            color: _editMuted,
-            fontSize: 12,
-            height: 1.1,
-          ),
+          style: AppTextStyles.micro.copyWith(color: _editMuted, height: 1.1),
         ),
       ],
     );
@@ -293,12 +303,11 @@ class _EditProfileField extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: FontWeight.w900,
             height: 1,
           ),
         ),
-        const SizedBox(height: 10),
+        const Padding(padding: EdgeInsets.only(top: 10)),
         VitInput(
           fieldKey: keyValue,
           controller: controller,
@@ -308,14 +317,10 @@ class _EditProfileField extends StatelessWidget {
           onChanged: onChanged,
         ),
         if (note != null) ...[
-          const SizedBox(height: 7),
+          const Padding(padding: EdgeInsets.only(top: 7)),
           Text(
             note!,
-            style: AppTextStyles.micro.copyWith(
-              color: _editMuted,
-              fontSize: 11,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: _editMuted, height: 1),
           ),
         ],
       ],

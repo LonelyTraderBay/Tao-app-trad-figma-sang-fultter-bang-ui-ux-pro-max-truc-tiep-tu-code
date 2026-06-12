@@ -7,27 +7,20 @@ class _OverviewContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: AppSpacing.x4,
       children: [
         _FundSummaryCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x4),
         _EligibilityCard(items: snapshot.eligibilityItems),
-        const SizedBox(height: AppSpacing.x4),
         _FundHealthCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x4),
         _FundChartCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x4),
         _CoverageCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x4),
         _CoverageTierCard(tiers: snapshot.coverageTiers),
-        const SizedBox(height: AppSpacing.x4),
         _NotificationCard(prefs: snapshot.notificationPrefs),
-        const SizedBox(height: AppSpacing.x4),
         const _HowItWorksCard(),
-        const SizedBox(height: AppSpacing.x4),
         _ClaimCalculatorCard(coveragePct: snapshot.userCoveragePct),
-        const SizedBox(height: AppSpacing.x4),
         _PlatformStatsCard(snapshot: snapshot),
       ],
     );
@@ -45,8 +38,10 @@ class _FundSummaryCard extends StatelessWidget {
       radius: VitCardRadius.lg,
       borderColor: AppColors.warningBorder,
       padding: const EdgeInsets.all(AppSpacing.x4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.x3,
         children: [
           Row(
             children: [
@@ -71,20 +66,16 @@ class _FundSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
           Text(
             '${_formatVnd(snapshot.totalFund)} đ',
             style: AppTextStyles.heroNumber.copyWith(
               color: AppModuleAccents.p2p,
-              fontSize: 31,
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
           Text(
             'Tổng quỹ hiện có để bảo vệ giao dịch P2P gặp sự cố.',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               Expanded(
@@ -123,28 +114,24 @@ class _EligibilityCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.md,
       padding: const EdgeInsets.all(AppSpacing.x4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.x3,
         children: [
           _CardTitle(
             icon: Icons.check_circle_outline_rounded,
             title: 'Điều kiện bồi thường',
           ),
-          const SizedBox(height: AppSpacing.x3),
-          for (final item in items) ...[
-            _EligibilityRow(item: item),
-            const SizedBox(height: AppSpacing.x2),
-          ],
-          Container(
-            width: double.infinity,
+          for (final item in items) _EligibilityRow(item: item),
+          VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
             padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.x3,
               vertical: AppSpacing.x2,
             ),
-            decoration: BoxDecoration(
-              color: AppColors.buy15,
-              borderRadius: AppRadii.mdRadius,
-            ),
+            borderColor: AppColors.buy20,
             child: Text(
               'Bạn đủ điều kiện gửi yêu cầu bồi thường',
               textAlign: TextAlign.center,
@@ -170,8 +157,10 @@ class _FundHealthCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.md,
       padding: const EdgeInsets.all(AppSpacing.x4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.x3,
         children: [
           Row(
             children: [
@@ -188,12 +177,10 @@ class _FundHealthCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
           Text(
             'Quỹ đủ khả năng chi trả toàn bộ claims đang xử lý',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
           _TwoColumnInfo(
             label: 'Tỷ lệ thanh khoản',
             value: '${snapshot.solvencyRatio}x',
@@ -215,7 +202,6 @@ class _FundHealthCard extends StatelessWidget {
             label: 'Hạn mức/30 ngày',
             value: '${_formatVnd(snapshot.maxClaimPerPeriod)} đ',
           ),
-          const SizedBox(height: AppSpacing.x3),
           VitCard(
             key: P2PInsuranceFundPage.certificateKey,
             variant: VitCardVariant.inner,
@@ -224,14 +210,13 @@ class _FundHealthCard extends StatelessWidget {
             onTap: () => context.go(snapshot.certificateRoute),
             child: Row(
               children: [
-                Container(
+                const VitCard(
                   width: AppSpacing.buttonCompact,
                   height: AppSpacing.buttonCompact,
-                  decoration: BoxDecoration(
-                    color: AppColors.primary12,
-                    borderRadius: AppRadii.mdRadius,
-                  ),
-                  child: const Icon(
+                  variant: VitCardVariant.inner,
+                  radius: VitCardRadius.sm,
+                  alignment: Alignment.center,
+                  child: Icon(
                     Icons.verified_user_outlined,
                     color: AppModuleAccents.p2p,
                     size: AppSpacing.iconMd,
@@ -283,8 +268,10 @@ class _FundChartCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.md,
       padding: const EdgeInsets.all(AppSpacing.x4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.x3,
         children: [
           Row(
             children: [
@@ -303,12 +290,10 @@ class _FundChartCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
           Text(
             'Số dư quỹ bảo hiểm (triệu VND)',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
           Row(
             children: const [
               _RangeChip(label: '7 ngày'),
@@ -318,7 +303,6 @@ class _FundChartCard extends StatelessWidget {
               _RangeChip(label: '90 ngày'),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
           SizedBox(
             height: AppSpacing.buttonHero * 1.55,
             child: CustomPaint(
@@ -326,7 +310,6 @@ class _FundChartCard extends StatelessWidget {
               child: const SizedBox.expand(),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(

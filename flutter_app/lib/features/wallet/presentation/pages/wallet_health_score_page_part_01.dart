@@ -9,8 +9,10 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 92
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.walletHealthBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.walletHealthBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -34,7 +36,7 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: WalletHealthScorePage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
+                  padding: AppSpacing.walletHealthScrollPadding(bottomInset),
                   physics: const BouncingScrollPhysics(),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
@@ -67,48 +69,36 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
       context: context,
       backgroundColor: _healthPanel,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            padding: AppSpacing.walletHealthSheetPadding,
+            child: VitPageContent(
+              padding: VitContentPadding.none,
+              fullBleed: true,
+              customGap: AppSpacing.walletHealthSheetGap,
               children: [
                 Text(
                   recommendation.actionLabel,
-                  style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
+                  style: AppTextStyles.sectionTitle,
                 ),
-                const SizedBox(height: 10),
                 Text(
                   recommendation.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1.45,
                   ),
                 ),
-                const SizedBox(height: 16),
-                GestureDetector(
-                  onTap: () => Navigator.of(context).pop(),
-                  behavior: HitTestBehavior.opaque,
-                  child: Container(
-                    height: 46,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: _healthPrimary,
-                      borderRadius: AppRadii.inputRadius,
-                    ),
-                    child: Text(
-                      'Done',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.onAccent,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w900,
-                      ),
+                VitCtaButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    'Done',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.onAccent,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
                 ),
@@ -130,7 +120,7 @@ class _HealthTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 54,
+      height: AppSpacing.walletHealthTabsHeight,
       decoration: const BoxDecoration(
         color: _healthPanel,
         border: Border(bottom: BorderSide(color: _healthBorder)),
@@ -156,24 +146,22 @@ class _HealthTabs extends StatelessWidget {
                           color: activeTab == tab
                               ? _healthPrimary
                               : AppColors.textDisabled,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w800,
-                          height: 1,
+                          fontWeight: AppTextStyles.bold,
                         ),
                       ),
                     ),
                     Positioned(
-                      left: 7,
-                      right: 7,
+                      left: AppSpacing.walletHealthTabIndicatorInset,
+                      right: AppSpacing.walletHealthTabIndicatorInset,
                       bottom: 0,
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 180),
-                        height: 2,
+                        height: AppSpacing.walletHealthTabIndicatorHeight,
                         decoration: BoxDecoration(
                           color: activeTab == tab
                               ? _healthPrimary
                               : AppColors.transparent,
-                          borderRadius: BorderRadius.circular(999),
+                          borderRadius: AppRadii.pillRadius,
                         ),
                       ),
                     ),
@@ -198,24 +186,17 @@ class _OverviewTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: AppSpacing.walletHealthContentGap,
       children: [
         _OverallScoreCard(snapshot: snapshot),
-        const SizedBox(height: 16),
         _RadarCard(metrics: snapshot.metrics),
-        const SizedBox(height: 16),
         const _SectionLabel(label: 'Chi ti\u1EBFt \u0111i\u1EC3m'),
-        const SizedBox(height: 10),
-        for (final metric in snapshot.metrics) ...[
-          _MetricCard(metric: metric),
-          if (metric != snapshot.metrics.last) const SizedBox(height: 8),
-        ],
-        const SizedBox(height: 16),
+        for (final metric in snapshot.metrics) ...[_MetricCard(metric: metric)],
         _TrendCard(history: snapshot.history),
-        const SizedBox(height: 16),
         const _SectionLabel(label: '\u0110\u1EC1 xu\u1EA5t \u01B0u ti\u00EAn'),
-        const SizedBox(height: 10),
         if (snapshot.priorityRecommendations.isEmpty)
           const VitEmptyState(
             title: 'No priority recommendations',
@@ -227,8 +208,6 @@ class _OverviewTab extends StatelessWidget {
               recommendation: rec,
               onTap: () => onRecommendationTap(rec),
             ),
-            if (rec != snapshot.priorityRecommendations.last)
-              const SizedBox(height: 10),
           ],
       ],
     );
@@ -244,28 +223,28 @@ class _OverallScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scoreColor = _scoreColor(snapshot.overallScore);
     return VitCard(
-      height: 292,
-      padding: const EdgeInsets.fromLTRB(16, 22, 16, 20),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.walletHealthOverallHeight,
+      ),
+      padding: AppSpacing.walletHealthOverallPadding,
       borderColor: _healthBorder,
-      child: Column(
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.walletHealthCardGap,
         children: [
           Text(
             'Overall Health Score',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 11,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 10),
           SizedBox(
-            width: 160,
-            height: 160,
+            width: AppSpacing.walletHealthGaugeSize,
+            height: AppSpacing.walletHealthGaugeSize,
             child: Stack(
               alignment: Alignment.center,
               children: [
                 CustomPaint(
-                  size: const Size.square(160),
+                  size: const Size.square(AppSpacing.walletHealthGaugeSize),
                   painter: _GaugePainter(
                     score: snapshot.overallScore,
                     color: scoreColor,
@@ -278,19 +257,14 @@ class _OverallScoreCard extends StatelessWidget {
                       '${snapshot.overallScore}',
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: scoreColor,
-                        fontSize: 42,
-                        fontWeight: FontWeight.w900,
-                        fontFamily: 'Roboto',
-                        height: .95,
+                        fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.walletHealthScoreGap),
                     Text(
                       '/ 100',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
-                        height: 1,
                       ),
                     ),
                   ],
@@ -298,25 +272,17 @@ class _OverallScoreCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 14),
           Text(
             snapshot.overallStatus,
             style: AppTextStyles.caption.copyWith(
               color: scoreColor,
-              fontSize: 14,
-              fontWeight: FontWeight.w900,
-              height: 1,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 8),
           Text(
             'Your wallet is ${snapshot.overallMessage}',
             textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 11,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -332,22 +298,21 @@ class _RadarCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 325,
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
+      height: AppSpacing.walletHealthRadarHeight,
+      padding: AppSpacing.walletHealthRadarPadding,
       borderColor: _healthBorder,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.walletHealthCardGap,
         children: [
           Text(
             'Health Breakdown',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 13,
-              fontWeight: FontWeight.w900,
-              height: 1,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 10),
           Expanded(
             child: CustomPaint(
               painter: _RadarPainter(metrics),
@@ -370,8 +335,10 @@ class _MetricCard extends StatelessWidget {
     final color = _statusColor(metric.status);
     return VitCard(
       radius: VitCardRadius.sm,
-      height: 60,
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.walletHealthMetricHeight,
+      ),
+      padding: AppSpacing.walletHealthMetricPadding,
       borderColor: _healthBorder,
       child: Column(
         children: [
@@ -382,9 +349,7 @@ class _MetricCard extends StatelessWidget {
                   metric.category,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
               ),
@@ -392,21 +357,18 @@ class _MetricCard extends StatelessWidget {
                 '${metric.score}',
                 style: AppTextStyles.caption.copyWith(
                   color: color,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w900,
-                  fontFamily: 'Roboto',
-                  height: 1,
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.walletHealthMetricValueGap),
               _StatusBadge(label: metric.status, color: color),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.walletHealthInlineGap),
           ClipRRect(
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.pillRadius,
             child: SizedBox(
-              height: 6,
+              height: AppSpacing.walletHealthProgressHeight,
               child: LinearProgressIndicator(
                 value: metric.score / metric.maxScore,
                 backgroundColor: _healthBackground,
@@ -428,22 +390,21 @@ class _TrendCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 205,
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 14),
+      height: AppSpacing.walletHealthTrendHeight,
+      padding: AppSpacing.walletHealthTrendPadding,
       borderColor: _healthBorder,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.walletHealthTrendGap,
         children: [
           Text(
             'Health Trend (6 months)',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 13,
-              fontWeight: FontWeight.w900,
-              height: 1,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 12),
           Expanded(
             child: CustomPaint(
               painter: _TrendPainter(history),

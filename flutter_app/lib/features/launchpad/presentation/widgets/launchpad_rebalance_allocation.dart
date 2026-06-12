@@ -26,7 +26,7 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              fontSize: 12,
+              fontSize: AppSpacing.launchpadFontLg,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -39,7 +39,11 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
                   colors: [for (final asset in assets) asset.accent],
                 ),
               ),
-              const Icon(Icons.sync_rounded, color: AppColors.text3, size: 18),
+              const Icon(
+                Icons.sync_rounded,
+                color: AppColors.text3,
+                size: AppSpacing.launchpadIcon2xl,
+              ),
               Expanded(
                 child: _DonutBlock(
                   label: 'Muc tieu',
@@ -60,8 +64,8 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      width: 8,
-                      height: 8,
+                      width: AppSpacing.launchpadDotMd,
+                      height: AppSpacing.launchpadDotMd,
                       decoration: BoxDecoration(
                         color: asset.accent,
                         borderRadius: AppRadii.xsRadius,
@@ -72,7 +76,7 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
                       asset.symbol,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 9,
+                        fontSize: AppSpacing.launchpadFontXs,
                       ),
                     ),
                   ],
@@ -104,13 +108,13 @@ class _DonutBlock extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 9,
+            fontSize: AppSpacing.launchpadFontXs,
           ),
         ),
         const SizedBox(height: AppSpacing.x2),
         SizedBox(
-          width: 104,
-          height: 104,
+          width: AppSpacing.launchpadBox104,
+          height: AppSpacing.launchpadBox104,
           child: CustomPaint(
             painter: _DonutPainter(values: values, colors: colors),
           ),

@@ -220,7 +220,10 @@ class _ValidatorCard extends StatelessWidget {
           ),
           if (selected) ...[
             const SizedBox(height: AppSpacing.x3),
-            const Divider(color: AppColors.borderSolid, height: 1),
+            const Divider(
+              color: AppColors.borderSolid,
+              height: AppSpacing.stakingValidatorHealthDividerHeight,
+            ),
             const SizedBox(height: AppSpacing.x3),
             Row(
               children: [
@@ -321,7 +324,7 @@ class _TrendSection extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: 196,
+                height: AppSpacing.stakingValidatorHealthTrendHeight,
                 child: CustomPaint(
                   painter: _UptimeTrendPainter(points),
                   child: const SizedBox.expand(),

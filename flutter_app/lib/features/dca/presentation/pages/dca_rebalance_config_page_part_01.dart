@@ -15,8 +15,10 @@ class _InfoBanner extends StatelessWidget {
           const _AccentIcon(icon: Icons.verified_user_outlined),
           const SizedBox(width: AppSpacing.x4),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: VitPageContent(
+              padding: VitContentPadding.none,
+              customGap: AppSpacing.x2,
+              fullBleed: true,
               children: [
                 Text(
                   'Tự động cân bằng danh mục',
@@ -25,12 +27,11 @@ class _InfoBanner extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
                 Text(
                   'Duy trì tỷ lệ phân bổ tài sản theo mục tiêu. Hệ thống tự động mua/bán khi danh mục lệch khỏi ngưỡng.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.dcaRebalanceBodyLineHeight,
                   ),
                 ),
               ],
@@ -78,8 +79,8 @@ class _AllocationSummary extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: 132,
-                height: 132,
+                width: AppSpacing.dcaRebalanceRingSize,
+                height: AppSpacing.dcaRebalanceRingSize,
                 child: CustomPaint(
                   painter: _DonutPainter(targets: targets),
                   child: Center(
@@ -90,7 +91,7 @@ class _AllocationSummary extends StatelessWidget {
                           '${totalPercent.toStringAsFixed(0)}%',
                           style: AppTextStyles.sectionTitle.copyWith(
                             color: AppColors.text1,
-                            height: 1,
+                            height: AppSpacing.dcaRebalanceTightLineHeight,
                           ),
                         ),
                         const SizedBox(height: AppSpacing.x1),
@@ -140,7 +141,7 @@ class _AllocationSummary extends StatelessWidget {
                       ? Icons.check_circle_outline_rounded
                       : Icons.error_outline_rounded,
                   color: _valid ? AppColors.buy : AppColors.sell,
-                  size: 18,
+                  size: AppSpacing.dcaRebalanceIcon,
                 ),
                 const SizedBox(width: AppSpacing.x3),
                 Text(
@@ -268,7 +269,7 @@ class _TargetCard extends StatelessWidget {
                               const Icon(
                                 Icons.keyboard_arrow_down_rounded,
                                 color: AppColors.text3,
-                                size: 18,
+                                size: AppSpacing.dcaRebalanceIcon,
                               ),
                             ],
                           ),
@@ -340,7 +341,7 @@ class _TargetCard extends StatelessWidget {
                       const SizedBox(width: AppSpacing.x2),
                       const Icon(
                         Icons.help_outline_rounded,
-                        size: 13,
+                        size: AppSpacing.dcaRebalanceIconXs,
                         color: AppColors.text3,
                       ),
                       const Spacer(),
@@ -489,7 +490,7 @@ class _StrategyOptionTile extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: selected ? AppColors.accent : AppColors.borderSolid,
-                    width: 2,
+                    width: AppSpacing.dcaRebalanceConnectorWidth,
                   ),
                 ),
                 child: selected

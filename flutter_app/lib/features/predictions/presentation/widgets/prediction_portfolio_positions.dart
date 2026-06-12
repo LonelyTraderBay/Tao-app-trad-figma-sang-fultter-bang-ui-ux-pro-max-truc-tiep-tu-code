@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/domain/entities/predictions_entities.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
@@ -41,7 +42,8 @@ class PredictionPortfolioPositionsList extends StatelessWidget {
             position: positions[index],
             event: snapshot.eventFor(positions[index].eventId),
           ),
-          if (index != positions.length - 1) const SizedBox(height: 10),
+          if (index != positions.length - 1)
+            const SizedBox(height: AppSpacing.predictionPortfolioListGap),
         ],
       ],
     );
@@ -79,13 +81,13 @@ class PredictionPortfolioPositionCard extends StatelessWidget {
 
     return VitCard(
       onTap: () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
-      padding: const EdgeInsets.fromLTRB(14, 14, 12, 26),
+      padding: AppSpacing.predictionPortfolioPositionCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 38,
-            height: 38,
+            width: AppSpacing.predictionPortfolioPositionIconBox,
+            height: AppSpacing.predictionPortfolioPositionIconBox,
             decoration: BoxDecoration(
               color: statusColor.withValues(alpha: .12),
               borderRadius: AppRadii.mdRadius,
@@ -97,10 +99,10 @@ class PredictionPortfolioPositionCard extends StatelessWidget {
                   ? Icons.schedule_rounded
                   : Icons.cancel_outlined,
               color: statusColor,
-              size: 19,
+              size: AppSpacing.predictionPortfolioPositionIcon,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.predictionPortfolioPositionGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,17 +111,17 @@ class PredictionPortfolioPositionCard extends StatelessWidget {
                   event.title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.badge.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
-                    height: 1.28,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(
+                  height: AppSpacing.predictionPortfolioPositionTitleGap,
+                ),
                 Wrap(
-                  spacing: 8,
-                  runSpacing: 4,
+                  spacing: AppSpacing.predictionPortfolioChipGap,
+                  runSpacing: AppSpacing.predictionPortfolioChipRunGap,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     PredictionPortfolioTinyBadge(
@@ -130,10 +132,8 @@ class PredictionPortfolioPositionCard extends StatelessWidget {
                     Text(
                       '${formatPredictionPortfolioShares(position.shares)} shares @ '
                       '\$${position.avgPrice.toStringAsFixed(2)}',
-                      style: AppTextStyles.micro.copyWith(
+                      style: AppTextStyles.numericMicro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 10,
-                        height: 1.2,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
@@ -144,7 +144,9 @@ class PredictionPortfolioPositionCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(
+                  height: AppSpacing.predictionPortfolioPositionMetricsGap,
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -153,7 +155,9 @@ class PredictionPortfolioPositionCard extends StatelessWidget {
                         value: '\$${position.avgPrice.toStringAsFixed(2)}',
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(
+                      width: AppSpacing.predictionPortfolioPositionMetricsGap,
+                    ),
                     Expanded(
                       child: PredictionPortfolioSmallMetric(
                         label: 'Current:',
@@ -162,7 +166,9 @@ class PredictionPortfolioPositionCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(
+                  height: AppSpacing.predictionPortfolioPositionRowsGap,
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -174,7 +180,9 @@ class PredictionPortfolioPositionCard extends StatelessWidget {
                         strong: true,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(
+                      width: AppSpacing.predictionPortfolioPositionMetricsGap,
+                    ),
                     Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -184,9 +192,11 @@ class PredictionPortfolioPositionCard extends StatelessWidget {
                                 ? Icons.arrow_outward_rounded
                                 : Icons.south_east_rounded,
                             color: pnlColor,
-                            size: 13,
+                            size: AppSpacing.predictionPortfolioPnlArrowIcon,
                           ),
-                          const SizedBox(width: 3),
+                          const SizedBox(
+                            width: AppSpacing.predictionPortfolioPnlArrowGap,
+                          ),
                           Flexible(
                             child: Text(
                               '${formatPredictionPortfolioSignedMoney(position.pnl)} '
@@ -194,10 +204,8 @@ class PredictionPortfolioPositionCard extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.end,
-                              style: AppTextStyles.micro.copyWith(
+                              style: AppTextStyles.badge.copyWith(
                                 color: pnlColor,
-                                fontSize: 12,
-                                height: 1.2,
                                 fontWeight: AppTextStyles.bold,
                                 fontFeatures: AppTextStyles.tabularFigures,
                               ),
@@ -211,13 +219,13 @@ class PredictionPortfolioPositionCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.predictionPortfolioTrailingGap),
           const Padding(
-            padding: EdgeInsets.only(top: 18),
+            padding: AppSpacing.predictionPortfolioTrailingIconPadding,
             child: Icon(
               Icons.chevron_right_rounded,
               color: AppColors.text3,
-              size: 18,
+              size: AppSpacing.predictionPortfolioTrailingIcon,
             ),
           ),
         ],
@@ -244,25 +252,22 @@ class PredictionPortfolioSmallMetric extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 10,
-            height: 1.2,
-          ),
+          style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(width: 4),
+        const SizedBox(width: AppSpacing.predictionPortfolioMetricGap),
         Flexible(
           child: Text(
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: strong ? AppColors.text1 : AppColors.text2,
-              fontSize: strong ? 12 : 10,
-              height: 1.2,
-              fontWeight: strong ? AppTextStyles.bold : AppTextStyles.normal,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
+            style: (strong ? AppTextStyles.badge : AppTextStyles.numericMicro)
+                .copyWith(
+                  color: strong ? AppColors.text1 : AppColors.text2,
+                  fontWeight: strong
+                      ? AppTextStyles.bold
+                      : AppTextStyles.normal,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
           ),
         ),
       ],

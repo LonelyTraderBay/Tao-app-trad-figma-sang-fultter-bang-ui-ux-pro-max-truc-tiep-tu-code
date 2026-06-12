@@ -26,10 +26,12 @@ class _CommentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: reply ? 48 : 0),
+      padding: EdgeInsets.only(
+        left: reply ? AppSpacing.predictionSocialReplyIndent : 0,
+      ),
       child: VitCard(
         borderColor: comment.isPinned ? AppColors.primary15 : AppColors.border,
-        padding: const EdgeInsets.all(16),
+        padding: AppSpacing.predictionSocialCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -37,28 +39,26 @@ class _CommentCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _TierAvatar(tier: comment.userTier),
-                const SizedBox(width: 10),
+                const SizedBox(
+                  width: AppSpacing.predictionSocialCommentHeaderGap,
+                ),
                 Expanded(child: _CommentUser(comment: comment)),
                 const Icon(
                   Icons.more_horiz_rounded,
                   color: AppColors.text3,
-                  size: 18,
+                  size: AppSpacing.predictionSocialCommentMoreIcon,
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.predictionSocialCommentBodyGap),
             Text(
               comment.content,
-              style: AppTextStyles.caption.copyWith(
-                height: 1.55,
-                color: AppColors.text1,
-                fontSize: 13,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text1),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.predictionSocialCommentBodyGap),
             _CommentActions(comment: comment, reply: reply),
             if (comment.replies.isNotEmpty) ...[
-              const SizedBox(height: 14),
+              const SizedBox(height: AppSpacing.predictionSocialReplyGap),
               for (final child in comment.replies)
                 _CommentCard(comment: child, reply: true),
             ],
@@ -80,15 +80,14 @@ class _CommentUser extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Wrap(
-          spacing: 6,
-          runSpacing: 4,
+          spacing: AppSpacing.predictionSocialUserBadgeGap,
+          runSpacing: AppSpacing.predictionSocialUserBadgeRunGap,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             Text(
               comment.userName,
               style: AppTextStyles.caption.copyWith(
                 fontWeight: AppTextStyles.bold,
-                fontSize: 13,
               ),
             ),
             _SmallBadge(
@@ -99,15 +98,15 @@ class _CommentUser extends StatelessWidget {
               const _SmallBadge(label: 'PINNED', color: _predictionPrimary),
           ],
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.predictionSocialUserMetaGap),
         Row(
           children: [
             const Icon(
               Icons.access_time_rounded,
               color: AppColors.text3,
-              size: 11,
+              size: AppSpacing.predictionSocialTimeIcon,
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: AppSpacing.predictionSocialTimeIconGap),
             Flexible(
               child: Text(
                 comment.createdAtLabel,
@@ -115,7 +114,7 @@ class _CommentUser extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ),
-            const SizedBox(width: 7),
+            const SizedBox(width: AppSpacing.predictionSocialStanceBadgeGap),
             _SmallBadge(
               label: _stanceLabel(comment.stance).toUpperCase(),
               color: _stanceColor(comment.stance),
@@ -142,20 +141,20 @@ class _CommentActions extends StatelessWidget {
           label: '${comment.upvotes}',
           color: AppColors.buy,
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.predictionSocialActionGap),
         _ActionPill(
           icon: Icons.thumb_down_alt_outlined,
           label: '${comment.downvotes}',
           color: AppColors.sell,
         ),
         if (!reply) ...[
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.predictionSocialActionGap),
           const _ActionPill(
             icon: Icons.mode_comment_outlined,
             label: 'Tra loi',
           ),
         ],
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.predictionSocialActionReportGap),
         const _ActionPill(
           icon: Icons.flag_outlined,
           label: 'Bao cao',
@@ -174,8 +173,8 @@ class _TierAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 32,
-      height: 32,
+      width: AppSpacing.predictionSocialAvatar,
+      height: AppSpacing.predictionSocialAvatar,
       decoration: BoxDecoration(
         color: _tierColor(tier),
         shape: BoxShape.circle,
@@ -183,7 +182,7 @@ class _TierAvatar extends StatelessWidget {
       child: const Icon(
         Icons.person_outline_rounded,
         color: AppColors.onAccent,
-        size: 17,
+        size: AppSpacing.predictionSocialAvatarIcon,
       ),
     );
   }
@@ -198,17 +197,16 @@ class _SmallBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+      padding: AppSpacing.predictionSocialSmallBadgePadding,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .16),
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: AppRadii.xsRadius,
       ),
       child: Text(
         label,
-        style: AppTextStyles.micro.copyWith(
+        style: AppTextStyles.numericMicro.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          fontSize: 9,
         ),
       ),
     );
@@ -231,15 +229,15 @@ class _ActionPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      padding: AppSpacing.predictionSocialActionPillPadding,
       decoration: BoxDecoration(
         color: flat ? AppColors.transparent : AppColors.bg,
         borderRadius: AppRadii.smRadius,
       ),
       child: Row(
         children: [
-          Icon(icon, color: color, size: 14),
-          const SizedBox(width: 5),
+          Icon(icon, color: color, size: AppSpacing.predictionSocialActionIcon),
+          const SizedBox(width: AppSpacing.predictionSocialActionIconGap),
           Text(
             label,
             style: AppTextStyles.micro.copyWith(
@@ -260,23 +258,20 @@ class _CommentDisclaimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.primary15,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.predictionSocialCompactPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: _predictionPrimary,
-            size: 15,
+            size: AppSpacing.predictionSocialDisclosureIcon,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.predictionSocialDisclosureGap),
           Expanded(
             child: Text(
               'Y kien nguoi dung chi mang tinh tham khao. Khong phai loi khuyen dau tu. Tu chiu trach nhiem quyet dinh.',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                height: 1.5,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],

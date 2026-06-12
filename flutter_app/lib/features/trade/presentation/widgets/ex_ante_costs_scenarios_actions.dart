@@ -47,7 +47,6 @@ class _Scenarios extends StatelessWidget {
                 '${holdingPeriod == 1 ? 'Year' : 'Years'}',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -75,17 +74,13 @@ class _Scenarios extends StatelessWidget {
                         'Total',
                         style: AppTextStyles.caption.copyWith(
                           color: _costRed,
-                          fontSize: 12,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
                     ),
                     Text(
                       _formatEur(total),
-                      style: AppTextStyles.baseMedium.copyWith(
-                        color: _costRed,
-                        fontSize: 16,
-                      ),
+                      style: AppTextStyles.baseMedium.copyWith(color: _costRed),
                     ),
                   ],
                 ),
@@ -194,13 +189,10 @@ class _MetricBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       height: 56,
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 9),
-      decoration: BoxDecoration(
-        color: _costPanel2,
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -208,7 +200,6 @@ class _MetricBox extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
               height: 1,
             ),
           ),
@@ -217,7 +208,6 @@ class _MetricBox extends StatelessWidget {
             value,
             style: AppTextStyles.caption.copyWith(
               color: valueColor,
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -235,12 +225,10 @@ class _WarningBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       padding: const EdgeInsets.fromLTRB(12, 11, 12, 10),
-      decoration: BoxDecoration(
-        color: _costAmber.withValues(alpha: .13),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      borderColor: _costAmber.withValues(alpha: .28),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -251,7 +239,6 @@ class _WarningBox extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: _costAmber,
-                fontSize: 10,
                 fontWeight: AppTextStyles.bold,
                 height: 1.3,
               ),
@@ -285,7 +272,7 @@ class _PeriodButton extends StatelessWidget {
           shape: const StadiumBorder(),
         ),
         onPressed: onPressed,
-        child: Text(label, style: AppTextStyles.micro.copyWith(fontSize: 12)),
+        child: Text(label, style: AppTextStyles.micro),
       ),
     );
   }
@@ -299,29 +286,22 @@ class _ScenarioRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: _costPanel2,
-        borderRadius: AppRadii.smRadius,
-      ),
       child: Row(
         children: [
           Expanded(
             child: Text(
               label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text3,
-                fontSize: 11,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
             ),
           ),
           Text(
             _formatEur(value),
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
             ),
           ),

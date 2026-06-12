@@ -53,7 +53,7 @@ class _NoQueryState extends StatelessWidget {
           iconColor: AppModuleAccents.predictions,
           label: 'Trending',
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Wrap(
           key: UnifiedSearchPage.trendingKey,
           spacing: AppSpacing.x3,
@@ -69,7 +69,7 @@ class _NoQueryState extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         Text(
           'Khám phá theo module',
           style: AppTextStyles.micro.copyWith(
@@ -77,10 +77,10 @@ class _NoQueryState extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         for (final module in snapshot.modules) ...[
           _ModuleCard(module: module),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ],
       ],
     );
@@ -161,7 +161,7 @@ class _ModuleCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   module.subtitle,
                   maxLines: 1,

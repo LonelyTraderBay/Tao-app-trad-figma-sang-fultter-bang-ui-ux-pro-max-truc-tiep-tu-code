@@ -41,7 +41,6 @@ class _DisputeTabs extends StatelessWidget {
                                   color: tab.id == activeId
                                       ? _disputePrimary
                                       : AppColors.text3,
-                                  fontSize: 12,
                                   fontWeight: AppTextStyles.bold,
                                   height: 1,
                                 ),
@@ -89,7 +88,6 @@ class _TabBadge extends StatelessWidget {
         '$count',
         style: AppTextStyles.micro.copyWith(
           color: AppColors.onAccent,
-          fontSize: 10,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -114,20 +112,18 @@ class _CasesTab extends StatelessWidget {
     final cases = activeTabId == 'history'
         ? snapshot.resolvedCases
         : snapshot.activeCases;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: 12,
       children: [
-        if (lastResult != null && activeTabId == 'active') ...[
+        if (lastResult != null && activeTabId == 'active')
           _ResultBanner(result: lastResult!),
-          const SizedBox(height: 12),
-        ],
         if (cases.isEmpty)
           _EmptyCases(history: activeTabId == 'history')
         else
-          for (final disputeCase in cases) ...[
+          for (final disputeCase in cases)
             _DisputeCaseCard(disputeCase: disputeCase),
-            if (disputeCase != cases.last) const SizedBox(height: 12),
-          ],
       ],
     );
   }
@@ -156,7 +152,6 @@ class _DisputeCaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final statusColor = _statusColor(disputeCase.status);
     final resolved = disputeCase.status == 'resolved';
     return VitCard(
       padding: const EdgeInsets.all(16),
@@ -173,9 +168,10 @@ class _DisputeCaseCard extends StatelessWidget {
                   size: 15,
                 )
               else
-                _StatusPill(
-                  label: _statusLabel(disputeCase.status),
-                  color: statusColor,
+                VitStatusPill(
+                  label: _statusLabel(disputeCase.status).toUpperCase(),
+                  status: _statusPillStatus(disputeCase.status),
+                  size: VitStatusPillSize.sm,
                 ),
               const SizedBox(width: 8),
               Expanded(
@@ -187,7 +183,6 @@ class _DisputeCaseCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: resolved ? AppColors.buy : AppColors.text3,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -200,7 +195,6 @@ class _DisputeCaseCard extends StatelessWidget {
             disputeCase.subject,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 13,
               fontWeight: AppTextStyles.bold,
               height: 1.25,
             ),
@@ -210,7 +204,6 @@ class _DisputeCaseCard extends StatelessWidget {
             'Provider: ${disputeCase.providerName}',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 11,
               height: 1.25,
             ),
           ),
@@ -219,7 +212,6 @@ class _DisputeCaseCard extends StatelessWidget {
             disputeCase.description,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              fontSize: 10,
               height: 1.4,
             ),
           ),

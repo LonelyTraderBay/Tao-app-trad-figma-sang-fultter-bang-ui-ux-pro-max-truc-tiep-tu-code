@@ -16,6 +16,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 part '../widgets/performance_scenarios_intro_widgets.dart';
 part '../widgets/performance_scenarios_outcome_widgets.dart';
 
@@ -105,6 +107,18 @@ class _PerformanceScenariosPageState
                           holdingPeriod: selectedPeriod,
                         ),
                       const _InfoNote(),
+                      const TradeBodyReviewSection(
+                        title: 'Scenario body review',
+                        message: 'Performance scenario body reviewed',
+                        detail:
+                            'Holding period, modeled outcomes, warnings, assumptions, empty, and result states stay visible.',
+                        primary:
+                            'Risk warning and investment summary stay before modeled outcomes.',
+                        secondary:
+                            'Scenario cards remain assumptions, not return promises.',
+                        tertiary:
+                            'Holding-period controls stay tied to visible outcome calculations.',
+                      ),
                     ],
                   ),
                 ),

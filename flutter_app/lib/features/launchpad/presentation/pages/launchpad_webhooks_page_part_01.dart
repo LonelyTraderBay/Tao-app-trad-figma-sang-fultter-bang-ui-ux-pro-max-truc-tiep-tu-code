@@ -107,7 +107,7 @@ class _StatTile extends StatelessWidget {
               style: AppTextStyles.base.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.launchpadLineHeightTight,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
@@ -118,8 +118,8 @@ class _StatTile extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 9,
-                height: 1.2,
+                fontSize: AppSpacing.launchpadFontXs,
+                height: AppSpacing.launchpadLineHeightShort,
               ),
             ),
           ],
@@ -194,11 +194,13 @@ class _UnderlineTabButton extends StatelessWidget {
               ),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 180),
-                height: 2,
+                height: AppSpacing.launchpadGapXxs,
                 width: active ? 132 : 0,
                 decoration: BoxDecoration(
                   color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(1),
+                  borderRadius: BorderRadius.circular(
+                    AppSpacing.launchpadRadiusXxs,
+                  ),
                 ),
               ),
             ],
@@ -225,8 +227,8 @@ class _CreateWebhookCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: AppSpacing.launchpadBox40,
+            height: AppSpacing.launchpadBox40,
             decoration: const BoxDecoration(
               color: AppColors.accent15,
               borderRadius: AppRadii.cardRadius,
@@ -252,7 +254,7 @@ class _CreateWebhookCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 11,
+                    fontSize: AppSpacing.launchpadFontMd,
                   ),
                 ),
               ],
@@ -347,7 +349,10 @@ class _SubscriptionCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(width: 3, color: statusColor),
+            Container(
+              width: AppSpacing.launchpadVerticalMarkerWidth,
+              color: statusColor,
+            ),
             Expanded(
               child: Column(
                 children: [
@@ -369,7 +374,7 @@ class _SubscriptionCard extends StatelessWidget {
                                   ? Icons.expand_less_rounded
                                   : Icons.expand_more_rounded,
                               color: AppColors.text3,
-                              size: 18,
+                              size: AppSpacing.launchpadIcon2xl,
                             ),
                           ],
                         ),
@@ -437,16 +442,16 @@ class _SubscriptionSummary extends StatelessWidget {
               '${subscription.eventTypes.length} events',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
-                height: 1.2,
+                fontSize: AppSpacing.launchpadFontSm,
+                height: AppSpacing.launchpadLineHeightShort,
               ),
             ),
             Text(
               '${subscription.triggerCount} triggers',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
-                height: 1.2,
+                fontSize: AppSpacing.launchpadFontSm,
+                height: AppSpacing.launchpadLineHeightShort,
               ),
             ),
           ],
@@ -464,13 +469,17 @@ class _ChainIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.launchpadBox40,
+      height: AppSpacing.launchpadBox40,
       decoration: BoxDecoration(
         color: subscription.accent.withValues(alpha: .15),
         borderRadius: AppRadii.cardRadius,
       ),
-      child: Icon(Icons.hub_outlined, color: subscription.accent, size: 18),
+      child: Icon(
+        Icons.hub_outlined,
+        color: subscription.accent,
+        size: AppSpacing.launchpadIcon2xl,
+      ),
     );
   }
 }

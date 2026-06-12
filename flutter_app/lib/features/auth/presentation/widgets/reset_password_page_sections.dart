@@ -24,13 +24,13 @@ class _ResetExpired extends StatelessWidget {
               size: 40,
             ),
           ),
-          const SizedBox(height: AppSpacing.x6),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x6)),
           Text(
             'Phiên xác minh đã hết hạn',
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             'Vui lòng xác minh OTP lại để tạo mật khẩu mới. '
             'Mã OTP không được lưu trong URL.',
@@ -67,13 +67,13 @@ class _ResetHero extends StatelessWidget {
             size: 34,
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         Text(
           'Tạo mật khẩu mới',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text(
           'Chọn mật khẩu mạnh để bảo vệ tài khoản của bạn.',
           textAlign: TextAlign.center,
@@ -98,7 +98,8 @@ class _PasswordRulesList extends StatelessWidget {
       children: [
         for (final rule in _passwordRules) ...[
           _PasswordRuleRow(label: rule.label, pass: rule.test(password)),
-          if (rule != _passwordRules.last) const SizedBox(height: 6),
+          if (rule != _passwordRules.last)
+            const Padding(padding: EdgeInsets.only(top: 6)),
         ],
       ],
     );
@@ -189,13 +190,13 @@ class _ResetSuccess extends StatelessWidget {
               size: 48,
             ),
           ),
-          const SizedBox(height: AppSpacing.x6),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x6)),
           Text(
             'Đổi mật khẩu thành công!',
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             'Mật khẩu của bạn đã được cập nhật.\n'
             'Vui lòng đăng nhập lại với mật khẩu mới.',

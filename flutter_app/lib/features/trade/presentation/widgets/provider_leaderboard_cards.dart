@@ -15,56 +15,49 @@ class _ProviderRankCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final redFlags = _redFlags(provider);
 
-    return InkWell(
+    return VitCard(
       key: ProviderLeaderboardPage.providerKey(provider.id),
+      height: redFlags.isEmpty ? 124 : 148,
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+      borderColor: AppColors.cardBorder,
       onTap: onOpen,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: redFlags.isEmpty ? 124 : 148,
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
-        decoration: BoxDecoration(
-          color: _leaderCard,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: AppColors.cardBorder),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _RankBadge(rank: rank),
-            const SizedBox(width: 13),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _ProviderTitle(provider: provider),
-                  const SizedBox(height: 9),
-                  _MetricsRow(provider: provider),
-                  const SizedBox(height: 12),
-                  _FollowersLabel(count: provider.copiers),
-                  if (redFlags.isNotEmpty) ...[
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 4,
-                      runSpacing: 4,
-                      children: [
-                        for (final flag in redFlags) _RedFlagPill(flag: flag),
-                      ],
-                    ),
-                  ],
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _RankBadge(rank: rank),
+          const SizedBox(width: 13),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _ProviderTitle(provider: provider),
+                const SizedBox(height: 9),
+                _MetricsRow(provider: provider),
+                const SizedBox(height: 12),
+                _FollowersLabel(count: provider.copiers),
+                if (redFlags.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 4,
+                    runSpacing: 4,
+                    children: [
+                      for (final flag in redFlags) _RedFlagPill(flag: flag),
+                    ],
+                  ),
                 ],
-              ),
+              ],
             ),
-            const SizedBox(width: 8),
-            const Padding(
-              padding: EdgeInsets.only(top: 4),
-              child: Icon(
-                Icons.visibility_outlined,
-                color: AppColors.text3,
-                size: 16,
-              ),
+          ),
+          const SizedBox(width: 8),
+          const Padding(
+            padding: EdgeInsets.only(top: 4),
+            child: Icon(
+              Icons.visibility_outlined,
+              color: AppColors.text3,
+              size: 16,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -93,7 +86,6 @@ class _RankBadge extends StatelessWidget {
         '#$rank',
         style: AppTextStyles.caption.copyWith(
           color: podium ? _leaderWarningText : AppColors.text2,
-          fontSize: 14,
           fontWeight: AppTextStyles.bold,
           height: 1,
           fontFeatures: AppTextStyles.tabularFigures,
@@ -119,7 +111,6 @@ class _ProviderTitle extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -154,13 +145,12 @@ class _RiskBadge extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 7),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: AppRadii.xsRadius,
       ),
       child: Text(
         _riskLabel(riskLevel),
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 11,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -223,7 +213,6 @@ class _MetricValue extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 9,
             height: 1,
           ),
         ),
@@ -232,7 +221,6 @@ class _MetricValue extends StatelessWidget {
           value,
           style: AppTextStyles.caption.copyWith(
             color: color,
-            fontSize: 13,
             fontWeight: AppTextStyles.bold,
             height: 1,
             fontFeatures: AppTextStyles.tabularFigures,
@@ -258,7 +246,6 @@ class _FollowersLabel extends StatelessWidget {
           '${_formatInteger(count)} followers',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
             height: 1,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
@@ -294,7 +281,6 @@ class _RedFlagPill extends StatelessWidget {
             flag,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.sell,
-              fontSize: 10,
               height: 1,
             ),
           ),

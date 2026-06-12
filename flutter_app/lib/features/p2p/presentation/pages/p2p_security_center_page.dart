@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -138,6 +139,19 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                             ),
                           ),
                         ),
+                        VitPageContent(
+                          padding: VitContentPadding.compact,
+                          customGap: 0,
+                          children: const [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Security center state review',
+                              message:
+                                  'Security score, feature status, quick actions, recent events, settings route, and login history route stay visible before sensitive P2P security changes.',
+                              contractId: 'SC-253',
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -261,6 +275,19 @@ class P2PWhitelistModePage extends ConsumerWidget {
                           context.go('/p2p/security/center');
                         },
                         child: const Text('Back to Security Center'),
+                      ),
+                      VitPageContent(
+                        padding: VitContentPadding.compact,
+                        customGap: 0,
+                        children: const [
+                          VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Whitelist mode state review',
+                            message:
+                                'Trusted-device path, anti-phishing route, whitelist scope, and return action remain visible before enforcing stricter P2P device access.',
+                            contractId: 'SC-253',
+                          ),
+                        ],
                       ),
                     ],
                   ),

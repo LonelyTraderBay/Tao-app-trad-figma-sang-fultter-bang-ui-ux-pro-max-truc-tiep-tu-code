@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_common.dart';
@@ -28,7 +29,7 @@ class MarketListTopMovers extends StatelessWidget {
             pairs: gainers.take(3).toList(),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.marketMoverGap),
         Expanded(
           child: _MoverCard(
             title: 'Giảm mạnh',
@@ -58,16 +59,16 @@ class _MoverCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 130,
+      height: AppSpacing.marketMoverCardHeight,
       borderColor: color.withValues(alpha: 0.18),
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
+      padding: AppSpacing.marketMoverCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              Icon(icon, color: color, size: 14),
-              const SizedBox(width: 6),
+              Icon(icon, color: color, size: AppSpacing.marketMoverIcon),
+              const SizedBox(width: AppSpacing.marketMoverIconGap),
               Flexible(
                 child: Text(
                   title,
@@ -81,7 +82,7 @@ class _MoverCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.marketMoverHeaderGap),
           for (final pair in pairs) ...[
             Row(
               children: [
@@ -90,25 +91,24 @@ class _MoverCard extends StatelessWidget {
                     pair.baseAsset,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.badge.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
-                      height: 1.25,
                     ),
                   ),
                 ),
                 Text(
                   marketListFormatPct(pair.change24h),
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.badge.copyWith(
                     color: color,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.25,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
               ],
             ),
-            if (pair != pairs.last) const SizedBox(height: 8),
+            if (pair != pairs.last)
+              const SizedBox(height: AppSpacing.marketMoverRowGap),
           ],
         ],
       ),

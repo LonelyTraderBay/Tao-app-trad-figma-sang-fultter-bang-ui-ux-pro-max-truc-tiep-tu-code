@@ -28,7 +28,7 @@ class _SettingsSection extends StatelessWidget {
                   height: 14,
                   decoration: BoxDecoration(
                     color: accent,
-                    borderRadius: BorderRadius.circular(999),
+                    borderRadius: AppRadii.xlRadius,
                   ),
                 ),
                 const SizedBox(width: 7),

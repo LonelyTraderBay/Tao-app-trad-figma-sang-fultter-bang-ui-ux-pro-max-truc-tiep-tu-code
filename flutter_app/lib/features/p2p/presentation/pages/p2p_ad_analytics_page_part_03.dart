@@ -19,10 +19,7 @@ class _LegendDot extends StatelessWidget {
         const SizedBox(width: AppSpacing.x2),
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 9,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
       ],
     );

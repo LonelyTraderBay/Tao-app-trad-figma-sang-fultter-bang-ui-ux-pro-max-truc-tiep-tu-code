@@ -25,8 +25,8 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 40,
-                height: 40,
+                width: AppSpacing.arenaStudioFeeIconBox,
+                height: AppSpacing.arenaStudioFeeIconBox,
                 decoration: BoxDecoration(
                   color: AppColors.warn10,
                   borderRadius: AppRadii.mdRadius,
@@ -66,7 +66,7 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
                       'Mọi challenge đều được trích ${widget.platformFeePct}% tổng pool để duy trì hệ thống. Phần này được hiển thị công khai cho tất cả người tham gia.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1.45,
+                        height: AppSpacing.arenaStudioFeeBodyLineHeight,
                       ),
                     ),
                   ],
@@ -89,7 +89,7 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
                   const Icon(
                     Icons.info_outline_rounded,
                     color: _arenaAccent,
-                    size: 13,
+                    size: AppSpacing.arenaStudioFeeInfoIcon,
                   ),
                   const SizedBox(width: AppSpacing.x1),
                   Text(
@@ -105,7 +105,7 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
                         ? Icons.keyboard_arrow_up_rounded
                         : Icons.keyboard_arrow_down_rounded,
                     color: _arenaAccent,
-                    size: 15,
+                    size: AppSpacing.arenaStudioFeeChevron,
                   ),
                 ],
               ),
@@ -157,7 +157,11 @@ class _FeeDetailRow extends StatelessWidget {
       padding: const EdgeInsets.only(top: AppSpacing.x2),
       child: Row(
         children: [
-          Icon(icon, color: _arenaAccent, size: 14),
+          Icon(
+            icon,
+            color: _arenaAccent,
+            size: AppSpacing.arenaStudioFeeDetailIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(

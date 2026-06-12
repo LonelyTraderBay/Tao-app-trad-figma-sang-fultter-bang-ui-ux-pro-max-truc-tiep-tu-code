@@ -17,8 +17,10 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 78
-            : DeviceMetrics.nativeBottomChrome + 24) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.arenaHomeBottomInsetVisualExtra
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.arenaHomeBottomInsetNativeExtra) +
         MediaQuery.paddingOf(context).bottom;
 
     final hasSearch = _query.trim().length >= 2;
@@ -47,7 +49,7 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                   child: SingleChildScrollView(
                     key: ArenaHomePage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaHomeScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       customGap: AppSpacing.x5,
@@ -182,7 +184,7 @@ class _IntroBlock extends StatelessWidget {
                 'Tạo mode chơi, mở phòng và thách đấu bằng Arena Points',
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text2,
-                  height: 1.35,
+                  height: AppSpacing.arenaHomeIntroLineHeight,
                 ),
               ),
             ),
@@ -194,7 +196,7 @@ class _IntroBlock extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         VitSearchBar(
           key: ArenaHomePage.searchKey,
           controller: controller,
@@ -203,7 +205,7 @@ class _IntroBlock extends StatelessWidget {
           onChanged: onChanged,
           onClear: onClear,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
@@ -267,7 +269,7 @@ class _QuickChip extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadii.inputRadius,
           child: Container(
-            height: 36,
+            height: AppSpacing.arenaHomeQuickChipHeight,
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
             decoration: BoxDecoration(
               color: AppColors.surface2,
@@ -277,14 +279,18 @@ class _QuickChip extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(icon, color: AppColors.text2, size: 13),
+                Icon(
+                  icon,
+                  color: AppColors.text2,
+                  size: AppSpacing.arenaHomeQuickChipIcon,
+                ),
                 const SizedBox(width: AppSpacing.x2),
                 Text(
                   label,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.arenaHomeQuickChipLineHeight,
                   ),
                 ),
                 if (count > 0) ...[
@@ -321,16 +327,15 @@ class _HeroCard extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             'Tạo sân chơi',
             style: AppTextStyles.heroNumber.copyWith(
-              fontSize: 31,
-              fontWeight: FontWeight.w900,
-              height: 1.05,
+              fontWeight: AppTextStyles.heavy,
+              height: AppSpacing.arenaHomeHeroTitleLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           Row(
             children: [
               const VitStatusPill(
@@ -353,7 +358,7 @@ class _HeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
           Row(
             children: [
               Expanded(
@@ -403,21 +408,21 @@ class _TemplateSection extends StatelessWidget {
           title: 'Templates',
           accentColor: AppColors.accent,
         ),
-        const SizedBox(height: AppSpacing.x1),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
         Text(
           'Chọn template để bắt đầu tạo challenge',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: templates.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+            crossAxisCount: AppSpacing.arenaHomeTemplateColumns,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
-            mainAxisExtent: 134,
+            mainAxisExtent: AppSpacing.arenaHomeTemplateExtent,
           ),
           itemBuilder: (context, index) {
             final template = templates[index];
@@ -443,20 +448,20 @@ class _TemplateSection extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.body.copyWith(
                             fontWeight: AppTextStyles.bold,
-                            height: 1.15,
+                            height: AppSpacing.arenaHomeTemplateTitleLineHeight,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
                   Text(
                     template.description,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1.3,
+                      height: AppSpacing.arenaHomeTemplateDescriptionLineHeight,
                     ),
                   ),
                   const Spacer(),

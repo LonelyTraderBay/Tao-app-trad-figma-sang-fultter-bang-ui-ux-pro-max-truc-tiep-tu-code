@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
 
@@ -34,8 +35,8 @@ class PredictionPortfolioTabs extends StatelessWidget {
     ];
 
     return Container(
-      height: 43,
-      padding: const EdgeInsets.all(4),
+      height: AppSpacing.predictionPortfolioTabsHeight,
+      padding: AppSpacing.predictionPortfolioTabsPadding,
       decoration: BoxDecoration(
         color: AppColors.surface3,
         borderRadius: AppRadii.lgRadius,
@@ -99,16 +100,15 @@ class PredictionPortfolioTabButton extends StatelessWidget {
                 label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.badge.copyWith(
                   color: active ? AppColors.text1 : AppColors.text3,
-                  fontSize: 12,
                   fontWeight: active
                       ? AppTextStyles.bold
                       : AppTextStyles.normal,
                 ),
               ),
             ),
-            const SizedBox(width: 5),
+            const SizedBox(width: AppSpacing.predictionPortfolioTabLabelGap),
             PredictionPortfolioCountBadge(count: count, active: active),
           ],
         ),
@@ -130,19 +130,17 @@ class PredictionPortfolioCountBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+      padding: AppSpacing.predictionPortfolioCountBadgePadding,
       decoration: BoxDecoration(
         color: active
             ? predictionPortfolioPrimary.withValues(alpha: .18)
             : AppColors.surface2,
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: AppRadii.badgeRadius,
       ),
       child: Text(
         '$count',
-        style: AppTextStyles.micro.copyWith(
+        style: AppTextStyles.numericMicro.copyWith(
           color: active ? predictionPortfolioPrimary : AppColors.text3,
-          height: 1.1,
-          fontSize: 9,
           fontWeight: AppTextStyles.bold,
         ),
       ),

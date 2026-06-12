@@ -37,7 +37,7 @@ class _ResultsState extends StatelessWidget {
           ),
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         if (results.predictions.isNotEmpty) ...[
           _ResultSection(
             icon: Icons.track_changes_rounded,
@@ -49,7 +49,7 @@ class _ResultsState extends StatelessWidget {
                 _PredictionResultCard(event: event),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         ],
         if (results.arenaModes.isNotEmpty) ...[
           _ResultSection(
@@ -62,7 +62,7 @@ class _ResultsState extends StatelessWidget {
                 _ArenaModeResultCard(mode: mode),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         ],
         if (results.arenaRooms.isNotEmpty) ...[
           _ResultSection(
@@ -75,7 +75,7 @@ class _ResultsState extends StatelessWidget {
                 _ArenaRoomResultCard(room: room),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         ],
         if (results.creators.isNotEmpty) ...[
           _ResultSection(
@@ -88,7 +88,7 @@ class _ResultsState extends StatelessWidget {
                 _CreatorResultCard(creator: creator),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         ],
         if (results.tradingPairs.isNotEmpty) ...[
           _ResultSection(
@@ -101,7 +101,7 @@ class _ResultsState extends StatelessWidget {
                 _TradingPairResultCard(pair: pair),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         ],
         _BoundaryDisclosure(notes: snapshot.contractNotes),
       ],
@@ -154,9 +154,12 @@ class _ResultSection extends StatelessWidget {
             _CountBadge(count: count),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ...children.expand(
-          (child) => [child, const SizedBox(height: AppSpacing.x3)],
+          (child) => [
+            child,
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          ],
         ),
       ],
     );

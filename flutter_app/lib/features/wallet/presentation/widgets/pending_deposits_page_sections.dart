@@ -11,14 +11,14 @@ class _SummaryBanner extends StatelessWidget {
     final hasPending = pendingCount > 0;
     final color = hasPending ? _pendingAmber : _pendingGreen;
     return VitCard(
-      height: 78,
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      height: AppSpacing.walletPendingSummaryHeight,
+      padding: AppSpacing.walletPendingSummaryPadding,
       borderColor: _pendingBorder,
       child: Row(
         children: [
           Container(
-            width: 44,
-            height: 44,
+            width: AppSpacing.walletPendingSummaryIconBox,
+            height: AppSpacing.walletPendingSummaryIconBox,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .12),
               borderRadius: AppRadii.cardRadius,
@@ -29,10 +29,10 @@ class _SummaryBanner extends StatelessWidget {
                   ? Icons.access_time_rounded
                   : Icons.check_circle_outline_rounded,
               color: color,
-              size: 22,
+              size: AppSpacing.walletPendingSummaryIconGlyph,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.walletPendingRowGap),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -46,35 +46,29 @@ class _SummaryBanner extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(height: AppSpacing.walletPendingTextGap),
                 Text(
                   hasPending
                       ? 'Trang t\u1EF1 \u0111\u1ED9ng c\u1EADp nh\u1EADt m\u1ED7i 5 gi\u00E2y'
                       : 'Kh\u00F4ng c\u00F3 giao d\u1ECBch n\u00E0o \u0111ang ch\u1EDD',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 11,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.walletPendingRowGap),
           GestureDetector(
             key: PendingDepositsPage.refreshKey,
             onTap: onRefresh,
             behavior: HitTestBehavior.opaque,
             child: Container(
-              width: 34,
-              height: 34,
+              width: AppSpacing.walletPendingRefreshButton,
+              height: AppSpacing.walletPendingRefreshButton,
               decoration: BoxDecoration(
                 color: AppColors.surface3,
                 borderRadius: AppRadii.cardRadius,
@@ -83,7 +77,7 @@ class _SummaryBanner extends StatelessWidget {
               child: const Icon(
                 Icons.refresh_rounded,
                 color: AppColors.text2,
-                size: 16,
+                size: AppSpacing.walletPendingRefreshGlyph,
               ),
             ),
           ),
@@ -111,16 +105,18 @@ class _FilterChips extends StatelessWidget {
       (_DepositFilter.pending, '\u0110ang ch\u1EDD ($pendingCount)'),
       (_DepositFilter.done, 'Ho\u00E0n t\u1EA5t'),
     ];
-    return Row(
+    return Wrap(
+      spacing: AppSpacing.walletPendingChipGap,
+      runSpacing: AppSpacing.walletPendingChipGap,
       children: [
-        for (final item in items) ...[
+        for (final item in items)
           GestureDetector(
             key: PendingDepositsPage.filterKey(item.$1.name),
             onTap: () => onChanged(item.$1),
             behavior: HitTestBehavior.opaque,
             child: Container(
-              height: 30,
-              padding: const EdgeInsets.symmetric(horizontal: 13),
+              height: AppSpacing.walletPendingChipHeight,
+              padding: AppSpacing.walletPendingChipPadding,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: active == item.$1
@@ -137,15 +133,11 @@ class _FilterChips extends StatelessWidget {
                 item.$2,
                 style: AppTextStyles.micro.copyWith(
                   color: active == item.$1 ? _pendingPrimary : AppColors.text2,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w900,
-                  height: 1,
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
             ),
           ),
-          if (item != items.last) const SizedBox(width: 10),
-        ],
       ],
     );
   }
@@ -167,7 +159,7 @@ class _DepositCard extends StatelessWidget {
     final config = _statusConfig(deposit.status);
     return VitCard(
       key: PendingDepositsPage.depositKey(deposit.id),
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.walletPendingCardPadding,
       borderColor: _pendingBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -175,8 +167,8 @@ class _DepositCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 40,
-                height: 40,
+                width: AppSpacing.walletPendingAssetIconBox,
+                height: AppSpacing.walletPendingAssetIconBox,
                 decoration: BoxDecoration(
                   color: config.color.withValues(alpha: .12),
                   borderRadius: AppRadii.cardRadius,
@@ -185,65 +177,75 @@ class _DepositCard extends StatelessWidget {
                 child: Icon(
                   Icons.south_west_rounded,
                   color: config.color,
-                  size: 20,
+                  size: AppSpacing.walletPendingAssetIconGlyph,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.walletPendingRowGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Flexible(
+                        Expanded(
                           child: Text(
                             'N\u1EA1p ${deposit.asset}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w900,
-                              height: 1,
+                              fontWeight: AppTextStyles.bold,
                             ),
                           ),
                         ),
-                        const SizedBox(width: 8),
+                        const SizedBox(
+                          width: AppSpacing.walletPendingInlineGap,
+                        ),
+                        Flexible(
+                          child: Text(
+                            '+${deposit.amountLabel}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.right,
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.walletPendingTextGap),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            deposit.createdAt,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.text3,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: AppSpacing.walletPendingInlineGap,
+                        ),
                         _DepositStatusBadge(config: config),
                       ],
                     ),
-                    const SizedBox(height: 7),
-                    Text(
-                      deposit.createdAt,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                        fontSize: 11,
-                        height: 1,
-                      ),
-                    ),
                   ],
-                ),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                '+${deposit.amountLabel}',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w900,
-                  fontFamily: 'Roboto',
-                  height: 1,
                 ),
               ),
             ],
           ),
           if (deposit.status == 'confirming' ||
               deposit.status == 'processing') ...[
-            const SizedBox(height: 18),
+            const SizedBox(height: AppSpacing.walletPendingProgressBlockGap),
             _ConfirmationProgress(deposit: deposit, color: config.color),
           ],
           if (deposit.status == 'credited') ...[
-            const SizedBox(height: 14),
+            const SizedBox(height: AppSpacing.walletPendingStatusGap),
             _StatusNotice(
               color: _pendingGreen,
               icon: Icons.check_circle_outline_rounded,
@@ -252,7 +254,7 @@ class _DepositCard extends StatelessWidget {
             ),
           ],
           if (deposit.status == 'failed') ...[
-            const SizedBox(height: 14),
+            const SizedBox(height: AppSpacing.walletPendingStatusGap),
             const _StatusNotice(
               color: _pendingRed,
               icon: Icons.warning_amber_rounded,
@@ -260,7 +262,7 @@ class _DepositCard extends StatelessWidget {
                   'Giao d\u1ECBch th\u1EA5t b\u1EA1i \u2014 li\u00EAn h\u1EC7 h\u1ED7 tr\u1EE3 n\u1EBFu \u0111\u00E3 g\u1EEDi ti\u1EC1n',
             ),
           ],
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.walletPendingRowGap),
           _DepositDetails(deposit: deposit, copied: copied, onCopy: onCopy),
         ],
       ),
@@ -276,18 +278,16 @@ class _DepositStatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+      padding: AppSpacing.walletPendingBadgePadding,
       decoration: BoxDecoration(
         color: config.color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: AppRadii.xsRadius,
       ),
       child: Text(
         config.label,
         style: AppTextStyles.micro.copyWith(
           color: config.color,
-          fontSize: 10,
-          fontWeight: FontWeight.w900,
-          height: 1,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -310,30 +310,23 @@ class _ConfirmationProgress extends StatelessWidget {
             Expanded(
               child: Text(
                 'X\u00E1c nh\u1EADn blockchain',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  fontSize: 11,
-                  height: 1,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text2),
               ),
             ),
             Text(
               '${deposit.confirmations}/${deposit.requiredConfirmations}',
               style: AppTextStyles.caption.copyWith(
                 color: color,
-                fontSize: 11,
-                fontWeight: FontWeight.w900,
-                fontFamily: 'Roboto',
-                height: 1,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.walletPendingProgressGap),
         ClipRRect(
-          borderRadius: BorderRadius.circular(999),
+          borderRadius: AppRadii.pillRadius,
           child: SizedBox(
-            height: 6,
+            height: AppSpacing.walletPendingProgressHeight,
             child: LinearProgressIndicator(
               value: deposit.progress.clamp(.05, 1),
               backgroundColor: AppColors.surface3,
@@ -341,17 +334,17 @@ class _ConfirmationProgress extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.walletPendingInlineGap),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             for (var i = 0; i < dotCount; i++)
               Container(
-                width: 6,
-                height: 6,
+                width: AppSpacing.walletPendingProgressDot,
+                height: AppSpacing.walletPendingProgressDot,
                 decoration: BoxDecoration(
                   color: i < deposit.confirmations ? color : AppColors.surface3,
-                  borderRadius: BorderRadius.circular(3),
+                  borderRadius: AppRadii.pillRadius,
                 ),
               ),
           ],

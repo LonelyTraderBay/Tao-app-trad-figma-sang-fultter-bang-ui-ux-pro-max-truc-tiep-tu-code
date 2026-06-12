@@ -180,13 +180,17 @@ class _MetricCard extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: AppSpacing.adminBox40,
+                  height: AppSpacing.adminBox40,
                   decoration: BoxDecoration(
                     color: tint,
                     borderRadius: AppRadii.inputRadius,
                   ),
-                  child: Icon(icon, color: accent, size: 20),
+                  child: Icon(
+                    icon,
+                    color: accent,
+                    size: AppSpacing.adminIconXl,
+                  ),
                 ),
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
@@ -198,7 +202,7 @@ class _MetricCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 11,
+                          fontSize: AppSpacing.adminFontMd,
                         ),
                       ),
                       Text(
@@ -206,7 +210,7 @@ class _MetricCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.sectionTitle.copyWith(
-                          fontSize: 20,
+                          fontSize: AppSpacing.adminFont3xl,
                           fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
@@ -222,7 +226,7 @@ class _MetricCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 11,
+                fontSize: AppSpacing.adminFontMd,
               ),
             ),
             const SizedBox(height: AppSpacing.x2),
@@ -244,7 +248,7 @@ class _MetricCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
+                    fontSize: AppSpacing.adminFontSm,
                   ),
                 ),
               ],
@@ -275,7 +279,7 @@ class _EventVolumeCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: 180,
+            height: AppSpacing.adminAnalyticsSparklineHeight,
             child: Semantics(
               label: hasEvents
                   ? 'Event volume chart for ${stats.length} days'

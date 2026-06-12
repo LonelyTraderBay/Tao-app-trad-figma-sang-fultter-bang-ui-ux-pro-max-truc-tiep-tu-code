@@ -140,7 +140,7 @@ class _BulletRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.5,
+              height: AppSpacing.savingsConsumerCompactBodyLineHeight,
             ),
           ),
         ),
@@ -172,7 +172,7 @@ class _AssetBadge extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.savingsConsumerPillLineHeight,
             ),
           ),
         ),

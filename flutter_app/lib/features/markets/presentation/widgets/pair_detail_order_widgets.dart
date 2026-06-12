@@ -8,9 +8,9 @@ class _OrderBookPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
+      padding: AppSpacing.pairOrderPanelPadding,
       child: VitCard(
-        padding: const EdgeInsets.all(14),
+        padding: AppSpacing.pairOrderCardPadding,
         child: Column(
           children: [
             Row(
@@ -28,10 +28,13 @@ class _OrderBookPanel extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.pairOrderSectionGap),
             for (final level in snapshot.depth.asks.take(4).toList().reversed)
               _DepthRow(level: level, side: MarketOrderSide.sell),
-            const Divider(color: AppColors.divider, height: 20),
+            const Divider(
+              color: AppColors.divider,
+              height: AppSpacing.pairOrderDividerHeight,
+            ),
             for (final level in snapshot.depth.bids.take(4))
               _DepthRow(level: level, side: MarketOrderSide.buy),
           ],
@@ -51,7 +54,7 @@ class _DepthRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = side == MarketOrderSide.buy ? AppColors.buy : AppColors.sell;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: AppSpacing.pairDepthRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -92,9 +95,9 @@ class _TradesPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
+      padding: AppSpacing.pairOrderPanelPadding,
       child: VitCard(
-        padding: const EdgeInsets.all(14),
+        padding: AppSpacing.pairOrderCardPadding,
         child: Column(
           children: [
             const _TradeHeader(),
@@ -112,7 +115,7 @@ class _TradeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: AppSpacing.pairTradeHeaderPadding,
       child: Row(
         children: [
           Expanded(child: Text('Gia', style: _tableHeaderStyle())),
@@ -147,7 +150,7 @@ class _TradeRow extends StatelessWidget {
         ? AppColors.buy
         : AppColors.sell;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: AppSpacing.pairTradeRowPadding,
       child: Row(
         children: [
           Expanded(

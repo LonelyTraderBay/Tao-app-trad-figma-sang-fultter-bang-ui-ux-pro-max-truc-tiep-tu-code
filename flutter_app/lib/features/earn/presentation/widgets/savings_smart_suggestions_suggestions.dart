@@ -147,7 +147,10 @@ class SavingsSmartSuggestionCard extends StatelessWidget {
             color: confidenceColor,
           ),
           const SizedBox(height: AppSpacing.x3),
-          const Divider(color: AppColors.divider, height: 1),
+          const Divider(
+            color: AppColors.divider,
+            height: AppSpacing.savingsConsumerDividerHeight,
+          ),
           const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
@@ -295,7 +298,7 @@ class SavingsSmartMetaPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.savingsConsumerPillLineHeight,
           ),
         ),
       ),

@@ -24,7 +24,6 @@ part '../widgets/deposit_page_common.dart';
 
 const _depositBackground = AppColors.bg;
 const _depositPanel = AppColors.surface;
-const _depositPanel2 = AppColors.surface2;
 const _depositPrimary = AppColors.primary;
 const _depositGreen = AppColors.buy;
 const _depositRed = AppColors.sell;
@@ -67,8 +66,10 @@ class _DepositPageState extends ConsumerState<DepositPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 92
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.walletBottomInsetVisualChrome
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.walletBottomInsetNativeChrome) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -91,7 +92,12 @@ class _DepositPageState extends ConsumerState<DepositPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: DepositPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.pageHorizontalPadding,
+                    AppSpacing.x4,
+                    AppSpacing.pageHorizontalPadding,
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     customGap: 0,
@@ -102,21 +108,27 @@ class _DepositPageState extends ConsumerState<DepositPage> {
                         selected: selected,
                         onTap: () => _openNetworkPicker(snapshot.networks),
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: AppSpacing.walletDepositTopGap),
                       _WarningCard(asset: snapshot.asset, network: selected),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.walletDepositSectionGap,
+                      ),
                       _QrAddressCard(
                         asset: snapshot.asset,
                         network: selected,
                         copied: _copied,
                         onCopy: () => _copyAddress(selected.address),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.walletDepositSectionGap,
+                      ),
                       _DepositInfoCard(
                         asset: snapshot.asset,
                         network: selected,
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.walletDepositSectionGap,
+                      ),
                       _RefreshButton(onTap: () {}),
                     ],
                   ),
@@ -150,22 +162,19 @@ class _DepositPageState extends ConsumerState<DepositPage> {
       context: context,
       backgroundColor: _depositPanel,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+            padding: AppSpacing.transferSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'Chọn mạng lưới',
-                  style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
-                ),
-                const SizedBox(height: 12),
+                Text('Chọn mạng lưới', style: AppTextStyles.sectionTitle),
+                const SizedBox(height: AppSpacing.walletDepositTitleGap),
                 for (final network in networks)
                   _NetworkOption(
                     network: network,

@@ -20,7 +20,7 @@ class _PairHeader extends StatelessWidget {
     return VitTopChrome(
       type: VitTopChromeType.instrument,
       leading: SizedBox(
-        width: 40,
+        width: AppSpacing.pairHeaderLeadingWidth,
         child: Align(
           alignment: Alignment.centerLeft,
           child: VitHeaderActionButton(
@@ -38,13 +38,13 @@ class _PairHeader extends StatelessWidget {
             onTap: onPairTap,
             borderRadius: AppRadii.headerActionRadius,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+              padding: AppSpacing.pairHeaderSymbolPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    width: 28,
-                    height: 28,
+                    width: AppSpacing.pairHeaderLogo,
+                    height: AppSpacing.pairHeaderLogo,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: pair.logoColor.withValues(alpha: .15),
@@ -55,11 +55,10 @@ class _PairHeader extends StatelessWidget {
                       style: AppTextStyles.micro.copyWith(
                         color: pair.logoColor,
                         fontWeight: AppTextStyles.bold,
-                        fontSize: 10,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 9),
+                  const SizedBox(width: AppSpacing.pairHeaderSymbolGap),
                   Flexible(
                     child: Text(
                       pair.symbol,
@@ -69,11 +68,11 @@ class _PairHeader extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 5),
+                  const SizedBox(width: AppSpacing.pairHeaderChevronGap),
                   const Icon(
                     Icons.keyboard_arrow_down_rounded,
                     color: AppColors.text2,
-                    size: 17,
+                    size: AppSpacing.pairHeaderChevron,
                   ),
                 ],
               ),
@@ -82,7 +81,7 @@ class _PairHeader extends StatelessWidget {
         ),
       ),
       trailing: SizedBox(
-        width: 88,
+        width: AppSpacing.pairHeaderTrailingWidth,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -95,7 +94,7 @@ class _PairHeader extends StatelessWidget {
                   : 'Theo d\u00F5i ${pair.symbol}',
               onPressed: onFavorite,
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.pairHeaderTrailingGap),
             const VitHeaderActionButton(
               type: VitHeaderActionType.share,
               onPressed: _noop,
@@ -118,7 +117,7 @@ class _PriceOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     final positive = pair.change24h >= 0;
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 14),
+      padding: AppSpacing.pairPriceOverviewPadding,
       decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
@@ -133,16 +132,14 @@ class _PriceOverview extends StatelessWidget {
                   _formatPrice(pair.price),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.heroNumber.copyWith(
-                    fontFamily: 'monospace',
-                    fontSize: 31,
-                    height: 1.1,
+                  style: AppTextStyles.amountLg.copyWith(
+                    fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.pairPriceChangeGap),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
+                padding: AppSpacing.pairPriceChangePadding,
                 decoration: BoxDecoration(
                   color: positive ? AppColors.buy15 : AppColors.sell15,
                   borderRadius: AppRadii.smRadius,
@@ -152,13 +149,12 @@ class _PriceOverview extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: positive ? AppColors.buy : AppColors.sell,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: AppSpacing.pairPriceStatsGap),
           Row(
             children: [
               Expanded(
@@ -210,14 +206,12 @@ class _PriceStat extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 2),
+        const SizedBox(height: AppSpacing.pairPriceStatGap),
         Text(
           value,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.numericMicro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontFamily: 'monospace',
-            fontSize: 11,
           ),
         ),
       ],

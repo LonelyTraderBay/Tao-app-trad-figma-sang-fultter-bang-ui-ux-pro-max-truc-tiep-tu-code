@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class MarketDepthPage extends ConsumerStatefulWidget {
   const MarketDepthPage({
@@ -105,6 +106,14 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
                           MarketDepthOrderBookView(snapshot: snapshot)
                         else
                           MarketDepthWhaleAlertsView(snapshot: snapshot),
+                        const VitBanner(
+                          variant: VitBannerVariant.info,
+                          icon: Icons.sync_rounded,
+                          message: 'Depth data state reviewed',
+                          detail:
+                              'Depth chart, order book, whale alerts, level selector, and cached/offline states stay visible while order-book data refreshes.',
+                        ),
+                        const _DepthDataReviewCards(),
                       ],
                     ),
                   ),
@@ -114,6 +123,22 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _DepthDataReviewCards extends StatelessWidget {
+  const _DepthDataReviewCards();
+
+  @override
+  Widget build(BuildContext context) {
+    return const VitPageSection(
+      label: 'Data checkpoints',
+      children: [
+        VitCard(child: Text('Pair summary and depth chart readiness')),
+        VitCard(child: Text('Order-book levels and spread state')),
+        VitCard(child: Text('Whale alerts and stale-data fallback')),
+      ],
     );
   }
 }

@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -102,8 +103,10 @@ class _P2PLargeTransactionJustificationPageState
                       AppSpacing.contentPad,
                       bottomInset,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      customGap: 0,
                       children: [
                         _LargeTransactionHero(snapshot: snapshot),
                         const SizedBox(height: AppSpacing.x5),
@@ -176,14 +179,12 @@ class _LargeTransactionHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       key: P2PLargeTransactionJustificationPage.heroKey,
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.lg,
+      borderColor: AppColors.warningBorder,
       padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
-        color: AppColors.warn10,
-        borderRadius: AppRadii.cardLargeRadius,
-        border: Border.all(color: AppColors.warningBorder),
-      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -288,16 +289,13 @@ class _PurposeTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
+        child: VitCard(
+          variant: VitCardVariant.ghost,
+          radius: VitCardRadius.sm,
+          borderColor: selected ? AppModuleAccents.p2p : AppColors.borderSolid,
           constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-          decoration: BoxDecoration(
-            borderRadius: AppRadii.inputRadius,
-            border: Border.all(
-              color: selected ? AppModuleAccents.p2p : AppColors.borderSolid,
-            ),
-          ),
           child: Text(
             purpose,
             maxLines: 1,

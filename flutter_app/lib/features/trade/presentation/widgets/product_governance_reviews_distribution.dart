@@ -7,11 +7,9 @@ class _ReviewsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Review Schedule',
       children: [
-        const _SectionLabel('Review Schedule'),
-        const SizedBox(height: 12),
         _Card(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -36,12 +34,10 @@ class _ReviewRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final urgent = product.id == 'prod-3';
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: _govPanel2,
-        borderRadius: AppRadii.mdRadius,
-      ),
       child: Row(
         children: [
           Expanded(
@@ -52,7 +48,6 @@ class _ReviewRow extends StatelessWidget {
                   product.name,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -62,7 +57,6 @@ class _ReviewRow extends StatelessWidget {
                   'Due: ${product.nextReview}',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1,
                   ),
                 ),
@@ -76,7 +70,6 @@ class _ReviewRow extends StatelessWidget {
                 urgent ? 'Due soon' : 'Scheduled',
                 style: AppTextStyles.caption.copyWith(
                   color: urgent ? _govAmber : AppColors.text2,
-                  fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -87,7 +80,6 @@ class _ReviewRow extends StatelessWidget {
                   'Action needed',
                   style: AppTextStyles.micro.copyWith(
                     color: _govAmber,
-                    fontSize: 9,
                     height: 1,
                   ),
                 ),
@@ -108,23 +100,21 @@ class _DistributionTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const channels = ['App', 'Web Platform', 'API'];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Distribution Channels',
+      customGap: 12,
       children: [
-        const _SectionLabel('Distribution Channels'),
-        const SizedBox(height: 12),
-        for (final channel in channels) ...[
+        for (final channel in channels)
           _Card(
             padding: const EdgeInsets.all(13),
             child: Row(
               children: [
-                Container(
+                VitCard(
                   width: 40,
                   height: 40,
-                  decoration: BoxDecoration(
-                    color: _govPrimary.withValues(alpha: .13),
-                    borderRadius: AppRadii.inputRadius,
-                  ),
+                  variant: VitCardVariant.inner,
+                  alignment: Alignment.center,
+                  borderColor: _govPrimary.withValues(alpha: .35),
                   child: const Icon(
                     Icons.monitor_heart_outlined,
                     color: _govPrimary,
@@ -140,7 +130,6 @@ class _DistributionTab extends StatelessWidget {
                         channel,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 13,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
@@ -150,7 +139,6 @@ class _DistributionTab extends StatelessWidget {
                         '${_productCountForChannel(products, channel)} products',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
                           height: 1,
                         ),
                       ),
@@ -165,8 +153,6 @@ class _DistributionTab extends StatelessWidget {
               ],
             ),
           ),
-          if (channel != channels.last) const SizedBox(height: 12),
-        ],
       ],
     );
   }
@@ -180,53 +166,19 @@ class _Pill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      borderColor: color.withValues(alpha: .35),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(5),
-      ),
       child: Text(
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
       ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 3,
-          height: 16,
-          decoration: BoxDecoration(
-            color: _govPrimary,
-            borderRadius: BorderRadius.circular(999),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          text,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 11,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
     );
   }
 }

@@ -27,11 +27,12 @@ class _FileComplaintTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final uploadTopGap = DeviceMetrics.height > 956 ? 82.0 : 16.0;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: 12,
       children: [
         _NoticeCard(title: snapshot.noticeTitle, body: snapshot.noticeBody),
-        const SizedBox(height: 12),
         const VitHighRiskStatePanel(
           state: VitHighRiskUiState.riskReview,
           title: 'Review dispute complaint',
@@ -39,48 +40,59 @@ class _FileComplaintTab extends StatelessWidget {
               'Confirm complaint type, provider, evidence, and issue details before submitting a formal dispute case.',
           contractId: 'Copy trading dispute intake',
         ),
-        const SizedBox(height: 26),
-        const _SectionLabel('Complaint Type'),
-        const SizedBox(height: 9),
-        for (final type in snapshot.complaintTypes) ...[
-          _ComplaintTypeCard(
-            option: type,
-            selected: selectedType == type.value,
-            onPressed: () => onTypeChanged(type.value),
+        VitPageSection(
+          label: 'Complaint Type',
+          customGap: 10,
+          children: [
+            for (final type in snapshot.complaintTypes)
+              _ComplaintTypeCard(
+                option: type,
+                selected: selectedType == type.value,
+                onPressed: () => onTypeChanged(type.value),
+              ),
+          ],
+        ),
+        VitPageSection(
+          label: 'Provider',
+          children: [
+            _ProviderSelect(
+              providers: snapshot.providers,
+              selectedProviderId: selectedProviderId,
+              onChanged: onProviderChanged,
+            ),
+          ],
+        ),
+        VitPageSection(
+          label: 'Details',
+          customGap: 7,
+          children: [
+            const _FieldLabel('Subject'),
+            _TextFieldShell(
+              key: DisputeResolutionPage.subjectKey,
+              controller: subjectController,
+              hint: 'Brief summary of the issue',
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: _FieldLabel('Description'),
+            ),
+            _TextFieldShell(
+              key: DisputeResolutionPage.descriptionKey,
+              controller: descriptionController,
+              hint:
+                  'Describe the issue in detail. Include dates, trade IDs, amounts, etc.',
+              minLines: 3,
+              maxLines: 5,
+            ),
+          ],
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: uploadTopGap),
+          child: _UploadEvidenceButton(
+            attached: evidenceAttached,
+            onPressed: onUpload,
           ),
-          if (type != snapshot.complaintTypes.last) const SizedBox(height: 10),
-        ],
-        const SizedBox(height: 25),
-        const _SectionLabel('Provider'),
-        const SizedBox(height: 10),
-        _ProviderSelect(
-          providers: snapshot.providers,
-          selectedProviderId: selectedProviderId,
-          onChanged: onProviderChanged,
         ),
-        const SizedBox(height: 25),
-        const _SectionLabel('Details'),
-        const SizedBox(height: 9),
-        _FieldLabel('Subject'),
-        const SizedBox(height: 7),
-        _TextFieldShell(
-          key: DisputeResolutionPage.subjectKey,
-          controller: subjectController,
-          hint: 'Brief summary of the issue',
-        ),
-        const SizedBox(height: 15),
-        _FieldLabel('Description'),
-        const SizedBox(height: 7),
-        _TextFieldShell(
-          key: DisputeResolutionPage.descriptionKey,
-          controller: descriptionController,
-          hint:
-              'Describe the issue in detail. Include dates, trade IDs, amounts, etc.',
-          minLines: 3,
-          maxLines: 5,
-        ),
-        SizedBox(height: uploadTopGap),
-        _UploadEvidenceButton(attached: evidenceAttached, onPressed: onUpload),
       ],
     );
   }
@@ -115,7 +127,6 @@ class _NoticeCard extends StatelessWidget {
                   title,
                   style: AppTextStyles.micro.copyWith(
                     color: _disputePrimary,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1.2,
                   ),
@@ -125,7 +136,6 @@ class _NoticeCard extends StatelessWidget {
                   body,
                   style: AppTextStyles.micro.copyWith(
                     color: _disputePrimary,
-                    fontSize: 10.5,
                     height: 1.4,
                   ),
                 ),
@@ -168,7 +178,6 @@ class _ComplaintTypeCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: selected ? _disputePrimary : AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -180,7 +189,6 @@ class _ComplaintTypeCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: selected ? _disputePrimary : AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -203,15 +211,12 @@ class _ProviderSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       key: DisputeResolutionPage.providerKey,
+      variant: VitCardVariant.inner,
+      borderColor: _disputeFieldBorder,
       height: 46,
       padding: const EdgeInsets.only(left: 16, right: 10),
-      decoration: BoxDecoration(
-        color: _disputeField,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _disputeFieldBorder),
-      ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: selectedProviderId,
@@ -227,13 +232,11 @@ class _ProviderSelect extends StatelessWidget {
             'Select provider...',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              fontSize: 13,
               height: 1,
             ),
           ),
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text1,
-            fontSize: 13,
             height: 1,
           ),
           items: [
@@ -281,7 +284,6 @@ class _TextFieldShell extends StatelessWidget {
       cursorColor: _disputePrimary,
       style: AppTextStyles.caption.copyWith(
         color: AppColors.text1,
-        fontSize: 13,
         height: 1.2,
       ),
       decoration: InputDecoration(
@@ -289,7 +291,6 @@ class _TextFieldShell extends StatelessWidget {
         hintText: hint,
         hintStyle: AppTextStyles.caption.copyWith(
           color: AppColors.text3,
-          fontSize: 13,
           fontWeight: AppTextStyles.bold,
           height: 1.2,
         ),

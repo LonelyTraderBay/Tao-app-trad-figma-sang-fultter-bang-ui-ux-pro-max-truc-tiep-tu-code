@@ -28,8 +28,6 @@ class _TermsCta extends StatelessWidget {
           agreed ? snapshot.enabledCta : snapshot.disabledCta,
           style: AppTextStyles.body.copyWith(
             color: agreed ? AppColors.onAccent : AppColors.text3,
-            fontFamily: 'Roboto',
-            fontSize: 14,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -46,13 +44,10 @@ class _ComplianceNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       constraints: const BoxConstraints(minHeight: 112),
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
-      decoration: BoxDecoration(
-        color: _termsPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -73,7 +68,6 @@ class _ComplianceNote extends StatelessWidget {
                   snapshot.complianceTitle,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1.2,
                   ),
@@ -83,7 +77,6 @@ class _ComplianceNote extends StatelessWidget {
                   snapshot.complianceDescription,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
                     height: 1.55,
                   ),
                 ),
@@ -110,7 +103,7 @@ class _SectionLabel extends StatelessWidget {
           height: 15,
           decoration: BoxDecoration(
             color: _termsPrimary,
-            borderRadius: BorderRadius.circular(3),
+            borderRadius: AppRadii.xsRadius,
           ),
         ),
         const SizedBox(width: 6),
@@ -118,7 +111,6 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

@@ -53,7 +53,7 @@ class SavingsGuideProgressHeader extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
-            minHeight: 6,
+            minHeight: AppSpacing.earnGuideProgressHeight,
             value: progress,
             backgroundColor: AppColors.borderSolid,
             valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
@@ -98,7 +98,7 @@ class SavingsGuideStepDetail extends StatelessWidget {
           step.description,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            height: 1.65,
+            height: AppSpacing.earnGuideParagraphLineHeight,
           ),
         ),
       ],
@@ -142,10 +142,10 @@ class SavingsGuideTipPanel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
-                  padding: EdgeInsets.only(top: 7),
+                  padding: EdgeInsets.only(top: AppSpacing.earnGuideBulletTop),
                   child: SizedBox(
-                    width: 4,
-                    height: 4,
+                    width: AppSpacing.earnGuideBulletSize,
+                    height: AppSpacing.earnGuideBulletSize,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         color: AppColors.text3,
@@ -160,7 +160,7 @@ class SavingsGuideTipPanel extends StatelessWidget {
                     tip,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.5,
+                      height: AppSpacing.earnGuideTipLineHeight,
                     ),
                   ),
                 ),
@@ -197,7 +197,7 @@ class SavingsGuideDifficultyPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.earnGuidePillLineHeight,
           ),
         ),
       ),
@@ -238,7 +238,7 @@ class SavingsGuideRoundIcon extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: color,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.earnGuidePillLineHeight,
                   ),
                 ),
         ),

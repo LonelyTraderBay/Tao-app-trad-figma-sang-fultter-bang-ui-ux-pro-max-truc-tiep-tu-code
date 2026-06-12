@@ -23,7 +23,6 @@ class _PortfolioOverview extends StatelessWidget {
                 child: Text(
                   'Tổng quan portfolio',
                   style: AppTextStyles.baseMedium.copyWith(
-                    fontSize: 16,
                     fontWeight: AppTextStyles.bold,
                     height: 1.2,
                   ),
@@ -31,10 +30,7 @@ class _PortfolioOverview extends StatelessWidget {
               ),
               Text(
                 '${snapshot.activeCopies} active',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 11,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -76,7 +72,6 @@ class _PortfolioOverview extends StatelessWidget {
                   'P/L tổng',
                   style: AppTextStyles.micro.copyWith(
                     color: labelColor,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.medium,
                   ),
                 ),
@@ -89,7 +84,6 @@ class _PortfolioOverview extends StatelessWidget {
                       _formatSignedUsd(snapshot.totalPnl),
                       style: AppTextStyles.caption.copyWith(
                         color: color,
-                        fontSize: 16,
                         fontWeight: AppTextStyles.bold,
                         height: 1.1,
                         fontFeatures: AppTextStyles.tabularFigures,
@@ -100,7 +94,6 @@ class _PortfolioOverview extends StatelessWidget {
                       _formatPercent(snapshot.totalPnlPct),
                       style: AppTextStyles.micro.copyWith(
                         color: labelColor,
-                        fontSize: 11,
                         height: 1,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
@@ -131,7 +124,6 @@ class _PortfolioMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 11,
             height: 1.1,
           ),
         ),
@@ -139,7 +131,6 @@ class _PortfolioMetric extends StatelessWidget {
         Text(
           value,
           style: AppTextStyles.baseMedium.copyWith(
-            fontSize: 18,
             fontWeight: AppTextStyles.bold,
             height: 1.15,
             fontFeatures: AppTextStyles.tabularFigures,
@@ -214,7 +205,6 @@ class _SegmentedTabButton extends StatelessWidget {
             tab.label,
             style: AppTextStyles.caption.copyWith(
               color: active ? AppColors.onAccent : AppColors.text3,
-              fontSize: 13,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -272,7 +262,6 @@ class _ActiveCopyCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
-                              fontSize: 15,
                               fontWeight: AppTextStyles.bold,
                               height: 1.2,
                             ),
@@ -301,7 +290,6 @@ class _ActiveCopyCard extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.micro.copyWith(
                                 color: AppColors.text3,
-                                fontSize: 10,
                                 height: 1,
                               ),
                             ),
@@ -394,7 +382,6 @@ class _ProviderAvatar extends StatelessWidget {
         copy.providerAvatar,
         style: AppTextStyles.baseMedium.copyWith(
           color: _copyPrimary,
-          fontSize: 17,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -420,7 +407,6 @@ class _StatusPill extends StatelessWidget {
         style.label,
         style: AppTextStyles.micro.copyWith(
           color: style.color,
-          fontSize: 11,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -456,7 +442,6 @@ class _MiniValueCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -467,7 +452,6 @@ class _MiniValueCard extends StatelessWidget {
               value,
               style: AppTextStyles.caption.copyWith(
                 color: valueColor,
-                fontSize: 13,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
                 fontFeatures: AppTextStyles.tabularFigures,

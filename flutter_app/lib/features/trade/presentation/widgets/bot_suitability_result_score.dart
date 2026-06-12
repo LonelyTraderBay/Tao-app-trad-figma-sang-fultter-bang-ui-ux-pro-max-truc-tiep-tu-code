@@ -40,11 +40,7 @@ class _ResultView extends StatelessWidget {
         Text(
           result.title,
           textAlign: TextAlign.center,
-          style: AppTextStyles.sectionTitle.copyWith(
-            color: color,
-            fontSize: 20,
-            height: 1.1,
-          ),
+          style: AppTextStyles.sectionTitle.copyWith(color: color, height: 1.1),
         ),
         const SizedBox(height: 12),
         Text(
@@ -52,7 +48,6 @@ class _ResultView extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.body.copyWith(
             color: AppColors.text2,
-            fontSize: 14,
             height: 1.6,
           ),
         ),
@@ -85,7 +80,6 @@ class _ResultView extends StatelessWidget {
             result.ctaLabel,
             style: AppTextStyles.body.copyWith(
               color: AppColors.onAccent,
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -127,7 +121,6 @@ class _ScoreCard extends StatelessWidget {
                   'Your Score',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 13,
                     height: 1,
                   ),
                 ),
@@ -136,7 +129,6 @@ class _ScoreCard extends StatelessWidget {
                 '$score / $maxScore',
                 style: AppTextStyles.baseMedium.copyWith(
                   color: color,
-                  fontSize: 18,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -145,7 +137,7 @@ class _ScoreCard extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           ClipRRect(
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.xlRadius,
             child: LinearProgressIndicator(
               value: percent,
               minHeight: 12,
@@ -158,7 +150,6 @@ class _ScoreCard extends StatelessWidget {
             '${(percent * 100).toStringAsFixed(0)}% proficiency',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              fontSize: 12,
               height: 1,
             ),
           ),

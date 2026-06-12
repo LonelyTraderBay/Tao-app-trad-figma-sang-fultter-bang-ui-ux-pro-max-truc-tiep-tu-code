@@ -56,7 +56,9 @@ class StakingCustodyMetricTile extends StatelessWidget {
             value,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.baseMedium.copyWith(height: 1.25),
+            style: AppTextStyles.baseMedium.copyWith(
+              height: AppSpacing.stakingCustodyMetricValueLineHeight,
+            ),
           ),
         ],
       ),
@@ -100,7 +102,7 @@ class StakingCustodyLegendRow extends StatelessWidget {
                   item.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.4,
+                    height: AppSpacing.stakingCustodyDescriptionLineHeight,
                   ),
                 ),
               ],
@@ -157,7 +159,7 @@ class StakingCustodyStorageTile extends StatelessWidget {
             description,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              height: 1.4,
+              height: AppSpacing.stakingCustodyDescriptionLineHeight,
             ),
           ),
         ],
@@ -273,7 +275,10 @@ class StakingCustodyMatchStatus extends StatelessWidget {
             color: AppColors.buy,
             shape: BoxShape.circle,
           ),
-          child: SizedBox(width: 6, height: 6),
+          child: SizedBox(
+            width: AppSpacing.stakingCustodyStatusDot,
+            height: AppSpacing.stakingCustodyStatusDot,
+          ),
         ),
         const SizedBox(width: AppSpacing.x1),
         Text(

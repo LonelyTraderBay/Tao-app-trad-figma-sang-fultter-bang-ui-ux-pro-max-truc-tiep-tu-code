@@ -7,14 +7,10 @@ class _ProtectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       constraints: const BoxConstraints(minHeight: 154),
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
-      decoration: BoxDecoration(
-        color: _compPanel,
-        border: Border.all(color: _compBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _compBorder.withValues(alpha: .72),
       child: Column(
         children: [
           Row(
@@ -44,7 +40,6 @@ class _ProtectionCard extends StatelessWidget {
                         'Protected up to ${snapshot.coverageLimit}',
                         style: AppTextStyles.baseMedium.copyWith(
                           color: AppColors.text1,
-                          fontSize: 16,
                           height: 1,
                         ),
                       ),
@@ -53,7 +48,6 @@ class _ProtectionCard extends StatelessWidget {
                         snapshot.summary,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          fontSize: 11,
                           height: 1.38,
                         ),
                       ),
@@ -78,7 +72,6 @@ class _ProtectionCard extends StatelessWidget {
                   snapshot.coveredMessage,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                     height: 1.35,
                   ),
@@ -118,7 +111,6 @@ class _InfoNotice extends StatelessWidget {
                   'Automatic Protection',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -128,7 +120,6 @@ class _InfoNotice extends StatelessWidget {
                   snapshot.automaticProtection,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                     height: 1.35,
                   ),
@@ -155,9 +146,9 @@ class _Tabs extends StatelessWidget {
       ('eligibility', 'Eligibility'),
       ('claim', 'How to Claim'),
     ];
-    return Container(
+    return VitCard(
       height: 53,
-      color: _compPanel,
+      variant: VitCardVariant.inner,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -177,7 +168,6 @@ class _Tabs extends StatelessWidget {
                             color: activeId == tab.$1
                                 ? _compPrimary
                                 : AppColors.text3,
-                            fontSize: 12,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),
@@ -220,7 +210,6 @@ class _Overview extends StatelessWidget {
                 snapshot.overviewDescription,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  fontSize: 11,
                   height: 1.55,
                 ),
               ),
@@ -262,7 +251,6 @@ class _InfoRow extends StatelessWidget {
                 item.title,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -272,7 +260,6 @@ class _InfoRow extends StatelessWidget {
                 item.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
                   height: 1.25,
                 ),
               ),
@@ -331,7 +318,6 @@ class _CoverageBox extends StatelessWidget {
                   coverage.label,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1,
                   ),
                 ),
@@ -340,7 +326,6 @@ class _CoverageBox extends StatelessWidget {
                 coverage.amount,
                 style: AppTextStyles.baseMedium.copyWith(
                   color: coverage.emphasized ? _compGreen : AppColors.text1,
-                  fontSize: 16,
                   height: 1,
                 ),
               ),
@@ -353,7 +338,6 @@ class _CoverageBox extends StatelessWidget {
               coverage.caption,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 9,
                 height: 1,
               ),
             ),

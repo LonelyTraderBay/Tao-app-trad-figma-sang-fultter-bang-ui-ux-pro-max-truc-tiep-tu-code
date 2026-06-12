@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -160,6 +161,19 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
                           ],
                         const SizedBox(height: AppSpacing.x2),
                         _QuickLinksCard(links: snapshot.quickLinks),
+                        VitPageContent(
+                          padding: VitContentPadding.compact,
+                          customGap: 0,
+                          children: const [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'My ads state review',
+                              message:
+                                  'Ad status, pause/delete state, analytics links, empty state, and active order impact stay visible before changing P2P advertisement exposure.',
+                              contractId: 'SC-225',
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

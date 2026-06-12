@@ -75,11 +75,13 @@ class _MiniOptionChip extends StatelessWidget {
           Icon(
             icon,
             color: selected ? AppColors.warn : AppColors.text3,
-            size: 14,
+            size: AppSpacing.arenaGovernanceSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x1),
           ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 132),
+            constraints: const BoxConstraints(
+              maxWidth: AppSpacing.arenaGovernanceOptionMaxWidth,
+            ),
             child: Text(
               label,
               maxLines: 1,
@@ -215,7 +217,7 @@ class _DropdownCard extends StatelessWidget {
           const Icon(
             Icons.keyboard_arrow_down_rounded,
             color: AppColors.text3,
-            size: 18,
+            size: AppSpacing.arenaGovernanceLargeIcon,
           ),
         ],
       ),

@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class SavingsSmartSuggestionsPage extends ConsumerStatefulWidget {
   const SavingsSmartSuggestionsPage({super.key, this.shellRenderMode});
@@ -81,7 +82,12 @@ class _SavingsSmartSuggestionsPageState
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
-                      SavingsSmartSummary(snapshot: snapshot),
+                      VitCard(
+                        variant: VitCardVariant.standard,
+                        radius: VitCardRadius.md,
+                        padding: EdgeInsets.zero,
+                        child: SavingsSmartSummary(snapshot: snapshot),
+                      ),
                       SavingsSmartTabs(
                         tabs: snapshot.tabs,
                         active: activeTab,

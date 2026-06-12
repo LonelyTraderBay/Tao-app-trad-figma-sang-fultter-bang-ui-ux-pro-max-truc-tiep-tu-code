@@ -15,7 +15,7 @@ class _ComparisonChartCard extends StatelessWidget {
           const _CardTitle('Portfolio Value Over Time'),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: 240,
+            height: AppSpacing.dcaPerformanceCompareChartHeight,
             width: double.infinity,
             child: CustomPaint(painter: _PerformanceLinePainter(points)),
           ),
@@ -204,7 +204,7 @@ class _AdvantageBar extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
-            minHeight: 6,
+            minHeight: AppSpacing.dcaPerformanceCompareProgressHeight,
             value: (value / 10).clamp(0.0, 1.0),
             backgroundColor: AppColors.surface3,
             valueColor: AlwaysStoppedAnimation<Color>(color),
@@ -230,7 +230,7 @@ class _RadarCard extends StatelessWidget {
           const _CardTitle('Multi-Dimensional Comparison'),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: 280,
+            height: AppSpacing.dcaPerformanceCompareRadarHeight,
             width: double.infinity,
             child: CustomPaint(painter: _RadarPainter(metrics)),
           ),

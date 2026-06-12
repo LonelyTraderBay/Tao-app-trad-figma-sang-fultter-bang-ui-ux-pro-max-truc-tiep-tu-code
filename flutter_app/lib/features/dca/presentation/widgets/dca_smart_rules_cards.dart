@@ -16,7 +16,11 @@ class _RuleCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(_typeIcon(rule.type), color: AppColors.text3, size: 18),
+              Icon(
+                _typeIcon(rule.type),
+                color: AppColors.text3,
+                size: AppSpacing.dcaSmartInlineIcon,
+              ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(
@@ -148,7 +152,7 @@ class _TemplateCard extends StatelessWidget {
               const Icon(
                 Icons.show_chart_rounded,
                 color: AppColors.text3,
-                size: 14,
+                size: AppSpacing.dcaSmartButtonIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -158,15 +162,18 @@ class _TemplateCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 32,
+                height: AppSpacing.dcaSmartButtonHeight,
                 child: VitCtaButton(
                   onPressed: () {},
                   fullWidth: false,
-                  height: 32,
+                  height: AppSpacing.dcaSmartButtonHeight,
                   padding: const EdgeInsets.symmetric(
                     horizontal: AppSpacing.x3,
                   ),
-                  leading: const Icon(Icons.copy_rounded, size: 14),
+                  leading: const Icon(
+                    Icons.copy_rounded,
+                    size: AppSpacing.dcaSmartButtonIcon,
+                  ),
                   child: const Text('Use'),
                 ),
               ),
@@ -217,7 +224,7 @@ class _HistoryCard extends StatelessWidget {
                         const Icon(
                           Icons.schedule_rounded,
                           color: AppColors.text3,
-                          size: 12,
+                          size: AppSpacing.dcaSmartTinyIcon,
                         ),
                         const SizedBox(width: AppSpacing.x2),
                         Text(

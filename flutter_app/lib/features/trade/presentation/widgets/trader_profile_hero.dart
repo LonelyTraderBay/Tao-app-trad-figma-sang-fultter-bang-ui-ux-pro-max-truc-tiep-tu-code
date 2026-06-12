@@ -47,7 +47,6 @@ class _ProfileHero extends StatelessWidget {
                   trader.avatar,
                   style: AppTextStyles.sectionTitle.copyWith(
                     color: _profilePrimary,
-                    fontSize: 22,
                     height: 1,
                   ),
                 ),
@@ -66,7 +65,6 @@ class _ProfileHero extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.baseMedium.copyWith(
                               color: AppColors.onAccent,
-                              fontSize: 18,
                               fontWeight: AppTextStyles.bold,
                               height: 1.2,
                             ),
@@ -132,7 +130,6 @@ class _ProfileHero extends StatelessWidget {
                 'Copiers: ${trader.copiers} / ${trader.maxCopiers}',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
                   height: 1,
                 ),
               ),
@@ -141,7 +138,6 @@ class _ProfileHero extends StatelessWidget {
                 '${trader.maxCopiers - trader.copiers} slots trống',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  fontSize: 10,
                   height: 1,
                 ),
               ),
@@ -189,7 +185,6 @@ class _ProfileHero extends StatelessWidget {
                     isFollowing ? 'Hủy theo dõi' : 'Copy Trader này',
                     style: AppTextStyles.body.copyWith(
                       color: isFollowing ? _profileRed : AppColors.onAccent,
-                      fontSize: 14,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),
@@ -223,7 +218,6 @@ class _TagChip extends StatelessWidget {
         label,
         style: AppTextStyles.micro.copyWith(
           color: chipColor,
-          fontSize: 10,
           fontWeight: AppTextStyles.medium,
           height: 1,
         ),
@@ -262,7 +256,6 @@ class _HeroMetric extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 9,
                 height: 1,
               ),
             ),
@@ -273,7 +266,6 @@ class _HeroMetric extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: color,
-                fontSize: 14,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
                 fontFeatures: AppTextStyles.tabularFigures,

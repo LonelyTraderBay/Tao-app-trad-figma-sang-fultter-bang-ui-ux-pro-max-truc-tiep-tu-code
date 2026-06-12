@@ -78,7 +78,7 @@ class _WaterfallStep extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.inputRadius,
           child: const SizedBox(
-            height: 32,
+            height: AppSpacing.adminBox32,
             child: ColoredBox(
               color: AppColors.surface2,
               child: Align(
@@ -89,9 +89,9 @@ class _WaterfallStep extends StatelessWidget {
                     'hoàn thành',
                     style: TextStyle(
                       color: AppColors.text1,
-                      fontSize: 11,
+                      fontSize: AppSpacing.adminFontMd,
                       fontWeight: FontWeight.w700,
-                      height: 1.2,
+                      height: AppSpacing.adminLineHeightShort,
                       decoration: TextDecoration.none,
                     ),
                   ),
@@ -106,7 +106,7 @@ class _WaterfallStep extends StatelessWidget {
             const Icon(
               Icons.check_circle_outline_rounded,
               color: AppColors.buy,
-              size: 12,
+              size: AppSpacing.adminIconXs,
             ),
             const SizedBox(width: AppSpacing.x1),
             Text(
@@ -139,7 +139,7 @@ class _DropoutChartCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: 200,
+            height: AppSpacing.adminFunnelWaterfallHeight,
             child: Semantics(
               label: hasDropout
                   ? '${funnel.name} dropout chart'
@@ -226,7 +226,7 @@ class _StepDetailRow extends StatelessWidget {
                 const Icon(
                   Icons.chevron_right_rounded,
                   color: AppColors.text3,
-                  size: 16,
+                  size: AppSpacing.adminIconMd,
                 ),
               ],
             ),

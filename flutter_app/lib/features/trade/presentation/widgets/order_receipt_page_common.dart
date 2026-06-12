@@ -14,8 +14,8 @@ class _RiskBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 58,
-      padding: const EdgeInsets.fromLTRB(12, 10, 10, 8),
+      height: AppSpacing.tradeReceiptRiskBoxHeight,
+      padding: AppSpacing.tradeReceiptRiskBoxPadding,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .08),
         border: Border.all(color: color.withValues(alpha: .22)),
@@ -32,15 +32,13 @@ class _RiskBox extends StatelessWidget {
               height: 1.1,
             ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: AppSpacing.tradeReceiptRiskValueGap),
           Text(
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: color,
-              fontSize: 14,
-              fontFamily: 'monospace',
               fontWeight: AppTextStyles.bold,
               height: 1.1,
               fontFeatures: AppTextStyles.tabularFigures,
@@ -56,8 +54,8 @@ class _WarningNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40),
-      padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+      margin: AppSpacing.tradeReceiptHorizontalMargin,
+      padding: AppSpacing.tradeReceiptNoticePadding,
       decoration: BoxDecoration(
         color: AppColors.warn.withValues(alpha: .06),
         border: Border.all(color: AppColors.warn.withValues(alpha: .22)),
@@ -67,21 +65,20 @@ class _WarningNotice extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(top: 2),
+            padding: EdgeInsets.only(top: AppSpacing.tradeReceiptNoticeIconTop),
             child: Icon(
               Icons.warning_amber_rounded,
               color: AppColors.warn,
-              size: 14,
+              size: AppSpacing.tradeReceiptNoticeIcon,
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.tradeReceiptNoticeGap),
           Expanded(
             child: Text(
               'Lệnh có thể bị khớp 1 phần hoặc hủy nếu giá thay đổi nhanh. '
               'Kiểm tra trạng thái tại Lệnh đang mở.',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.warn,
-                fontSize: 11,
                 height: 1.45,
                 fontWeight: AppTextStyles.medium,
               ),
@@ -105,9 +102,9 @@ class _OrderSupportLink extends StatelessWidget {
       onTap: () => context.go(supportRoute),
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 46,
-        margin: const EdgeInsets.symmetric(horizontal: 40),
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        height: AppSpacing.tradeReceiptSupportHeight,
+        margin: AppSpacing.tradeReceiptHorizontalMargin,
+        padding: AppSpacing.tradeReceiptSupportPadding,
         decoration: BoxDecoration(
           color: AppColors.primary.withValues(alpha: .08),
           border: Border.all(color: AppColors.primary.withValues(alpha: .18)),
@@ -118,9 +115,9 @@ class _OrderSupportLink extends StatelessWidget {
             const Icon(
               Icons.support_agent_rounded,
               color: AppColors.primary,
-              size: 16,
+              size: AppSpacing.tradeReceiptSupportIcon,
             ),
-            const SizedBox(width: 9),
+            const SizedBox(width: AppSpacing.tradeReceiptSupportGap),
             Expanded(
               child: Text(
                 'Cần hỗ trợ lệnh này?',
@@ -128,7 +125,6 @@ class _OrderSupportLink extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -138,16 +134,15 @@ class _OrderSupportLink extends StatelessWidget {
               'Mở hồ sơ',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.primary,
-                fontSize: 11,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: AppSpacing.tradeReceiptSupportChevronGap),
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.primary,
-              size: 16,
+              size: AppSpacing.tradeReceiptSupportIcon,
             ),
           ],
         ),
@@ -175,12 +170,12 @@ class _ReceiptFooter extends StatelessWidget {
         border: Border(top: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(40, 16, 40, 8),
+        padding: AppSpacing.tradeReceiptFooterPadding,
         child: Row(
           children: [
             Expanded(
               child: SizedBox(
-                height: 48,
+                height: AppSpacing.tradeReceiptFooterButtonHeight,
                 child: OutlinedButton.icon(
                   key: OrderReceiptPage.shareKey,
                   onPressed: onShare,
@@ -189,7 +184,7 @@ class _ReceiptFooter extends StatelessWidget {
                     color: sharePressed
                         ? AppColors.receiptTextActive
                         : AppColors.textMutedLight,
-                    size: 16,
+                    size: AppSpacing.tradeReceiptFooterIcon,
                   ),
                   label: Text(sharePressed ? 'Đã chia sẻ' : 'Chia sẻ'),
                   style: OutlinedButton.styleFrom(
@@ -206,7 +201,7 @@ class _ReceiptFooter extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.tradeReceiptFooterGap),
             Expanded(
               flex: 2,
               child: SizedBox(
@@ -222,7 +217,6 @@ class _ReceiptFooter extends StatelessWidget {
                       borderRadius: AppRadii.mdRadius,
                     ),
                     textStyle: AppTextStyles.baseMedium.copyWith(
-                      fontSize: 16,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),

@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
@@ -124,28 +125,39 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     AppSpacing.contentPad,
                     AppSpacing.x3,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
                     children: [
-                      const _LoginHero(),
-                      const SizedBox(height: 49),
-                      _LoginForm(
-                        identifierController: _identifierController,
-                        passwordController: _passwordController,
-                        showPassword: _showPassword,
-                        submitting: _submitting,
-                        error: _error,
-                        missingIdentifier: missingIdentifier,
-                        missingPassword: missingPassword,
-                        onChanged: _clearFieldError,
-                        onTogglePassword: () {
-                          setState(() => _showPassword = !_showPassword);
-                        },
-                        onLogin: _handleLogin,
-                        onDemoLogin: _handleDemoLogin,
+                      const VitCard(
+                        padding: EdgeInsets.zero,
+                        child: _LoginHero(),
                       ),
-                      const SizedBox(height: 52),
-                      const _LegalFooter(),
+                      const Padding(padding: EdgeInsets.only(top: 49)),
+                      VitCard(
+                        padding: EdgeInsets.zero,
+                        child: _LoginForm(
+                          identifierController: _identifierController,
+                          passwordController: _passwordController,
+                          showPassword: _showPassword,
+                          submitting: _submitting,
+                          error: _error,
+                          missingIdentifier: missingIdentifier,
+                          missingPassword: missingPassword,
+                          onChanged: _clearFieldError,
+                          onTogglePassword: () {
+                            setState(() => _showPassword = !_showPassword);
+                          },
+                          onLogin: _handleLogin,
+                          onDemoLogin: _handleDemoLogin,
+                        ),
+                      ),
+                      const Padding(padding: EdgeInsets.only(top: 52)),
+                      const VitCard(
+                        padding: EdgeInsets.zero,
+                        child: _LegalFooter(),
+                      ),
                     ],
                   ),
                 ),
@@ -185,9 +197,9 @@ class _LoginHero extends StatelessWidget {
           ),
           child: const Center(child: _VitTradeLogoMark()),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         Text('VitTrade', style: AppTextStyles.pageTitle),
-        const SizedBox(height: AppSpacing.x2),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         Text(
           'Giao dịch thông minh, an toàn, tốc độ',
           textAlign: TextAlign.center,
@@ -243,7 +255,7 @@ class _LoginForm extends StatelessWidget {
             autofillHints: const [AutofillHints.username, AutofillHints.email],
             onChanged: (_) => onChanged(),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           VitInput(
             controller: passwordController,
             fieldKey: LoginPage.passwordFieldKey,
@@ -268,10 +280,10 @@ class _LoginForm extends StatelessWidget {
             onSubmitted: (_) => onLogin(),
           ),
           if (error.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
             _LoginErrorBanner(error: error),
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
@@ -291,7 +303,7 @@ class _LoginForm extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           VitCtaButton(
             key: LoginPage.submitKey,
             onPressed: submitting ? null : onLogin,
@@ -299,9 +311,9 @@ class _LoginForm extends StatelessWidget {
             variant: VitCtaButtonVariant.auth,
             child: const Text('Đăng nhập'),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           const _DividerLabel(),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           VitCtaButton(
             key: LoginPage.demoSubmitKey,
             onPressed: submitting ? null : onDemoLogin,
@@ -309,7 +321,7 @@ class _LoginForm extends StatelessWidget {
             leading: const Icon(Icons.fingerprint_rounded, color: _authPrimary),
             child: const Text('Đăng nhập Demo'),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -390,10 +402,7 @@ class _DividerLabel extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
           child: Text(
             'hoặc',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ),
         const Expanded(child: Divider(color: AppColors.borderSolid, height: 1)),

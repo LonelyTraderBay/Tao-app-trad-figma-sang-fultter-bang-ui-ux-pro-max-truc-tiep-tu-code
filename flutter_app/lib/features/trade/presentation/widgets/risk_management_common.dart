@@ -46,7 +46,6 @@ class _GradientButton extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -71,14 +70,12 @@ class _IconTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       width: size,
       height: size,
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.mdRadius,
-      ),
+      borderColor: color.withValues(alpha: .24),
       child: Icon(icon, color: color, size: size * .5),
     );
   }
@@ -105,10 +102,7 @@ class _OcoSheet extends StatelessWidget {
           children: [
             const _SheetHandle(),
             const SizedBox(height: 18),
-            Text(
-              'OCO Order Form',
-              style: AppTextStyles.sectionTitle.copyWith(fontSize: 20),
-            ),
+            Text('OCO Order Form', style: AppTextStyles.sectionTitle),
             const SizedBox(height: 10),
             const _SheetRow(label: 'Cặp', value: 'BTC/USDT'),
             const _SheetRow(label: 'Side', value: 'Buy'),
@@ -155,7 +149,7 @@ class _CalculatorSheet extends StatelessWidget {
             const SizedBox(height: 18),
             Text(
               'Position Sizing Calculator',
-              style: AppTextStyles.sectionTitle.copyWith(fontSize: 20),
+              style: AppTextStyles.sectionTitle,
             ),
             const SizedBox(height: 10),
             _SheetRow(
@@ -222,17 +216,13 @@ class _SheetRow extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text3,
-                fontSize: 12,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
             ),
           ),
           Text(
             value,
             style: AppTextStyles.caption.copyWith(
               fontWeight: AppTextStyles.bold,
-              fontFamily: 'monospace',
             ),
           ),
         ],

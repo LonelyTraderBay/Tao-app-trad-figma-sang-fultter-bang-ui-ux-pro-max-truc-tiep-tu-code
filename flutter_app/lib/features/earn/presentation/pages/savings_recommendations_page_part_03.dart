@@ -20,7 +20,7 @@ class _CompareRow extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: 76,
+            width: AppSpacing.savingsRecommendationsMatrixLabelWidth,
             child: Text(
               label,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -192,7 +192,9 @@ class _BulletSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 7),
+                padding: const EdgeInsets.only(
+                  top: AppSpacing.savingsRecommendationsBulletTop,
+                ),
                 child: SizedBox(
                   width: AppSpacing.x1,
                   height: AppSpacing.x1,
@@ -210,7 +212,7 @@ class _BulletSection extends StatelessWidget {
                   item,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.5,
+                    height: AppSpacing.savingsRecommendationsItemLineHeight,
                   ),
                 ),
               ),
@@ -301,7 +303,7 @@ class _AssetBadge extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.savingsRecommendationsAssetLineHeight,
             ),
           ),
         ),

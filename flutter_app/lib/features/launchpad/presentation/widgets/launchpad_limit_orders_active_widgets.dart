@@ -95,7 +95,7 @@ class _LimitOrderCard extends StatelessWidget {
                   'Distance to target',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
+                    fontSize: AppSpacing.launchpadFontSm,
                   ),
                 ),
               ),
@@ -118,14 +118,17 @@ class _LimitOrderCard extends StatelessWidget {
                 : AppColors.primary,
           ),
           const SizedBox(height: AppSpacing.x3),
-          const Divider(height: 1, color: AppColors.border),
+          const Divider(
+            height: AppSpacing.launchpadDividerHeight,
+            color: AppColors.border,
+          ),
           const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               const Icon(
                 Icons.calendar_today_outlined,
                 color: AppColors.text3,
-                size: 12,
+                size: AppSpacing.launchpadIconXs,
               ),
               const SizedBox(width: AppSpacing.x1),
               Expanded(
@@ -133,7 +136,7 @@ class _LimitOrderCard extends StatelessWidget {
                   'Expires: ${order.expiresAt}',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
+                    fontSize: AppSpacing.launchpadFontSm,
                   ),
                 ),
               ),
@@ -157,8 +160,8 @@ class _SideIcon extends StatelessWidget {
     final isBuy = side == LaunchpadLimitOrderSide.buy;
     final color = isBuy ? AppColors.buy : AppColors.sell;
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.launchpadBox40,
+      height: AppSpacing.launchpadBox40,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
@@ -167,7 +170,7 @@ class _SideIcon extends StatelessWidget {
       child: Icon(
         isBuy ? Icons.south_rounded : Icons.north_rounded,
         color: color,
-        size: 20,
+        size: AppSpacing.launchpadIcon3xl,
       ),
     );
   }
@@ -187,8 +190,8 @@ class _MiniIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 32,
-      height: 32,
+      width: AppSpacing.launchpadBox32,
+      height: AppSpacing.launchpadBox32,
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: AppColors.bg,
@@ -197,7 +200,7 @@ class _MiniIconButton extends StatelessWidget {
         child: IconButton(
           onPressed: onTap,
           padding: EdgeInsets.zero,
-          icon: Icon(icon, color: color, size: 16),
+          icon: Icon(icon, color: color, size: AppSpacing.launchpadIconXl),
         ),
       ),
     );
@@ -212,10 +215,10 @@ class _OrderMetricsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: 2,
+      crossAxisCount: AppSpacing.launchpadGridColumns,
       mainAxisSpacing: AppSpacing.x3,
       crossAxisSpacing: AppSpacing.x3,
-      childAspectRatio: 3.7,
+      childAspectRatio: AppSpacing.launchpadGridAspectAction,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.zero,
@@ -257,7 +260,7 @@ class _MetricBlock extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
+            fontSize: AppSpacing.launchpadFontSm,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
@@ -287,9 +290,9 @@ class _ProgressBar extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return ClipRRect(
-          borderRadius: BorderRadius.circular(999),
+          borderRadius: AppRadii.pillRadius,
           child: SizedBox(
-            height: 6,
+            height: AppSpacing.launchpadDotSm,
             child: Stack(
               children: [
                 const Positioned.fill(child: ColoredBox(color: AppColors.bg)),
@@ -346,8 +349,8 @@ class _TinyPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: 8,
-            height: 1,
+            fontSize: AppSpacing.launchpadFontXxs,
+            height: AppSpacing.launchpadLineHeightTight,
           ),
         ),
       ),

@@ -44,7 +44,7 @@ class _SmartStepper extends StatelessWidget {
           if (i != steps.length - 1)
             Container(
               width: AppSpacing.x5,
-              height: 2,
+              height: AppSpacing.arenaSmartRuleStepperLineHeight,
               margin: const EdgeInsets.only(bottom: AppSpacing.x5),
               decoration: BoxDecoration(
                 color: steps[i].index < step
@@ -78,8 +78,8 @@ class _SmartStepMarker extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 28,
-          height: 28,
+          width: AppSpacing.arenaSmartRuleStepDot,
+          height: AppSpacing.arenaSmartRuleStepDot,
           decoration: BoxDecoration(
             color: color,
             shape: BoxShape.circle,
@@ -92,7 +92,7 @@ class _SmartStepMarker extends StatelessWidget {
               ? const Icon(
                   Icons.check_rounded,
                   color: AppColors.navCenterIcon,
-                  size: 14,
+                  size: AppSpacing.arenaSmartRuleStepIcon,
                 )
               : Text(
                   '${item.index}',
@@ -136,7 +136,7 @@ class _IntroSection extends StatelessWidget {
           'Chọn rule có cấu trúc để room dễ hiểu và dễ được tin tưởng hơn',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
-            height: 1.3,
+            height: AppSpacing.arenaSmartRuleSubtitleLineHeight,
           ),
         ),
       ],
@@ -159,7 +159,11 @@ class _ClarityScoreCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.shield_outlined, color: result.color, size: 16),
+              Icon(
+                Icons.shield_outlined,
+                color: result.color,
+                size: AppSpacing.arenaSmartRuleIcon,
+              ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
@@ -192,7 +196,7 @@ class _ClarityScoreCard extends StatelessWidget {
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
               value: score / 100,
-              minHeight: 8,
+              minHeight: AppSpacing.arenaSmartRuleProgressHeight,
               color: result.color,
               backgroundColor: AppColors.surface3,
             ),
@@ -239,7 +243,7 @@ class _GuidanceLink extends StatelessWidget {
           const Icon(
             Icons.help_outline_rounded,
             color: AppColors.primary,
-            size: 16,
+            size: AppSpacing.arenaSmartRuleIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -254,7 +258,7 @@ class _GuidanceLink extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.primary,
-            size: 16,
+            size: AppSpacing.arenaSmartRuleIcon,
           ),
         ],
       ),
@@ -378,7 +382,7 @@ class _ChallengeTypeGrid extends StatelessWidget {
         children: [
           for (final type in types)
             SizedBox(
-              width: 200,
+              width: AppSpacing.arenaSmartRuleChallengeTypeWidth,
               child: _ChallengeTypeTile(
                 key: ArenaSmartRuleBuilderPage.challengeTypeKey(type.id),
                 type: type,
@@ -419,7 +423,7 @@ class _ChallengeTypeTile extends StatelessWidget {
             Icon(
               _challengeTypeIcon(type.id),
               color: selected ? AppColors.buy : _challengeTypeColor(type.id),
-              size: 15,
+              size: AppSpacing.arenaSmartRuleTinyIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(

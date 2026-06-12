@@ -7,17 +7,11 @@ class _InfoBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       constraints: const BoxConstraints(minHeight: 96),
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
-      decoration: BoxDecoration(
-        color: _termsPrimary.withValues(alpha: .08),
-        border: Border.all(
-          color: _termsPrimary.withValues(alpha: .24),
-          width: 1.5,
-        ),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      borderColor: _termsPrimary.withValues(alpha: .24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -38,7 +32,6 @@ class _InfoBanner extends StatelessWidget {
                   snapshot.infoTitle,
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                     height: 1.15,
                   ),
@@ -48,7 +41,6 @@ class _InfoBanner extends StatelessWidget {
                   snapshot.infoDescription,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1.55,
                   ),
                 ),
@@ -69,13 +61,9 @@ class _TermsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 575,
-      decoration: BoxDecoration(
-        color: _termsPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: ClipRRect(
         borderRadius: AppRadii.cardRadius,
         child: SingleChildScrollView(
@@ -89,7 +77,6 @@ class _TermsCard extends StatelessWidget {
                 snapshot.title,
                 style: AppTextStyles.sectionTitle.copyWith(
                   color: AppColors.text1,
-                  fontSize: 21,
                   height: 1.15,
                 ),
               ),
@@ -98,7 +85,6 @@ class _TermsCard extends StatelessWidget {
                 snapshot.lastUpdatedLabel,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  fontSize: 12,
                   height: 1,
                 ),
               ),
@@ -112,10 +98,7 @@ class _TermsCard extends StatelessWidget {
               Center(
                 child: Text(
                   '-- End of Terms --',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ),
             ],
@@ -140,7 +123,6 @@ class _TermsSection extends StatelessWidget {
           section.title,
           style: AppTextStyles.baseMedium.copyWith(
             color: AppColors.text1,
-            fontSize: 16,
             height: 1.15,
           ),
         ),
@@ -154,7 +136,6 @@ class _TermsSection extends StatelessWidget {
             paragraph,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text2,
-              fontSize: 13,
               height: 1.68,
             ),
           ),
@@ -169,7 +150,6 @@ class _TermsSection extends StatelessWidget {
                 '- $bullet',
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text2,
-                  fontSize: 13,
                   height: 1.45,
                 ),
               ),
@@ -187,13 +167,10 @@ class _CriticalWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       padding: const EdgeInsets.fromLTRB(13, 14, 13, 13),
-      decoration: BoxDecoration(
-        color: _termsRed.withValues(alpha: .10),
-        border: Border.all(color: _termsRed.withValues(alpha: .35)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _termsRed.withValues(alpha: .35),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -211,8 +188,6 @@ class _CriticalWarning extends StatelessWidget {
               text: TextSpan(
                 style: AppTextStyles.caption.copyWith(
                   color: _termsRed,
-                  fontFamily: 'Roboto',
-                  fontSize: 12,
                   height: 1.5,
                 ),
                 children: [
@@ -238,14 +213,11 @@ class _ScrollWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       constraints: const BoxConstraints(minHeight: 45),
       padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
-      decoration: BoxDecoration(
-        color: _termsAmber.withValues(alpha: .08),
-        border: Border.all(color: _termsAmber.withValues(alpha: .32)),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      borderColor: _termsAmber.withValues(alpha: .32),
       child: Row(
         children: [
           const Icon(Icons.warning_amber_rounded, color: _termsAmber, size: 16),
@@ -255,7 +227,6 @@ class _ScrollWarning extends StatelessWidget {
               snapshot.scrollWarning,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                fontSize: 12,
                 height: 1.25,
               ),
             ),
@@ -325,7 +296,6 @@ class _AgreementCard extends StatelessWidget {
                       snapshot.agreementTitle,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
-                        fontSize: 13,
                         fontWeight: AppTextStyles.bold,
                         height: 1.35,
                       ),
@@ -335,7 +305,6 @@ class _AgreementCard extends StatelessWidget {
                       snapshot.agreementDescription,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 12,
                         height: 1.45,
                       ),
                     ),

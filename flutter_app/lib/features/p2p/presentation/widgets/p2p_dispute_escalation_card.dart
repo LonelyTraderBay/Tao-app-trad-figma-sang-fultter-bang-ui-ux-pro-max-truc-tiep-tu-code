@@ -31,7 +31,7 @@ class P2PDisputeEscalationCard extends StatelessWidget {
     final color = p2pDisputeLevelColor(currentLevel);
     final nextLevel = nextLevelData;
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDisputeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -70,9 +70,9 @@ class P2PDisputeEscalationCard extends StatelessWidget {
                 if (index < levels.length - 1)
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 17),
+                      padding: AppSpacing.p2pDisputeLevelConnectorPadding,
                       child: Container(
-                        height: 2,
+                        height: AppSpacing.p2pDisputeLevelConnectorHeight,
                         color: levels[index].level < currentLevel
                             ? p2pDisputeLevelColor(levels[index].level)
                             : AppColors.borderSolid,
@@ -86,7 +86,7 @@ class P2PDisputeEscalationCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: color.withValues(alpha: .18),
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.p2pDisputeCompactCardPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -128,7 +128,7 @@ class P2PDisputeEscalationCard extends StatelessWidget {
                           const Icon(
                             Icons.schedule_rounded,
                             color: AppColors.text3,
-                            size: 11,
+                            size: AppSpacing.p2pDisputeMetaIcon,
                           ),
                           const SizedBox(width: AppSpacing.x1),
                           Text(
@@ -158,10 +158,7 @@ class P2PDisputeEscalationCard extends StatelessWidget {
                   constraints: const BoxConstraints(
                     minHeight: AppSpacing.inputHeight,
                   ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x3,
-                    vertical: AppSpacing.x3,
-                  ),
+                  padding: AppSpacing.p2pDisputeEscalatePadding,
                   decoration: BoxDecoration(
                     border: Border.all(color: AppColors.warn15),
                     borderRadius: AppRadii.inputRadius,
@@ -219,8 +216,8 @@ class _LevelNode extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 37,
-            height: 37,
+            width: AppSpacing.p2pDisputeLevelNodeSize,
+            height: AppSpacing.p2pDisputeLevelNodeSize,
             decoration: BoxDecoration(
               color: isActive
                   ? color
@@ -247,7 +244,6 @@ class _LevelNode extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: isActive ? color : AppColors.text3,
               fontWeight: isActive ? AppTextStyles.bold : AppTextStyles.medium,
-              height: 1.2,
             ),
           ),
         ],

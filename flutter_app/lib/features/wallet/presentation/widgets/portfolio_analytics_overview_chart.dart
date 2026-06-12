@@ -21,11 +21,11 @@ class _OverviewContent extends StatelessWidget {
           active: activePeriod,
           onChanged: onPeriodChanged,
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.walletAnalyticsOverviewPeriodGap),
         _ChartCard(points: snapshot.history),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.walletAnalyticsOverviewChartGap),
         _MetricsCard(metrics: snapshot.metrics),
-        const SizedBox(height: 18),
+        const SizedBox(height: AppSpacing.walletAnalyticsOverviewMetricsGap),
         _AssetsCard(assets: snapshot.assets, totalUsd: snapshot.totalUsd),
       ],
     );
@@ -54,7 +54,7 @@ class _PeriodSelector extends StatelessWidget {
               onTap: () => onChanged(period),
               behavior: HitTestBehavior.opaque,
               child: Container(
-                height: 29,
+                height: AppSpacing.walletAnalyticsPeriodHeight,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: active == period
@@ -68,9 +68,7 @@ class _PeriodSelector extends StatelessWidget {
                     color: active == period
                         ? _analyticsPrimary
                         : AppColors.text2,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w800,
-                    height: 1,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
               ),
@@ -88,9 +86,9 @@ class _ChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      height: 214,
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 15),
+    return _VitCardSurface(
+      height: AppSpacing.walletAnalyticsChartHeight,
+      padding: AppSpacing.walletAnalyticsChartPadding,
       child: CustomPaint(
         painter: _PortfolioAreaPainter(points),
         child: const SizedBox.expand(),
@@ -179,12 +177,7 @@ class _PortfolioAreaPainter extends CustomPainter {
       final x = i / (labels.length - 1) * chart.width;
       labelPaint.text = TextSpan(
         text: labels[i],
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: 10,
-          fontFamily: 'Roboto',
-          height: 1,
-        ),
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
       );
       labelPaint.layout();
       labelPaint.paint(

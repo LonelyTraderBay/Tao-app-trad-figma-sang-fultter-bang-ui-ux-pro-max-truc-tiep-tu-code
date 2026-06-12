@@ -45,20 +45,34 @@ class DCARebalanceDashboard extends ConsumerWidget {
           key: contentKey,
           padding: VitContentPadding.none,
           children: [
-            Center(
-              child: Text(
-                snapshot.message,
-                key: missingConfigKey,
-                style: AppTextStyles.base.copyWith(color: AppColors.text2),
-                textAlign: TextAlign.center,
+            VitCard(
+              padding: EdgeInsets.zero,
+              child: Center(
+                child: Text(
+                  snapshot.message,
+                  key: missingConfigKey,
+                  style: AppTextStyles.base.copyWith(color: AppColors.text2),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-            const VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'Rebalance review required',
-              message:
-                  'Rebalance changes can move funds between assets. Show allocation delta, fees, limits, and confirmation before execution.',
-              contractId: 'SC-171',
+            const VitCard(
+              padding: EdgeInsets.zero,
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Rebalance review required',
+                message:
+                    'Rebalance changes can move funds between assets. Show allocation delta, fees, limits, and confirmation before execution.',
+                contractId: 'SC-171',
+              ),
+            ),
+            VitCard(
+              padding: EdgeInsets.zero,
+              child: Text(
+                'Select a rebalance configuration to review history, drift, and execution evidence.',
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                textAlign: TextAlign.center,
+              ),
             ),
           ],
         ),

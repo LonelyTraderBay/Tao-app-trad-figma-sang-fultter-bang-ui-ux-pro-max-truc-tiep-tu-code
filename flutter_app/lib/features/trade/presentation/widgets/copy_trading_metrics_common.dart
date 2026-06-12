@@ -50,10 +50,7 @@ class _MetricCell extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 11,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: 2),
         FittedBox(
@@ -63,9 +60,8 @@ class _MetricCell extends StatelessWidget {
             value,
             style: AppTextStyles.caption.copyWith(
               color: color,
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
-              fontFamily: 'monospace',
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ),
@@ -86,10 +82,7 @@ class _WeeklyChart extends StatelessWidget {
       children: [
         Text(
           'P/L 7 ngày gần nhất',
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 10,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: 6),
         SizedBox(
@@ -142,7 +135,6 @@ class _MiniBadge extends StatelessWidget {
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
           fontWeight: AppTextStyles.bold,
           height: 1.2,
         ),
@@ -165,7 +157,6 @@ class _Disclaimer extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          fontSize: 10,
           height: 1.5,
         ),
       ),

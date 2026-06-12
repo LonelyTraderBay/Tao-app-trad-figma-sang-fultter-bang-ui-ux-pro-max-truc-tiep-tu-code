@@ -34,17 +34,16 @@ class _PredictionEventCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Text(
             event.title,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 13,
               height: 1.32,
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Row(
             children: [
               Text(
@@ -102,7 +101,7 @@ class _ArenaRoomCard extends StatelessWidget {
               _StatusMini(label: room.statusLabel, color: statusColor),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             room.title,
             style: AppTextStyles.body.copyWith(
@@ -110,7 +109,7 @@ class _ArenaRoomCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Row(
             children: [
               Text(
@@ -186,7 +185,7 @@ class _ArenaModeCard extends StatelessWidget {
                     ],
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   '${mode.activeChallenges} challenges · ${mode.cloneCount} clones',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -239,10 +238,7 @@ class _CreatorChip extends StatelessWidget {
                 ),
                 Text(
                   'Trust ${creator.trustScore}%',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 9,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -285,7 +281,7 @@ class _CreateRoomCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x1),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                     Text(
                       'Tạo thách đấu Arena Points liên quan đến ${snapshot.selectedTopic.label}',
                       style: AppTextStyles.micro.copyWith(
@@ -304,7 +300,7 @@ class _CreateRoomCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Padding(
             padding: const EdgeInsets.only(left: AppSpacing.x7),
             child: Text(

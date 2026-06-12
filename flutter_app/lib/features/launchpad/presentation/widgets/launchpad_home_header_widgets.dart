@@ -42,7 +42,7 @@ class _HeroCard extends StatelessWidget {
                       'VitLaunch',
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: AppColors.text1,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: AppTextStyles.extraBold,
                       ),
                     ),
                     Text(
@@ -90,7 +90,7 @@ class _HeroCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
-              height: 1.35,
+              height: AppSpacing.launchpadLineHeightDense,
             ),
           ),
         ],
@@ -136,7 +136,7 @@ class _HeroMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
-              height: 1.25,
+              height: AppSpacing.launchpadLineHeightBody,
             ),
           ),
         ],

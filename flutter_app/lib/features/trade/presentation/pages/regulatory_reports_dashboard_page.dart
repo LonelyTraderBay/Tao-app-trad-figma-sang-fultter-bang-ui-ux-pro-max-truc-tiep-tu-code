@@ -24,7 +24,6 @@ part 'regulatory_reports_dashboard_page_part_02.dart';
 part 'regulatory_reports_dashboard_page_part_03.dart';
 
 const _dashBackground = AppColors.bg;
-const _dashPanel = AppColors.surface;
 const _dashPanel2 = AppColors.surface2;
 const _dashBorder = AppColors.borderSolid;
 const _dashGreen = AppColors.buy;

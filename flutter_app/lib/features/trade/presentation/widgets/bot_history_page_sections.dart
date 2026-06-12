@@ -64,18 +64,13 @@ class _StatColumn extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
             height: 1,
           ),
         ),
         const SizedBox(height: 10),
         Text(
           value,
-          style: AppTextStyles.sectionTitle.copyWith(
-            color: color,
-            fontSize: 20,
-            height: 1,
-          ),
+          style: AppTextStyles.sectionTitle.copyWith(color: color, height: 1),
         ),
       ],
     );
@@ -87,14 +82,11 @@ class _SearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       height: 46,
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      decoration: BoxDecoration(
-        color: _historyPanel,
-        border: Border.all(color: AppColors.borderSolid),
-        borderRadius: AppRadii.lgRadius,
-      ),
+      borderColor: AppColors.borderSolid,
       child: Row(
         children: [
           const Icon(Icons.search_rounded, color: AppColors.text3, size: 19),
@@ -104,7 +96,6 @@ class _SearchBox extends StatelessWidget {
               'Search by bot name or pair...',
               style: AppTextStyles.body.copyWith(
                 color: AppColors.text3,
-                fontSize: 14,
                 fontWeight: AppTextStyles.medium,
               ),
             ),
@@ -143,11 +134,13 @@ class _FilterTabs extends StatelessWidget {
     return Row(
       children: [
         for (final tab in tabs) ...[
-          _FilterPill(
-            key: BotHistoryPage.filterKey(tab.$1.name),
-            label: tab.$2,
-            active: tab.$1 == filter,
-            onTap: () => onChanged(tab.$1),
+          Expanded(
+            child: _FilterPill(
+              key: BotHistoryPage.filterKey(tab.$1.name),
+              label: tab.$2,
+              active: tab.$1 == filter,
+              onTap: () => onChanged(tab.$1),
+            ),
           ),
           if (tab != tabs.last) const SizedBox(width: 10),
         ],
@@ -188,9 +181,10 @@ class _FilterPill extends StatelessWidget {
         ),
         child: Text(
           label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: AppTextStyles.caption.copyWith(
             color: active ? _historyPrimary : AppColors.text3,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

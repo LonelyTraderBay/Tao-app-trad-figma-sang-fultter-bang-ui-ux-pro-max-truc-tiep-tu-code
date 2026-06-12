@@ -20,11 +20,14 @@ class _RankedRow extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.homeSectionHorizontalPadding,
+          vertical: AppSpacing.homeSectionVerticalPadding,
+        ),
         child: Row(
           children: [
             SizedBox(
-              width: 20,
+              width: AppSpacing.homeRankedRowRankChipWidth,
               child: Text(
                 '$rank',
                 textAlign: TextAlign.center,
@@ -36,9 +39,10 @@ class _RankedRow extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.homeMarketIconGap),
+            const SizedBox(width: AppSpacing.homeMarketIconGap),
             _CoinAvatar(pair: pair),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.homeMarketIconGap),
             Expanded(
               child: Text(
                 pair.symbol,
@@ -50,7 +54,10 @@ class _RankedRow extends StatelessWidget {
               ),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.homeRankedRowBadgePaddingHorizontal,
+                vertical: AppSpacing.homeRankedRowBadgePaddingVertical,
+              ),
               decoration: BoxDecoration(
                 color: bg,
                 borderRadius: AppRadii.xsRadius,
@@ -60,7 +67,6 @@ class _RankedRow extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                 ),
               ),
             ),
@@ -74,13 +80,13 @@ class _RankedRow extends StatelessWidget {
 class _CoinAvatar extends StatelessWidget {
   const _CoinAvatar({
     required this.pair,
-    this.size = 34,
-    this.radius = AppRadii.sm,
+    this.size = AppSpacing.homeCoinAvatarSize,
+    this.radius = AppRadii.smRadius,
   });
 
   final HomeCryptoPair pair;
   final double size;
-  final double radius;
+  final BorderRadiusGeometry radius;
 
   @override
   Widget build(BuildContext context) {
@@ -90,15 +96,13 @@ class _CoinAvatar extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: pair.logoColor.withValues(alpha: 0.16),
-        borderRadius: BorderRadius.circular(radius),
+        borderRadius: radius,
       ),
       child: Text(
         pair.baseAsset.characters.first,
         style: AppTextStyles.caption.copyWith(
           color: pair.logoColor,
-          fontSize: size <= 28 ? 10 : 13,
           fontWeight: AppTextStyles.bold,
-          height: 1,
         ),
       ),
     );
@@ -114,13 +118,17 @@ class _Dot extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 180),
-      width: active ? 16 : 5,
-      height: 5,
+      width: active
+          ? AppSpacing.homeAnnouncementDotActiveWidth
+          : AppSpacing.homeAnnouncementDotInactiveWidth,
+      height: AppSpacing.homeAnnouncementDotHeight,
       decoration: BoxDecoration(
         color: active
             ? AppColors.primary
             : AppColors.text3.withValues(alpha: 0.35),
-        borderRadius: BorderRadius.circular(3),
+        borderRadius: BorderRadius.circular(
+          AppSpacing.homeAnnouncementDotRadius,
+        ),
       ),
     );
   }

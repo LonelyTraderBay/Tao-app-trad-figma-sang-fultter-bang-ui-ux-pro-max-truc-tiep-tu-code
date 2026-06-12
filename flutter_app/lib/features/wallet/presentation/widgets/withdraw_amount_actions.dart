@@ -20,20 +20,16 @@ class WithdrawRecentAddresses extends StatelessWidget {
             const Icon(
               Icons.menu_book_rounded,
               color: AppColors.text3,
-              size: 13,
+              size: AppSpacing.iconSm,
             ),
-            const SizedBox(width: 5),
+            const SizedBox(width: AppSpacing.x2),
             Text(
-              '�?a ch? g?n d�y',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: 11,
-                height: 1,
-              ),
+              'Lịch sử địa chỉ gần đây',
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.rowGap),
         for (final address in addresses) ...[
           Semantics(
             button: true,
@@ -43,17 +39,10 @@ class WithdrawRecentAddresses extends StatelessWidget {
               key: withdrawRecentAddressKey(address.label),
               onTap: () => onSelect(address),
               behavior: HitTestBehavior.opaque,
-              child: Container(
-                height: 51,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 13,
-                  vertical: 9,
-                ),
-                decoration: BoxDecoration(
-                  color: withdrawPanel2,
-                  borderRadius: AppRadii.inputRadius,
-                  border: Border.all(color: AppColors.divider),
-                ),
+              child: VitCard(
+                variant: VitCardVariant.ghost,
+                borderColor: AppColors.divider,
+                padding: AppSpacing.walletWithdrawRecentAddressPadding,
                 child: Row(
                   children: [
                     Expanded(
@@ -63,34 +52,30 @@ class WithdrawRecentAddresses extends StatelessWidget {
                         children: [
                           Text(
                             address.label,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w800,
-                              height: 1,
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
                             ),
                           ),
-                          const SizedBox(height: 7),
+                          const SizedBox(height: AppSpacing.x1),
                           Text(
                             address.address,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              fontSize: 9,
-                              fontFamily: 'Roboto',
-                              height: 1,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: AppSpacing.x2),
                     Text(
                       address.lastUsed,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 9,
-                        height: 1,
                       ),
                     ),
                   ],
@@ -98,7 +83,7 @@ class WithdrawRecentAddresses extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: AppSpacing.x1),
         ],
       ],
     );
@@ -138,24 +123,18 @@ class WithdrawAmountInput extends StatelessWidget {
                   'Tất cả',
                   style: AppTextStyles.micro.copyWith(
                     color: withdrawPrimary,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w800,
-                    height: 1,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 12),
-        Container(
-          height: 52,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          decoration: BoxDecoration(
-            color: withdrawPanel2,
-            border: Border.all(color: withdrawPrimary.withValues(alpha: .25)),
-            borderRadius: AppRadii.inputRadius,
-          ),
+        const SizedBox(height: AppSpacing.rowGap),
+        VitCard(
+          variant: VitCardVariant.inner,
+          borderColor: withdrawPrimary.withValues(alpha: .25),
+          padding: AppSpacing.cardPadding,
           child: Row(
             children: [
               Expanded(
@@ -172,32 +151,26 @@ class WithdrawAmountInput extends StatelessWidget {
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
                     ],
-                    style: AppTextStyles.body.copyWith(
-                      fontSize: 18,
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w800,
+                    style: AppTextStyles.amountSm.copyWith(
+                      fontFeatures: AppTextStyles.tabularFigures,
+                      fontWeight: AppTextStyles.bold,
                     ),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       isCollapsed: true,
                       hintText: '0.00',
-                      hintStyle: AppTextStyles.body.copyWith(
+                      hintStyle: AppTextStyles.amountSm.copyWith(
                         color: AppColors.text2,
-                        fontSize: 18,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w800,
+                        fontWeight: AppTextStyles.bold,
                       ),
                     ),
                   ),
                 ),
               ),
+              const SizedBox(width: AppSpacing.rowGap),
               Text(
                 asset,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 13,
-                  height: 1,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -212,28 +185,23 @@ class WithdrawWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 62),
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-      decoration: BoxDecoration(
-        color: withdrawAmber.withValues(alpha: .10),
-        border: Border.all(color: withdrawAmber.withValues(alpha: .28)),
-        borderRadius: AppRadii.inputRadius,
-      ),
+    return VitCard(
+      variant: VitCardVariant.standard,
+      borderColor: withdrawAmber.withValues(alpha: .30),
+      padding: AppSpacing.cardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.access_time_rounded, color: withdrawAmber, size: 14),
-          const SizedBox(width: 9),
+          Icon(
+            Icons.access_time_rounded,
+            color: withdrawAmber,
+            size: AppSpacing.iconMd,
+          ),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
-              'Rút tiền cần xác minh 2FA. Yêu cầu rút trên \$10,000 sẽ được xem xét trong 24h.',
-              style: AppTextStyles.micro.copyWith(
-                color: withdrawAmber,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                height: 1.45,
-              ),
+              'Rút tiền cần xác minh 2FA. Yêu cầu rút trên \$10,000 chỉ được xem xét trong 24h.',
+              style: AppTextStyles.micro.copyWith(color: withdrawAmber),
             ),
           ),
         ],
@@ -256,30 +224,24 @@ class WithdrawSupportLink extends StatelessWidget {
         key: withdrawSupportKey,
         onTap: onTap,
         behavior: HitTestBehavior.opaque,
-        child: Container(
-          height: 44,
-          padding: const EdgeInsets.symmetric(horizontal: 14),
-          decoration: BoxDecoration(
-            color: withdrawPanel,
-            border: Border.all(color: withdrawPrimary.withValues(alpha: .22)),
-            borderRadius: AppRadii.inputRadius,
-          ),
+        child: VitCard(
+          variant: VitCardVariant.inner,
+          borderColor: withdrawPrimary.withValues(alpha: .22),
+          padding: AppSpacing.walletWithdrawSupportPadding,
           child: Row(
             children: [
               const Icon(
                 Icons.support_agent_rounded,
                 color: withdrawPrimary,
-                size: 18,
+                size: AppSpacing.iconSm,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   'Cần hỗ trợ rút tiền?',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w800,
-                    height: 1,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
               ),
@@ -287,16 +249,14 @@ class WithdrawSupportLink extends StatelessWidget {
                 'Mở hồ sơ',
                 style: AppTextStyles.micro.copyWith(
                   color: withdrawPrimary,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w800,
-                  height: 1,
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: AppSpacing.x1),
               const Icon(
                 Icons.chevron_right_rounded,
                 color: withdrawPrimary,
-                size: 18,
+                size: AppSpacing.iconSm,
               ),
             ],
           ),
@@ -320,30 +280,15 @@ class WithdrawNextButton extends StatelessWidget {
         key: withdrawNextKey,
         onTap: onTap,
         behavior: HitTestBehavior.opaque,
-        child: Container(
-          height: 52,
+        child: VitCard(
+          variant: VitCardVariant.standard,
+          height: AppSpacing.inputHeight,
+          borderColor: AppColors.primary,
           alignment: Alignment.center,
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [AppColors.primary, AppColors.primaryDark],
-            ),
-            borderRadius: AppRadii.inputRadius,
-            boxShadow: [
-              BoxShadow(
-                color: withdrawPrimary.withValues(alpha: .28),
-                blurRadius: 24,
-                offset: const Offset(0, 10),
-              ),
-            ],
-          ),
           child: Text(
             'Tiếp tục →',
             style: AppTextStyles.baseMedium.copyWith(
-              fontSize: 17,
-              fontWeight: FontWeight.w800,
-              height: 1,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
         ),

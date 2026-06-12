@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -73,6 +74,19 @@ class P2PInsurancePolicyPage extends ConsumerWidget {
                         _PolicySectionList(sections: snapshot.sections),
                         const SizedBox(height: AppSpacing.x5),
                         _PrivacyNoticeCard(text: snapshot.privacyNotice),
+                        VitPageContent(
+                          padding: VitContentPadding.compact,
+                          customGap: 0,
+                          children: const [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'P2P insurance policy state review',
+                              message:
+                                  'Policy version, coverage notice, section terms, privacy handling, and current policy state stay visible before insurance decisions.',
+                              contractId: 'SC-241',
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

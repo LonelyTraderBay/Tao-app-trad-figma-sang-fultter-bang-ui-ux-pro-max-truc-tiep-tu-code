@@ -18,13 +18,10 @@ class _DisclosureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = color ?? AppColors.text1;
-    return Container(
+    return VitCard(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-      decoration: BoxDecoration(
-        color: tint ?? _legalCard,
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: tint == null ? VitCardVariant.standard : VitCardVariant.inner,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -40,7 +37,6 @@ class _DisclosureCard extends StatelessWidget {
                   block.title,
                   style: AppTextStyles.caption.copyWith(
                     color: accent,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1.15,
                   ),
@@ -54,7 +50,6 @@ class _DisclosureCard extends StatelessWidget {
               block.body,
               style: AppTextStyles.micro.copyWith(
                 color: color ?? AppColors.text3,
-                fontSize: 10,
                 height: 1.45,
               ),
             ),
@@ -70,7 +65,6 @@ class _DisclosureCard extends StatelessWidget {
                       : '* ${block.items[index]}',
                   style: AppTextStyles.micro.copyWith(
                     color: color ?? AppColors.text3,
-                    fontSize: 10,
                     height: 1.5,
                   ),
                 ),
@@ -91,13 +85,10 @@ class _CommitmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
-      decoration: BoxDecoration(
-        color: _legalPrimary.withValues(alpha: .06),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _legalPrimary),
-      ),
+      borderColor: _legalPrimary,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -112,7 +103,6 @@ class _CommitmentCard extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: _legalPrimary,
-                fontSize: 10,
                 fontWeight: AppTextStyles.bold,
                 height: 1.42,
               ),
@@ -132,13 +122,10 @@ class _WarningList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-      decoration: BoxDecoration(
-        color: AppColors.warn10,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.warningBorder),
-      ),
+      borderColor: AppColors.warningBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -154,7 +141,6 @@ class _WarningList extends StatelessWidget {
                 title,
                 style: AppTextStyles.micro.copyWith(
                   color: _legalAmber,
-                  fontSize: 11,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -168,7 +154,6 @@ class _WarningList extends StatelessWidget {
                 '* $item',
                 style: AppTextStyles.micro.copyWith(
                   color: _legalAmber,
-                  fontSize: 10,
                   height: 1.4,
                 ),
               ),
@@ -188,12 +173,8 @@ class _LeverageRules extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-      decoration: BoxDecoration(
-        color: _legalCard,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -201,7 +182,6 @@ class _LeverageRules extends StatelessWidget {
             'Leverage Restrictions by Region',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1.2,
             ),
@@ -212,7 +192,6 @@ class _LeverageRules extends StatelessWidget {
               rule.title,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
                 height: 1.2,
               ),
             ),
@@ -221,7 +200,6 @@ class _LeverageRules extends StatelessWidget {
               rule.body,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
                 height: 1.3,
               ),
             ),

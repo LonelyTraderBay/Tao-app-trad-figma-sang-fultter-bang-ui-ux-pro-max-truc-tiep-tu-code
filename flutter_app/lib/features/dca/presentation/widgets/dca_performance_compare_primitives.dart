@@ -62,8 +62,8 @@ class _Legend extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 8,
-          height: 8,
+          width: AppSpacing.dcaPerformanceCompareLegendDot,
+          height: AppSpacing.dcaPerformanceCompareLegendDot,
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         const SizedBox(width: AppSpacing.x2),

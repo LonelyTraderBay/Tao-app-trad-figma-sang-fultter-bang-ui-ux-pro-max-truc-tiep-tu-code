@@ -20,7 +20,9 @@ class _ClaimSheet extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           child: Material(
             color: AppColors.surface,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(AppRadii.cardLarge),
+            ),
             child: Padding(
               key: LaunchpadClaimReceiptPage.claimSheetKey,
               padding: EdgeInsets.fromLTRB(
@@ -35,8 +37,8 @@ class _ClaimSheet extends StatelessWidget {
                 children: [
                   Align(
                     child: Container(
-                      width: 40,
-                      height: 4,
+                      width: AppSpacing.launchpadBox40,
+                      height: AppSpacing.launchpadSheetHandleHeight,
                       decoration: BoxDecoration(
                         color: AppColors.borderSolid,
                         borderRadius: AppRadii.xsRadius,

@@ -17,7 +17,7 @@ class _SafeInfoCard extends StatelessWidget {
               const Icon(
                 Icons.info_outline_rounded,
                 color: AppColors.accent,
-                size: 14,
+                size: AppSpacing.launchpadIconMd,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -65,7 +65,7 @@ class _SecurityNotice extends StatelessWidget {
           const Icon(
             Icons.lock_outline_rounded,
             color: AppColors.accent,
-            size: 15,
+            size: AppSpacing.launchpadIconLg,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -73,7 +73,7 @@ class _SecurityNotice extends StatelessWidget {
               'Multi-sig yeu cau ${safe.threshold}/${safe.owners.length} chu ky truoc khi thuc hien. Moi giao dich co thoi han 7 ngay. Dam bao tat ca signers xac nhan truoc khi het han.',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.5,
+                height: AppSpacing.launchpadLineHeightLong,
               ),
             ),
           ),
@@ -150,8 +150,8 @@ class _CreateTxSheetState extends State<_CreateTxSheet> {
                 children: [
                   Center(
                     child: Container(
-                      width: 40,
-                      height: 4,
+                      width: AppSpacing.launchpadBox40,
+                      height: AppSpacing.launchpadSheetHandleHeight,
                       decoration: const BoxDecoration(
                         color: AppColors.borderSolid,
                         borderRadius: AppRadii.xsRadius,
@@ -274,7 +274,11 @@ class _SafeSheetBadge extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.shield_outlined, color: safe.accent, size: 15),
+          Icon(
+            Icons.shield_outlined,
+            color: safe.accent,
+            size: AppSpacing.launchpadIconLg,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
@@ -315,7 +319,7 @@ class _CreateWarning extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: 14,
+            size: AppSpacing.launchpadIconMd,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -342,9 +346,9 @@ class _SignatureProgress extends StatelessWidget {
         ? AppColors.buy
         : AppColors.primary;
     return ClipRRect(
-      borderRadius: BorderRadius.circular(999),
+      borderRadius: AppRadii.pillRadius,
       child: LinearProgressIndicator(
-        minHeight: 6,
+        minHeight: AppSpacing.launchpadDotSm,
         value: ratio.clamp(0, 1),
         backgroundColor: AppColors.surface3,
         valueColor: AlwaysStoppedAnimation<Color>(color),
@@ -399,8 +403,8 @@ class _MiniPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: 8,
-            height: 1,
+            fontSize: AppSpacing.launchpadFontXxs,
+            height: AppSpacing.launchpadLineHeightTight,
           ),
         ),
       ),

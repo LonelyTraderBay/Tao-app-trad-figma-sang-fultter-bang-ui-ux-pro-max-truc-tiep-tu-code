@@ -64,7 +64,7 @@ class _ResultView extends StatelessWidget {
                           result.description,
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text2,
-                            height: 1.55,
+                            height: AppSpacing.stakingAssessmentBodyLineHeight,
                           ),
                         ),
                       ],
@@ -133,7 +133,10 @@ class _ResultIcon extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
-        border: Border.all(color: color, width: 1.5),
+        border: Border.all(
+          color: color,
+          width: AppSpacing.stakingAssessmentOptionBorderWidth,
+        ),
         borderRadius: AppRadii.xlRadius,
       ),
       child: SizedBox(
@@ -232,7 +235,7 @@ class _BulletRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.55,
+              height: AppSpacing.stakingAssessmentBodyLineHeight,
             ),
           ),
         ),

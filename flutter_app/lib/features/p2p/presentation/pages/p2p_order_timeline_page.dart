@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -126,16 +125,16 @@ class _TimelineHeroCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.x4),
       child: Row(
         children: [
-          Container(
+          VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
             width: AppSpacing.ctaHeight,
             height: AppSpacing.ctaHeight,
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: AppRadii.lgRadius,
-            ),
+            alignment: Alignment.center,
+            borderColor: AppColors.primary20,
             child: const Icon(
               Icons.schedule_rounded,
-              color: AppColors.onAccent,
+              color: AppColors.primary,
               size: AppSpacing.iconMd,
             ),
           ),
@@ -178,7 +177,10 @@ class _TimelineList extends StatelessWidget {
           left: AppSpacing.x6 / 2,
           top: AppSpacing.x1,
           bottom: AppSpacing.x6,
-          child: Container(width: 2, color: AppColors.borderSolid),
+          child: const SizedBox(
+            width: 2,
+            child: ColoredBox(color: AppColors.borderSolid),
+          ),
         ),
         Column(
           children: [
@@ -208,15 +210,16 @@ class _TimelineRow extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: AppSpacing.x6,
-            height: AppSpacing.x6,
+          DecoratedBox(
             decoration: BoxDecoration(
               color: _statusBackground(event.status),
               shape: BoxShape.circle,
               border: Border.all(color: color, width: 2),
             ),
-            child: Icon(_eventIcon(event.typeKey), color: color, size: 18),
+            child: SizedBox.square(
+              dimension: AppSpacing.x6,
+              child: Icon(_eventIcon(event.typeKey), color: color, size: 18),
+            ),
           ),
           const SizedBox(width: AppSpacing.x5),
           Expanded(

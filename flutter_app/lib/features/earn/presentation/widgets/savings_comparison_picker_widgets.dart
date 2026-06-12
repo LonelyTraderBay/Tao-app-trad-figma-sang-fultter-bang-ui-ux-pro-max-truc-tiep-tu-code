@@ -175,7 +175,7 @@ class _Disclaimer extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.55,
+                height: AppSpacing.savingsConsumerBodyLineHeight,
               ),
             ),
           ),
@@ -250,7 +250,7 @@ class _AssetBadge extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.savingsConsumerPillLineHeight,
             ),
           ),
         ),

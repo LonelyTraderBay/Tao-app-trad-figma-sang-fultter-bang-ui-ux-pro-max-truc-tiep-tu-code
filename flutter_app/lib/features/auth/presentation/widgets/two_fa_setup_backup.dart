@@ -29,13 +29,13 @@ class _BackupCodesStep extends StatelessWidget {
             size: 34,
           ),
         ),
-        const SizedBox(height: 18),
+        const Padding(padding: EdgeInsets.only(top: 18)),
         Text(
           'Bước 3: Mã dự phòng',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text(
           'Lưu các mã này ở nơi an toàn. Dùng khi mất thiết bị xác thực.',
           textAlign: TextAlign.center,
@@ -44,14 +44,14 @@ class _BackupCodesStep extends StatelessWidget {
             height: 1.5,
           ),
         ),
-        const SizedBox(height: 20),
+        const Padding(padding: EdgeInsets.only(top: 20)),
         _BackupCodeList(codes: _backupCodes),
-        const SizedBox(height: 20),
+        const Padding(padding: EdgeInsets.only(top: 20)),
         const _WarningBanner(text: 'Mỗi mã chỉ dùng được 1 lần.'),
-        const SizedBox(height: 16),
+        const Padding(padding: EdgeInsets.only(top: 16)),
         _BackupSavedRow(saved: saved, onTap: onSavedChanged),
         if (error.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           _ErrorBanner(error: error),
         ],
       ],
@@ -74,7 +74,8 @@ class _BackupCodeList extends StatelessWidget {
       child: Column(
         children: [
           for (var index = 0; index < codes.length; index++) ...[
-            if (index > 0) const SizedBox(height: AppSpacing.x3),
+            if (index > 0)
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
             Row(
               children: [
                 Container(

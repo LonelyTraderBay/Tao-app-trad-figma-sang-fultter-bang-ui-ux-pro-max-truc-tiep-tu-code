@@ -175,7 +175,7 @@ class _JurisdictionDetail extends StatelessWidget {
             jurisdiction.treatment,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.6,
+              height: AppSpacing.stakingTaxFooterLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x4),
@@ -212,7 +212,9 @@ class _JurisdictionMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minHeight: 96),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.stakingTaxJurisdictionMetricMinHeight,
+      ),
       padding: const EdgeInsets.all(AppSpacing.x3),
       decoration: BoxDecoration(
         color: AppColors.surface2,
@@ -231,7 +233,7 @@ class _JurisdictionMetric extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1.4,
+              height: AppSpacing.stakingTaxJurisdictionMetricLineHeight,
             ),
           ),
         ],
@@ -255,7 +257,11 @@ class _ResourceRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.public_rounded, color: AppColors.primary, size: 17),
+          const Icon(
+            Icons.public_rounded,
+            color: AppColors.primary,
+            size: AppSpacing.stakingTaxResourceIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
@@ -269,7 +275,7 @@ class _ResourceRow extends StatelessWidget {
           const Icon(
             Icons.open_in_new_rounded,
             color: AppColors.primary,
-            size: 15,
+            size: AppSpacing.stakingTaxResourceExternalIcon,
           ),
         ],
       ),

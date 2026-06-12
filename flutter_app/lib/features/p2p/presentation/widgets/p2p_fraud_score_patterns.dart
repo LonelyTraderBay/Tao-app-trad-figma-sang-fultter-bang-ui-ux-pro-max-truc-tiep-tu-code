@@ -38,7 +38,6 @@ class _SafetyScoreCard extends StatelessWidget {
                 '$score%',
                 style: AppTextStyles.sectionTitle.copyWith(
                   color: color,
-                  fontSize: 28,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
@@ -197,7 +196,6 @@ class _PatternCard extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.baseMedium.copyWith(
-                                fontSize: 15,
                                 fontWeight: AppTextStyles.bold,
                               ),
                             ),
@@ -339,7 +337,6 @@ class _DetailList extends StatelessWidget {
                   items[index],
                   style: AppTextStyles.caption.copyWith(
                     color: color == AppColors.text2 ? AppColors.text2 : color,
-                    fontSize: 12,
                     height: 1.45,
                   ),
                 ),

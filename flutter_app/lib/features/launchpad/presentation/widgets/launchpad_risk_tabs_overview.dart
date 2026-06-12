@@ -56,7 +56,11 @@ class _OverallRiskCard extends StatelessWidget {
                     const SizedBox(height: AppSpacing.x1),
                     Text(
                       '${project.score.overall}/100',
-                      style: AppTextStyles.heroNumber.copyWith(fontSize: 28),
+                      style: AppTextStyles.heroNumber.copyWith(
+                        fontSize:
+                            AppSpacing.launchpadFont3xl +
+                            AppSpacing.launchpadGapXxs,
+                      ),
                     ),
                     const SizedBox(height: AppSpacing.x2),
                     _RiskPill(level: project.level),
@@ -64,14 +68,18 @@ class _OverallRiskCard extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 60,
-                height: 60,
+                width: AppSpacing.launchpadBox60,
+                height: AppSpacing.launchpadBox60,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: .12),
                   borderRadius: AppRadii.cardRadius,
                 ),
-                child: Icon(Icons.shield_outlined, color: color, size: 32),
+                child: Icon(
+                  Icons.shield_outlined,
+                  color: color,
+                  size: AppSpacing.launchpadIconHuge,
+                ),
               ),
             ],
           ),
@@ -110,7 +118,7 @@ class _RiskBreakdownCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: 250,
+            height: AppSpacing.launchpadRiskChartHeight,
             child: CustomPaint(
               painter: _RadarChartPainter(metrics),
               child: Stack(
@@ -168,10 +176,10 @@ class _QuickChecksSection extends StatelessWidget {
         accentColor: AppColors.primary,
         children: [
           GridView.count(
-            crossAxisCount: 2,
+            crossAxisCount: AppSpacing.launchpadGridColumns,
             mainAxisSpacing: AppSpacing.x3,
             crossAxisSpacing: AppSpacing.x3,
-            childAspectRatio: 2.15,
+            childAspectRatio: AppSpacing.launchpadGridAspectWide,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.zero,
@@ -217,14 +225,14 @@ class _QuickCheckCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(check.icon, color: color, size: 16),
+              Icon(check.icon, color: color, size: AppSpacing.launchpadIconXl),
               const SizedBox(width: AppSpacing.x2),
               Icon(
                 check.status
                     ? Icons.check_circle_outline_rounded
                     : Icons.cancel_outlined,
                 color: color,
-                size: 15,
+                size: AppSpacing.launchpadIconLg,
               ),
             ],
           ),
@@ -234,7 +242,7 @@ class _QuickCheckCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              fontSize: 12,
+              fontSize: AppSpacing.launchpadFontLg,
             ),
           ),
         ],
@@ -277,7 +285,7 @@ class _SignalSection extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(icon, color: accent, size: 16),
+                  Icon(icon, color: accent, size: AppSpacing.launchpadIconXl),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(
                     child: Text(

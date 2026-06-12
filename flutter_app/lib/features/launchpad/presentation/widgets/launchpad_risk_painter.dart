@@ -22,7 +22,7 @@ class _RadarLabel extends StatelessWidget {
         metrics[index].label,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          fontSize: 10,
+          fontSize: AppSpacing.launchpadFontSm,
         ),
       ),
     );

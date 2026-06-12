@@ -24,8 +24,8 @@ class _RungTile extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 28,
-            height: 28,
+            width: AppSpacing.savingsLadderRungIndexBox,
+            height: AppSpacing.savingsLadderRungIndexBox,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .14),
               shape: BoxShape.circle,
@@ -179,11 +179,11 @@ class _AllocationStatus extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.x4),
           SizedBox(
-            width: 96,
+            width: AppSpacing.savingsLadderAllocationProgressWidth,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(999),
+              borderRadius: AppRadii.pillRadius,
               child: LinearProgressIndicator(
-                minHeight: 6,
+                minHeight: AppSpacing.savingsLadderProgressHeight,
                 value: progress,
                 color: color,
                 backgroundColor: AppColors.surface3,
@@ -213,21 +213,23 @@ class _TimelineTab extends StatelessWidget {
     }
 
     final sorted = [...rungs]..sort((a, b) => a.lockDays.compareTo(b.lockDays));
-    return Column(
+    return VitPageContent(
       key: SavingsLadderPage.timelineKey,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: AppSpacing.x5,
       children: [
         const _SectionTitle(label: 'Lịch đáo hạn'),
         _TimelineChart(rungs: sorted),
-        const SizedBox(height: AppSpacing.x5),
         const _SectionTitle(label: 'Lịch trình đáo hạn'),
-        for (final rung in sorted) ...[
-          _MaturityTile(rung: rung),
-          const SizedBox(height: AppSpacing.x3),
-        ],
+        VitPageContent(
+          padding: VitContentPadding.none,
+          fullBleed: true,
+          customGap: AppSpacing.x3,
+          children: [for (final rung in sorted) _MaturityTile(rung: rung)],
+        ),
         const _SectionTitle(label: 'Dự kiến dòng tiền'),
         _CashFlowCard(rungs: sorted),
-        const SizedBox(height: AppSpacing.x3),
         _Disclaimer(text: snapshot.disclaimer),
       ],
     );
@@ -297,7 +299,7 @@ class _TimelineBar extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 58,
+          width: AppSpacing.savingsLadderTimelineLabelWidth,
           child: Text(
             '${rung.asset} ${rung.lockDays}D',
             textAlign: TextAlign.right,
@@ -309,7 +311,7 @@ class _TimelineBar extends StatelessWidget {
           child: Stack(
             children: [
               Container(
-                height: 24,
+                height: AppSpacing.savingsLadderTimelineBarHeight,
                 decoration: BoxDecoration(
                   color: AppColors.surface3,
                   borderRadius: AppRadii.smRadius,
@@ -318,7 +320,7 @@ class _TimelineBar extends StatelessWidget {
               FractionallySizedBox(
                 widthFactor: widthFactor,
                 child: Container(
-                  height: 24,
+                  height: AppSpacing.savingsLadderTimelineBarHeight,
                   padding: const EdgeInsets.symmetric(
                     horizontal: AppSpacing.x2,
                   ),
@@ -364,8 +366,8 @@ class _MaturityTile extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 42,
-            height: 52,
+            width: AppSpacing.savingsLadderMaturityBadgeWidth,
+            height: AppSpacing.savingsLadderMaturityBadgeHeight,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .12),
               border: Border.all(color: color.withValues(alpha: .25)),
@@ -492,9 +494,11 @@ class _AnalysisTab extends StatelessWidget {
     final avgLockDays =
         rungs.fold<int>(0, (total, rung) => total + rung.lockDays) ~/
         rungs.length;
-    return Column(
+    return VitPageContent(
       key: SavingsLadderPage.analysisKey,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: AppSpacing.x5,
       children: [
         _MetricGrid(
           metrics: [
@@ -524,21 +528,16 @@ class _AnalysisTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x5),
         const _SectionTitle(label: 'Phân bổ theo tài sản'),
         _AssetBreakdown(rungs: rungs),
-        const SizedBox(height: AppSpacing.x5),
         const _SectionTitle(label: 'Phân bổ theo thời hạn'),
         _DurationBreakdown(rungs: rungs),
-        const SizedBox(height: AppSpacing.x5),
         const _SectionTitle(label: 'Đánh giá thanh khoản'),
         _LiquidityCard(score: liquidityScore, rungs: rungs),
-        const SizedBox(height: AppSpacing.x3),
         _OptimizationTip(
           weightedApy: weightedApy,
           liquidityScore: liquidityScore,
         ),
-        const SizedBox(height: AppSpacing.x3),
         _Disclaimer(text: snapshot.disclaimer),
       ],
     );

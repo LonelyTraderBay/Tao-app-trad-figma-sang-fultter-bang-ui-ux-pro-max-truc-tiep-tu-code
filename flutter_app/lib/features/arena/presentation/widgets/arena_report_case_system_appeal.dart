@@ -35,14 +35,18 @@ class _SystemNotePanel extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Icon(Icons.info_outline, color: AppColors.text3, size: 14),
+            const Icon(
+              Icons.info_outline,
+              color: AppColors.text3,
+              size: AppSpacing.arenaReportSmallIcon,
+            ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: Text(
                 note,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.45,
+                  height: AppSpacing.arenaReportNoticeLineHeight,
                 ),
               ),
             ),
@@ -90,7 +94,7 @@ class _AppealNotice extends StatelessWidget {
                       'Nếu cho rằng kết luận chưa chính xác, bạn có thể mở khiếu nại trong 7 ngày kể từ ngày kết luận.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1.45,
+                        height: AppSpacing.arenaReportNoticeLineHeight,
                       ),
                     ),
                   ],
@@ -110,7 +114,7 @@ class _AppealNotice extends StatelessWidget {
               onPressed: onAppeal,
               variant: VitCtaButtonVariant.ghost,
               fullWidth: false,
-              height: 36,
+              height: AppSpacing.arenaReportAppealCtaHeight,
               child: const Text('Mở khiếu nại'),
             ),
         ],
@@ -140,7 +144,11 @@ class _LinkedActionRow extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.x4),
       child: Row(
         children: [
-          Icon(icon, color: accentColor, size: 18),
+          Icon(
+            icon,
+            color: accentColor,
+            size: AppSpacing.arenaReportInlineIcon,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
@@ -151,7 +159,11 @@ class _LinkedActionRow extends StatelessWidget {
               ),
             ),
           ),
-          const Icon(Icons.chevron_right, color: AppColors.text3, size: 18),
+          const Icon(
+            Icons.chevron_right,
+            color: AppColors.text3,
+            size: AppSpacing.arenaReportInlineIcon,
+          ),
         ],
       ),
     );

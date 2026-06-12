@@ -21,8 +21,6 @@ part 'client_categorization_page_part_02.dart';
 part 'client_categorization_page_part_03.dart';
 
 const _clientBackground = AppColors.bg;
-const _clientPanel = AppColors.surface;
-const _clientPanel2 = AppColors.surface2;
 const _clientBorder = AppColors.borderSolid;
 const _clientGreen = AppColors.buy;
 const _clientPrimary = AppColors.primary;

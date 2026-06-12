@@ -16,12 +16,12 @@ class _EmailCta extends StatelessWidget {
     if (subscribed) {
       return VitCard(
         borderColor: AppColors.buy.withValues(alpha: .24),
-        padding: const EdgeInsets.all(16),
+        padding: AppSpacing.predictionBreakingEmailPadding,
         child: Row(
           children: [
             Container(
-              width: 40,
-              height: 40,
+              width: AppSpacing.predictionBreakingEmailIconBox,
+              height: AppSpacing.predictionBreakingEmailIconBox,
               decoration: BoxDecoration(
                 color: AppColors.buy.withValues(alpha: .12),
                 borderRadius: AppRadii.mdRadius,
@@ -29,10 +29,10 @@ class _EmailCta extends StatelessWidget {
               child: const Icon(
                 Icons.mail_outline_rounded,
                 color: AppColors.buy,
-                size: 18,
+                size: AppSpacing.predictionBreakingEmailIcon,
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.predictionBreakingEmailGap),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,14 +58,14 @@ class _EmailCta extends StatelessWidget {
 
     return VitCard(
       borderColor: _emailPurple.withValues(alpha: .24),
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionBreakingEmailPadding,
       child: Column(
         children: [
           Row(
             children: [
               Container(
-                width: 40,
-                height: 40,
+                width: AppSpacing.predictionBreakingEmailIconBox,
+                height: AppSpacing.predictionBreakingEmailIconBox,
                 decoration: BoxDecoration(
                   color: _emailPurple.withValues(alpha: .13),
                   borderRadius: AppRadii.mdRadius,
@@ -73,10 +73,10 @@ class _EmailCta extends StatelessWidget {
                 child: const Icon(
                   Icons.mail_outline_rounded,
                   color: _emailPurple,
-                  size: 18,
+                  size: AppSpacing.predictionBreakingEmailIcon,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.predictionBreakingEmailGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +99,7 @@ class _EmailCta extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.predictionBreakingEmailFormGap),
           Row(
             children: [
               Expanded(
@@ -114,14 +114,16 @@ class _EmailCta extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(
+                width: AppSpacing.predictionBreakingEmailButtonGap,
+              ),
               InkWell(
                 key: PredictionsBreakingPage.subscribeKey,
                 onTap: onSubscribe,
                 borderRadius: AppRadii.mdRadius,
                 child: Container(
-                  height: 42,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  height: AppSpacing.predictionBreakingSubscribeHeight,
+                  padding: AppSpacing.predictionBreakingSubscribePadding,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: _emailPurple,
@@ -157,7 +159,7 @@ class _BreakingEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 220,
+      height: AppSpacing.predictionBreakingEmptyHeight,
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -165,9 +167,9 @@ class _BreakingEmptyState extends StatelessWidget {
             Icon(
               Icons.bolt_rounded,
               color: AppColors.text3.withValues(alpha: .42),
-              size: 40,
+              size: AppSpacing.predictionBreakingEmptyIcon,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.predictionBreakingEmptyTitleGap),
             Text(
               'No movers in this category',
               style: AppTextStyles.body.copyWith(
@@ -175,7 +177,9 @@ class _BreakingEmptyState extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(
+              height: AppSpacing.predictionBreakingEmptySubtitleGap,
+            ),
             Text(
               'Try selecting a different category',
               style: AppTextStyles.caption.copyWith(color: AppColors.text3),

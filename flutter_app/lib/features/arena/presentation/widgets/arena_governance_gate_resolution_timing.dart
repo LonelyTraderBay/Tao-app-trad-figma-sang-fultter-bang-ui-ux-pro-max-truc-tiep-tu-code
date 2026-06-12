@@ -95,7 +95,7 @@ class _TimingRulesCard extends StatelessWidget {
               const Icon(
                 Icons.schedule_outlined,
                 color: AppColors.buy,
-                size: 16,
+                size: AppSpacing.arenaGovernanceIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -118,7 +118,7 @@ class _TimingRulesCard extends StatelessWidget {
                 suffixIcon: const Icon(
                   Icons.calendar_today_outlined,
                   color: AppColors.text3,
-                  size: 16,
+                  size: AppSpacing.arenaGovernanceIcon,
                 ),
               ),
             ),
@@ -186,7 +186,7 @@ class _WarningStack extends StatelessWidget {
                   const Icon(
                     Icons.warning_amber_rounded,
                     color: AppColors.warn,
-                    size: 16,
+                    size: AppSpacing.arenaGovernanceIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(
@@ -194,7 +194,7 @@ class _WarningStack extends StatelessWidget {
                       warning,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        height: 1.4,
+                        height: AppSpacing.arenaGovernanceBodyLineHeight,
                       ),
                     ),
                   ),

@@ -39,7 +39,7 @@ class _PerformanceTabs extends StatelessWidget {
                       const SizedBox(height: AppSpacing.x4),
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 160),
-                        height: 2,
+                        height: AppSpacing.launchpadGapXxs,
                         width: tab == activeTab ? 116 : 0,
                         decoration: BoxDecoration(
                           color: AppColors.primary,
@@ -89,7 +89,7 @@ class _OverviewTab extends StatelessWidget {
                 '+${summary.averageRoiAth}%',
                 style: AppTextStyles.heroNumber.copyWith(
                   color: AppColors.buy,
-                  fontSize: 36,
+                  fontSize: AppSpacing.launchpadFont4xl,
                 ),
               ),
               Text(
@@ -203,7 +203,7 @@ class _HeroMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
-              height: 1.25,
+              height: AppSpacing.launchpadLineHeightBody,
             ),
           ),
         ],
@@ -286,12 +286,12 @@ class _RoiDistribution extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: 210,
+            height: AppSpacing.launchpadPerformanceChartHeight,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 SizedBox(
-                  width: 42,
+                  width: AppSpacing.launchpadBox42,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -301,7 +301,7 @@ class _RoiDistribution extends StatelessWidget {
                           label,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            height: 1,
+                            height: AppSpacing.launchpadLineHeightTight,
                           ),
                         ),
                     ],
@@ -365,7 +365,7 @@ class _RoiBar extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.launchpadLineHeightTight,
           ),
         ),
       ],

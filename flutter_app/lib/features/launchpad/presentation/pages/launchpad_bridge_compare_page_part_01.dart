@@ -100,7 +100,11 @@ class _ChainAmount extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _ProviderBadge(label: _chainLabel(chain), accent: accent, size: 32),
+        _ProviderBadge(
+          label: _chainLabel(chain),
+          accent: accent,
+          size: AppSpacing.launchpadIconHuge,
+        ),
         const SizedBox(height: AppSpacing.x2),
         Text(
           amount,
@@ -283,7 +287,7 @@ class _MetricBarRow extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: 28,
+            width: AppSpacing.launchpadBox28,
             child: Text(
               route.providerIcon,
               textAlign: TextAlign.end,
@@ -329,9 +333,13 @@ class _MetricBarRow extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.x2),
           SizedBox(
-            width: 14,
+            width: AppSpacing.launchpadIconMd,
             child: best
-                ? const Icon(Icons.star_rounded, color: AppColors.buy, size: 12)
+                ? const Icon(
+                    Icons.star_rounded,
+                    color: AppColors.buy,
+                    size: AppSpacing.launchpadIconXs,
+                  )
                 : const SizedBox.shrink(),
           ),
         ],
@@ -409,7 +417,7 @@ class _SortChip extends StatelessWidget {
             Icon(
               _sortIcon(option.iconKey),
               color: active ? AppColors.primary : AppColors.text3,
-              size: 13,
+              size: AppSpacing.launchpadIconSm,
             ),
             const SizedBox(width: AppSpacing.x1),
             Text(

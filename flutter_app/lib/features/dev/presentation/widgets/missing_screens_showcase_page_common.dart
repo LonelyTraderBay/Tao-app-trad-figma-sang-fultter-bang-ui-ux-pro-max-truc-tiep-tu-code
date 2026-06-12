@@ -117,7 +117,7 @@ class _ChangeRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
+              fontSize: AppSpacing.devFontLg,
             ),
           ),
         ),
@@ -131,7 +131,10 @@ class _Divider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Divider(height: 1, color: AppColors.divider);
+    return const Divider(
+      height: AppSpacing.devDividerHeight,
+      color: AppColors.divider,
+    );
   }
 }
 

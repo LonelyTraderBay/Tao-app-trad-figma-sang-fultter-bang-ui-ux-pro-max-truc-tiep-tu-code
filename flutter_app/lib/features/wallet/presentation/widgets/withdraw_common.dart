@@ -62,11 +62,7 @@ class WithdrawSectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: AppTextStyles.caption.copyWith(
-        color: AppColors.text2,
-        fontSize: 13,
-        height: 1,
-      ),
+      style: AppTextStyles.control.copyWith(color: AppColors.text2),
     );
   }
 }

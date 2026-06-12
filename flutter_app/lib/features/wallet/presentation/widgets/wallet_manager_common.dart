@@ -27,20 +27,19 @@ class WalletManagerSectionLabel extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 14,
+          width: AppSpacing.walletManagerSectionMarkerWidth,
+          height: AppSpacing.walletManagerSectionMarkerHeight,
           decoration: BoxDecoration(
             color: walletManagerPrimary,
-            borderRadius: BorderRadius.circular(2),
+            borderRadius: AppRadii.hairlineRadius,
           ),
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: AppSpacing.walletManagerSectionLabelGap),
         Text(
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.textMutedDense,
-            fontSize: 12,
-            fontWeight: FontWeight.w800,
+            fontWeight: AppTextStyles.medium,
             height: 1,
           ),
         ),
@@ -70,9 +69,9 @@ class WalletManagerTinyIconButton extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: SizedBox(
-        width: 14,
-        height: 14,
-        child: Icon(icon, color: color, size: 11),
+        width: AppSpacing.walletManagerTinyButton,
+        height: AppSpacing.walletManagerTinyButton,
+        child: Icon(icon, color: color, size: AppSpacing.walletManagerTinyIcon),
       ),
     );
   }
@@ -84,19 +83,18 @@ class WalletManagerDefaultBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 17,
-      padding: const EdgeInsets.symmetric(horizontal: 7),
+      height: AppSpacing.walletManagerDefaultBadgeHeight,
+      padding: AppSpacing.walletManagerCompactBadgePadding,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: walletManagerGreen.withValues(alpha: .13),
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: AppRadii.walletHistoryStatusBadgeRadius,
       ),
       child: Text(
         'DEFAULT',
         style: AppTextStyles.micro.copyWith(
           color: walletManagerGreen,
-          fontSize: 9,
-          fontWeight: FontWeight.w900,
+          fontWeight: AppTextStyles.bold,
           height: 1,
         ),
       ),
@@ -112,19 +110,18 @@ class WalletManagerAssetChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 18,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      height: AppSpacing.walletManagerAssetChipHeight,
+      padding: AppSpacing.walletManagerBadgePadding,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: AppColors.overlaySubtle,
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: AppRadii.badgeRadius,
       ),
       child: Text(
         symbol,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.textSoftBlue,
-          fontSize: 9,
-          fontWeight: FontWeight.w900,
+          fontWeight: AppTextStyles.bold,
           height: 1,
         ),
       ),
@@ -145,19 +142,18 @@ class WalletManagerTypeBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 19,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      height: AppSpacing.walletManagerTypeBadgeHeight,
+      padding: AppSpacing.walletManagerBadgePadding,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .15),
-        borderRadius: BorderRadius.circular(9),
+        borderRadius: AppRadii.pillRadius,
       ),
       child: Text(
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
-          fontWeight: FontWeight.w900,
+          fontWeight: AppTextStyles.bold,
           height: 1,
         ),
       ),
@@ -184,14 +180,17 @@ class WalletManagerAddWalletButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.add_rounded, color: AppColors.onAccent, size: 18),
-            const SizedBox(width: 8),
+            const Icon(
+              Icons.add_rounded,
+              color: AppColors.onAccent,
+              size: AppSpacing.walletManagerButtonIcon,
+            ),
+            const SizedBox(width: AppSpacing.walletManagerButtonIconGap),
             Text(
               'Add Wallet',
               style: AppTextStyles.baseMedium.copyWith(
                 color: AppColors.onAccent,
-                fontSize: 14,
-                fontWeight: FontWeight.w900,
+                fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
             ),
@@ -209,8 +208,10 @@ class WalletManagerSecurityNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       key: const Key('sc148_multi_manager_security_note'),
-      constraints: const BoxConstraints(minHeight: 58),
-      padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.walletManagerSecurityMinHeight,
+      ),
+      padding: AppSpacing.walletManagerSecurityPadding,
       decoration: BoxDecoration(
         color: walletManagerPrimary.withValues(alpha: .08),
         borderRadius: AppRadii.cardRadius,
@@ -220,21 +221,22 @@ class WalletManagerSecurityNotice extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(top: 1),
+            padding: EdgeInsets.only(
+              top: AppSpacing.walletManagerSecurityIconTop,
+            ),
             child: Icon(
               Icons.shield_outlined,
               color: walletManagerPrimary,
-              size: 14,
+              size: AppSpacing.walletManagerSecurityIcon,
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.walletManagerSecurityGap),
           Expanded(
             child: Text(
               'Addresses are masked by default. Click eye icon to reveal. '
               'Never share your private keys.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
                 height: 1.48,
               ),
             ),

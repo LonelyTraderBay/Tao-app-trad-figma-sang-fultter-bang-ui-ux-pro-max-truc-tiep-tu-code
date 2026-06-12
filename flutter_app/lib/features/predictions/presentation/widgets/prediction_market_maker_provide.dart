@@ -32,7 +32,7 @@ class _MarketMakerTabBar extends StatelessWidget {
         border: Border(bottom: BorderSide(color: AppColors.border)),
       ),
       child: SizedBox(
-        height: 54,
+        height: AppSpacing.predictionMarketMakerTabsHeight,
         child: Row(
           children: [
             for (final item in tabs)
@@ -52,18 +52,20 @@ class _MarketMakerTabBar extends StatelessWidget {
                                   ? _predictionPrimary
                                   : AppColors.text3,
                               fontWeight: AppTextStyles.bold,
-                              fontSize: 12,
                             ),
                           ),
                         ),
                       ),
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 160),
-                        height: 2,
-                        width: activeTab == item.tab ? 116 : 0,
+                        height:
+                            AppSpacing.predictionMarketMakerTabIndicatorHeight,
+                        width: activeTab == item.tab
+                            ? AppSpacing.predictionMarketMakerTabIndicatorWidth
+                            : 0,
                         decoration: BoxDecoration(
                           color: _predictionPrimary,
-                          borderRadius: BorderRadius.circular(1),
+                          borderRadius: AppRadii.hairlineRadius,
                         ),
                       ),
                     ],
@@ -85,14 +87,14 @@ class _LiquidityOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionMarketMakerCardPadding,
       child: Column(
         children: [
           Row(
             children: [
               Container(
-                width: 48,
-                height: 48,
+                width: AppSpacing.predictionMarketMakerOverviewIconBox,
+                height: AppSpacing.predictionMarketMakerOverviewIconBox,
                 decoration: BoxDecoration(
                   color: AppColors.primary08,
                   borderRadius: AppRadii.inputRadius,
@@ -100,10 +102,12 @@ class _LiquidityOverview extends StatelessWidget {
                 child: const Icon(
                   Icons.water_drop_outlined,
                   color: _predictionPrimary,
-                  size: 25,
+                  size: AppSpacing.predictionMarketMakerOverviewIcon,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(
+                width: AppSpacing.predictionMarketMakerOverviewGap,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,9 +120,8 @@ class _LiquidityOverview extends StatelessWidget {
                     ),
                     Text(
                       'Thu nhap tu phi giao dich',
-                      style: AppTextStyles.caption.copyWith(
+                      style: AppTextStyles.badge.copyWith(
                         color: AppColors.text3,
-                        fontSize: 12,
                       ),
                     ),
                   ],
@@ -126,7 +129,9 @@ class _LiquidityOverview extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(
+            height: AppSpacing.predictionMarketMakerOverviewStatsGap,
+          ),
           Row(
             children: [
               Expanded(
@@ -175,11 +180,11 @@ class _AddLiquidityForm extends StatelessWidget {
       accentColor: _predictionPrimary,
       children: [
         VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.predictionMarketMakerCardPadding,
           child: Column(
             children: [
               _MarketInput(label: 'Select Event', controller: eventController),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.predictionMarketMakerFormGap),
               _MarketInput(
                 label: 'Liquidity Amount (USD)',
                 controller: amountController,
@@ -189,18 +194,18 @@ class _AddLiquidityForm extends StatelessWidget {
                 prefix: const Icon(
                   Icons.attach_money_rounded,
                   color: AppColors.text3,
-                  size: 19,
+                  size: AppSpacing.predictionMarketMakerInputPrefixIcon,
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.predictionMarketMakerFormGap),
               _SpreadSelector(value: spreadBps, onChanged: onSpreadChanged),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.predictionMarketMakerFormGap),
               _MarketInput(
                 label: 'Minimum Depth (USD)',
                 controller: minDepthController,
                 numeric: true,
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: AppSpacing.predictionMarketMakerHelperGap),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -209,10 +214,14 @@ class _AddLiquidityForm extends StatelessWidget {
                 ),
               ),
               if (hasAmount) ...[
-                const SizedBox(height: 14),
+                const SizedBox(
+                  height: AppSpacing.predictionMarketMakerEstimateGap,
+                ),
                 _EstimatedReturns(amount: amount),
               ],
-              const SizedBox(height: 16),
+              const SizedBox(
+                height: AppSpacing.predictionMarketMakerAddButtonGap,
+              ),
               _AddLiquidityButton(enabled: hasAmount),
             ],
           ),
@@ -246,12 +255,9 @@ class _MarketInput extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 12,
-          ),
+          style: AppTextStyles.badge.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.predictionMarketMakerInputLabelGap),
         VitInput(
           fieldKey: fieldKey,
           controller: controller,
@@ -265,7 +271,6 @@ class _MarketInput extends StatelessWidget {
           hintText: hintText,
           prefix: prefix,
           textStyle: AppTextStyles.body.copyWith(
-            fontSize: 14,
             fontWeight: AppTextStyles.medium,
           ),
         ),
@@ -287,12 +292,9 @@ class _SpreadSelector extends StatelessWidget {
       children: [
         Text(
           'Spread (basis points)',
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 12,
-          ),
+          style: AppTextStyles.badge.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.predictionMarketMakerSpreadGap),
         Row(
           children: [
             for (final bps in [25, 50, 100, 200]) ...[
@@ -304,17 +306,17 @@ class _SpreadSelector extends StatelessWidget {
                   onTap: () => onChanged(bps),
                 ),
               ),
-              if (bps != 200) const SizedBox(width: 8),
+              if (bps != 200)
+                const SizedBox(
+                  width: AppSpacing.predictionMarketMakerSpreadGap,
+                ),
             ],
           ],
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.predictionMarketMakerSpreadGap),
         Text(
           'Hieu gia bid/ask: ${(value / 100).toStringAsFixed(2)}%',
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 11,
-          ),
+          style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         ),
       ],
     );
@@ -336,7 +338,7 @@ class _SpreadButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 36,
+      height: AppSpacing.predictionMarketMakerSpreadButtonHeight,
       child: Material(
         color: selected ? _predictionPrimary : AppColors.bg,
         borderRadius: AppRadii.cardRadius,

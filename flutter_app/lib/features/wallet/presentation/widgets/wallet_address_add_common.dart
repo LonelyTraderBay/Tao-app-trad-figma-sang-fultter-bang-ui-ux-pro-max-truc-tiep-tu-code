@@ -5,6 +5,8 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 
 const addressAddBackground = AppColors.bg;
 const addressAddPanel = AppColors.surface;
@@ -38,7 +40,7 @@ class AddressFieldSection extends StatelessWidget {
           required: required,
           optionalText: optionalText,
         ),
-        const SizedBox(height: 9),
+        const SizedBox(height: AppSpacing.walletAddressStatsValueGap),
         child,
       ],
     );
@@ -63,10 +65,7 @@ class AddressFieldLabel extends StatelessWidget {
       text: TextSpan(
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text2,
-          fontSize: 13,
-          fontWeight: FontWeight.w700,
-          fontFamily: 'Roboto',
-          height: 1.1,
+          fontWeight: AppTextStyles.bold,
         ),
         children: [
           TextSpan(text: label),
@@ -98,7 +97,7 @@ class AddressTextInput extends StatelessWidget {
     required this.hintText,
     required this.onChanged,
     this.maxLength,
-    this.height = 52,
+    this.height = AppSpacing.inputHeight,
   });
 
   final Key? fieldKey;
@@ -119,7 +118,7 @@ class AddressTextInput extends StatelessWidget {
         borderRadius: AppRadii.cardRadius,
         border: Border.all(
           color: hasValue ? addressAddPrimary : AppColors.borderSolid,
-          width: 1.35,
+          width: AppSpacing.borderWidth,
         ),
       ),
       alignment: Alignment.center,
@@ -132,22 +131,14 @@ class AddressTextInput extends StatelessWidget {
           controller: controller,
           maxLength: maxLength,
           onChanged: (_) => onChanged(),
-          style: AppTextStyles.body.copyWith(
-            color: AppColors.text1,
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-          ),
+          style: AppTextStyles.control.copyWith(color: AppColors.text1),
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: AppTextStyles.body.copyWith(
-              color: AppColors.text2,
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-            ),
+            hintStyle: AppTextStyles.control.copyWith(color: AppColors.text2),
             border: InputBorder.none,
             counterText: '',
             isCollapsed: true,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+            contentPadding: AppSpacing.walletAddressAddInputPadding,
           ),
         ),
       ),
@@ -169,14 +160,14 @@ class AddressWalletInput extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasValue = controller.text.trim().length > 8;
     return Container(
-      height: 52,
-      padding: const EdgeInsets.only(left: 16, right: 9),
+      height: AppSpacing.inputHeight,
+      padding: AppSpacing.walletAddressAddWalletInputPadding,
       decoration: BoxDecoration(
         color: addressAddPanel2,
         borderRadius: AppRadii.inputRadius,
         border: Border.all(
           color: hasValue ? addressAddPrimary : AppColors.borderSolid,
-          width: 1.35,
+          width: AppSpacing.borderWidth,
         ),
       ),
       child: Row(
@@ -192,17 +183,13 @@ class AddressWalletInput extends StatelessWidget {
                 onChanged: (_) => onChanged(),
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontFamily: 'Roboto',
-                  fontSize: 13,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: AppTextStyles.bold,
                 ),
                 decoration: InputDecoration(
                   hintText: 'Nhập hoặc dán địa chỉ...',
                   hintStyle: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontFamily: 'Roboto',
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: AppTextStyles.bold,
                   ),
                   border: InputBorder.none,
                   isCollapsed: true,
@@ -221,7 +208,7 @@ class AddressWalletInput extends StatelessWidget {
               onChanged();
             },
           ),
-          const SizedBox(width: 7),
+          const SizedBox(width: AppSpacing.walletAddressSectionGap),
           AddressIconCircleButton(
             semanticLabel: 'Scan wallet address QR code',
             icon: Icons.qr_code_scanner_rounded,
@@ -250,17 +237,16 @@ class AddressIconCircleButton extends StatelessWidget {
     return Semantics(
       button: true,
       label: semanticLabel,
-      child: GestureDetector(
+      child: VitCard(
+        width: AppSpacing.walletAddressAddIconButton,
+        height: AppSpacing.walletAddressAddIconButton,
+        variant: VitCardVariant.inner,
+        alignment: Alignment.center,
         onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: Container(
-          width: 32,
-          height: 32,
-          decoration: BoxDecoration(
-            color: AppColors.overlayStroke,
-            borderRadius: AppRadii.mdRadius,
-          ),
-          child: Icon(icon, color: AppColors.text2, size: 16),
+        child: Icon(
+          icon,
+          color: AppColors.text2,
+          size: AppSpacing.walletAddressAddIcon,
         ),
       ),
     );
@@ -287,35 +273,10 @@ class AddressPrimaryActionButton extends StatelessWidget {
       button: true,
       enabled: enabled,
       label: semanticLabel ?? label,
-      child: GestureDetector(
-        onTap: enabled ? onTap : null,
-        behavior: HitTestBehavior.opaque,
-        child: Container(
-          height: AppSpacing.inputHeight,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: enabled ? addressAddPrimary : AppColors.surface3,
-            borderRadius: AppRadii.inputRadius,
-            boxShadow: enabled
-                ? [
-                    BoxShadow(
-                      color: addressAddPrimary.withValues(alpha: .22),
-                      blurRadius: 18,
-                      offset: const Offset(0, 8),
-                    ),
-                  ]
-                : null,
-          ),
-          child: Text(
-            label,
-            style: AppTextStyles.baseMedium.copyWith(
-              color: enabled ? AppColors.onAccent : AppColors.text3,
-              fontSize: 15,
-              fontWeight: FontWeight.w800,
-              height: 1,
-            ),
-          ),
-        ),
+      child: VitCtaButton(
+        onPressed: enabled ? onTap : null,
+        height: AppSpacing.inputHeight,
+        child: Text(label),
       ),
     );
   }

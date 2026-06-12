@@ -91,49 +91,63 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                     customGap: 0,
                     fullBleed: true,
                     children: [
-                      _SecuritySummaryCard(
-                        totalDevices: _devices.length,
-                        trustedCount: _trustedCount,
-                        untrustedCount: _untrustedCount,
-                        activeCount: _activeCount,
-                      ),
-                      const SizedBox(height: 18),
-                      VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review device sessions',
-                        message:
-                            'Ch\u1EC9 tin c\u1EADy thi\u1EBFt b\u1ECB b\u1EA1n s\u1EDF h\u1EEFu; \u0111\u0103ng xu\u1EA5t c\u00E1c phi\u00EAn l\u1EA1 ho\u1EB7c kh\u00F4ng c\u00F2n s\u1EED d\u1EE5ng.',
-                        contractId:
-                            'Trusted devices: $_trustedCount/${_devices.length}',
-                      ),
-                      const SizedBox(height: 27),
-                      if (currentDevice != null) ...[
-                        const _SectionHeader(
-                          label: 'THI\u1EBET B\u1ECA HI\u1EC6N T\u1EA0I',
+                      VitCard(
+                        padding: EdgeInsets.zero,
+                        child: _SecuritySummaryCard(
+                          totalDevices: _devices.length,
+                          trustedCount: _trustedCount,
+                          untrustedCount: _untrustedCount,
+                          activeCount: _activeCount,
                         ),
-                        const SizedBox(height: 10),
-                        _DeviceCard(
-                          device: currentDevice,
-                          showActions: false,
-                          onToggleTrust: () {},
-                          onLogout: () {},
-                        ),
-                        const SizedBox(height: 26),
-                      ] else ...[
-                        const VitEmptyState(
-                          title:
-                              'Kh\u00F4ng c\u00F3 thi\u1EBFt b\u1ECB hi\u1EC7n t\u1EA1i',
+                      ),
+                      const Padding(padding: EdgeInsets.only(top: 18)),
+                      VitCard(
+                        padding: EdgeInsets.zero,
+                        child: VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Review device sessions',
                           message:
-                              'Phi\u00EAn \u0111\u0103ng nh\u1EADp s\u1EBD hi\u1EC3n th\u1ECB sau khi \u0111\u1ED3ng b\u1ED9.',
-                          icon: Icons.devices_other_outlined,
+                              'Ch\u1EC9 tin c\u1EADy thi\u1EBFt b\u1ECB b\u1EA1n s\u1EDF h\u1EEFu; \u0111\u0103ng xu\u1EA5t c\u00E1c phi\u00EAn l\u1EA1 ho\u1EB7c kh\u00F4ng c\u00F2n s\u1EED d\u1EE5ng.',
+                          contractId:
+                              'Trusted devices: $_trustedCount/${_devices.length}',
                         ),
-                        const SizedBox(height: 26),
-                      ],
+                      ),
+                      const Padding(padding: EdgeInsets.only(top: 27)),
+                      VitCard(
+                        padding: EdgeInsets.zero,
+                        child: currentDevice != null
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  const _SectionHeader(
+                                    label:
+                                        'THI\u1EBET B\u1ECA HI\u1EC6N T\u1EA0I',
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.only(top: 10),
+                                  ),
+                                  _DeviceCard(
+                                    device: currentDevice,
+                                    showActions: false,
+                                    onToggleTrust: () {},
+                                    onLogout: () {},
+                                  ),
+                                ],
+                              )
+                            : const VitEmptyState(
+                                title:
+                                    'Kh\u00F4ng c\u00F3 thi\u1EBFt b\u1ECB hi\u1EC7n t\u1EA1i',
+                                message:
+                                    'Phi\u00EAn \u0111\u0103ng nh\u1EADp s\u1EBD hi\u1EC3n th\u1ECB sau khi \u0111\u1ED3ng b\u1ED9.',
+                                icon: Icons.devices_other_outlined,
+                              ),
+                      ),
+                      const Padding(padding: EdgeInsets.only(top: 26)),
                       _OtherDevicesHeader(
                         count: otherDevices.length,
                         onLogoutAll: otherDevices.isEmpty ? null : _logoutAll,
                       ),
-                      const SizedBox(height: 10),
+                      const Padding(padding: EdgeInsets.only(top: 10)),
                       if (otherDevices.isEmpty)
                         const VitEmptyState(
                           title:
@@ -151,9 +165,9 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                             onLogout: () => _logoutDevice(device.id),
                           ),
                           if (device != otherDevices.last)
-                            const SizedBox(height: 13),
+                            const Padding(padding: EdgeInsets.only(top: 13)),
                         ],
-                      const SizedBox(height: 27),
+                      const Padding(padding: EdgeInsets.only(top: 27)),
                       _SecuritySummaryCard(
                         totalDevices: _devices.length,
                         trustedCount: _trustedCount,

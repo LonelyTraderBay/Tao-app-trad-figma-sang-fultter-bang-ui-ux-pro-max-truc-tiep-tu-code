@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 
@@ -20,7 +21,7 @@ class PredictionOrderPreviewCard extends StatelessWidget {
       ('Max loss', _formatMoney(preview.maxLoss)),
     ];
     return Container(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
+      padding: AppSpacing.predictionOrderPreviewPadding,
       decoration: BoxDecoration(
         color: AppColors.surface2,
         border: Border.all(color: AppColors.primary.withValues(alpha: .22)),
@@ -34,30 +35,33 @@ class PredictionOrderPreviewCard extends StatelessWidget {
               const Icon(
                 Icons.receipt_long_outlined,
                 color: AppColors.primary,
-                size: 15,
+                size: AppSpacing.predictionOrderPreviewIcon,
               ),
-              const SizedBox(width: 8),
-              Text(
-                'Order Preview',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
+              const SizedBox(width: AppSpacing.predictionOrderPreviewIconGap),
+              Expanded(
+                child: Text(
+                  'Order Preview',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
               ),
-              const Spacer(),
+              const SizedBox(width: AppSpacing.predictionOrderPreviewIconGap),
               _PreviewBadge(label: preview.orderTypeLabel),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.predictionOrderPreviewHeaderGap),
           for (final row in rows) ...[
             Row(
               children: [
                 Expanded(
                   child: Text(
                     row.$1,
-                    style: AppTextStyles.micro.copyWith(
+                    style: AppTextStyles.numericMicro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 10,
                     ),
                   ),
                 ),
@@ -65,25 +69,21 @@ class PredictionOrderPreviewCard extends StatelessWidget {
                   preview.canSubmit || row.$1 == 'Outcome'
                       ? row.$2
                       : 'Enter amount',
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.numericMicro.copyWith(
                     color: AppColors.text1,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
               ],
             ),
-            if (row != rows.last) const SizedBox(height: 7),
+            if (row != rows.last)
+              const SizedBox(height: AppSpacing.predictionOrderPreviewRowGap),
           ],
-          const SizedBox(height: 9),
+          const SizedBox(height: AppSpacing.predictionOrderPreviewFooterGap),
           Text(
             'Prediction positions, probability, receipt, rewards, and P/L stay separate from Arena Points.',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 9,
-              height: 1.35,
-            ),
+            style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -104,14 +104,10 @@ class _PreviewBadge extends StatelessWidget {
         borderRadius: AppRadii.xlRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        padding: AppSpacing.predictionOrderPreviewBadgePadding,
         child: Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.primary,
-            fontSize: 9,
-            fontWeight: AppTextStyles.bold,
-          ),
+          style: AppTextStyles.badge.copyWith(color: AppColors.primary),
         ),
       ),
     );

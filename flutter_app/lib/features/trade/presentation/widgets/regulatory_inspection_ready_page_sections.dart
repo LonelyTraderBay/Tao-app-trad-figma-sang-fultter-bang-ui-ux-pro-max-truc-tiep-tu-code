@@ -79,7 +79,7 @@ class _ComplianceScoreCard extends StatelessWidget {
           LayoutBuilder(
             builder: (context, constraints) {
               return ClipRRect(
-                borderRadius: BorderRadius.circular(999),
+                borderRadius: AppRadii.xlRadius,
                 child: SizedBox(
                   height: 11,
                   child: Stack(
@@ -193,7 +193,6 @@ class _QuickStatCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 8,
               height: 1,
             ),
           ),

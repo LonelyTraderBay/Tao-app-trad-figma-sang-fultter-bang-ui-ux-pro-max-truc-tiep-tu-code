@@ -217,7 +217,11 @@ class _ValidatorAvatar extends StatelessWidget {
                     color: AppColors.text1,
                   ),
                 )
-              : Icon(stakingValidatorIcon(validator), color: accent, size: 24),
+              : Icon(
+                  stakingValidatorIcon(validator),
+                  color: accent,
+                  size: AppSpacing.stakingValidatorSelectionIcon,
+                ),
         ),
       ),
     );
@@ -297,7 +301,7 @@ class _StatusPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.stakingValidatorSelectionPillLineHeight,
           ),
         ),
       ),

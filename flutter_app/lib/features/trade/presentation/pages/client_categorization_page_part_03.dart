@@ -16,41 +16,34 @@ class _QuickLinkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
+      height: 45,
+      padding: const EdgeInsets.symmetric(horizontal: 14),
+      variant: VitCardVariant.inner,
+      borderColor: _clientBorder.withValues(alpha: .72),
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 45,
-        padding: const EdgeInsets.symmetric(horizontal: 14),
-        decoration: BoxDecoration(
-          color: _clientPanel2,
-          border: Border.all(color: _clientBorder.withValues(alpha: .72)),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Row(
-          children: [
-            Icon(icon, color: iconColor, size: 16),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontSize: 12,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
+      child: Row(
+        children: [
+          Icon(icon, color: iconColor, size: 16),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+                height: 1,
               ),
             ),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: 17,
-            ),
-          ],
-        ),
+          ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: 17,
+          ),
+        ],
       ),
     );
   }
@@ -64,13 +57,10 @@ class _MetricBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 49,
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-      decoration: BoxDecoration(
-        color: _clientPanel2,
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -78,7 +68,6 @@ class _MetricBox extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
               height: 1,
             ),
           ),
@@ -89,65 +78,12 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 13,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 3,
-          height: 16,
-          decoration: BoxDecoration(
-            color: _clientPrimary,
-            borderRadius: BorderRadius.circular(999),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          text,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 11,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _Card extends StatelessWidget {
-  const _Card({super.key, required this.child, required this.padding});
-
-  final Widget child;
-  final EdgeInsetsGeometry padding;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        color: _clientPanel,
-        border: Border.all(color: _clientBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: child,
     );
   }
 }
@@ -165,14 +101,17 @@ class _CategoryIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: style.color.withValues(alpha: .13),
-        borderRadius: BorderRadius.circular(size >= 52 ? 18 : 16),
+    return SizedBox.square(
+      dimension: size,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: style.color.withValues(alpha: .13),
+          borderRadius: size >= 52
+              ? AppRadii.cardLargeRadius
+              : AppRadii.cardRadius,
+        ),
+        child: Icon(style.icon, color: style.color, size: iconSize),
       ),
-      child: Icon(style.icon, color: style.color, size: iconSize),
     );
   }
 }
@@ -184,21 +123,14 @@ class _CurrentPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(7),
-      ),
-      child: Text(
-        'CURRENT',
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 10,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    return VitStatusPill(
+      label: 'CURRENT',
+      status: color == _clientAmber
+          ? VitStatusPillStatus.warning
+          : color == _clientPrimary
+          ? VitStatusPillStatus.info
+          : VitStatusPillStatus.success,
+      size: VitStatusPillSize.sm,
     );
   }
 }

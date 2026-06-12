@@ -74,7 +74,6 @@ class _CategoryScoreCard extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -83,14 +82,13 @@ class _CategoryScoreCard extends StatelessWidget {
             '$score/$maxScore',
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,
-              fontSize: 16,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
           ),
           const SizedBox(height: 10),
           ClipRRect(
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.xlRadius,
             child: LinearProgressIndicator(
               value: percent,
               minHeight: 6,
@@ -156,7 +154,6 @@ class _RecommendationRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
               height: 1.55,
             ),
           ),
@@ -183,7 +180,6 @@ class _RegulatoryCard extends StatelessWidget {
             snapshot.regulatoryTitle,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1.15,
             ),
@@ -193,7 +189,6 @@ class _RegulatoryCard extends StatelessWidget {
             snapshot.regulatoryDescription,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              fontSize: 12,
               height: 1.55,
             ),
           ),
@@ -214,7 +209,6 @@ class _SectionLabel extends StatelessWidget {
       label,
       style: AppTextStyles.baseMedium.copyWith(
         color: AppColors.text1,
-        fontSize: 16,
         fontWeight: AppTextStyles.bold,
         height: 1,
       ),

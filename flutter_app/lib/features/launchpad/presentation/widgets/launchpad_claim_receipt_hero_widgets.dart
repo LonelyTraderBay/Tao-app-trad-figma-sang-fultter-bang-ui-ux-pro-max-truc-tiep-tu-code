@@ -180,8 +180,8 @@ class _TokenAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 48,
-      height: 48,
+      width: AppSpacing.launchpadBox48,
+      height: AppSpacing.launchpadBox48,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: receipt.accent.withValues(alpha: .12),

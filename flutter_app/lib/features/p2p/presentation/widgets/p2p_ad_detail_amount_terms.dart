@@ -24,7 +24,6 @@ class _PriceCard extends StatelessWidget {
                 _formatVnd(ad.price),
                 style: AppTextStyles.sectionTitle.copyWith(
                   color: AppColors.text1,
-                  fontFamily: 'Roboto',
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
@@ -87,7 +86,6 @@ class _PriceMeta extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text1,
             fontWeight: AppTextStyles.bold,
-            fontFamily: 'Roboto',
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
@@ -121,10 +119,7 @@ class _AmountCard extends StatelessWidget {
         children: [
           Text(
             'Nhập số lượng',
-            style: AppTextStyles.sectionTitle.copyWith(
-              color: AppColors.text1,
-              fontSize: 18,
-            ),
+            style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
           ),
           const SizedBox(height: AppSpacing.x4),
           Text(
@@ -207,7 +202,6 @@ class _InputShell extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.base.copyWith(
                 color: muted ? AppColors.text3 : AppColors.text1,
-                fontFamily: 'Roboto',
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
@@ -436,7 +430,6 @@ class _Badge extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.warn,
             fontWeight: AppTextStyles.bold,
-            fontSize: 8,
           ),
         ),
       ),

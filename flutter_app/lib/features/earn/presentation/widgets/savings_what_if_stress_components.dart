@@ -17,7 +17,7 @@ class _StressBars extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: 88,
+                width: AppSpacing.savingsWhatIfStressLabelWidth,
                 child: Text(
                   entry.scenario.label,
                   maxLines: 1,
@@ -30,7 +30,7 @@ class _StressBars extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: AppRadii.smRadius,
                   child: LinearProgressIndicator(
-                    minHeight: 8,
+                    minHeight: AppSpacing.savingsWhatIfStressProgressHeight,
                     value: entry.result.differencePct.abs() / maxAbs,
                     backgroundColor: AppColors.surface3,
                     valueColor: AlwaysStoppedAnimation<Color>(
@@ -43,7 +43,7 @@ class _StressBars extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x3),
               SizedBox(
-                width: 52,
+                width: AppSpacing.savingsWhatIfStressValueWidth,
                 child: Text(
                   '${entry.result.differencePct >= 0 ? '+' : ''}${entry.result.differencePct.toStringAsFixed(1)}%',
                   textAlign: TextAlign.right,
@@ -57,7 +57,8 @@ class _StressBars extends StatelessWidget {
               ),
             ],
           ),
-          if (entry != results.last) const SizedBox(height: AppSpacing.x3),
+          if (entry != results.last)
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ],
       ],
     );
@@ -107,7 +108,6 @@ class _StressRankCard extends StatelessWidget {
                       entry.scenario.description,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 12,
                       ),
                     ),
                   ],
@@ -123,7 +123,7 @@ class _StressRankCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Row(
             children: [
               Expanded(

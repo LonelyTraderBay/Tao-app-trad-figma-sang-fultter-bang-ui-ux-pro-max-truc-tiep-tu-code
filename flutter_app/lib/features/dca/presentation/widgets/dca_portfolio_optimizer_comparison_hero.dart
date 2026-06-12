@@ -27,12 +27,12 @@ class _ComparisonHero extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                     Text(
                       'Hiện tại vs Tối ưu',
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: AppColors.text1,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: AppTextStyles.heavy,
                       ),
                     ),
                   ],
@@ -41,13 +41,13 @@ class _ComparisonHero extends StatelessWidget {
               _ScoreBadge(score: snapshot.score),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
           _MetricStrip(snapshot: snapshot),
-          const SizedBox(height: AppSpacing.x5),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
           for (final allocation in snapshot.currentAllocations) ...[
             _AllocationRow(allocation: allocation),
             if (allocation != snapshot.currentAllocations.last)
-              const SizedBox(height: AppSpacing.x3),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           ],
         ],
       ),
@@ -87,7 +87,7 @@ class _ScoreBadge extends StatelessWidget {
             '$score',
             style: AppTextStyles.sectionTitle.copyWith(
               color: AppColors.buy,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.heavy,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
@@ -152,13 +152,13 @@ class _MetricStrip extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                     Text(
                       metric.value,
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: metric.color,
-                        fontWeight: FontWeight.w900,
-                        height: 1,
+                        fontWeight: AppTextStyles.heavy,
+                        height: AppSpacing.dcaPortfolioOptimizerTightLineHeight,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
@@ -168,7 +168,7 @@ class _MetricStrip extends StatelessWidget {
             ),
             if (metric != metrics.last)
               Container(
-                width: 1,
+                width: AppSpacing.dcaPortfolioOptimizerDividerWidth,
                 height: AppSpacing.x7,
                 color: AppColors.border,
               ),
@@ -229,7 +229,7 @@ class _AllocationRow extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           _PercentBar(
             label: 'Hiện tại',
             value: allocation.currentPercent,
@@ -237,7 +237,7 @@ class _AllocationRow extends StatelessWidget {
             color: accent.withValues(alpha: .65),
             valueColor: AppColors.portfolioTextDim,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           _PercentBar(
             label: 'Tối ưu',
             value: allocation.optimalPercent,

@@ -17,16 +17,9 @@ class _ReportTypeCard extends StatelessWidget {
       key: BotTaxReportingPage.reportKey(report.id),
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
-      child: Container(
+      child: VitCard(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-        decoration: BoxDecoration(
-          color: _taxPanel,
-          border: Border.all(
-            color: selected ? _taxPrimary : _taxOptionBorder,
-            width: 2,
-          ),
-          borderRadius: AppRadii.cardRadius,
-        ),
+        borderColor: selected ? _taxPrimary : _taxOptionBorder,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -45,7 +38,6 @@ class _ReportTypeCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: selected ? _taxPrimary : AppColors.text1,
-                            fontSize: 13,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),
@@ -72,7 +64,6 @@ class _ReportTypeCard extends StatelessWidget {
                     report.description,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 11,
                       height: 1,
                     ),
                   ),
@@ -138,7 +129,6 @@ class _BreakdownRow extends StatelessWidget {
                 title,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  fontSize: 12,
                   height: 1,
                 ),
               ),
@@ -147,7 +137,6 @@ class _BreakdownRow extends StatelessWidget {
                 description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
                   height: 1,
                 ),
               ),
@@ -158,9 +147,7 @@ class _BreakdownRow extends StatelessWidget {
           value,
           style: AppTextStyles.caption.copyWith(
             color: _taxGreen,
-            fontSize: 14,
             fontWeight: AppTextStyles.bold,
-            fontFamily: 'Roboto',
             height: 1,
           ),
         ),
@@ -176,12 +163,9 @@ class _TaxNotesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
-      decoration: BoxDecoration(
-        color: _taxPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -189,7 +173,6 @@ class _TaxNotesCard extends StatelessWidget {
             'Important Tax Notes',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -199,13 +182,14 @@ class _TaxNotesCard extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                const SizedBox(
                   width: 3,
                   height: 3,
-                  margin: const EdgeInsets.only(top: 7),
-                  decoration: const BoxDecoration(
-                    color: AppColors.text3,
-                    shape: BoxShape.circle,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: AppColors.text3,
+                      shape: BoxShape.circle,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -214,7 +198,6 @@ class _TaxNotesCard extends StatelessWidget {
                     note,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 11,
                       height: 1.45,
                     ),
                   ),
@@ -254,20 +237,18 @@ class _GenerateFooter extends StatelessWidget {
         : 0.0;
     final top =
         DeviceMetrics.height - DeviceMetrics.bottomChrome - 46 - topOffset;
-    final child = Container(
+    final child = VitCard(
+      variant: VitCardVariant.ghost,
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-      color: _taxBackground.withValues(alpha: .96),
+      borderColor: AppColors.borderSolid,
       child: GestureDetector(
         key: BotTaxReportingPage.generateKey,
         behavior: HitTestBehavior.opaque,
         onTap: disabled ? null : onPressed,
-        child: Container(
+        child: VitCard(
+          variant: disabled ? VitCardVariant.inner : VitCardVariant.hero,
           height: 42,
           alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: disabled ? _taxPanel2 : _taxPrimary,
-            borderRadius: AppRadii.inputRadius,
-          ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -297,7 +278,6 @@ class _GenerateFooter extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: disabled ? AppColors.text3 : AppColors.onAccent,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),

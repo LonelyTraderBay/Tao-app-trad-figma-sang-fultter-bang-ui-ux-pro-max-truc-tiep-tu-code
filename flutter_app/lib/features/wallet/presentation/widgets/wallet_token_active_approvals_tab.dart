@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 part 'wallet_token_approval_cards.dart';
 part 'wallet_token_approval_badges.dart';
@@ -28,18 +30,19 @@ class WalletTokenActiveApprovalsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         WalletTokenSecurityOverview(snapshot: snapshot),
-        const SizedBox(height: 18),
+        const SizedBox(height: AppSpacing.walletTokenSectionGap),
         WalletTokenCriticalAlert(count: snapshot.criticalCount),
-        const SizedBox(height: 17),
+        const SizedBox(height: AppSpacing.walletTokenAlertGap),
         const WalletTokenApprovalSectionLabel(label: 'Active Approvals'),
-        const SizedBox(height: 11),
+        const SizedBox(height: AppSpacing.walletTokenLabelGap),
         for (var i = 0; i < approvals.length; i++) ...[
           WalletTokenApprovalCard(approval: approvals[i], onRevoke: onRevoke),
-          if (i != approvals.length - 1) const SizedBox(height: 14),
+          if (i != approvals.length - 1)
+            const SizedBox(height: AppSpacing.walletTokenCardGap),
         ],
-        const SizedBox(height: 17),
+        const SizedBox(height: AppSpacing.walletTokenAlertGap),
         WalletTokenApprovalRevokeAllButton(onTap: onRevokeAll),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.walletTokenNoticeGap),
         const WalletTokenApprovalInfoNotice(),
       ],
     );
@@ -53,22 +56,18 @@ class WalletTokenSecurityOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 203,
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
-      decoration: BoxDecoration(
-        color: walletTokenApprovalPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: walletTokenApprovalBorder),
-      ),
+    return VitCard(
+      height: AppSpacing.walletTokenOverviewHeight,
+      padding: AppSpacing.walletTokenOverviewPadding,
+      borderColor: walletTokenApprovalBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
               Container(
-                width: 48,
-                height: 48,
+                width: AppSpacing.walletTokenHeroIcon,
+                height: AppSpacing.walletTokenHeroIcon,
                 decoration: BoxDecoration(
                   color: walletTokenApprovalPurple.withValues(alpha: .14),
                   borderRadius: AppRadii.inputRadius,
@@ -77,10 +76,10 @@ class WalletTokenSecurityOverview extends StatelessWidget {
                 child: const Icon(
                   Icons.shield_outlined,
                   color: walletTokenApprovalPurple,
-                  size: 25,
+                  size: AppSpacing.walletTokenHeroIconGlyph,
                 ),
               ),
-              const SizedBox(width: 13),
+              const SizedBox(width: AppSpacing.walletTokenHeroGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,20 +89,16 @@ class WalletTokenSecurityOverview extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.baseMedium.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w900,
-                        height: 1,
+                        fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.walletTokenTitleGap),
                     Text(
                       '${snapshot.approvals.length} active approvals',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 12,
-                        height: 1,
                       ),
                     ),
                   ],
@@ -111,7 +106,7 @@ class WalletTokenSecurityOverview extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 23),
+          const SizedBox(height: AppSpacing.walletTokenMetricTopGap),
           Row(
             children: [
               WalletTokenOverviewMetric(
@@ -167,21 +162,14 @@ class WalletTokenOverviewMetric extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 11,
-              height: 1,
-            ),
+            style: AppTextStyles.badge.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.walletTokenMetricValueGap),
           Text(
             value,
-            style: AppTextStyles.sectionTitle.copyWith(
+            style: AppTextStyles.amountSm.copyWith(
               color: color,
-              fontSize: 18,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'Roboto',
-              height: 1,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],
@@ -198,8 +186,8 @@ class WalletTokenCriticalAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 104,
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
+      height: AppSpacing.walletTokenAlertHeight,
+      padding: AppSpacing.walletTokenAlertPadding,
       decoration: BoxDecoration(
         color: walletTokenApprovalRed.withValues(alpha: .07),
         borderRadius: AppRadii.cardRadius,
@@ -213,31 +201,27 @@ class WalletTokenCriticalAlert extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: walletTokenApprovalRed,
-            size: 17,
+            size: AppSpacing.walletTokenAlertIcon,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.rowGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Critical Security Risk',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
-                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.badge.copyWith(color: AppColors.text1),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.rowGap),
                 Text(
                   'You have $count approval(s) to unverified contracts. Revoke immediately to protect your funds.',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    fontSize: 11,
-                    height: 1.25,
+                    height: 1.35,
                   ),
                 ),
               ],

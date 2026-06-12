@@ -95,7 +95,6 @@ class _MetricCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1,
                   ),
                 ),
@@ -111,7 +110,6 @@ class _MetricCard extends StatelessWidget {
                       metric.label == 'VaR (95%)'
                   ? AppColors.text1
                   : metric.color,
-              fontSize: 20,
               height: 1,
             ),
           ),
@@ -120,7 +118,6 @@ class _MetricCard extends StatelessWidget {
             metric.limit,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -150,7 +147,6 @@ class _ExposureCard extends StatelessWidget {
                   exposure.asset,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -160,7 +156,6 @@ class _ExposureCard extends StatelessWidget {
                   '${exposure.percentage}%',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 11,
                     height: 1,
                   ),
                 ),
@@ -169,7 +164,6 @@ class _ExposureCard extends StatelessWidget {
                   '\$${_formatCompact(exposure.exposure)}',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -193,7 +187,6 @@ class _ExposureCard extends StatelessWidget {
                   'Diversification Score',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1,
                   ),
                 ),
@@ -202,7 +195,6 @@ class _ExposureCard extends StatelessWidget {
                 '72/100 (Good)',
                 style: AppTextStyles.caption.copyWith(
                   color: _riskGreen,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),

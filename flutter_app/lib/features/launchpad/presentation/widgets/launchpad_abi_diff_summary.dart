@@ -21,7 +21,7 @@ class _RiskHero extends StatelessWidget {
               const Icon(
                 Icons.account_tree_outlined,
                 color: AppColors.portfolioTextMuted,
-                size: 16,
+                size: AppSpacing.launchpadIconXl,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -46,14 +46,14 @@ class _RiskHero extends StatelessWidget {
                       'Risk Score',
                       style: AppTextStyles.base.copyWith(
                         color: AppColors.text1,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: AppTextStyles.heavy,
                       ),
                     ),
                     Text(
                       'Trung binh - Co thay doi dang chu y',
                       style: AppTextStyles.caption.copyWith(
                         color: riskColor,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: AppTextStyles.extraBold,
                       ),
                     ),
                   ],
@@ -77,7 +77,7 @@ class _RiskHero extends StatelessWidget {
                 child: Icon(
                   Icons.bolt_rounded,
                   color: AppColors.portfolioTextMuted,
-                  size: 16,
+                  size: AppSpacing.launchpadIconXl,
                 ),
               ),
               Expanded(
@@ -105,19 +105,22 @@ class _RiskScoreRing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 64,
-      height: 64,
+      width: AppSpacing.launchpadBox64,
+      height: AppSpacing.launchpadBox64,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: color, width: 4),
+        border: Border.all(
+          color: color,
+          width: AppSpacing.launchpadBorderWidthStrong,
+        ),
         color: color.withValues(alpha: .08),
       ),
       child: Text(
         '$score',
         style: AppTextStyles.base.copyWith(
           color: color,
-          fontWeight: FontWeight.w900,
+          fontWeight: AppTextStyles.heavy,
           fontFeatures: const [FontFeature.tabularFigures()],
         ),
       ),
@@ -154,7 +157,7 @@ class _ImplCard extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
             ),
           ),
           Text(
@@ -163,7 +166,7 @@ class _ImplCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: color == AppColors.buy ? color : AppColors.text1,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.heavy,
             ),
           ),
           Text(
@@ -215,13 +218,17 @@ class _SummaryStats extends StatelessWidget {
               child: Column(
                 key: LaunchpadAbiDiffPage.statKey(stat.$1.value),
                 children: [
-                  Icon(stat.$1.icon, color: stat.$1.color, size: 16),
+                  Icon(
+                    stat.$1.icon,
+                    color: stat.$1.color,
+                    size: AppSpacing.launchpadIconXl,
+                  ),
                   const SizedBox(height: AppSpacing.x2),
                   Text(
                     '${stat.$2}',
                     style: AppTextStyles.base.copyWith(
                       color: AppColors.text1,
-                      fontWeight: FontWeight.w900,
+                      fontWeight: AppTextStyles.heavy,
                       fontFeatures: const [FontFeature.tabularFigures()],
                     ),
                   ),
@@ -229,7 +236,7 @@ class _SummaryStats extends StatelessWidget {
                     stat.$1.label,
                     style: AppTextStyles.micro.copyWith(
                       color: stat.$1.color,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: AppTextStyles.extraBold,
                     ),
                   ),
                 ],
@@ -289,13 +296,17 @@ class _UpgradeMetadata extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.code_rounded, color: AppColors.accent, size: 16),
+              const Icon(
+                Icons.code_rounded,
+                color: AppColors.accent,
+                size: AppSpacing.launchpadIconXl,
+              ),
               const SizedBox(width: AppSpacing.x2),
               Text(
                 'Thong tin upgrade',
                 style: AppTextStyles.base.copyWith(
                   color: AppColors.text1,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: AppTextStyles.heavy,
                 ),
               ),
             ],
@@ -352,7 +363,7 @@ class _MetaRow extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
-                fontWeight: FontWeight.w900,
+                fontWeight: AppTextStyles.heavy,
                 fontFeatures: const [FontFeature.tabularFigures()],
               ),
             ),
@@ -366,7 +377,7 @@ class _MetaRow extends StatelessWidget {
               child: Icon(
                 copied ? Icons.check_rounded : Icons.copy_rounded,
                 color: copied ? AppColors.buy : AppColors.text3,
-                size: 14,
+                size: AppSpacing.launchpadIconMd,
               ),
             ),
           ],
@@ -413,7 +424,7 @@ class _FilterRow extends StatelessWidget {
                 Icon(
                   Icons.code_rounded,
                   color: active ? AppModuleAccents.launchpad : AppColors.text3,
-                  size: 14,
+                  size: AppSpacing.launchpadIconMd,
                 ),
                 const SizedBox(width: AppSpacing.x1),
                 Text(

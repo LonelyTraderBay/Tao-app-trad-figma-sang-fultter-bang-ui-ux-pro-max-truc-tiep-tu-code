@@ -17,7 +17,6 @@ class _ProductSriCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 11,
               height: 1.2,
             ),
           ),
@@ -27,7 +26,6 @@ class _ProductSriCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,
-              fontSize: 16,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -57,7 +55,6 @@ class _ProductSriCard extends StatelessWidget {
                 'Lower Risk',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 9,
                   height: 1,
                 ),
               ),
@@ -65,7 +62,6 @@ class _ProductSriCard extends StatelessWidget {
                 'Higher Risk',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 9,
                   height: 1,
                 ),
               ),
@@ -92,20 +88,22 @@ class _ScaleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 48,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(4),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        '$level',
-        style: AppTextStyles.baseMedium.copyWith(
-          color: active ? AppColors.onAccent : AppColors.text3,
-          fontSize: 15,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: 48),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: AppRadii.xsRadius,
+        ),
+        child: Center(
+          child: Text(
+            '$level',
+            style: AppTextStyles.baseMedium.copyWith(
+              color: active ? AppColors.onAccent : AppColors.text3,
+              fontWeight: AppTextStyles.bold,
+              height: 1,
+            ),
+          ),
         ),
       ),
     );
@@ -117,13 +115,11 @@ class _SriWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       constraints: const BoxConstraints(minHeight: 52),
       padding: const EdgeInsets.fromLTRB(13, 11, 13, 11),
-      decoration: BoxDecoration(
-        color: _riskAmber.withValues(alpha: .10),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      borderColor: _riskAmber.withValues(alpha: .24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -153,7 +149,6 @@ class _SriWarning extends StatelessWidget {
               ),
               style: AppTextStyles.micro.copyWith(
                 color: _riskAmber,
-                fontSize: 10,
                 fontWeight: AppTextStyles.medium,
                 height: 1.28,
               ),

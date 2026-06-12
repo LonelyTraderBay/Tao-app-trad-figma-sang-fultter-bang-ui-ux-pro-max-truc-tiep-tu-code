@@ -8,13 +8,10 @@ class _SideToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 55,
       padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: _marginPanel,
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.inner,
       child: Row(
         children: [
           _SideButton(
@@ -61,39 +58,28 @@ class _SideButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final resolvedColor = active ? color : AppColors.text3;
     return Expanded(
-      child: InkWell(
+      child: VitCard(
         key: MarginTradingPage.sideKey(id),
         onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: active
-                ? color.withValues(alpha: .13)
-                : AppColors.transparent,
-            borderRadius: AppRadii.cardRadius,
-            border: Border.all(
-              color: active
-                  ? color.withValues(alpha: .35)
-                  : AppColors.transparent,
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: resolvedColor, size: 17),
-              const SizedBox(width: 7),
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: resolvedColor,
-                  fontSize: 14,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
+        alignment: Alignment.center,
+        variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
+        borderColor: active
+            ? color.withValues(alpha: .35)
+            : AppColors.transparent,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: resolvedColor, size: 17),
+            const SizedBox(width: 7),
+            Text(
+              label,
+              style: AppTextStyles.caption.copyWith(
+                color: resolvedColor,
+                fontWeight: AppTextStyles.bold,
+                height: 1,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -123,17 +109,19 @@ class _LeverageSelector extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 13, 16, 13),
           child: Row(
             children: [
-              Container(
-                width: 34,
-                height: 34,
+              DecoratedBox(
                 decoration: BoxDecoration(
                   color: _marginAmber.withValues(alpha: .13),
                   borderRadius: AppRadii.mdRadius,
                 ),
-                child: const Icon(
-                  Icons.tune_rounded,
-                  color: _marginAmber,
-                  size: 18,
+                child: const SizedBox(
+                  width: 34,
+                  height: 34,
+                  child: Icon(
+                    Icons.tune_rounded,
+                    color: _marginAmber,
+                    size: 18,
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
@@ -145,7 +133,6 @@ class _LeverageSelector extends StatelessWidget {
                       'Đòn bẩy',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.onAccent,
-                        fontSize: 13,
                         fontWeight: AppTextStyles.bold,
                         height: 1.1,
                       ),
@@ -155,7 +142,6 @@ class _LeverageSelector extends StatelessWidget {
                       'Nhân ${leverage}x giá trị vị thế',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 10,
                         height: 1.1,
                       ),
                     ),
@@ -200,27 +186,15 @@ class _LeverageSheet extends StatelessWidget {
         runSpacing: 8,
         children: [
           for (final option in options)
-            InkWell(
-              onTap: () => onChanged(option),
-              borderRadius: AppRadii.mdRadius,
-              child: Container(
-                width: 55,
-                height: 42,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: selected == option ? _marginPrimary : _marginCard,
-                  borderRadius: AppRadii.mdRadius,
-                  border: Border.all(color: AppColors.cardBorder),
-                ),
-                child: Text(
-                  '${option}x',
-                  style: AppTextStyles.caption.copyWith(
-                    color: selected == option
-                        ? AppColors.onAccent
-                        : AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
+            SizedBox(
+              width: 55,
+              child: VitStatusPill(
+                label: '${option}x',
+                status: selected == option
+                    ? VitStatusPillStatus.info
+                    : VitStatusPillStatus.neutral,
+                size: VitStatusPillSize.lg,
+                onTap: () => onChanged(option),
               ),
             ),
         ],

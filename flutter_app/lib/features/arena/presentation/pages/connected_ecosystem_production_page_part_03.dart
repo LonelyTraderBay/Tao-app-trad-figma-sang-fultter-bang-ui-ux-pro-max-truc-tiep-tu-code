@@ -18,7 +18,7 @@ class _BridgeRules extends StatelessWidget {
             leading: Icon(
               rule.allowed ? Icons.check_rounded : Icons.close_rounded,
               color: rule.allowed ? AppColors.buy : AppColors.sell,
-              size: 16,
+              size: AppSpacing.arenaEcosystemInlineIcon,
             ),
           ),
       ],
@@ -76,12 +76,12 @@ class _HandoffCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Text(
             subtitle,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           for (final child in children) ...[
             child,
             if (child != children.last)
@@ -126,12 +126,12 @@ class _HandoffRow extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x1),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
               Text(
                 subtitle,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1.4,
+                  height: AppSpacing.arenaEcosystemCheckLineHeight,
                 ),
               ),
             ],
@@ -164,7 +164,7 @@ class _SummaryMetric extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Text(
             label,
             maxLines: 1,
@@ -190,14 +190,18 @@ class _InfoLine extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: color ?? AppColors.text3, size: 13),
+        Icon(
+          icon,
+          color: color ?? AppColors.text3,
+          size: AppSpacing.arenaEcosystemCompactIcon,
+        ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
             text,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.4,
+              height: AppSpacing.arenaEcosystemCheckLineHeight,
             ),
           ),
         ),
@@ -231,7 +235,11 @@ class _SmallTextAction extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, color: color, size: 13),
+              Icon(
+                icon,
+                color: color,
+                size: AppSpacing.arenaEcosystemCompactIcon,
+              ),
               const SizedBox(width: AppSpacing.x1),
               Text(
                 label,
@@ -269,7 +277,9 @@ class _MiniPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minHeight: 22),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.arenaEcosystemPillMinHeight,
+      ),
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.x2,
         vertical: AppSpacing.x1,
@@ -302,16 +312,24 @@ class _TintIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = small ? 30.0 : 36.0;
+    final size = small
+        ? AppSpacing.arenaEcosystemTintIconBoxSmall
+        : AppSpacing.arenaEcosystemTintIconBox;
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
         border: Border.all(color: color.withValues(alpha: .20)),
-        borderRadius: BorderRadius.circular(small ? 12 : 14),
+        borderRadius: small ? AppRadii.inputRadius : AppRadii.mdRadius,
       ),
-      child: Icon(icon, color: color, size: small ? 15 : 17),
+      child: Icon(
+        icon,
+        color: color,
+        size: small
+            ? AppSpacing.arenaEcosystemTintGlyphSmall
+            : AppSpacing.arenaEcosystemTintGlyph,
+      ),
     );
   }
 }
@@ -332,7 +350,7 @@ class _EcosystemFooter extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.text3,
-            size: 14,
+            size: AppSpacing.arenaEcosystemSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -340,7 +358,7 @@ class _EcosystemFooter extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1.45,
+                height: AppSpacing.arenaEcosystemBodyLineHeight,
               ),
             ),
           ),

@@ -93,78 +93,94 @@ class _BotSecuritySettingsPageState
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 0,
+                    customGap: 18,
                     children: [
-                      const _SectionLabel('Two-Factor Authentication'),
-                      const SizedBox(height: 10),
                       VitPageSection(
-                        customGap: 0,
+                        label: 'Two-Factor Authentication',
+                        customGap: 12,
                         children: [
                           _TwoFaCard(
                             enabled: _twoFaEnabled,
                             onTap: () => _toggleTwoFa(snapshot),
                           ),
+                          const VitCard(
+                            variant: VitCardVariant.inner,
+                            padding: EdgeInsets.all(12),
+                            child: VitPageContent(
+                              padding: VitContentPadding.none,
+                              customGap: 8,
+                              children: [
+                                VitHighRiskStatePanel(
+                                  state: VitHighRiskUiState.riskReview,
+                                  title: 'Bot security review required',
+                                  message:
+                                      '2FA, API key creation, IP whitelist, recent activity and destructive key changes require explicit review.',
+                                  contractId: 'bot-security-settings-review',
+                                ),
+                                VitStatusPill(
+                                  label: 'Sensitive settings',
+                                  status: VitStatusPillStatus.warning,
+                                  size: VitStatusPillSize.sm,
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                      const SizedBox(height: 12),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Bot security review required',
-                              message:
-                                  '2FA, API key creation, IP whitelist, recent activity and destructive key changes require explicit review.',
-                              contractId: 'bot-security-settings-review',
-                            ),
-                            SizedBox(height: 8),
-                            VitStatusPill(
-                              label: 'Sensitive settings',
-                              status: VitStatusPillStatus.warning,
-                              size: VitStatusPillSize.sm,
-                            ),
-                          ],
-                        ),
+                      VitPageSection(
+                        label: 'API Keys',
+                        customGap: 10,
+                        children: [
+                          VitPageContent(
+                            padding: VitContentPadding.none,
+                            customGap: 10,
+                            children: [
+                              for (final key in snapshot.apiKeys)
+                                _ApiKeyCard(apiKey: key),
+                            ],
+                          ),
+                          _DashedActionButton(
+                            key: BotSecuritySettingsPage.createApiKeyKey,
+                            label: 'Create New API Key',
+                            icon: Icons.add_rounded,
+                            onTap: () => _showApiKeySheet(context, snapshot),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 18),
-                      const _SectionLabel('API Keys'),
-                      const SizedBox(height: 10),
-                      for (final key in snapshot.apiKeys) ...[
-                        _ApiKeyCard(apiKey: key),
-                        if (key != snapshot.apiKeys.last)
-                          const SizedBox(height: 10),
-                      ],
-                      const SizedBox(height: 10),
-                      _DashedActionButton(
-                        key: BotSecuritySettingsPage.createApiKeyKey,
-                        label: 'Create New API Key',
-                        icon: Icons.add_rounded,
-                        onTap: () => _showApiKeySheet(context, snapshot),
+                      VitPageSection(
+                        label: 'IP Whitelist',
+                        customGap: 10,
+                        children: [
+                          VitPageContent(
+                            padding: VitContentPadding.none,
+                            customGap: 10,
+                            children: [
+                              for (final entry in snapshot.ipWhitelist)
+                                _IpCard(entry: entry),
+                            ],
+                          ),
+                          _DashedActionButton(
+                            key: BotSecuritySettingsPage.addIpKey,
+                            label: 'Add IP Address',
+                            icon: Icons.add_rounded,
+                            onTap: () => _showIpSheet(context),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 18),
-                      const _SectionLabel('IP Whitelist'),
-                      const SizedBox(height: 10),
-                      for (final entry in snapshot.ipWhitelist) ...[
-                        _IpCard(entry: entry),
-                        if (entry != snapshot.ipWhitelist.last)
-                          const SizedBox(height: 10),
-                      ],
-                      const SizedBox(height: 10),
-                      _DashedActionButton(
-                        key: BotSecuritySettingsPage.addIpKey,
-                        label: 'Add IP Address',
-                        icon: Icons.add_rounded,
-                        onTap: () => _showIpSheet(context),
+                      VitPageSection(
+                        label: 'Recent Activity',
+                        customGap: 10,
+                        children: [
+                          _ActivityCard(activities: snapshot.recentActivity),
+                        ],
                       ),
-                      const SizedBox(height: 18),
-                      const _SectionLabel('Recent Activity'),
-                      const SizedBox(height: 10),
-                      _ActivityCard(activities: snapshot.recentActivity),
-                      const SizedBox(height: 18),
-                      _SecurityTipsCard(tips: snapshot.securityTips),
+                      VitPageSection(
+                        label: 'Security Tips',
+                        customGap: 10,
+                        children: [
+                          _SecurityTipsCard(tips: snapshot.securityTips),
+                        ],
+                      ),
                     ],
                   ),
                 ),

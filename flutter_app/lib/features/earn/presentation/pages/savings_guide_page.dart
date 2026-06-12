@@ -84,13 +84,23 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
                     gap: VitContentGap.defaultGap,
                     children: [
                       if (_activeTab == 'tutorials')
-                        SavingsGuideTutorialsTab(
-                          snapshot: snapshot,
-                          completedTutorials: _completedTutorials,
-                          onTutorialTap: _openTutorialSheet,
+                        VitCard(
+                          variant: VitCardVariant.standard,
+                          radius: VitCardRadius.md,
+                          padding: EdgeInsets.zero,
+                          child: SavingsGuideTutorialsTab(
+                            snapshot: snapshot,
+                            completedTutorials: _completedTutorials,
+                            onTutorialTap: _openTutorialSheet,
+                          ),
                         )
                       else
-                        SavingsGuideGlossaryTab(snapshot: snapshot),
+                        VitCard(
+                          variant: VitCardVariant.standard,
+                          radius: VitCardRadius.md,
+                          padding: EdgeInsets.zero,
+                          child: SavingsGuideGlossaryTab(snapshot: snapshot),
+                        ),
                     ],
                   ),
                 ),

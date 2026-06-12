@@ -52,6 +52,13 @@ flutter_app/lib/features/<feature>/
       `VitBottomNav`, `VitCard`, `VitCtaButton`, `VitInput`, and `VitTabBar`.
 - [ ] New pages include loading, empty, error, offline, submitting, and success
       states where the flow requires them.
+- [ ] New feature/screen edits use existing design tokens from
+      `flutter_app/lib/app/theme/` and `shared/*` components (no local hardcoded
+      `fontSize`, `EdgeInsets`, fixed `radius`, or container-box decoration
+      duplicates without exception).
+- [ ] New feature/screen edits pass the changed-file token guardrail and do not
+      increase the P0 module design-token baseline when they touch Wallet,
+      Trade, P2P, Markets, Profile, security, or KYC surfaces.
 
 ## Size Gates
 
@@ -90,6 +97,14 @@ flutter test test/quality/product_copy_guardrails_test.dart --reporter=compact
 flutter test --reporter=compact
 ```
 
+Design token compliance:
+
+```bash
+cd flutter_app
+dart run tool/design_token_consistency_audit.dart --check
+flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact
+```
+
 Run additional focused suites for the touched feature:
 
 ```bash
@@ -109,3 +124,5 @@ Stop and refactor before merge when any of these are true:
 - A financial or P2P flow lacks preview and confirmation.
 - Arena and Prediction Markets copy or reward semantics are mixed.
 - Router contracts or route coverage are not updated with new routes.
+- Design-token audit or guardrail tests fail without a documented and reviewed
+  exception.

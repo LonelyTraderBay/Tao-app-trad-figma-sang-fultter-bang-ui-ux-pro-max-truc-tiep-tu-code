@@ -54,7 +54,10 @@ class _SettingsSummary extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: AppColors.primary08,
-        border: Border.all(color: AppColors.primary20, width: 1.5),
+        border: Border.all(
+          color: AppColors.primary20,
+          width: AppSpacing.savingsNotificationSummaryBorderWidth,
+        ),
         borderRadius: AppRadii.cardLargeRadius,
       ),
       child: Padding(
@@ -78,7 +81,7 @@ class _SettingsSummary extends StatelessWidget {
                     subtitle,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.55,
+                      height: AppSpacing.savingsNotificationSummaryLineHeight,
                     ),
                   ),
                 ],
@@ -172,7 +175,7 @@ class _SettingCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.4,
+                    height: AppSpacing.savingsNotificationCardLineHeight,
                   ),
                 ),
               ],
@@ -201,9 +204,11 @@ class _ToggleSwitch extends StatelessWidget {
         onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
-          width: 44,
-          height: 24,
-          padding: const EdgeInsets.all(4),
+          width: AppSpacing.savingsNotificationSwitchWidth,
+          height: AppSpacing.savingsNotificationSwitchHeight,
+          padding: const EdgeInsets.all(
+            AppSpacing.savingsNotificationSwitchPadding,
+          ),
           decoration: BoxDecoration(
             color: on ? AppColors.primary : AppColors.borderSolid,
             borderRadius: AppRadii.mdRadius,
@@ -212,8 +217,8 @@ class _ToggleSwitch extends StatelessWidget {
             duration: const Duration(milliseconds: 180),
             alignment: on ? Alignment.centerRight : Alignment.centerLeft,
             child: const SizedBox(
-              width: 16,
-              height: 16,
+              width: AppSpacing.savingsNotificationSwitchThumb,
+              height: AppSpacing.savingsNotificationSwitchThumb,
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   color: AppColors.onAccent,

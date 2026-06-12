@@ -78,6 +78,13 @@ class _DCASmartRulesPageState extends ConsumerState<DCASmartRulesPage> {
                       ..._buildTemplates(snapshot),
                     if (_activeTab == _RulesTab.history)
                       ..._buildHistory(snapshot),
+                    const VitHighRiskStatePanel(
+                      state: VitHighRiskUiState.riskReview,
+                      title: 'Smart DCA rule execution review',
+                      message:
+                          'Rule conditions, automated trade actions, trigger history, success rate, delete preview, and create-rule confirmation are reviewed before DCA automation changes.',
+                      contractId: 'SC-179',
+                    ),
                   ],
                 ),
               ),

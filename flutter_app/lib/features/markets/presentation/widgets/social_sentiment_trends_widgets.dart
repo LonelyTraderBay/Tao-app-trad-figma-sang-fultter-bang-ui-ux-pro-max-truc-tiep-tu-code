@@ -226,21 +226,25 @@ class _MentionVelocity extends StatelessWidget {
                 ),
                 Expanded(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(999),
+                    borderRadius: AppRadii.xlRadius,
                     child: SizedBox(
                       height: 5,
                       child: Stack(
                         children: [
-                          Container(color: AppColors.surface2),
+                          const ColoredBox(
+                            color: AppColors.surface2,
+                            child: SizedBox.expand(),
+                          ),
                           FractionallySizedBox(
                             alignment: Alignment.centerLeft,
                             widthFactor: maxChange == 0
                                 ? 0
                                 : token.mentionsChange.abs() / maxChange,
-                            child: Container(
+                            child: ColoredBox(
                               color: token.mentionsChange >= 0
                                   ? AppColors.buy
                                   : AppColors.sell,
+                              child: const SizedBox.expand(),
                             ),
                           ),
                         ],

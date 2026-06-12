@@ -222,7 +222,7 @@ class _DcaAdvantageCard extends StatelessWidget {
               'DCA strategy outperformed lump sum by +${(result.returnPercent - 54.76).toStringAsFixed(2)}%',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.45,
+                height: AppSpacing.dcaBacktesterBodyLineHeight,
               ),
             ),
           ),

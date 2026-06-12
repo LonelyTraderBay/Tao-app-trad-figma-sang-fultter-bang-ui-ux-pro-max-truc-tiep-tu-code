@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/controllers/wallet_controller.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class AddressConfirmPreviewSheet extends StatelessWidget {
   const AddressConfirmPreviewSheet({
@@ -25,24 +27,18 @@ class AddressConfirmPreviewSheet extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+        padding: AppSpacing.walletAddressAddSheetPadding,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Xác nhận lưu địa chỉ',
-              style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
-            ),
-            const SizedBox(height: 8),
+            Text('Xác nhận lưu địa chỉ', style: AppTextStyles.sectionTitle),
+            const SizedBox(height: AppSpacing.walletAddressAddSheetTitleGap),
             Text(
               preview.auditTrailNote,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontSize: 12,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: AppSpacing.walletAddressAddSheetSectionGap),
             AddressPreviewPanel(
               rows: [
                 ('Tên', preview.label),
@@ -53,7 +49,7 @@ class AddressConfirmPreviewSheet extends StatelessWidget {
                 ('Whitelist', preview.whitelistLabel),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.walletAddressFilterGap),
             AddressPrimaryActionButton(
               key: confirmButtonKey,
               enabled: true,
@@ -75,13 +71,9 @@ class AddressPreviewPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: addressAddPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.overlayStroke),
-      ),
+    return VitCard(
+      padding: AppSpacing.walletAddressCardPadding,
+      borderColor: AppColors.overlayStroke,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -89,11 +81,10 @@ class AddressPreviewPanel extends StatelessWidget {
             'Xem trước',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 11,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.walletAddressMetaGap),
           for (final row in rows) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,11 +94,10 @@ class AddressPreviewPanel extends StatelessWidget {
                     row.$1,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      fontSize: 12,
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.rowGapRegular),
                 Flexible(
                   flex: 2,
                   child: Text(
@@ -115,15 +105,14 @@ class AddressPreviewPanel extends StatelessWidget {
                     textAlign: TextAlign.right,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: AppTextStyles.bold,
                       fontFamily: row.$1 == 'Địa chỉ' ? 'Roboto Mono' : null,
                     ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.rowGap),
           ],
         ],
       ),
@@ -144,8 +133,8 @@ class AddressSaveFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 72,
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+      height: AppSpacing.walletAddressAddFooterHeight,
+      padding: AppSpacing.walletAddressAddFooterPadding,
       decoration: const BoxDecoration(
         color: AppColors.navBg,
         border: Border(top: BorderSide(color: AppColors.divider)),
@@ -189,45 +178,50 @@ class AddressSavedState extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
+                padding: AppSpacing.walletAddressAddSuccessPadding,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 80,
-                      height: 80,
+                      width: AppSpacing.walletAddressAddSuccessIconSize,
+                      height: AppSpacing.walletAddressAddSuccessIconSize,
                       decoration: BoxDecoration(
                         color: AppColors.buy10,
                         borderRadius: AppRadii.cardLargeRadius,
-                        border: Border.all(color: AppColors.buy20, width: 1.5),
+                        border: Border.all(
+                          color: AppColors.buy20,
+                          width: AppSpacing.borderWidth,
+                        ),
                       ),
                       child: const Icon(
                         Icons.check_circle_outline_rounded,
                         color: addressAddGreen,
-                        size: 42,
+                        size: AppSpacing.walletAddressAddSuccessIconGlyph,
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(
+                      height: AppSpacing.walletAddressAddSuccessTitleGap,
+                    ),
                     Text(
                       'Đã lưu thành công!',
                       textAlign: TextAlign.center,
-                      style: AppTextStyles.sectionTitle.copyWith(fontSize: 20),
+                      style: AppTextStyles.sectionTitle,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(
+                      height: AppSpacing.walletAddressAddSuccessMessageGap,
+                    ),
                     Text(
                       'Địa chỉ "$label" đã được thêm vào sổ địa chỉ.',
                       textAlign: TextAlign.center,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        fontSize: 14,
                       ),
                     ),
-                    const SizedBox(height: 18),
+                    const SizedBox(
+                      height: AppSpacing.walletAddressAddSuccessPillGap,
+                    ),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 14,
-                        vertical: 10,
-                      ),
+                      padding: AppSpacing.walletAddressAddStatusPadding,
                       decoration: BoxDecoration(
                         color: AppColors.buy10,
                         borderRadius: AppRadii.cardRadius,
@@ -238,9 +232,9 @@ class AddressSavedState extends StatelessWidget {
                           const Icon(
                             Icons.shield_outlined,
                             color: addressAddGreen,
-                            size: 14,
+                            size: AppSpacing.iconSm,
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: AppSpacing.rowGap),
                           Flexible(
                             child: Text(
                               whitelist
@@ -250,8 +244,7 @@ class AddressSavedState extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.micro.copyWith(
                                 color: addressAddGreen,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: AppTextStyles.bold,
                               ),
                             ),
                           ),

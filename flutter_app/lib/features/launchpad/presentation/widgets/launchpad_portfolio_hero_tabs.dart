@@ -39,8 +39,8 @@ class _PortfolioHero extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 48,
-                height: 48,
+                width: AppSpacing.launchpadBox48,
+                height: AppSpacing.launchpadBox48,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: AppColors.primary12,
@@ -143,7 +143,7 @@ class _HeroMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
-              height: 1.2,
+              height: AppSpacing.launchpadLineHeightShort,
             ),
           ),
         ],

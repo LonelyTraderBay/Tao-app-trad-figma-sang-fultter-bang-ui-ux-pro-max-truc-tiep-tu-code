@@ -26,7 +26,7 @@ class _SmallMetric extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         FittedBox(
           fit: BoxFit.scaleDown,
           alignment: alignEnd ? Alignment.centerRight : Alignment.centerLeft,
@@ -81,7 +81,7 @@ class _InnerMetric extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
@@ -144,7 +144,7 @@ class _FooterNote extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: 1.55,
+          height: AppSpacing.stakingProofInfoLineHeight,
         ),
       ),
     );

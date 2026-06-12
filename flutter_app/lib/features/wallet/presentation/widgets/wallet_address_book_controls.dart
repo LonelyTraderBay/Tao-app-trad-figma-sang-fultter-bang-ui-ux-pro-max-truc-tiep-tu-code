@@ -47,7 +47,7 @@ class _NetworkFilterBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 30,
+      height: AppSpacing.walletAddressFilterHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         clipBehavior: Clip.none,
@@ -61,9 +61,9 @@ class _NetworkFilterBar extends StatelessWidget {
             child: VitCard(
               variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
               radius: VitCardRadius.sm,
-              height: 30,
+              height: AppSpacing.walletAddressFilterHeight,
               alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 13),
+              padding: AppSpacing.walletAddressFilterPadding,
               borderColor: selected
                   ? AppColors.primary60
                   : AppColors.transparent,
@@ -71,15 +71,14 @@ class _NetworkFilterBar extends StatelessWidget {
                 filter,
                 style: AppTextStyles.caption.copyWith(
                   color: selected ? _bookPrimary : AppColors.text2,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w800,
-                  height: 1,
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
             ),
           );
         },
-        separatorBuilder: (_, _) => const SizedBox(width: 16),
+        separatorBuilder: (_, _) =>
+            const SizedBox(width: AppSpacing.walletAddressFilterGap),
         itemCount: filters.length,
       ),
     );
@@ -113,7 +112,7 @@ class _AddressStats extends StatelessWidget {
           Expanded(
             child: VitCard(
               variant: VitCardVariant.inner,
-              height: 70,
+              height: AppSpacing.walletAddressStatsHeight,
               borderColor: AppColors.overlayStroke,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -122,24 +121,20 @@ class _AddressStats extends StatelessWidget {
                     stats[i].$1,
                     style: AppTextStyles.sectionTitle.copyWith(
                       color: stats[i].$3,
-                      fontSize: 20,
-                      height: 1,
+                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
-                  const SizedBox(height: 9),
+                  const SizedBox(height: AppSpacing.walletAddressStatsValueGap),
                   Text(
                     stats[i].$2,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 10,
-                      height: 1,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
             ),
           ),
-          if (i != stats.length - 1) const SizedBox(width: 8),
+          if (i != stats.length - 1)
+            const SizedBox(width: AppSpacing.walletAddressStatsGap),
         ],
       ],
     );
@@ -158,16 +153,16 @@ class _SectionTitle extends StatelessWidget {
     return Row(
       children: [
         if (icon != null) ...[
-          Icon(icon, color: iconColor, size: 15),
-          const SizedBox(width: 6),
+          Icon(
+            icon,
+            color: iconColor,
+            size: AppSpacing.walletAddressSectionIcon,
+          ),
+          const SizedBox(width: AppSpacing.walletAddressSectionGap),
         ],
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 13,
-            height: 1,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
       ],
     );

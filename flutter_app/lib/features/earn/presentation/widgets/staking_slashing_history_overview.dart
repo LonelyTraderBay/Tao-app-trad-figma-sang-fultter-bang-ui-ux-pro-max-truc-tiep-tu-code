@@ -39,7 +39,7 @@ class StakingSlashingInsuranceBanner extends StatelessWidget {
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.stakingSlashingBodyLineHeight,
                   ),
                 ),
               ],
@@ -63,12 +63,12 @@ class StakingSlashingSummaryStats extends StatelessWidget {
       radius: VitCardRadius.lg,
       padding: const EdgeInsets.all(AppSpacing.x4),
       child: GridView.count(
-        crossAxisCount: 2,
+        crossAxisCount: AppSpacing.stakingSlashingStatsGridColumns,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         mainAxisSpacing: AppSpacing.x3,
         crossAxisSpacing: AppSpacing.x3,
-        childAspectRatio: 1.65,
+        childAspectRatio: AppSpacing.stakingSlashingStatsGridAspect,
         children: [
           _StatTile(
             label: 'Total Events',
@@ -198,7 +198,7 @@ class StakingSlashingTabs extends StatelessWidget {
                         AnimatedContainer(
                           duration: const Duration(milliseconds: 160),
                           width: active == tab ? AppSpacing.buttonHero : 0,
-                          height: 2,
+                          height: AppSpacing.stakingSlashingTabIndicatorHeight,
                           decoration: BoxDecoration(
                             color: active == tab
                                 ? AppColors.primarySoft

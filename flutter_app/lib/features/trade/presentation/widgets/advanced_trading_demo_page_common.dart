@@ -37,7 +37,6 @@ class _MetricsCard extends StatelessWidget {
             title,
             style: AppTextStyles.body.copyWith(
               color: AppColors.onAccent,
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -72,7 +71,6 @@ class _ChoiceChip extends StatelessWidget {
         label,
         style: AppTextStyles.caption.copyWith(
           color: active ? AppColors.onAccent : AppColors.text2,
-          fontSize: 12,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),

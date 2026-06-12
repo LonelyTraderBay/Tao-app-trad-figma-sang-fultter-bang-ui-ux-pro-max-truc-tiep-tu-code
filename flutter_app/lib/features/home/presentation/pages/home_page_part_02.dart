@@ -11,7 +11,7 @@ class _HomeDiscoverySection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionHeader(title: 'Dự đoán & Thách đấu'),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         _DiscoveryCard(
           title: 'Prediction Markets',
           badge: 'Prediction Market',
@@ -27,7 +27,9 @@ class _HomeDiscoverySection extends StatelessWidget {
           ),
           onTap: () => onNavigate('/markets/predictions'),
         ),
-        const SizedBox(height: 10),
+        const Padding(
+          padding: EdgeInsets.only(top: AppSpacing.homeSectionCtaGap),
+        ),
         _DiscoveryCard(
           title: 'Open Arena',
           badge: 'Arena Points only',
@@ -43,14 +45,11 @@ class _HomeDiscoverySection extends StatelessWidget {
           ),
           onTap: () => onNavigate('/arena'),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         Text(
           'Predictions sử dụng vị thế thực. Arena sử dụng Points (không phải tiền thật).',
           textAlign: TextAlign.center,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 9,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
       ],
     );
@@ -80,7 +79,7 @@ class _MarketSection extends StatelessWidget {
           actionLabel: 'Xem tất cả',
           onAction: () => onNavigate('/markets'),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         VitTabBar(
           activeKey: activeTab,
           onChanged: onTabChanged,
@@ -91,7 +90,7 @@ class _MarketSection extends StatelessWidget {
             VitTabItem(key: 'new', label: '🆕 Mới'),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         VitCard(
           clip: true,
           child: Column(
@@ -104,8 +103,8 @@ class _MarketSection extends StatelessWidget {
                 ),
                 if (i < pairs.length - 1)
                   const Divider(
-                    height: 1,
-                    thickness: 1,
+                    height: AppSpacing.homeDividerHeight,
+                    thickness: AppSpacing.homeDividerHeight,
                     color: AppColors.divider,
                   ),
               ],
@@ -135,21 +134,22 @@ class _TrendingSection extends StatelessWidget {
           actionLabel: 'Xem tất cả',
           onAction: () => onNavigate('/markets'),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         SizedBox(
-          height: 128,
+          height: AppSpacing.homeTrendingSectionHeight,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             clipBehavior: Clip.none,
             itemCount: pairs.length,
-            separatorBuilder: (_, _) => const SizedBox(width: 12),
+            separatorBuilder: (_, _) =>
+                const SizedBox(width: AppSpacing.homeMarketIconGap),
             itemBuilder: (context, index) {
               final pair = pairs[index];
               return SizedBox(
-                width: 148,
+                width: AppSpacing.homeTrendingItemWidth,
                 child: VitCard(
                   onTap: () => onNavigate('/pair/${pair.id}'),
-                  padding: const EdgeInsets.all(16),
+                  padding: AppSpacing.cardPadding,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -157,8 +157,8 @@ class _TrendingSection extends StatelessWidget {
                         children: [
                           _CoinAvatar(
                             pair: pair,
-                            size: 28,
-                            radius: AppRadii.xs,
+                            size: AppSpacing.homeTrendingIconSize,
+                            radius: AppRadii.xsRadius,
                           ),
                           const SizedBox(width: AppSpacing.x3),
                           Expanded(
@@ -181,7 +181,9 @@ class _TrendingSection extends StatelessWidget {
                           fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x1),
+                      const Padding(
+                        padding: EdgeInsets.only(top: AppSpacing.x1),
+                      ),
                       Text(
                         _formatPct(pair.change24h),
                         style: AppTextStyles.micro.copyWith(
@@ -232,7 +234,7 @@ class _RankedListSection extends StatelessWidget {
           actionLabel: 'Xem tất cả',
           onAction: () => onNavigate('/markets'),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         VitCard(
           clip: true,
           child: Column(
@@ -246,8 +248,8 @@ class _RankedListSection extends StatelessWidget {
                 ),
                 if (i < pairs.length - 1)
                   const Divider(
-                    height: 1,
-                    thickness: 1,
+                    height: AppSpacing.homeDividerHeight,
+                    thickness: AppSpacing.homeDividerHeight,
                     color: AppColors.divider,
                   ),
               ],
@@ -284,14 +286,14 @@ class _SectionHeader extends StatelessWidget {
             color: iconColor ?? AppColors.text1,
             size: AppSpacing.iconMd,
           ),
-          const SizedBox(width: 6),
+          const SizedBox(width: AppSpacing.homeSectionHeaderIconGap),
         ],
         Expanded(
           child: Text(
             title,
             style: AppTextStyles.sectionTitle.copyWith(
               fontWeight: AppTextStyles.bold,
-              height: 1.2,
+              height: AppSpacing.homeSectionHeaderTitleLineHeight,
             ),
           ),
         ),
@@ -318,7 +320,7 @@ class _SectionHeader extends StatelessWidget {
                   const Icon(
                     Icons.chevron_right_rounded,
                     color: AppColors.primary,
-                    size: 14,
+                    size: AppSpacing.homeSectionHeaderChevronSize,
                   ),
                 ],
               ),
@@ -357,19 +359,23 @@ class _DiscoveryCard extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       borderColor: border,
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.cardPadding,
       child: Row(
         children: [
           Container(
-            width: 44,
-            height: 44,
+            width: AppSpacing.homeDiscoveryIconContainer,
+            height: AppSpacing.homeDiscoveryIconContainer,
             decoration: BoxDecoration(
               gradient: background,
               borderRadius: AppRadii.mdRadius,
             ),
-            child: Icon(icon, color: color, size: 20),
+            child: Icon(
+              icon,
+              color: color,
+              size: AppSpacing.homeDiscoveryIconSize,
+            ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.homeMarketIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -393,14 +399,14 @@ class _DiscoveryCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   subtitle,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   actionLabel,
                   style: AppTextStyles.micro.copyWith(
@@ -411,7 +417,11 @@ class _DiscoveryCard extends StatelessWidget {
               ],
             ),
           ),
-          Icon(Icons.chevron_right_rounded, color: color, size: 16),
+          Icon(
+            Icons.chevron_right_rounded,
+            color: color,
+            size: AppSpacing.homeSectionActionChevronSize,
+          ),
         ],
       ),
     );
@@ -434,11 +444,14 @@ class _MarketRow extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.homeSectionHorizontalPadding,
+          vertical: AppSpacing.homeSectionVerticalPadding,
+        ),
         child: Row(
           children: [
             _CoinAvatar(pair: pair),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.homeMarketIconGap),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -449,7 +462,7 @@ class _MarketRow extends StatelessWidget {
                       fontWeight: AppTextStyles.medium,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x1),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                   Text(
                     'Vol \$${_formatBillions(pair.volume24h)}B',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -459,8 +472,8 @@ class _MarketRow extends StatelessWidget {
             ),
             if (showSparkline) ...[
               SizedBox(
-                width: 64,
-                height: 30,
+                width: AppSpacing.homeSparklineWidth,
+                height: AppSpacing.homeSparklineHeight,
                 child: CustomPaint(
                   painter: _SparklinePainter(
                     values: pair.sparkline,
@@ -468,10 +481,10 @@ class _MarketRow extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.homeMarketIconGap),
             ],
             SizedBox(
-              width: 85,
+              width: AppSpacing.homeRankedValueColumnWidth,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -484,7 +497,7 @@ class _MarketRow extends StatelessWidget {
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x1),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                   Text(
                     _formatPct(pair.change24h),
                     style: AppTextStyles.micro.copyWith(

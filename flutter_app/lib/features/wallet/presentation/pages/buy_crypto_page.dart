@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 
 const _buyBackground = AppColors.bg;
@@ -116,33 +117,43 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
                           contractId: '${crypto.symbol} / ${payment.name}',
                         ),
                         const SizedBox(height: 14),
-                        BuyConfirmContent(
-                          crypto: crypto,
-                          payment: payment,
-                          amountVnd: _amountVnd,
-                          receiveAmount: receiveAmount,
-                          onConfirm: () => setState(() => _success = true),
-                          onBack: () => setState(() => _confirming = false),
+                        VitCard(
+                          variant: VitCardVariant.standard,
+                          radius: VitCardRadius.md,
+                          padding: EdgeInsets.zero,
+                          child: BuyConfirmContent(
+                            crypto: crypto,
+                            payment: payment,
+                            amountVnd: _amountVnd,
+                            receiveAmount: receiveAmount,
+                            onConfirm: () => setState(() => _success = true),
+                            onBack: () => setState(() => _confirming = false),
+                          ),
                         ),
                       ] else
-                        BuyInputContent(
-                          snapshot: snapshot,
-                          selectedCrypto: crypto,
-                          selectedPaymentId: _selectedPayment,
-                          amountController: _amountController,
-                          amountVnd: _amountVnd,
-                          receiveAmount: receiveAmount,
-                          onAmountChanged: () => setState(() {}),
-                          onPreset: (amount) {
-                            _amountController.text = amount.toString();
-                            setState(() {});
-                          },
-                          onCryptoTap: () => _showCryptoPicker(snapshot),
-                          onPaymentChanged: (id) =>
-                              setState(() => _selectedPayment = id),
-                          onBuy: _canBuy(crypto)
-                              ? () => setState(() => _confirming = true)
-                              : null,
+                        VitCard(
+                          variant: VitCardVariant.standard,
+                          radius: VitCardRadius.md,
+                          padding: EdgeInsets.zero,
+                          child: BuyInputContent(
+                            snapshot: snapshot,
+                            selectedCrypto: crypto,
+                            selectedPaymentId: _selectedPayment,
+                            amountController: _amountController,
+                            amountVnd: _amountVnd,
+                            receiveAmount: receiveAmount,
+                            onAmountChanged: () => setState(() {}),
+                            onPreset: (amount) {
+                              _amountController.text = amount.toString();
+                              setState(() {});
+                            },
+                            onCryptoTap: () => _showCryptoPicker(snapshot),
+                            onPaymentChanged: (id) =>
+                                setState(() => _selectedPayment = id),
+                            onBuy: _canBuy(crypto)
+                                ? () => setState(() => _confirming = true)
+                                : null,
+                          ),
                         ),
                     ],
                   ),

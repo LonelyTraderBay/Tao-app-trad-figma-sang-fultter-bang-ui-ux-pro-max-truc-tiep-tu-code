@@ -10,7 +10,7 @@ class _EstimatedReturns extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.predictionMarketMakerEstimatePadding,
       child: Row(
         children: [
           Expanded(
@@ -58,9 +58,9 @@ class _AddLiquidityButton extends StatelessWidget {
               Icon(
                 Icons.add_rounded,
                 color: AppColors.onAccent.withValues(alpha: enabled ? 1 : .5),
-                size: 20,
+                size: AppSpacing.predictionMarketMakerAddIcon,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.predictionMarketMakerAddIconGap),
               Text(
                 'Them thanh khoan',
                 style: AppTextStyles.body.copyWith(
@@ -85,22 +85,21 @@ class _LiquidityWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.predictionMarketMakerWarningPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: 15,
+            size: AppSpacing.predictionMarketMakerWarningIcon,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.predictionMarketMakerWarningGap),
           Expanded(
             child: Text(
               'Cung cap thanh khoan co rui ro impermanent loss. APR khong co dinh va phu thuoc vao volume giao dich. Khong dam bao loi nhuan.',
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.numericMicro.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
               ),
             ),
           ),

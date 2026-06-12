@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_sections.dart';
@@ -14,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 
 const _addressBackground = AppColors.bg;
@@ -119,10 +121,7 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
                       Expanded(
                         child: SingleChildScrollView(
                           key: AddressAddPage.contentKey,
-                          padding: EdgeInsets.fromLTRB(
-                            20,
-                            14,
-                            20,
+                          padding: AppSpacing.walletAddressAddScrollPadding(
                             _scrollBottomInset(context, mode),
                           ),
                           child: VitPageContent(
@@ -138,24 +137,29 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
                                 contractId: 'Network: ${selectedNetwork.label}',
                               ),
                               const SizedBox(height: 18),
-                              AddressAddForm(
-                                snapshot: snapshot,
-                                selectedNetworkId: _networkId,
-                                selectedAsset: _asset,
-                                labelController: _labelController,
-                                addressController: _addressController,
-                                memoController: _memoController,
-                                whitelist: _whitelist,
-                                agreed: _agreed,
-                                onNetworkChanged: (id) =>
-                                    setState(() => _networkId = id),
-                                onAssetChanged: (asset) =>
-                                    setState(() => _asset = asset),
-                                onWhitelistChanged: () =>
-                                    setState(() => _whitelist = !_whitelist),
-                                onAgreementChanged: () =>
-                                    setState(() => _agreed = !_agreed),
-                                onInputChanged: () => setState(() {}),
+                              VitCard(
+                                variant: VitCardVariant.standard,
+                                radius: VitCardRadius.md,
+                                padding: AppSpacing.walletAddressCardPadding,
+                                child: AddressAddForm(
+                                  snapshot: snapshot,
+                                  selectedNetworkId: _networkId,
+                                  selectedAsset: _asset,
+                                  labelController: _labelController,
+                                  addressController: _addressController,
+                                  memoController: _memoController,
+                                  whitelist: _whitelist,
+                                  agreed: _agreed,
+                                  onNetworkChanged: (id) =>
+                                      setState(() => _networkId = id),
+                                  onAssetChanged: (asset) =>
+                                      setState(() => _asset = asset),
+                                  onWhitelistChanged: () =>
+                                      setState(() => _whitelist = !_whitelist),
+                                  onAgreementChanged: () =>
+                                      setState(() => _agreed = !_agreed),
+                                  onInputChanged: () => setState(() {}),
+                                ),
                               ),
                             ],
                           ),
@@ -186,7 +190,7 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
     BoxConstraints constraints,
     ShellRenderMode mode,
   ) {
-    const footerHeight = 72.0;
+    const footerHeight = AppSpacing.walletAddressAddFooterHeight;
     if (mode.usesVisualQaFrame) {
       return DeviceMetrics.height -
           DeviceMetrics.safeTop -
@@ -204,7 +208,7 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome +
               MediaQuery.paddingOf(context).bottom;
-    return navReserve + 112;
+    return navReserve + AppSpacing.walletAddressAddScrollBottomExtra;
   }
 
   void _showConfirmPreview(AddressAddController controller) {

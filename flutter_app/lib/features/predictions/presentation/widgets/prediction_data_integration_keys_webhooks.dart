@@ -52,7 +52,7 @@ class _ApiKeyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionDataCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,8 +64,8 @@ class _ApiKeyCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Wrap(
-                      spacing: 8,
-                      runSpacing: 5,
+                      spacing: AppSpacing.predictionDataHeaderWrapGap,
+                      runSpacing: AppSpacing.predictionDataHeaderRunGap,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         Text(
@@ -80,12 +80,13 @@ class _ApiKeyCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(
+                      height: AppSpacing.predictionDataSmallTopGap,
+                    ),
                     Text(
                       apiKey.createdAtLabel,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
                       ),
                     ),
                   ],
@@ -98,10 +99,12 @@ class _ApiKeyCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.predictionDataApiKeyBoxTopGap),
           Container(
-            constraints: const BoxConstraints(minHeight: 44),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            constraints: const BoxConstraints(
+              minHeight: AppSpacing.predictionDataApiKeyBoxMinHeight,
+            ),
+            padding: AppSpacing.predictionDataApiKeyBoxPadding,
             decoration: BoxDecoration(
               color: AppColors.bg,
               border: Border.all(color: AppColors.border),
@@ -112,18 +115,14 @@ class _ApiKeyCard extends StatelessWidget {
                 const Icon(
                   Icons.vpn_key_outlined,
                   color: AppColors.text3,
-                  size: 15,
+                  size: AppSpacing.predictionDataApiKeyIcon,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.predictionDataApiKeyGap),
                 Expanded(
                   child: Text(
                     revealed ? apiKey.key : _maskKey(apiKey.key),
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text1,
-                      fontFamily: 'monospace',
-                      fontSize: 11,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text1),
                   ),
                 ),
                 _InlineIconButton(
@@ -144,33 +143,30 @@ class _ApiKeyCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.predictionDataPermissionsTopGap),
           Text(
             'Permissions',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 11,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: AppSpacing.predictionDataPermissionLabelGap),
           Wrap(
-            spacing: 6,
-            runSpacing: 6,
+            spacing: AppSpacing.predictionDataChipGap,
+            runSpacing: AppSpacing.predictionDataChipGap,
             children: [
               for (final permission in apiKey.permissions)
                 _NeutralChip(label: permission),
             ],
           ),
           if (apiKey.lastUsedLabel != null) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.predictionDataLastUsedGap),
             Row(
               children: [
                 const Icon(
                   Icons.access_time_rounded,
                   color: AppColors.text3,
-                  size: 12,
+                  size: AppSpacing.predictionDataLastUsedIcon,
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(width: AppSpacing.predictionDataLastUsedIconGap),
                 Text(
                   apiKey.lastUsedLabel!,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -209,7 +205,7 @@ class _WebhookCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionDataCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -221,13 +217,13 @@ class _WebhookCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Wrap(
-                      spacing: 8,
+                      spacing: AppSpacing.predictionDataHeaderWrapGap,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         const Icon(
                           Icons.hub_outlined,
                           color: AppColors.text3,
-                          size: 15,
+                          size: AppSpacing.predictionDataWebhookHeaderIcon,
                         ),
                         _MiniStatusPill(
                           label: _webhookStatusLabel(webhook.status),
@@ -235,20 +231,20 @@ class _WebhookCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(
+                      height: AppSpacing.predictionDataWebhookUrlGap,
+                    ),
                     Text(
                       webhook.url,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text1,
-                        fontFamily: 'monospace',
-                        height: 1.45,
-                        fontSize: 11,
+                        height: AppSpacing.predictionDataWebhookUrlLineHeight,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.predictionDataWebhookActionGap),
               _IconBubble(
                 icon: Icons.delete_outline_rounded,
                 color: AppColors.sell,
@@ -256,23 +252,20 @@ class _WebhookCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.predictionDataWebhookSectionGap),
           Text(
             'Events',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 11,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: AppSpacing.predictionDataPermissionLabelGap),
           Wrap(
-            spacing: 6,
-            runSpacing: 6,
+            spacing: AppSpacing.predictionDataChipGap,
+            runSpacing: AppSpacing.predictionDataChipGap,
             children: [
               for (final event in webhook.events) _NeutralChip(label: event),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.predictionDataWebhookSectionGap),
           Row(
             children: [
               Expanded(

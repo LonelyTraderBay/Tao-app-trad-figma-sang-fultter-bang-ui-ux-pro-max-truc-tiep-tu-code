@@ -20,7 +20,6 @@ part '../widgets/client_money_protection_page_sections.dart';
 part '../widgets/client_money_protection_page_common.dart';
 
 const _moneyBackground = AppColors.bg;
-const _moneyPanel = AppColors.surface;
 const _moneyPanel2 = AppColors.surface2;
 const _moneyBorder = AppColors.borderSolid;
 const _moneyPrimary = AppColors.primary;
@@ -78,31 +77,24 @@ class _ClientMoneyProtectionPageState
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 0,
+                    customGap: 12,
                     children: [
                       const _ProtectionNotice(),
-                      const SizedBox(height: 34),
                       _BalanceCard(snapshot: snapshot),
-                      const SizedBox(height: 24),
                       _Tabs(activeId: _tab, onChanged: _setTab),
-                      const SizedBox(height: 26),
-                      VitPageSection(
-                        customGap: 0,
-                        children: [
-                          if (_tab == 'overview')
-                            _Overview(snapshot: snapshot)
-                          else if (_tab == 'reconciliation')
-                            const _Reconciliation()
-                          else
-                            const _Documents(),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
+                      if (_tab == 'overview')
+                        _Overview(snapshot: snapshot)
+                      else if (_tab == 'reconciliation')
+                        const _Reconciliation()
+                      else
+                        const _Documents(),
                       const VitCard(
                         variant: VitCardVariant.inner,
                         padding: EdgeInsets.all(12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: VitPageContent(
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          customGap: 8,
                           children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
@@ -111,7 +103,6 @@ class _ClientMoneyProtectionPageState
                                   'Segregation status, reconciliation, documents, limits and next steps are reviewed before client-money actions.',
                               contractId: 'client-money-protection-review',
                             ),
-                            SizedBox(height: 8),
                             VitStatusPill(
                               label: 'CASS review',
                               status: VitStatusPillStatus.info,

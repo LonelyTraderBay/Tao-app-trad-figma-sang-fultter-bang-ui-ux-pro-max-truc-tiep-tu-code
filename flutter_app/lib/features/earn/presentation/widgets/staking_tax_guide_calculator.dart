@@ -44,20 +44,20 @@ class StakingTaxCalculatorTab extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    width: 50,
-                    height: 50,
+                    width: AppSpacing.stakingTaxCalculatorIconBox,
+                    height: AppSpacing.stakingTaxCalculatorIconBox,
                     decoration: BoxDecoration(
                       color: AppColors.primary12,
                       border: Border.all(
                         color: AppColors.primary20,
-                        width: 1.5,
+                        width: AppSpacing.stakingTaxBorderWidth,
                       ),
                       borderRadius: AppRadii.cardRadius,
                     ),
                     child: const Icon(
                       Icons.calculate_rounded,
                       color: AppColors.primary,
-                      size: 26,
+                      size: AppSpacing.stakingTaxCalculatorIcon,
                     ),
                   ),
                   const SizedBox(width: AppSpacing.x3),
@@ -226,7 +226,9 @@ class _ResultRow extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: color ?? AppColors.text1,
             fontWeight: AppTextStyles.bold,
-            fontSize: highlight ? 16 : 14,
+            fontSize: highlight
+                ? AppSpacing.stakingTaxResultFontSizeLarge
+                : AppSpacing.stakingTaxResultFontSize,
           ),
         ),
       ],
@@ -259,8 +261,8 @@ class _FaqCard extends StatelessWidget {
             faq.answer,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
-              height: 1.6,
+              fontSize: AppSpacing.stakingTaxDetailFontSize,
+              height: AppSpacing.stakingTaxFooterLineHeight,
             ),
           ),
         ],

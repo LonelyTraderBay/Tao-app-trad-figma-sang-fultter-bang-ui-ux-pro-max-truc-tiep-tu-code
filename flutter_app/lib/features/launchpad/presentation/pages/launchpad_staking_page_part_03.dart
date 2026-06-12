@@ -34,7 +34,7 @@ class _TierChip extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: tier.accent,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.launchpadLineHeightTight,
               ),
             ),
           ),
@@ -43,8 +43,8 @@ class _TierChip extends StatelessWidget {
             '+${_formatApy(tier.apyBonus)}%',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              fontSize: 9,
-              height: 1,
+              fontSize: AppSpacing.launchpadFontXs,
+              height: AppSpacing.launchpadLineHeightTight,
             ),
           ),
         ],

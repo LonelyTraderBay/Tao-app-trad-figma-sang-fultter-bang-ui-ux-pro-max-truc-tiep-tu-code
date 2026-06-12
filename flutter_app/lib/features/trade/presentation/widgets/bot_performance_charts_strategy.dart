@@ -69,7 +69,6 @@ class _KeyMetricsCard extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: AppTextStyles.caption.copyWith(
                       color: _analyticsGreen,
-                      fontSize: 12,
                       height: 1.45,
                     ),
                   ),
@@ -102,19 +101,13 @@ class _MetricColumn extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
             height: 1,
           ),
         ),
         const SizedBox(height: 10),
         Text(
           value,
-          style: AppTextStyles.sectionTitle.copyWith(
-            color: color,
-            fontSize: 20,
-            height: 1,
-            fontFamily: 'Roboto',
-          ),
+          style: AppTextStyles.sectionTitle.copyWith(color: color, height: 1),
         ),
       ],
     );
@@ -185,7 +178,6 @@ class _TimeframePill extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: active ? _analyticsPrimary : AppColors.text3,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -286,7 +278,6 @@ class _StrategyRow extends StatelessWidget {
                 '${strategy.strategy} Bot',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -296,7 +287,6 @@ class _StrategyRow extends StatelessWidget {
               '${isPositive ? '+' : ''}${strategy.pnl.toStringAsFixed(2)} USDT',
               style: AppTextStyles.caption.copyWith(
                 color: isPositive ? _analyticsGreen : _analyticsRed,
-                fontSize: 14,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),

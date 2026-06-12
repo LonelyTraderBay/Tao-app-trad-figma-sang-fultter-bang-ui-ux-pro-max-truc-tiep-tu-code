@@ -21,7 +21,7 @@ class _TitlesSection extends StatelessWidget {
           subtitle: 'Gợi ý title thông minh theo domain + type',
           accentColor: AppColors.sell,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         VitCard(
           padding: const EdgeInsets.all(AppSpacing.x4),
           child: Column(
@@ -32,7 +32,7 @@ class _TitlesSection extends StatelessWidget {
                 label: 'AutoTitleSuggestionRow',
                 count: titles.length,
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
               Wrap(
                 spacing: AppSpacing.x2,
                 runSpacing: AppSpacing.x2,
@@ -49,7 +49,7 @@ class _TitlesSection extends StatelessWidget {
           ),
         ),
         if (selectedTitle != null) ...[
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           VitCard(
             borderColor: AppColors.sell20,
             padding: const EdgeInsets.all(AppSpacing.x4),
@@ -60,7 +60,7 @@ class _TitlesSection extends StatelessWidget {
                   icon: Icons.visibility_outlined,
                   label: 'Title đã chọn',
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   selectedTitle!,
                   style: AppTextStyles.base.copyWith(
@@ -72,7 +72,7 @@ class _TitlesSection extends StatelessWidget {
             ),
           ),
         ],
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         VitCard(
           padding: const EdgeInsets.all(AppSpacing.x4),
           child: Column(
@@ -94,7 +94,7 @@ class _TitlesSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         const _PresetEngineNote(),
       ],
     );
@@ -118,12 +118,12 @@ class _PresetSectionHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VitModuleSectionHeader(title: title, accentColor: accentColor),
-        const SizedBox(height: AppSpacing.x1),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
         Text(
           subtitle,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
-            height: 1.3,
+            height: AppSpacing.arenaPresetCaptionLineHeight,
           ),
         ),
       ],
@@ -139,13 +139,17 @@ class _DomainIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.arenaPresetDomainIconBox,
+      height: AppSpacing.arenaPresetDomainIconBox,
       decoration: const BoxDecoration(
         color: AppColors.surface2,
         shape: BoxShape.circle,
       ),
-      child: Icon(_domainIcon(id), color: _arenaAccent, size: 20),
+      child: Icon(
+        _domainIcon(id),
+        color: _arenaAccent,
+        size: AppSpacing.arenaPresetDomainIcon,
+      ),
     );
   }
 }
@@ -201,7 +205,7 @@ class _ExampleRow extends StatelessWidget {
             const Icon(
               Icons.auto_awesome_rounded,
               color: AppColors.text3,
-              size: 12,
+              size: AppSpacing.arenaPresetTinyIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -209,7 +213,7 @@ class _ExampleRow extends StatelessWidget {
                 text,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  height: 1.35,
+                  height: AppSpacing.arenaPresetBodyLineHeight,
                 ),
               ),
             ),
@@ -248,7 +252,7 @@ class _DomainFilterChip extends StatelessWidget {
           Icon(
             _domainIcon(pack.id),
             color: active ? AppColors.warn : AppColors.text3,
-            size: 14,
+            size: AppSpacing.arenaPresetSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Text(
@@ -292,11 +296,13 @@ class _SuggestionChip extends StatelessWidget {
           Icon(
             _challengeIcon(item.type),
             color: selected ? AppColors.warn : AppColors.text3,
-            size: 13,
+            size: AppSpacing.arenaPresetMicroIcon,
           ),
           const SizedBox(width: AppSpacing.x1),
           ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 250),
+            constraints: const BoxConstraints(
+              maxWidth: AppSpacing.arenaPresetSuggestionMaxWidth,
+            ),
             child: Text(
               item.text,
               maxLines: 1,
@@ -331,7 +337,11 @@ class _SearchBox extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.search_rounded, color: AppColors.text3, size: 18),
+          const Icon(
+            Icons.search_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.arenaPresetSearchIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
@@ -362,7 +372,7 @@ class _AutocompleteRow extends StatelessWidget {
                 ? Icons.check_circle_rounded
                 : Icons.radio_button_unchecked_rounded,
             color: selected ? AppColors.buy : AppColors.text3,
-            size: 14,
+            size: AppSpacing.arenaPresetSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -404,7 +414,7 @@ class _DropdownPreview extends StatelessWidget {
                     ? Icons.lock_outline_rounded
                     : Icons.search_rounded,
                 color: group.disabled ? AppColors.text3 : AppColors.accent,
-                size: 16,
+                size: AppSpacing.arenaPresetInlineIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -419,11 +429,11 @@ class _DropdownPreview extends StatelessWidget {
               const Icon(
                 Icons.keyboard_arrow_down_rounded,
                 color: AppColors.text3,
-                size: 18,
+                size: AppSpacing.arenaPresetChevron,
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Text(
             selected,
             style: AppTextStyles.base.copyWith(
@@ -432,7 +442,7 @@ class _DropdownPreview extends StatelessWidget {
             ),
           ),
           if (group.options.length > 1) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
             Wrap(
               spacing: AppSpacing.x2,
               runSpacing: AppSpacing.x2,
@@ -476,7 +486,7 @@ class _DemoSelectorChip extends StatelessWidget {
           Icon(
             _domainIcon(flow.domainId),
             color: active ? AppColors.buy : AppColors.text3,
-            size: 14,
+            size: AppSpacing.arenaPresetSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Text(

@@ -11,22 +11,27 @@ class _OverviewTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: 16,
       children: [
-        const _SectionLabel('Client Categories'),
-        const SizedBox(height: 12),
-        for (final category in categories) ...[
-          _CategoryCard(
-            category: category,
-            isCurrent: category.id == currentCategoryId,
-          ),
-          if (category != categories.last) const SizedBox(height: 12),
-        ],
-        const SizedBox(height: 24),
-        const _SectionLabel('Want Professional Status?'),
-        const SizedBox(height: 12),
-        const _OptUpCard(),
+        VitPageSection(
+          label: 'Client Categories',
+          customGap: 12,
+          children: [
+            for (final category in categories)
+              _CategoryCard(
+                category: category,
+                isCurrent: category.id == currentCategoryId,
+              ),
+          ],
+        ),
+        const VitPageSection(
+          label: 'Want Professional Status?',
+          customGap: 12,
+          children: [_OptUpCard()],
+        ),
       ],
     );
   }
@@ -41,10 +46,13 @@ class _CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = _categoryStyle(category.id);
-    return _Card(
+    return VitCard(
       key: ClientCategorizationPage.categoryKey(category.id),
       padding: const EdgeInsets.all(16),
-      child: Column(
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: 13,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +72,6 @@ class _CategoryCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
-                              fontSize: 14,
                               fontWeight: AppTextStyles.bold,
                               height: 1,
                             ),
@@ -80,14 +87,12 @@ class _CategoryCard extends StatelessWidget {
                         ],
                       ],
                     ),
-                    const SizedBox(height: 9),
                     Text(
                       category.description,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
                         height: 1,
                       ),
                     ),
@@ -96,7 +101,6 @@ class _CategoryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 13),
           Row(
             children: [
               Expanded(
@@ -125,9 +129,12 @@ class _OptUpCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      child: Column(
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: 14,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,24 +149,23 @@ class _OptUpCard extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: VitPageContent(
+                  padding: VitContentPadding.none,
+                  fullBleed: true,
+                  customGap: 8,
                   children: [
                     Text(
                       'Request Professional Client Status',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
-                        fontSize: 14,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),
                     ),
-                    const SizedBox(height: 8),
                     Text(
                       'If you meet the criteria, you can request to be treated as a professional client with reduced regulatory requirements.',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
                         height: 1.35,
                       ),
                     ),
@@ -168,14 +174,10 @@ class _OptUpCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          Container(
-            width: double.infinity,
+          VitCard(
+            variant: VitCardVariant.inner,
             padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-            decoration: BoxDecoration(
-              color: _clientAmber.withValues(alpha: .14),
-              borderRadius: AppRadii.mdRadius,
-            ),
+            borderColor: _clientAmber.withValues(alpha: .24),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -190,7 +192,6 @@ class _OptUpCard extends StatelessWidget {
                     text: TextSpan(
                       style: AppTextStyles.micro.copyWith(
                         color: _clientAmber,
-                        fontSize: 10,
                         height: 1.3,
                       ),
                       children: const [
@@ -209,45 +210,14 @@ class _OptUpCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 14),
-          SizedBox(
+          VitCtaButton(
+            key: ClientCategorizationPage.optUpKey,
             height: 44,
-            width: double.infinity,
-            child: FilledButton(
-              key: ClientCategorizationPage.optUpKey,
-              style: FilledButton.styleFrom(
-                backgroundColor: _clientPrimary,
-                foregroundColor: AppColors.onAccent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.inputRadius,
-                ),
-              ),
-              onPressed: () =>
-                  context.go(AppRoutePaths.tradeCopyClientOptUpRequest),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.description_outlined, size: 16),
-                  const SizedBox(width: 9),
-                  Flexible(
-                    child: Text(
-                      'Start Opt-Up Application',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.onAccent,
-                        fontSize: 13,
-                        fontWeight: AppTextStyles.bold,
-                        height: 1,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  const Icon(Icons.chevron_right_rounded, size: 16),
-                ],
-              ),
-            ),
+            leading: const Icon(Icons.description_outlined),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onPressed: () =>
+                context.go(AppRoutePaths.tradeCopyClientOptUpRequest),
+            child: const Text('Start Opt-Up Application'),
           ),
         ],
       ),
@@ -262,15 +232,12 @@ class _ProtectionsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Protection Comparison',
+      customGap: 12,
       children: [
-        const _SectionLabel('Protection Comparison'),
-        const SizedBox(height: 12),
-        for (final category in categories) ...[
+        for (final category in categories)
           _ListCard(category: category, values: category.protections),
-          if (category != categories.last) const SizedBox(height: 12),
-        ],
       ],
     );
   }
@@ -283,19 +250,16 @@ class _RequirementsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Qualification Requirements',
+      customGap: 12,
       children: [
-        const _SectionLabel('Qualification Requirements'),
-        const SizedBox(height: 12),
-        for (final category in categories) ...[
+        for (final category in categories)
           _ListCard(
             category: category,
             values: category.requirements,
             requirementMode: true,
           ),
-          if (category != categories.last) const SizedBox(height: 12),
-        ],
       ],
     );
   }
@@ -315,19 +279,22 @@ class _ListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = _categoryStyle(category.id);
-    return _Card(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: 13,
         children: [
           Row(
             children: [
-              Container(
-                width: 12,
-                height: 12,
-                decoration: BoxDecoration(
-                  color: style.color,
-                  borderRadius: BorderRadius.circular(3),
+              SizedBox.square(
+                dimension: 12,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: style.color,
+                    borderRadius: AppRadii.xsRadius,
+                  ),
                 ),
               ),
               const SizedBox(width: 9),
@@ -335,40 +302,42 @@ class _ListCard extends StatelessWidget {
                 category.label,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 13),
-          for (final value in values) ...[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  requirementMode
-                      ? Icons.track_changes_outlined
-                      : Icons.check_circle_outline,
-                  color: requirementMode ? AppColors.text3 : style.color,
-                  size: 13,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    value,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      fontSize: 11,
-                      height: 1.35,
+          VitPageContent(
+            padding: VitContentPadding.none,
+            fullBleed: true,
+            customGap: 8,
+            children: [
+              for (final value in values)
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      requirementMode
+                          ? Icons.track_changes_outlined
+                          : Icons.check_circle_outline,
+                      color: requirementMode ? AppColors.text3 : style.color,
+                      size: 13,
                     ),
-                  ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        value,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text2,
+                          height: 1.35,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            if (value != values.last) const SizedBox(height: 8),
-          ],
+            ],
+          ),
         ],
       ),
     );
@@ -385,13 +354,12 @@ class _HistoryTab extends StatelessWidget {
   Widget build(BuildContext context) {
     String labelFor(String id) =>
         categories.firstWhere((item) => item.id == id).label;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Category History',
+      customGap: 12,
       children: [
-        const _SectionLabel('Category History'),
-        const SizedBox(height: 12),
-        for (final entry in history) ...[
-          _Card(
+        for (final entry in history)
+          VitCard(
             padding: const EdgeInsets.all(13),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -406,44 +374,38 @@ class _HistoryTab extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 7,
                     children: [
                       Text(
                         _historyActionLabel(entry.action),
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 13,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
                       ),
-                      if (entry.fromCategoryId != null) ...[
-                        const SizedBox(height: 7),
+                      if (entry.fromCategoryId != null)
                         Text(
                           '${labelFor(entry.fromCategoryId!)} -> ${labelFor(entry.toCategoryId)}',
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            fontSize: 10,
                             height: 1,
                           ),
                         ),
-                      ],
-                      const SizedBox(height: 7),
                       Text(
                         entry.reason,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
                           height: 1.2,
                         ),
                       ),
-                      const SizedBox(height: 7),
                       Text(
                         _formatHistoryDate(entry.date),
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 9,
                           height: 1,
                         ),
                       ),
@@ -453,8 +415,6 @@ class _HistoryTab extends StatelessWidget {
               ],
             ),
           ),
-          if (entry != history.last) const SizedBox(height: 12),
-        ],
       ],
     );
   }

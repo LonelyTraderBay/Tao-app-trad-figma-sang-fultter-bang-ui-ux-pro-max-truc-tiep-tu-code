@@ -118,7 +118,6 @@ class _FeesStep extends StatelessWidget {
             color: draft.strategyDescription.length >= 100
                 ? _providerGreen
                 : AppColors.text3,
-            fontSize: 10,
           ),
         ),
       ],

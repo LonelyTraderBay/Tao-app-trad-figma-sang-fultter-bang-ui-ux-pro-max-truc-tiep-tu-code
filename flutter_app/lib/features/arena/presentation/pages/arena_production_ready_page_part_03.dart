@@ -28,7 +28,7 @@ class _ComponentLine extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.arenaProductionCompactLineHeight,
               ),
             ),
           ),
@@ -41,15 +41,15 @@ class _ComponentLine extends StatelessWidget {
                   component.name,
                   style: AppTextStyles.caption.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: 1.2,
+                    height: AppSpacing.arenaProductionTitleLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   component.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.35,
+                    height: AppSpacing.arenaProductionMetricLineHeight,
                   ),
                 ),
               ],
@@ -107,7 +107,7 @@ class _DictionaryLine extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.arenaProductionCompactLineHeight,
               ),
             ),
           ),
@@ -120,15 +120,15 @@ class _DictionaryLine extends StatelessWidget {
                   item.label,
                   style: AppTextStyles.caption.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: 1.2,
+                    height: AppSpacing.arenaProductionTitleLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   item.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.35,
+                    height: AppSpacing.arenaProductionMetricLineHeight,
                   ),
                 ),
               ],
@@ -155,7 +155,7 @@ class _ChecklistLine extends StatelessWidget {
           const Icon(
             Icons.check_circle_outline,
             color: AppColors.buy,
-            size: 14,
+            size: AppSpacing.arenaProductionChecklistIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -163,7 +163,7 @@ class _ChecklistLine extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.4,
+                height: AppSpacing.arenaProductionCheckLineHeight,
               ),
             ),
           ),
@@ -185,7 +185,11 @@ class _InternalOnlyFooter extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.text3, size: 14),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.text3,
+            size: AppSpacing.arenaProductionChecklistIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
@@ -193,7 +197,7 @@ class _InternalOnlyFooter extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1.4,
+                height: AppSpacing.arenaProductionCheckLineHeight,
               ),
             ),
           ),
@@ -226,7 +230,7 @@ class _StatusPill extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.arenaProductionCompactLineHeight,
         ),
       ),
     );
@@ -251,7 +255,10 @@ class _StateMiniPill extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: AppTextStyles.micro.copyWith(color: AppColors.text2, height: 1),
+        style: AppTextStyles.micro.copyWith(
+          color: AppColors.text2,
+          height: AppSpacing.arenaProductionCompactLineHeight,
+        ),
       ),
     );
   }
@@ -270,7 +277,11 @@ class _StateLegendItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(_stateIcon(state), color: color, size: 12),
+        Icon(
+          _stateIcon(state),
+          color: color,
+          size: AppSpacing.arenaProductionStateIcon,
+        ),
         const SizedBox(width: AppSpacing.x1),
         Text(
           _stateLabel(state),
@@ -296,7 +307,9 @@ class _StateMatrixPill extends StatelessWidget {
     return Opacity(
       opacity: active ? 1 : .32,
       child: Container(
-        constraints: const BoxConstraints(minWidth: 70),
+        constraints: const BoxConstraints(
+          minWidth: AppSpacing.arenaProductionStateMatrixMinWidth,
+        ),
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.x2,
           vertical: AppSpacing.x1,
@@ -308,7 +321,11 @@ class _StateMatrixPill extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(_stateIcon(state), color: color, size: 11),
+            Icon(
+              _stateIcon(state),
+              color: color,
+              size: AppSpacing.arenaProductionStateMatrixIcon,
+            ),
             const SizedBox(width: AppSpacing.x1),
             Flexible(
               child: Text(

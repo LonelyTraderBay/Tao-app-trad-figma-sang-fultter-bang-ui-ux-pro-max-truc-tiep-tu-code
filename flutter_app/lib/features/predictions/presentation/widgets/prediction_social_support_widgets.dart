@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 
@@ -20,16 +21,20 @@ class PredictionSocialShareButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56,
-      padding: const EdgeInsets.symmetric(horizontal: 14),
+      height: AppSpacing.predictionSocialShareButtonHeight,
+      padding: AppSpacing.predictionSocialShareButtonPadding,
       decoration: BoxDecoration(
         color: color,
         borderRadius: AppRadii.cardRadius,
       ),
       child: Row(
         children: [
-          const Icon(Icons.share_rounded, color: AppColors.onAccent, size: 20),
-          const SizedBox(width: 10),
+          const Icon(
+            Icons.share_rounded,
+            color: AppColors.onAccent,
+            size: AppSpacing.predictionSocialShareIcon,
+          ),
+          const SizedBox(width: AppSpacing.predictionSocialShareIconGap),
           Text(
             label,
             style: AppTextStyles.caption.copyWith(
@@ -64,7 +69,7 @@ class PredictionSocialMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.predictionSocialMetricGap),
         Text(
           value,
           style: AppTextStyles.baseMedium.copyWith(
@@ -90,21 +95,21 @@ class PredictionSocialSentimentLegend extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 10,
-              height: 10,
+              width: AppSpacing.predictionSocialLegendSwatch,
+              height: AppSpacing.predictionSocialLegendSwatch,
               decoration: BoxDecoration(
                 color: item.color,
-                borderRadius: BorderRadius.circular(2),
+                borderRadius: AppRadii.hairlineRadius,
               ),
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: AppSpacing.predictionSocialLegendGap),
             Text(
               item.name,
               style: AppTextStyles.micro.copyWith(color: AppColors.text2),
             ),
           ],
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.predictionSocialLegendValueGap),
         Text(
           '${item.value}%',
           style: AppTextStyles.baseMedium.copyWith(

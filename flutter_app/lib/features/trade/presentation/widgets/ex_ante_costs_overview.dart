@@ -20,7 +20,6 @@ class _RegulatoryNotice extends StatelessWidget {
                   'PRIIPs Cost Disclosure',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -31,7 +30,6 @@ class _RegulatoryNotice extends StatelessWidget {
                   'Required by EU regulation for retail clients.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                     height: 1.35,
                   ),
@@ -81,7 +79,6 @@ class _InvestmentCard extends StatelessWidget {
                       'Example Investment Amount',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
                         height: 1,
                       ),
                     ),
@@ -90,7 +87,6 @@ class _InvestmentCard extends StatelessWidget {
                       _formatEur(snapshot.investmentAmount),
                       style: AppTextStyles.heroNumber.copyWith(
                         color: AppColors.text1,
-                        fontSize: 24,
                         height: 1,
                       ),
                     ),
@@ -99,7 +95,6 @@ class _InvestmentCard extends StatelessWidget {
                       'Estimated for illustration purposes',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 10,
                         height: 1,
                       ),
                     ),
@@ -166,7 +161,6 @@ class _Tabs extends StatelessWidget {
                             color: activeId == tab.$1
                                 ? _costPrimary
                                 : AppColors.text3,
-                            fontSize: 12,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),

@@ -111,14 +111,11 @@ class _MultilineInput extends StatelessWidget {
             minLines: 3,
             maxLines: 3,
             cursorColor: AppColors.primary,
-            style: AppTextStyles.body.copyWith(fontSize: 14),
+            style: AppTextStyles.body,
             onChanged: (_) => onChanged(),
             decoration: InputDecoration.collapsed(
               hintText: hintText,
-              hintStyle: AppTextStyles.body.copyWith(
-                color: AppColors.text3,
-                fontSize: 14,
-              ),
+              hintStyle: AppTextStyles.body.copyWith(color: AppColors.text3),
             ),
           ),
         ),
@@ -325,18 +322,18 @@ class _IconBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = large ? 48.0 : 32.0;
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: large ? AppRadii.mdRadius : AppRadii.smRadius,
-      ),
-      alignment: Alignment.center,
-      child: Icon(
-        icon,
-        color: color,
-        size: large ? AppSpacing.iconMd : AppSpacing.iconSm,
+    return SizedBox.square(
+      dimension: size,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: .12),
+          borderRadius: large ? AppRadii.mdRadius : AppRadii.smRadius,
+        ),
+        child: Icon(
+          icon,
+          color: color,
+          size: large ? AppSpacing.iconMd : AppSpacing.iconSm,
+        ),
       ),
     );
   }
@@ -349,18 +346,18 @@ class _CircleStatusIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 28,
-      height: 28,
-      decoration: BoxDecoration(
-        color: (met ? AppColors.buy : AppColors.sell).withValues(alpha: .12),
-        shape: BoxShape.circle,
-      ),
-      alignment: Alignment.center,
-      child: Icon(
-        met ? Icons.check_circle_rounded : Icons.cancel_rounded,
-        color: met ? AppColors.buy : AppColors.sell,
-        size: AppSpacing.iconSm,
+    return SizedBox.square(
+      dimension: 28,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: (met ? AppColors.buy : AppColors.sell).withValues(alpha: .12),
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          met ? Icons.check_circle_rounded : Icons.cancel_rounded,
+          color: met ? AppColors.buy : AppColors.sell,
+          size: AppSpacing.iconSm,
+        ),
       ),
     );
   }
@@ -373,18 +370,18 @@ class _TinyStatusDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.iconMd,
-      height: AppSpacing.iconMd,
-      decoration: BoxDecoration(
-        color: active ? AppColors.buy : AppColors.surface2,
-        shape: BoxShape.circle,
-      ),
-      alignment: Alignment.center,
-      child: Icon(
-        active ? Icons.check_rounded : Icons.radio_button_checked_rounded,
-        color: active ? AppColors.onAccent : AppColors.text3,
-        size: AppSpacing.iconSm,
+    return SizedBox.square(
+      dimension: AppSpacing.iconMd,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: active ? AppColors.buy : AppColors.surface2,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          active ? Icons.check_rounded : Icons.radio_button_checked_rounded,
+          color: active ? AppColors.onAccent : AppColors.text3,
+          size: AppSpacing.iconSm,
+        ),
       ),
     );
   }

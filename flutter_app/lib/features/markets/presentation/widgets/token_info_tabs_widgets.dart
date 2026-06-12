@@ -79,7 +79,7 @@ class _TabButton extends StatelessWidget {
                 width: active ? 116 : 0,
                 decoration: BoxDecoration(
                   color: _marketPrimary,
-                  borderRadius: BorderRadius.circular(1),
+                  borderRadius: AppRadii.xsRadius,
                 ),
               ),
             ],
@@ -324,7 +324,7 @@ class _SectionHeader extends StatelessWidget {
           height: 14,
           decoration: BoxDecoration(
             color: accentColor,
-            borderRadius: BorderRadius.circular(2),
+            borderRadius: AppRadii.xsRadius,
           ),
         ),
         const SizedBox(width: 6),

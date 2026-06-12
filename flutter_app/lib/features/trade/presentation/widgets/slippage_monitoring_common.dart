@@ -8,21 +8,10 @@ class _SidePill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final buy = side == 'buy';
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-      decoration: BoxDecoration(
-        color: (buy ? _slipGreen : _slipRed).withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Text(
-        side.toUpperCase(),
-        style: AppTextStyles.micro.copyWith(
-          color: buy ? _slipGreen : _slipRed,
-          fontSize: 9,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    return VitStatusPill(
+      label: side.toUpperCase(),
+      status: buy ? VitStatusPillStatus.success : VitStatusPillStatus.error,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -34,21 +23,15 @@ class _SeverityPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
-      decoration: BoxDecoration(
-        color: style.color.withValues(alpha: .13),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Text(
-        style.label,
-        style: AppTextStyles.micro.copyWith(
-          color: style.color,
-          fontSize: 10,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    return VitStatusPill(
+      label: style.label,
+      icon: style.icon,
+      status: switch (style.label) {
+        'Critical' => VitStatusPillStatus.error,
+        'Warning' => VitStatusPillStatus.warning,
+        _ => VitStatusPillStatus.success,
+      },
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -89,12 +72,14 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: 3,
           height: 16,
-          decoration: BoxDecoration(
-            color: _slipPrimary,
-            borderRadius: BorderRadius.circular(999),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: _slipPrimary,
+              borderRadius: AppRadii.smRadius,
+            ),
           ),
         ),
         const SizedBox(width: 7),
@@ -103,7 +88,6 @@ class _SectionLabel extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 11,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -159,10 +143,7 @@ class _NoticePanel extends StatelessWidget {
               Expanded(
                 child: Text(
                   text,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text1),
                 ),
               ),
               IconButton(

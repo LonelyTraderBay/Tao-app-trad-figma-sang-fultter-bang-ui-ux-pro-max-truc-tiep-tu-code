@@ -19,9 +19,12 @@ class _LegendRow extends StatelessWidget {
               DecoratedBox(
                 decoration: BoxDecoration(
                   color: entry.color,
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: AppRadii.swatchRadius,
                 ),
-                child: const SizedBox(width: 10, height: 3),
+                child: const SizedBox(
+                  width: AppSpacing.earnAnalyticsLegendMarkerWidth,
+                  height: AppSpacing.earnAnalyticsLegendMarkerHeight,
+                ),
               ),
               const SizedBox(width: AppSpacing.x1),
               Text(
@@ -197,7 +200,7 @@ class _RoiBarPainter extends CustomPainter {
     final height = (baselineY - valueY).abs().clamp(3.0, size.height);
     final rect = RRect.fromRectAndRadius(
       Rect.fromLTWH(x, top, width, height),
-      const Radius.circular(5),
+      AppRadii.xsCorner,
     );
     canvas.drawRRect(
       rect,

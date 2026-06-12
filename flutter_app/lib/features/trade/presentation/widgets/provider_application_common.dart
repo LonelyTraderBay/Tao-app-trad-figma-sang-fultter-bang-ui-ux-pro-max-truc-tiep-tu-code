@@ -15,7 +15,7 @@ class _SectionLabel extends StatelessWidget {
           height: 14,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.xlRadius,
           ),
         ),
         const SizedBox(width: 7),
@@ -23,7 +23,6 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: FontWeight.w800,
           ),
         ),
@@ -41,10 +40,7 @@ class _StepTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
-      child: Text(
-        title,
-        style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
-      ),
+      child: Text(title, style: AppTextStyles.sectionTitle),
     );
   }
 }
@@ -130,10 +126,7 @@ class _NumberPanel extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 11,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           const SizedBox(height: 6),
           VitInput(
@@ -189,7 +182,6 @@ class _ConsentTile extends StatelessWidget {
                 text,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 11,
                   height: 1.5,
                 ),
               ),
@@ -252,21 +244,15 @@ class _PanelHeader extends StatelessWidget {
         const SizedBox(width: 8),
         Text(
           title,
-          style: AppTextStyles.baseMedium.copyWith(
-            fontSize: 13,
-            fontWeight: FontWeight.w800,
-          ),
+          style: AppTextStyles.baseMedium.copyWith(fontWeight: FontWeight.w800),
         ),
       ],
     );
   }
 }
 
-TextStyle get _panelDescriptionStyle => AppTextStyles.caption.copyWith(
-  color: AppColors.text3,
-  fontSize: 11,
-  height: 1.45,
-);
+TextStyle get _panelDescriptionStyle =>
+    AppTextStyles.caption.copyWith(color: AppColors.text3, height: 1.45);
 
 InputDecoration _inputDecoration(String hint) {
   return InputDecoration(

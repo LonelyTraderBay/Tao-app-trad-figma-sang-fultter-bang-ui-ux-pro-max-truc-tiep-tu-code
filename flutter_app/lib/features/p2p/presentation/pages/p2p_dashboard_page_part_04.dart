@@ -38,7 +38,7 @@ void _paintTinyText(Canvas canvas, String text, Offset offset) {
   final painter = TextPainter(
     text: TextSpan(
       text: text,
-      style: AppTextStyles.micro.copyWith(color: AppColors.text3, fontSize: 9),
+      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
     ),
     textDirection: TextDirection.ltr,
   )..layout();

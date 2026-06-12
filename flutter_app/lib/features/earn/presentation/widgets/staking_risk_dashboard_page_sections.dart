@@ -24,13 +24,16 @@ class _OverallRiskCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x4),
           Center(
             child: Container(
-              width: 128,
-              height: 128,
+              width: AppSpacing.stakingRiskDashboardScoreRing,
+              height: AppSpacing.stakingRiskDashboardScoreRing,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: color.withValues(alpha: 0.12),
                 shape: BoxShape.circle,
-                border: Border.all(color: color, width: 4),
+                border: Border.all(
+                  color: color,
+                  width: AppSpacing.stakingRiskDashboardScoreBorderWidth,
+                ),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -39,7 +42,7 @@ class _OverallRiskCard extends StatelessWidget {
                     snapshot.overallScore.toString(),
                     style: AppTextStyles.display.copyWith(
                       color: color,
-                      fontSize: 36,
+                      fontSize: AppSpacing.stakingRiskDashboardScoreFontSize,
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
@@ -61,7 +64,7 @@ class _OverallRiskCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.5,
+              height: AppSpacing.stakingRiskDashboardSummaryLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x5),
@@ -157,7 +160,7 @@ class _RiskMetricCard extends StatelessWidget {
                       metric.description,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        height: 1.35,
+                        height: AppSpacing.stakingRiskDashboardMetricLineHeight,
                       ),
                     ),
                   ],
@@ -194,10 +197,12 @@ class _ExposureCard extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: 180,
+            height: AppSpacing.stakingRiskDashboardExposureChartHeight,
             child: Center(
               child: CustomPaint(
-                size: const Size(148, 148),
+                size: const Size.square(
+                  AppSpacing.stakingRiskDashboardExposurePieSize,
+                ),
                 painter: _ExposurePiePainter(exposures),
               ),
             ),
@@ -301,7 +306,7 @@ class _RiskEventCard extends StatelessWidget {
                   event.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.4,
+                    height: AppSpacing.stakingRiskDashboardEventLineHeight,
                   ),
                 ),
               ],
@@ -325,10 +330,10 @@ class _ActionsGrid extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: actions.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+        crossAxisCount: AppSpacing.stakingRiskDashboardActionGridColumns,
         mainAxisSpacing: AppSpacing.x3,
         crossAxisSpacing: AppSpacing.x3,
-        childAspectRatio: 1.55,
+        childAspectRatio: AppSpacing.stakingRiskDashboardActionGridAspect,
       ),
       itemBuilder: (context, index) {
         final action = actions[index];

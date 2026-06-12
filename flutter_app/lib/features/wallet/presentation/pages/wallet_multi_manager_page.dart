@@ -5,12 +5,14 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_multi_manager_sections.dart';
@@ -52,8 +54,10 @@ class _WalletMultiManagerPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 92
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.walletBottomInsetVisualChrome
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.walletBottomInsetNativeChrome) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -77,7 +81,8 @@ class _WalletMultiManagerPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: WalletMultiManagerPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
+                  padding: AppSpacing.walletMultiManagerPageScrollPadding
+                      .copyWith(bottom: bottomInset),
                   child: _contentForTab(snapshot),
                 ),
               ),
@@ -115,8 +120,13 @@ class _WalletMultiManagerPageState
           message:
               'Reveal or copy masked wallet addresses only when you trust the destination and next step.',
         ),
-        const SizedBox(height: 14),
-        tabContent,
+        const SizedBox(height: AppSpacing.walletManagerRiskGap),
+        VitCard(
+          variant: VitCardVariant.standard,
+          radius: VitCardRadius.md,
+          padding: EdgeInsets.zero,
+          child: tabContent,
+        ),
       ],
     );
   }

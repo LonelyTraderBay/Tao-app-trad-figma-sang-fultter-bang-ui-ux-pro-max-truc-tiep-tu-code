@@ -41,7 +41,7 @@ class _InfoSheet extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.55,
+                  height: AppSpacing.autoCompoundSettingsBodyLineHeight,
                 ),
               ),
             ],
@@ -102,7 +102,7 @@ class _InfoItem extends StatelessWidget {
                 item.description,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: 1.45,
+                  height: AppSpacing.autoCompoundSettingsInfoLineHeight,
                 ),
               ),
             ],
@@ -169,8 +169,8 @@ class _ToggleSwitch extends StatelessWidget {
         onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
-          width: 44,
-          height: 24,
+          width: AppSpacing.autoCompoundSettingsSwitchWidth,
+          height: AppSpacing.autoCompoundSettingsSwitchHeight,
           padding: const EdgeInsets.all(AppSpacing.x1),
           decoration: BoxDecoration(
             color: on ? AppColors.buy : AppColors.borderSolid,
@@ -219,7 +219,7 @@ class _AssetBadge extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.autoCompoundSettingsAssetLineHeight,
             ),
           ),
         ),

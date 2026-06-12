@@ -17,7 +17,11 @@ class _CompactStateCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.x5),
       child: Column(
         children: [
-          Icon(icon, color: AppColors.text3, size: 28),
+          Icon(
+            icon,
+            color: AppColors.text3,
+            size: AppSpacing.arenaCreatorEmptyIcon,
+          ),
           const SizedBox(height: AppSpacing.x3),
           Text(
             title,
@@ -63,7 +67,7 @@ class _PolicyLink extends StatelessWidget {
                 const Icon(
                   Icons.info_outline_rounded,
                   color: AppColors.accent,
-                  size: 14,
+                  size: AppSpacing.arenaCreatorInlineIcon,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Text(
@@ -77,7 +81,7 @@ class _PolicyLink extends StatelessWidget {
                 const Icon(
                   Icons.chevron_right_rounded,
                   color: AppColors.accent,
-                  size: 14,
+                  size: AppSpacing.arenaCreatorInlineIcon,
                 ),
               ],
             ),

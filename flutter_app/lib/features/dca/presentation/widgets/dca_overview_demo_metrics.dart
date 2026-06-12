@@ -29,7 +29,7 @@ class _ProfitRow extends StatelessWidget {
                       ? Icons.arrow_upward_rounded
                       : Icons.arrow_downward_rounded,
                   color: isProfit ? AppColors.buy : AppColors.sell,
-                  size: 14,
+                  size: AppSpacing.dcaOverviewMetaIcon,
                 ),
                 const SizedBox(width: AppSpacing.x1),
                 Text(
@@ -153,7 +153,11 @@ class _MetricTile extends StatelessWidget {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(AppSpacing.x2),
-                    child: Icon(icon, color: accent, size: 13),
+                    child: Icon(
+                      icon,
+                      color: accent,
+                      size: AppSpacing.dcaOverviewMetricIcon,
+                    ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x2),
@@ -165,14 +169,14 @@ class _MetricTile extends StatelessWidget {
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.portfolioTextDim,
                       fontWeight: AppTextStyles.bold,
-                      height: 1.15,
+                      height: AppSpacing.dcaOverviewMetricLabelLineHeight,
                     ),
                   ),
                 ),
                 Icon(
                   Icons.help_outline_rounded,
                   color: AppColors.portfolioTextMuted,
-                  size: 13,
+                  size: AppSpacing.dcaOverviewMetricIcon,
                 ),
               ],
             ),
@@ -233,7 +237,7 @@ class _NextExecutionRow extends StatelessWidget {
                 child: Icon(
                   Icons.schedule_rounded,
                   color: AppColors.primary,
-                  size: 18,
+                  size: AppSpacing.dcaOverviewInlineIcon,
                 ),
               ),
             ),
@@ -320,7 +324,7 @@ class _StatusBadge extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: color, size: 13),
+            Icon(icon, color: color, size: AppSpacing.dcaOverviewMetricIcon),
             const SizedBox(width: AppSpacing.x1),
             Text(
               '$count',

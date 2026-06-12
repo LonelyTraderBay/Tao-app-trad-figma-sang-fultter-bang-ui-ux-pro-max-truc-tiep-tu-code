@@ -35,7 +35,7 @@ class _EventCalendarTabBar extends StatelessWidget {
         border: Border(bottom: BorderSide(color: AppColors.border)),
       ),
       child: SizedBox(
-        height: 54,
+        height: AppSpacing.predictionCalendarTabsHeight,
         child: Row(
           children: [
             for (final item in tabs)
@@ -55,18 +55,19 @@ class _EventCalendarTabBar extends StatelessWidget {
                                   ? _predictionPrimary
                                   : AppColors.text3,
                               fontWeight: AppTextStyles.bold,
-                              fontSize: 12,
                             ),
                           ),
                         ),
                       ),
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 160),
-                        height: 2,
-                        width: activeTab == item.tab ? 116 : 0,
+                        height: AppSpacing.predictionCalendarTabIndicatorHeight,
+                        width: activeTab == item.tab
+                            ? AppSpacing.predictionCalendarTabIndicatorWidth
+                            : 0,
                         decoration: BoxDecoration(
                           color: _predictionPrimary,
-                          borderRadius: BorderRadius.circular(1),
+                          borderRadius: AppRadii.hairlineRadius,
                         ),
                       ),
                     ],
@@ -94,8 +95,8 @@ class _CategoryFilters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 8,
-      runSpacing: 8,
+      spacing: AppSpacing.predictionCalendarFilterGap,
+      runSpacing: AppSpacing.predictionCalendarFilterGap,
       children: [
         _CategoryChip(
           label: 'Tat ca',
@@ -135,7 +136,7 @@ class _CategoryChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+          padding: AppSpacing.predictionCalendarFilterChipPadding,
           decoration: BoxDecoration(
             border: Border.all(
               color: selected ? AppColors.transparent : AppColors.border,
@@ -147,7 +148,6 @@ class _CategoryChip extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: selected ? AppColors.onAccent : AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              fontSize: 12,
             ),
           ),
         ),

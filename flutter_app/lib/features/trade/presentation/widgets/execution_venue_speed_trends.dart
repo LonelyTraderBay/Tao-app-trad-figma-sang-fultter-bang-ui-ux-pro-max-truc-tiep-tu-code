@@ -24,7 +24,6 @@ class _SpeedTab extends StatelessWidget {
                         venue.venue,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 13,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
@@ -41,7 +40,6 @@ class _SpeedTab extends StatelessWidget {
                         color: venue.avgFillTime < .4
                             ? _venueGreen
                             : _venueAmber,
-                        fontSize: 14,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -100,7 +98,6 @@ class _TrendsTab extends StatelessWidget {
                         trend.month,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text2,
-                          fontSize: 11,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
@@ -116,7 +113,6 @@ class _TrendsTab extends StatelessWidget {
                       '${trend.binance.toStringAsFixed(2)} bps',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 10,
                       ),
                     ),
                   ],
@@ -134,7 +130,6 @@ class _TrendsTab extends StatelessWidget {
                   'Overall costs trending down 5% over last 3 months',
                   style: AppTextStyles.caption.copyWith(
                     color: _venueGreen,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -195,17 +190,13 @@ class _ProgressMetric extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 10,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ),
             Text(
               value,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
                 fontWeight: AppTextStyles.bold,
               ),
             ),

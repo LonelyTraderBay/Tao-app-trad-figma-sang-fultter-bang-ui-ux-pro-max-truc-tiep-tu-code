@@ -98,6 +98,13 @@ class _P2POrderCancelPageState extends ConsumerState<P2POrderCancelPage> {
                           onConfirm: () =>
                               _confirmCancel(context, snapshot.order),
                         ),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Order cancellation state review',
+                          message:
+                              'Order summary, cancellation reason, reputation warning, disabled confirmation, submitting state, and return path remain visible before cancelling a P2P order.',
+                          contractId: 'SC-214',
+                        ),
                       ],
                     ),
                   ),
@@ -142,8 +149,12 @@ class _CancelHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
+    return VitCard(
+      radius: VitCardRadius.lg,
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.x4,
+        vertical: AppSpacing.x6,
+      ),
       child: Column(
         children: [
           Container(
@@ -391,44 +402,40 @@ class _CancelWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.warningBg,
-        border: Border.all(color: AppColors.warningBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.warning_amber_rounded,
-              color: AppColors.warn,
-              size: AppSpacing.iconSm,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.warn,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+    return VitCard(
+      radius: VitCardRadius.lg,
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.warningBorder,
+      padding: const EdgeInsets.all(AppSpacing.x3),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: AppColors.warn,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.warn,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    message,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.warn),
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  message,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.warn),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

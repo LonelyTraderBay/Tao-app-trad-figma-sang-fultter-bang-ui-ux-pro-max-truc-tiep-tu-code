@@ -1,37 +1,5 @@
 part of '../pages/bot_guide_page.dart';
 
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 15,
-          decoration: BoxDecoration(
-            color: _guidePrimary,
-            borderRadius: BorderRadius.circular(3),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 12,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _Card extends StatelessWidget {
   const _Card({required this.child, required this.padding});
 
@@ -40,15 +8,7 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        color: _guidePanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: child,
-    );
+    return VitCard(padding: padding, child: child);
   }
 }
 

@@ -114,7 +114,6 @@ class _HeroCard extends StatelessWidget {
                       'P3: Advanced Analytics',
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: AppColors.onAccent,
-                        fontSize: 24,
                         fontWeight: AppTextStyles.bold,
                         height: 1.15,
                       ),
@@ -124,7 +123,6 @@ class _HeroCard extends StatelessWidget {
                       'AI-powered insights va professional trading tools',
                       style: AppTextStyles.body.copyWith(
                         color: AppColors.onAccent.withValues(alpha: .72),
-                        fontSize: 14,
                         height: 1.35,
                       ),
                     ),
@@ -169,9 +167,7 @@ class _HeroStat extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.baseMedium.copyWith(
               color: color,
-              fontSize: 18,
               fontWeight: AppTextStyles.bold,
-              fontFamily: 'monospace',
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
             ),
@@ -184,7 +180,6 @@ class _HeroStat extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.onAccent.withValues(alpha: .62),
-              fontSize: 10,
               height: 1.2,
             ),
           ),
@@ -249,7 +244,6 @@ class _UnderlineTabs extends StatelessWidget {
                           color: activeId == tab.$1
                               ? _advancedPrimary
                               : AppColors.text3,
-                          fontSize: 10,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
@@ -295,8 +289,9 @@ class _AiSignalsTab extends StatelessWidget {
 
     return _Card(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 16,
         children: [
           const _SectionHeader(
             icon: Icons.psychology_rounded,
@@ -305,7 +300,6 @@ class _AiSignalsTab extends StatelessWidget {
             subtitle: 'Machine learning powered predictions',
             iconSize: 24,
           ),
-          const SizedBox(height: 17),
           Row(
             children: [
               Expanded(
@@ -331,7 +325,6 @@ class _AiSignalsTab extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
           Row(
             children: [
               for (final filter in const ['all', 'long', 'short']) ...[
@@ -346,12 +339,13 @@ class _AiSignalsTab extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: 16),
-          for (final signal in visibleSignals) ...[
-            _SignalCard(signal: signal),
-            if (signal != visibleSignals.last) const SizedBox(height: 12),
-          ],
-          const SizedBox(height: 16),
+          VitPageContent(
+            padding: VitContentPadding.none,
+            customGap: 12,
+            children: [
+              for (final signal in visibleSignals) _SignalCard(signal: signal),
+            ],
+          ),
           const _DisclaimerCard(),
         ],
       ),
@@ -385,7 +379,6 @@ class _FilterChip extends StatelessWidget {
           id.toUpperCase(),
           style: AppTextStyles.caption.copyWith(
             color: selected ? _advancedPurple : AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

@@ -13,14 +13,14 @@ class _WhitelistModeCard extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: VitCard(
-        height: 74,
-        padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+        height: AppSpacing.walletAddressSecurityCardHeight,
+        padding: AppSpacing.walletAddressSecurityPadding,
         borderColor: AppColors.overlayStroke,
         child: Row(
           children: [
             Container(
-              width: 40,
-              height: 40,
+              width: AppSpacing.walletAddressIconSize,
+              height: AppSpacing.walletAddressIconSize,
               decoration: BoxDecoration(
                 color: enabled ? AppColors.buy10 : _bookPanel2,
                 borderRadius: AppRadii.lgRadius,
@@ -28,10 +28,10 @@ class _WhitelistModeCard extends StatelessWidget {
               child: Icon(
                 Icons.lock_outline_rounded,
                 color: enabled ? _bookGreen : AppColors.text3,
-                size: 19,
+                size: AppSpacing.walletAddressShieldIcon,
               ),
             ),
-            const SizedBox(width: 13),
+            const SizedBox(width: AppSpacing.walletAddressPrimaryGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -39,22 +39,20 @@ class _WhitelistModeCard extends StatelessWidget {
                 children: [
                   Text(
                     'Chế độ Whitelist',
-                    style: AppTextStyles.body.copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800,
-                      height: 1,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: AppSpacing.walletAddressSectionGap),
                   Text(
                     enabled
                         ? 'Chỉ rút tới địa chỉ whitelist'
                         : 'Cho phép rút tới mọi địa chỉ',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 10.5,
-                      height: 1,
-                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
@@ -75,23 +73,23 @@ class _SwitchPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 48,
-      height: 28,
+      width: AppSpacing.walletAddressSwitchWidth,
+      height: AppSpacing.walletAddressSwitchHeight,
       decoration: BoxDecoration(
         color: enabled ? _bookGreen : _bookPanel2,
         borderRadius: AppRadii.inputRadius,
         border: Border.all(
           color: enabled ? _bookGreen : AppColors.borderSolid,
-          width: 1.4,
+          width: AppSpacing.walletAddressSwitchBorder,
         ),
       ),
       child: AnimatedAlign(
         alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
         duration: const Duration(milliseconds: 160),
         child: Container(
-          width: 22,
-          height: 22,
-          margin: const EdgeInsets.symmetric(horizontal: 2.5),
+          width: AppSpacing.walletAddressSwitchKnob,
+          height: AppSpacing.walletAddressSwitchKnob,
+          margin: AppSpacing.walletAddressSwitchKnobMargin,
           decoration: BoxDecoration(
             color: enabled ? AppColors.onAccent : AppColors.textDisabledBlue,
             shape: BoxShape.circle,
@@ -108,7 +106,7 @@ class _SecurityTip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+      padding: AppSpacing.walletAddressSecurityPadding,
       borderColor: AppColors.primary15,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +118,6 @@ class _SecurityTip extends StatelessWidget {
               TextSpan(
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  fontSize: 12,
                   height: 1.45,
                 ),
                 children: const [
@@ -128,7 +125,7 @@ class _SecurityTip extends StatelessWidget {
                     text: 'Bảo mật: ',
                     style: TextStyle(
                       color: _bookPrimary,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
                   TextSpan(

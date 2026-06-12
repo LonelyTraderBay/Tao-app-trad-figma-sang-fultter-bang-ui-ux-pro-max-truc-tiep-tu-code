@@ -22,13 +22,12 @@ class _ModificationCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
                   color: typeColor.withValues(alpha: .16),
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: AppRadii.xsRadius,
                 ),
                 child: Text(
                   modification.type.replaceAll('_', ' ').toUpperCase(),
                   style: AppTextStyles.micro.copyWith(
                     color: typeColor,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -47,7 +46,6 @@ class _ModificationCard extends StatelessWidget {
             'Change:',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -58,7 +56,6 @@ class _ModificationCard extends StatelessWidget {
                 modification.oldValue,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  fontSize: 11,
                   height: 1,
                 ),
               ),
@@ -76,7 +73,6 @@ class _ModificationCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -97,7 +93,6 @@ class _ModificationCard extends StatelessWidget {
                 modification.date,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
                   height: 1,
                 ),
               ),
@@ -113,7 +108,6 @@ class _ModificationCard extends StatelessWidget {
                   '${modification.followerImpact} followers impacted',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1,
                   ),
                 ),
@@ -133,7 +127,6 @@ class _ModificationCard extends StatelessWidget {
               '✓ Notification sent 24h before implementation',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.buy,
-                fontSize: 9,
                 height: 1,
               ),
             ),
@@ -270,17 +263,13 @@ class _SimplePanel extends StatelessWidget {
                   title,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   body,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 10,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),

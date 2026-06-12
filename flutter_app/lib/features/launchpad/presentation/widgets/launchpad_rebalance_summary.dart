@@ -32,7 +32,7 @@ class LaunchpadRebalanceSummaryCard extends StatelessWidget {
               const Icon(
                 Icons.info_outline_rounded,
                 color: AppColors.primary,
-                size: 14,
+                size: AppSpacing.launchpadIconMd,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -40,7 +40,7 @@ class LaunchpadRebalanceSummaryCard extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  fontSize: 12,
+                  fontSize: AppSpacing.launchpadFontLg,
                 ),
               ),
             ],
@@ -96,7 +96,7 @@ class LaunchpadRebalanceSummaryRow extends StatelessWidget {
                 label,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 11,
+                  fontSize: AppSpacing.launchpadFontMd,
                 ),
               ),
             ),
@@ -105,7 +105,7 @@ class LaunchpadRebalanceSummaryRow extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: color ?? AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                fontSize: 11,
+                fontSize: AppSpacing.launchpadFontMd,
               ),
             ),
           ],
@@ -133,7 +133,7 @@ class LaunchpadRebalanceWarningBanner extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: 15,
+            size: AppSpacing.launchpadIconLg,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -141,7 +141,7 @@ class LaunchpadRebalanceWarningBanner extends StatelessWidget {
               'Day la de xuat tu dong dua tren ty le muc tieu. Gia token co the thay doi giua luc xem va luc thuc hien. Luon kiem tra lai truoc khi giao dich.',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
+                fontSize: AppSpacing.launchpadFontMd,
               ),
             ),
           ),

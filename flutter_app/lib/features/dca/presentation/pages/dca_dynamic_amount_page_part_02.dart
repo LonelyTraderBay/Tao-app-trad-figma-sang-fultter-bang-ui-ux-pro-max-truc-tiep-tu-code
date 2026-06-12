@@ -183,7 +183,7 @@ class _HistoryRow extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      height: 1.25,
+                      height: AppSpacing.dcaDynamicHistoryLineHeight,
                     ),
                   ),
                 ],
@@ -377,7 +377,7 @@ class _StrategyExplainer extends StatelessWidget {
                   option.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.dcaDynamicExplainerLineHeight,
                   ),
                 ),
               ],
@@ -416,7 +416,7 @@ class _DynamicDisclaimer extends StatelessWidget {
                 'Dynamic Amount tự điều chỉnh lượng mua dựa trên chiến lược bạn chọn. Bạn có thể thay đổi chiến lược hoặc quay về "Cố định" bất cứ lúc nào.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.55,
+                  height: AppSpacing.dcaDynamicExplainerLineHeight,
                 ),
               ),
             ),

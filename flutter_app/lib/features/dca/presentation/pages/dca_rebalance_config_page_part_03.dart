@@ -100,7 +100,7 @@ class _AccentIcon extends StatelessWidget {
         color: muted ? AppColors.surface2 : color.withValues(alpha: .15),
         borderRadius: AppRadii.inputRadius,
       ),
-      child: Icon(icon, color: color, size: 18),
+      child: Icon(icon, color: color, size: AppSpacing.dcaRebalanceIcon),
     );
   }
 }
@@ -142,7 +142,11 @@ class _PillButton extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(icon, color: AppColors.accent, size: 16),
+                Icon(
+                  icon,
+                  color: AppColors.accent,
+                  size: AppSpacing.dcaRebalanceIconSm,
+                ),
                 const SizedBox(width: AppSpacing.x2),
                 Text(
                   label,
@@ -206,8 +210,8 @@ class _CoinBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 42,
-      height: 42,
+      width: AppSpacing.dcaRebalanceTileIconBox,
+      height: AppSpacing.dcaRebalanceTileIconBox,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
@@ -259,7 +263,7 @@ class _IconBadgeButton extends StatelessWidget {
             shape: BoxShape.circle,
             color: neutral ? AppColors.surface : color.withValues(alpha: .12),
           ),
-          child: Icon(icon, color: color, size: 18),
+          child: Icon(icon, color: color, size: AppSpacing.dcaRebalanceIcon),
         ),
       ),
     );
@@ -281,8 +285,8 @@ class _TogglePill extends StatelessWidget {
         onTap: () => onChanged(!value),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 160),
-          width: 52,
-          height: 30,
+          width: AppSpacing.dcaRebalanceToggleWidth,
+          height: AppSpacing.dcaRebalanceToggleHeight,
           decoration: BoxDecoration(
             color: value ? AppColors.buy : AppColors.borderSolid,
             borderRadius: AppRadii.xlRadius,
@@ -290,8 +294,8 @@ class _TogglePill extends StatelessWidget {
           alignment: value ? Alignment.centerRight : Alignment.centerLeft,
           padding: const EdgeInsets.all(AppSpacing.x1),
           child: Container(
-            width: 24,
-            height: 24,
+            width: AppSpacing.dcaRebalanceToggleThumb,
+            height: AppSpacing.dcaRebalanceToggleThumb,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: AppColors.text1,

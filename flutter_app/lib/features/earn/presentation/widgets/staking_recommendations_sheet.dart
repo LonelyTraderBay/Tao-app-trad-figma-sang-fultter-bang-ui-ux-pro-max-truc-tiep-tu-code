@@ -200,7 +200,9 @@ class StakingRecommendationsBulletSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 7),
+                padding: const EdgeInsets.only(
+                  top: AppSpacing.stakingRecommendationsBulletTop,
+                ),
                 child: SizedBox(
                   width: AppSpacing.x1,
                   height: AppSpacing.x1,
@@ -218,7 +220,7 @@ class StakingRecommendationsBulletSection extends StatelessWidget {
                   item,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.5,
+                    height: AppSpacing.stakingRecommendationsBulletLineHeight,
                   ),
                 ),
               ),

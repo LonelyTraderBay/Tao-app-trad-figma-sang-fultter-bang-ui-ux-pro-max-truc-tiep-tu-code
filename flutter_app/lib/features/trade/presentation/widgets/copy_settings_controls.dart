@@ -196,14 +196,14 @@ class _ToggleSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => onChanged(!value),
-      borderRadius: BorderRadius.circular(999),
+      borderRadius: AppRadii.xlRadius,
       child: Container(
         width: 48,
         height: 26,
         padding: const EdgeInsets.all(3),
         decoration: BoxDecoration(
           color: value ? _settingsPrimary : AppColors.surface3,
-          borderRadius: BorderRadius.circular(999),
+          borderRadius: AppRadii.xlRadius,
         ),
         child: Align(
           alignment: value ? Alignment.centerRight : Alignment.centerLeft,

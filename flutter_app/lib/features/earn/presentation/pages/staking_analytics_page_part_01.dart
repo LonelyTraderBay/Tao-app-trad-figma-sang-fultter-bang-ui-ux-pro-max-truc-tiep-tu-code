@@ -154,7 +154,7 @@ class _SummaryCard extends StatelessWidget {
               Expanded(
                 child: VitCtaButton(
                   key: StakingAnalyticsPage.calculateButtonKey,
-                  height: 40,
+                  height: AppSpacing.earnAnalyticsActionHeight,
                   onPressed: onCalculate,
                   leading: Icon(
                     showCalculator
@@ -168,7 +168,7 @@ class _SummaryCard extends StatelessWidget {
               Expanded(
                 child: VitCtaButton(
                   key: StakingAnalyticsPage.exportButtonKey,
-                  height: 40,
+                  height: AppSpacing.earnAnalyticsActionHeight,
                   variant: VitCtaButtonVariant.secondary,
                   onPressed: onExport,
                   leading: const Icon(Icons.file_download_outlined),
@@ -203,7 +203,7 @@ class _SummaryMetric extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(icon, color: color, size: 15),
+            Icon(icon, color: color, size: AppSpacing.earnAnalyticsSummaryIcon),
             const SizedBox(width: AppSpacing.x1),
             Expanded(
               child: Text(
@@ -263,7 +263,7 @@ class _CalculatorCard extends StatelessWidget {
               const Icon(
                 Icons.calculate_outlined,
                 color: AppColors.primary,
-                size: 18,
+                size: AppSpacing.earnAnalyticsInlineIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -310,7 +310,7 @@ class _CalculatorCard extends StatelessWidget {
             'Tổng nhận về ${_formatUsd(finalValue)} sau 90 ngày. Đây là mô phỏng để kiểm UI, không phải cam kết lợi nhuận.',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.35,
+              height: AppSpacing.earnAnalyticsCaptionLineHeight,
             ),
           ),
         ],
@@ -439,7 +439,7 @@ class _EarningsChartCard extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: 214,
+            height: AppSpacing.earnAnalyticsEarningsChartHeight,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

@@ -48,7 +48,7 @@ class _SortChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(999),
+      borderRadius: AppRadii.xlRadius,
       child: Container(
         constraints: const BoxConstraints(minHeight: 34),
         alignment: Alignment.center,
@@ -61,7 +61,6 @@ class _SortChip extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: active ? AppColors.onAccent : AppColors.text2,
-            fontSize: 12,
             fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
           ),
         ),
@@ -104,7 +103,6 @@ class _TraderCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
-                              fontSize: 15,
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
@@ -230,7 +228,6 @@ class _RoiBlock extends StatelessWidget {
                   '+${trader.totalPnlPct.toStringAsFixed(1)}%',
                   style: AppTextStyles.sectionTitle.copyWith(
                     color: AppColors.buy,
-                    fontSize: 20,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
@@ -239,7 +236,6 @@ class _RoiBlock extends StatelessWidget {
                   '${trader.maxDrawdown.toStringAsFixed(1)}%',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.sell,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -252,10 +248,7 @@ class _RoiBlock extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.right,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 9,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),

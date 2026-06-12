@@ -124,7 +124,7 @@ class StakingApiDocumentationCopyButton extends StatelessWidget {
                     ? Icons.check_circle_outline_rounded
                     : Icons.content_copy_rounded,
                 color: copied ? AppColors.buy : AppColors.text3,
-                size: 12,
+                size: AppSpacing.stakingApiCopyIcon,
               ),
               const SizedBox(width: AppSpacing.x1),
               Text(
@@ -191,7 +191,7 @@ class StakingApiDocumentationFooterNote extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: 1.55,
+          height: AppSpacing.stakingApiFooterLineHeight,
         ),
       ),
     );

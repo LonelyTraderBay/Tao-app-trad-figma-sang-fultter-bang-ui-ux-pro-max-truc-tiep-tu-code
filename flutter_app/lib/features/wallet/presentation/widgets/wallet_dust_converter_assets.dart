@@ -19,8 +19,8 @@ class _DustAssetRow extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 59,
-        padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
+        height: AppSpacing.walletDustAssetRowHeight,
+        padding: AppSpacing.walletDustAssetRowPadding,
         decoration: BoxDecoration(
           color: selected ? color.withValues(alpha: .07) : _dustPanel2,
           borderRadius: AppRadii.cardRadius,
@@ -37,11 +37,15 @@ class _DustAssetRow extends StatelessWidget {
                   ? Icons.check_box_rounded
                   : Icons.check_box_outline_blank_rounded,
               color: selected ? _dustPrimary : _dustMuted,
-              size: 18,
+              size: AppSpacing.walletDustCheckboxIcon,
             ),
-            const SizedBox(width: 13),
-            _TokenLogo(symbol: asset.symbol, color: color, size: 34),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.walletDustAssetCheckboxGap),
+            _TokenLogo(
+              symbol: asset.symbol,
+              color: color,
+              size: AppSpacing.walletDustTokenLogo,
+            ),
+            const SizedBox(width: AppSpacing.walletDustAssetInfoGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -51,21 +55,15 @@ class _DustAssetRow extends StatelessWidget {
                     asset.symbol,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w900,
-                      height: 1,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.walletDustTextGap),
                   Text(
                     asset.name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: _dustMuted,
-                      fontSize: 10,
-                      height: 1,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: _dustMuted),
                   ),
                 ],
               ),
@@ -78,19 +76,15 @@ class _DustAssetRow extends StatelessWidget {
                   asset.availableLabel,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
+                    fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.walletDustTextGap),
                 Text(
                   '\u2248 ${_formatUsd(asset.usdValue, preciseSmall: true)}',
                   style: AppTextStyles.micro.copyWith(
                     color: _dustMuted,
-                    fontSize: 10,
-                    height: 1,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
@@ -129,9 +123,7 @@ class _TokenLogo extends StatelessWidget {
         symbol.length > 3 ? symbol.substring(0, 3) : symbol,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
-          fontWeight: FontWeight.w900,
-          height: 1,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );

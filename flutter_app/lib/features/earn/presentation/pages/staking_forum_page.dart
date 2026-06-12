@@ -110,7 +110,7 @@ class _ForumHero extends StatelessWidget {
             snapshot.heroBody,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.55,
+              height: AppSpacing.stakingCommunityBodyLineHeight,
             ),
           ),
         ],
@@ -136,10 +136,10 @@ class _CategoryGrid extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: categories.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+            crossAxisCount: AppSpacing.stakingCommunityGridColumns,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
-            childAspectRatio: 2.9,
+            childAspectRatio: AppSpacing.stakingCommunityForumGridAspect,
           ),
           itemBuilder: (context, index) =>
               _CategoryCard(category: categories[index]),

@@ -89,7 +89,7 @@ class _CheckInSection extends StatelessWidget {
                   const Icon(
                     Icons.info_outline_rounded,
                     color: AppColors.text3,
-                    size: 13,
+                    size: AppSpacing.arenaPointsMicroIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(
@@ -147,7 +147,7 @@ class _CheckInTile extends StatelessWidget {
           Icon(
             item.claimed ? Icons.check_circle_outline : Icons.circle_outlined,
             color: color,
-            size: 17,
+            size: AppSpacing.arenaPointsCheckInIcon,
           ),
           const SizedBox(height: AppSpacing.x1),
           Text(
@@ -204,7 +204,7 @@ class _ReferralBanner extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.buy,
-            size: 22,
+            size: AppSpacing.arenaPointsChevron,
           ),
         ],
       ),
@@ -429,7 +429,10 @@ class _BonusSection extends StatelessWidget {
               for (final row in rows) ...[
                 _BonusRow(row: row),
                 if (row != rows.last)
-                  const Divider(height: 1, color: AppColors.divider),
+                  const Divider(
+                    height: AppSpacing.arenaPointsDividerHeight,
+                    color: AppColors.divider,
+                  ),
               ],
             ],
           ),

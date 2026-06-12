@@ -27,7 +27,11 @@ class _SelectionHeader extends StatelessWidget {
           ),
         ),
         TextButton(onPressed: onSelectAll, child: const Text('Chọn tất cả')),
-        Container(width: 1, height: 18, color: AppColors.divider),
+        Container(
+          width: AppSpacing.launchpadDividerWidth,
+          height: AppSpacing.launchpadBox18,
+          color: AppColors.divider,
+        ),
         TextButton(onPressed: onClear, child: const Text('Bỏ chọn')),
       ],
     );
@@ -208,8 +212,8 @@ class _TokenAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 36,
-      height: 36,
+      width: AppSpacing.launchpadBox36,
+      height: AppSpacing.launchpadBox36,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .18),

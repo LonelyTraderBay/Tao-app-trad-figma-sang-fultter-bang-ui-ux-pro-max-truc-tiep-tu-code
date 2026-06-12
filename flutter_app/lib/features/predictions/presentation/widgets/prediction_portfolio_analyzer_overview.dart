@@ -32,7 +32,7 @@ class _AnalyzerTabBar extends StatelessWidget {
         border: Border(bottom: BorderSide(color: AppColors.border)),
       ),
       child: SizedBox(
-        height: 54,
+        height: AppSpacing.predictionAnalyzerTabsHeight,
         child: Row(
           children: [
             for (final item in tabs)
@@ -52,18 +52,19 @@ class _AnalyzerTabBar extends StatelessWidget {
                                   ? _predictionPrimary
                                   : AppColors.text3,
                               fontWeight: AppTextStyles.bold,
-                              fontSize: 12,
                             ),
                           ),
                         ),
                       ),
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 160),
-                        height: 2,
-                        width: activeTab == item.tab ? 116 : 0,
+                        height: AppSpacing.predictionAnalyzerTabIndicatorHeight,
+                        width: activeTab == item.tab
+                            ? AppSpacing.predictionAnalyzerTabIndicatorWidth
+                            : 0,
                         decoration: BoxDecoration(
                           color: _predictionPrimary,
-                          borderRadius: BorderRadius.circular(1),
+                          borderRadius: AppRadii.hairlineRadius,
                         ),
                       ),
                     ],
@@ -86,32 +87,25 @@ class _PortfolioSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final pnlColor = snapshot.totalPnl >= 0 ? AppColors.buy : AppColors.sell;
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 18),
+      padding: AppSpacing.predictionAnalyzerSummaryPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Total Portfolio Value',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.badge.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 11),
+          const SizedBox(height: AppSpacing.predictionAnalyzerValueGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 _formatMoney(snapshot.totalPortfolioValue),
-                style: AppTextStyles.heroNumber.copyWith(
-                  fontSize: 29,
-                  height: 1,
-                  fontWeight: FontWeight.w800,
-                ),
+                style: AppTextStyles.amountMd.copyWith(color: AppColors.text1),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.predictionAnalyzerPnlGap),
               Padding(
-                padding: const EdgeInsets.only(bottom: 2),
+                padding: AppSpacing.predictionAnalyzerPnlPadding,
                 child: Row(
                   children: [
                     Icon(
@@ -119,15 +113,16 @@ class _PortfolioSummaryCard extends StatelessWidget {
                           ? Icons.trending_up_rounded
                           : Icons.trending_down_rounded,
                       color: pnlColor,
-                      size: 15,
+                      size: AppSpacing.predictionAnalyzerPnlIcon,
                     ),
-                    const SizedBox(width: 3),
+                    const SizedBox(
+                      width: AppSpacing.predictionAnalyzerPnlIconGap,
+                    ),
                     Text(
                       '${snapshot.totalPnl >= 0 ? '+' : ''}${_formatMoney(snapshot.totalPnl)}',
-                      style: AppTextStyles.caption.copyWith(
+                      style: AppTextStyles.baseMedium.copyWith(
                         color: pnlColor,
                         fontWeight: AppTextStyles.bold,
-                        fontSize: 16,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
@@ -136,7 +131,9 @@ class _PortfolioSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 22),
+          const SizedBox(
+            height: AppSpacing.predictionAnalyzerSummaryPrimaryGap,
+          ),
           Row(
             children: [
               Expanded(
@@ -155,7 +152,9 @@ class _PortfolioSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(
+            height: AppSpacing.predictionAnalyzerSummarySecondaryGap,
+          ),
           Row(
             children: [
               Expanded(
@@ -227,30 +226,35 @@ class _StatsGrid extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: stats.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisExtent: 84,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
+        crossAxisCount: AppSpacing.predictionAnalyzerGridColumns,
+        mainAxisExtent: AppSpacing.predictionAnalyzerGridExtent,
+        crossAxisSpacing: AppSpacing.predictionAnalyzerGridGap,
+        mainAxisSpacing: AppSpacing.predictionAnalyzerGridGap,
       ),
       itemBuilder: (context, index) {
         final stat = stats[index];
         return VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.predictionAnalyzerCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  Icon(stat.icon, color: stat.color, size: 16),
-                  const SizedBox(width: 8),
+                  Icon(
+                    stat.icon,
+                    color: stat.color,
+                    size: AppSpacing.predictionAnalyzerStatIcon,
+                  ),
+                  const SizedBox(
+                    width: AppSpacing.predictionAnalyzerStatIconGap,
+                  ),
                   Expanded(
                     child: Text(
                       stat.label,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
+                      style: AppTextStyles.numericMicro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
                       ),
                     ),
                   ),
@@ -259,8 +263,7 @@ class _StatsGrid extends StatelessWidget {
               const Spacer(),
               Text(
                 stat.value,
-                style: AppTextStyles.baseMedium.copyWith(
-                  fontSize: 20,
+                style: AppTextStyles.amountSm.copyWith(
                   fontWeight: AppTextStyles.bold,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
@@ -282,7 +285,7 @@ class _CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final categories = snapshot.categories;
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
+      padding: AppSpacing.predictionAnalyzerCategoryPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -290,26 +293,26 @@ class _CategoryCard extends StatelessWidget {
             'Portfolio by Category',
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.predictionAnalyzerCategoryTitleGap),
           Center(
             child: SizedBox(
-              height: 190,
-              width: 240,
+              height: AppSpacing.predictionAnalyzerDonutHeight,
+              width: AppSpacing.predictionAnalyzerDonutWidth,
               child: CustomPaint(
                 painter: _DonutChartPainter(categories: categories),
               ),
             ),
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: AppSpacing.predictionAnalyzerLegendGap),
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: categories.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisExtent: 42,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 4,
+              crossAxisCount: AppSpacing.predictionAnalyzerLegendColumns,
+              mainAxisExtent: AppSpacing.predictionAnalyzerLegendExtent,
+              crossAxisSpacing: AppSpacing.predictionAnalyzerLegendCrossGap,
+              mainAxisSpacing: AppSpacing.predictionAnalyzerLegendMainGap,
             ),
             itemBuilder: (context, index) {
               final category = categories[index];

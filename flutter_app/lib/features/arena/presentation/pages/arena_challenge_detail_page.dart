@@ -254,15 +254,15 @@ class _ArenaChallengeDetailPageState
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
               Text(
                 body,
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text2,
-                  height: 1.45,
+                  height: AppSpacing.arenaChallengeBodyLineHeight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
               VitCtaButton(
                 onPressed: () => Navigator.of(context).pop(),
                 child: const Text('Đã hiểu'),

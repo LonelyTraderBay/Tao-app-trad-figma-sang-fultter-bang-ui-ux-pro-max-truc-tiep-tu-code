@@ -14,7 +14,7 @@ class _AllocationCard extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: 150,
+            height: AppSpacing.savingsPortfolioDonutHeight,
             child: CustomPaint(
               painter: _DonutPainter(
                 segments: [
@@ -72,7 +72,10 @@ class _AllocationRow extends StatelessWidget {
       children: [
         Row(
           children: [
-            _TinyDot(color: color, size: 13),
+            _TinyDot(
+              color: color,
+              size: AppSpacing.savingsPortfolioAllocationDot,
+            ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: Text(
@@ -93,7 +96,7 @@ class _AllocationRow extends StatelessWidget {
             ),
             const SizedBox(width: AppSpacing.x3),
             SizedBox(
-              width: 42,
+              width: AppSpacing.savingsPortfolioAllocationPercentWidth,
               child: Text(
                 position.allocationLabel,
                 textAlign: TextAlign.right,

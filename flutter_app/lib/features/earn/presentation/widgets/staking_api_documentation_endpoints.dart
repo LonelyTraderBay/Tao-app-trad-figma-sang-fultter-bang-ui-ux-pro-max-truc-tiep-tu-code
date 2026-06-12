@@ -77,7 +77,7 @@ class StakingApiDocumentationEndpointsTab extends StatelessWidget {
                     selected.description,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.5,
+                      height: AppSpacing.stakingApiEndpointBodyLineHeight,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x4),
@@ -160,7 +160,7 @@ class _EndpointSummaryCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.4,
+              height: AppSpacing.stakingApiEndpointDescriptionLineHeight,
             ),
           ),
         ],

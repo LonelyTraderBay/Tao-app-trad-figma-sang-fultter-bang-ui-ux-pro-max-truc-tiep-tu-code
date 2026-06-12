@@ -400,7 +400,10 @@ void _drawText(Canvas canvas, String text, Offset offset, Color color) {
   final painter = TextPainter(
     text: TextSpan(
       text: text,
-      style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w500),
+      style: AppTextStyles.micro.copyWith(
+        color: color,
+        fontWeight: FontWeight.w500,
+      ),
     ),
     textDirection: TextDirection.ltr,
   )..layout();

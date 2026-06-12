@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/referral_controller_providers.dart';
@@ -99,28 +100,45 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                       AppSpacing.contentPad,
                       bottomInset,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      customGap: 0,
+                      fullBleed: true,
                       children: [
-                        _StatsRow(stats: snapshot.stats),
-                        const SizedBox(height: AppSpacing.x4),
-                        VitSearchBar(
-                          key: ReferralHistoryPage.searchKey,
-                          controller: _searchController,
-                          placeholder: snapshot.searchHint,
-                          variant: VitSearchBarVariant.compact,
-                          onChanged: (_) => setState(() {}),
+                        VitCard(
+                          padding: EdgeInsets.zero,
+                          child: _StatsRow(stats: snapshot.stats),
                         ),
-                        const SizedBox(height: AppSpacing.x4),
-                        _FilterRail(
-                          filters: snapshot.filters,
-                          active: snapshot.filter,
-                          onChanged: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _filter = value);
-                          },
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x4),
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        VitCard(
+                          padding: EdgeInsets.zero,
+                          child: VitSearchBar(
+                            key: ReferralHistoryPage.searchKey,
+                            controller: _searchController,
+                            placeholder: snapshot.searchHint,
+                            variant: VitSearchBarVariant.compact,
+                            onChanged: (_) => setState(() {}),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x4),
+                        ),
+                        VitCard(
+                          padding: EdgeInsets.zero,
+                          child: _FilterRail(
+                            filters: snapshot.filters,
+                            active: snapshot.filter,
+                            onChanged: (value) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _filter = value);
+                            },
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x4),
+                        ),
                         _SortRail(
                           options: snapshot.sortOptions,
                           active: snapshot.sort,
@@ -129,7 +147,9 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                             setState(() => _sort = value);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x4),
+                        ),
                         if (snapshot.friends.isEmpty)
                           const VitEmptyState(
                             key: ReferralHistoryPage.emptyKey,
@@ -148,7 +168,9 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                                 setState(() => _remindedFriend = friend.id);
                               },
                             ),
-                            const SizedBox(height: AppSpacing.x3),
+                            const Padding(
+                              padding: EdgeInsets.only(top: AppSpacing.x3),
+                            ),
                           ],
                       ],
                     ),

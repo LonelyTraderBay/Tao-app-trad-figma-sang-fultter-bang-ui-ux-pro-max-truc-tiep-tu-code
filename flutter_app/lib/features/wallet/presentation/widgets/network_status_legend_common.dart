@@ -12,7 +12,7 @@ class _LegendCard extends StatelessWidget {
       ('down', 'B\u1EA3o tr\u00EC'),
     ];
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.cardPadding,
       borderColor: _networkBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,11 +21,10 @@ class _LegendCard extends StatelessWidget {
             'Ch\u00FA th\u00EDch tr\u1EA1ng th\u00E1i',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.rowGapRegular),
           Row(
             children: [
               for (var col = 0; col < 2; col++) ...[
@@ -37,7 +36,8 @@ class _LegendCard extends StatelessWidget {
                           health: rows[col + row * 2].$1,
                           label: rows[col + row * 2].$2,
                         ),
-                        if (row == 0) const SizedBox(height: 12),
+                        if (row == 0)
+                          const SizedBox(height: AppSpacing.rowGapRegular),
                       ],
                     ],
                   ),
@@ -63,24 +63,24 @@ class _LegendItem extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 22,
-          height: 22,
+          width: AppSpacing.walletNetworkLegendIcon,
+          height: AppSpacing.walletNetworkLegendIcon,
           decoration: BoxDecoration(
             color: color.withValues(alpha: .08),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: AppRadii.mdRadius,
           ),
           alignment: Alignment.center,
-          child: Icon(_healthIcon(health), color: color, size: 12),
+          child: Icon(
+            _healthIcon(health),
+            color: color,
+            size: AppSpacing.walletNetworkLegendIconGlyph,
+          ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.walletTokenApprovalHeaderGap),
         Expanded(
           child: Text(
             label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 12,
-              height: 1,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
         ),
       ],
@@ -94,7 +94,7 @@ class _DisclaimerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+      padding: AppSpacing.walletNetworkDisclaimerPadding,
       borderColor: _networkPrimary.withValues(alpha: .25),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,15 +102,14 @@ class _DisclaimerCard extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: _networkPrimary,
-            size: 14,
+            size: AppSpacing.walletTokenNoticeIcon,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.walletTokenApprovalHeaderGap),
           Expanded(
             child: Text(
               'D\u1EEF li\u1EC7u tr\u1EA1ng th\u00E1i m\u1EA1ng \u0111\u01B0\u1EE3c c\u1EADp nh\u1EADt t\u1EF1 \u0111\u1ED9ng. Th\u1EDDi gian x\u00E1c nh\u1EADn th\u1EF1c t\u1EBF c\u00F3 th\u1EC3 kh\u00E1c t\u00F9y thu\u1ED9c v\u00E0o ph\u00ED gas v\u00E0 m\u1EE9c t\u1EA3i m\u1EA1ng t\u1EA1i th\u1EDDi \u0111i\u1EC3m giao d\u1ECBch.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
                 height: 1.5,
               ),
             ),
@@ -130,8 +129,8 @@ class _TokenLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.walletAddressIconSize,
+      height: AppSpacing.walletAddressIconSize,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .1),
         borderRadius: AppRadii.cardRadius,
@@ -143,9 +142,7 @@ class _TokenLogo extends StatelessWidget {
         overflow: TextOverflow.clip,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 11,
-          fontWeight: FontWeight.w900,
-          height: 1,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -161,10 +158,12 @@ class _HealthPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+      padding: AppSpacing.walletNetworkHealthPillPadding,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(7),
+        borderRadius: BorderRadius.circular(
+          AppSpacing.walletNetworkHealthPillRadius,
+        ),
       ),
       child: Text(
         label,
@@ -172,9 +171,7 @@ class _HealthPill extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 8.5,
-          fontWeight: FontWeight.w900,
-          height: 1,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );

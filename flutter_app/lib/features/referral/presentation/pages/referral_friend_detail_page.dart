@@ -82,40 +82,52 @@ class _NotFoundState extends StatelessWidget {
       key: ReferralFriendDetailPage.emptyKey,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: AppSpacing.iconLg + AppSpacing.x2,
-          height: AppSpacing.iconLg + AppSpacing.x2,
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.borderSolid, width: 2),
-            borderRadius: AppRadii.xlRadius,
-          ),
-          alignment: Alignment.center,
-          child: const Icon(
-            Icons.error_outline_rounded,
-            color: AppColors.text3,
-            size: AppSpacing.iconMd,
+        VitCard(
+          padding: EdgeInsets.zero,
+          child: Container(
+            width: AppSpacing.iconLg + AppSpacing.x2,
+            height: AppSpacing.iconLg + AppSpacing.x2,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: AppColors.borderSolid,
+                width: AppSpacing.referralBorderWidth,
+              ),
+              borderRadius: AppRadii.xlRadius,
+            ),
+            alignment: Alignment.center,
+            child: const Icon(
+              Icons.error_outline_rounded,
+              color: AppColors.text3,
+              size: AppSpacing.iconMd,
+            ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
-        Text(
-          snapshot.emptyTitle,
-          textAlign: TextAlign.center,
-          style: AppTextStyles.baseMedium.copyWith(color: AppColors.text2),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        VitCard(
+          padding: EdgeInsets.zero,
+          child: Text(
+            snapshot.emptyTitle,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.baseMedium.copyWith(color: AppColors.text2),
+          ),
         ),
-        const SizedBox(height: AppSpacing.x1),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
         Text(
           snapshot.emptyMessage,
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x4),
-        VitCtaButton(
-          key: ReferralFriendDetailPage.listButtonKey,
-          onPressed: () => context.go(snapshot.listRoute),
-          fullWidth: false,
-          variant: VitCtaButtonVariant.primary,
-          height: AppSpacing.inputHeight - AppSpacing.x3,
-          child: const Text('Quay lại danh sách'),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        VitCard(
+          padding: EdgeInsets.zero,
+          child: VitCtaButton(
+            key: ReferralFriendDetailPage.listButtonKey,
+            onPressed: () => context.go(snapshot.listRoute),
+            fullWidth: false,
+            variant: VitCtaButtonVariant.primary,
+            height: AppSpacing.inputHeight - AppSpacing.x3,
+            child: const Text('Quay lại danh sách'),
+          ),
         ),
       ],
     );

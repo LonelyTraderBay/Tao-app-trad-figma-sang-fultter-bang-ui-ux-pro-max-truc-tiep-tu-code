@@ -29,20 +29,14 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
         children: [
           Text(
             'Create API Key',
-            style: AppTextStyles.sectionTitle.copyWith(
-              color: AppColors.text1,
-              fontSize: 18,
-            ),
+            style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
           ),
           const SizedBox(height: 18),
           const _SheetInput(label: 'Key Name', hint: 'e.g., Trading Bot Key'),
           const SizedBox(height: 14),
           Text(
             'Permissions',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           const SizedBox(height: 8),
           Row(
@@ -68,7 +62,6 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
                     'API Key Generated',
                     style: AppTextStyles.caption.copyWith(
                       color: _securityGreen,
-                      fontSize: 12,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -88,8 +81,6 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
-                              fontFamily: 'Roboto',
-                              fontSize: 12,
                             ),
                           ),
                         ),
@@ -114,10 +105,7 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
                   const SizedBox(height: 8),
                   Text(
                     'Save this key now - you will not be able to see it again.',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 10,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
@@ -160,10 +148,7 @@ class _IpSheet extends StatelessWidget {
         children: [
           Text(
             'Add IP to Whitelist',
-            style: AppTextStyles.sectionTitle.copyWith(
-              color: AppColors.text1,
-              fontSize: 18,
-            ),
+            style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
           ),
           const SizedBox(height: 18),
           const _SheetInput(label: 'IP Address', hint: 'e.g., 192.168.1.100'),
@@ -205,10 +190,7 @@ class _SheetInput extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 12,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
         const SizedBox(height: 8),
         Container(
@@ -222,10 +204,7 @@ class _SheetInput extends StatelessWidget {
           ),
           child: Text(
             hint,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 13,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
         ),
       ],
@@ -252,7 +231,6 @@ class _PermissionChip extends StatelessWidget {
         label,
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text1,
-          fontSize: 12,
           fontWeight: AppTextStyles.bold,
         ),
       ),

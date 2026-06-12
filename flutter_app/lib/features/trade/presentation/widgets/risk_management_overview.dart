@@ -5,13 +5,9 @@ class _IntroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _cardBackground,
-        border: Border.all(color: _riskPrimary.withValues(alpha: .30)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _riskPrimary.withValues(alpha: .30),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -32,7 +28,6 @@ class _IntroCard extends StatelessWidget {
                   '3 công cụ quản lý rủi ro chuyên nghiệp giúp bảo vệ vốn và tối ưu hóa lợi nhuận. Đây là foundation quan trọng nhất cho enterprise trading platform.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
                     height: 1.55,
                   ),
                 ),
@@ -58,13 +53,8 @@ class _FeatureCard extends StatelessWidget {
       key: RiskManagementDemoPage.featureKey(feature.id),
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
-      child: Container(
+      child: VitCard(
         padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: _cardBackground,
-          border: Border.all(color: AppColors.cardBorder),
-          borderRadius: AppRadii.cardRadius,
-        ),
         child: Row(
           children: [
             _IconTile(icon: _iconForFeature(feature), color: color, size: 48),
@@ -76,7 +66,6 @@ class _FeatureCard extends StatelessWidget {
                   Text(
                     feature.title,
                     style: AppTextStyles.caption.copyWith(
-                      fontSize: 14,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -85,7 +74,6 @@ class _FeatureCard extends StatelessWidget {
                     feature.description,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      fontSize: 12,
                       height: 1.5,
                     ),
                   ),
@@ -141,20 +129,14 @@ class _BenefitsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _cardBackground,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Lợi ích chính',
             style: AppTextStyles.caption.copyWith(
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -199,7 +181,6 @@ class _BenefitItem extends StatelessWidget {
                 title,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.medium,
                 ),
               ),
@@ -208,7 +189,6 @@ class _BenefitItem extends StatelessWidget {
                 description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 11,
                   height: 1.35,
                 ),
               ),
@@ -227,20 +207,14 @@ class _StatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _cardBackground,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Implementation Status',
             style: AppTextStyles.caption.copyWith(
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -253,7 +227,6 @@ class _StatusCard extends StatelessWidget {
                     item.label,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      fontSize: 12,
                     ),
                   ),
                 ),
@@ -286,7 +259,6 @@ class _StatusPill extends StatelessWidget {
         complete ? '✓ Complete' : '⏳ Pending',
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 10,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),

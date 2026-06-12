@@ -13,8 +13,8 @@ class _MyRankCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 42,
-            height: 42,
+            width: AppSpacing.arenaLeaderboardMyRankIconBox,
+            height: AppSpacing.arenaLeaderboardMyRankIconBox,
             decoration: const BoxDecoration(
               color: AppColors.accent12,
               borderRadius: AppRadii.mdRadius,
@@ -22,7 +22,7 @@ class _MyRankCard extends StatelessWidget {
             child: const Icon(
               Icons.emoji_events_outlined,
               color: AppColors.accent,
-              size: 22,
+              size: AppSpacing.arenaLeaderboardMyRankIcon,
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -204,7 +204,7 @@ class _FilterChipButton extends StatelessWidget {
               Icon(
                 icon,
                 color: active ? accentColor : AppColors.text2,
-                size: 13,
+                size: AppSpacing.arenaLeaderboardFilterIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -212,7 +212,7 @@ class _FilterChipButton extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: active ? accentColor : AppColors.text2,
                   fontWeight: AppTextStyles.medium,
-                  height: 1,
+                  height: AppSpacing.arenaLeaderboardLineHeight,
                 ),
               ),
             ],
@@ -256,7 +256,7 @@ class _SeasonButton extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: active ? AppColors.primary : AppColors.text3,
               fontWeight: AppTextStyles.medium,
-              height: 1,
+              height: AppSpacing.arenaLeaderboardLineHeight,
             ),
           ),
         ),

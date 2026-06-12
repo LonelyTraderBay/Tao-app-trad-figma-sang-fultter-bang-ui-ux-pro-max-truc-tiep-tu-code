@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -65,7 +66,9 @@ class _PredictionsBreakingPageState
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.predictionBreakingBottomInsetVisual
+            : AppSpacing.predictionBreakingBottomInsetNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -89,10 +92,12 @@ class _PredictionsBreakingPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionsBreakingPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.predictionBreakingScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 14,
+                      customGap: AppSpacing.predictionBreakingContentGap,
                       children: [
                         _MovementSummary(snapshot: snapshot),
                         _CategoryTabs(

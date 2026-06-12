@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -79,7 +80,9 @@ class _PredictionSocialPageState extends ConsumerState<PredictionSocialPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.predictionSocialBottomInsetVisual
+            : AppSpacing.predictionSocialBottomInsetNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -106,43 +109,54 @@ class _PredictionSocialPageState extends ConsumerState<PredictionSocialPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionSocialPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.predictionSocialScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 16,
-                      children: switch (_activeTab) {
-                        _SocialTab.comments => [
-                          _EventInfoCard(snapshot: snapshot),
-                          _NewCommentCard(
-                            controller: _commentController,
-                            selectedStance: _selectedStance,
-                            onStanceChanged: (stance) =>
-                                setState(() => _selectedStance = stance),
-                          ),
-                          _CommentsSection(snapshot: snapshot),
-                          const _CommentDisclaimer(),
-                        ],
-                        _SocialTab.analysis => [
-                          _SentimentCard(snapshot: snapshot),
-                          _ContributorsSection(snapshot: snapshot),
-                          const _SentimentTrendCard(),
-                        ],
-                        _SocialTab.share => [
-                          _SocialShareButtons(snapshot: snapshot),
-                          _CopyLinkCard(
-                            snapshot: snapshot,
-                            copied: _copied,
-                            onCopy: () {
-                              Clipboard.setData(
-                                ClipboardData(text: snapshot.shareUrl),
-                              );
-                              setState(() => _copied = true);
-                            },
-                          ),
-                          const _ShareStatsCard(),
-                          _SharePreviewCard(snapshot: snapshot),
-                        ],
-                      },
+                      customGap: AppSpacing.predictionSocialContentGap,
+                      children: [
+                        ...switch (_activeTab) {
+                          _SocialTab.comments => [
+                            _EventInfoCard(snapshot: snapshot),
+                            _NewCommentCard(
+                              controller: _commentController,
+                              selectedStance: _selectedStance,
+                              onStanceChanged: (stance) =>
+                                  setState(() => _selectedStance = stance),
+                            ),
+                            _CommentsSection(snapshot: snapshot),
+                            const _CommentDisclaimer(),
+                          ],
+                          _SocialTab.analysis => [
+                            _SentimentCard(snapshot: snapshot),
+                            _ContributorsSection(snapshot: snapshot),
+                            const _SentimentTrendCard(),
+                          ],
+                          _SocialTab.share => [
+                            _SocialShareButtons(snapshot: snapshot),
+                            _CopyLinkCard(
+                              snapshot: snapshot,
+                              copied: _copied,
+                              onCopy: () {
+                                Clipboard.setData(
+                                  ClipboardData(text: snapshot.shareUrl),
+                                );
+                                setState(() => _copied = true);
+                              },
+                            ),
+                            const _ShareStatsCard(),
+                            _SharePreviewCard(snapshot: snapshot),
+                          ],
+                        },
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Prediction social review',
+                          message:
+                              'Comment stance, moderation context, sentiment analysis, contributor signals, share/copy feedback, and disclaimer states are reviewed before social trading signals influence a prediction decision.',
+                          contractId: 'SC-040',
+                        ),
+                      ],
                     ),
                   ),
                 ),

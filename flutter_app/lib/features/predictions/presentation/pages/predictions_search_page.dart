@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -81,7 +82,9 @@ class _PredictionsSearchPageState extends ConsumerState<PredictionsSearchPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.predictionSearchBottomInsetVisual
+            : AppSpacing.predictionSearchBottomInsetNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -105,43 +108,53 @@ class _PredictionsSearchPageState extends ConsumerState<PredictionsSearchPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionsSearchPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.predictionSearchScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 14,
+                      customGap: AppSpacing.predictionSearchContentGap,
                       children: [
-                        _SearchControl(
-                          controller: _searchController,
-                          showFilters: _showFilters,
-                          onChanged: () => setState(() {}),
-                          onClear: () => setState(_searchController.clear),
-                          onToggleFilters: () => setState(() {
-                            _showFilters = !_showFilters;
-                          }),
+                        VitCard(
+                          padding: EdgeInsets.zero,
+                          child: _SearchControl(
+                            controller: _searchController,
+                            showFilters: _showFilters,
+                            onChanged: () => setState(() {}),
+                            onClear: () => setState(_searchController.clear),
+                            onToggleFilters: () => setState(() {
+                              _showFilters = !_showFilters;
+                            }),
+                          ),
                         ),
                         if (_showFilters)
-                          _FilterPanel(
-                            sort: _sort,
-                            status: _status,
-                            categories: snapshot.categories,
-                            selectedCategory: _category,
-                            hasActiveFilters: _hasActiveFilters,
-                            onSortSelected: (value) => setState(() {
-                              _sort = value;
-                            }),
-                            onStatusSelected: (value) => setState(() {
-                              _status = value;
-                            }),
-                            onCategorySelected: (value) => setState(() {
-                              _category = value;
-                            }),
-                            onClear: _clearFilters,
+                          VitCard(
+                            padding: EdgeInsets.zero,
+                            child: _FilterPanel(
+                              sort: _sort,
+                              status: _status,
+                              categories: snapshot.categories,
+                              selectedCategory: _category,
+                              hasActiveFilters: _hasActiveFilters,
+                              onSortSelected: (value) => setState(() {
+                                _sort = value;
+                              }),
+                              onStatusSelected: (value) => setState(() {
+                                _status = value;
+                              }),
+                              onCategorySelected: (value) => setState(() {
+                                _category = value;
+                              }),
+                              onClear: _clearFilters,
+                            ),
                           ),
-                        Text(
-                          _resultsLabel(snapshot.results.length),
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                            fontSize: 11,
+                        VitCard(
+                          padding: EdgeInsets.zero,
+                          child: Text(
+                            _resultsLabel(snapshot.results.length),
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.text3,
+                            ),
                           ),
                         ),
                         if (snapshot.results.isEmpty)

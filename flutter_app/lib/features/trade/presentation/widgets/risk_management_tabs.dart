@@ -13,13 +13,10 @@ class _RiskTabs extends StatelessWidget {
       (_RiskTab.positions, 'Positions'),
       (_RiskTab.calculator, 'Calculator'),
     ];
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       height: 44,
       padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: _chipBackground,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Row(
         children: [
           for (var i = 0; i < tabs.length; i++) ...[
@@ -68,7 +65,6 @@ class _TabButton extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: active ? AppColors.onAccent : AppColors.text2,
-            fontSize: 11,
             fontWeight: AppTextStyles.bold,
           ),
         ),
@@ -89,10 +85,7 @@ class _OcoTab extends StatelessWidget {
       children: [
         Text(
           'Nhấn nút bên dưới để mở form đặt lệnh OCO',
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text3,
-            fontSize: 12,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: 12),
         _GradientButton(
@@ -119,10 +112,7 @@ class _CalculatorTab extends StatelessWidget {
       children: [
         Text(
           'Nhấn nút bên dưới để mở calculator',
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text3,
-            fontSize: 12,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: 12),
         _GradientButton(
@@ -148,13 +138,8 @@ class _PositionsTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Container(
+        VitCard(
           padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(
-            color: _cardBackground,
-            border: Border.all(color: AppColors.cardBorder),
-            borderRadius: AppRadii.cardRadius,
-          ),
           child: Row(
             children: [
               Expanded(
@@ -211,8 +196,6 @@ class _MiniMetric extends StatelessWidget {
           value,
           style: AppTextStyles.caption.copyWith(
             color: color,
-            fontSize: 14,
-            fontFamily: 'monospace',
             fontWeight: AppTextStyles.bold,
           ),
         ),
@@ -230,13 +213,8 @@ class _PositionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(position.logoColorHex);
     final pnlColor = position.pnl >= 0 ? AppColors.buy : AppColors.sell;
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: _cardBackground,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Row(
         children: [
           _IconTile(
@@ -257,7 +235,6 @@ class _PositionTile extends StatelessWidget {
                       child: Text(
                         position.symbol,
                         style: AppTextStyles.caption.copyWith(
-                          fontSize: 14,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
@@ -266,7 +243,6 @@ class _PositionTile extends StatelessWidget {
                       _formatSignedMoney(position.pnl),
                       style: AppTextStyles.caption.copyWith(
                         color: pnlColor,
-                        fontFamily: 'monospace',
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -275,10 +251,7 @@ class _PositionTile extends StatelessWidget {
                 const SizedBox(height: 5),
                 Text(
                   '${position.side.name.toUpperCase()} · ${position.amount.toStringAsFixed(position.amount >= 10 ? 0 : 2)} ${position.baseAsset} · Entry ${_formatMoney(position.entryPrice)}',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 11,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),

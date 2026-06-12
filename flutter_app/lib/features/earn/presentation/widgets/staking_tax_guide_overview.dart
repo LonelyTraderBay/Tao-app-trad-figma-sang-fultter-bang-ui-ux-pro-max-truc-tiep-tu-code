@@ -34,7 +34,7 @@ class StakingTaxOverviewTab extends StatelessWidget {
                     snapshot.overviewBody,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.7,
+                      height: AppSpacing.stakingTaxOverviewLineHeight,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x4),
@@ -132,8 +132,8 @@ class _IncomeEventCard extends StatelessWidget {
             event.description,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
-              height: 1.55,
+              fontSize: AppSpacing.stakingTaxDetailFontSize,
+              height: AppSpacing.stakingTaxEventLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x2),
@@ -142,7 +142,7 @@ class _IncomeEventCard extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
               fontStyle: FontStyle.italic,
-              height: 1.5,
+              height: AppSpacing.stakingTaxExampleLineHeight,
             ),
           ),
         ],
@@ -214,7 +214,11 @@ class _ToolRow extends StatelessWidget {
           padding: const EdgeInsets.all(AppSpacing.x3),
           child: Row(
             children: [
-              Icon(icon, color: AppColors.text1, size: 22),
+              Icon(
+                icon,
+                color: AppColors.text1,
+                size: AppSpacing.stakingTaxToolIcon,
+              ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(
@@ -240,7 +244,7 @@ class _ToolRow extends StatelessWidget {
               const Icon(
                 Icons.open_in_new_rounded,
                 color: AppColors.text3,
-                size: 16,
+                size: AppSpacing.stakingTaxExternalIcon,
               ),
             ],
           ),

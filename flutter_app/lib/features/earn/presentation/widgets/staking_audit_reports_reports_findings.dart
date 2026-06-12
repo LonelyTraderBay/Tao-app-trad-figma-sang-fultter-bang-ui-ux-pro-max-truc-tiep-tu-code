@@ -110,7 +110,7 @@ class _ReportCard extends StatelessWidget {
               report.summary,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.55,
+                height: AppSpacing.stakingAuditBodyLineHeight,
               ),
             ),
             if (isPublished && report.findings.resolvedFindings > 0) ...[

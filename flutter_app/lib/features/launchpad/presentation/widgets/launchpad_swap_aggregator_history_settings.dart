@@ -72,7 +72,7 @@ class _HistorySection extends StatelessWidget {
                           swap.timestamp,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            fontSize: 10,
+                            fontSize: AppSpacing.launchpadFontSm,
                           ),
                         ),
                       ),
@@ -80,7 +80,7 @@ class _HistorySection extends StatelessWidget {
                         swap.txHash,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
+                          fontSize: AppSpacing.launchpadFontSm,
                         ),
                       ),
                     ],
@@ -118,8 +118,8 @@ class _StatusPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: 8,
-            height: 1,
+            fontSize: AppSpacing.launchpadFontXxs,
+            height: AppSpacing.launchpadLineHeightTight,
           ),
         ),
       ),
@@ -231,7 +231,7 @@ class _SettingsSection extends StatelessWidget {
                     const Icon(
                       Icons.info_outline_rounded,
                       color: AppColors.accent,
-                      size: 15,
+                      size: AppSpacing.launchpadIconLg,
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(
@@ -239,7 +239,7 @@ class _SettingsSection extends StatelessWidget {
                         'Luon kiem tra dia chi hop dong va chi swap tren cac DEX uy tin. Khong chia se private key.',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text2,
-                          height: 1.5,
+                          height: AppSpacing.launchpadLineHeightLong,
                         ),
                       ),
                     ),
@@ -272,7 +272,7 @@ class _SlippageButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.inputRadius,
       child: Container(
-        height: 40,
+        height: AppSpacing.launchpadBox40,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active ? AppColors.primary : AppColors.bg,

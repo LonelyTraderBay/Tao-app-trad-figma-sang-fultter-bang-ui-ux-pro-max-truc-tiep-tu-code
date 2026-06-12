@@ -52,7 +52,7 @@ class _SecondaryTabContent extends StatelessWidget {
             description,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.55,
+              height: AppSpacing.savingsConsumerBodyLineHeight,
             ),
           ),
         ],
@@ -165,7 +165,7 @@ class _AxisText extends StatelessWidget {
       maxLines: 1,
       style: AppTextStyles.micro.copyWith(
         color: AppColors.text3,
-        height: 1,
+        height: AppSpacing.savingsConsumerChartLabelLineHeight,
         fontWeight: AppTextStyles.bold,
         fontFeatures: AppTextStyles.tabularFigures,
       ),

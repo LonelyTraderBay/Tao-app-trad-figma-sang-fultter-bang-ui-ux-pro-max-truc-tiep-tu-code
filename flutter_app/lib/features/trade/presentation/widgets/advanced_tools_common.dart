@@ -8,17 +8,15 @@ class _StatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = complete ? AppColors.buy : AppColors.caution;
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      borderColor: color.withValues(alpha: .35),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xsRadius,
-      ),
       child: Text(
         complete ? '✓ Complete' : '⏳ Pending',
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 10,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -44,19 +42,17 @@ class _TabButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
-      child: Container(
+      child: VitCard(
         alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? _toolsPrimary : AppColors.transparent,
-          borderRadius: AppRadii.smRadius,
-        ),
+        variant: active ? VitCardVariant.standard : VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        borderColor: active ? _toolsPrimary : AppColors.transparent,
         child: Text(
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: active ? AppColors.onAccent : AppColors.text2,
-            fontSize: 11,
             fontWeight: AppTextStyles.bold,
           ),
         ),
@@ -111,7 +107,6 @@ class _GradientButton extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -136,14 +131,13 @@ class _IconTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       width: size,
       height: size,
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.mdRadius,
-      ),
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      borderColor: color.withValues(alpha: .28),
       child: Icon(icon, color: color, size: size * .5),
     );
   }
@@ -162,13 +156,10 @@ class _Panel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _cardBackground,
-        border: Border.all(color: borderColor),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.inner,
+      borderColor: borderColor,
       child: child,
     );
   }
@@ -199,10 +190,7 @@ class _SheetFrame extends StatelessWidget {
             children: [
               const _SheetHandle(),
               const SizedBox(height: 18),
-              Text(
-                title,
-                style: AppTextStyles.sectionTitle.copyWith(fontSize: 20),
-              ),
+              Text(title, style: AppTextStyles.sectionTitle),
               const SizedBox(height: 12),
               child,
             ],
@@ -246,10 +234,7 @@ class _SheetRow extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text3,
-                fontSize: 12,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
             ),
           ),
           Flexible(
@@ -259,7 +244,7 @@ class _SheetRow extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 fontWeight: AppTextStyles.bold,
-                fontFamily: 'monospace',
+                fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
           ),

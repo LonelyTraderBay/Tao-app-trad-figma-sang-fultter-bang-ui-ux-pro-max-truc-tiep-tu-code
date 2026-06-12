@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_gradients.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 
 enum VitCtaButtonVariant {
   primary,
@@ -26,6 +27,7 @@ class VitCtaButton extends StatelessWidget {
     this.loading = false,
     this.fullWidth = true,
     this.height = AppSpacing.ctaHeight,
+    this.density = VitDensity.standard,
     this.leading,
     this.trailing,
     this.padding = const EdgeInsets.symmetric(horizontal: AppSpacing.x5),
@@ -37,6 +39,7 @@ class VitCtaButton extends StatelessWidget {
   final bool loading;
   final bool fullWidth;
   final double height;
+  final VitDensity density;
   final Widget? leading;
   final Widget? trailing;
   final EdgeInsetsGeometry padding;
@@ -99,10 +102,13 @@ class VitCtaButton extends StatelessWidget {
             background: AppColors.surface2,
             foreground: AppColors.text3,
           );
+    final resolvedHeight = height == AppSpacing.ctaHeight
+        ? density.controlHeight
+        : height;
 
     final button = SizedBox(
       width: fullWidth ? double.infinity : null,
-      height: height,
+      height: resolvedHeight,
       child: Material(
         color: AppColors.transparent,
         borderRadius: AppRadii.inputRadius,
@@ -119,8 +125,8 @@ class VitCtaButton extends StatelessWidget {
                 : [
                     BoxShadow(
                       color: style.shadow!,
-                      blurRadius: 16,
-                      offset: const Offset(0, 4),
+                      blurRadius: AppSpacing.ctaElevationBlur,
+                      offset: const Offset(0, AppSpacing.ctaElevationYOffset),
                     ),
                   ],
           ),
@@ -135,10 +141,10 @@ class VitCtaButton extends StatelessWidget {
                 children: [
                   if (loading) ...[
                     SizedBox(
-                      width: 18,
-                      height: 18,
+                      width: AppSpacing.ctaLoadingIcon,
+                      height: AppSpacing.ctaLoadingIcon,
                       child: CircularProgressIndicator(
-                        strokeWidth: 2,
+                        strokeWidth: AppSpacing.ctaStrokeWidth,
                         valueColor: AlwaysStoppedAnimation<Color>(
                           style.foreground,
                         ),
@@ -147,7 +153,10 @@ class VitCtaButton extends StatelessWidget {
                     const SizedBox(width: AppSpacing.x3),
                   ] else if (leading != null) ...[
                     IconTheme(
-                      data: IconThemeData(color: style.foreground, size: 18),
+                      data: IconThemeData(
+                        color: style.foreground,
+                        size: AppSpacing.iconMd,
+                      ),
                       child: leading!,
                     ),
                     const SizedBox(width: AppSpacing.x3),
@@ -156,9 +165,8 @@ class VitCtaButton extends StatelessWidget {
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: DefaultTextStyle.merge(
-                        style: AppTextStyles.baseMedium.copyWith(
+                        style: AppTextStyles.control.copyWith(
                           color: style.foreground,
-                          height: 1,
                         ),
                         child: child,
                       ),
@@ -167,7 +175,10 @@ class VitCtaButton extends StatelessWidget {
                   if (trailing != null) ...[
                     const SizedBox(width: AppSpacing.x3),
                     IconTheme(
-                      data: IconThemeData(color: style.foreground, size: 18),
+                      data: IconThemeData(
+                        color: style.foreground,
+                        size: AppSpacing.iconMd,
+                      ),
                       child: trailing!,
                     ),
                   ],

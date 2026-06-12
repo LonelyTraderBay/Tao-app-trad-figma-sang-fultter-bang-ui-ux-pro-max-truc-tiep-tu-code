@@ -43,7 +43,7 @@ class StakingInsuranceFundContributionCard extends StatelessWidget {
                       '${snapshot.stakingFeeContribution}% of all staking fees are automatically allocated to the insurance fund. No user funds are ever used.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1.55,
+                        height: AppSpacing.stakingProductBodyLineHeight,
                       ),
                     ),
                   ],

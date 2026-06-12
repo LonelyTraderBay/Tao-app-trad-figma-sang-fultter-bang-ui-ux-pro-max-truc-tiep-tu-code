@@ -196,14 +196,14 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
                     color: AppColors.text1,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                 Text(
                   'Mã ${snapshot.referralCode} · Bạn nhận ${_formatUsd(snapshot.currentTier.kycBonus)} + ${snapshot.currentTier.commissionPercent}%',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
                 _SharePreview(link: snapshot.referralLink),
-                const SizedBox(height: AppSpacing.x5),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
                 VitCtaButton(
                   onPressed: () {
                     _copy(snapshot.referralLink);

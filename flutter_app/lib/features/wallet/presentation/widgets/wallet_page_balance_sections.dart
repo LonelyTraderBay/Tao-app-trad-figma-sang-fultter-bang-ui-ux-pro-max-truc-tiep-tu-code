@@ -19,12 +19,7 @@ class WalletBalanceHero extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.contentPad,
-        AppSpacing.contentPad,
-        AppSpacing.contentPad,
-        AppSpacing.x4,
-      ),
+      padding: AppSpacing.cardPaddingHero,
       borderColor: _walletPrimary.withValues(alpha: .20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -34,12 +29,7 @@ class WalletBalanceHero extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Tổng tài sản ước tính',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ),
               GestureDetector(
@@ -51,38 +41,26 @@ class WalletBalanceHero extends StatelessWidget {
                       ? Icons.visibility_off_outlined
                       : Icons.visibility_outlined,
                   color: AppColors.text2,
-                  size: 15,
+                  size: AppSpacing.iconSm,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.x4),
           Text(
             hidden ? '••••••' : _formatUsd(snapshot.totalUsd),
-            style: AppTextStyles.heroNumber.copyWith(
-              color: AppColors.text1,
-              fontSize: 31,
-              fontWeight: AppTextStyles.bold,
-              fontFamily: 'Roboto',
-              height: 1,
-            ),
+            style: AppTextStyles.amountLg.copyWith(color: AppColors.text1),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             hidden
-                ? '•••••• BTC'
+                ? '••••• BTC'
                 : '≈ ${snapshot.totalBtc.toStringAsFixed(8)} BTC',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 10,
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Roboto',
-              height: 1,
-            ),
+            style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 19),
+          const SizedBox(height: AppSpacing.x5),
           _BreakdownRow(snapshot: snapshot, hidden: hidden),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.x5),
           Row(
             children: [
               for (var i = 0; i < snapshot.actions.length; i++) ...[
@@ -92,7 +70,8 @@ class WalletBalanceHero extends StatelessWidget {
                     onTap: () => onNavigate(snapshot.actions[i].route),
                   ),
                 ),
-                if (i != snapshot.actions.length - 1) const SizedBox(width: 12),
+                if (i != snapshot.actions.length - 1)
+                  const SizedBox(width: AppSpacing.rowGapRegular),
               ],
             ],
           ),
@@ -120,13 +99,11 @@ class _BreakdownRow extends StatelessWidget {
       ('Trong lệnh', snapshot.inOrderUsd, _walletAmber, Icons.flag_rounded),
       ('Đóng băng', snapshot.frozenUsd, _walletRed, Icons.lock_outline_rounded),
     ];
-    return Container(
-      height: 61,
-      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 10),
-      decoration: BoxDecoration(
-        color: AppColors.onAccent.withValues(alpha: .10),
-        borderRadius: AppRadii.cardRadius,
-      ),
+
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      padding: AppSpacing.cardPaddingCompact,
       child: Row(
         children: [
           for (var i = 0; i < items.length; i++) ...[
@@ -139,35 +116,33 @@ class _BreakdownRow extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(items[i].$4, color: items[i].$3, size: 10),
-                        const SizedBox(width: 4),
+                        Icon(
+                          items[i].$4,
+                          color: items[i].$3,
+                          size: AppSpacing.iconSm,
+                        ),
+                        const SizedBox(width: AppSpacing.x1),
                         Text(
                           items[i].$1,
-                          style: AppTextStyles.micro.copyWith(
+                          style: AppTextStyles.numericMicro.copyWith(
                             color: AppColors.text3,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                            height: 1,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: AppSpacing.x2),
                   Text(
                     hidden ? '••••' : _formatUsd(items[i].$2),
-                    style: AppTextStyles.micro.copyWith(
+                    style: AppTextStyles.amountSm.copyWith(
                       color: AppColors.text1,
-                      fontSize: 11,
-                      fontWeight: AppTextStyles.bold,
-                      fontFamily: 'Roboto',
-                      height: 1,
+                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
                 ],
               ),
             ),
-            if (i != items.length - 1) const SizedBox(width: 2),
+            if (i != items.length - 1) const SizedBox(width: AppSpacing.x1),
           ],
         ],
       ),
@@ -189,28 +164,29 @@ class _ActionTile extends StatelessWidget {
       onTap: onTap,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.sm,
-      height: 68,
       borderColor: AppColors.portfolioBtnGhostBorder,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 34,
-            height: 34,
+            width: AppSpacing.iconLg,
+            height: AppSpacing.iconLg,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .18),
               shape: BoxShape.circle,
             ),
-            child: Icon(_actionIcon(action.iconKey), color: color, size: 22),
+            child: Icon(
+              _actionIcon(action.iconKey),
+              color: color,
+              size: AppSpacing.iconSm,
+            ),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             action.label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              fontSize: 11,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],

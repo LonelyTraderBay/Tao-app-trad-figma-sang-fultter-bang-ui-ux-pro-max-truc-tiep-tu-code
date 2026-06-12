@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_h
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_heatmap_panels.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_heatmap_summary.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_heatmap_treemap.dart';
+import '../widgets/market_body_review_widgets.dart';
 
 class MarketHeatmapPage extends ConsumerStatefulWidget {
   const MarketHeatmapPage({super.key, this.shellRenderMode});
@@ -138,6 +139,18 @@ class _MarketHeatmapPageState extends ConsumerState<MarketHeatmapPage> {
                         MarketHeatmapTrendPanels(
                           coins: visibleCoins,
                           metric: _metric,
+                        ),
+                        const MarketBodyReviewSection(
+                          title: 'Heatmap state review',
+                          message: 'Market heatmap data reviewed',
+                          detail:
+                              'Metric, category, selected tile, empty, and refresh states remain visible in the heatmap flow.',
+                          primary:
+                              'Treemap selection keeps the active coin context close to the detail card.',
+                          secondary:
+                              'Category and metric controls stay above the visualization for fast recovery.',
+                          tertiary:
+                              'Trend panels share the same market-data status language as the rest of Markets.',
                         ),
                       ],
                     ),

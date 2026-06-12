@@ -45,7 +45,7 @@ class _AmountCard extends StatelessWidget {
                 balanceLabel,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  fontFamily: 'monospace',
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],
@@ -77,8 +77,7 @@ class _AmountCard extends StatelessWidget {
                         onChanged: (_) => onChanged?.call(),
                         textStyle: AppTextStyles.sectionTitle.copyWith(
                           color: AppColors.text1,
-                          fontSize: 22,
-                          fontFamily: 'monospace',
+                          fontFeatures: AppTextStyles.tabularFigures,
                           fontWeight: AppTextStyles.bold,
                         ),
                       )
@@ -90,8 +89,7 @@ class _AmountCard extends StatelessWidget {
                         textAlign: TextAlign.right,
                         style: AppTextStyles.sectionTitle.copyWith(
                           color: AppColors.text3,
-                          fontSize: 22,
-                          fontFamily: 'monospace',
+                          fontFeatures: AppTextStyles.tabularFigures,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
@@ -168,7 +166,6 @@ class _AssetButton extends StatelessWidget {
                 asset.symbol.substring(0, math.min(3, asset.symbol.length)),
                 style: AppTextStyles.micro.copyWith(
                   color: color,
-                  fontSize: 8,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -219,7 +216,6 @@ class _PercentChip extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
           ),
         ),

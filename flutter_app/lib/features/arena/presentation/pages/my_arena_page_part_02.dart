@@ -138,10 +138,10 @@ class _ChallengeRow extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.body.copyWith(
                         fontWeight: AppTextStyles.bold,
-                        height: 1.2,
+                        height: AppSpacing.myArenaTextLineHeight,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                     Wrap(
                       spacing: AppSpacing.x2,
                       runSpacing: AppSpacing.x1,
@@ -173,7 +173,7 @@ class _ChallengeRow extends StatelessWidget {
                     label: _stateLabel(challenge.state),
                     color: statusColor,
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                   Text(
                     'Xem',
                     style: AppTextStyles.micro.copyWith(
@@ -248,10 +248,12 @@ class _SavedModesList extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.body.copyWith(
                                 fontWeight: AppTextStyles.bold,
-                                height: 1.2,
+                                height: AppSpacing.myArenaTextLineHeight,
                               ),
                             ),
-                            const SizedBox(height: AppSpacing.x2),
+                            const Padding(
+                              padding: EdgeInsets.only(top: AppSpacing.x2),
+                            ),
                             Wrap(
                               spacing: AppSpacing.x2,
                               runSpacing: AppSpacing.x1,
@@ -327,8 +329,8 @@ class _DraftList extends StatelessWidget {
                   child: Row(
                     children: [
                       Container(
-                        width: 36,
-                        height: 36,
+                        width: AppSpacing.myArenaDraftIconBox,
+                        height: AppSpacing.myArenaDraftIconBox,
                         decoration: BoxDecoration(
                           color: AppColors.surface2,
                           borderRadius: AppRadii.mdRadius,
@@ -336,7 +338,7 @@ class _DraftList extends StatelessWidget {
                         child: const Icon(
                           Icons.edit_note_rounded,
                           color: AppColors.text2,
-                          size: 18,
+                          size: AppSpacing.myArenaDraftIcon,
                         ),
                       ),
                       const SizedBox(width: AppSpacing.x3),
@@ -350,10 +352,12 @@ class _DraftList extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.body.copyWith(
                                 fontWeight: AppTextStyles.bold,
-                                height: 1.2,
+                                height: AppSpacing.myArenaTextLineHeight,
                               ),
                             ),
-                            const SizedBox(height: AppSpacing.x2),
+                            const Padding(
+                              padding: EdgeInsets.only(top: AppSpacing.x2),
+                            ),
                             Row(
                               children: [
                                 _MetaText(drafts[i].format),
@@ -398,7 +402,7 @@ class _CreatedModesSection extends StatelessWidget {
           title: 'Mode đã tạo (${snapshot.stats.modesCreated})',
           accentColor: AppColors.accent,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         VitCard(
           onTap: onTap,
           padding: const EdgeInsets.all(AppSpacing.x4),
@@ -417,10 +421,10 @@ class _CreatedModesSection extends StatelessWidget {
                       '${snapshot.stats.modesCreated} mode đã tạo',
                       style: AppTextStyles.body.copyWith(
                         fontWeight: AppTextStyles.bold,
-                        height: 1.2,
+                        height: AppSpacing.myArenaTextLineHeight,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                     Text(
                       'Quản lý modes và xem thống kê',
                       style: AppTextStyles.micro.copyWith(
@@ -433,7 +437,7 @@ class _CreatedModesSection extends StatelessWidget {
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: 20,
+                size: AppSpacing.myArenaSectionChevron,
               ),
             ],
           ),

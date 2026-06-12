@@ -21,20 +21,20 @@ class _AssessmentTab extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 48,
-                    height: 48,
+                    width: AppSpacing.stakingRiskDisclosureAssessmentIconBox,
+                    height: AppSpacing.stakingRiskDisclosureAssessmentIconBox,
                     decoration: BoxDecoration(
                       color: AppColors.primary12,
                       border: Border.all(
                         color: AppColors.primary30,
-                        width: 1.5,
+                        width: AppSpacing.stakingRiskDisclosureBorderWidth,
                       ),
                       borderRadius: AppRadii.cardLargeRadius,
                     ),
                     child: const Icon(
                       Icons.balance_rounded,
                       color: AppColors.primary,
-                      size: 24,
+                      size: AppSpacing.stakingRiskDisclosureAssessmentIcon,
                     ),
                   ),
                   const SizedBox(width: AppSpacing.x3),
@@ -49,12 +49,13 @@ class _AssessmentTab extends StatelessWidget {
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x1),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppSpacing.x1),
+                        ),
                         Text(
                           snapshot.assessmentSubtitle,
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text3,
-                            fontSize: 12,
                           ),
                         ),
                       ],
@@ -62,18 +63,18 @@ class _AssessmentTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
               Text(
                 snapshot.assessmentBody,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.6,
+                  height: AppSpacing.stakingRiskDisclosureBodyLineHeight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
               VitCtaButton(
                 key: StakingRiskDisclosurePage.assessmentCtaKey,
-                height: 44,
+                height: AppSpacing.stakingRiskDisclosureCtaHeight,
                 onPressed: onStart,
                 trailing: const Icon(Icons.chevron_right_rounded),
                 child: Text(snapshot.assessmentCta),
@@ -81,9 +82,9 @@ class _AssessmentTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         _SectionLabel(snapshot.faqTitle),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         for (final faq in snapshot.faqs) ...[
           VitCard(
             radius: VitCardRadius.lg,
@@ -98,19 +99,19 @@ class _AssessmentTab extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   faq.answer,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
-                    height: 1.55,
+                    height: AppSpacing.stakingRiskDisclosureNoticeLineHeight,
                   ),
                 ),
               ],
             ),
           ),
-          if (faq != snapshot.faqs.last) const SizedBox(height: AppSpacing.x3),
+          if (faq != snapshot.faqs.last)
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ],
       ],
     );
@@ -127,11 +128,13 @@ class _SectionLabel extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 15,
+          width: AppSpacing.stakingRiskDisclosureSectionMarkerWidth,
+          height: AppSpacing.stakingRiskDisclosureSectionMarkerHeight,
           decoration: BoxDecoration(
             color: AppColors.primary,
-            borderRadius: BorderRadius.circular(2),
+            borderRadius: BorderRadius.circular(
+              AppSpacing.stakingRiskDisclosureSectionMarkerRadius,
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -140,7 +143,7 @@ class _SectionLabel extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.stakingRiskDisclosureCompactLineHeight,
           ),
         ),
       ],
@@ -174,7 +177,7 @@ class _RiskLevelBadge extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.stakingRiskDisclosureCompactLineHeight,
         ),
       ),
     );

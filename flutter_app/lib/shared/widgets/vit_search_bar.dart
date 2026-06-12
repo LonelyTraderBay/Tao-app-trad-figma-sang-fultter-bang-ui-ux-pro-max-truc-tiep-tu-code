@@ -65,7 +65,7 @@ class _VitSearchBarState extends State<VitSearchBar> {
   double get _height {
     switch (widget.variant) {
       case VitSearchBarVariant.compact:
-        return 44;
+        return AppSpacing.searchBarCompactHeight;
       case VitSearchBarVariant.defaultSearch:
       case VitSearchBarVariant.header:
         return AppSpacing.inputHeight;
@@ -131,8 +131,8 @@ class _VitSearchBarState extends State<VitSearchBar> {
   Widget build(BuildContext context) {
     final hasValue = _controller.text.isNotEmpty;
     final fontSize = widget.variant == VitSearchBarVariant.compact
-        ? 13.0
-        : 14.0;
+        ? AppSpacing.searchBarCompactFont
+        : AppSpacing.searchBarFont;
 
     return Row(
       children: [
@@ -150,14 +150,19 @@ class _VitSearchBarState extends State<VitSearchBar> {
         Expanded(
           child: Container(
             height: _height,
-            padding: const EdgeInsets.only(left: 12, right: 8),
+            padding: const EdgeInsets.only(
+              left: AppSpacing.searchBarHorizontalPadding,
+              right: AppSpacing.searchBarHorizontalTrailingPadding,
+            ),
             decoration: BoxDecoration(
               color: AppColors.searchBg,
               border: Border.all(
                 color: _focusNode.hasFocus
                     ? AppColors.primary
                     : AppColors.searchBorder,
-                width: _focusNode.hasFocus ? 1.5 : 1,
+                width: _focusNode.hasFocus
+                    ? AppSpacing.searchBarFocusBorder
+                    : AppSpacing.searchBarNormalBorder,
               ),
               borderRadius: _radius,
             ),
@@ -166,7 +171,7 @@ class _VitSearchBarState extends State<VitSearchBar> {
                 const Icon(
                   Icons.search_rounded,
                   color: AppColors.text3,
-                  size: 18,
+                  size: AppSpacing.searchBarIcon,
                 ),
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
@@ -180,10 +185,10 @@ class _VitSearchBarState extends State<VitSearchBar> {
                     onSubmitted: widget.onSubmitted,
                     textInputAction: TextInputAction.search,
                     cursorColor: AppColors.primary,
-                    style: AppTextStyles.body.copyWith(fontSize: fontSize),
+                    style: AppTextStyles.control.copyWith(fontSize: fontSize),
                     decoration: InputDecoration.collapsed(
                       hintText: widget.placeholder,
-                      hintStyle: AppTextStyles.body.copyWith(
+                      hintStyle: AppTextStyles.control.copyWith(
                         color: AppColors.searchPlaceholder,
                         fontSize: fontSize,
                       ),

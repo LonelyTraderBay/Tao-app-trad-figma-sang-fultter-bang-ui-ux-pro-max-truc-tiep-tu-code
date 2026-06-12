@@ -82,7 +82,10 @@ class _RouteCard extends StatelessWidget {
               ),
             ),
           ),
-          const Divider(height: 1, color: AppColors.divider),
+          const Divider(
+            height: AppSpacing.launchpadDividerHeight,
+            color: AppColors.divider,
+          ),
           InkWell(
             key: LaunchpadBridgeComparePage.expandKey(route.id),
             onTap: onExpand,
@@ -131,15 +134,15 @@ class _RankedProviderBadge extends StatelessWidget {
         _ProviderBadge(
           label: route.providerIcon,
           accent: route.accent,
-          size: 40,
+          size: AppSpacing.launchpadBox40,
         ),
         if (rank == 1)
           Positioned(
             top: -6,
             right: -6,
             child: Container(
-              width: 17,
-              height: 17,
+              width: AppSpacing.launchpadBox17,
+              height: AppSpacing.launchpadBox17,
               alignment: Alignment.center,
               decoration: const BoxDecoration(
                 color: AppColors.primarySoft,
@@ -150,7 +153,7 @@ class _RankedProviderBadge extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.onAccent,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.launchpadLineHeightTight,
                 ),
               ),
             ),
@@ -427,9 +430,9 @@ class _SecurityDots extends StatelessWidget {
       children: [
         for (var i = 0; i < 5; i++)
           Container(
-            width: 5,
-            height: 5,
-            margin: const EdgeInsets.only(right: 2),
+            width: AppSpacing.launchpadDotXs,
+            height: AppSpacing.launchpadDotXs,
+            margin: const EdgeInsets.only(right: AppSpacing.launchpadGapXxs),
             decoration: BoxDecoration(
               color: i < filled
                   ? AppColors.buy
@@ -483,7 +486,7 @@ class _ExpandedRouteDetails extends StatelessWidget {
                     child: Icon(
                       Icons.arrow_forward_rounded,
                       color: AppColors.text3,
-                      size: 12,
+                      size: AppSpacing.launchpadIconXs,
                     ),
                   ),
                   _HopChip(label: hop.dex, subtitle: 'DEX'),
@@ -492,7 +495,7 @@ class _ExpandedRouteDetails extends StatelessWidget {
                     child: Icon(
                       Icons.arrow_forward_rounded,
                       color: AppColors.text3,
-                      size: 12,
+                      size: AppSpacing.launchpadIconXs,
                     ),
                   ),
                   _HopChip(label: hop.toToken, subtitle: hop.chain),

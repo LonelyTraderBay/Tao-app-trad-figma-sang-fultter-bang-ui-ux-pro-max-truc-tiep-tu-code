@@ -8,16 +8,18 @@ class _PriceBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+    return DecoratedBox(
       decoration: BoxDecoration(color: color, borderRadius: AppRadii.xsRadius),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.onAccent,
-          fontFamily: 'monospace',
-          fontWeight: AppTextStyles.bold,
-          height: 1,
+      child: Padding(
+        padding: AppSpacing.tradePriceBadgePadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.onAccent,
+            fontFeatures: AppTextStyles.tabularFigures,
+            fontWeight: AppTextStyles.bold,
+            height: 1,
+          ),
         ),
       ),
     );
@@ -32,13 +34,16 @@ class _OrderBookPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.tradeMarketListPadding,
       child: Column(
         children: [
           _BookHeader(),
           for (final ask in book.asks.reversed)
             _BookRow(level: ask, color: AppColors.sell),
-          const Divider(color: AppColors.divider, height: 16),
+          const Divider(
+            color: AppColors.divider,
+            height: AppSpacing.tradeBookDividerHeight,
+          ),
           for (final bid in book.bids)
             _BookRow(level: bid, color: AppColors.buy),
         ],
@@ -71,7 +76,7 @@ class _BookRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 7),
+      padding: const EdgeInsets.only(top: AppSpacing.tradeBookRowTopGap),
       child: Row(
         children: [
           _BookCell(level.price.toStringAsFixed(2), color: color),
@@ -102,7 +107,7 @@ class _BookCell extends StatelessWidget {
         textAlign: alignEnd ? TextAlign.right : TextAlign.left,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontFamily: 'monospace',
+          fontFeatures: AppTextStyles.tabularFigures,
           fontWeight: AppTextStyles.bold,
         ),
       ),
@@ -118,12 +123,14 @@ class _TradesPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.tradeMarketListPadding,
       child: Column(
         children: [
           for (final trade in trades)
             Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(
+                bottom: AppSpacing.tradeTapeRowBottomGap,
+              ),
               child: Row(
                 children: [
                   Expanded(
@@ -131,7 +138,7 @@ class _TradesPanel extends StatelessWidget {
                       trade.price.toStringAsFixed(2),
                       style: AppTextStyles.caption.copyWith(
                         color: trade.isBuy ? AppColors.buy : AppColors.sell,
-                        fontFamily: 'monospace',
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ),
@@ -169,13 +176,11 @@ class _OrderTabs extends StatelessWidget {
       ('open', 'Đang mở ($openCount)', TradePage.openOrdersTabKey),
       ('history', 'Lịch sử', TradePage.historyTabKey),
     ];
-    return Container(
-      height: 44,
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: _fieldBackground,
-        borderRadius: AppRadii.lgRadius,
-      ),
+    return VitCard(
+      height: AppSpacing.tradeOrderTabsHeight,
+      padding: AppSpacing.tradeOrderTabsInnerPadding,
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -236,26 +241,26 @@ class _OrderForm extends StatelessWidget {
         : balances.baseAvailable;
     final availableAsset = side == TradeOrderSide.buy ? 'USDT' : pair.baseAsset;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: AppSpacing.tradeHorizontalInsets,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _SideSwitch(side: side, onChanged: onSideChanged),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.tradeFormGap),
           _OrderTypeRow(active: orderType, onSelected: onTypeChanged),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.tradeFormGap),
           _LabelValue(
             label: 'Khả dụng',
             value: '${_formatMoney(available)} $availableAsset',
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.tradeFormSmallGap),
           _TradeInput(
             label: 'Giá đặt (USDT)',
             suffix: 'USDT',
             controller: priceController,
             onChanged: onChanged,
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.tradeFormSmallGap),
           _TradeInput(
             key: TradePage.amountFieldKey,
             label: 'Khối lượng (${pair.baseAsset})',
@@ -263,7 +268,7 @@ class _OrderForm extends StatelessWidget {
             controller: amountController,
             onChanged: onChanged,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.tradeFormGap),
           Row(
             children: [
               for (final pct in const [25, 50, 75, 100]) ...[
@@ -274,19 +279,19 @@ class _OrderForm extends StatelessWidget {
                     onTap: () => onPct(pct),
                   ),
                 ),
-                if (pct != 100) const SizedBox(width: 10),
+                if (pct != 100) const SizedBox(width: AppSpacing.tradePctGap),
               ],
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.tradeFormGap),
           _TpslSwitch(value: tpslEnabled, onChanged: onTpslChanged),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.tradeFormGap),
           _FeeCard(preview: preview),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.tradeFormGap),
           VitCtaButton(
             key: TradePage.submitKey,
             onPressed: canSubmit ? onSubmit : null,
-            height: 52,
+            height: AppSpacing.tradeCtaHeight,
             variant: side == TradeOrderSide.buy
                 ? VitCtaButtonVariant.success
                 : VitCtaButtonVariant.danger,
@@ -296,7 +301,7 @@ class _OrderForm extends StatelessWidget {
                   : 'Nhập thông tin lệnh',
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.tradeFormSmallGap),
           Text(
             'Kiểm tra kỹ trước khi xác nhận.',
             textAlign: TextAlign.center,
@@ -316,12 +321,9 @@ class _SideSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 46,
-      decoration: BoxDecoration(
-        color: _fieldBackground,
-        borderRadius: AppRadii.cardRadius,
-      ),
+    return VitCard(
+      height: AppSpacing.tradeSideSwitchHeight,
+      variant: VitCardVariant.inner,
       child: Row(
         children: [
           Expanded(
@@ -405,22 +407,22 @@ class _OrderTypeRow extends StatelessWidget {
           active: active == TradeOrderType.market,
           onSelected: onSelected,
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.tradePctGap),
         _OrderTypeChip(
           type: TradeOrderType.limit,
           active: active == TradeOrderType.limit,
           onSelected: onSelected,
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.tradePctGap),
         _OrderTypeChip(
           type: TradeOrderType.stop,
           active: active == TradeOrderType.stop,
           onSelected: onSelected,
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.tradePctGap),
         Container(
-          width: 39,
-          height: 39,
+          width: AppSpacing.tradeOrderTypeSize,
+          height: AppSpacing.tradeOrderTypeSize,
           decoration: BoxDecoration(
             color: _fieldBackground,
             border: Border.all(color: AppColors.borderSolid),
@@ -461,7 +463,7 @@ class _OrderTypeChip extends StatelessWidget {
         onTap: () => onSelected(type),
         borderRadius: AppRadii.cardRadius,
         child: Container(
-          height: 39,
+          height: AppSpacing.tradeOrderTypeSize,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: active

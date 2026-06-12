@@ -26,13 +26,10 @@ class _NoticePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .10),
-        border: Border.all(color: color.withValues(alpha: .55)),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      borderColor: color.withValues(alpha: .55),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,11 +38,7 @@ class _NoticePanel extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                height: 1.45,
-                fontSize: 10,
-              ),
+              style: AppTextStyles.micro.copyWith(color: color, height: 1.45),
             ),
           ),
         ],

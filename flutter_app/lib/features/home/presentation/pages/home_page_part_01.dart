@@ -1,7 +1,5 @@
 part of 'home_page.dart';
 
-const _homePrimaryQuickActionCount = 12;
-
 class _HomePageState extends ConsumerState<HomePage> {
   String _marketTab = 'hot';
   bool _balanceHidden = false;
@@ -19,10 +17,11 @@ class _HomePageState extends ConsumerState<HomePage> {
     context.push(path);
   }
 
-  void _showMoreProducts(List<HomeQuickAction> actions) {
+  void _showMoreProducts(List<HomeQuickAction> actions, VitDensity density) {
+    final rootContext = context;
+
     if (actions.isEmpty) return;
 
-    final rootContext = context;
     showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -35,6 +34,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             Navigator.of(sheetContext).pop();
             rootContext.push(path);
           },
+          density: density,
         );
       },
     );
@@ -48,14 +48,14 @@ class _HomePageState extends ConsumerState<HomePage> {
   bool _handleUserScroll(UserScrollNotification notification) {
     if (notification.metrics.axis != Axis.vertical) return false;
 
-    if (notification.metrics.pixels <= 8) {
+    if (notification.metrics.pixels <= AppSpacing.homeScrollShowThreshold) {
       _setHeaderVisible(true);
       return false;
     }
 
     switch (notification.direction) {
       case ScrollDirection.reverse:
-        if (notification.metrics.pixels > 24) {
+        if (notification.metrics.pixels > AppSpacing.homeScrollHideThreshold) {
           _setHeaderVisible(false);
         }
       case ScrollDirection.forward:
@@ -70,13 +70,14 @@ class _HomePageState extends ConsumerState<HomePage> {
   bool _handleScrollUpdate(ScrollUpdateNotification notification) {
     if (notification.metrics.axis != Axis.vertical) return false;
 
-    if (notification.metrics.pixels <= 8) {
+    if (notification.metrics.pixels <= AppSpacing.homeScrollShowThreshold) {
       _setHeaderVisible(true);
       return false;
     }
 
     final delta = notification.scrollDelta ?? 0;
-    if (delta > 0 && notification.metrics.pixels > 24) {
+    if (delta > 0 &&
+        notification.metrics.pixels > AppSpacing.homeScrollHideThreshold) {
       _setHeaderVisible(false);
     } else if (delta < 0) {
       _setHeaderVisible(true);
@@ -89,11 +90,19 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final controller = ref.watch(homeControllerProvider);
     final snapshot = controller.state.snapshot;
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final homeDensity =
+        screenWidth < AppSpacing.homeQuickActionDensityBreakpoint
+        ? VitDensity.compact
+        : VitDensity.standard;
+    final homePrimaryQuickActionCount = homeDensity == VitDensity.compact
+        ? AppSpacing.homeQuickActionCompactCount
+        : AppSpacing.homeQuickActionStandardCount;
     final primaryQuickActions = snapshot.quickActions
-        .take(_homePrimaryQuickActionCount)
+        .take(homePrimaryQuickActionCount)
         .toList(growable: false);
     final moreQuickActions = snapshot.quickActions
-        .skip(_homePrimaryQuickActionCount)
+        .skip(homePrimaryQuickActionCount)
         .toList(growable: false);
     final notificationUnreadCount = ref.watch(notificationUnreadCountProvider);
     final shellRenderMode = widget.shellRenderMode ?? defaultShellRenderMode();
@@ -104,7 +113,9 @@ class _HomePageState extends ConsumerState<HomePage> {
     final bottomScrollInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (nativeShell ? 16 : 40);
+        (nativeShell
+            ? AppSpacing.homeBottomSheetScrollInset
+            : AppSpacing.homeBottomSheetScrollInsetVisual);
 
     return VitPageLayout(
       variant: nativeShell ? VitPageVariant.flush : VitPageVariant.defaultPage,
@@ -130,7 +141,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
-                    customGap: nativeShell ? 12 : null,
+                    customGap: nativeShell
+                        ? AppSpacing.homeNativeShellCustomGap
+                        : null,
                     children: [
                       _AnnouncementBanner(
                         announcements: snapshot.announcements,
@@ -153,11 +166,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                             : 'Xem th\u00EAm',
                         onAction: moreQuickActions.isEmpty
                             ? null
-                            : () => _showMoreProducts(moreQuickActions),
+                            : () => _showMoreProducts(
+                                moreQuickActions,
+                                homeDensity,
+                              ),
                       ),
                       _QuickActionsGrid(
                         actions: primaryQuickActions,
                         onNavigate: _go,
+                        density: homeDensity,
                       ),
                       _HomeDiscoverySection(onNavigate: _go),
                       _MarketSection(
@@ -221,7 +238,9 @@ class _CollapsibleHomeHeader extends StatelessWidget {
           duration: duration,
           curve: curve,
           child: AnimatedSlide(
-            offset: visible ? Offset.zero : const Offset(0, -0.25),
+            offset: visible
+                ? Offset.zero
+                : const Offset(0, -AppSpacing.homeSlideOffsetUp),
             duration: duration,
             curve: curve,
             child: child,
@@ -272,15 +291,18 @@ class _AnnouncementBanner extends StatelessWidget {
         VitCard(
           radius: VitCardRadius.sm,
           borderColor: AppColors.primary12,
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.homeAnnouncementCardHorizontalPadding,
+            vertical: AppSpacing.homeAnnouncementCardVerticalPadding,
+          ),
           child: Row(
             children: [
               const Icon(
                 Icons.card_giftcard_rounded,
                 color: AppColors.primary,
-                size: 18,
+                size: AppSpacing.homeAnnouncementIcon,
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.homeAnnouncementIconGap),
               Expanded(
                 child: Text(
                   announcements.first.text,
@@ -289,23 +311,23 @@ class _AnnouncementBanner extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.homeAnnouncementArrowGap),
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: 16,
+                size: AppSpacing.homeAnnouncementChevron,
               ),
             ],
           ),
         ),
-        const SizedBox(height: 8),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _Dot(active: true),
-            SizedBox(width: 5),
+            SizedBox(width: AppSpacing.homeAnnouncementDotGap),
             _Dot(active: false),
-            SizedBox(width: 5),
+            SizedBox(width: AppSpacing.homeAnnouncementDotGap),
             _Dot(active: false),
           ],
         ),
@@ -333,7 +355,12 @@ class _PortfolioCard extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
       clip: true,
-      padding: const EdgeInsets.fromLTRB(20, 22, 20, 20),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.homeAnnouncementCardHorizontalPadding,
+        AppSpacing.homePortfolioBadgeVerticalPadding + AppSpacing.x1,
+        AppSpacing.homeAnnouncementCardHorizontalPadding,
+        AppSpacing.homePortfolioBadgeVerticalPadding,
+      ),
       child: Stack(
         children: [
           const Positioned.fill(child: _PortfolioGlow()),
@@ -355,39 +382,43 @@ class _PortfolioCard extends StatelessWidget {
                     onTap: onToggleBalance,
                     borderRadius: AppRadii.smRadius,
                     child: Padding(
-                      padding: const EdgeInsets.all(6),
+                      padding: const EdgeInsets.all(
+                        AppSpacing.homePortfolioHeaderActionPadding,
+                      ),
                       child: Icon(
                         balanceHidden
                             ? Icons.visibility_off_outlined
                             : Icons.visibility_outlined,
                         color: AppColors.portfolioTextDim,
-                        size: 18,
+                        size: AppSpacing.homePortfolioHeaderIcon,
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const Padding(
+                padding: EdgeInsets.only(top: AppSpacing.homeSectionInnerGap),
+              ),
               Text(
                 balanceHidden
                     ? '••••••'
                     : _formatUsd(snapshot.totalBalance, forceTwoDecimals: true),
                 style: AppTextStyles.heroNumber.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: 34,
                   letterSpacing: 0,
-                  height: 1.1,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
               if (!balanceHidden)
                 Row(
                   children: [
                     Flexible(
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 4,
+                          horizontal:
+                              AppSpacing.homePortfolioBadgeHorizontalPadding,
+                          vertical:
+                              AppSpacing.homePortfolioBadgeVerticalPadding,
                         ),
                         decoration: BoxDecoration(
                           color: AppColors.buy15,
@@ -400,7 +431,7 @@ class _PortfolioCard extends StatelessWidget {
                             const Icon(
                               Icons.trending_up_rounded,
                               color: AppColors.buy,
-                              size: 12,
+                              size: AppSpacing.homePortfolioBadgeIcon,
                             ),
                             const SizedBox(width: AppSpacing.x1),
                             Flexible(
@@ -410,9 +441,7 @@ class _PortfolioCard extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTextStyles.caption.copyWith(
                                   color: AppColors.buy,
-                                  fontSize: 12,
                                   fontWeight: AppTextStyles.medium,
-                                  height: 1,
                                 ),
                               ),
                             ),
@@ -429,22 +458,26 @@ class _PortfolioCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              const SizedBox(height: 24),
+              const Padding(
+                padding: EdgeInsets.only(top: AppSpacing.homeActionRowGap),
+              ),
               Row(
                 children: [
                   Expanded(
                     child: VitCtaButton(
-                      height: 44,
+                      height: AppSpacing.homeHeroActionHeight,
+                      density: VitDensity.compact,
                       fullWidth: true,
                       onPressed: () => onNavigate('/wallet/deposit/USDT'),
                       leading: const Icon(Icons.file_download_outlined),
                       child: const Text('Nạp'),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: AppSpacing.homePortfolioActionSpacing),
                   Expanded(
                     child: VitCtaButton(
-                      height: 44,
+                      height: AppSpacing.homeHeroActionHeight,
+                      density: VitDensity.compact,
                       fullWidth: true,
                       variant: VitCtaButtonVariant.secondary,
                       onPressed: () => onNavigate('/wallet/withdraw/USDT'),
@@ -452,10 +485,11 @@ class _PortfolioCard extends StatelessWidget {
                       child: const Text('Rút'),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: AppSpacing.homePortfolioActionSpacing),
                   Expanded(
                     child: VitCtaButton(
-                      height: 44,
+                      height: AppSpacing.homeHeroActionHeight,
+                      density: VitDensity.compact,
                       fullWidth: true,
                       variant: VitCtaButtonVariant.secondary,
                       onPressed: () => onNavigate('/wallet'),
@@ -492,22 +526,23 @@ class _HomeCommandCenter extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionHeader(title: 'Tiếp theo'),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         _NextActionCard(
           action: nextAction,
           onTap: () => onNavigate(nextAction.routePath),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         const _SectionHeader(title: 'Gần đây'),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         SizedBox(
           key: HomePage.recentProductsKey,
-          height: 86,
+          height: AppSpacing.homeRecentProductHeight,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             clipBehavior: Clip.none,
             itemCount: recentProducts.length,
-            separatorBuilder: (_, _) => const SizedBox(width: 10),
+            separatorBuilder: (_, _) =>
+                const SizedBox(width: AppSpacing.homeSectionCtaGap),
             itemBuilder: (context, index) {
               final product = recentProducts[index];
               return _RecentProductTile(
@@ -533,21 +568,25 @@ class _NextActionCard extends StatelessWidget {
     return VitCard(
       key: HomePage.nextActionKey,
       onTap: onTap,
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
+      padding: const EdgeInsets.all(AppSpacing.homeNextActionCardPadding),
       borderColor: action.accentColor.withValues(alpha: .28),
       child: Row(
         children: [
           Container(
-            width: 42,
-            height: 42,
+            width: AppSpacing.homeNextActionIconContainer,
+            height: AppSpacing.homeNextActionIconContainer,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: action.accentColor.withValues(alpha: .14),
               borderRadius: AppRadii.mdRadius,
             ),
-            child: Icon(action.icon, color: action.accentColor, size: 20),
+            child: Icon(
+              action.icon,
+              color: action.accentColor,
+              size: AppSpacing.homeNextActionIconSize,
+            ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.homeCommandRowSpacing),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -562,45 +601,41 @@ class _NextActionCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.body.copyWith(
                           fontWeight: AppTextStyles.bold,
-                          height: 1.15,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.x2),
                     _CommandChip(
                       label: action.stateLabel,
                       color: action.accentColor,
                     ),
                   ],
                 ),
-                const SizedBox(height: 6),
+                const Padding(
+                  padding: EdgeInsets.only(top: AppSpacing.homeSectionInnerGap),
+                ),
                 Text(
                   action.subtitle,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 10,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.x3),
           Text(
             action.ctaLabel,
             style: AppTextStyles.caption.copyWith(
               color: action.accentColor,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: AppSpacing.homeChevronGap),
           Icon(
             Icons.chevron_right_rounded,
             color: action.accentColor,
-            size: 18,
+            size: AppSpacing.homeActionChevronSize,
           ),
         ],
       ),
@@ -617,19 +652,22 @@ class _RecentProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 146,
+      width: AppSpacing.homeRecentProductWidth,
       child: VitCard(
         key: HomePage.recentProductKey(product.id),
         onTap: onTap,
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.homeMarketSectionGap,
+          vertical: AppSpacing.x2,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Container(
-                  width: 28,
-                  height: 28,
+                  width: AppSpacing.homeRecentProductIcon,
+                  height: AppSpacing.homeRecentProductIcon,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: product.accentColor.withValues(alpha: .14),
@@ -638,7 +676,7 @@ class _RecentProductTile extends StatelessWidget {
                   child: Icon(
                     product.icon,
                     color: product.accentColor,
-                    size: 15,
+                    size: AppSpacing.homeRecentProductIconText,
                   ),
                 ),
                 const Spacer(),
@@ -648,26 +686,23 @@ class _RecentProductTile extends StatelessWidget {
                 ),
               ],
             ),
-            const Spacer(),
+            const SizedBox(height: AppSpacing.x1),
             Text(
               product.label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 fontWeight: AppTextStyles.bold,
-                height: 1,
               ),
             ),
-            const SizedBox(height: 6),
+            const Padding(
+              padding: EdgeInsets.only(top: AppSpacing.homeSectionInnerGap),
+            ),
             Text(
               product.contextLabel,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: 10,
-                height: 1,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ],
         ),
@@ -685,11 +720,16 @@ class _CommandChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minHeight: 20),
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.homeChipMinHeight,
+      ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.homeChipHorizontalPadding,
+        vertical: AppSpacing.homeChipVerticalPadding,
+      ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: AppRadii.pillRadius,
         border: Border.all(color: color.withValues(alpha: .26)),
       ),
       child: Text(
@@ -698,9 +738,7 @@ class _CommandChip extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
           fontWeight: AppTextStyles.bold,
-          height: 1,
         ),
       ),
     );
@@ -708,27 +746,38 @@ class _CommandChip extends StatelessWidget {
 }
 
 class _QuickActionsGrid extends StatelessWidget {
-  const _QuickActionsGrid({required this.actions, required this.onNavigate});
+  const _QuickActionsGrid({
+    required this.actions,
+    required this.onNavigate,
+    required this.density,
+  });
 
   final List<HomeQuickAction> actions;
   final ValueChanged<String> onNavigate;
+  final VitDensity density;
 
   @override
   Widget build(BuildContext context) {
+    final serviceDensity = density == VitDensity.compact
+        ? VitServiceTileDensity.compact
+        : VitServiceTileDensity.standard;
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.zero,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        crossAxisSpacing: AppSpacing.x3,
-        mainAxisSpacing: AppSpacing.x3,
-        childAspectRatio: 1.68,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: AppSpacing.serviceTileCrossAxisCount,
+        crossAxisSpacing: AppSpacing.gridGap,
+        mainAxisSpacing: AppSpacing.gridGap,
+        childAspectRatio: density == VitDensity.compact
+            ? AppSpacing.serviceTileGridAspectCompact
+            : AppSpacing.serviceTileGridAspectStandard,
       ),
       itemCount: actions.length,
       itemBuilder: (context, index) {
         final action = actions[index];
         return VitServiceTile(
+          density: serviceDensity,
           icon: action.icon,
           label: action.label,
           accentColor: action.accentColor,
@@ -741,13 +790,21 @@ class _QuickActionsGrid extends StatelessWidget {
 }
 
 class _MoreProductsSheet extends StatelessWidget {
-  const _MoreProductsSheet({required this.actions, required this.onNavigate});
+  const _MoreProductsSheet({
+    required this.actions,
+    required this.onNavigate,
+    required this.density,
+  });
 
   final List<HomeQuickAction> actions;
   final ValueChanged<String> onNavigate;
+  final VitDensity density;
 
   @override
   Widget build(BuildContext context) {
+    final serviceDensity = density == VitDensity.compact
+        ? VitServiceTileDensity.compact
+        : VitServiceTileDensity.standard;
     final maxHeight = MediaQuery.sizeOf(context).height * .72;
 
     return SafeArea(
@@ -756,7 +813,12 @@ class _MoreProductsSheet extends StatelessWidget {
         constraints: BoxConstraints(maxHeight: maxHeight),
         child: Padding(
           key: HomePage.moreProductsSheetKey,
-          padding: const EdgeInsets.fromLTRB(16, 10, 16, 20),
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.homeSectionCtaGap,
+            AppSpacing.x2,
+            AppSpacing.homeSectionCtaGap,
+            AppSpacing.homeSectionCtaGap,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -764,36 +826,39 @@ class _MoreProductsSheet extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Container(
-                  width: 36,
-                  height: 4,
+                  width: AppSpacing.homeMoreProductsSheetHandleWidth,
+                  height: AppSpacing.homeMoreProductsSheetHandleHeight,
                   decoration: BoxDecoration(
                     color: AppColors.borderSolid,
-                    borderRadius: BorderRadius.circular(999),
+                    borderRadius: AppRadii.pillRadius,
                   ),
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
               Text(
                 'Th\u00EAm s\u1EA3n ph\u1EA9m',
                 style: AppTextStyles.sectionTitle.copyWith(
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
               Flexible(
                 child: GridView.builder(
                   shrinkWrap: true,
                   padding: EdgeInsets.zero,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: AppSpacing.serviceTileCrossAxisCount,
                     crossAxisSpacing: AppSpacing.x3,
                     mainAxisSpacing: AppSpacing.x3,
-                    childAspectRatio: 1.68,
+                    childAspectRatio: density == VitDensity.compact
+                        ? AppSpacing.serviceTileGridAspectCompact
+                        : AppSpacing.serviceTileGridAspectStandard,
                   ),
                   itemCount: actions.length,
                   itemBuilder: (context, index) {
                     final action = actions[index];
                     return VitServiceTile(
+                      density: serviceDensity,
                       icon: action.icon,
                       label: action.label,
                       accentColor: action.accentColor,

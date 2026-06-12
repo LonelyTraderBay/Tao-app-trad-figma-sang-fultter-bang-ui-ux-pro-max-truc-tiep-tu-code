@@ -43,7 +43,7 @@ class StakingInsuranceFundInfoBanner extends StatelessWidget {
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.stakingProductBodyLineHeight,
                   ),
                 ),
               ],
@@ -96,7 +96,7 @@ class StakingInsuranceFundTabs extends StatelessWidget {
                         AnimatedContainer(
                           duration: const Duration(milliseconds: 160),
                           width: active == tab ? AppSpacing.buttonHero : 0,
-                          height: 2,
+                          height: AppSpacing.stakingProductTabIndicatorHeight,
                           decoration: BoxDecoration(
                             color: active == tab
                                 ? AppColors.primarySoft

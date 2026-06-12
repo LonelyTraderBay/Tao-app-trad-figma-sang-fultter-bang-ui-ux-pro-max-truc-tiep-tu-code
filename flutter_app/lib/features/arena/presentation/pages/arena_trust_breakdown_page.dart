@@ -131,8 +131,8 @@ class _TrustBreakdownCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 72,
-                height: 72,
+                width: AppSpacing.arenaTrustScoreBox,
+                height: AppSpacing.arenaTrustScoreBox,
                 decoration: BoxDecoration(
                   color: AppColors.buy10,
                   borderRadius: AppRadii.cardRadius,
@@ -164,7 +164,7 @@ class _TrustBreakdownCard extends StatelessWidget {
                       'Community metrics: Fair Play, completion, report rate và dispute rate.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1.4,
+                        height: AppSpacing.arenaTrustHeroLineHeight,
                       ),
                     ),
                     if (creator.fairPlayBadge) ...[
@@ -198,7 +198,7 @@ class _TrustBreakdownCard extends StatelessWidget {
             snapshot.disclaimer,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.45,
+              height: AppSpacing.arenaTrustDisclaimerLineHeight,
             ),
           ),
         ],
@@ -218,13 +218,17 @@ class _TrustMetricRow extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 36,
-          height: 36,
+          width: AppSpacing.arenaTrustMetricIconBox,
+          height: AppSpacing.arenaTrustMetricIconBox,
           decoration: BoxDecoration(
             color: color.withValues(alpha: .14),
             borderRadius: AppRadii.mdRadius,
           ),
-          child: Icon(_metricIcon(metric.kind), color: color, size: 18),
+          child: Icon(
+            _metricIcon(metric.kind),
+            color: color,
+            size: AppSpacing.arenaTrustMetricGlyph,
+          ),
         ),
         const SizedBox(width: AppSpacing.x3),
         Expanded(
@@ -266,8 +270,8 @@ class _CreatorProfileLink extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: AppSpacing.arenaTrustCreatorAvatar,
+            height: AppSpacing.arenaTrustCreatorAvatar,
             decoration: const BoxDecoration(
               color: AppColors.surface2,
               borderRadius: AppRadii.mdRadius,
@@ -328,7 +332,11 @@ class _SafetyLink extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.buy, size: 20),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.buy,
+            size: AppSpacing.arenaTrustSafetyIcon,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
@@ -346,7 +354,7 @@ class _SafetyLink extends StatelessWidget {
                   snapshot.safetyDescription,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.4,
+                    height: AppSpacing.arenaTrustHeroLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),

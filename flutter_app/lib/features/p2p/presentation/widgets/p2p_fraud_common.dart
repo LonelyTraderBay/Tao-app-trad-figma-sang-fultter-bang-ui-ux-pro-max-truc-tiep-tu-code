@@ -65,7 +65,6 @@ class _SeverityBadge extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: 9,
           ),
         ),
       ),

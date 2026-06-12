@@ -89,7 +89,7 @@ class _Pill extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.stakingCommunityPillLineHeight,
         ),
       ),
     );

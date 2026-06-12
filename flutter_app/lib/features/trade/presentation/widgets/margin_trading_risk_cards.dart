@@ -28,7 +28,6 @@ class _RiskWarningCard extends StatelessWidget {
                   warning.title,
                   style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.onAccent,
-                    fontSize: 16,
                     fontWeight: AppTextStyles.bold,
                     height: 1.1,
                   ),
@@ -83,7 +82,6 @@ class _NegativeBalanceCard extends StatelessWidget {
                   disclosure.title,
                   style: AppTextStyles.body.copyWith(
                     color: _marginGreen,
-                    fontSize: 15,
                     fontWeight: AppTextStyles.bold,
                     height: 1.1,
                   ),
@@ -93,17 +91,13 @@ class _NegativeBalanceCard extends StatelessWidget {
                   disclosure.body,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1.45,
                   ),
                 ),
                 const SizedBox(height: 9),
                 Text(
                   disclosure.footer,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 10,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -149,7 +143,6 @@ class _BestExecutionCard extends StatelessWidget {
                   disclosure.title,
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.onAccent,
-                    fontSize: 15,
                     fontWeight: AppTextStyles.bold,
                     height: 1.1,
                   ),
@@ -159,7 +152,6 @@ class _BestExecutionCard extends StatelessWidget {
                   disclosure.body,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1.45,
                   ),
                 ),
@@ -179,7 +171,6 @@ class _BestExecutionCard extends StatelessWidget {
                           item,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            fontSize: 10,
                           ),
                         ),
                       ),
@@ -204,7 +195,6 @@ class _BestExecutionCard extends StatelessWidget {
                       disclosure.actionLabel,
                       style: AppTextStyles.caption.copyWith(
                         color: _marginPrimary,
-                        fontSize: 12,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),

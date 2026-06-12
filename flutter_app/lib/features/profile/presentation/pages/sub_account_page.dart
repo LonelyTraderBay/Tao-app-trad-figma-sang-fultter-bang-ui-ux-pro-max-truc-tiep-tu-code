@@ -87,7 +87,7 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
                         isBalanceHidden: _isBalanceHidden,
                         onToggleBalance: _toggleBalance,
                       ),
-                      const SizedBox(height: 18),
+                      const Padding(padding: EdgeInsets.only(top: 18)),
                       VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Review sub-account permissions',
@@ -95,21 +95,21 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
                             'Ki\u1EC3m tra quy\u1EC1n chuy\u1EC3n, r\u00FAt, API key v\u00E0 gi\u1EDBi h\u1EA1n tr\u01B0\u1EDBc khi t\u1EA1o ho\u1EB7c m\u1EDF r\u1ED9ng t\u00E0i kho\u1EA3n ph\u1EE5.',
                         contractId: 'Sub accounts: ${snapshot.accounts.length}',
                       ),
-                      const SizedBox(height: 26),
+                      const Padding(padding: EdgeInsets.only(top: 26)),
                       _CreateSubAccountButton(
                         isOpen: _showCreate,
                         onTap: _toggleCreateForm,
                       ),
                       if (_showCreate) ...[
-                        const SizedBox(height: 13),
+                        const Padding(padding: EdgeInsets.only(top: 13)),
                         const _CreateSubAccountForm(),
                       ],
-                      const SizedBox(height: 24),
+                      const Padding(padding: EdgeInsets.only(top: 24)),
                       _SectionHeader(
                         label:
                             'T\u00C0I KHO\u1EA2N (${snapshot.accounts.length})',
                       ),
-                      const SizedBox(height: 10),
+                      const Padding(padding: EdgeInsets.only(top: 10)),
                       if (snapshot.accounts.isEmpty)
                         const VitEmptyState(
                           title:
@@ -127,9 +127,9 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
                             onTap: () => _toggleExpanded(account.id),
                           ),
                           if (account != snapshot.accounts.last)
-                            const SizedBox(height: 13),
+                            const Padding(padding: EdgeInsets.only(top: 13)),
                         ],
-                      const SizedBox(height: 25),
+                      const Padding(padding: EdgeInsets.only(top: 25)),
                       const _SubAccountInfoNote(),
                     ],
                   ),

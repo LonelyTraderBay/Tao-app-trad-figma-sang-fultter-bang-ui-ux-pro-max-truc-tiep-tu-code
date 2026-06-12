@@ -16,7 +16,9 @@ import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_dispute_
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class P2PDisputeDetailPage extends ConsumerStatefulWidget {
   const P2PDisputeDetailPage({
@@ -67,8 +69,10 @@ class _P2PDisputeDetailPageState extends ConsumerState<P2PDisputeDetailPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pDisputeBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pDisputeBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
     final level = _currentLevel ?? snapshot.dispute.currentLevel;
     final currentLevel = snapshot.levelByNumber(level);
@@ -101,29 +105,42 @@ class _P2PDisputeDetailPageState extends ConsumerState<P2PDisputeDetailPage> {
                   child: SingleChildScrollView(
                     key: P2PDisputeDetailPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    padding: AppSpacing.p2pDisputeScrollPadding(bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      customGap: 0,
                       children: [
-                        P2PDisputeStatusBanner(dispute: snapshot.dispute),
-                        const SizedBox(height: AppSpacing.x4),
-                        P2PDisputeEscalationCard(
-                          escalateKey: P2PDisputeDetailPage.escalateKey,
-                          levels: snapshot.levels,
-                          currentLevel: level,
-                          currentLevelData: currentLevel,
-                          nextLevelData: nextLevel,
-                          onEscalate: nextLevel == null
-                              ? null
-                              : () => _escalate(nextLevel),
+                        VitCard(
+                          variant: VitCardVariant.ghost,
+                          padding: EdgeInsets.zero,
+                          child: P2PDisputeStatusBanner(
+                            dispute: snapshot.dispute,
+                          ),
                         ),
                         const SizedBox(height: AppSpacing.x4),
-                        P2PDisputeReasonCard(dispute: snapshot.dispute),
+                        VitCard(
+                          variant: VitCardVariant.ghost,
+                          padding: EdgeInsets.zero,
+                          child: P2PDisputeEscalationCard(
+                            escalateKey: P2PDisputeDetailPage.escalateKey,
+                            levels: snapshot.levels,
+                            currentLevel: level,
+                            currentLevelData: currentLevel,
+                            nextLevelData: nextLevel,
+                            onEscalate: nextLevel == null
+                                ? null
+                                : () => _escalate(nextLevel),
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.x4),
+                        VitCard(
+                          variant: VitCardVariant.ghost,
+                          padding: EdgeInsets.zero,
+                          child: P2PDisputeReasonCard(
+                            dispute: snapshot.dispute,
+                          ),
+                        ),
                         const SizedBox(height: AppSpacing.x4),
                         P2PDisputeEvidenceCard(
                           addEvidenceKey: P2PDisputeDetailPage.addEvidenceKey,

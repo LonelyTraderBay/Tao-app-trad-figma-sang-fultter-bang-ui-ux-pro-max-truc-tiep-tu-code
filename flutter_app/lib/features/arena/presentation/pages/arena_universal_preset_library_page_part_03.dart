@@ -41,11 +41,11 @@ class _DemoFlowCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           _DemoStep(step: '1', label: 'Domain', value: flow.domainLabel),
           _DemoStep(step: '2', label: 'Type', value: flow.typeLabel),
           _DemoSuggestions(values: flow.suggestions),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.buy20,
@@ -56,7 +56,7 @@ class _DemoFlowCard extends StatelessWidget {
                 const Icon(
                   Icons.visibility_outlined,
                   color: AppColors.buy,
-                  size: 14,
+                  size: AppSpacing.arenaPresetSmallIcon,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(
@@ -64,7 +64,7 @@ class _DemoFlowCard extends StatelessWidget {
                     flow.generatedRule,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      height: 1.4,
+                      height: AppSpacing.arenaPresetCheckLineHeight,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -105,7 +105,7 @@ class _DemoStep extends StatelessWidget {
               _StepDot(step: step, color: AppColors.buy),
               const SizedBox(width: AppSpacing.x3),
               SizedBox(
-                width: 56,
+                width: AppSpacing.arenaPresetProcessLabelWidth,
                 child: Text(
                   label,
                   style: AppTextStyles.micro.copyWith(
@@ -125,7 +125,11 @@ class _DemoStep extends StatelessWidget {
                   ),
                 ),
               ),
-              const Icon(Icons.check_rounded, color: AppColors.buy, size: 14),
+              const Icon(
+                Icons.check_rounded,
+                color: AppColors.buy,
+                size: AppSpacing.arenaPresetSmallIcon,
+              ),
             ],
           ),
         ),
@@ -164,7 +168,7 @@ class _DemoSuggestions extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
             Wrap(
               spacing: AppSpacing.x2,
               runSpacing: AppSpacing.x2,
@@ -205,7 +209,7 @@ class _DemoSummaryRow extends StatelessWidget {
             Icon(
               _domainIcon(flow.domainId),
               color: selected ? AppColors.buy : AppColors.text3,
-              size: 16,
+              size: AppSpacing.arenaPresetInlineIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -222,7 +226,7 @@ class _DemoSummaryRow extends StatelessWidget {
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.text3,
-              size: 16,
+              size: AppSpacing.arenaPresetInlineIcon,
             ),
           ],
         ),
@@ -254,7 +258,9 @@ class _TitleChip extends StatelessWidget {
       ),
       onTap: onTap,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 260),
+        constraints: const BoxConstraints(
+          maxWidth: AppSpacing.arenaPresetTitleMaxWidth,
+        ),
         child: Text(
           title,
           maxLines: 1,
@@ -296,7 +302,7 @@ class _ProcessRow extends StatelessWidget {
                   text,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.35,
+                    height: AppSpacing.arenaPresetBodyLineHeight,
                   ),
                 ),
               ),
@@ -320,14 +326,18 @@ class _PresetEngineNote extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.buy, size: 16),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.buy,
+            size: AppSpacing.arenaPresetInlineIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               'Hệ preset dùng 1 rule engine chung. Tất cả domains tái sử dụng cùng challenge types, dropdowns và suggestion pipeline.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: 1.45,
+                height: AppSpacing.arenaPresetNoticeLineHeight,
               ),
             ),
           ),
@@ -348,7 +358,7 @@ class _MiniHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: _arenaAccent, size: 15),
+        Icon(icon, color: _arenaAccent, size: AppSpacing.arenaPresetHeaderIcon),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
@@ -377,8 +387,8 @@ class _StepDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 22,
-      height: 22,
+      width: AppSpacing.arenaPresetStepDot,
+      height: AppSpacing.arenaPresetStepDot,
       alignment: Alignment.center,
       decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       child: Text(

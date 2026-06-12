@@ -19,7 +19,7 @@ class _StudioStepper extends StatelessWidget {
             if (i != steps.length - 1)
               Container(
                 width: AppSpacing.x5,
-                height: 2,
+                height: AppSpacing.arenaStudioStepperLineHeight,
                 margin: const EdgeInsets.only(bottom: AppSpacing.x5),
                 decoration: BoxDecoration(
                   color: steps[i].index < step
@@ -57,8 +57,8 @@ class _StepMarker extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 28,
-          height: 28,
+          width: AppSpacing.arenaStudioStepDot,
+          height: AppSpacing.arenaStudioStepDot,
           decoration: BoxDecoration(
             color: fill,
             shape: BoxShape.circle,
@@ -71,7 +71,7 @@ class _StepMarker extends StatelessWidget {
               ? const Icon(
                   Icons.check_rounded,
                   color: AppColors.navCenterIcon,
-                  size: 14,
+                  size: AppSpacing.arenaStudioStepIcon,
                 )
               : Text(
                   '${item.index}',
@@ -94,7 +94,7 @@ class _StepMarker extends StatelessWidget {
                 ? AppColors.buy
                 : AppColors.text3,
             fontWeight: AppTextStyles.medium,
-            height: 1.1,
+            height: AppSpacing.arenaStudioStepLabelLineHeight,
           ),
         ),
       ],

@@ -27,7 +27,6 @@ class _IntroCard extends StatelessWidget {
                   '3 công cụ nâng cao cho pro traders: trade nhanh hơn với ladder, quản lý nhiều lệnh cùng lúc, và shortcuts để tăng tốc 3x.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
                     height: 1.55,
                   ),
                 ),
@@ -66,7 +65,6 @@ class _FeatureCard extends StatelessWidget {
                   Text(
                     feature.title,
                     style: AppTextStyles.caption.copyWith(
-                      fontSize: 14,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -75,7 +73,6 @@ class _FeatureCard extends StatelessWidget {
                     feature.description,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      fontSize: 12,
                       height: 1.5,
                     ),
                   ),
@@ -123,7 +120,6 @@ class _SpeedCard extends StatelessWidget {
                   'Trading Speed: 3x Faster',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.buy,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -132,7 +128,6 @@ class _SpeedCard extends StatelessWidget {
                   'Pro traders sử dụng Phase 3 tools đặt lệnh trung bình 3-5 giây thay vì 10-15 giây. Master shortcuts để trade nhanh như market makers.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
                     height: 1.5,
                   ),
                 ),
@@ -180,7 +175,6 @@ class _BenefitsCard extends StatelessWidget {
           Text(
             'Advanced Tools Benefits',
             style: AppTextStyles.caption.copyWith(
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -221,7 +215,6 @@ class _BenefitItem extends StatelessWidget {
                 title,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.medium,
                 ),
               ),
@@ -230,7 +223,6 @@ class _BenefitItem extends StatelessWidget {
                 description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 11,
                   height: 1.35,
                 ),
               ),
@@ -256,7 +248,6 @@ class _ProgressCard extends StatelessWidget {
           Text(
             'Phase 3 Progress',
             style: AppTextStyles.caption.copyWith(
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -269,7 +260,6 @@ class _ProgressCard extends StatelessWidget {
                     item.label,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      fontSize: 12,
                     ),
                   ),
                 ),

@@ -19,17 +19,11 @@ class _MessagePanel extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'Broadcast Message',
-                  style: AppTextStyles.baseMedium.copyWith(fontSize: 16),
-                ),
+                Text('Broadcast Message', style: AppTextStyles.baseMedium),
                 const SizedBox(height: 10),
                 Text(
                   'Send announcement to all followers',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
                 const SizedBox(height: 18),
                 _RequestButton(onPressed: onClose),

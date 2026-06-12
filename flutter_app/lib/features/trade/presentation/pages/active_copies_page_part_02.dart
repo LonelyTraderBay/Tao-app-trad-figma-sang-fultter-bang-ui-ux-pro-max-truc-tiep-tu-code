@@ -23,7 +23,6 @@ class _ReturnBar extends StatelessWidget {
                 'Return',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
                   height: 1,
                 ),
               ),
@@ -32,7 +31,6 @@ class _ReturnBar extends StatelessWidget {
                 _formatPercent(value),
                 style: AppTextStyles.micro.copyWith(
                   color: color,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                   fontFeatures: AppTextStyles.tabularFigures,
@@ -84,7 +82,6 @@ class _ExpandedCopyDetails extends StatelessWidget {
               'Performance (30 ngày)',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
                 fontWeight: AppTextStyles.medium,
               ),
             ),
@@ -137,7 +134,6 @@ class _ExpandedCopyDetails extends StatelessWidget {
                       'Trades gần đây',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        fontSize: 11,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -149,7 +145,6 @@ class _ExpandedCopyDetails extends StatelessWidget {
                       'Xem tất cả',
                       style: AppTextStyles.micro.copyWith(
                         color: _copyPrimary,
-                        fontSize: 11,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -270,7 +265,6 @@ class _DetailStat extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -281,7 +275,6 @@ class _DetailStat extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 13,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -319,7 +312,6 @@ class _RecentTradeRow extends StatelessWidget {
               trade.side == TradeOrderSide.buy ? 'BUY' : 'SELL',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.onAccent,
-                fontSize: 9,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
@@ -331,7 +323,6 @@ class _RecentTradeRow extends StatelessWidget {
               trade.pair,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
-                fontSize: 11,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
@@ -341,7 +332,6 @@ class _RecentTradeRow extends StatelessWidget {
             _formatSignedUsd(trade.pnl),
             style: AppTextStyles.micro.copyWith(
               color: trade.pnl >= 0 ? AppColors.buy : AppColors.sell,
-              fontSize: 11,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),

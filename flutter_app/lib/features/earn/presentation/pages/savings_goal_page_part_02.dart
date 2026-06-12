@@ -15,7 +15,7 @@ class _MilestoneDot extends StatelessWidget {
         shape: BoxShape.circle,
         border: Border.all(
           color: unlocked ? color : AppColors.borderSolid,
-          width: 1.5,
+          width: AppSpacing.savingsGoalMilestoneBorderWidth,
         ),
       ),
       child: SizedBox(
@@ -32,8 +32,8 @@ class _MilestoneDot extends StatelessWidget {
                   '${milestone.percentage}',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 7,
-                    height: 1,
+                    fontSize: AppSpacing.savingsGoalMilestoneFontSize,
+                    height: AppSpacing.savingsGoalMilestoneLineHeight,
                   ),
                 ),
               ),
@@ -74,7 +74,7 @@ class _TipCard extends StatelessWidget {
                   tip.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
+                    fontSize: AppSpacing.savingsGoalTipFontSize,
                   ),
                 ),
               ],
@@ -272,8 +272,8 @@ class _GoalDetailSheet extends StatelessWidget {
             _ProgressRing(
               progress: progress,
               color: accent,
-              size: 84,
-              strokeWidth: 6,
+              size: AppSpacing.savingsGoalDetailProgressRing,
+              strokeWidth: AppSpacing.savingsGoalDetailProgressStroke,
               centerLabel: '${(progress * 100).round()}%',
             ),
             const SizedBox(width: AppSpacing.x4),

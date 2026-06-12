@@ -154,6 +154,19 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
                             '${_tradeType == P2PTradeType.buy ? 'Mua nhanh' : 'Bán nhanh'} ${selectedAsset.symbol}',
                           ),
                         ),
+                        VitPageContent(
+                          padding: VitContentPadding.compact,
+                          customGap: 0,
+                          children: const [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Express trade state review',
+                              message:
+                                  'Trade side, asset, fiat amount, crypto estimate, payment method, best offer, escrow note, and disabled CTA state stay visible before confirmation.',
+                              contractId: 'SC-211',
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

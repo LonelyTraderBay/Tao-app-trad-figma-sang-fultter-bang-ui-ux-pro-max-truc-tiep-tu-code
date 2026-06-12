@@ -21,7 +21,7 @@ class _OrderTopTabs extends StatelessWidget {
         border: Border(bottom: BorderSide(color: AppColors.border)),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+        padding: AppSpacing.tradeHistoryTopTabsPadding,
         child: Row(
           children: [
             Expanded(
@@ -33,7 +33,7 @@ class _OrderTopTabs extends StatelessWidget {
                 onTap: () => onChanged('open'),
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.tradeHistoryTabGap),
             Expanded(
               child: _TopTabButton(
                 key: OrdersHistoryPage.historyTabKey,
@@ -70,7 +70,7 @@ class _TopTabButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
       child: Container(
-        height: 40,
+        height: AppSpacing.tradeHistoryTopTabHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active ? _tradePrimary : _fieldBackground,
@@ -86,9 +86,9 @@ class _TopTabButton extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.tradeHistoryTabGap),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: AppSpacing.tradeHistoryBadgePadding,
               decoration: BoxDecoration(
                 color: active
                     ? AppColors.onAccent.withValues(alpha: .18)
@@ -125,7 +125,7 @@ class _FilterRow extends StatelessWidget {
       ('sell', 'Bán', AppColors.sell),
     ];
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      padding: AppSpacing.tradeHistoryFilterPadding,
       child: Row(
         children: [
           for (final filter in filters) ...[
@@ -137,7 +137,7 @@ class _FilterRow extends StatelessWidget {
               active: active == filter.$1,
               onTap: () => onChanged(filter.$1),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: AppSpacing.tradeHistoryFilterGap),
           ],
         ],
       ),
@@ -168,11 +168,13 @@ class _FilterChip extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.lgRadius,
       child: Container(
-        height: 34,
-        width: compactAll ? 61 : 58,
+        height: AppSpacing.tradeHistoryFilterHeight,
+        width: compactAll
+            ? AppSpacing.tradeHistoryFilterCompactWidth
+            : AppSpacing.tradeHistoryFilterWidth,
         padding: compactAll
             ? EdgeInsets.zero
-            : const EdgeInsets.symmetric(horizontal: 10),
+            : AppSpacing.tradeHistoryFilterPaddingCompact,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: active ? color : AppColors.transparent,
@@ -217,7 +219,7 @@ class _OrderHistoryTile extends StatelessWidget {
         border: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 14, 20, 12),
+        padding: AppSpacing.tradeHistoryTilePadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -231,28 +233,30 @@ class _OrderHistoryTile extends StatelessWidget {
                           order.symbol,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.baseMedium.copyWith(
-                            fontSize: 15,
-                          ),
+                          style: AppTextStyles.baseMedium,
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: AppSpacing.tradeHistorySymbolGap),
                       _SmallBadge(
                         label: isBuy ? 'MUA' : 'BÁN',
                         color: isBuy ? AppColors.buy : AppColors.sell,
                       ),
-                      const SizedBox(width: 6),
+                      const SizedBox(width: AppSpacing.tradeHistoryTypeGap),
                       _TypeBadge(type: order.type),
                     ],
                   ),
                 ),
                 SizedBox(
-                  width: 118,
+                  width: AppSpacing.tradeHistoryStatusWidth,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Icon(status.icon, color: status.color, size: 15),
-                      const SizedBox(width: 5),
+                      Icon(
+                        status.icon,
+                        color: status.color,
+                        size: AppSpacing.tradeHistoryStatusIcon,
+                      ),
+                      const SizedBox(width: AppSpacing.tradeHistoryStatusGap),
                       Flexible(
                         child: Text(
                           status.label,
@@ -269,7 +273,7 @@ class _OrderHistoryTile extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.tradeHistoryTileGap),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -288,7 +292,7 @@ class _OrderHistoryTile extends StatelessWidget {
               ],
             ),
             if (order.status == TradeOrderStatus.partial || order.fee > 0) ...[
-              const SizedBox(height: 10),
+              const SizedBox(height: AppSpacing.tradeHistoryTileSmallGap),
               Row(
                 children: [
                   Expanded(
@@ -312,24 +316,24 @@ class _OrderHistoryTile extends StatelessWidget {
                 ],
               ),
             ],
-            const SizedBox(height: 10),
+            const SizedBox(height: AppSpacing.tradeHistoryTileSmallGap),
             _InfoColumn(label: 'Thời gian', value: order.createdAt),
             if (order.status == TradeOrderStatus.partial) ...[
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.tradeHistoryTileGap),
               ClipRRect(
                 borderRadius: AppRadii.xsRadius,
                 child: LinearProgressIndicator(
                   value: fillPercent,
-                  minHeight: 5,
+                  minHeight: AppSpacing.tradeHistoryProgressHeight,
                   color: AppColors.buy,
                   backgroundColor: AppColors.surface3,
                 ),
               ),
             ],
             if (actionable) ...[
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.tradeHistoryTileGap),
               SizedBox(
-                height: 36,
+                height: AppSpacing.tradeHistoryCancelHeight,
                 child: OutlinedButton(
                   key: actionKey,
                   onPressed: onCancel,

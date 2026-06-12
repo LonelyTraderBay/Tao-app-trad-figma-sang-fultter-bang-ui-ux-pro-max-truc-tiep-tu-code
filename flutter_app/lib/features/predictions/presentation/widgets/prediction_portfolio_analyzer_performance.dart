@@ -8,7 +8,7 @@ class _PerformanceChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionAnalyzerCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -16,9 +16,11 @@ class _PerformanceChartCard extends StatelessWidget {
             'P/L Over Time',
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(
+            height: AppSpacing.predictionAnalyzerPerformanceChartGap,
+          ),
           SizedBox(
-            height: 180,
+            height: AppSpacing.predictionAnalyzerPerformanceChartHeight,
             child: CustomPaint(
               painter: _PnlLinePainter(points: snapshot.pnlHistory),
               child: const SizedBox.expand(),
@@ -42,7 +44,7 @@ class _TradeStatsSection extends StatelessWidget {
       accentColor: _predictionPrimary,
       children: [
         VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.predictionAnalyzerCardPadding,
           child: Column(
             children: [
               Row(
@@ -63,7 +65,9 @@ class _TradeStatsSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(
+                height: AppSpacing.predictionAnalyzerTradeStatsGap,
+              ),
               Row(
                 children: [
                   Expanded(
@@ -82,11 +86,13 @@ class _TradeStatsSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 14),
+              const SizedBox(
+                height: AppSpacing.predictionAnalyzerTradeProgressGap,
+              ),
               ClipRRect(
-                borderRadius: BorderRadius.circular(999),
+                borderRadius: AppRadii.pillRadius,
                 child: LinearProgressIndicator(
-                  minHeight: 8,
+                  minHeight: AppSpacing.predictionAnalyzerTradeProgressHeight,
                   value: snapshot.winRate / 100,
                   color: AppColors.buy,
                   backgroundColor: AppColors.bg,
@@ -115,7 +121,7 @@ class _AttributionSection extends StatelessWidget {
       children: [
         for (final position in closed)
           VitCard(
-            padding: const EdgeInsets.all(14),
+            padding: AppSpacing.predictionAnalyzerAttributionPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -129,7 +135,10 @@ class _AttributionSection extends StatelessWidget {
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(height: 3),
+                      const SizedBox(
+                        height:
+                            AppSpacing.predictionAnalyzerAttributionLabelGap,
+                      ),
                       Text(
                         position.category,
                         style: AppTextStyles.micro.copyWith(
@@ -139,7 +148,9 @@ class _AttributionSection extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(
+                  width: AppSpacing.predictionAnalyzerAttributionTrailingGap,
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [

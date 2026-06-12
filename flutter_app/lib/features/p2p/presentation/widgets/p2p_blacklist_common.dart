@@ -89,7 +89,6 @@ class _ReasonCountPill extends StatelessWidget {
               '$count',
               style: AppTextStyles.micro.copyWith(
                 color: color,
-                fontSize: 9,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -121,7 +120,6 @@ class _SmallReasonPill extends StatelessWidget {
         reason.label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
           fontWeight: AppTextStyles.bold,
         ),
       ),
@@ -179,10 +177,7 @@ class _TinyStat extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 8,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),

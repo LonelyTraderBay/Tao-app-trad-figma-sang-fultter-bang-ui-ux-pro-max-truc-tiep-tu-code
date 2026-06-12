@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -57,7 +59,9 @@ class _PredictionPortfolioAnalyzerPageState
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.predictionAnalyzerBottomInsetVisual
+            : AppSpacing.predictionAnalyzerBottomInsetNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -84,28 +88,39 @@ class _PredictionPortfolioAnalyzerPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionPortfolioAnalyzerPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.predictionAnalyzerScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 16,
-                      children: switch (_activeTab) {
-                        _AnalyzerTab.overview => [
-                          _PortfolioSummaryCard(snapshot: snapshot),
-                          _StatsGrid(snapshot: snapshot),
-                          _CategoryCard(snapshot: snapshot),
-                        ],
-                        _AnalyzerTab.performance => [
-                          _PerformanceChartCard(snapshot: snapshot),
-                          _TradeStatsSection(snapshot: snapshot),
-                          _AttributionSection(snapshot: snapshot),
-                        ],
-                        _AnalyzerTab.risk => [
-                          _RiskMetricsSection(snapshot: snapshot),
-                          _CategoryRiskCard(snapshot: snapshot),
-                          _DiversificationCard(snapshot: snapshot),
-                          const _RiskWarning(),
-                        ],
-                      },
+                      customGap: AppSpacing.predictionAnalyzerContentGap,
+                      children: [
+                        ...switch (_activeTab) {
+                          _AnalyzerTab.overview => [
+                            _PortfolioSummaryCard(snapshot: snapshot),
+                            _StatsGrid(snapshot: snapshot),
+                            _CategoryCard(snapshot: snapshot),
+                          ],
+                          _AnalyzerTab.performance => [
+                            _PerformanceChartCard(snapshot: snapshot),
+                            _TradeStatsSection(snapshot: snapshot),
+                            _AttributionSection(snapshot: snapshot),
+                          ],
+                          _AnalyzerTab.risk => [
+                            _RiskMetricsSection(snapshot: snapshot),
+                            _CategoryRiskCard(snapshot: snapshot),
+                            _DiversificationCard(snapshot: snapshot),
+                            const _RiskWarning(),
+                          ],
+                        },
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Prediction portfolio analyzer review',
+                          message:
+                              'Portfolio value, category exposure, P/L attribution, probability drift, risk concentration, diversification, and warning states are reviewed before portfolio decisions.',
+                          contractId: 'SC-038',
+                        ),
+                      ],
                     ),
                   ),
                 ),

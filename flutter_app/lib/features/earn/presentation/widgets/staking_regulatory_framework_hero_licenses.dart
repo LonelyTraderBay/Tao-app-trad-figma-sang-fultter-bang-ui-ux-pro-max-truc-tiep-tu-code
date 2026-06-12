@@ -31,7 +31,7 @@ class _HeroCard extends StatelessWidget {
                   snapshot.heroBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.stakingRegulatoryBodyLineHeight,
                   ),
                 ),
               ],

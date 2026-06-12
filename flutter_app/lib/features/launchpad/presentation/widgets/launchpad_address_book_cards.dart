@@ -52,7 +52,7 @@ class _AddressCard extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTextStyles.base.copyWith(
                                   color: AppColors.text1,
-                                  fontWeight: FontWeight.w900,
+                                  fontWeight: AppTextStyles.heavy,
                                 ),
                               ),
                             ),
@@ -68,7 +68,7 @@ class _AddressCard extends StatelessWidget {
                               const Icon(
                                 Icons.verified_user_outlined,
                                 color: AppColors.buy,
-                                size: 14,
+                                size: AppSpacing.launchpadIconMd,
                               ),
                             ],
                           ],
@@ -107,7 +107,7 @@ class _AddressCard extends StatelessWidget {
                           color: address.isFavorite
                               ? AppColors.warn
                               : AppColors.text3,
-                          size: 20,
+                          size: AppSpacing.launchpadIcon3xl,
                         ),
                       ),
                       IconButton(
@@ -117,7 +117,7 @@ class _AddressCard extends StatelessWidget {
                         icon: Icon(
                           copied ? Icons.check_rounded : Icons.copy_rounded,
                           color: copied ? AppColors.buy : AppColors.text3,
-                          size: 16,
+                          size: AppSpacing.launchpadIconXl,
                         ),
                       ),
                     ],
@@ -161,7 +161,7 @@ class _ExpandedAddress extends StatelessWidget {
               address.address,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
-                height: 1.45,
+                height: AppSpacing.launchpadLineHeightReadable,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -185,7 +185,7 @@ class _ExpandedAddress extends StatelessWidget {
               address.notes!,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.35,
+                height: AppSpacing.launchpadLineHeightDense,
               ),
             ),
           ],
@@ -195,11 +195,11 @@ class _ExpandedAddress extends StatelessWidget {
               key: LaunchpadAddressBookPage.defaultKey(address.id),
               onPressed: onDefault,
               variant: VitCtaButtonVariant.secondary,
-              height: 42,
+              height: AppSpacing.launchpadBox42,
               leading: const Icon(
                 Icons.verified_user_outlined,
                 color: AppColors.text1,
-                size: 16,
+                size: AppSpacing.launchpadIconXl,
               ),
               child: const Text('Dat lam mac dinh'),
             ),

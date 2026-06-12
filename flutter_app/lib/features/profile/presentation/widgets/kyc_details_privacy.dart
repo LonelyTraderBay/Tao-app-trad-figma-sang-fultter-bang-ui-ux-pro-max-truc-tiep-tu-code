@@ -18,13 +18,9 @@ class _DetailsBlock extends StatelessWidget {
       children: [
         Text(
           title,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text2,
-            fontSize: 12,
-            height: 1,
-          ),
+          style: AppTextStyles.badge.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.kycDetailTitleGap),
         for (final line in lines) ...[
           Row(
             children: [
@@ -32,31 +28,25 @@ class _DetailsBlock extends StatelessWidget {
                 Icon(
                   Icons.check_circle_rounded,
                   color: done ? _kycGreen : AppColors.text3,
-                  size: 12,
+                  size: AppSpacing.kycDetailIcon,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.kycDetailIconGap),
               ] else
                 Text(
                   '\u2022 ',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontSize: 13,
-                    height: 1.25,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text1),
                 ),
               Expanded(
                 child: Text(
                   line,
                   style: AppTextStyles.caption.copyWith(
                     color: done ? AppColors.text1 : AppColors.text3,
-                    fontSize: 13,
-                    height: 1.25,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.kycDetailLineGap),
         ],
       ],
     );
@@ -70,14 +60,18 @@ class _PrivacyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: KYCPage.privacyCardKey,
-      height: 95,
-      padding: const EdgeInsets.fromLTRB(16, 15, 16, 14),
+      height: AppSpacing.kycPrivacyHeight,
+      padding: AppSpacing.kycPrivacyPadding,
       borderColor: _kycPrimary.withValues(alpha: .24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.warning_amber_rounded, color: _kycPrimary, size: 15),
-          const SizedBox(width: 8),
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: _kycPrimary,
+            size: AppSpacing.kycPrivacyIcon,
+          ),
+          const SizedBox(width: AppSpacing.kycPrivacyGapHorizontal),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,23 +80,17 @@ class _PrivacyCard extends StatelessWidget {
                   'B\u1EA3o m\u1EADt th\u00F4ng tin c\u00E1 nh\u00E2n',
                   style: AppTextStyles.caption.copyWith(
                     color: _kycPrimary,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.kycPrivacyTitleGap),
                 Flexible(
                   child: Text(
                     'Th\u00F4ng tin KYC \u0111\u01B0\u1EE3c m\u00E3 h\u00F3a AES-256. Ch\u00FAng t\u00F4i kh\u00F4ng chia\n'
                     's\u1EBB v\u1EDBi b\u00EAn th\u1EE9 ba.',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      fontSize: 12,
-                      height: 1.38,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                   ),
                 ),
               ],

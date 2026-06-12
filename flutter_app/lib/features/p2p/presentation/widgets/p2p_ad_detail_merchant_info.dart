@@ -174,7 +174,7 @@ class _InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.buttonHero + AppSpacing.x4,
+      height: AppSpacing.buttonHero + AppSpacing.x6,
       padding: const EdgeInsets.all(AppSpacing.x4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,8 +201,6 @@ class _InfoCard extends StatelessWidget {
                 value,
                 style: AppTextStyles.sectionTitle.copyWith(
                   color: color,
-                  fontSize: 21,
-                  fontFamily: 'Roboto',
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
@@ -221,10 +219,7 @@ class _InfoCard extends StatelessWidget {
           if (footnote != null)
             Text(
               footnote!,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: 9,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           if (progress != null) ...[
             const SizedBox(height: AppSpacing.x2),
@@ -243,7 +238,6 @@ class _InfoCard extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              fontSize: 9,
             ),
           ),
         ],

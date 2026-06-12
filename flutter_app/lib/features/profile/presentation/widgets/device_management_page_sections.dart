@@ -50,17 +50,15 @@ class _SecuritySummaryCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.baseMedium.copyWith(
-                        fontSize: 16,
                         fontWeight: FontWeight.w900,
                         height: 1,
                       ),
                     ),
-                    const SizedBox(height: 7),
+                    const Padding(padding: EdgeInsets.only(top: 7)),
                     Text(
                       '$totalDevices thi\u1EBFt b\u1ECB \u0111\u00E3 \u0111\u0103ng nh\u1EADp',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        fontSize: 12,
                         height: 1,
                       ),
                     ),
@@ -69,7 +67,7 @@ class _SecuritySummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const Padding(padding: EdgeInsets.only(top: 16)),
           Row(
             children: [
               Expanded(
@@ -132,7 +130,6 @@ class _SummaryStat extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: _devicesMuted,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -141,7 +138,6 @@ class _SummaryStat extends StatelessWidget {
             value,
             style: AppTextStyles.caption.copyWith(
               color: color,
-              fontSize: 16,
               fontWeight: FontWeight.w900,
               height: 1,
             ),
@@ -163,7 +159,6 @@ class _SectionHeader extends StatelessWidget {
       label,
       style: AppTextStyles.micro.copyWith(
         color: AppColors.text2,
-        fontSize: 12,
         fontWeight: FontWeight.w900,
         height: 1,
       ),
@@ -196,7 +191,6 @@ class _OtherDevicesHeader extends StatelessWidget {
               '\u0110\u0103ng xu\u1EA5t t\u1EA5t c\u1EA3',
               style: AppTextStyles.micro.copyWith(
                 color: _devicesRed,
-                fontSize: 12,
                 fontWeight: FontWeight.w900,
                 height: 1,
               ),
@@ -255,9 +249,9 @@ class _DeviceCard extends StatelessWidget {
             ],
           ),
           if (showActions) ...[
-            const SizedBox(height: 14),
+            const Padding(padding: EdgeInsets.only(top: 14)),
             const Divider(height: 1, color: _devicesDivider),
-            const SizedBox(height: 13),
+            const Padding(padding: EdgeInsets.only(top: 13)),
             Row(
               children: [
                 Expanded(
@@ -294,7 +288,6 @@ class _DeviceDetails extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 15,
                   fontWeight: FontWeight.w900,
                   height: 1,
                 ),
@@ -317,19 +310,18 @@ class _DeviceDetails extends StatelessWidget {
             ],
           ],
         ),
-        const SizedBox(height: 7),
+        const Padding(padding: EdgeInsets.only(top: 7)),
         Text(
           '${device.browser} \u2022 ${device.os}',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: FontWeight.w700,
             height: 1,
           ),
         ),
-        const SizedBox(height: 8),
+        const Padding(padding: EdgeInsets.only(top: 8)),
         Wrap(
           spacing: 11,
           runSpacing: 5,
@@ -344,14 +336,10 @@ class _DeviceDetails extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 7),
+        const Padding(padding: EdgeInsets.only(top: 7)),
         Text(
           'IP: ${device.ip}',
-          style: AppTextStyles.micro.copyWith(
-            color: _devicesMuted,
-            fontSize: 11,
-            height: 1,
-          ),
+          style: AppTextStyles.micro.copyWith(color: _devicesMuted, height: 1),
         ),
       ],
     );

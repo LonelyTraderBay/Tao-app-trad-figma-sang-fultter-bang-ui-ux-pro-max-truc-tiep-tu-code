@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -90,17 +91,15 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
                       AppSpacing.contentPad,
                       bottomInset,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      customGap: AppSpacing.x4,
                       children: [
                         _MerchantCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
                         _TrustMarketRow(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
                         _SignalChips(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
                         _PriceCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
                         _AmountCard(
                           snapshot: snapshot,
                           selectedPercent: _selectedPercent,
@@ -111,13 +110,9 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
                             setState(() => _selectedPercent = percent);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
                         _RequirementCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
                         _TermsCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
                         _EscrowCard(snapshot: snapshot, amount: cryptoAmount),
-                        const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
                           padding: EdgeInsets.all(AppSpacing.x3),

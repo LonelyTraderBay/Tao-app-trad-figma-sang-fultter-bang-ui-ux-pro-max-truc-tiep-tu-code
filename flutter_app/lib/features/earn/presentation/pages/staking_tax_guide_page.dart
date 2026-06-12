@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class StakingTaxGuidePage extends ConsumerStatefulWidget {
   const StakingTaxGuidePage({super.key, this.shellRenderMode});
@@ -83,7 +84,12 @@ class _StakingTaxGuidePageState extends ConsumerState<StakingTaxGuidePage> {
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
-                      StakingTaxDisclaimerBanner(snapshot: snapshot),
+                      VitCard(
+                        variant: VitCardVariant.standard,
+                        radius: VitCardRadius.md,
+                        padding: EdgeInsets.zero,
+                        child: StakingTaxDisclaimerBanner(snapshot: snapshot),
+                      ),
                       StakingTaxTabs(
                         tabs: snapshot.tabs,
                         active: activeTab,

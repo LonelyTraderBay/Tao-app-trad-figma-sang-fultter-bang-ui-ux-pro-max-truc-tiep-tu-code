@@ -75,7 +75,7 @@ class _TypeButton extends StatelessWidget {
                 Icon(
                   icon,
                   color: active ? AppModuleAccents.p2p : AppColors.text3,
-                  size: 18,
+                  size: AppSpacing.p2pPaymentTypeIcon,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Flexible(
@@ -162,10 +162,7 @@ class _PaymentOptionChip extends StatelessWidget {
             onTap: onTap,
             borderRadius: AppRadii.xlRadius,
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x3,
-                vertical: AppSpacing.x2,
-              ),
+              padding: AppSpacing.p2pPaymentOptionPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -207,7 +204,7 @@ class _PaymentPreview extends StatelessWidget {
     return VitCard(
       key: P2PPaymentMethodAddPage.previewKey,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pPaymentCardPadding,
       borderColor: AppColors.primary20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -246,7 +243,10 @@ class _PaymentPreview extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x3),
-          const Divider(color: AppColors.divider, height: 1),
+          const Divider(
+            color: AppColors.divider,
+            height: AppSpacing.dividerHairline,
+          ),
           const SizedBox(height: AppSpacing.x3),
           _PreviewRow(label: 'Tài khoản', value: preview.maskedAccount),
           const SizedBox(height: AppSpacing.x2),
@@ -271,7 +271,7 @@ class _SecurityNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pPaymentCardPadding,
       borderColor: AppColors.warningBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -285,10 +285,7 @@ class _SecurityNote extends StatelessWidget {
           Expanded(
             child: Text(
               note,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                height: 1.45,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],
@@ -345,7 +342,7 @@ class _PreviewRow extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 108,
+          width: AppSpacing.p2pPaymentPreviewLabelWidth,
           child: Text(
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

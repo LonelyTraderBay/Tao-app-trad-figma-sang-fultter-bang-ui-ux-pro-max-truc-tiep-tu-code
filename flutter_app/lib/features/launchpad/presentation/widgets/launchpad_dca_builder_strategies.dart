@@ -104,14 +104,17 @@ class _StrategyCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           _PnlBand(strategy: strategy),
           const SizedBox(height: AppSpacing.x3),
-          const Divider(height: 1, color: AppColors.border),
+          const Divider(
+            height: AppSpacing.launchpadDividerHeight,
+            color: AppColors.border,
+          ),
           const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               const Icon(
                 Icons.calendar_today_outlined,
                 color: AppColors.text3,
-                size: 12,
+                size: AppSpacing.launchpadIconXs,
               ),
               const SizedBox(width: AppSpacing.x1),
               Expanded(
@@ -119,7 +122,7 @@ class _StrategyCard extends StatelessWidget {
                   'Next: ${strategy.nextBuy}',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
+                    fontSize: AppSpacing.launchpadFontSm,
                   ),
                 ),
               ),
@@ -127,7 +130,7 @@ class _StrategyCard extends StatelessWidget {
                 '${strategy.executedOrders} orders - \$${strategy.amount.toStringAsFixed(0)}/order',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
+                  fontSize: AppSpacing.launchpadFontSm,
                 ),
               ),
             ],
@@ -146,14 +149,18 @@ class _TrendIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.launchpadBox40,
+      height: AppSpacing.launchpadBox40,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: accent.withValues(alpha: .12),
         borderRadius: AppRadii.mdRadius,
       ),
-      child: Icon(Icons.trending_up_rounded, color: accent, size: 20),
+      child: Icon(
+        Icons.trending_up_rounded,
+        color: accent,
+        size: AppSpacing.launchpadIcon3xl,
+      ),
     );
   }
 }
@@ -172,8 +179,8 @@ class _MiniIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 32,
-      height: 32,
+      width: AppSpacing.launchpadBox32,
+      height: AppSpacing.launchpadBox32,
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: AppColors.bg,
@@ -182,7 +189,7 @@ class _MiniIconButton extends StatelessWidget {
         child: IconButton(
           onPressed: onTap,
           padding: EdgeInsets.zero,
-          icon: Icon(icon, color: color, size: 16),
+          icon: Icon(icon, color: color, size: AppSpacing.launchpadIconXl),
         ),
       ),
     );
@@ -197,10 +204,10 @@ class _StrategyMetricsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: 2,
+      crossAxisCount: AppSpacing.launchpadGridColumns,
       mainAxisSpacing: AppSpacing.x3,
       crossAxisSpacing: AppSpacing.x3,
-      childAspectRatio: 3.7,
+      childAspectRatio: AppSpacing.launchpadGridAspectAction,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.zero,
@@ -248,7 +255,7 @@ class _MetricBlock extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
+            fontSize: AppSpacing.launchpadFontSm,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
@@ -328,8 +335,8 @@ class _StatusPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: 8,
-            height: 1,
+            fontSize: AppSpacing.launchpadFontXxs,
+            height: AppSpacing.launchpadLineHeightTight,
           ),
         ),
       ),

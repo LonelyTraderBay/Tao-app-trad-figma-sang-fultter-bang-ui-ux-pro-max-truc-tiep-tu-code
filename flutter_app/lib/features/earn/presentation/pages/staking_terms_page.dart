@@ -150,17 +150,20 @@ class _TermsHero extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 48,
-                height: 48,
+                width: AppSpacing.earnTermsHeroIconBox,
+                height: AppSpacing.earnTermsHeroIconBox,
                 decoration: BoxDecoration(
                   color: AppColors.primary12,
                   borderRadius: AppRadii.lgRadius,
-                  border: Border.all(color: AppColors.primary30, width: 1.5),
+                  border: Border.all(
+                    color: AppColors.primary30,
+                    width: AppSpacing.earnTermsHeroBorderWidth,
+                  ),
                 ),
                 child: const Icon(
                   Icons.description_outlined,
                   color: AppColors.primary,
-                  size: 24,
+                  size: AppSpacing.earnTermsHeroIcon,
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -205,7 +208,7 @@ class _TermsHero extends StatelessWidget {
                 child: VitCtaButton(
                   key: StakingTermsPage.printKey,
                   variant: VitCtaButtonVariant.secondary,
-                  height: 44,
+                  height: AppSpacing.earnTermsActionHeight,
                   onPressed: onPrint,
                   leading: const Icon(Icons.print_outlined),
                   child: const Text('In trang'),
@@ -215,7 +218,7 @@ class _TermsHero extends StatelessWidget {
               Expanded(
                 child: VitCtaButton(
                   key: StakingTermsPage.downloadKey,
-                  height: 44,
+                  height: AppSpacing.earnTermsActionHeight,
                   onPressed: onDownload,
                   leading: const Icon(Icons.download_rounded),
                   child: const Text('Tải PDF'),
@@ -241,7 +244,11 @@ class _MetaChip extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (icon != null) ...[
-          Icon(icon, color: AppColors.text3, size: 13),
+          Icon(
+            icon,
+            color: AppColors.text3,
+            size: AppSpacing.earnTermsMetaIcon,
+          ),
           const SizedBox(width: AppSpacing.x1),
         ],
         Text(text, style: AppTextStyles.micro.copyWith(color: AppColors.text3)),
@@ -268,16 +275,13 @@ class _WarningCallout extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.warn,
-            size: 17,
+            size: AppSpacing.earnTermsNoticeIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               text,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontSize: 12,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],
@@ -295,10 +299,7 @@ class _ActionStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: AppTextStyles.caption.copyWith(
-        color: AppColors.primary,
-        fontSize: 12,
-      ),
+      style: AppTextStyles.caption.copyWith(color: AppColors.primary),
     );
   }
 }
@@ -345,7 +346,7 @@ class _TermsSectionCard extends StatelessWidget {
                       child: const Icon(
                         Icons.keyboard_arrow_down_rounded,
                         color: AppColors.text3,
-                        size: 22,
+                        size: AppSpacing.earnTermsSectionChevron,
                       ),
                     ),
                   ],
@@ -394,7 +395,7 @@ class _SectionContent extends StatelessWidget {
               paragraph,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.7,
+                height: AppSpacing.earnTermsParagraphLineHeight,
               ),
             ),
             if (paragraph != section.content.last)
@@ -428,9 +429,11 @@ class _AcceptanceCard extends StatelessWidget {
         children: [
           Container(
             key: StakingTermsPage.acceptanceKey,
-            width: 22,
-            height: 22,
-            margin: const EdgeInsets.only(top: 2),
+            width: AppSpacing.earnTermsAcceptanceBox,
+            height: AppSpacing.earnTermsAcceptanceBox,
+            margin: const EdgeInsets.only(
+              top: AppSpacing.earnTermsAcceptanceTopMargin,
+            ),
             decoration: BoxDecoration(
               color: accepted ? AppColors.buy : AppColors.transparent,
               borderRadius: AppRadii.smRadius,
@@ -442,7 +445,7 @@ class _AcceptanceCard extends StatelessWidget {
                 ? const Icon(
                     Icons.check_rounded,
                     color: AppColors.onAccent,
-                    size: 15,
+                    size: AppSpacing.earnTermsAcceptanceIcon,
                   )
                 : null,
           ),
@@ -453,10 +456,7 @@ class _AcceptanceCard extends StatelessWidget {
               children: [
                 Text(
                   snapshot.acceptanceText,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
                 const SizedBox(height: AppSpacing.x2),
                 Text(

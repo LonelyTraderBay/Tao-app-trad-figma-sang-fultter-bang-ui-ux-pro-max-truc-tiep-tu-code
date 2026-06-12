@@ -15,10 +15,10 @@ class _MetricBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       constraints: const BoxConstraints(minHeight: 57),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      decoration: BoxDecoration(color: bg, borderRadius: AppRadii.cardRadius),
+      variant: VitCardVariant.inner,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -29,11 +29,9 @@ class _MetricBubble extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1.1,
             ),
           ),
-          const SizedBox(height: 8),
           Text(
             value,
             maxLines: 1,
@@ -41,9 +39,7 @@ class _MetricBubble extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(
               color: color,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
-              fontFamily: 'monospace',
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
             ),
@@ -62,21 +58,17 @@ class _SmallBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(999),
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 10,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    final status = color == _analyticsGreen
+        ? VitStatusPillStatus.success
+        : color == _analyticsRed
+        ? VitStatusPillStatus.error
+        : color == _analyticsAmber
+        ? VitStatusPillStatus.warning
+        : VitStatusPillStatus.info;
+    return VitStatusPill(
+      label: label,
+      status: status,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -94,9 +86,9 @@ class _InfoStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-      decoration: BoxDecoration(color: bg, borderRadius: AppRadii.cardRadius),
+      variant: VitCardVariant.inner,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -107,7 +99,6 @@ class _InfoStrip extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
                 height: 1.42,
               ),
             ),
@@ -126,31 +117,17 @@ class _ToggleBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 42,
       padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: _analyticsPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.inner,
       child: Row(
         children: [
           Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: _analyticsPrimary,
-                borderRadius: AppRadii.inputRadius,
-              ),
-              child: Text(
-                left,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.onAccent,
-                  fontSize: 12,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
-              ),
+            child: VitStatusPill(
+              label: left,
+              status: VitStatusPillStatus.info,
+              size: VitStatusPillSize.lg,
             ),
           ),
           Expanded(
@@ -159,7 +136,6 @@ class _ToggleBar extends StatelessWidget {
                 right,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.medium,
                   height: 1,
                 ),
@@ -194,7 +170,6 @@ class _PctLabel extends StatelessWidget {
         label,
         style: AppTextStyles.caption.copyWith(
           color: color,
-          fontSize: 12,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -248,17 +223,13 @@ class _ValueRow extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
         ),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text1,
-            fontSize: 13,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
@@ -284,7 +255,6 @@ class _HeatmapRow extends StatelessWidget {
             '\$${cluster.price.toStringAsFixed(0)}',
             style: AppTextStyles.caption.copyWith(
               color: isCurrent ? _analyticsPrimary : AppColors.text2,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
@@ -293,18 +263,22 @@ class _HeatmapRow extends StatelessWidget {
         Expanded(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(999),
-            child: Container(
+            child: SizedBox(
               height: 18,
-              color: _analyticsPanel2,
-              alignment: Alignment.centerLeft,
-              child: FractionallySizedBox(
-                widthFactor: math.max(cluster.intensity / 100, .02),
-                child: ColoredBox(
-                  color:
-                      (cluster.shortLiquidations >= cluster.longLiquidations
-                              ? _analyticsRed
-                              : _analyticsGreen)
-                          .withValues(alpha: isCurrent ? .18 : .78),
+              child: ColoredBox(
+                color: _analyticsPanel2,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: FractionallySizedBox(
+                    widthFactor: math.max(cluster.intensity / 100, .02),
+                    child: ColoredBox(
+                      color:
+                          (cluster.shortLiquidations >= cluster.longLiquidations
+                                  ? _analyticsRed
+                                  : _analyticsGreen)
+                              .withValues(alpha: isCurrent ? .18 : .78),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -317,7 +291,6 @@ class _HeatmapRow extends StatelessWidget {
             textAlign: TextAlign.right,
             style: AppTextStyles.micro.copyWith(
               color: isCurrent ? _analyticsPrimary : AppColors.text3,
-              fontSize: 10,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -336,12 +309,9 @@ class _LiquidationRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final isLong = liquidation.side == 'long';
     final color = isLong ? _analyticsGreen : _analyticsRed;
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(11),
-      decoration: BoxDecoration(
-        color: _analyticsPanel2,
-        borderRadius: AppRadii.mdRadius,
-      ),
+      variant: VitCardVariant.inner,
       child: Row(
         children: [
           _SmallBadge(label: liquidation.side.toUpperCase(), color: color),
@@ -351,7 +321,6 @@ class _LiquidationRow extends StatelessWidget {
               '${liquidation.pair} @ \$${_formatMoney(liquidation.price)}',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -360,7 +329,6 @@ class _LiquidationRow extends StatelessWidget {
             _formatCompactUsd(liquidation.size),
             style: AppTextStyles.caption.copyWith(
               color: color,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
@@ -378,14 +346,12 @@ class _SentimentComponentRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: _analyticsPanel2,
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      variant: VitCardVariant.inner,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 6,
         children: [
           Row(
             children: [
@@ -394,7 +360,6 @@ class _SentimentComponentRow extends StatelessWidget {
                   component.label,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -402,13 +367,9 @@ class _SentimentComponentRow extends StatelessWidget {
               _SmallBadge(label: component.weight, color: AppColors.primary),
             ],
           ),
-          const SizedBox(height: 6),
           Text(
             component.description,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 10,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -424,22 +385,18 @@ class _ImplicationRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(implication.colorHex);
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: _analyticsPanel2,
-        borderRadius: AppRadii.mdRadius,
-      ),
+      variant: VitCardVariant.inner,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 4,
-            height: 38,
+          DecoratedBox(
             decoration: BoxDecoration(
               color: color,
               borderRadius: BorderRadius.circular(999),
             ),
+            child: const SizedBox(width: 4, height: 38),
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -450,17 +407,14 @@ class _ImplicationRow extends StatelessWidget {
                   implication.condition,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1.2,
                   ),
                 ),
-                const SizedBox(height: 4),
                 Text(
                   implication.action,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1.4,
                   ),
                 ),

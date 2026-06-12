@@ -50,8 +50,9 @@ class _KYCPageState extends ConsumerState<KYCPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 120
-            : DeviceMetrics.nativeBottomChrome + 32) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.kycBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.kycBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -73,14 +74,14 @@ class _KYCPageState extends ConsumerState<KYCPage> {
                 child: SingleChildScrollView(
                   key: KYCPage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(20, 31, 20, bottomInset),
+                  padding: AppSpacing.kycScrollPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     customGap: 0,
                     fullBleed: true,
                     children: [
                       _KycStatusCard(snapshot: snapshot),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: AppSpacing.kycStatusToReviewGap),
                       VitHighRiskStatePanel(
                         state: _submitting
                             ? VitHighRiskUiState.submitting
@@ -92,7 +93,7 @@ class _KYCPageState extends ConsumerState<KYCPage> {
                             'Ki\u1EC3m tra c\u1EA5p KYC, gi\u1EDBi h\u1EA1n giao d\u1ECBch v\u00E0 t\u00EDnh n\u0103ng m\u1EDF kho\u00E1 tr\u01B0\u1EDBc khi n\u1ED9p.',
                         contractId: 'Current level: ${snapshot.currentLevel}',
                       ),
-                      const SizedBox(height: 33),
+                      const SizedBox(height: AppSpacing.kycReviewToLevelsGap),
                       if (snapshot.levels.isEmpty)
                         const VitEmptyState(
                           title: 'Ch\u01B0a c\u00F3 c\u1EA5p KYC',
@@ -120,9 +121,9 @@ class _KYCPageState extends ConsumerState<KYCPage> {
                             onStart: () => _startVerification(level.level),
                           ),
                           if (level != snapshot.levels.last)
-                            const SizedBox(height: 25),
+                            const SizedBox(height: AppSpacing.kycLevelGap),
                         ],
-                      const SizedBox(height: 29),
+                      const SizedBox(height: AppSpacing.kycPrivacyGap),
                       const _PrivacyCard(),
                     ],
                   ),

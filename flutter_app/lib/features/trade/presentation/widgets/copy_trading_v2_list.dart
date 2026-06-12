@@ -72,23 +72,20 @@ class _SortChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(999),
-      child: Container(
+      borderRadius: AppRadii.xlRadius,
+      child: VitCard(
         width: _sortChipWidth(label),
         height: 32,
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        decoration: BoxDecoration(
-          color: active ? _copyPrimary : _copyPanelAlt,
-          borderRadius: BorderRadius.circular(999),
-        ),
+        variant: active ? VitCardVariant.standard : VitCardVariant.inner,
+        borderColor: active ? _copyPrimary : AppColors.cardBorder,
         child: FittedBox(
           fit: BoxFit.scaleDown,
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
               color: active ? AppColors.onAccent : AppColors.text2,
-              fontSize: 12,
               fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
               height: 1,
             ),
@@ -108,15 +105,11 @@ class _TraderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tier = _tierFor(trader.copiers);
-    return Container(
+    return VitCard(
       key: CopyTradingV2Page.traderKey(trader.id),
-      height: 137,
+      height: 145,
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
-      decoration: BoxDecoration(
-        color: _copyPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      borderColor: AppColors.cardBorder,
       child: Column(
         children: [
           Row(
@@ -139,7 +132,6 @@ class _TraderCard extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text1,
-                                fontSize: 15,
                                 fontWeight: AppTextStyles.bold,
                                 height: 1.2,
                               ),
@@ -254,7 +246,6 @@ class _RoiBlock extends StatelessWidget {
               '+${trader.totalPnlPct.toStringAsFixed(1)}%',
               style: AppTextStyles.sectionTitle.copyWith(
                 color: AppColors.buy,
-                fontSize: 20,
                 height: 1.15,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
@@ -268,7 +259,6 @@ class _RoiBlock extends StatelessWidget {
             textAlign: TextAlign.right,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
               height: 1,
             ),
           ),
@@ -290,13 +280,10 @@ class _DetailsButton extends StatelessWidget {
       key: CopyTradingV2Page.detailKey(traderId),
       onTap: onOpen,
       borderRadius: AppRadii.inputRadius,
-      child: Container(
+      child: VitCard(
         height: 40,
         alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: _copyPanelAlt,
-          borderRadius: AppRadii.lgRadius,
-        ),
+        variant: VitCardVariant.inner,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -304,7 +291,6 @@ class _DetailsButton extends StatelessWidget {
               'Xem chi tiết',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
-                fontSize: 13,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),

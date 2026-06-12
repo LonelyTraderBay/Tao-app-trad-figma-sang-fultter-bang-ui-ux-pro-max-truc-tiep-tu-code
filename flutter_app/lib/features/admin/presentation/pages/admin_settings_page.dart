@@ -65,7 +65,9 @@ class AdminSettingsPage extends ConsumerWidget {
                             icon: Icons.route_outlined,
                             title: 'Dashboard routing',
                           ),
-                          const SizedBox(height: AppSpacing.x4),
+                          const Padding(
+                            padding: EdgeInsets.only(top: AppSpacing.x4),
+                          ),
                           for (final dashboard in snapshot.dashboards) ...[
                             _AdminSettingsRow(
                               icon: _settingsMetricIcon(dashboard.icon),
@@ -89,7 +91,9 @@ class AdminSettingsPage extends ConsumerWidget {
                             icon: Icons.health_and_safety_outlined,
                             title: 'Operational health',
                           ),
-                          const SizedBox(height: AppSpacing.x4),
+                          const Padding(
+                            padding: EdgeInsets.only(top: AppSpacing.x4),
+                          ),
                           _AdminSettingsRow(
                             icon: Icons.bolt_rounded,
                             title: 'Event stream',
@@ -97,7 +101,21 @@ class AdminSettingsPage extends ConsumerWidget {
                                 snapshot.adminMetrics.liveEventWindowLabel,
                             trailing: snapshot.adminMetrics.eventsPerMinute,
                           ),
-                          const Divider(color: AppColors.divider),
+                        ],
+                      ),
+                    ),
+                    VitCard(
+                      padding: const EdgeInsets.all(AppSpacing.x4),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const _SettingsSectionTitle(
+                            icon: Icons.verified_outlined,
+                            title: 'System health',
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(top: AppSpacing.x4),
+                          ),
                           _AdminSettingsRow(
                             icon: Icons.verified_outlined,
                             title: 'System health',
@@ -142,7 +160,7 @@ class _AdminSettingsRow extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
         child: Row(
           children: [
-            Icon(icon, color: AppColors.primary, size: 18),
+            Icon(icon, color: AppColors.primary, size: AppSpacing.adminIconLg),
             const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: Column(
@@ -157,14 +175,14 @@ class _AdminSettingsRow extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x1),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                   Text(
                     subtitle,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1.3,
+                      height: AppSpacing.adminLineHeightCompact,
                     ),
                   ),
                 ],
@@ -188,7 +206,7 @@ class _AdminSettingsRow extends StatelessWidget {
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: 18,
+                size: AppSpacing.adminIconLg,
               ),
             ],
           ],
@@ -208,7 +226,7 @@ class _SettingsSectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: AppColors.text1, size: 18),
+        Icon(icon, color: AppColors.text1, size: AppSpacing.adminIconLg),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(

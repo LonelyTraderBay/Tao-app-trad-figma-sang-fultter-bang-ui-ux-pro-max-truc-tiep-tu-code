@@ -29,7 +29,7 @@ class _ArenaRoomResultCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             room.title,
             style: AppTextStyles.body.copyWith(
@@ -37,7 +37,7 @@ class _ArenaRoomResultCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Row(
             children: [
               Text(
@@ -54,7 +54,7 @@ class _ArenaRoomResultCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Row(
             children: [
               Text(
@@ -116,7 +116,7 @@ class _CreatorResultCard extends StatelessWidget {
                     ],
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   'Trust ${creator.trustScore}% · ${creator.modesCreated} modes',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -165,7 +165,7 @@ class _TradingPairResultCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   '${pair.baseAsset}/${pair.quoteAsset}',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -184,7 +184,7 @@ class _TradingPairResultCard extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x1),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
               Text(
                 '$sign${pair.change24h.toStringAsFixed(2)}%',
                 style: AppTextStyles.micro.copyWith(

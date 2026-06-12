@@ -9,14 +9,14 @@ class _KycStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: KYCPage.statusCardKey,
-      height: 81,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      height: AppSpacing.kycStatusHeight,
+      padding: AppSpacing.kycStatusPadding,
       borderColor: _kycGreen.withValues(alpha: .45),
       child: Row(
         children: [
           Container(
-            width: 48,
-            height: 48,
+            width: AppSpacing.kycStatusIconBox,
+            height: AppSpacing.kycStatusIconBox,
             decoration: BoxDecoration(
               color: _kycGreen.withValues(alpha: .2),
               borderRadius: AppRadii.cardLargeRadius,
@@ -25,10 +25,10 @@ class _KycStatusCard extends StatelessWidget {
             child: const Icon(
               Icons.shield_outlined,
               color: _kycGreen,
-              size: 25,
+              size: AppSpacing.kycStatusIcon,
             ),
           ),
-          const SizedBox(width: 14),
+          const SizedBox(width: AppSpacing.kycStatusGap),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -40,12 +40,10 @@ class _KycStatusCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.text1,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.kycStatusTextGap),
                 Row(
                   children: [
                     Flexible(
@@ -55,14 +53,16 @@ class _KycStatusCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.caption.copyWith(
                           color: _kycGreen,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          height: 1,
+                          fontWeight: AppTextStyles.medium,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 4),
-                    const Icon(Icons.check_rounded, color: _kycGreen, size: 14),
+                    const SizedBox(width: AppSpacing.kycStatusCheckGap),
+                    const Icon(
+                      Icons.check_rounded,
+                      color: _kycGreen,
+                      size: AppSpacing.kycStatusCheckIcon,
+                    ),
                   ],
                 ),
               ],
@@ -108,12 +108,12 @@ class _KycLevelCard extends StatelessWidget {
             onTap: onTap,
             behavior: HitTestBehavior.opaque,
             child: Container(
-              height: 73,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              height: AppSpacing.kycLevelRowHeight,
+              padding: AppSpacing.kycLevelRowPadding,
               child: Row(
                 children: [
                   _LevelIcon(level: level.level, done: done, accent: accent),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: AppSpacing.kycLevelRowGap),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -125,28 +125,27 @@ class _KycLevelCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.baseMedium.copyWith(
                             color: done ? AppColors.text1 : AppColors.text2,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w900,
-                            height: 1,
+                            fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: AppSpacing.kycStatusTextGap),
                         if (done)
                           Row(
                             children: [
                               const Icon(
                                 Icons.check_rounded,
                                 color: _kycMuted,
-                                size: 12,
+                                size: AppSpacing.kycDetailIcon,
                               ),
-                              const SizedBox(width: 3),
+                              const SizedBox(
+                                width:
+                                    AppSpacing.dividerHairline +
+                                    AppSpacing.hairlineStroke,
+                              ),
                               Text(
                                 '\u0110\u00E3 ho\u00E0n th\u00E0nh',
-                                style: AppTextStyles.micro.copyWith(
+                                style: AppTextStyles.badge.copyWith(
                                   color: _kycMuted,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  height: 1,
                                 ),
                               ),
                             ],
@@ -154,11 +153,8 @@ class _KycLevelCard extends StatelessWidget {
                         else
                           Text(
                             'Ch\u01B0a x\u00E1c minh',
-                            style: AppTextStyles.micro.copyWith(
+                            style: AppTextStyles.badge.copyWith(
                               color: _kycMuted,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              height: 1,
                             ),
                           ),
                       ],
@@ -170,7 +166,7 @@ class _KycLevelCard extends StatelessWidget {
                     child: const Icon(
                       Icons.chevron_right_rounded,
                       color: AppColors.text3,
-                      size: 19,
+                      size: AppSpacing.kycLevelChevron,
                     ),
                   ),
                 ],
@@ -178,9 +174,12 @@ class _KycLevelCard extends StatelessWidget {
             ),
           ),
           if (expanded) ...[
-            const Divider(height: 1, color: AppColors.divider),
+            const Divider(
+              height: AppSpacing.dividerHairline,
+              color: AppColors.divider,
+            ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
+              padding: AppSpacing.kycLevelDetailsPadding,
               child: _ExpandedLevelDetails(
                 level: level,
                 done: done,
@@ -210,26 +209,28 @@ class _LevelIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.kycLevelIconBox,
+      height: AppSpacing.kycLevelIconBox,
       decoration: BoxDecoration(
         color: done ? accent.withValues(alpha: .13) : AppColors.transparent,
         borderRadius: AppRadii.lgRadius,
         border: Border.all(
           color: done ? accent : AppColors.borderSolid,
-          width: 2,
+          width: AppSpacing.kycLevelIconBorder,
         ),
       ),
       alignment: Alignment.center,
       child: done
-          ? Icon(Icons.check_circle_outline_rounded, color: accent, size: 24)
+          ? Icon(
+              Icons.check_circle_outline_rounded,
+              color: accent,
+              size: AppSpacing.kycLevelDoneIcon,
+            )
           : Text(
               '$level',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                fontSize: 14,
-                fontWeight: FontWeight.w900,
-                height: 1,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
     );
@@ -262,14 +263,14 @@ class _ExpandedLevelDetails extends StatelessWidget {
           title: 'Gi\u1EDBi h\u1EA1n giao d\u1ECBch:',
           lines: level.limits,
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.kycLevelDetailsGap),
         _DetailsBlock(
           title: 'T\u00EDnh n\u0103ng m\u1EDF kh\u00F3a:',
           lines: level.features,
           done: done,
         ),
         if (canStart) ...[
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.kycLevelDetailsGap),
           VitCtaButton(
             key: KYCPage.startKey(level.level),
             onPressed: submitting ? null : onStart,

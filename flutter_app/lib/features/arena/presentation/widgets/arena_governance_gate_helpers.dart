@@ -12,11 +12,17 @@ InputDecoration _inputDecoration(String hint) {
     ),
     enabledBorder: const OutlineInputBorder(
       borderRadius: AppRadii.inputRadius,
-      borderSide: BorderSide(color: AppColors.borderSolid, width: 1.4),
+      borderSide: BorderSide(
+        color: AppColors.borderSolid,
+        width: AppSpacing.arenaGovernanceInputBorderWidth,
+      ),
     ),
     focusedBorder: const OutlineInputBorder(
       borderRadius: AppRadii.inputRadius,
-      borderSide: BorderSide(color: AppColors.accent, width: 1.4),
+      borderSide: BorderSide(
+        color: AppColors.accent,
+        width: AppSpacing.arenaGovernanceInputBorderWidth,
+      ),
     ),
   );
 }

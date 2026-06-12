@@ -29,7 +29,6 @@ class _TaxNotice extends StatelessWidget {
                   'Tax Reporting Notice',
                   style: AppTextStyles.caption.copyWith(
                     color: _taxAmber,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -42,7 +41,6 @@ class _TaxNotice extends StatelessWidget {
                   'professional for accurate filing.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    fontSize: 11,
                     height: 1.55,
                   ),
                 ),
@@ -94,9 +92,7 @@ class _YearPicker extends StatelessWidget {
                   years[i],
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.bold,
-                    fontFamily: 'Roboto',
                     height: 1,
                   ),
                 ),

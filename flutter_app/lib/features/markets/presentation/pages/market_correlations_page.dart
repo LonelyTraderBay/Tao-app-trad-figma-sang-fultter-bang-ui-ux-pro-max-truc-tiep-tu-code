@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
+import '../widgets/market_body_review_widgets.dart';
 
 part '../widgets/market_correlations_tabs_widgets.dart';
 part '../widgets/market_correlations_matrix_widgets.dart';
@@ -145,6 +146,18 @@ class _MarketCorrelationsPageState
                           _TimeframeScoreCard(repo: repo),
                           const _CorrelationDisclaimer(),
                         ],
+                        const MarketBodyReviewSection(
+                          title: 'Correlation state review',
+                          message: 'Correlation data reviewed',
+                          detail:
+                              'Matrix, pair ranking, diversification, empty, and refresh states remain visible for portfolio checks.',
+                          primary:
+                              'Timeframe chips keep each correlation reading tied to the selected window.',
+                          secondary:
+                              'Pair rows preserve direction, magnitude, and ranking before drilling into assets.',
+                          tertiary:
+                              'Diversification guidance stays separated from trading execution surfaces.',
+                        ),
                       ],
                     ),
                   ),

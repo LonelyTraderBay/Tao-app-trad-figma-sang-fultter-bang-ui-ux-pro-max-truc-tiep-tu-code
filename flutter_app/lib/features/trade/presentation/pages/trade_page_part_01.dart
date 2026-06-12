@@ -33,7 +33,9 @@ class _TradePageState extends ConsumerState<TradePage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.tradeBottomInsetVisual
+            : AppSpacing.tradeBottomInsetNative);
     final amount = double.tryParse(_amountController.text) ?? 0;
     final price = double.tryParse(_priceController.text) ?? pair.price;
     final draft = TradeOrderDraft(
@@ -79,7 +81,7 @@ class _TradePageState extends ConsumerState<TradePage> {
                 onSelected: (value) => setState(() => _dataTab = value),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
+                padding: AppSpacing.tradeMarketPanelPadding,
                 child: _MarketDataPanel(
                   active: _dataTab,
                   snapshot: snapshot,
@@ -87,14 +89,14 @@ class _TradePageState extends ConsumerState<TradePage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: AppSpacing.tradeHorizontalInsets,
                 child: _OrderTabs(
                   active: _activeTab,
                   openCount: snapshot.orders.length + 2,
                   onSelected: (value) => setState(() => _activeTab = value),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.tradeSectionGap),
               if (_activeTab == 'order')
                 _OrderForm(
                   side: _side,
@@ -131,9 +133,9 @@ class _TradePageState extends ConsumerState<TradePage> {
               else
                 _HistoryList(),
               if (snapshot.highRiskContractId != null) ...[
-                const SizedBox(height: 20),
+                const SizedBox(height: AppSpacing.tradeSectionGap),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
+                  padding: AppSpacing.tradeRiskPanelPadding,
                   child: VitHighRiskStatePanel(
                     state: VitHighRiskUiState.riskReview,
                     title: 'Spot order risk states active',
@@ -171,8 +173,8 @@ class _TradeHeader extends StatelessWidget {
       onBack: onBack,
       backKey: TradePage.backKey,
       leading: Container(
-        width: 32,
-        height: 32,
+        width: AppSpacing.tradeHeaderLogo,
+        height: AppSpacing.tradeHeaderLogo,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: logoColor.withValues(alpha: .20),
@@ -193,7 +195,7 @@ class _TradeHeader extends StatelessWidget {
           onTap: () => context.go(AppRoutePaths.tradePair(pair.id)),
           borderRadius: AppRadii.mdRadius,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+            padding: AppSpacing.tradeHeaderBodyPadding,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -201,14 +203,14 @@ class _TradeHeader extends StatelessWidget {
                   child: Text(
                     pair.symbol,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.sectionTitle.copyWith(fontSize: 21),
+                    style: AppTextStyles.sectionTitle,
                   ),
                 ),
-                const SizedBox(width: 5),
+                const SizedBox(width: AppSpacing.tradeHeaderChevronGap),
                 const Icon(
                   Icons.keyboard_arrow_down_rounded,
                   color: AppColors.text2,
-                  size: 18,
+                  size: AppSpacing.tradeHeaderChevron,
                 ),
               ],
             ),
@@ -216,7 +218,7 @@ class _TradeHeader extends StatelessWidget {
         ),
       ),
       trailing: SizedBox(
-        width: 128,
+        width: AppSpacing.tradeHeaderTrailingWidth,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -226,8 +228,7 @@ class _TradeHeader extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.baseMedium.copyWith(
                 color: AppColors.buy,
-                fontFamily: 'monospace',
-                fontSize: 18,
+                fontFeatures: AppTextStyles.tabularFigures,
                 letterSpacing: .6,
               ),
             ),
@@ -377,10 +378,10 @@ class _QuickNavRow extends StatelessWidget {
     ];
 
     return SizedBox(
-      height: 74,
+      height: AppSpacing.tradeQuickNavHeight,
       child: ListView(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+        padding: AppSpacing.tradeQuickNavPadding,
         children: [
           for (final item in items)
             _QuickNavChip(
@@ -434,27 +435,28 @@ class _QuickNavChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 8),
+      padding: const EdgeInsets.only(right: AppSpacing.tradeQuickNavGap),
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
           onTap: onTap,
           borderRadius: AppRadii.mdRadius,
-          child: Container(
-            width: 96,
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-            decoration: BoxDecoration(
-              color: AppColors.surface2,
-              border: Border.all(color: color.withValues(alpha: .24)),
-              borderRadius: AppRadii.mdRadius,
-            ),
+          child: VitCard(
+            width: AppSpacing.tradeQuickChipWidth,
+            padding: AppSpacing.tradeQuickChipPadding,
+            radius: VitCardRadius.sm,
+            borderColor: color.withValues(alpha: .24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
                   children: [
-                    Icon(icon, color: color, size: 15),
-                    const SizedBox(width: 5),
+                    Icon(
+                      icon,
+                      color: color,
+                      size: AppSpacing.tradeQuickChipIcon,
+                    ),
+                    const SizedBox(width: AppSpacing.tradeQuickChipIconGap),
                     Expanded(
                       child: Text(
                         label,
@@ -469,29 +471,31 @@ class _QuickNavChip extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.tradeQuickChipBadgeGap),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Container(
-                    constraints: const BoxConstraints(maxWidth: 74),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 5,
-                      vertical: 2,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: AppSpacing.tradeQuickChipBadgeMaxWidth,
                     ),
-                    decoration: BoxDecoration(
-                      color: color.withValues(alpha: .12),
-                      borderRadius: AppRadii.xsRadius,
-                      border: Border.all(color: color.withValues(alpha: .24)),
-                    ),
-                    child: Text(
-                      badge,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: color,
-                        fontSize: 8,
-                        fontWeight: AppTextStyles.bold,
-                        height: 1,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: color.withValues(alpha: .12),
+                        borderRadius: AppRadii.xsRadius,
+                        border: Border.all(color: color.withValues(alpha: .24)),
+                      ),
+                      child: Padding(
+                        padding: AppSpacing.tradeQuickChipBadgePadding,
+                        child: Text(
+                          badge,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.micro.copyWith(
+                            color: color,
+                            fontWeight: AppTextStyles.bold,
+                            height: 1,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -519,14 +523,12 @@ class _DataTabs extends StatelessWidget {
       ('trades', 'Giao dịch', TradePage.tradesTabKey),
     ];
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
-      child: Container(
-        height: 34,
-        padding: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-          color: _fieldBackground,
-          borderRadius: AppRadii.lgRadius,
-        ),
+      padding: AppSpacing.tradeDataTabsPadding,
+      child: VitCard(
+        height: AppSpacing.tradeDataTabsHeight,
+        padding: AppSpacing.tradeSegmentedPadding,
+        variant: VitCardVariant.inner,
+        radius: VitCardRadius.sm,
         child: Row(
           children: [
             for (final tab in tabs)
@@ -572,13 +574,10 @@ class _ChartPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pairRoute = variant == TradeChartVariant.pairRoute;
-    return Container(
-      height: 122,
-      decoration: BoxDecoration(
-        color: AppColors.surfaceTradeDeep,
-        border: Border.all(color: _tradePrimary.withValues(alpha: .35)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+    return VitCard(
+      height: AppSpacing.tradeChartHeight,
+      borderColor: _tradePrimary.withValues(alpha: .35),
+      clip: true,
       child: Stack(
         children: [
           Positioned.fill(
@@ -589,32 +588,17 @@ class _ChartPanel extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 10,
-            top: 12,
+            left: AppSpacing.tradeChartOverlayInset,
+            top: AppSpacing.tradeChartOverlayTop,
             child: pairRoute
-                ? Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.sell.withValues(alpha: .20),
-                      border: Border.all(
-                        color: AppColors.sell.withValues(alpha: .55),
-                      ),
-                      borderRadius: AppRadii.lgRadius,
-                    ),
-                    child: Text(
-                      '24H',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.sell,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
+                ? const VitStatusPill(
+                    label: '24H',
+                    status: VitStatusPillStatus.error,
+                    size: VitStatusPillSize.sm,
                   )
                 : Container(
-                    width: 44,
-                    height: 44,
+                    width: AppSpacing.tradeChartLogoSize,
+                    height: AppSpacing.tradeChartLogoSize,
                     decoration: BoxDecoration(
                       color: AppColors.sell.withValues(alpha: .30),
                       shape: BoxShape.circle,
@@ -622,21 +606,19 @@ class _ChartPanel extends StatelessWidget {
                   ),
           ),
           Positioned(
-            left: 12,
-            bottom: 8,
+            left: AppSpacing.tradeChartTvLeft,
+            bottom: AppSpacing.tradeChartTvBottom,
             child: Text(
               'TV',
               style: AppTextStyles.sectionTitle.copyWith(
                 color: AppColors.onAccent,
-                fontSize: 28,
-                fontFamily: 'monospace',
               ),
             ),
           ),
           if (pairRoute) ...[
             Positioned(
-              right: 10,
-              top: 46,
+              right: AppSpacing.tradeChartOverlayInset,
+              top: AppSpacing.tradeChartPriceRightTop,
               child: Text(
                 '70000.00',
                 style: AppTextStyles.micro.copyWith(
@@ -645,8 +627,8 @@ class _ChartPanel extends StatelessWidget {
               ),
             ),
             Positioned(
-              right: 10,
-              bottom: 22,
+              right: AppSpacing.tradeChartOverlayInset,
+              bottom: AppSpacing.tradeChartPriceRightBottom,
               child: Text(
                 '68000.00',
                 style: AppTextStyles.micro.copyWith(
@@ -656,24 +638,28 @@ class _ChartPanel extends StatelessWidget {
             ),
           ],
           Positioned(
-            right: 8,
-            top: pairRoute ? 18 : 38,
+            right: AppSpacing.tradeChartPriceRight,
+            top: pairRoute
+                ? AppSpacing.tradeChartPriceTopPair
+                : AppSpacing.tradeChartPriceTopDefault,
             child: _PriceBadge(
               label: pairRoute ? '70821.46' : '67545.13',
               color: AppColors.sell,
             ),
           ),
           Positioned(
-            right: 8,
-            top: pairRoute ? 40 : 60,
+            right: AppSpacing.tradeChartPriceRight,
+            top: pairRoute
+                ? AppSpacing.tradeChartPriceTopPairSecond
+                : AppSpacing.tradeChartPriceTopDefaultSecond,
             child: _PriceBadge(
               label: pairRoute ? '70821.46' : '67254.13',
               color: AppColors.buy,
             ),
           ),
           Positioned(
-            right: 8,
-            bottom: 8,
+            right: AppSpacing.tradeChartPriceRight,
+            bottom: AppSpacing.tradeChartTvBottom,
             child: _PriceBadge(
               label: pairRoute ? '70.39K' : '252.58K',
               color: AppColors.buy,

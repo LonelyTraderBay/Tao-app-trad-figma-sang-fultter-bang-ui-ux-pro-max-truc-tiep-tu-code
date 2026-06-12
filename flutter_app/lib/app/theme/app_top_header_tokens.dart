@@ -20,18 +20,6 @@ final class AppTopHeaderTokens {
   static const double leadingGap = 12;
   static const double instrumentGap = 12;
 
-  static const double detailTitleSize = 17;
-  static const double rootTitleSize = 26;
-  static const double instrumentTitleSize = 21;
-  static const double subtitleSize = 12;
-
-  static const double detailTitleLineHeight = 1.3;
-  static const double detailSubtitleLineHeight = 1.3;
-  static const double rootTitleLineHeight = 1.2;
-  static const double rootSubtitleLineHeight = 1.25;
-  static const double instrumentTitleLineHeight = 1.2;
-  static const double instrumentSubtitleLineHeight = 1.2;
-
   static const double buttonSize = 40;
   static const double compactButtonSize = 36;
   static const double buttonIconSize = 20;

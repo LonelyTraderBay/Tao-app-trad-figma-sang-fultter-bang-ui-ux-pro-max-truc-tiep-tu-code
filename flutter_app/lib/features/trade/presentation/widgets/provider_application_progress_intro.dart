@@ -19,7 +19,7 @@ class _ProgressBars extends StatelessWidget {
                 color: activeIndex >= index
                     ? _providerPrimary
                     : AppColors.surface3,
-                borderRadius: BorderRadius.circular(999),
+                borderRadius: AppRadii.xlRadius,
               ),
             ),
           ),
@@ -45,10 +45,7 @@ class _IntroStep extends StatelessWidget {
         Text(
           'Trở thành Copy Trading Provider',
           textAlign: TextAlign.center,
-          style: AppTextStyles.sectionTitle.copyWith(
-            fontSize: 22,
-            height: 1.18,
-          ),
+          style: AppTextStyles.sectionTitle.copyWith(height: 1.18),
         ),
         const SizedBox(height: 10),
         Text(
@@ -56,7 +53,6 @@ class _IntroStep extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
-            fontSize: 13,
             height: 1.42,
           ),
         ),
@@ -112,7 +108,6 @@ class _BenefitCard extends StatelessWidget {
                 Text(
                   benefit.title,
                   style: AppTextStyles.baseMedium.copyWith(
-                    fontSize: 13,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -121,7 +116,6 @@ class _BenefitCard extends StatelessWidget {
                   benefit.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1.25,
                   ),
                 ),
@@ -161,7 +155,6 @@ class _ResponsibilitiesCard extends StatelessWidget {
                   'Trách nhiệm quan trọng',
                   style: AppTextStyles.baseMedium.copyWith(
                     color: _providerWarning,
-                    fontSize: 15,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -173,7 +166,6 @@ class _ResponsibilitiesCard extends StatelessWidget {
                       '• $item',
                       style: AppTextStyles.caption.copyWith(
                         color: _providerWarning,
-                        fontSize: 10,
                         height: 1.3,
                       ),
                     ),
@@ -202,10 +194,7 @@ class _RequirementPreview extends StatelessWidget {
           Expanded(
             child: Text(
               requirement.label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontSize: 11,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
           Icon(

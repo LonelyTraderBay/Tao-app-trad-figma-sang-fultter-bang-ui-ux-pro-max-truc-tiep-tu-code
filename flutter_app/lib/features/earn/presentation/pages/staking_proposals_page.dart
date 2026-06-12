@@ -59,7 +59,12 @@ class StakingProposalsPage extends ConsumerWidget {
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
-                      _ProposalList(proposals: snapshot.proposals),
+                      VitCard(
+                        variant: VitCardVariant.standard,
+                        radius: VitCardRadius.md,
+                        padding: EdgeInsets.zero,
+                        child: _ProposalList(proposals: snapshot.proposals),
+                      ),
                       VitCtaButton(
                         key: StakingProposalsPage.createKey,
                         onPressed: () {},
@@ -207,7 +212,10 @@ class _CategoryPill extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: AppTextStyles.micro.copyWith(color: AppColors.text3, height: 1),
+        style: AppTextStyles.micro.copyWith(
+          color: AppColors.text3,
+          height: AppSpacing.stakingCommunityPillLineHeight,
+        ),
       ),
     );
   }

@@ -158,7 +158,7 @@ class _InputWrapperDemo extends StatelessWidget {
             error!,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.sell,
-              fontSize: 12,
+              fontSize: AppSpacing.devFontLg,
             ),
           ),
         ],

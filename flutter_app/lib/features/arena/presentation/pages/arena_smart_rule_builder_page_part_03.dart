@@ -32,7 +32,7 @@ class _RuleSummaryCard extends StatelessWidget {
               const Icon(
                 Icons.summarize_outlined,
                 color: AppColors.accent,
-                size: 16,
+                size: AppSpacing.arenaSmartRuleIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -91,7 +91,7 @@ class _SummaryRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 112,
+            width: AppSpacing.arenaSmartRuleSummaryLabelWidth,
             child: Text(
               label,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -129,7 +129,7 @@ class _ModerationNote extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.primary,
-            size: 16,
+            size: AppSpacing.arenaSmartRuleIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -137,7 +137,7 @@ class _ModerationNote extends StatelessWidget {
               'Challenge sẽ được kiểm duyệt tự động. Nội dung vi phạm sẽ bị ẩn. Arena Points không phải tài sản tài chính.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: 1.4,
+                height: AppSpacing.arenaSmartRuleBodyLineHeight,
               ),
             ),
           ),
@@ -198,7 +198,10 @@ class _FooterActions extends StatelessWidget {
             TextButton.icon(
               key: ArenaSmartRuleBuilderPage.saveKey,
               onPressed: onSave,
-              icon: const Icon(Icons.save_outlined, size: 15),
+              icon: const Icon(
+                Icons.save_outlined,
+                size: AppSpacing.arenaSmartRuleTinyIcon,
+              ),
               label: const Text('Lưu nháp'),
             ),
             if (statusLabel != null)

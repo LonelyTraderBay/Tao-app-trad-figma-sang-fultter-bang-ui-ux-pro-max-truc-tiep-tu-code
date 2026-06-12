@@ -33,8 +33,10 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pPaymentBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pPaymentBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -59,12 +61,7 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodCoolingPeriodPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pPaymentScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       customGap: AppSpacing.x5,
@@ -116,7 +113,7 @@ class _CoolingHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pPaymentCardPadding,
       borderColor: AppColors.warningBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -134,7 +131,7 @@ class _CoolingHero extends StatelessWidget {
                 child: const Icon(
                   Icons.schedule_rounded,
                   color: AppColors.warn,
-                  size: 28,
+                  size: AppSpacing.p2pPaymentHeroIcon,
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -153,7 +150,6 @@ class _CoolingHero extends StatelessWidget {
                       'Phương thức thanh toán mới cần chờ 7 ngày',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1.45,
                       ),
                     ),
                   ],
@@ -163,7 +159,7 @@ class _CoolingHero extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.x5),
+            padding: AppSpacing.p2pPaymentCountdownPadding,
             decoration: BoxDecoration(
               color: AppColors.warn15,
               borderRadius: AppRadii.mdRadius,
@@ -200,7 +196,7 @@ class _TimelineCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pPaymentCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -257,7 +253,7 @@ class _ReasonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pPaymentCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -297,7 +293,6 @@ class _ReasonCard extends StatelessWidget {
                     reason,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.45,
                     ),
                   ),
                 ),
@@ -322,7 +317,7 @@ class _WaitingNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pPaymentCardPadding,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -347,10 +342,7 @@ class _WaitingNote extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   message,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    height: 1.45,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
               ],
             ),

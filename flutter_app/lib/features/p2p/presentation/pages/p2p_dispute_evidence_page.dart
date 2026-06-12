@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -50,8 +51,10 @@ class _P2PDisputeEvidencePageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pDisputeBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pDisputeBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
     final documents = controller.documents(_uploaded);
 
@@ -79,14 +82,11 @@ class _P2PDisputeEvidencePageState
                   child: SingleChildScrollView(
                     key: P2PDisputeEvidencePage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    padding: AppSpacing.p2pDisputeScrollPadding(bottomInset),
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      customGap: 0,
                       children: [
                         _HeroCard(
                           title: snapshot.title,
@@ -126,7 +126,7 @@ class _P2PDisputeEvidencePageState
                         const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pDisputeCompactCardPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Evidence submission review',
@@ -163,7 +163,7 @@ class _HeroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppModuleAccents.p2p.withValues(alpha: .24),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDisputeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -195,14 +195,13 @@ class _MockActionNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pDisputeCompactCardPadding,
       borderColor: AppColors.warningBorder,
       child: Text(
         text,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.warn,
           fontWeight: AppTextStyles.medium,
-          height: 1.45,
         ),
       ),
     );
@@ -219,7 +218,7 @@ class _EvidenceRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = document.uploaded ? AppColors.buy : AppModuleAccents.p2p;
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDisputeCardPadding,
       child: Row(
         children: [
           Container(
@@ -289,7 +288,7 @@ class _UploadButton extends StatelessWidget {
         child: SizedBox(
           height: AppSpacing.buttonCompact,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+            padding: AppSpacing.p2pDisputeEvidenceButtonPadding,
             child: Center(
               child: Text(
                 'Upload',

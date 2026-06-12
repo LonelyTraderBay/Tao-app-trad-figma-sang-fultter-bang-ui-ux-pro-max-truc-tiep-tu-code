@@ -13,14 +13,12 @@ class WalletSegmentedTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const tabs = [('assets', 'Danh sách'), ('chart', 'Phân bổ')];
-    return Container(
-      height: 44,
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: _walletPanel2,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.inputRadius,
-      ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      height: AppSpacing.searchBarCompactHeight,
+      padding: AppSpacing.cardPaddingCompact,
+      borderColor: AppColors.cardBorder,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -48,9 +46,6 @@ class WalletSegmentedTabs extends StatelessWidget {
                       color: active == tab.$1
                           ? _walletPrimary
                           : AppColors.text3,
-                      fontSize: 13,
-                      fontWeight: AppTextStyles.bold,
-                      height: 1,
                     ),
                   ),
                 ),
@@ -150,11 +145,7 @@ class WalletAssetHeader extends StatelessWidget {
         Expanded(
           child: Text(
             '$count tài sản',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
         ),
         _HeaderButton(
@@ -163,7 +154,7 @@ class WalletAssetHeader extends StatelessWidget {
           background: _walletPanel2,
           onTap: () => onNavigate('/wallet/address-book'),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.rowGap),
         _HeaderButton(
           label: 'Phân tích',
           foreground: _walletPrimary,
@@ -194,8 +185,9 @@ class _HeaderButton extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
-        height: 28,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.searchBarHorizontalPadding,
+        ),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: background,
@@ -206,9 +198,7 @@ class _HeaderButton extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: foreground,
-            fontSize: 11,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
       ),
@@ -232,7 +222,6 @@ class WalletAssetList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (assets.isEmpty) {
       return VitCard(
-        height: 160,
         alignment: Alignment.center,
         variant: VitCardVariant.standard,
         child: Text(
@@ -281,117 +270,105 @@ class _AssetRow extends StatelessWidget {
       key: Key('sc135_wallet_asset_${asset.id}'),
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
-      child: Container(
-        height: 65,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: last
-                ? BorderSide.none
-                : const BorderSide(color: AppColors.cardBorder),
-          ),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 38,
-              height: 38,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: .16),
-                shape: BoxShape.circle,
-                border: Border.all(color: color.withValues(alpha: .45)),
-              ),
-              child: Text(
-                asset.symbol.length > 3
-                    ? asset.symbol.substring(0, 3)
-                    : asset.symbol,
-                style: AppTextStyles.micro.copyWith(
-                  color: color,
-                  fontSize: 11,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      children: [
-                        Text(
-                          asset.symbol,
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text1,
-                            fontSize: 14,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                        const SizedBox(width: 7),
-                        Text(
-                          _formatPct(asset.change24h),
-                          style: AppTextStyles.micro.copyWith(
-                            color: changeColor,
-                            fontSize: 10,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    asset.name,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 11,
-                      height: 1,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: AppSpacing.transferCardPadding,
+            child: Row(
               children: [
-                Text(
-                  hidden ? '••••' : _formatAssetAmount(asset.balance),
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontSize: 15,
-                    fontWeight: AppTextStyles.bold,
-                    fontFamily: 'Roboto',
-                    height: 1,
+                Container(
+                  width: AppSpacing.transferIcon,
+                  height: AppSpacing.transferIcon,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: .16),
+                    shape: BoxShape.circle,
+                    border: Border.all(color: color.withValues(alpha: .45)),
+                  ),
+                  child: Text(
+                    asset.symbol.length > 3
+                        ? asset.symbol.substring(0, 3)
+                        : asset.symbol,
+                    style: AppTextStyles.micro.copyWith(
+                      color: color,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  hidden ? '••••' : '≈ ${_formatUsd(asset.usdValue)}',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 10,
-                    fontFamily: 'Roboto',
-                    height: 1,
+                const SizedBox(width: AppSpacing.rowGapRegular),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          children: [
+                            Text(
+                              asset.symbol,
+                              style: AppTextStyles.baseMedium.copyWith(
+                                color: AppColors.text1,
+                              ),
+                            ),
+                            const SizedBox(width: AppSpacing.x1),
+                            Text(
+                              _formatPct(asset.change24h),
+                              style: AppTextStyles.numericMicro.copyWith(
+                                color: changeColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.rowGapCompact),
+                      Text(
+                        asset.name,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ],
                   ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      hidden ? '••••' : _formatAssetAmount(asset.balance),
+                      style: AppTextStyles.amountSm.copyWith(
+                        color: AppColors.text1,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.rowGapCompact),
+                    Text(
+                      hidden ? '••••' : '≈ ${_formatUsd(asset.usdValue)}',
+                      style: AppTextStyles.numericMicro.copyWith(
+                        color: AppColors.text2,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(width: AppSpacing.x4),
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.iconMd,
                 ),
               ],
             ),
-            const SizedBox(width: 13),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: 18,
+          ),
+          if (!last)
+            const Divider(
+              height: AppSpacing.walletHistoryDividerHeight,
+              thickness: AppSpacing.walletHistoryDividerHeight,
+              color: AppColors.cardBorder,
             ),
-          ],
-        ),
+        ],
       ),
     );
   }

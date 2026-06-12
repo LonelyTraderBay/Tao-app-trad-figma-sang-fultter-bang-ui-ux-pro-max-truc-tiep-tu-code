@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -67,15 +68,15 @@ class P2PTradingLevelPage extends ConsumerWidget {
                       AppSpacing.contentPad,
                       bottomInset,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      customGap: AppSpacing.x4,
                       children: [
                         _CurrentLevelHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
                         if (snapshot.userLevel.currentLevel <
                             snapshot.levels.length)
                           _NextLevelProgress(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
                         Text(
                           'Tất cả cấp độ',
                           style: AppTextStyles.caption.copyWith(
@@ -83,11 +84,8 @@ class P2PTradingLevelPage extends ConsumerWidget {
                             fontWeight: AppTextStyles.medium,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x4),
-                        for (final level in snapshot.levels) ...[
+                        for (final level in snapshot.levels)
                           _LevelCard(snapshot: snapshot, level: level),
-                          const SizedBox(height: AppSpacing.x3),
-                        ],
                       ],
                     ),
                   ),

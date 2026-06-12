@@ -27,7 +27,7 @@ class _DetailTabs extends StatelessWidget {
       ),
     ];
     return Container(
-      padding: const EdgeInsets.all(4),
+      padding: AppSpacing.predictionDetailTabsPadding,
       decoration: BoxDecoration(
         color: AppColors.surface2,
         borderRadius: AppRadii.cardRadius,
@@ -38,14 +38,16 @@ class _DetailTabs extends StatelessWidget {
           children: [
             for (final tab in tabs)
               Padding(
-                padding: const EdgeInsets.only(right: 4),
+                padding: const EdgeInsets.only(
+                  right: AppSpacing.predictionDetailTabsGap,
+                ),
                 child: InkWell(
                   key: tab.$3,
                   onTap: () => onChanged(tab.$1),
                   borderRadius: AppRadii.smRadius,
                   child: Container(
-                    height: 34,
-                    padding: const EdgeInsets.symmetric(horizontal: 11),
+                    height: AppSpacing.predictionDetailTabHeight,
+                    padding: AppSpacing.predictionDetailTabPadding,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: activeTab == tab.$1
@@ -59,7 +61,6 @@ class _DetailTabs extends StatelessWidget {
                         color: activeTab == tab.$1
                             ? AppColors.text1
                             : AppColors.text3,
-                        fontSize: 12,
                         fontWeight: activeTab == tab.$1
                             ? AppTextStyles.bold
                             : AppTextStyles.normal,
@@ -84,7 +85,7 @@ class _TabCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(15),
+      padding: AppSpacing.predictionDetailTabCardPadding,
       child: switch (activeTab) {
         _DetailTab.rules => _RulesContent(snapshot: snapshot),
         _DetailTab.comments => const _CommentsContent(),
@@ -111,21 +112,21 @@ class _RulesContent extends StatelessWidget {
           text:
               'This market will resolve to "Yes" if bitcoin reaches \$150K before July 2026 before the end date. Otherwise, it resolves to "No".',
         ),
-        const SizedBox(height: 13),
+        const SizedBox(height: AppSpacing.predictionDetailTabSectionGap),
         _InfoBox(
           icon: Icons.verified_user_outlined,
           title: 'Resolution Source',
           text: 'CoinGecko & CoinMarketCap (average)',
           color: _predictionPrimary,
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.predictionDetailTabInfoGap),
         _InfoBox(
           icon: Icons.calendar_month_outlined,
           title: 'End Date',
           text: '${_formatDate(snapshot.event.endDate)} at 23:59 UTC',
           color: AppColors.warn,
         ),
-        const SizedBox(height: 13),
+        const SizedBox(height: AppSpacing.predictionDetailTabSectionGap),
         Text(
           'Market Rules',
           style: AppTextStyles.caption.copyWith(
@@ -133,15 +134,17 @@ class _RulesContent extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.predictionDetailTabTitleGap),
         for (var index = 0; index < snapshot.rules.length; index += 1)
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(
+              bottom: AppSpacing.predictionDetailRuleBottomGap,
+            ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 22,
+                  width: AppSpacing.predictionDetailRuleNumberWidth,
                   child: Text(
                     '${index + 1}.',
                     style: AppTextStyles.micro.copyWith(
@@ -153,11 +156,7 @@ class _RulesContent extends StatelessWidget {
                 Expanded(
                   child: Text(
                     snapshot.rules[index],
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      fontSize: 11,
-                      height: 1.45,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                   ),
                 ),
               ],
@@ -186,8 +185,12 @@ class _InfoBlock extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(icon, color: AppColors.text2, size: 13),
-            const SizedBox(width: 7),
+            Icon(
+              icon,
+              color: AppColors.text2,
+              size: AppSpacing.predictionDetailInfoIcon,
+            ),
+            const SizedBox(width: AppSpacing.predictionDetailInfoIconGap),
             Text(
               title,
               style: AppTextStyles.caption.copyWith(
@@ -197,14 +200,10 @@ class _InfoBlock extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 7),
+        const SizedBox(height: AppSpacing.predictionDetailInfoIconGap),
         Text(
           text,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 12,
-            height: 1.55,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
       ],
     );
@@ -227,7 +226,7 @@ class _InfoBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.predictionDetailInfoBoxPadding,
       decoration: BoxDecoration(
         color: AppColors.surface2,
         borderRadius: AppRadii.mdRadius,
@@ -235,8 +234,12 @@ class _InfoBox extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color, size: 14),
-          const SizedBox(width: 8),
+          Icon(
+            icon,
+            color: color,
+            size: AppSpacing.predictionDetailInfoBoxIcon,
+          ),
+          const SizedBox(width: AppSpacing.predictionDetailInfoBoxGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,18 +248,13 @@ class _InfoBox extends StatelessWidget {
                   title,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 3),
-                Text(
-                  text,
-                  style: AppTextStyles.caption.copyWith(
-                    color: color,
-                    fontSize: 12,
-                  ),
+                const SizedBox(
+                  height: AppSpacing.predictionDetailInfoBoxTextGap,
                 ),
+                Text(text, style: AppTextStyles.caption.copyWith(color: color)),
               ],
             ),
           ),

@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
+import '../widgets/market_body_review_widgets.dart';
 
 part '../widgets/social_sentiment_tabs_widgets.dart';
 part '../widgets/social_sentiment_overview_widgets.dart';
@@ -130,6 +131,18 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
                           ),
                           _MentionVelocity(tokens: snapshot.tokens),
                         ],
+                        const MarketBodyReviewSection(
+                          title: 'Sentiment state review',
+                          message: 'Social sentiment data reviewed',
+                          detail:
+                              'Overview, token ranking, trend, empty, and refresh states remain visible for sentiment review.',
+                          primary:
+                              'Global sentiment stays separated from token-level rankings.',
+                          secondary:
+                              'Sort and trend controls keep social data comparable across tabs.',
+                          tertiary:
+                              'Mention velocity and heatmap panels remain informational, not execution prompts.',
+                        ),
                       ],
                     ),
                   ),

@@ -20,7 +20,6 @@ class _RightsNotice extends StatelessWidget {
                   'Your Rights',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -32,7 +31,6 @@ class _RightsNotice extends StatelessWidget {
                   'to the Financial Ombudsman Service.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                     height: 1.35,
                   ),
@@ -102,7 +100,6 @@ class _StatCard extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
                 height: 1,
               ),
             ),
@@ -111,7 +108,6 @@ class _StatCard extends StatelessWidget {
               value,
               style: AppTextStyles.heroNumber.copyWith(
                 color: valueColor,
-                fontSize: 20,
                 height: 1,
               ),
             ),
@@ -135,22 +131,24 @@ class _SubmitComplaintButton extends StatelessWidget {
         borderRadius: AppRadii.inputRadius,
         onTap: () => context.go(AppRoutePaths.tradeCopyComplaintSubmission),
         child: SizedBox(
-          height: 78,
+          height: 86,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 15, 16),
+            padding: const EdgeInsets.fromLTRB(16, 10, 15, 10),
             child: Row(
               children: [
-                Container(
+                SizedBox(
                   width: 48,
                   height: AppSpacing.inputHeight,
-                  decoration: BoxDecoration(
-                    color: AppColors.onAccent.withValues(alpha: .20),
-                    borderRadius: AppRadii.cardRadius,
-                  ),
-                  child: const Icon(
-                    Icons.chat_bubble_outline_rounded,
-                    color: AppColors.onAccent,
-                    size: 25,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: AppColors.onAccent.withValues(alpha: .20),
+                      borderRadius: AppRadii.cardRadius,
+                    ),
+                    child: const Icon(
+                      Icons.chat_bubble_outline_rounded,
+                      color: AppColors.onAccent,
+                      size: 25,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -163,7 +161,6 @@ class _SubmitComplaintButton extends StatelessWidget {
                         'Submit a Complaint',
                         style: AppTextStyles.baseMedium.copyWith(
                           color: AppColors.onAccent,
-                          fontSize: 14,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
@@ -173,7 +170,6 @@ class _SubmitComplaintButton extends StatelessWidget {
                         "We'll respond within 8 weeks",
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.onAccent,
-                          fontSize: 11,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
@@ -203,9 +199,9 @@ class _Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 52,
-      color: _complaintsPanel,
+      variant: VitCardVariant.inner,
       child: Row(
         children: [
           _TabButton(
@@ -260,17 +256,18 @@ class _TabButton extends StatelessWidget {
                   label,
                   style: AppTextStyles.caption.copyWith(
                     color: isActive ? _complaintsPrimary : AppColors.text3,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               width: 100,
               height: 2,
-              color: isActive ? _complaintsPrimary : AppColors.transparent,
+              child: ColoredBox(
+                color: isActive ? _complaintsPrimary : AppColors.transparent,
+              ),
             ),
           ],
         ),

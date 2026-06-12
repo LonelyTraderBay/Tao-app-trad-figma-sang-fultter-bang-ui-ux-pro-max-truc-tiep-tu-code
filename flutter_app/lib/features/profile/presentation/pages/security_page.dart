@@ -64,8 +64,9 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 58
-            : DeviceMetrics.nativeBottomChrome + 24) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.securityBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.securityBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -87,10 +88,10 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
                 child: SingleChildScrollView(
                   key: SecurityPage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.securityScrollPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 18,
+                    customGap: AppSpacing.securityContentGap,
                     fullBleed: true,
                     children: [
                       VitHighRiskStatePanel(

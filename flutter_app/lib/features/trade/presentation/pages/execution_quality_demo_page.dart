@@ -17,6 +17,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 class ExecutionQualityDemoPage extends ConsumerStatefulWidget {
   const ExecutionQualityDemoPage({super.key, this.shellRenderMode});
 
@@ -125,6 +127,19 @@ class _ExecutionQualityDemoPageState
                             ExecutionQualityAmendmentTab(
                               onOpen: _openAmendmentSheet,
                             ),
+                          const SizedBox(height: 14),
+                          const TradeBodyReviewSection(
+                            title: 'Execution quality review',
+                            message: 'Execution quality body reviewed',
+                            detail:
+                                'Slippage, execution report, amendment, sheet, success, and result states stay visible.',
+                            primary:
+                                'Feature cards keep execution safeguards visible before sheets open.',
+                            secondary:
+                                'Tabbed controls preserve the active quality workflow.',
+                            tertiary:
+                                'Success toast remains separate from the underlying settings state.',
+                          ),
                         ],
                       ),
                     ),

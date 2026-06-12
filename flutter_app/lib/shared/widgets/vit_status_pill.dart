@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 
 enum VitStatusPillStatus {
   success,
@@ -83,27 +85,27 @@ class VitStatusPill extends StatelessWidget {
     switch (size) {
       case VitStatusPillSize.sm:
         return const _StatusMetrics(
-          height: 20,
-          fontSize: 10,
-          iconSize: 10,
-          paddingX: 6,
-          gap: 3,
+          height: AppSpacing.statusPillHeightSm,
+          labelStyle: AppTextStyles.numericMicro,
+          iconSize: AppSpacing.statusPillIconSizeSm,
+          paddingX: AppSpacing.statusPillHorizontalPaddingSm,
+          gap: AppSpacing.statusPillGapSm,
         );
       case VitStatusPillSize.md:
         return const _StatusMetrics(
-          height: 26,
-          fontSize: 13,
-          iconSize: 12,
-          paddingX: 10,
-          gap: 4,
+          height: AppSpacing.statusPillHeightMd,
+          labelStyle: AppTextStyles.navLabel,
+          iconSize: AppSpacing.statusPillIconSizeMd,
+          paddingX: AppSpacing.statusPillHorizontalPaddingMd,
+          gap: AppSpacing.statusPillGapMd,
         );
       case VitStatusPillSize.lg:
         return const _StatusMetrics(
-          height: 32,
-          fontSize: 14,
-          iconSize: 14,
-          paddingX: 12,
-          gap: 5,
+          height: AppSpacing.statusPillHeightLg,
+          labelStyle: AppTextStyles.navLabel,
+          iconSize: AppSpacing.statusPillIconSizeLg,
+          paddingX: AppSpacing.statusPillHorizontalPaddingLg,
+          gap: AppSpacing.statusPillGapLg,
         );
     }
   }
@@ -120,7 +122,7 @@ class VitStatusPill extends StatelessWidget {
       decoration: BoxDecoration(
         color: outline ? AppColors.transparent : palette.background,
         border: Border.all(color: palette.border),
-        borderRadius: BorderRadius.circular(metrics.height / 2),
+        borderRadius: AppRadii.pillRadius,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -132,7 +134,12 @@ class VitStatusPill extends StatelessWidget {
               decoration: BoxDecoration(
                 color: palette.foreground,
                 shape: BoxShape.circle,
-                boxShadow: [BoxShadow(color: palette.border, blurRadius: 4)],
+                boxShadow: [
+                  BoxShadow(
+                    color: palette.border,
+                    blurRadius: AppSpacing.statusPillBadgeBlur,
+                  ),
+                ],
               ),
             ),
             SizedBox(width: metrics.gap),
@@ -145,32 +152,34 @@ class VitStatusPill extends StatelessWidget {
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(
+              style: metrics.labelStyle.copyWith(
                 color: palette.foreground,
-                fontSize: metrics.fontSize,
                 fontWeight: AppTextStyles.medium,
-                height: 1,
               ),
             ),
           ),
           if (hasCount) ...[
             SizedBox(width: metrics.gap),
             Container(
-              constraints: BoxConstraints(minWidth: metrics.height * 0.65),
-              height: metrics.height * 0.65,
-              padding: const EdgeInsets.symmetric(horizontal: 3),
+              constraints: BoxConstraints(
+                minWidth:
+                    metrics.height * AppSpacing.statusPillCountMinWidthFactor,
+              ),
+              height: metrics.height * AppSpacing.statusPillCountHeightFactor,
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.statusPillCountPadding,
+              ),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: palette.foreground,
-                borderRadius: BorderRadius.circular(metrics.height),
+                borderRadius: AppRadii.pillRadius,
               ),
               child: Text(
                 count! > 99 ? '99+' : '${count!}',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: metrics.fontSize - 2,
+                  fontSize: AppTextStyles.navLabel.fontSize,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                 ),
               ),
             ),
@@ -184,7 +193,7 @@ class VitStatusPill extends StatelessWidget {
         type: MaterialType.transparency,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(metrics.height / 2),
+          borderRadius: AppRadii.pillRadius,
           child: content,
         ),
       );
@@ -209,14 +218,14 @@ class _StatusPalette {
 class _StatusMetrics {
   const _StatusMetrics({
     required this.height,
-    required this.fontSize,
+    required this.labelStyle,
     required this.iconSize,
     required this.paddingX,
     required this.gap,
   });
 
   final double height;
-  final double fontSize;
+  final TextStyle labelStyle;
   final double iconSize;
   final double paddingX;
   final double gap;

@@ -21,19 +21,23 @@ class _PredictionCtaCard extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       borderColor: color.withValues(alpha: .20),
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.predictionHomeCompactCardPadding,
       child: Row(
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: AppSpacing.predictionHomeHighlightIconBox,
+            height: AppSpacing.predictionHomeHighlightIconBox,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .12),
               borderRadius: AppRadii.mdRadius,
             ),
-            child: Icon(icon, color: color, size: 18),
+            child: Icon(
+              icon,
+              color: color,
+              size: AppSpacing.predictionHomeHighlightCtaIcon,
+            ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.predictionHomeHighlightGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +51,9 @@ class _PredictionCtaCard extends StatelessWidget {
                 ),
                 Text(
                   subtitle,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  style: AppTextStyles.numericMicro.copyWith(
+                    color: AppColors.text3,
+                  ),
                 ),
               ],
             ),
@@ -55,7 +61,7 @@ class _PredictionCtaCard extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: 18,
+            size: AppSpacing.predictionHomeHighlightCtaIcon,
           ),
         ],
       ),
@@ -75,12 +81,12 @@ class _BreakingMoversCard extends StatelessWidget {
       key: PredictionsHomePage.breakingMoversKey,
       onTap: onTap,
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.predictionHomeCompactCardPadding,
       child: Row(
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: AppSpacing.predictionHomeHighlightIconBox,
+            height: AppSpacing.predictionHomeHighlightIconBox,
             decoration: BoxDecoration(
               color: AppColors.warn10,
               borderRadius: AppRadii.mdRadius,
@@ -88,22 +94,24 @@ class _BreakingMoversCard extends StatelessWidget {
             child: const Icon(
               Icons.bolt_rounded,
               color: AppColors.warn,
-              size: 20,
+              size: AppSpacing.predictionHomeHighlightIcon,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.predictionHomeHighlightGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Breaking movers (24h)',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.control.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(
+                  height: AppSpacing.predictionHomeHighlightTinyGap,
+                ),
                 Row(
                   children: [
                     for (final mover in snapshot.breakingMovers.take(2)) ...[
@@ -116,11 +124,11 @@ class _BreakingMoversCard extends StatelessWidget {
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: AppSpacing.predictionHomeActionGap),
                     ],
                     Text(
                       '& ${snapshot.breakingMovers.length - 2}+ more',
-                      style: AppTextStyles.micro.copyWith(
+                      style: AppTextStyles.numericMicro.copyWith(
                         color: AppColors.text3,
                       ),
                     ),
@@ -132,7 +140,7 @@ class _BreakingMoversCard extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: 18,
+            size: AppSpacing.predictionHomeHighlightCtaIcon,
           ),
         ],
       ),
@@ -151,12 +159,12 @@ class _ArenaBridgeCard extends StatelessWidget {
       key: PredictionsHomePage.arenaBridgeKey,
       onTap: onTap,
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionHomeBridgeCardPadding,
       child: Row(
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: AppSpacing.predictionHomeHighlightIconBox,
+            height: AppSpacing.predictionHomeHighlightIconBox,
             decoration: BoxDecoration(
               color: AppColors.warn10,
               borderRadius: AppRadii.mdRadius,
@@ -164,21 +172,21 @@ class _ArenaBridgeCard extends StatelessWidget {
             child: const Icon(
               Icons.sports_esports_rounded,
               color: AppColors.warn,
-              size: 20,
+              size: AppSpacing.predictionHomeHighlightIcon,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.predictionHomeHighlightGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Wrap(
-                  spacing: 7,
+                  spacing: AppSpacing.predictionHomeBridgeWrapGap,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
                       'Thử thách cùng chủ đề',
-                      style: AppTextStyles.caption.copyWith(
+                      style: AppTextStyles.control.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
                       ),
@@ -190,20 +198,19 @@ class _ArenaBridgeCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: AppSpacing.predictionHomeBridgeTinyGap),
                 Text(
                   'Khám phá các room social points-only trong Open Arena',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  style: AppTextStyles.numericMicro.copyWith(
+                    color: AppColors.text3,
+                  ),
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: AppSpacing.predictionHomeBridgeTinyGap),
                 Text(
                   'Xem Arena',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.warn,
-                    fontWeight: AppTextStyles.bold,
-                  ),
+                  style: AppTextStyles.badge.copyWith(color: AppColors.warn),
                 ),
               ],
             ),
@@ -211,7 +218,7 @@ class _ArenaBridgeCard extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.warn,
-            size: 18,
+            size: AppSpacing.predictionHomeHighlightCtaIcon,
           ),
         ],
       ),

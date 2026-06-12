@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/controllers/wallet_controller.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/withdraw_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class WithdrawPreviewSheet extends StatelessWidget {
   const WithdrawPreviewSheet({required this.preview, super.key});
@@ -16,16 +17,13 @@ class WithdrawPreviewSheet extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+        padding: AppSpacing.transferSheetPadding,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Xác nhận rút tiền',
-              style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
-            ),
-            const SizedBox(height: 14),
+            Text('Xác nhận rút tiền', style: AppTextStyles.sectionTitle),
+            const SizedBox(height: AppSpacing.transferInfoGap),
             WithdrawPreviewRow(label: 'Số lượng', value: preview.amountLabel),
             WithdrawPreviewRow(label: 'Mạng lưới', value: preview.networkName),
             WithdrawPreviewRow(label: 'Phí mạng', value: preview.feeLabel),
@@ -34,26 +32,20 @@ class WithdrawPreviewSheet extends StatelessWidget {
               value: preview.receivedLabel,
             ),
             WithdrawPreviewRow(
-              label: 'Địa chỉ đến',
+              label: 'Địa chỉ nhận',
               value: preview.maskedAddress,
             ),
-            const SizedBox(height: 14),
-            Container(
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: withdrawAmber.withValues(alpha: .10),
-                border: Border.all(color: withdrawAmber.withValues(alpha: .24)),
-                borderRadius: AppRadii.inputRadius,
-              ),
+            const SizedBox(height: AppSpacing.transferInfoGap),
+            VitCard(
+              variant: VitCardVariant.inner,
+              borderColor: withdrawAmber.withValues(alpha: .24),
+              padding: AppSpacing.cardPadding,
               child: Text(
                 'High-risk action: preview + confirm + audit trail required.',
-                style: AppTextStyles.caption.copyWith(
-                  color: withdrawAmber,
-                  fontSize: 12,
-                ),
+                style: AppTextStyles.caption.copyWith(color: withdrawAmber),
               ),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: AppSpacing.transferInfoGap),
             Row(
               children: [
                 Expanded(
@@ -63,7 +55,7 @@ class WithdrawPreviewSheet extends StatelessWidget {
                     onTap: () => Navigator.of(context).pop(),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.x3 - AppSpacing.x1),
                 Expanded(
                   child: WithdrawConfirmActionButton(
                     key: withdrawConfirmWithdrawKey,
@@ -103,18 +95,11 @@ class WithdrawConfirmActionButton extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         behavior: HitTestBehavior.opaque,
-        child: Container(
-          height: 46,
+        child: VitCard(
+          height: AppSpacing.ctaHeight,
+          variant: VitCardVariant.standard,
+          borderColor: primary ? withdrawPrimary : AppColors.borderSolid,
           alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: primary ? withdrawPrimary : withdrawPanel2,
-            border: Border.all(
-              color: primary
-                  ? withdrawPrimary.withValues(alpha: .65)
-                  : AppColors.borderSolid,
-            ),
-            borderRadius: AppRadii.inputRadius,
-          ),
           child: Text(
             label,
             maxLines: 1,
@@ -122,7 +107,6 @@ class WithdrawConfirmActionButton extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: foreground,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
         ),
@@ -144,7 +128,7 @@ class WithdrawPreviewRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+      padding: AppSpacing.walletWithdrawPreviewRowPadding,
       child: Row(
         children: [
           Expanded(

@@ -39,7 +39,7 @@ class _OtpIntro extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle.copyWith(fontSize: 24),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text.rich(
           TextSpan(
             text: 'Chúng tôi đã gửi mã 6 chữ số đến ',
@@ -59,7 +59,7 @@ class _OtpIntro extends StatelessWidget {
             height: 1.6,
           ),
         ),
-        const SizedBox(height: AppSpacing.x1),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
         Text.rich(
           const TextSpan(
             text: '(Demo: nhập ',
@@ -72,10 +72,7 @@ class _OtpIntro extends StatelessWidget {
             ],
           ),
           textAlign: TextAlign.center,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text3,
-            fontSize: 12,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
       ],
     );

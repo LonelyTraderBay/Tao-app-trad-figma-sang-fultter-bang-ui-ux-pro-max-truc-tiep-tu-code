@@ -15,8 +15,8 @@ class _RankingRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 58,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      height: AppSpacing.predictionLeaderboardRankingRowHeight,
+      padding: AppSpacing.predictionLeaderboardRankingPadding,
       decoration: BoxDecoration(
         border: last
             ? null
@@ -24,12 +24,22 @@ class _RankingRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          SizedBox(width: 32, child: _RankBadge(rank: trader.rank)),
+          SizedBox(
+            width: AppSpacing.predictionLeaderboardRankWidth,
+            child: _RankBadge(rank: trader.rank),
+          ),
           Expanded(
             child: Row(
               children: [
-                Text(trader.avatar, style: const TextStyle(fontSize: 17)),
-                const SizedBox(width: 8),
+                Text(
+                  trader.avatar,
+                  style: const TextStyle(
+                    fontSize: AppSpacing.predictionLeaderboardTraderAvatar,
+                  ),
+                ),
+                const SizedBox(
+                  width: AppSpacing.predictionLeaderboardTraderGap,
+                ),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -48,7 +58,6 @@ class _RankingRow extends StatelessWidget {
                         '${trader.trades} trades',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
                         ),
                       ),
                     ],
@@ -58,7 +67,7 @@ class _RankingRow extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 84,
+            width: AppSpacing.predictionLeaderboardMetricWidth,
             child: Text(
               metric == PredictionLeaderboardMetric.pnl
                   ? _formatSignedCompact(trader.pnl)
@@ -74,13 +83,12 @@ class _RankingRow extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 58,
+            width: AppSpacing.predictionLeaderboardWinRateWidth,
             child: Text(
               '${trader.winRate}%',
               textAlign: TextAlign.right,
               style: AppTextStyles.caption.copyWith(
                 color: _winRateColor(trader.winRate),
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
@@ -114,8 +122,8 @@ class _RankBadge extends StatelessWidget {
         ? AppColors.medalSilver
         : AppColors.medalBronze;
     return Container(
-      width: 21,
-      height: 21,
+      width: AppSpacing.predictionLeaderboardRankBadge,
+      height: AppSpacing.predictionLeaderboardRankBadge,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .15),
@@ -125,7 +133,6 @@ class _RankBadge extends StatelessWidget {
         '$rank',
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 10,
           fontWeight: AppTextStyles.bold,
         ),
       ),
@@ -172,12 +179,12 @@ class _BiggestWinCard extends StatelessWidget {
           ? null
           : () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
       borderColor: AppColors.transparent,
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.predictionLeaderboardWinCardPadding,
       child: Row(
         children: [
           Container(
-            width: 42,
-            height: 42,
+            width: AppSpacing.predictionLeaderboardWinIconBox,
+            height: AppSpacing.predictionLeaderboardWinIconBox,
             decoration: BoxDecoration(
               color: AppColors.buy10,
               borderRadius: AppRadii.cardRadius,
@@ -185,18 +192,25 @@ class _BiggestWinCard extends StatelessWidget {
             child: const Icon(
               Icons.emoji_events_outlined,
               color: AppColors.buy,
-              size: 20,
+              size: AppSpacing.predictionLeaderboardWinIcon,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.predictionLeaderboardWinGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    Text(trader.avatar, style: const TextStyle(fontSize: 15)),
-                    const SizedBox(width: 6),
+                    Text(
+                      trader.avatar,
+                      style: const TextStyle(
+                        fontSize: AppSpacing.predictionLeaderboardWinAvatar,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: AppSpacing.predictionLeaderboardWinAvatarGap,
+                    ),
                     Flexible(
                       child: Text(
                         trader.user,
@@ -210,7 +224,9 @@ class _BiggestWinCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(
+                  height: AppSpacing.predictionLeaderboardWinMarketGap,
+                ),
                 Row(
                   children: [
                     Flexible(
@@ -222,16 +238,17 @@ class _BiggestWinCard extends StatelessWidget {
                           color: event == null
                               ? AppColors.text3
                               : _predictionPrimary,
-                          fontSize: 10,
                         ),
                       ),
                     ),
                     if (event != null) ...[
-                      const SizedBox(width: 3),
+                      const SizedBox(
+                        width: AppSpacing.predictionLeaderboardWinMarketGap,
+                      ),
                       const Icon(
                         Icons.arrow_outward_rounded,
                         color: _predictionPrimary,
-                        size: 10,
+                        size: AppSpacing.predictionLeaderboardWinMarketArrow,
                       ),
                     ],
                   ],

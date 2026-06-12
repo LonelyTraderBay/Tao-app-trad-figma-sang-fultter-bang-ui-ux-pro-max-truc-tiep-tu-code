@@ -16,7 +16,7 @@ class _QuickActionButton extends StatelessWidget {
         borderRadius: AppRadii.inputRadius,
         child: Container(
           height: AppSpacing.buttonCompact,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
+          padding: AppSpacing.p2pOrderQuickButtonPadding,
           decoration: BoxDecoration(
             border: Border.all(color: color.withValues(alpha: .18)),
             borderRadius: AppRadii.inputRadius,
@@ -24,7 +24,11 @@ class _QuickActionButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(_quickActionIcon(action.iconKey), color: color, size: 12),
+              Icon(
+                _quickActionIcon(action.iconKey),
+                color: color,
+                size: AppSpacing.p2pOrderQuickActionIcon,
+              ),
               const SizedBox(width: AppSpacing.x1),
               Flexible(
                 child: Text(
@@ -60,7 +64,7 @@ class _InfoLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+      padding: AppSpacing.p2pOrderInfoLinePadding,
       decoration: BoxDecoration(
         border: isLast
             ? null
@@ -114,14 +118,11 @@ class _SmallPill extends StatelessWidget {
         borderRadius: AppRadii.inputRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
+        padding: AppSpacing.p2pOrderSmallPillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: color, size: 11),
+            Icon(icon, color: color, size: AppSpacing.p2pOrderSmallPillIcon),
             const SizedBox(width: AppSpacing.x1),
             Flexible(
               child: Text(
@@ -164,12 +165,16 @@ class _SmallButton extends StatelessWidget {
         borderRadius: AppRadii.inputRadius,
         child: Container(
           height: AppSpacing.buttonCompact,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+          padding: AppSpacing.p2pOrderSmallButtonPadding,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, color: color, size: 13),
+              Icon(
+                icon,
+                color: color,
+                size: AppSpacing.p2pOrderSmallButtonIcon,
+              ),
               const SizedBox(width: AppSpacing.x1),
               Text(
                 label,
@@ -208,7 +213,7 @@ class _TextActionButton extends StatelessWidget {
         onTap: onPressed,
         borderRadius: AppRadii.inputRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+          padding: AppSpacing.p2pOrderTextActionPadding,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -270,7 +275,7 @@ class _InlineWarning extends StatelessWidget {
         borderRadius: AppRadii.cardRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.p2pOrderInlineWarningPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

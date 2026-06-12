@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/controllers/wallet_controller.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_agreement.dart';
@@ -63,16 +64,13 @@ class AddressAddForm extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(4, 6, 4, 0),
+          padding: AppSpacing.walletAddressAddHelperPadding,
           child: Row(
             children: [
               Expanded(
                 child: Text(
                   'Đặt tên dễ nhớ cho ví',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 11,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
               Text(
@@ -81,29 +79,28 @@ class AddressAddForm extends StatelessWidget {
                   color: labelController.text.length > 25
                       ? addressAddAmber
                       : AppColors.text3,
-                  fontSize: 11,
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 26),
+        const SizedBox(height: AppSpacing.walletAddressAddFormSectionGap),
         const AddressFieldLabel(label: 'Mạng lưới', required: true),
-        const SizedBox(height: 9),
+        const SizedBox(height: AppSpacing.walletAddressStatsValueGap),
         AddressNetworkGrid(
           networks: snapshot.networks,
           selectedId: selectedNetworkId,
           onChanged: onNetworkChanged,
         ),
-        const SizedBox(height: 26),
+        const SizedBox(height: AppSpacing.walletAddressAddFormSectionGap),
         const AddressFieldLabel(label: 'Tài sản'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.walletAddressAddAssetLabelGap),
         AddressAssetSelector(
           assets: snapshot.assets,
           selectedAsset: selectedAsset,
           onChanged: onAssetChanged,
         ),
-        const SizedBox(height: 34),
+        const SizedBox(height: AppSpacing.walletAddressAddAddressSectionGap),
         AddressFieldSection(
           label: 'Địa chỉ ví',
           required: true,
@@ -112,19 +109,15 @@ class AddressAddForm extends StatelessWidget {
             onChanged: onInputChanged,
           ),
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: AppSpacing.walletAddressAddHintGap),
         Padding(
-          padding: const EdgeInsets.only(left: 4),
+          padding: AppSpacing.walletAddressAddHintPadding,
           child: Text(
             selectedNetwork.addressHint,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 11,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ),
-        const SizedBox(height: 28),
+        const SizedBox(height: AppSpacing.walletAddressAddMemoGap),
         AddressFieldSection(
           label: 'Memo / Tag',
           optionalText: '(tùy chọn)',
@@ -133,19 +126,19 @@ class AddressAddForm extends StatelessWidget {
             semanticLabel: 'Address memo optional',
             controller: memoController,
             hintText: 'Nhập memo nếu cần...',
-            height: 48,
+            height: AppSpacing.walletAddressAddMemoHeight,
             onChanged: onInputChanged,
           ),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: AppSpacing.sectionGapRelaxed),
         AddressWhitelistCard(enabled: whitelist, onTap: onWhitelistChanged),
-        const SizedBox(height: 24),
+        const SizedBox(height: AppSpacing.walletAddressAddAgreementGap),
         const AddressWarningCard(),
-        const SizedBox(height: 24),
+        const SizedBox(height: AppSpacing.walletAddressAddAgreementGap),
         AddressAgreementRow(agreed: agreed, onTap: onAgreementChanged),
         if (labelController.text.trim().isNotEmpty &&
             addressController.text.trim().isNotEmpty) ...[
-          const SizedBox(height: 18),
+          const SizedBox(height: AppSpacing.walletAddressAddPreviewGap),
           AddressPreviewPanel(
             rows: [
               ('Tên', labelController.text.trim()),

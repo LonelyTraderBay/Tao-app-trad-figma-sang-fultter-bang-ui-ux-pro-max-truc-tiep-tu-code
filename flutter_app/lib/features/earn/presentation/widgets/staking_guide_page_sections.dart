@@ -355,7 +355,7 @@ class _ProgressHeader extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
-            minHeight: 6,
+            minHeight: AppSpacing.earnGuideProgressHeight,
             value: progress,
             backgroundColor: AppColors.borderSolid,
             valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),

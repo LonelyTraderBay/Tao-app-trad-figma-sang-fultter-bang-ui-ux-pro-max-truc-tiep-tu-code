@@ -18,8 +18,8 @@ class _EventHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Wrap(
-          spacing: 7,
-          runSpacing: 6,
+          spacing: AppSpacing.predictionDetailBadgeGap,
+          runSpacing: AppSpacing.predictionDetailBadgeRunGap,
           children: [
             _TinyBadge(
               label: event.category,
@@ -40,20 +40,17 @@ class _EventHeader extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: 9),
+        const SizedBox(height: AppSpacing.predictionDetailTitleTopGap),
         Text(
           event.title,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.sectionTitle.copyWith(
-            fontSize: 20,
-            height: 1.30,
-          ),
+          style: AppTextStyles.sectionTitle,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.predictionDetailMetaTopGap),
         Wrap(
-          spacing: 12,
-          runSpacing: 6,
+          spacing: AppSpacing.predictionDetailMetaGap,
+          runSpacing: AppSpacing.predictionDetailBadgeRunGap,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             _MetaItem(
@@ -71,7 +68,7 @@ class _EventHeader extends StatelessWidget {
             _ChangeLabel(value: event.change24h),
           ],
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: AppSpacing.predictionDetailOutcomeTopGap),
         if (event.outcomes.length == 2)
           Row(
             children: [
@@ -83,7 +80,8 @@ class _EventHeader extends StatelessWidget {
                     onTap: () => onOutcomeSelected(outcomes[index].label),
                   ),
                 ),
-                if (index == 0) const SizedBox(width: 12),
+                if (index == 0)
+                  const SizedBox(width: AppSpacing.predictionDetailOutcomeGap),
               ],
             ],
           )
@@ -94,7 +92,7 @@ class _EventHeader extends StatelessWidget {
             onOutcomeSelected: onOutcomeSelected,
           ),
         if (event.outcomes.length == 2) ...[
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.predictionDetailProbabilityTopGap),
           _ProbabilityBar(outcomes: outcomes),
         ],
       ],
@@ -120,7 +118,7 @@ class _OutcomeCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
       child: Container(
-        padding: const EdgeInsets.all(15),
+        padding: AppSpacing.predictionDetailOutcomePadding,
         decoration: BoxDecoration(
           color: outcome.color.withValues(alpha: isYes ? .08 : .07),
           border: Border.all(
@@ -134,14 +132,16 @@ class _OutcomeCard extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  width: 11,
-                  height: 11,
+                  width: AppSpacing.predictionDetailOutcomeDot,
+                  height: AppSpacing.predictionDetailOutcomeDot,
                   decoration: BoxDecoration(
                     color: outcome.color,
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 7),
+                const SizedBox(
+                  width: AppSpacing.predictionDetailOutcomeLabelGap,
+                ),
                 Text(
                   outcome.label,
                   style: AppTextStyles.body.copyWith(
@@ -151,16 +151,12 @@ class _OutcomeCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: AppSpacing.predictionDetailOutcomeChanceGap),
             Text(
               '${outcome.chance}%',
-              style: AppTextStyles.heroNumber.copyWith(
-                color: outcome.color,
-                fontSize: 28,
-                height: 1.1,
-              ),
+              style: AppTextStyles.heroNumber.copyWith(color: outcome.color),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.predictionDetailOutcomeMetaGap),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -172,7 +168,9 @@ class _OutcomeCard extends StatelessWidget {
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(
+                  width: AppSpacing.predictionDetailOutcomeChanceGap,
+                ),
                 Flexible(
                   child: Text(
                     _formatPrice(outcome.chance / 100),
@@ -181,7 +179,6 @@ class _OutcomeCard extends StatelessWidget {
                     textAlign: TextAlign.end,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      fontSize: 11,
                       fontWeight: AppTextStyles.bold,
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
@@ -213,15 +210,14 @@ class _MultiOutcomeList extends StatelessWidget {
       children: [
         for (final outcome in event.outcomes)
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(
+              bottom: AppSpacing.predictionDetailMultiOutcomeBottomGap,
+            ),
             child: InkWell(
               onTap: () => onOutcomeSelected(outcome.label),
               borderRadius: AppRadii.mdRadius,
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 12,
-                ),
+                padding: AppSpacing.predictionDetailMultiOutcomePadding,
                 decoration: BoxDecoration(
                   color: selectedOutcome == outcome.label
                       ? outcome.color.withValues(alpha: .12)
@@ -236,14 +232,16 @@ class _MultiOutcomeList extends StatelessWidget {
                 child: Row(
                   children: [
                     Container(
-                      width: 10,
-                      height: 10,
+                      width: AppSpacing.predictionDetailMultiOutcomeDot,
+                      height: AppSpacing.predictionDetailMultiOutcomeDot,
                       decoration: BoxDecoration(
                         color: outcome.color,
                         shape: BoxShape.circle,
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(
+                      width: AppSpacing.predictionDetailMultiOutcomeGap,
+                    ),
                     Expanded(
                       child: Text(
                         outcome.label,
@@ -280,9 +278,9 @@ class _ProbabilityBar extends StatelessWidget {
     final yes = outcomes.first;
     final no = outcomes.last;
     return ClipRRect(
-      borderRadius: BorderRadius.circular(999),
+      borderRadius: AppRadii.pillRadius,
       child: SizedBox(
-        height: 10,
+        height: AppSpacing.predictionDetailProbabilityHeight,
         child: Row(
           children: [
             Expanded(

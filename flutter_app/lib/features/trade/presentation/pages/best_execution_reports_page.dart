@@ -21,7 +21,6 @@ part '../widgets/best_execution_current.dart';
 part '../widgets/best_execution_archive_common.dart';
 
 const _bestBackground = AppColors.bg;
-const _bestPanel = AppColors.surface;
 const _bestPanel2 = AppColors.surface2;
 const _bestBorder = AppColors.borderSolid;
 const _bestGreen = AppColors.buy;

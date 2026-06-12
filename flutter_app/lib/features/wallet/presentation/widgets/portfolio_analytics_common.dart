@@ -7,19 +7,21 @@ class _PlaceholderAnalyticsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = view == 'allocation' ? 'Phân bổ danh mục' : 'Lãi/Lỗ';
-    return _Card(
-      padding: const EdgeInsets.all(20),
+    final title = view == 'allocation'
+        ? 'Ph\u00E2n b\u1ED5 danh m\u1EE5c'
+        : 'L\u00E3i/L\u1ED7';
+    return _VitCardSurface(
+      padding: AppSpacing.walletAnalyticsPlaceholderPadding,
       child: Text(
         title,
-        style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w800),
+        style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
       ),
     );
   }
 }
 
-class _Card extends StatelessWidget {
-  const _Card({required this.child, this.padding, this.height});
+class _VitCardSurface extends StatelessWidget {
+  const _VitCardSurface({required this.child, this.padding, this.height});
 
   final Widget child;
   final EdgeInsetsGeometry? padding;

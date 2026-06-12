@@ -21,6 +21,18 @@
 - [ ] New or split Dart files are reflected in the file action manifest when
       cleanup work requires it.
 
+## Design Token Drift Checklist
+
+- [ ] UI changes reuse `app/theme`, `shared/layout`, and `shared/widgets`
+      tokens/primitives before local variants.
+- [ ] Changed files do not add local hardcoded `fontSize`, `EdgeInsets`,
+      numeric radius, near-1 text height, fixed grid sizing, or duplicate
+      `Container` + `BoxDecoration` patterns without a documented exception.
+- [ ] `dart run tool/design_token_consistency_audit.dart --check` passes,
+      including P0 financial module baseline gates.
+- [ ] CI design-token report artifact was reviewed when UI or theme files
+      changed.
+
 ## Product Safety Checklist
 
 - [ ] High-risk financial or P2P flows include preview and confirmation.
@@ -40,9 +52,11 @@ Run from `flutter_app/` and paste results:
 flutter pub get
 dart format --output=none --set-exit-if-changed .
 dart run tool/route_coverage_audit.dart --check
+dart run tool/design_token_consistency_audit.dart --check
 flutter analyze
 flutter test test/app/router --reporter=compact
 flutter test test/quality/architecture_baseline_guardrails_test.dart --reporter=compact
+flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact
 flutter test test/quality/product_copy_guardrails_test.dart --reporter=compact
 flutter test --reporter=compact
 ```

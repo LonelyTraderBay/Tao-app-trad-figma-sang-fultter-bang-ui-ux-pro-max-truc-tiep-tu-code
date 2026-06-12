@@ -34,19 +34,17 @@ class _ApiDocsCard extends StatelessWidget {
                 Text(
                   'T\u00E0i li\u1EC7u API',
                   style: AppTextStyles.body.copyWith(
-                    fontSize: 14,
                     fontWeight: FontWeight.w800,
                     height: 1.1,
                   ),
                 ),
-                const SizedBox(height: 5),
+                const Padding(padding: EdgeInsets.only(top: 5)),
                 Text(
                   'Xem h\u01B0\u1EDBng d\u1EABn t\u00EDch h\u1EE3p v\u00E0 endpoint',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: _apiMuted,
-                    fontSize: 12,
                     height: 1,
                   ),
                 ),

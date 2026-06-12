@@ -7,27 +7,32 @@ class _RadioDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 16,
       height: 16,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: selected ? _taxPrimary : _taxOptionBorder,
-          width: 2,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: selected ? _taxPrimary : _taxOptionBorder,
+            width: 2,
+          ),
+        ),
+        child: Center(
+          child: selected
+              ? const SizedBox(
+                  width: 8,
+                  height: 8,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: _taxPrimary,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                )
+              : null,
         ),
       ),
-      child: selected
-          ? Container(
-              width: 8,
-              height: 8,
-              decoration: const BoxDecoration(
-                color: _taxPrimary,
-                shape: BoxShape.circle,
-              ),
-            )
-          : null,
     );
   }
 }
@@ -39,25 +44,15 @@ class _CheckBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       width: 24,
       height: 24,
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: selected ? _taxPrimary : AppColors.transparent,
-        border: Border.all(
-          color: selected ? _taxPrimary : _taxOptionBorder,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(7),
-      ),
+      borderColor: selected ? _taxPrimary : _taxOptionBorder,
       child: selected
-          ? const Icon(
-              Icons.check_circle_rounded,
-              color: AppColors.onAccent,
-              size: 16,
-            )
-          : null,
+          ? const Icon(Icons.check_circle_rounded, color: _taxPrimary, size: 16)
+          : const SizedBox.shrink(),
     );
   }
 }
@@ -75,21 +70,12 @@ class _Pill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        text,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 11,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    return VitStatusPill(
+      label: text,
+      status: color == AppColors.buy
+          ? VitStatusPillStatus.success
+          : VitStatusPillStatus.warning,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -102,15 +88,7 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        color: _taxPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: child,
-    );
+    return VitCard(padding: padding, child: child);
   }
 }
 
@@ -123,12 +101,14 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: 4,
           height: 15,
-          decoration: BoxDecoration(
-            color: _taxPrimary,
-            borderRadius: BorderRadius.circular(3),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: _taxPrimary,
+              borderRadius: AppRadii.smRadius,
+            ),
           ),
         ),
         const SizedBox(width: 7),
@@ -136,7 +116,6 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

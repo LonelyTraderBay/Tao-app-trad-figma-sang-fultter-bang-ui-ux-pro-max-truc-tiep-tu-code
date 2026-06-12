@@ -139,8 +139,8 @@ class _GasSavingsBanner extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 36,
-            height: 36,
+            width: AppSpacing.launchpadBox36,
+            height: AppSpacing.launchpadBox36,
             alignment: Alignment.center,
             decoration: const BoxDecoration(
               color: AppColors.buy15,

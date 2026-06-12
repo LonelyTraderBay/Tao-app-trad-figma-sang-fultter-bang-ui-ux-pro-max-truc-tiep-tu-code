@@ -36,7 +36,6 @@ class _HeroBanner extends StatelessWidget {
                   snapshot.heroTitle,
                   style: AppTextStyles.body.copyWith(
                     color: _safetyPrimary,
-                    fontSize: 15,
                     fontWeight: AppTextStyles.bold,
                     height: 1.05,
                   ),
@@ -48,7 +47,6 @@ class _HeroBanner extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: _safetyPrimary,
-                    fontSize: 10.5,
                     height: 1.25,
                   ),
                 ),
@@ -96,7 +94,6 @@ class _SafetyTabs extends StatelessWidget {
                             color: tab.id == activeId
                                 ? _safetyPrimary
                                 : AppColors.text3,
-                            fontSize: 11,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),
@@ -166,7 +163,6 @@ class _VerificationTab extends StatelessWidget {
           snapshot.verificationIntro,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             height: 1.4,
           ),
         ),
@@ -212,7 +208,6 @@ class _VerificationTierCard extends StatelessWidget {
                 tier.tier,
                 style: AppTextStyles.body.copyWith(
                   color: color,
-                  fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -251,7 +246,6 @@ class _ListBlock extends StatelessWidget {
             label,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 11,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -264,7 +258,6 @@ class _ListBlock extends StatelessWidget {
                 '${check ? '/' : '*'} $item',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
                   height: 1.2,
                 ),
               ),

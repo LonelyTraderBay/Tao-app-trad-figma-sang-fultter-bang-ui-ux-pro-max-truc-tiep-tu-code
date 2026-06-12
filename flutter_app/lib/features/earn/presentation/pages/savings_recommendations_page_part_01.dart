@@ -218,7 +218,10 @@ class _HeroCard extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: AppColors.accent08,
-        border: Border.all(color: AppColors.accent20, width: 1.5),
+        border: Border.all(
+          color: AppColors.accent20,
+          width: AppSpacing.savingsConsumerBorderWidth,
+        ),
         borderRadius: AppRadii.cardLargeRadius,
       ),
       child: Padding(
@@ -242,7 +245,7 @@ class _HeroCard extends StatelessWidget {
                     snapshot.heroSubtitle,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.55,
+                      height: AppSpacing.savingsConsumerBodyLineHeight,
                     ),
                   ),
                 ],

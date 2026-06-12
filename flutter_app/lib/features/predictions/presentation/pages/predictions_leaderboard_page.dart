@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -62,7 +63,9 @@ class _PredictionsLeaderboardPageState
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.predictionLeaderboardBottomInsetVisual
+            : AppSpacing.predictionLeaderboardBottomInsetNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -86,10 +89,12 @@ class _PredictionsLeaderboardPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionsLeaderboardPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.predictionLeaderboardScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 16,
+                      customGap: AppSpacing.predictionLeaderboardContentGap,
                       children: [
                         _TimeFilters(
                           active: _timeFilter,
@@ -124,10 +129,10 @@ class _PredictionsLeaderboardPageState
       context: context,
       backgroundColor: AppColors.surface,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) => Padding(
-        padding: const EdgeInsets.fromLTRB(20, 18, 20, 28),
+        padding: AppSpacing.predictionLeaderboardSheetPadding,
         child: Text(
           'P/L (Profit/Loss) shows how much a trader has gained or lost. '
           'A positive P/L means profit, negative means loss.',

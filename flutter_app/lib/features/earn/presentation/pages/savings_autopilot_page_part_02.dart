@@ -45,12 +45,12 @@ class _ApprovalCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                     Text(
                       action.title,
                       style: _captionBold.copyWith(color: AppColors.text1),
                     ),
-                    const SizedBox(height: AppSpacing.x1),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                     Text(
                       action.description,
                       maxLines: 3,
@@ -64,7 +64,7 @@ class _ApprovalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Row(
             children: [
               Expanded(
@@ -72,7 +72,7 @@ class _ApprovalCard extends StatelessWidget {
                   key: SavingsAutoPilotPage.skipActionKey,
                   onPressed: onSkip,
                   variant: VitCtaButtonVariant.ghost,
-                  height: 40,
+                  height: AppSpacing.savingsAutoPilotApprovalButtonHeight,
                   leading: const Icon(Icons.close_rounded),
                   child: const Text('Bỏ qua'),
                 ),
@@ -82,7 +82,7 @@ class _ApprovalCard extends StatelessWidget {
                 child: VitCtaButton(
                   onPressed: onOpen,
                   variant: VitCtaButtonVariant.secondary,
-                  height: 40,
+                  height: AppSpacing.savingsAutoPilotApprovalButtonHeight,
                   leading: const Icon(Icons.visibility_outlined),
                   child: const Text('Xem'),
                 ),
@@ -93,7 +93,7 @@ class _ApprovalCard extends StatelessWidget {
                   key: SavingsAutoPilotPage.approveActionKey,
                   onPressed: onApprove,
                   variant: VitCtaButtonVariant.success,
-                  height: 40,
+                  height: AppSpacing.savingsAutoPilotApprovalButtonHeight,
                   leading: const Icon(Icons.check_circle_outline_rounded),
                   child: const Text('Duyệt'),
                 ),
@@ -151,7 +151,7 @@ class _ActionTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   action.title,
                   maxLines: 1,
@@ -223,22 +223,22 @@ class _SettingsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionTitle(label: 'Chế độ AutoPilot'),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         for (final item in snapshot.modes) ...[
           _ModeCard(
             item: item,
             selected: item.id == mode,
             onTap: () => onModeChanged(item.id),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         ],
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         const _SectionTitle(label: 'Ngân sách hằng tháng (USD)'),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         _BudgetCard(selected: monthlyBudgetUsd, onChanged: onBudgetChanged),
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         const _SectionTitle(label: 'Modules tự động'),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         for (final module in snapshot.modules) ...[
           _SwitchRow(
             icon: _iconFor(module.iconKey),
@@ -248,11 +248,11 @@ class _SettingsTab extends StatelessWidget {
             value: moduleEnabled(module),
             onChanged: (value) => onModuleChanged(module.id, value),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         ],
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         const _SectionTitle(label: 'An toàn & Kiểm soát'),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         _SwitchRow(
           icon: Icons.security_rounded,
           color: AppColors.primary,
@@ -261,7 +261,7 @@ class _SettingsTab extends StatelessWidget {
           value: approvalRequired,
           onChanged: onApprovalChanged,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         _SwitchRow(
           icon: Icons.notifications_active_outlined,
           color: AppColors.warn,
@@ -270,9 +270,9 @@ class _SettingsTab extends StatelessWidget {
           value: notificationsEnabled,
           onChanged: onNotificationChanged,
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         const _SectionTitle(label: 'Tham số rủi ro'),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         _RiskParameter(
           label: 'Ngưỡng rebalance',
           value: '${snapshot.config.rebalanceThresholdPct}%',
@@ -280,7 +280,7 @@ class _SettingsTab extends StatelessWidget {
           maxLabel: '25% (ổn định)',
           color: AppColors.primary,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         _RiskParameter(
           label: 'Min APY gain cho switch',
           value: '${snapshot.config.switchMinApyGainPct.toStringAsFixed(1)}%',
@@ -288,7 +288,7 @@ class _SettingsTab extends StatelessWidget {
           maxLabel: '3.0% (thận trọng)',
           color: AppColors.accent,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         _RiskParameter(
           label: 'Max single-asset',
           value: '${snapshot.config.maxSingleAssetPct}%',
@@ -296,7 +296,7 @@ class _SettingsTab extends StatelessWidget {
           maxLabel: '80% (tập trung)',
           color: AppColors.sell,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         _InfoCallout(text: snapshot.disclaimer, tone: EarnRiskLevel.high),
       ],
     );
@@ -334,12 +334,12 @@ class _ModeCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(item.label, style: _captionBold),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   item.description,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Wrap(
                   spacing: AppSpacing.x3,
                   runSpacing: AppSpacing.x1,
@@ -419,7 +419,7 @@ class _BudgetCard extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         Row(
           children: [
             for (final amount in options) ...[

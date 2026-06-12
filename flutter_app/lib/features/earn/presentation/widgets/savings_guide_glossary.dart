@@ -60,7 +60,7 @@ class SavingsGuideGlossaryTab extends StatelessWidget {
                   snapshot.disclaimer,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.primary,
-                    height: 1.45,
+                    height: AppSpacing.earnGuideBodyLineHeight,
                   ),
                 ),
               ),
@@ -107,7 +107,7 @@ class _TermCard extends StatelessWidget {
                   term.definition,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.5,
+                    height: AppSpacing.earnGuideTipLineHeight,
                   ),
                 ),
               ],

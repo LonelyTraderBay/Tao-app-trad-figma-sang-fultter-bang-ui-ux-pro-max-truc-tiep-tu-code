@@ -201,8 +201,8 @@ class _DateFilterRow extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           child: const SizedBox(
-            width: 38,
-            height: 38,
+            width: AppSpacing.savingsHistoryFilterButton,
+            height: AppSpacing.savingsHistoryFilterButton,
             child: Icon(
               Icons.filter_alt_outlined,
               color: AppColors.text3,
@@ -326,7 +326,12 @@ class _DateHeader extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
         const SizedBox(width: AppSpacing.x2),
-        const Expanded(child: Divider(color: AppColors.divider, height: 1)),
+        const Expanded(
+          child: Divider(
+            color: AppColors.divider,
+            height: AppSpacing.savingsHistoryDividerHeight,
+          ),
+        ),
       ],
     );
   }

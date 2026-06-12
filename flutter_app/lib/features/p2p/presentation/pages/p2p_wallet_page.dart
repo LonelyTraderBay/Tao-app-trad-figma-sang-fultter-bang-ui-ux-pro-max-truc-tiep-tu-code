@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -131,6 +132,19 @@ class _P2PWalletPageState extends ConsumerState<P2PWalletPage> {
                         ),
                         const SizedBox(height: AppSpacing.x6),
                         _RecentTransactions(snapshot: snapshot),
+                        VitPageContent(
+                          padding: VitContentPadding.compact,
+                          customGap: 0,
+                          children: const [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'P2P wallet state review',
+                              message:
+                                  'Masked balance, transfer directions, escrow balances, expanded asset actions, recent transactions, and history route remain visible before moving funds.',
+                              contractId: 'SC-264',
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

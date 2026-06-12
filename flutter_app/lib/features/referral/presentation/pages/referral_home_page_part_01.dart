@@ -39,7 +39,7 @@ class _CampaignBanner extends StatelessWidget {
                           campaign.title,
                           style: AppTextStyles.baseMedium.copyWith(
                             color: AppColors.text1,
-                            height: 1.2,
+                            height: AppSpacing.referralLineHeightShort,
                           ),
                         ),
                         _TinyPill(
@@ -49,14 +49,14 @@ class _CampaignBanner extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x1),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                     Text(
                       campaign.description,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.portfolioTextDim,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                     Wrap(
                       spacing: AppSpacing.x4,
                       runSpacing: AppSpacing.x1,
@@ -79,7 +79,7 @@ class _CampaignBanner extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.x3,
@@ -205,7 +205,7 @@ class _ReferralHero extends StatelessWidget {
                 icon: Icons.military_tech_rounded,
                 color: AppColors.primarySoft,
                 background: AppColors.primary20,
-                size: 48,
+                size: AppSpacing.referralHeroIcon,
               ),
               const SizedBox(width: AppSpacing.x4),
               Expanded(
@@ -235,7 +235,7 @@ class _ReferralHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Row(
             children: [
               Expanded(
@@ -267,7 +267,7 @@ class _ReferralHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           _NoticeCard(
             icon: Icons.schedule_rounded,
             text:
@@ -277,7 +277,7 @@ class _ReferralHero extends StatelessWidget {
             border: AppColors.warningBorder,
             dense: true,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           VitCard(
             variant: VitCardVariant.inner,
             padding: const EdgeInsets.all(AppSpacing.x3),
@@ -303,7 +303,7 @@ class _ReferralHero extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                 Text(
                   snapshot.referralCode,
                   style: AppTextStyles.base.copyWith(
@@ -316,7 +316,7 @@ class _ReferralHero extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.buy20,
@@ -330,7 +330,11 @@ class _ReferralHero extends StatelessWidget {
                         '${_formatUsd(snapshot.currentTier.kycBonus)} + ${snapshot.currentTier.commissionPercent}%',
                   ),
                 ),
-                Container(width: 1, height: 32, color: AppColors.buy20),
+                Container(
+                  width: AppSpacing.referralSplitDividerWidth,
+                  height: AppSpacing.referralSplitDividerHeight,
+                  color: AppColors.buy20,
+                ),
                 const Expanded(
                   child: _SplitReward(
                     label: 'Bạn bè nhận',
@@ -340,14 +344,14 @@ class _ReferralHero extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Row(
             children: [
               Expanded(
                 child: VitCtaButton(
                   key: ReferralHomePage.copyLinkKey,
                   onPressed: onCopyLink,
-                  height: 46,
+                  height: AppSpacing.referralCtaHeight,
                   leading: Icon(
                     copied ? Icons.check_circle_rounded : Icons.copy_rounded,
                   ),
@@ -359,7 +363,7 @@ class _ReferralHero extends StatelessWidget {
                 key: ReferralHomePage.shareKey,
                 onPressed: onShare,
                 fullWidth: false,
-                height: 46,
+                height: AppSpacing.referralCtaHeight,
                 variant: VitCtaButtonVariant.secondary,
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
                 child: const Icon(Icons.share_rounded),
@@ -426,7 +430,7 @@ class _MilestoneSection extends StatelessWidget {
           trailing: next == null ? null : 'Còn ${remaining.clamp(0, 999)} bạn',
           color: AppColors.warn,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           clipBehavior: Clip.none,
@@ -485,9 +489,9 @@ class _TierProgress extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           _ProgressBar(progress: progress, color: AppColors.primarySoft),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Row(
             children: [
               Expanded(

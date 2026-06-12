@@ -19,15 +19,15 @@ class _DustHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+      padding: AppSpacing.walletDustHeroPadding,
       borderColor: _dustHeroBorder,
       child: Column(
         children: [
           Row(
             children: [
               Container(
-                width: 48,
-                height: 48,
+                width: AppSpacing.walletDustHeroIconBox,
+                height: AppSpacing.walletDustHeroIconBox,
                 decoration: BoxDecoration(
                   color: _dustAmber.withValues(alpha: .14),
                   borderRadius: AppRadii.cardRadius,
@@ -37,10 +37,10 @@ class _DustHero extends StatelessWidget {
                 child: const Icon(
                   Icons.auto_awesome_rounded,
                   color: _dustAmber,
-                  size: 25,
+                  size: AppSpacing.walletDustHeroIconGlyph,
                 ),
               ),
-              const SizedBox(width: 13),
+              const SizedBox(width: AppSpacing.walletDustHeroHeaderGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,28 +48,22 @@ class _DustHero extends StatelessWidget {
                     Text(
                       'D\u1ECDn d\u1EB9p v\u00ED',
                       style: AppTextStyles.body.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w900,
-                        height: 1,
+                        fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.walletDustHeroTitleGap),
                     Text(
                       'Chuy\u1EC3n \u0111\u1ED5i s\u1ED1 d\u01B0 nh\u1ECF (d\u01B0\u1EDBi ${_formatUsd(snapshot.dustThresholdUsd)}) sang $targetSymbol',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: _dustMuted,
-                        fontSize: 11,
-                        height: 1,
-                      ),
+                      style: AppTextStyles.micro.copyWith(color: _dustMuted),
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 11),
+          const SizedBox(height: AppSpacing.walletDustHeroStatsGap),
           Row(
             children: [
               _HeroStat(
@@ -77,13 +71,13 @@ class _DustHero extends StatelessWidget {
                 label: 'Dust t\u00ECm th\u1EA5y',
                 color: _dustAmber,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.walletDustHeroStatGap),
               _HeroStat(
                 value: selectedCount.toString(),
                 label: '\u0110\u00E3 ch\u1ECDn',
                 color: _dustPrimary,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.walletDustHeroStatGap),
               _HeroStat(
                 value: _formatUsd(selectedValue),
                 label: 'Gi\u00E1 tr\u1ECB',
@@ -112,8 +106,8 @@ class _HeroStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        height: 52,
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 9),
+        height: AppSpacing.walletDustHeroStatHeight,
+        padding: AppSpacing.walletDustHeroStatPadding,
         decoration: BoxDecoration(
           color: AppColors.surface3,
           borderRadius: AppRadii.cardRadius,
@@ -127,23 +121,17 @@ class _HeroStat extends StatelessWidget {
                 value,
                 style: AppTextStyles.caption.copyWith(
                   color: color,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w900,
-                  height: 1,
+                  fontWeight: AppTextStyles.bold,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.walletDustTextGap),
             Text(
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                fontSize: 9,
-                height: 1,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
             ),
           ],
         ),

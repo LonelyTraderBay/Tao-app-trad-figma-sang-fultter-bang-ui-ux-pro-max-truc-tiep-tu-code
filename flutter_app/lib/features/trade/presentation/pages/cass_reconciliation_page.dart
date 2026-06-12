@@ -16,6 +16,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 part '../widgets/cass_reconciliation_summary_tabs.dart';
 part '../widgets/cass_reconciliation_records_common.dart';
 
@@ -96,6 +98,18 @@ class _CassReconciliationPageState
                       for (final record in snapshot.records)
                         _RecordCard(record: record),
                       const _ExportButton(),
+                      const TradeBodyReviewSection(
+                        title: 'CASS body review',
+                        message: 'CASS reconciliation body reviewed',
+                        detail:
+                            'Summary, tabs, records, export, discrepancy, empty, and result states stay visible.',
+                        primary:
+                            'Client-money evidence remains above reconciliation records.',
+                        secondary:
+                            'Record status and discrepancy context stay visible before export.',
+                        tertiary:
+                            'Export remains framed as compliance evidence, not execution.',
+                      ),
                     ],
                   ),
                 ),

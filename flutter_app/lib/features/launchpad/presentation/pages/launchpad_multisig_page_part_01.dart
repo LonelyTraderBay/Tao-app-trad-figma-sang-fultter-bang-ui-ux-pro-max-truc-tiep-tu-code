@@ -233,7 +233,7 @@ class _SafeSelector extends StatelessWidget {
                         _IconBubble(
                           icon: Icons.shield_outlined,
                           color: safe.accent,
-                          size: 26,
+                          size: AppSpacing.launchpadIcon5xl,
                         ),
                         const SizedBox(width: AppSpacing.x2),
                         Expanded(
@@ -244,7 +244,7 @@ class _SafeSelector extends StatelessWidget {
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
-                              fontSize: 11,
+                              fontSize: AppSpacing.launchpadFontMd,
                             ),
                           ),
                         ),
@@ -258,7 +258,7 @@ class _SafeSelector extends StatelessWidget {
                           style: AppTextStyles.micro.copyWith(
                             color: safe.accent,
                             fontWeight: AppTextStyles.bold,
-                            fontSize: 9,
+                            fontSize: AppSpacing.launchpadFontXs,
                           ),
                         ),
                         const SizedBox(width: AppSpacing.x2),
@@ -266,7 +266,7 @@ class _SafeSelector extends StatelessWidget {
                           '${safe.threshold}/${safe.owners.length}',
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            fontSize: 9,
+                            fontSize: AppSpacing.launchpadFontXs,
                           ),
                         ),
                       ],
@@ -365,14 +365,14 @@ class _StatChip extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                fontSize: 14,
+                fontSize: AppSpacing.launchpadFontMd,
               ),
             ),
             Text(
               label,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 9,
+                fontSize: AppSpacing.launchpadFontXs,
               ),
             ),
           ],
@@ -426,7 +426,7 @@ class _CreateTxCard extends StatelessWidget {
           _IconBubble(
             icon: Icons.add_rounded,
             color: AppColors.accent,
-            size: 40,
+            size: AppSpacing.launchpadBox40,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

@@ -30,7 +30,7 @@ class _SafetyHero extends StatelessWidget {
                   snapshot.bannerDescription,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.arenaSafetyNoticeLineHeight,
                   ),
                 ),
               ],
@@ -61,8 +61,8 @@ class _SafetySection extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: 4,
-              height: 18,
+              width: AppSpacing.arenaSafetyMarkerWidth,
+              height: AppSpacing.arenaSafetyMarkerHeight,
               decoration: BoxDecoration(
                 color: accentColor,
                 borderRadius: AppRadii.xsRadius,
@@ -77,7 +77,7 @@ class _SafetySection extends StatelessWidget {
                 style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.25,
+                  height: AppSpacing.arenaSafetySectionTitleLineHeight,
                 ),
               ),
             ),
@@ -123,9 +123,8 @@ class _RuleCard extends StatelessWidget {
                 Text(
                   rule.description,
                   style: AppTextStyles.caption.copyWith(
-                    fontSize: 12,
                     color: AppColors.text2,
-                    height: 1.35,
+                    height: AppSpacing.arenaSafetyBodyLineHeight,
                   ),
                 ),
               ],
@@ -155,7 +154,7 @@ class _BannedContentCard extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.cancel_outlined,
-                  size: 15,
+                  size: AppSpacing.arenaSafetyBannedIcon,
                   color: AppColors.sell,
                 ),
                 const SizedBox(width: AppSpacing.x3),
@@ -164,7 +163,7 @@ class _BannedContentCard extends StatelessWidget {
                     item,
                     style: AppTextStyles.body.copyWith(
                       color: AppColors.text1,
-                      height: 1.35,
+                      height: AppSpacing.arenaSafetyBodyLineHeight,
                     ),
                   ),
                 ),
@@ -194,12 +193,12 @@ class _ViolationProcessCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 30,
+                  width: AppSpacing.arenaSafetyProcessColumnWidth,
                   child: Column(
                     children: [
                       Container(
-                        width: 28,
-                        height: 28,
+                        width: AppSpacing.arenaSafetyProcessStepBox,
+                        height: AppSpacing.arenaSafetyProcessStepBox,
                         decoration: BoxDecoration(
                           color: AppColors.buy10,
                           borderRadius: AppRadii.xlRadius,
@@ -215,7 +214,11 @@ class _ViolationProcessCard extends StatelessWidget {
                         ),
                       ),
                       if (item != items.last)
-                        Container(width: 1, height: 28, color: AppColors.buy20),
+                        Container(
+                          width: AppSpacing.arenaSafetyProcessLineWidth,
+                          height: AppSpacing.arenaSafetyProcessLineHeight,
+                          color: AppColors.buy20,
+                        ),
                     ],
                   ),
                 ),
@@ -240,7 +243,7 @@ class _ViolationProcessCard extends StatelessWidget {
                           item.description,
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text2,
-                            height: 1.45,
+                            height: AppSpacing.arenaSafetyNoticeLineHeight,
                           ),
                         ),
                       ],
@@ -271,7 +274,11 @@ class _InfoCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(_kindIcon(info.kind), color: color, size: 18),
+              Icon(
+                _kindIcon(info.kind),
+                color: color,
+                size: AppSpacing.arenaSafetyInfoIcon,
+              ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(
@@ -289,7 +296,7 @@ class _InfoCard extends StatelessWidget {
                       info.description,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1.45,
+                        height: AppSpacing.arenaSafetyNoticeLineHeight,
                       ),
                     ),
                   ],
@@ -298,7 +305,10 @@ class _InfoCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x3),
-          const Divider(height: 1, color: AppColors.divider),
+          const Divider(
+            height: AppSpacing.arenaSafetyDividerHeight,
+            color: AppColors.divider,
+          ),
           const SizedBox(height: AppSpacing.x3),
           for (final item in info.items) ...[
             _SafetyCheckRow(item: item),
@@ -324,7 +334,7 @@ class _SafetyCheckRow extends StatelessWidget {
         Icon(
           item.allowed ? Icons.check_circle_outline : Icons.cancel_outlined,
           color: color,
-          size: 14,
+          size: AppSpacing.arenaSafetyCheckIcon,
         ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
@@ -332,7 +342,7 @@ class _SafetyCheckRow extends StatelessWidget {
             item.text,
             style: AppTextStyles.caption.copyWith(
               color: item.allowed ? AppColors.text1 : AppColors.text2,
-              height: 1.4,
+              height: AppSpacing.arenaSafetyCheckLineHeight,
             ),
           ),
         ),

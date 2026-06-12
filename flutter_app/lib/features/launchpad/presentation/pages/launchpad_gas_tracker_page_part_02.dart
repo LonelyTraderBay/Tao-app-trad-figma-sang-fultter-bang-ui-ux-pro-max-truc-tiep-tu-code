@@ -15,14 +15,18 @@ class _EstimateCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.bolt_rounded, color: AppColors.warn, size: 14),
+              const Icon(
+                Icons.bolt_rounded,
+                color: AppColors.warn,
+                size: AppSpacing.launchpadIconMd,
+              ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   estimate.operation,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
+                    fontSize: AppSpacing.launchpadFontLg,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -32,7 +36,7 @@ class _EstimateCard extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
                   fontFamily: 'monospace',
-                  fontSize: 9,
+                  fontSize: AppSpacing.launchpadFontXs,
                 ),
               ),
             ],
@@ -76,7 +80,7 @@ class _EstimateCostRow extends StatelessWidget {
                 cost.chain,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  fontSize: 10,
+                  fontSize: AppSpacing.launchpadFontSm,
                 ),
               ),
             ),
@@ -150,8 +154,8 @@ class _AddAlertCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: AppSpacing.launchpadBox40,
+            height: AppSpacing.launchpadBox40,
             decoration: const BoxDecoration(
               color: AppColors.primary15,
               borderRadius: AppRadii.cardRadius,
@@ -174,7 +178,7 @@ class _AddAlertCard extends StatelessWidget {
                   'Thong bao khi gas dat nguong',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 11,
+                    fontSize: AppSpacing.launchpadFontMd,
                   ),
                 ),
               ],
@@ -209,13 +213,17 @@ class _AlertCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 34,
-            height: 34,
+            width: AppSpacing.launchpadBox34,
+            height: AppSpacing.launchpadBox34,
             decoration: BoxDecoration(
               color: alert.accent.withValues(alpha: .12),
               borderRadius: AppRadii.mdRadius,
             ),
-            child: Icon(trendIcon, color: alert.accent, size: 17),
+            child: Icon(
+              trendIcon,
+              color: alert.accent,
+              size: AppSpacing.launchpadIconXl + AppSpacing.hairlineStroke,
+            ),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -226,7 +234,7 @@ class _AlertCard extends StatelessWidget {
                   '${alert.chain} ${alert.direction == LaunchpadGasAlertDirection.below ? '<' : '>'} ${_formatGasValue(alert.threshold)} ${alert.unit}',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
+                    fontSize: AppSpacing.launchpadFontLg,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -236,7 +244,7 @@ class _AlertCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
+                    fontSize: AppSpacing.launchpadFontSm,
                   ),
                 ),
               ],
@@ -250,7 +258,7 @@ class _AlertCard extends StatelessWidget {
                   ? Icons.notifications_active_outlined
                   : Icons.notifications_off_outlined,
               color: alert.enabled ? AppColors.buy : AppColors.text3,
-              size: 18,
+              size: AppSpacing.launchpadIcon2xl,
             ),
           ),
           IconButton(
@@ -259,7 +267,7 @@ class _AlertCard extends StatelessWidget {
             icon: const Icon(
               Icons.delete_outline_rounded,
               color: AppColors.sell,
-              size: 17,
+              size: AppSpacing.launchpadIconXl + AppSpacing.hairlineStroke,
             ),
           ),
         ],
@@ -338,8 +346,8 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                 children: [
                   Center(
                     child: Container(
-                      width: 40,
-                      height: 4,
+                      width: AppSpacing.launchpadBox40,
+                      height: AppSpacing.launchpadSheetHandleHeight,
                       decoration: const BoxDecoration(
                         color: AppColors.borderSolid,
                         borderRadius: AppRadii.xsRadius,

@@ -12,7 +12,7 @@ class _RiskMetricsSection extends StatelessWidget {
       accentColor: _predictionPrimary,
       children: [
         VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.predictionAnalyzerCardPadding,
           child: Column(
             children: const [
               _RiskMetricRow(
@@ -52,7 +52,7 @@ class _CategoryRiskCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionAnalyzerCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,9 +60,11 @@ class _CategoryRiskCard extends StatelessWidget {
             'Risk by Category',
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(
+            height: AppSpacing.predictionAnalyzerRiskChartTitleGap,
+          ),
           SizedBox(
-            height: 160,
+            height: AppSpacing.predictionAnalyzerRiskChartHeight,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -87,15 +89,19 @@ class _DiversificationCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionAnalyzerCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(Icons.shield_outlined, color: AppColors.buy, size: 16),
-              const SizedBox(width: 8),
+              const Icon(
+                Icons.shield_outlined,
+                color: AppColors.buy,
+                size: AppSpacing.predictionAnalyzerRiskIcon,
+              ),
+              const SizedBox(width: AppSpacing.predictionAnalyzerRiskIconGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,12 +112,13 @@ class _DiversificationCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(
+                      height: AppSpacing.predictionAnalyzerRiskTextGap,
+                    ),
                     Text(
                       'Portfolio da phan tan hop ly qua ${snapshot.categories.length} categories',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: 1.5,
                       ),
                     ),
                   ],
@@ -119,19 +126,17 @@ class _DiversificationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.predictionAnalyzerScoreGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 '7.2',
-                style: AppTextStyles.heroNumber.copyWith(
-                  color: AppColors.buy,
-                  fontSize: 25,
-                  height: 1,
-                ),
+                style: AppTextStyles.amountMd.copyWith(color: AppColors.buy),
               ),
-              const SizedBox(width: 5),
+              const SizedBox(
+                width: AppSpacing.predictionAnalyzerScoreSuffixGap,
+              ),
               Text(
                 '/ 10',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -151,23 +156,20 @@ class _RiskWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.predictionAnalyzerWarningPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.warn,
-            size: 15,
+            size: AppSpacing.predictionAnalyzerWarningIcon,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.predictionAnalyzerWarningGap),
           Expanded(
             child: Text(
               'Phan tich rui ro dua tren du lieu lich su. Hieu suat qua khu khong dam bao ket qua tuong lai. Luon quan ly rui ro va phan tan dau tu.',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                height: 1.5,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],
@@ -196,12 +198,9 @@ class _SummaryMetric extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 11,
-          ),
+          style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: AppSpacing.predictionAnalyzerSummaryMetricGap),
         Text(
           value,
           style: (small ? AppTextStyles.caption : AppTextStyles.baseMedium)
@@ -228,32 +227,30 @@ class _CategoryLegendItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          width: 12,
-          height: 12,
-          margin: const EdgeInsets.only(top: 2),
+          width: AppSpacing.predictionAnalyzerLegendSwatch,
+          height: AppSpacing.predictionAnalyzerLegendSwatch,
+          margin: AppSpacing.predictionAnalyzerLegendSwatchMargin,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(3),
+            borderRadius: AppRadii.swatchRadius,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.predictionAnalyzerLegendItemGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 category.name,
-                style: AppTextStyles.micro.copyWith(
+                style: AppTextStyles.numericMicro.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  fontSize: 11,
                 ),
               ),
               Text(
                 '${category.pnl >= 0 ? '+' : ''}${_formatMoney(category.pnl)}',
-                style: AppTextStyles.micro.copyWith(
+                style: AppTextStyles.numericMicro.copyWith(
                   color: category.pnl >= 0 ? AppColors.buy : AppColors.sell,
-                  fontSize: 10,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
@@ -281,11 +278,17 @@ class _RiskMetricRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.predictionAnalyzerRiskMetricVertical,
+      ),
       child: Row(
         children: [
-          Icon(icon, color: AppColors.text3, size: 16),
-          const SizedBox(width: 8),
+          Icon(
+            icon,
+            color: AppColors.text3,
+            size: AppSpacing.predictionAnalyzerRiskIcon,
+          ),
+          const SizedBox(width: AppSpacing.predictionAnalyzerRiskIconGap),
           Expanded(
             child: Text(
               label,
@@ -314,7 +317,9 @@ class _CategoryRiskBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = 30 + category.invested.clamp(0, 95);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.predictionAnalyzerRiskBarHorizontal,
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -322,20 +327,15 @@ class _CategoryRiskBar extends StatelessWidget {
             height: height.toDouble(),
             decoration: BoxDecoration(
               color: _predictionPrimary,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(8),
-              ),
+              borderRadius: const BorderRadius.vertical(top: AppRadii.smCorner),
             ),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: AppSpacing.predictionAnalyzerRiskBarLabelGap),
           Text(
             category.name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 9,
-            ),
+            style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -424,10 +424,7 @@ class _PnlLinePainter extends CustomPainter {
       canvas.drawCircle(Offset(x, y), 3.6, dotPaint);
       textPainter.text = TextSpan(
         text: points[i].date,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: 9,
-        ),
+        style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
       );
       textPainter.layout();
       textPainter.paint(

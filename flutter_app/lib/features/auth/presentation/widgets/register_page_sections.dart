@@ -160,13 +160,10 @@ class _AgreementRow extends StatelessWidget {
           ),
         ),
         if (hasError) ...[
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Text(
             error!,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.sell,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.sell),
           ),
         ],
       ],
@@ -228,7 +225,7 @@ class _PasswordStrength extends StatelessWidget {
             ],
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Wrap(
           spacing: AppSpacing.x3,
           runSpacing: AppSpacing.x2,
@@ -249,7 +246,6 @@ class _PasswordStrength extends StatelessWidget {
                     check.label,
                     style: AppTextStyles.micro.copyWith(
                       color: check.ok ? AppColors.buy : AppColors.text3,
-                      fontSize: 11,
                     ),
                   ),
                 ],

@@ -10,9 +10,18 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: AppColors.text1, size: 18),
+        Icon(
+          icon,
+          color: AppColors.text1,
+          size: AppSpacing.dcaScheduleSectionIcon,
+        ),
         const SizedBox(width: AppSpacing.x3),
-        Text(title, style: AppTextStyles.sectionTitle.copyWith(fontSize: 18)),
+        Text(
+          title,
+          style: AppTextStyles.sectionTitle.copyWith(
+            fontSize: AppSpacing.dcaScheduleSectionTitleFontSize,
+          ),
+        ),
       ],
     );
   }
@@ -27,8 +36,8 @@ class _AccentIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.dcaScheduleAccentIconBox,
+      height: AppSpacing.dcaScheduleAccentIconBox,
       decoration: BoxDecoration(
         color: accent.withValues(alpha: .14),
         borderRadius: AppRadii.mdRadius,
@@ -46,13 +55,13 @@ class _SelectedDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 24,
-      height: 24,
+      width: AppSpacing.dcaScheduleSelectedDot,
+      height: AppSpacing.dcaScheduleSelectedDot,
       decoration: BoxDecoration(color: accent, shape: BoxShape.circle),
       alignment: Alignment.center,
       child: Container(
-        width: 7,
-        height: 7,
+        width: AppSpacing.dcaScheduleSelectedDotInner,
+        height: AppSpacing.dcaScheduleSelectedDotInner,
         decoration: const BoxDecoration(
           color: AppColors.navCenterIcon,
           shape: BoxShape.circle,

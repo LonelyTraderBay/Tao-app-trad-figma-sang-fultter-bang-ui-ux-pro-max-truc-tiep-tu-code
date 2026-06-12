@@ -24,12 +24,8 @@ part '../widgets/bot_guide_practices_videos.dart';
 part '../widgets/bot_guide_common.dart';
 
 const _guideBackground = AppColors.bg;
-const _guidePanel = AppColors.surface;
-const _guidePanel2 = AppColors.surface2;
 const _guidePrimary = AppColors.primary;
 const _guideGreen = AppColors.buy;
-const _guideAmber = AppColors.caution;
-const _guidePurple = AppColors.accent;
 const _guideRed = AppColors.sell;
 
 class BotGuidePage extends ConsumerStatefulWidget {
@@ -80,15 +76,15 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 0,
+                    customGap: 16,
                     children: [
                       const _IntroBanner(),
-                      const SizedBox(height: 12),
                       const VitCard(
                         variant: VitCardVariant.inner,
                         padding: EdgeInsets.all(12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: VitPageContent(
+                          padding: VitContentPadding.none,
+                          customGap: 8,
                           children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
@@ -97,7 +93,6 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
                                   'Strategy type, setup risk, operational limits, mistakes and next steps are reviewed before bot activation.',
                               contractId: 'bot-guide-review',
                             ),
-                            SizedBox(height: 8),
                             VitStatusPill(
                               label: 'Education before activation',
                               status: VitStatusPillStatus.warning,
@@ -106,9 +101,7 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 28),
                       _Tabs(active: _view, onChanged: _setView),
-                      const SizedBox(height: 17),
                       VitPageSection(
                         customGap: 0,
                         children: [
@@ -124,7 +117,6 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
                             _MistakesView(items: snapshot.mistakes),
                         ],
                       ),
-                      const SizedBox(height: 16),
                       const _VideoTutorialsCard(),
                     ],
                   ),

@@ -38,7 +38,6 @@ class _FeatureCard extends StatelessWidget {
                       feature.title,
                       style: AppTextStyles.baseMedium.copyWith(
                         color: AppColors.text1,
-                        fontSize: 16,
                         fontWeight: AppTextStyles.bold,
                         height: 1.1,
                       ),

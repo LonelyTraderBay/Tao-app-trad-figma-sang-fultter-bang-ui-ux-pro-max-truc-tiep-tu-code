@@ -26,7 +26,7 @@ class _PositionSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionMarketMakerCardPadding,
       child: Column(
         children: [
           Row(
@@ -46,7 +46,9 @@ class _PositionSummary extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(
+            height: AppSpacing.predictionMarketMakerPositionMetricGap,
+          ),
           Row(
             children: [
               Expanded(
@@ -84,7 +86,7 @@ class _PositionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionMarketMakerCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -107,7 +109,9 @@ class _PositionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(
+            height: AppSpacing.predictionMarketMakerPositionCardGap,
+          ),
           Row(
             children: [
               Expanded(

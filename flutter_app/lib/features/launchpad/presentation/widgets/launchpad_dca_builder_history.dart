@@ -73,7 +73,7 @@ class _ExecutionBars extends StatelessWidget {
       (max, execution) => execution.tokens > max ? execution.tokens : max,
     );
     return SizedBox(
-      height: 170,
+      height: AppSpacing.launchpadDcaHistoryChartHeight,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -86,7 +86,7 @@ class _ExecutionBars extends StatelessWidget {
                     execution.tokens.toStringAsFixed(1),
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 9,
+                      fontSize: AppSpacing.launchpadFontXs,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x1),
@@ -111,7 +111,7 @@ class _ExecutionBars extends StatelessWidget {
                     execution.date.split(' ').first,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 9,
+                      fontSize: AppSpacing.launchpadFontXs,
                     ),
                   ),
                 ],

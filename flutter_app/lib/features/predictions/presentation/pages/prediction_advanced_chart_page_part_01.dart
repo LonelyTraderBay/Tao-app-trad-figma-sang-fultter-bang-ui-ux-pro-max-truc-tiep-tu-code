@@ -48,7 +48,9 @@ class _PredictionAdvancedChartPageState
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.predictionAdvancedBottomInsetVisual
+            : AppSpacing.predictionAdvancedBottomInsetNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -75,50 +77,62 @@ class _PredictionAdvancedChartPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionAdvancedChartPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.predictionAdvancedScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 16,
-                      children: switch (_activeTab) {
-                        _ChartTab.chart => [
-                          _TimeframeSelector(
-                            active: _timeframe,
-                            onChanged: (value) =>
-                                setState(() => _timeframe = value),
-                          ),
-                          _ProbabilitySummaryCard(snapshot: snapshot),
-                          _ProbabilityChartCard(
-                            snapshot: snapshot,
-                            showMA7: _showMA7,
-                            showMA25: _showMA25,
-                            showBB: _showBB,
-                          ),
-                          if (_showVolume) _VolumeChartCard(snapshot: snapshot),
-                          _ChartLayerControls(
-                            showMA7: _showMA7,
-                            showMA25: _showMA25,
-                            showBB: _showBB,
-                            showVolume: _showVolume,
-                            onMA7: () => setState(() => _showMA7 = !_showMA7),
-                            onMA25: () =>
-                                setState(() => _showMA25 = !_showMA25),
-                            onBB: () => setState(() => _showBB = !_showBB),
-                            onVolume: () =>
-                                setState(() => _showVolume = !_showVolume),
-                          ),
-                        ],
-                        _ChartTab.indicators => [
-                          _RsiCard(snapshot: snapshot),
-                          _IndicatorSummarySection(snapshot: snapshot),
-                          const _OverallSignalCard(),
-                        ],
-                        _ChartTab.analysis => [
-                          _OrderFlowCard(snapshot: snapshot),
-                          _SupportResistanceSection(snapshot: snapshot),
-                          _PatternRecognitionCard(snapshot: snapshot),
-                          const _AnalysisDisclaimer(),
-                        ],
-                      },
+                      customGap: AppSpacing.predictionAdvancedContentGap,
+                      children: [
+                        ...switch (_activeTab) {
+                          _ChartTab.chart => [
+                            _TimeframeSelector(
+                              active: _timeframe,
+                              onChanged: (value) =>
+                                  setState(() => _timeframe = value),
+                            ),
+                            _ProbabilitySummaryCard(snapshot: snapshot),
+                            _ProbabilityChartCard(
+                              snapshot: snapshot,
+                              showMA7: _showMA7,
+                              showMA25: _showMA25,
+                              showBB: _showBB,
+                            ),
+                            if (_showVolume)
+                              _VolumeChartCard(snapshot: snapshot),
+                            _ChartLayerControls(
+                              showMA7: _showMA7,
+                              showMA25: _showMA25,
+                              showBB: _showBB,
+                              showVolume: _showVolume,
+                              onMA7: () => setState(() => _showMA7 = !_showMA7),
+                              onMA25: () =>
+                                  setState(() => _showMA25 = !_showMA25),
+                              onBB: () => setState(() => _showBB = !_showBB),
+                              onVolume: () =>
+                                  setState(() => _showVolume = !_showVolume),
+                            ),
+                          ],
+                          _ChartTab.indicators => [
+                            _RsiCard(snapshot: snapshot),
+                            _IndicatorSummarySection(snapshot: snapshot),
+                            const _OverallSignalCard(),
+                          ],
+                          _ChartTab.analysis => [
+                            _OrderFlowCard(snapshot: snapshot),
+                            _SupportResistanceSection(snapshot: snapshot),
+                            _PatternRecognitionCard(snapshot: snapshot),
+                            const _AnalysisDisclaimer(),
+                          ],
+                        },
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Prediction advanced-chart review',
+                          message:
+                              'Timeframe, probability movement, volume, indicators, support/resistance, order flow, pattern signals, and disclaimer states are reviewed before acting on chart analysis.',
+                          contractId: 'SC-041',
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -166,7 +180,7 @@ class _AdvancedChartTabBar extends StatelessWidget {
         border: Border(bottom: BorderSide(color: AppColors.border)),
       ),
       child: SizedBox(
-        height: 54,
+        height: AppSpacing.predictionAdvancedTabsHeight,
         child: Row(
           children: [
             for (final item in tabs)
@@ -186,18 +200,19 @@ class _AdvancedChartTabBar extends StatelessWidget {
                                   ? _predictionPrimary
                                   : AppColors.text3,
                               fontWeight: AppTextStyles.bold,
-                              fontSize: 12,
                             ),
                           ),
                         ),
                       ),
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 160),
-                        height: 2,
-                        width: activeTab == item.tab ? 116 : 0,
+                        height: AppSpacing.predictionAdvancedTabIndicatorHeight,
+                        width: activeTab == item.tab
+                            ? AppSpacing.predictionAdvancedTabIndicatorWidth
+                            : 0,
                         decoration: BoxDecoration(
                           color: _predictionPrimary,
-                          borderRadius: BorderRadius.circular(1),
+                          borderRadius: AppRadii.hairlineRadius,
                         ),
                       ),
                     ],
@@ -233,7 +248,8 @@ class _TimeframeSelector extends StatelessWidget {
               onTap: () => onChanged(timeframes[index]),
             ),
           ),
-          if (index != timeframes.length - 1) const SizedBox(width: 10),
+          if (index != timeframes.length - 1)
+            const SizedBox(width: AppSpacing.predictionAdvancedTimeframeGap),
         ],
       ],
     );
@@ -255,7 +271,7 @@ class _TimeframeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 36,
+      height: AppSpacing.predictionAdvancedTimeframeHeight,
       child: Material(
         color: active ? _predictionPrimary : AppColors.bg,
         borderRadius: AppRadii.cardRadius,
@@ -292,33 +308,38 @@ class _ProbabilitySummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: AppSpacing.predictionAdvancedCardPadding,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.predictionAdvancedSummaryGap,
         children: [
           Text(
             'Current Probability',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 7),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 '${(snapshot.currentProbability * 100).toStringAsFixed(1)}%',
-                style: AppTextStyles.heroNumber.copyWith(fontSize: 28),
+                style: AppTextStyles.amountMd,
               ),
-              const SizedBox(width: 9),
+              const SizedBox(
+                width: AppSpacing.predictionAdvancedSummaryValueGap,
+              ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 5),
+                padding: AppSpacing.predictionAdvancedSummaryChangePadding,
                 child: Row(
                   children: [
                     const Icon(
                       Icons.north_east_rounded,
                       color: AppColors.buy,
-                      size: 16,
+                      size: AppSpacing.predictionAdvancedTrendIcon,
                     ),
-                    const SizedBox(width: 3),
+                    const SizedBox(
+                      width: AppSpacing.predictionAdvancedTrendIconGap,
+                    ),
                     Text(
                       '+${snapshot.priceChangePercent.toStringAsFixed(2)}%',
                       style: AppTextStyles.caption.copyWith(
@@ -353,20 +374,20 @@ class _ProbabilityChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: AppSpacing.predictionAdvancedCardPadding,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.predictionAdvancedChartGap,
         children: [
           Text(
             'Probability Chart',
             style: AppTextStyles.caption.copyWith(
               fontWeight: AppTextStyles.bold,
-              fontSize: 13,
             ),
           ),
-          const SizedBox(height: 12),
           SizedBox(
-            height: 286,
+            height: AppSpacing.predictionAdvancedProbabilityChartHeight,
             child: CustomPaint(
               painter: _ProbabilityPainter(
                 points: snapshot.priceHistory,
@@ -393,20 +414,20 @@ class _VolumeChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: AppSpacing.predictionAdvancedCardPadding,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        customGap: AppSpacing.predictionAdvancedChartGap,
         children: [
           Text(
             'Trading Volume',
             style: AppTextStyles.caption.copyWith(
               fontWeight: AppTextStyles.bold,
-              fontSize: 13,
             ),
           ),
-          const SizedBox(height: 12),
           SizedBox(
-            height: 122,
+            height: AppSpacing.predictionAdvancedVolumeChartHeight,
             child: CustomPaint(
               painter: _VolumePainter(points: snapshot.priceHistory),
               child: const SizedBox.expand(),
@@ -446,12 +467,12 @@ class _ChartLayerControls extends StatelessWidget {
       accentColor: _predictionPrimary,
       children: [
         GridView.count(
-          crossAxisCount: 2,
+          crossAxisCount: AppSpacing.predictionAdvancedLayerColumns,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          mainAxisSpacing: 8,
-          crossAxisSpacing: 8,
-          childAspectRatio: 3.9,
+          mainAxisSpacing: AppSpacing.predictionAdvancedLayerGap,
+          crossAxisSpacing: AppSpacing.predictionAdvancedLayerGap,
+          childAspectRatio: AppSpacing.predictionAdvancedLayerAspect,
           children: [
             _LayerButton(
               key: PredictionAdvancedChartPage.ma7ToggleKey,

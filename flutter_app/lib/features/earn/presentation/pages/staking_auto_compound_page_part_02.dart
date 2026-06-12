@@ -28,7 +28,7 @@ class _FrequencyTile extends StatelessWidget {
             borderRadius: AppRadii.inputRadius,
             border: Border.all(
               color: selected ? AppColors.buy : AppColors.borderSolid,
-              width: 1.5,
+              width: AppSpacing.stakingAutoCompoundPlanBorderWidth,
             ),
           ),
           child: Column(
@@ -45,16 +45,13 @@ class _FrequencyTile extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: AppSpacing.x1),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
               FittedBox(
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.centerLeft,
                 child: Text(
                   frequency.description,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 9,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
             ],
@@ -137,7 +134,7 @@ class _PositionCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(position.product, style: AppTextStyles.baseMedium),
-                    const SizedBox(height: AppSpacing.x1),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                     Text(
                       '${_formatAmount(position.amount)} ${position.asset}',
                       style: AppTextStyles.caption.copyWith(
@@ -155,7 +152,7 @@ class _PositionCard extends StatelessWidget {
             ],
           ),
           if (position.autoCompound) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: AppSpacing.x3,
@@ -246,9 +243,9 @@ class _SimulationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
           SizedBox(
-            height: 190,
+            height: AppSpacing.stakingAutoCompoundChartHeight,
             child: Stack(
               children: [
                 Positioned.fill(
@@ -295,7 +292,7 @@ class _SimulationCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           Row(
             children: [
               Expanded(
@@ -317,7 +314,7 @@ class _SimulationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.md,
@@ -328,7 +325,7 @@ class _SimulationCard extends StatelessWidget {
                   'Lợi thế compound',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   '+${_formatCurrency(simulation.difference)}',
                   style: AppTextStyles.sectionTitle.copyWith(
@@ -336,7 +333,7 @@ class _SimulationCard extends StatelessWidget {
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   '(+${simulation.percentageGain.toStringAsFixed(2)}% cao hơn)',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -376,7 +373,7 @@ class _MiniInput extends StatelessWidget {
             fontWeight: AppTextStyles.medium,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
           decoration: BoxDecoration(
@@ -416,7 +413,10 @@ class _AxisLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
-      style: AppTextStyles.micro.copyWith(color: AppColors.text3, fontSize: 9),
+      style: AppTextStyles.micro.copyWith(
+        color: AppColors.text3,
+        fontSize: AppSpacing.stakingAutoCompoundAxisFontSize,
+      ),
     );
   }
 }
@@ -446,7 +446,7 @@ class _ResultCard extends StatelessWidget {
             children: [
               Container(
                 width: AppSpacing.x4,
-                height: 2,
+                height: AppSpacing.stakingAutoCompoundResultMarkerHeight,
                 decoration: BoxDecoration(
                   color: color,
                   borderRadius: AppRadii.xsRadius,
@@ -461,7 +461,7 @@ class _ResultCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,

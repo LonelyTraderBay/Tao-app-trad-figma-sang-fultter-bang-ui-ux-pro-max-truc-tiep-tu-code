@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -94,6 +95,19 @@ class P2PKycRequirementsPage extends ConsumerWidget {
                         ],
                         const SizedBox(height: AppSpacing.x5),
                         _KycSupportCard(snapshot: snapshot),
+                        VitPageContent(
+                          padding: VitContentPadding.compact,
+                          customGap: 0,
+                          children: const [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'KYC requirement state review',
+                              message:
+                                  'Current tier, locked requirements, available upgrade action, support path, and P2P limit impact remain visible before starting verification.',
+                              contractId: 'SC-247',
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

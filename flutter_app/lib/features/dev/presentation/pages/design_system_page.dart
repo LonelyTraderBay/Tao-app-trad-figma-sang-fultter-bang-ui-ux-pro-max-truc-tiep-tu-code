@@ -20,6 +20,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class DesignSystemPage extends ConsumerStatefulWidget {
   const DesignSystemPage({super.key, this.shellRenderMode});
@@ -104,18 +105,33 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
                   child: VitPageContent(
                     gap: VitContentGap.loose,
                     children: [
-                      DesignSystemHero(
-                        key: DesignSystemPage.heroKey,
-                        snapshot: snapshot,
+                      VitCard(
+                        radius: VitCardRadius.lg,
+                        padding: EdgeInsets.zero,
+                        clip: true,
+                        child: DesignSystemHero(
+                          key: DesignSystemPage.heroKey,
+                          snapshot: snapshot,
+                        ),
                       ),
-                      DesignSystemTokensSection(
-                        sectionKey: DesignSystemPage.tokensKey,
-                        tokens: snapshot.tokens,
+                      VitCard(
+                        radius: VitCardRadius.lg,
+                        padding: EdgeInsets.zero,
+                        clip: true,
+                        child: DesignSystemTokensSection(
+                          sectionKey: DesignSystemPage.tokensKey,
+                          tokens: snapshot.tokens,
+                        ),
                       ),
-                      DesignSystemColorSection(
-                        sectionKey: DesignSystemPage.colorsKey,
-                        swatchKey: DesignSystemPage.swatchKey,
-                        swatches: snapshot.swatches,
+                      VitCard(
+                        radius: VitCardRadius.lg,
+                        padding: EdgeInsets.zero,
+                        clip: true,
+                        child: DesignSystemColorSection(
+                          sectionKey: DesignSystemPage.colorsKey,
+                          swatchKey: DesignSystemPage.swatchKey,
+                          swatches: snapshot.swatches,
+                        ),
                       ),
                       DesignSystemCtaSection(
                         sectionKey: DesignSystemPage.ctaKey,

@@ -11,7 +11,7 @@ class _MissingReceipt extends StatelessWidget {
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
         key: PredictionOrderReceiptPage.missingReceiptKey,
-        padding: EdgeInsets.only(bottom: bottomInset),
+        padding: AppSpacing.predictionReceiptScrollPadding(bottomInset),
         child: const VitEmptyState(
           title: 'Không tìm thấy',
           message: 'Lệnh không tồn tại hoặc đã bị xoá',
@@ -36,10 +36,10 @@ class _ReceiptContent extends StatelessWidget {
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
         key: PredictionOrderReceiptPage.contentKey,
-        padding: EdgeInsets.only(bottom: bottomInset),
+        padding: AppSpacing.predictionReceiptScrollPadding(bottomInset),
         child: VitPageContent(
           padding: VitContentPadding.relaxed,
-          customGap: 15,
+          customGap: AppSpacing.predictionReceiptContentGap,
           children: [
             _ReceiptHero(receipt: receipt),
             if (snapshot.highRiskContractId != null)
@@ -74,12 +74,12 @@ class _ReceiptHero extends StatelessWidget {
     final status = _statusConfig(receipt.status);
 
     return VitCard(
-      padding: const EdgeInsets.all(20),
+      padding: AppSpacing.predictionReceiptHeroPadding,
       child: Column(
         children: [
           Wrap(
-            spacing: 8,
-            runSpacing: 8,
+            spacing: AppSpacing.predictionReceiptHeroPillGap,
+            runSpacing: AppSpacing.predictionReceiptHeroPillGap,
             alignment: WrapAlignment.center,
             children: [
               _SoftPill(
@@ -94,7 +94,7 @@ class _ReceiptHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.predictionReceiptHeroOutcomeGap),
           Text(
             receipt.outcome,
             textAlign: TextAlign.center,
@@ -102,7 +102,7 @@ class _ReceiptHero extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.predictionReceiptHeroEventGap),
           Text(
             receipt.eventTitle,
             textAlign: TextAlign.center,
@@ -132,7 +132,7 @@ class _OrderSummary extends StatelessWidget {
       accentColor: _predictionPrimary,
       children: [
         VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.predictionReceiptCardPadding,
           child: Column(
             children: [
               _SummaryRow(
@@ -199,7 +199,7 @@ class _TimelineCard extends StatelessWidget {
       accentColor: AppColors.buy,
       children: [
         VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.predictionReceiptCardPadding,
           child: Column(
             children: [
               for (var i = 0; i < timeline.length; i++)
@@ -223,7 +223,7 @@ class _TimestampCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionReceiptCardPadding,
       child: Column(
         children: [
           _SummaryRow(label: 'Tạo lúc', value: receipt.createdAt),
@@ -257,7 +257,10 @@ class _ShareReceiptButton extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
             color: AppColors.primary12,
-            border: Border.all(color: AppColors.primary15, width: 1.5),
+            border: Border.all(
+              color: AppColors.primary15,
+              width: AppSpacing.predictionReceiptShareBorderWidth,
+            ),
             borderRadius: AppRadii.inputRadius,
           ),
           child: InkWell(
@@ -272,9 +275,11 @@ class _ShareReceiptButton extends StatelessWidget {
                   const Icon(
                     Icons.ios_share_rounded,
                     color: _predictionPrimary,
-                    size: 17,
+                    size: AppSpacing.predictionReceiptShareIcon,
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(
+                    width: AppSpacing.predictionReceiptShareIconGap,
+                  ),
                   Flexible(
                     child: Text(
                       'Chia sẻ chi tiết lệnh',
@@ -302,19 +307,20 @@ class _DisclosureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.predictionReceiptDisclosurePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.accent, size: 15),
-          const SizedBox(width: 8),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.accent,
+            size: AppSpacing.predictionReceiptDisclosureIcon,
+          ),
+          const SizedBox(width: AppSpacing.predictionReceiptDisclosureGap),
           Expanded(
             child: Text(
               'Probability không phải certainty. Giá thị trường dự đoán phản ánh ước lượng cộng đồng và có thể thay đổi bất cứ lúc nào. Đây không phải lời khuyên đầu tư.',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text3,
-                fontSize: 12,
-              ),
+              style: AppTextStyles.badge.copyWith(color: AppColors.text3),
             ),
           ),
         ],
@@ -339,7 +345,7 @@ class _ReceiptActions extends StatelessWidget {
           variant: VitCtaButtonVariant.auth,
           child: const Text('Xem sự kiện'),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.predictionReceiptActionGap),
         VitCtaButton(
           key: PredictionOrderReceiptPage.viewPortfolioKey,
           onPressed: () => context.go(AppRoutePaths.profilePredictions),

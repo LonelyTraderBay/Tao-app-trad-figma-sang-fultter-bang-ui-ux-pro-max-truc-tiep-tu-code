@@ -45,28 +45,31 @@ class _TableHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 36,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      height: AppSpacing.predictionRewardsHeaderHeight,
+      padding: AppSpacing.predictionRewardsTablePadding,
       decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: Row(
         children: [
           Expanded(child: _HeaderText('MARKET')),
-          const SizedBox(width: 6),
+          const SizedBox(width: AppSpacing.predictionRewardsMarketColumnGap),
           const SizedBox(
-            width: 54,
+            width: AppSpacing.predictionRewardsSpreadWidth,
             child: Center(child: _HeaderText('SPREAD')),
           ),
-          const SizedBox(width: 48, child: Center(child: _HeaderText('MIN'))),
           const SizedBox(
-            width: 58,
+            width: AppSpacing.predictionRewardsMinWidth,
+            child: Center(child: _HeaderText('MIN')),
+          ),
+          const SizedBox(
+            width: AppSpacing.predictionRewardsRewardWidth,
             child: Align(
               alignment: Alignment.centerRight,
               child: _HeaderText('REWARD'),
             ),
           ),
-          const SizedBox(width: 14),
+          const SizedBox(width: AppSpacing.predictionRewardsHeaderTrailingGap),
         ],
       ),
     );
@@ -84,7 +87,6 @@ class _HeaderText extends StatelessWidget {
       label,
       style: AppTextStyles.micro.copyWith(
         color: AppColors.text3,
-        fontSize: 10,
         fontWeight: AppTextStyles.bold,
       ),
     );
@@ -114,8 +116,8 @@ class _RewardRow extends StatelessWidget {
     return InkWell(
       onTap: () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
       child: Container(
-        height: 64,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        height: AppSpacing.predictionRewardsRowHeight,
+        padding: AppSpacing.predictionRewardsTablePadding,
         decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(color: AppColors.divider)),
         ),
@@ -126,15 +128,15 @@ class _RewardRow extends StatelessWidget {
               onTap: onFavoriteToggle,
               borderRadius: AppRadii.mdRadius,
               child: SizedBox(
-                width: 20,
+                width: AppSpacing.predictionRewardsFavoriteWidth,
                 child: Icon(
                   favorite ? Icons.star_rounded : Icons.star_border_rounded,
                   color: favorite ? AppColors.warn : AppColors.text3,
-                  size: 15,
+                  size: AppSpacing.predictionRewardsFavoriteIcon,
                 ),
               ),
             ),
-            const SizedBox(width: 7),
+            const SizedBox(width: AppSpacing.predictionRewardsFavoriteGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -146,11 +148,12 @@ class _RewardRow extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontSize: 12,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const Padding(
+                    padding: AppSpacing.predictionRewardsRowMetaGap,
+                  ),
                   Row(
                     children: [
                       Flexible(
@@ -160,23 +163,26 @@ class _RewardRow extends StatelessWidget {
                           background: _predictionPrimary.withValues(alpha: .14),
                         ),
                       ),
-                      const SizedBox(width: 7),
+                      const SizedBox(
+                        width: AppSpacing.predictionRewardsMetaGap,
+                      ),
                       Icon(
                         reward.priceChange24h >= 0
                             ? Icons.arrow_outward_rounded
                             : Icons.south_east_rounded,
                         color: changeColor,
-                        size: 11,
+                        size: AppSpacing.predictionRewardsChangeIcon,
                       ),
                       Text(
                         _formatPercent(reward.priceChange24h),
                         style: AppTextStyles.micro.copyWith(
                           color: changeColor,
-                          fontSize: 10,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(width: 7),
+                      const SizedBox(
+                        width: AppSpacing.predictionRewardsMetaGap,
+                      ),
                       Flexible(
                         child: Text(
                           '${reward.earningsPct.toStringAsFixed(reward.earningsPct == reward.earningsPct.round() ? 0 : 1)}% APY',
@@ -184,7 +190,6 @@ class _RewardRow extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            fontSize: 10,
                           ),
                         ),
                       ),
@@ -193,49 +198,46 @@ class _RewardRow extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 6),
+            const SizedBox(width: AppSpacing.predictionRewardsMarketColumnGap),
             SizedBox(
-              width: 54,
+              width: AppSpacing.predictionRewardsSpreadWidth,
               child: Text(
                 '${(reward.maxSpread * 100).toStringAsFixed(0)}%',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  fontSize: 11,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ),
             SizedBox(
-              width: 48,
+              width: AppSpacing.predictionRewardsMinWidth,
               child: Text(
                 '${reward.minShares}',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  fontSize: 11,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ),
             SizedBox(
-              width: 58,
+              width: AppSpacing.predictionRewardsRewardWidth,
               child: Text(
                 '\$${reward.dailyReward.toStringAsFixed(0)}',
                 textAlign: TextAlign.right,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.buy,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: AppSpacing.predictionRewardsChevronGap),
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.text3,
-              size: 15,
+              size: AppSpacing.predictionRewardsChevron,
             ),
           ],
         ),
@@ -256,12 +258,16 @@ class _RiskLink extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.mdRadius,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 9),
+        padding: AppSpacing.predictionRewardsRiskLinkPadding,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.shield_outlined, color: AppColors.warn, size: 13),
-            const SizedBox(width: 7),
+            const Icon(
+              Icons.shield_outlined,
+              color: AppColors.warn,
+              size: AppSpacing.predictionRewardsRiskIcon,
+            ),
+            const SizedBox(width: AppSpacing.predictionRewardsRiskGap),
             Flexible(
               child: Text(
                 'Reward không phải lợi nhuận đảm bảo — tìm hiểu thêm',
@@ -269,16 +275,15 @@ class _RiskLink extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.warn,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: AppSpacing.predictionRewardsChevronGap),
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.warn,
-              size: 14,
+              size: AppSpacing.predictionRewardsRiskChevron,
             ),
           ],
         ),

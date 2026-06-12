@@ -75,14 +75,18 @@ class _DisclaimerCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.accent, size: 16),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.accent,
+            size: AppSpacing.arenaReportInlineIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               disclaimer,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.45,
+                height: AppSpacing.arenaReportNoticeLineHeight,
               ),
             ),
           ),
@@ -111,8 +115,8 @@ class _SectionBlock extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: 4,
-              height: 18,
+              width: AppSpacing.arenaReportMarkerWidth,
+              height: AppSpacing.arenaReportMarkerHeight,
               decoration: BoxDecoration(
                 color: accentColor,
                 borderRadius: AppRadii.xsRadius,
@@ -144,14 +148,14 @@ class _ToneIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.arenaReportToneIconBox,
+      height: AppSpacing.arenaReportToneIconBox,
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
         border: Border.all(color: color.withValues(alpha: 0.22)),
         borderRadius: AppRadii.mdRadius,
       ),
-      child: Icon(icon, color: color, size: 20),
+      child: Icon(icon, color: color, size: AppSpacing.arenaReportToneIcon),
     );
   }
 }

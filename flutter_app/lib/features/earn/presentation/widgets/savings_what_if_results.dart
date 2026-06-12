@@ -54,7 +54,6 @@ class _ResultsTab extends StatelessWidget {
                           '${scenario.durationMonths} tháng · ${_riskLabel(scenario.riskLevel)}',
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text3,
-                            fontSize: 12,
                           ),
                         ),
                       ],
@@ -63,7 +62,7 @@ class _ResultsTab extends StatelessWidget {
                   _ImpactBadge(value: result.differencePct),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
               Row(
                 children: [
                   Expanded(
@@ -84,7 +83,7 @@ class _ResultsTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
               Row(
                 children: [
                   Expanded(
@@ -106,12 +105,12 @@ class _ResultsTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         _ComparisonChart(result: result),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         const _SectionTitle(label: 'Ảnh hưởng theo tài sản'),
         _AssetImpactList(result: result),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         Row(
           children: [
             Expanded(
@@ -153,20 +152,20 @@ class _EmptyResults extends StatelessWidget {
           const Icon(
             Icons.analytics_outlined,
             color: AppColors.text3,
-            size: 44,
+            size: AppSpacing.savingsWhatIfEmptyIcon,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             'Chưa chạy mô phỏng',
             style: _captionBold.copyWith(color: AppColors.text1),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Text(
             'Chọn kịch bản và bấm "Chạy mô phỏng" để xem kết quả.',
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           VitCtaButton(
             onPressed: onRun,
             leading: const Icon(Icons.play_arrow_rounded),
@@ -195,15 +194,15 @@ class _ComparisonChart extends StatelessWidget {
             'Baseline vs kịch bản',
             style: _captionBold.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           SizedBox(
-            height: 150,
+            height: AppSpacing.savingsWhatIfComparisonChartHeight,
             width: double.infinity,
             child: CustomPaint(
               painter: _LineChartPainter(points: result.monthlyData),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [

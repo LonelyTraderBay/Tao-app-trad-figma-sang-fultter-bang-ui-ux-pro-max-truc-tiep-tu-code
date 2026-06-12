@@ -38,7 +38,6 @@ class _SummaryRow extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 10,
                         height: 1,
                       ),
                     ),
@@ -47,9 +46,7 @@ class _SummaryRow extends StatelessWidget {
                       items[i].$2,
                       style: AppTextStyles.baseMedium.copyWith(
                         color: items[i].$3,
-                        fontSize: 18,
                         fontWeight: AppTextStyles.bold,
-                        fontFamily: 'Roboto',
                         fontFeatures: AppTextStyles.tabularFigures,
                         height: 1,
                       ),
@@ -83,36 +80,25 @@ class _Tabs extends StatelessWidget {
       children: [
         for (var i = 0; i < tabs.length; i++) ...[
           Expanded(
-            child: GestureDetector(
+            child: VitCard(
               key: BotEquityCurvePage.tabKey(tabs[i].$1),
-              behavior: HitTestBehavior.opaque,
               onTap: () => onChanged(tabs[i].$1),
-              child: Container(
-                height: 35,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
+              height: 35,
+              alignment: Alignment.center,
+              variant: VitCardVariant.inner,
+              borderColor: active == tabs[i].$1
+                  ? _equityPrimary.withValues(alpha: .50)
+                  : AppColors.transparent,
+              child: Text(
+                tabs[i].$2,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(
                   color: active == tabs[i].$1
-                      ? _equityPrimary.withValues(alpha: .15)
-                      : _equityPanel2,
-                  borderRadius: AppRadii.cardRadius,
-                  border: Border.all(
-                    color: active == tabs[i].$1
-                        ? _equityPrimary.withValues(alpha: .50)
-                        : AppColors.transparent,
-                  ),
-                ),
-                child: Text(
-                  tabs[i].$2,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active == tabs[i].$1
-                        ? _equityPrimary
-                        : AppColors.text3,
-                    fontSize: 12,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
-                  ),
+                      ? _equityPrimary
+                      : AppColors.text3,
+                  fontWeight: AppTextStyles.bold,
+                  height: 1,
                 ),
               ),
             ),

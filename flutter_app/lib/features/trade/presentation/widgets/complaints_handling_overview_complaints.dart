@@ -54,7 +54,6 @@ class _CategoryGrid extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontSize: 11,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),
@@ -82,19 +81,15 @@ class _TimelineCard extends StatelessWidget {
           for (final item in timeline) ...[
             Row(
               children: [
-                Container(
+                VitCard(
                   width: 32,
                   height: 32,
-                  decoration: BoxDecoration(
-                    color: _complaintsPanel2,
-                    borderRadius: AppRadii.cardRadius,
-                  ),
+                  variant: VitCardVariant.inner,
                   alignment: Alignment.center,
                   child: Text(
                     '${item.step}',
                     style: AppTextStyles.caption.copyWith(
                       color: _complaintsPrimary,
-                      fontSize: 13,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),
@@ -109,7 +104,6 @@ class _TimelineCard extends StatelessWidget {
                         item.label,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 12,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
@@ -119,7 +113,6 @@ class _TimelineCard extends StatelessWidget {
                         item.time,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
                           height: 1,
                         ),
                       ),
@@ -175,13 +168,12 @@ class _ComplaintCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            VitCard(
               width: 40,
               height: 40,
-              decoration: BoxDecoration(
-                color: status.color.withValues(alpha: .11),
-                borderRadius: AppRadii.inputRadius,
-              ),
+              variant: VitCardVariant.ghost,
+              borderColor: status.color.withValues(alpha: .24),
+              alignment: Alignment.center,
               child: Icon(
                 Icons.chat_bubble_outline_rounded,
                 color: status.color,
@@ -201,7 +193,6 @@ class _ComplaintCard extends StatelessWidget {
                         complaint.id,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 13,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
@@ -210,7 +201,6 @@ class _ComplaintCard extends StatelessWidget {
                         status.label,
                         style: AppTextStyles.micro.copyWith(
                           color: status.color,
-                          fontSize: 9,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
@@ -222,7 +212,6 @@ class _ComplaintCard extends StatelessWidget {
                     complaint.subject,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      fontSize: 11,
                       height: 1.2,
                     ),
                   ),
@@ -231,7 +220,6 @@ class _ComplaintCard extends StatelessWidget {
                     '${complaint.category} - Submitted ${complaint.submittedDate}',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 9,
                       height: 1,
                     ),
                   ),

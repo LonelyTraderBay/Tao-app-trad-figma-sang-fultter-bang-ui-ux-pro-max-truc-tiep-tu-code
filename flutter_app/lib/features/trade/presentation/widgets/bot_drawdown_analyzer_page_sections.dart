@@ -88,9 +88,10 @@ class _MetricCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Card(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
-      child: SizedBox(
-        height: height - 32,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: height - 32),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Icon(icon, color: iconColor, size: 21),
@@ -99,7 +100,6 @@ class _MetricCard extends StatelessWidget {
               label,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                fontSize: 11,
                 height: 1,
               ),
             ),
@@ -108,9 +108,7 @@ class _MetricCard extends StatelessWidget {
               value,
               style: AppTextStyles.baseMedium.copyWith(
                 color: valueColor,
-                fontSize: 20,
                 fontWeight: AppTextStyles.bold,
-                fontFamily: 'Roboto',
                 fontFeatures: AppTextStyles.tabularFigures,
                 height: 1,
               ),
@@ -121,8 +119,6 @@ class _MetricCard extends StatelessWidget {
                 caption!,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 11,
-                  fontFamily: 'Roboto',
                   height: 1,
                 ),
               ),
@@ -158,7 +154,6 @@ class _UnderwaterCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -224,7 +219,6 @@ class _EventCard extends StatelessWidget {
                 'Event #${event.id}',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  fontSize: 11,
                   height: 1,
                 ),
               ),
@@ -237,13 +231,12 @@ class _EventCard extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: _drawdownRed.withValues(alpha: .12),
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: AppRadii.smRadius,
                   ),
                   child: Text(
                     'Severe',
                     style: AppTextStyles.micro.copyWith(
                       color: _drawdownRed,
-                      fontSize: 12,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),
@@ -255,9 +248,7 @@ class _EventCard extends StatelessWidget {
                 '${event.depthPct.toStringAsFixed(1)}%',
                 style: AppTextStyles.baseMedium.copyWith(
                   color: _drawdownRed,
-                  fontSize: 16,
                   fontWeight: AppTextStyles.bold,
-                  fontFamily: 'Roboto',
                   height: 1,
                 ),
               ),
@@ -304,12 +295,9 @@ class _EventStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(10, 8, 10, 12),
-      decoration: BoxDecoration(
-        color: _drawdownPanel2,
-        borderRadius: AppRadii.mdRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -319,7 +307,6 @@ class _EventStat extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
               height: 1,
             ),
           ),
@@ -330,9 +317,7 @@ class _EventStat extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: valueColor,
-              fontSize: 11,
               fontWeight: AppTextStyles.bold,
-              fontFamily: 'Roboto',
               height: 1,
             ),
           ),

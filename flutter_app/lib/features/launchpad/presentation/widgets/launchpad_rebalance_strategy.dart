@@ -80,8 +80,8 @@ class _StrategyCard extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 28,
-            height: 28,
+            width: AppSpacing.launchpadBox28,
+            height: AppSpacing.launchpadBox28,
             decoration: BoxDecoration(
               color: strategy.accent.withValues(alpha: .14),
               borderRadius: AppRadii.mdRadius,
@@ -89,7 +89,7 @@ class _StrategyCard extends StatelessWidget {
             child: Icon(
               Icons.shield_outlined,
               color: strategy.accent,
-              size: 15,
+              size: AppSpacing.launchpadIconLg,
             ),
           ),
           const SizedBox(height: AppSpacing.x2),
@@ -100,7 +100,7 @@ class _StrategyCard extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: active ? strategy.accent : AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              fontSize: 11,
+              fontSize: AppSpacing.launchpadFontMd,
             ),
           ),
           const SizedBox(height: AppSpacing.x1),
@@ -111,8 +111,8 @@ class _StrategyCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
-              height: 1.35,
+              fontSize: AppSpacing.launchpadFontXs,
+              height: AppSpacing.launchpadLineHeightDense,
             ),
           ),
         ],

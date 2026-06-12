@@ -241,8 +241,6 @@ void _paintText(
       text: text,
       style: TextStyle(
         color: color,
-        fontSize: fontSize,
-        fontFamily: 'Roboto',
         fontWeight: FontWeight.w500,
         height: 1,
         decoration: TextDecoration.none,

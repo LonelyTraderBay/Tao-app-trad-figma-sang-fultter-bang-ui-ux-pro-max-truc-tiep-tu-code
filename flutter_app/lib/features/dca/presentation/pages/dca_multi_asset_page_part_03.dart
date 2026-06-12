@@ -57,12 +57,14 @@ class _SuccessCallout extends StatelessWidget {
                 score,
                 style: AppTextStyles.heroNumber.copyWith(
                   color: AppColors.buy,
-                  fontSize: 28,
+                  fontSize: AppSpacing.dcaMultiScoreFontSize,
                 ),
               ),
               const SizedBox(width: AppSpacing.x2),
               Padding(
-                padding: const EdgeInsets.only(bottom: 5),
+                padding: const EdgeInsets.only(
+                  bottom: AppSpacing.dcaMultiScoreSuffixBottom,
+                ),
                 child: Text(
                   '/ 10',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -149,7 +151,7 @@ class _PercentBar extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
-            minHeight: 6,
+            minHeight: AppSpacing.dcaMultiProgressHeight,
             value: (percent / 100).clamp(0.0, 1.0),
             backgroundColor: AppColors.surface3,
             valueColor: AlwaysStoppedAnimation<Color>(color),
@@ -189,8 +191,8 @@ class _LegendItem extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 10,
-          height: 10,
+          width: AppSpacing.dcaMultiDot,
+          height: AppSpacing.dcaMultiDot,
           decoration: BoxDecoration(
             color: color,
             borderRadius: AppRadii.xsRadius,

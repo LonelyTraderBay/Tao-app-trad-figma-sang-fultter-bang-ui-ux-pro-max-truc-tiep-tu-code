@@ -71,7 +71,10 @@ class _YieldChartCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x3),
-          SizedBox(height: 226, child: _YieldChart(points: points)),
+          SizedBox(
+            height: AppSpacing.savingsConsumerYieldChartHeight,
+            child: _YieldChart(points: points),
+          ),
           const SizedBox(height: AppSpacing.x3),
           const _YieldLegend(),
         ],
@@ -155,7 +158,10 @@ class _MonthlyIncomeCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x4),
-          SizedBox(height: 184, child: _MonthlyBars(points: points)),
+          SizedBox(
+            height: AppSpacing.savingsConsumerMonthlyChartHeight,
+            child: _MonthlyBars(points: points),
+          ),
         ],
       ),
     );

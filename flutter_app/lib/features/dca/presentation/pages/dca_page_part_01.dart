@@ -158,7 +158,7 @@ class _DcaOverviewCard extends StatelessWidget {
               const Icon(
                 Icons.visibility_outlined,
                 color: AppColors.portfolioTextMuted,
-                size: 18,
+                size: AppSpacing.dcaMainInlineIcon,
               ),
             ],
           ),
@@ -172,15 +172,15 @@ class _DcaOverviewCard extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.heroNumber.copyWith(
-                    fontSize: 29,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
+                    fontSize: AppSpacing.dcaMainHeroAmountFontSize,
+                    fontWeight: AppTextStyles.heavy,
+                    height: AppSpacing.dcaMainTightLineHeight,
                   ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
               SizedBox(
-                width: 96,
+                width: AppSpacing.dcaMainSparklineWidth,
                 height: AppSpacing.x7,
                 child: CustomPaint(
                   painter: _SparklinePainter(
@@ -346,7 +346,7 @@ class _DeltaPill extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.buy,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.dcaMainTightLineHeight,
                 ),
               ),
             ),
@@ -379,7 +379,7 @@ class _OverviewMetric extends StatelessWidget {
       radius: VitCardRadius.md,
       padding: const EdgeInsets.all(AppSpacing.x4),
       child: SizedBox(
-        height: 78,
+        height: AppSpacing.dcaMainStatCardHeight,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -404,7 +404,7 @@ class _OverviewMetric extends StatelessWidget {
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.portfolioTextDim,
                       fontWeight: AppTextStyles.bold,
-                      height: 1.15,
+                      height: AppSpacing.dcaMainStatLabelLineHeight,
                     ),
                   ),
                 ),
@@ -417,9 +417,9 @@ class _OverviewMetric extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.sectionTitle.copyWith(
                 color: color,
-                fontSize: 22,
-                fontWeight: FontWeight.w900,
-                height: 1,
+                fontSize: AppSpacing.dcaMainStatValueFontSize,
+                fontWeight: AppTextStyles.heavy,
+                height: AppSpacing.dcaMainTightLineHeight,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
@@ -431,7 +431,7 @@ class _OverviewMetric extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.portfolioTextMuted,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.dcaMainTightLineHeight,
               ),
             ),
           ],

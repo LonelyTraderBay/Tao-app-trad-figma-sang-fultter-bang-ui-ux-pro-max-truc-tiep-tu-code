@@ -42,8 +42,10 @@ class _ActivityRow extends StatelessWidget {
     return InkWell(
       onTap: () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
       child: Container(
-        constraints: const BoxConstraints(minHeight: 78),
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        constraints: const BoxConstraints(
+          minHeight: AppSpacing.predictionActivityRowMinHeight,
+        ),
+        padding: AppSpacing.predictionActivityRowPadding,
         decoration: BoxDecoration(
           border: last
               ? null
@@ -52,8 +54,8 @@ class _ActivityRow extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              width: 38,
-              height: 38,
+              width: AppSpacing.predictionActivityAvatarBox,
+              height: AppSpacing.predictionActivityAvatarBox,
               alignment: Alignment.center,
               decoration: const BoxDecoration(
                 color: AppColors.surface3,
@@ -61,17 +63,19 @@ class _ActivityRow extends StatelessWidget {
               ),
               child: Text(
                 activity.avatar,
-                style: const TextStyle(fontSize: 17),
+                style: const TextStyle(
+                  fontSize: AppSpacing.predictionActivityAvatarText,
+                ),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.predictionActivityRowGap),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Wrap(
-                    spacing: 5,
-                    runSpacing: 3,
+                    spacing: AppSpacing.predictionActivityActorSpacing,
+                    runSpacing: AppSpacing.predictionActivityActorRunSpacing,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       Text(
@@ -85,7 +89,6 @@ class _ActivityRow extends StatelessWidget {
                         isBuy ? 'bought' : 'sold',
                         style: AppTextStyles.caption.copyWith(
                           color: sideColor,
-                          fontSize: 12,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
@@ -97,31 +100,27 @@ class _ActivityRow extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
+                  const Padding(padding: AppSpacing.predictionActivityEventGap),
                   Text(
                     event.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 10,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
-                  const SizedBox(height: 5),
+                  const Padding(padding: AppSpacing.predictionActivityOrderGap),
                   Text(
                     '${_formatWhole(activity.shares)} shares @ \$${activity.price.toStringAsFixed(2)}',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      fontSize: 10,
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.predictionActivityAmountGap),
             SizedBox(
-              width: 58,
+              width: AppSpacing.predictionActivityAmountWidth,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -131,19 +130,17 @@ class _ActivityRow extends StatelessWidget {
                     textAlign: TextAlign.right,
                     style: AppTextStyles.caption.copyWith(
                       color: sideColor,
-                      fontSize: 12,
                       fontWeight: AppTextStyles.bold,
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const Padding(
+                    padding: AppSpacing.predictionActivityTimestampGap,
+                  ),
                   Text(
                     activity.timestamp,
                     textAlign: TextAlign.right,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 9,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
@@ -164,17 +161,16 @@ class _OutcomeBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+      padding: AppSpacing.predictionActivityOutcomePadding,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: AppRadii.xsRadius,
       ),
       child: Text(
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
-          height: 1,
+          height: AppSpacing.predictionActivityOutcomeLineHeight,
           fontWeight: AppTextStyles.bold,
         ),
       ),

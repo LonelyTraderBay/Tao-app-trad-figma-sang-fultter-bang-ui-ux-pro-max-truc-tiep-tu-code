@@ -46,7 +46,9 @@ class DesignSystemHero extends StatelessWidget {
               const SizedBox(height: AppSpacing.x2),
               Text(
                 snapshot.heroTitle,
-                style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
+                style: AppTextStyles.sectionTitle.copyWith(
+                  fontSize: AppSpacing.devFontHero,
+                ),
               ),
               const SizedBox(height: AppSpacing.x3),
               Text(

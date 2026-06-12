@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 Widget _wrap(Widget child) {
@@ -104,9 +105,9 @@ void main() {
     expect(heroDecoration.boxShadow, const [
       BoxShadow(
         color: AppColors.primary08,
-        blurRadius: 12,
-        spreadRadius: -4,
-        offset: Offset(0, 4),
+        blurRadius: AppSpacing.ctaElevationBlur,
+        spreadRadius: AppSpacing.ctaElevationSpread,
+        offset: Offset(0, AppSpacing.ctaElevationYOffset),
       ),
     ]);
   });

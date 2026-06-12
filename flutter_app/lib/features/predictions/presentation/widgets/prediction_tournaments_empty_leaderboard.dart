@@ -40,17 +40,23 @@ class _EmptyStateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 26),
+      padding: AppSpacing.predictionTournamentEmptyPadding,
       child: Column(
         children: [
-          Icon(icon, color: AppColors.text3, size: 44),
-          const SizedBox(height: 10),
+          Icon(
+            icon,
+            color: AppColors.text3,
+            size: AppSpacing.predictionTournamentEmptyIcon,
+          ),
+          const SizedBox(height: AppSpacing.predictionTournamentEmptyTitleGap),
           Text(
             title,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           if (message != null) ...[
-            const SizedBox(height: 4),
+            const SizedBox(
+              height: AppSpacing.predictionTournamentEmptyMessageGap,
+            ),
             Text(
               message!,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -92,11 +98,11 @@ class _LeaderboardEntryCard extends StatelessWidget {
       borderColor: ranked
           ? AppColors.buy.withValues(alpha: .18)
           : AppColors.border,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.predictionTournamentLeaderboardPadding,
       child: Row(
         children: [
           SizedBox(
-            width: 32,
+            width: AppSpacing.predictionTournamentLeaderboardRankWidth,
             child: Icon(
               entry.rank == 1
                   ? Icons.emoji_events_rounded
@@ -104,10 +110,12 @@ class _LeaderboardEntryCard extends StatelessWidget {
                   ? Icons.workspace_premium_rounded
                   : Icons.tag_rounded,
               color: _rankColor(entry.rank),
-              size: entry.rank == 1 ? 21 : 18,
+              size: entry.rank == 1
+                  ? AppSpacing.predictionTournamentLeaderboardWinnerIcon
+                  : AppSpacing.predictionTournamentLeaderboardIcon,
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.predictionTournamentLeaderboardGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +126,9 @@ class _LeaderboardEntryCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(
+                  height: AppSpacing.predictionTournamentLeaderboardScoreGap,
+                ),
                 Text(
                   '${entry.score} points',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),

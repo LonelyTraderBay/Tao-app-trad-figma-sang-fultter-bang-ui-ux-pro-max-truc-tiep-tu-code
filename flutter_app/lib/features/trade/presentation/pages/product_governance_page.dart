@@ -22,7 +22,6 @@ part '../widgets/product_governance_products.dart';
 part '../widgets/product_governance_reviews_distribution.dart';
 
 const _govBackground = AppColors.bg;
-const _govPanel2 = AppColors.surface2;
 const _govBorder = AppColors.borderSolid;
 const _govGreen = AppColors.buy;
 const _govPrimary = AppColors.primary;
@@ -82,10 +81,9 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 0,
+                    customGap: 12,
                     children: [
                       _ComplianceNotice(snapshot: snapshot),
-                      const SizedBox(height: 16),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Product governance review',
@@ -93,14 +91,11 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
                             'Review target market, negative market, risk level, distribution channel, fee disclosure, and next review deadline before approving copy products.',
                         contractId: 'SC-100 product governance review',
                       ),
-                      const SizedBox(height: 36),
                       _Stats(products: snapshot.products),
-                      const SizedBox(height: 25),
                       _Tabs(
                         activeId: _tab!,
                         onChanged: (id) => setState(() => _tab = id),
                       ),
-                      const SizedBox(height: 25),
                       if (_tab == 'products')
                         _ProductsTab(products: snapshot.products)
                       else if (_tab == 'reviews')

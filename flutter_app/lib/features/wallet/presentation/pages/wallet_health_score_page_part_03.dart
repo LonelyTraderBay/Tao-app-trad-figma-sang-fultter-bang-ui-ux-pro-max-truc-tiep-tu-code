@@ -18,18 +18,14 @@ class _AllocationRow extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 11,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
             color: color,
-            fontSize: 12,
-            fontWeight: FontWeight.w900,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ],
@@ -46,18 +42,21 @@ class _TipCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.walletHealthCompactCardPadding,
       borderColor: _healthBorder,
       child: Row(
         children: [
-          const Icon(Icons.bolt_rounded, color: _healthAmber, size: 14),
-          const SizedBox(width: 10),
+          const Icon(
+            Icons.bolt_rounded,
+            color: _healthAmber,
+            size: AppSpacing.walletHealthActionIcon,
+          ),
+          const SizedBox(width: AppSpacing.walletHealthNoticeGap),
           Expanded(
             child: Text(
               tip,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
                 height: 1.35,
               ),
             ),
@@ -77,7 +76,7 @@ class _InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.walletHealthCompactCardPadding,
       borderColor: _healthPrimary.withValues(alpha: .15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,15 +84,14 @@ class _InfoCard extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: _healthPrimary,
-            size: 14,
+            size: AppSpacing.walletHealthActionIcon,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.walletHealthNoticeGap),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
                 height: 1.45,
               ),
             ),
@@ -114,21 +112,19 @@ class _SectionLabel extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 14,
+          width: AppSpacing.walletHealthSectionMarkerWidth,
+          height: AppSpacing.walletHealthSectionMarkerHeight,
           decoration: BoxDecoration(
             color: _healthPrimary,
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.pillRadius,
           ),
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: AppSpacing.walletHealthSectionLabelGap),
         Text(
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
-            fontWeight: FontWeight.w900,
-            height: 1,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ],
@@ -145,18 +141,16 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      padding: AppSpacing.walletHealthBadgePadding,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: AppRadii.smRadius,
       ),
       child: Text(
         label.toUpperCase(),
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
-          fontWeight: FontWeight.w900,
-          height: 1,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -429,12 +423,7 @@ void _drawText(
   final painter = TextPainter(
     text: TextSpan(
       text: text,
-      style: TextStyle(
-        color: color,
-        fontSize: fontSize,
-        fontFamily: 'Roboto',
-        height: 1,
-      ),
+      style: TextStyle(color: color, height: 1),
     ),
     textAlign: align,
     textDirection: TextDirection.ltr,

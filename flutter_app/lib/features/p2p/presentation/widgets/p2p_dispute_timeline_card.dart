@@ -15,7 +15,7 @@ class P2PDisputeTimelineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDisputeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -53,8 +53,8 @@ class _TimelineItem extends StatelessWidget {
         Column(
           children: [
             Container(
-              width: 12,
-              height: 12,
+              width: AppSpacing.p2pDisputeTimelineDot,
+              height: AppSpacing.p2pDisputeTimelineDot,
               decoration: BoxDecoration(
                 color: color,
                 shape: BoxShape.circle,
@@ -63,8 +63,8 @@ class _TimelineItem extends StatelessWidget {
             ),
             if (!isLast)
               Container(
-                width: 2,
-                height: AppSpacing.x6,
+                width: AppSpacing.p2pDisputeTimelineConnectorWidth,
+                height: AppSpacing.p2pDisputeTimelineConnectorHeight,
                 color: AppColors.borderSolid,
               ),
           ],
@@ -72,7 +72,9 @@ class _TimelineItem extends StatelessWidget {
         const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.only(bottom: isLast ? 0 : AppSpacing.x3),
+            padding: isLast
+                ? AppSpacing.zeroInsets
+                : AppSpacing.p2pDisputeTimelineItemPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

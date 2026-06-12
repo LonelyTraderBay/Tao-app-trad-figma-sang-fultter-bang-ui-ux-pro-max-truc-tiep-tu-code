@@ -7,20 +7,16 @@ class _MetricsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 13),
+    return _VitCardSurface(
+      padding: AppSpacing.walletAnalyticsMetricsPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Chỉ số hiệu suất',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 13,
-              height: 1,
-            ),
+            'Ch\u1EC9 s\u1ED1 hi\u1EC7u su\u1EA5t',
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: 17),
+          const SizedBox(height: AppSpacing.walletAnalyticsMetricsTitleGap),
           for (final metric in metrics)
             _MetricRow(metric: metric, isLast: metric == metrics.last),
         ],
@@ -38,7 +34,7 @@ class _MetricRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 36,
+      height: AppSpacing.walletAnalyticsMetricRowHeight,
       decoration: BoxDecoration(
         border: isLast
             ? null
@@ -49,19 +45,14 @@ class _MetricRow extends StatelessWidget {
           Expanded(
             child: Text(
               metric.label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontSize: 13,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
           Text(
             metric.value,
             style: AppTextStyles.caption.copyWith(
               color: Color(metric.colorHex),
-              fontSize: 13,
-              fontWeight: FontWeight.w800,
-              fontFamily: 'Roboto',
+              fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
@@ -79,19 +70,17 @@ class _AssetsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      padding: EdgeInsets.zero,
+    return _VitCardSurface(
+      padding: AppSpacing.zeroInsets,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 17, 16, 13),
+            padding: AppSpacing.walletAnalyticsAssetsHeaderPadding,
             child: Text(
-              'Vị thế hiện tại',
+              'V\u1ECB th\u1EBF hi\u1EC7n t\u1EA1i',
               style: AppTextStyles.body.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.w800,
-                height: 1,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
           ),
@@ -125,8 +114,10 @@ class _AssetRow extends StatelessWidget {
     final trendColor = asset.change24h >= 0 ? _analyticsGreen : _analyticsRed;
 
     return Container(
-      constraints: const BoxConstraints(minHeight: 91),
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 13),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.walletAnalyticsAssetRowMinHeight,
+      ),
+      padding: AppSpacing.walletAnalyticsAssetRowPadding,
       decoration: BoxDecoration(
         border: isLast
             ? null
@@ -135,7 +126,7 @@ class _AssetRow extends StatelessWidget {
       child: Row(
         children: [
           _AssetAvatar(asset: asset, color: color),
-          const SizedBox(width: 16),
+          const SizedBox(width: AppSpacing.walletAnalyticsAssetGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,9 +138,7 @@ class _AssetRow extends StatelessWidget {
                       child: Text(
                         asset.symbol,
                         style: AppTextStyles.body.copyWith(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w800,
-                          height: 1,
+                          fontWeight: AppTextStyles.bold,
                         ),
                       ),
                     ),
@@ -157,50 +146,46 @@ class _AssetRow extends StatelessWidget {
                       _formatUsd(asset.usdValue),
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w800,
-                        fontFamily: 'Roboto',
+                        fontWeight: AppTextStyles.bold,
                         fontFeatures: AppTextStyles.tabularFigures,
-                        height: 1,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 11),
+                const SizedBox(height: AppSpacing.walletAnalyticsAssetTopGap),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(3),
+                        borderRadius: AppRadii.xsRadius,
                         child: LinearProgressIndicator(
                           value: math.min(1, pct / 100),
-                          minHeight: 4,
+                          minHeight:
+                              AppSpacing.walletAnalyticsAssetProgressHeight,
                           backgroundColor: AppColors.surface3,
                           valueColor: AlwaysStoppedAnimation<Color>(color),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(
+                      width: AppSpacing.walletAnalyticsAssetValueGap,
+                    ),
                     Text(
                       '${asset.change24h >= 0 ? '+' : ''}${asset.change24h.toStringAsFixed(2)}%',
                       style: AppTextStyles.micro.copyWith(
                         color: trendColor,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w800,
-                        height: 1,
+                        fontWeight: AppTextStyles.bold,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 13),
+                const SizedBox(
+                  height: AppSpacing.walletAnalyticsAssetBottomGap,
+                ),
                 Text(
-                  '${pct.toStringAsFixed(1)}% danh mục',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 11,
-                    height: 1,
-                  ),
+                  '${pct.toStringAsFixed(1)}% danh m\u1EE5c',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -220,8 +205,8 @@ class _AssetAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 36,
-      height: 36,
+      width: AppSpacing.walletAnalyticsAssetAvatar,
+      height: AppSpacing.walletAnalyticsAssetAvatar,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .18),
         shape: BoxShape.circle,
@@ -232,9 +217,7 @@ class _AssetAvatar extends StatelessWidget {
         asset.symbol.length <= 3 ? asset.symbol : asset.symbol.substring(0, 3),
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: asset.symbol.length > 3 ? 8 : 9,
-          fontWeight: FontWeight.w900,
-          height: 1,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );

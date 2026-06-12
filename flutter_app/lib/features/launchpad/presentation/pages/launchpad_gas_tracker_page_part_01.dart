@@ -19,7 +19,7 @@ class _FeaturedGasCard extends StatelessWidget {
               const Icon(
                 Icons.local_gas_station_outlined,
                 color: AppColors.portfolioTextMuted,
-                size: 15,
+                size: AppSpacing.launchpadIconLg,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -29,7 +29,7 @@ class _FeaturedGasCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.portfolioTextDim,
-                    fontSize: 11,
+                    fontSize: AppSpacing.launchpadFontMd,
                     fontWeight: AppTextStyles.medium,
                   ),
                 ),
@@ -69,7 +69,7 @@ class _FeaturedGasCard extends StatelessWidget {
               '${price.unit} - Updated ${price.lastUpdated}',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.portfolioTextMuted,
-                fontSize: 9,
+                fontSize: AppSpacing.launchpadFontXs,
               ),
             ),
           ),
@@ -101,7 +101,7 @@ class _TierValue extends StatelessWidget {
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
+              height: AppSpacing.launchpadLineHeightTight,
             ),
           ),
           const SizedBox(height: AppSpacing.x1),
@@ -109,8 +109,8 @@ class _TierValue extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
-              fontSize: 8,
-              height: 1.2,
+              fontSize: AppSpacing.launchpadFontXxs,
+              height: AppSpacing.launchpadLineHeightShort,
             ),
           ),
         ],
@@ -187,7 +187,7 @@ class _TabButton extends StatelessWidget {
               ),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 180),
-                height: 2,
+                height: AppSpacing.launchpadGapXxs,
                 width: active ? 116 : 0,
                 color: AppColors.primary,
               ),
@@ -291,12 +291,12 @@ class _GasChartCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               fontWeight: AppTextStyles.bold,
               color: AppColors.text1,
-              fontSize: 12,
+              fontSize: AppSpacing.launchpadFontLg,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
           SizedBox(
-            height: 160,
+            height: AppSpacing.launchpadGasChartHeight,
             child: CustomPaint(
               painter: _GasChartPainter(price),
               child: const SizedBox.expand(),
@@ -325,7 +325,7 @@ class _Eip1559Card extends StatelessWidget {
             'EIP-1559',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
+              fontSize: AppSpacing.launchpadFontLg,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -390,7 +390,7 @@ class _FeeBox extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 9,
+                fontSize: AppSpacing.launchpadFontXs,
               ),
             ),
           ],
@@ -462,7 +462,7 @@ class _ChainComparisonCard extends StatelessWidget {
                   price.chain,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
+                    fontSize: AppSpacing.launchpadFontLg,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -471,7 +471,7 @@ class _ChainComparisonCard extends StatelessWidget {
                   '${_formatGasValue(price.slow)} / ${_formatGasValue(price.standard)} / ${_formatGasValue(price.fast)} ${price.unit}',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
+                    fontSize: AppSpacing.launchpadFontSm,
                   ),
                 ),
               ],

@@ -23,7 +23,6 @@ class _EquityChartPainter extends CustomPainter {
         '\$$value',
         Offset(10, y - 6),
         AppColors.text3,
-        10,
         width: 48,
         align: TextAlign.right,
       );
@@ -36,7 +35,6 @@ class _EquityChartPainter extends CustomPainter {
         points[i].date,
         Offset(x - 14, chart.bottom + 10),
         AppColors.text3,
-        10,
         width: 30,
         align: TextAlign.center,
       );
@@ -88,7 +86,6 @@ class _EquityChartPainter extends CustomPainter {
         strategy.name,
         Offset(legendX + 14, legendY - 6),
         color,
-        11,
         width: 90,
       );
       legendX += 106;
@@ -142,7 +139,6 @@ class _RadarPainter extends CustomPainter {
         labels[i],
         Offset(point.dx - 36, point.dy - 7),
         AppColors.text2,
-        11,
         width: 72,
         align: TextAlign.center,
       );
@@ -190,7 +186,6 @@ class _RadarPainter extends CustomPainter {
         strategy.name,
         Offset(legendX + 18, legendY - 8),
         color,
-        11,
         width: 100,
       );
       legendX += 118;
@@ -225,18 +220,15 @@ void _paintText(
   Canvas canvas,
   String text,
   Offset offset,
-  Color color,
-  double fontSize, {
+  Color color, {
   double width = 80,
   TextAlign align = TextAlign.left,
 }) {
   final painter = TextPainter(
     text: TextSpan(
       text: text,
-      style: TextStyle(
+      style: AppTextStyles.micro.copyWith(
         color: color,
-        fontSize: fontSize,
-        fontFamily: 'Roboto',
         fontWeight: FontWeight.w500,
         height: 1,
         decoration: TextDecoration.none,

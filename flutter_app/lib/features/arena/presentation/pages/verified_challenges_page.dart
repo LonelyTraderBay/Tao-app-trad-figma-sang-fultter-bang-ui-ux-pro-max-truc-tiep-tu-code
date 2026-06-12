@@ -66,8 +66,11 @@ class VerifiedChallengesPage extends ConsumerWidget {
                       padding: VitContentPadding.defaultPadding,
                       customGap: AppSpacing.x6,
                       children: [
-                        _VerifiedHero(snapshot: snapshot),
-                        _VerifiedInfoCard(snapshot: snapshot),
+                        VitCard(child: _VerifiedHero(snapshot: snapshot)),
+                        VitCard(
+                          padding: EdgeInsets.zero,
+                          child: _VerifiedInfoCard(snapshot: snapshot),
+                        ),
                       ],
                     ),
                   ),
@@ -99,7 +102,7 @@ class _VerifiedHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: AppSpacing.x1),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
         Container(
           width: AppSpacing.x7 + AppSpacing.x5,
           height: AppSpacing.x7 + AppSpacing.x5,
@@ -114,25 +117,27 @@ class _VerifiedHero extends StatelessWidget {
             size: AppSpacing.iconLg,
           ),
         ),
-        const SizedBox(height: AppSpacing.x6),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x6)),
         Text(
           snapshot.title,
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 360),
+          constraints: const BoxConstraints(
+            maxWidth: AppSpacing.arenaVerifiedHeroTextMaxWidth,
+          ),
           child: Text(
             snapshot.subtitle,
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.55,
+              height: AppSpacing.arenaVerifiedHeroLineHeight,
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         VitStatusPill(
           label: snapshot.statusLabel,
           status: VitStatusPillStatus.purple,
@@ -159,7 +164,7 @@ class _VerifiedInfoCard extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.primary,
-            size: 17,
+            size: AppSpacing.arenaVerifiedInfoIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -173,11 +178,11 @@ class _VerifiedInfoCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 for (final feature in snapshot.features) ...[
                   _FeatureRow(feature: feature),
                   if (feature != snapshot.features.last)
-                    const SizedBox(height: AppSpacing.x1),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 ],
               ],
             ),
@@ -203,7 +208,7 @@ class _FeatureRow extends StatelessWidget {
           child: Icon(
             _featureIcon(feature.kind),
             color: AppColors.accent,
-            size: 10,
+            size: AppSpacing.arenaVerifiedFeatureIcon,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -212,7 +217,7 @@ class _FeatureRow extends StatelessWidget {
             feature.label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.45,
+              height: AppSpacing.arenaVerifiedFeatureLineHeight,
             ),
           ),
         ),

@@ -19,7 +19,7 @@ class _NotificationSettings extends StatelessWidget {
       accentColor: _predictionPrimary,
       children: [
         VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.predictionCalendarCardPadding,
           child: Column(
             children: [
               for (var i = 0; i < settings.length; i += 1)
@@ -49,7 +49,7 @@ class _WatchingSection extends StatelessWidget {
       children: [
         for (final event in snapshot.watchingEvents)
           VitCard(
-            padding: const EdgeInsets.all(16),
+            padding: AppSpacing.predictionCalendarCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -59,29 +59,34 @@ class _WatchingSection extends StatelessWidget {
                     const Icon(
                       Icons.star_rounded,
                       color: AppColors.warn,
-                      size: 17,
+                      size: AppSpacing.predictionCalendarWatchingIcon,
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(
+                      width: AppSpacing.predictionCalendarWatchingIconGap,
+                    ),
                     Expanded(
                       child: Text(
                         event.title,
                         style: AppTextStyles.body.copyWith(
                           fontWeight: AppTextStyles.bold,
-                          fontSize: 14,
                         ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(
+                  height: AppSpacing.predictionCalendarWatchingCategoryGap,
+                ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 25),
+                  padding: AppSpacing.predictionCalendarWatchingCategoryPadding,
                   child: Text(
                     event.category,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(
+                  height: AppSpacing.predictionCalendarWatchingMetricGap,
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -99,9 +104,11 @@ class _WatchingSection extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(
+                  height: AppSpacing.predictionCalendarEditButtonGap,
+                ),
                 SizedBox(
-                  height: 38,
+                  height: AppSpacing.predictionCalendarEditButtonHeight,
                   width: double.infinity,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
@@ -115,9 +122,11 @@ class _WatchingSection extends StatelessWidget {
                         const Icon(
                           Icons.notifications_none_rounded,
                           color: AppColors.text1,
-                          size: 15,
+                          size: AppSpacing.predictionCalendarEditIcon,
                         ),
-                        const SizedBox(width: 8),
+                        const SizedBox(
+                          width: AppSpacing.predictionCalendarEditIconGap,
+                        ),
                         Text(
                           'Chinh sua thong bao',
                           style: AppTextStyles.caption.copyWith(
@@ -143,23 +152,20 @@ class _NotificationInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.primary15,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.predictionCalendarInfoPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: _predictionPrimary,
-            size: 15,
+            size: AppSpacing.predictionCalendarInfoIcon,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.predictionCalendarInfoIconGap),
           Expanded(
             child: Text(
               'Thong bao giup ban khong bo lo su kien quan trong. Ban se nhan canh bao qua app va email.',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                height: 1.5,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],
@@ -182,7 +188,7 @@ class _NotificationSettingRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: AppSpacing.predictionCalendarNotificationRowPadding,
       decoration: BoxDecoration(
         border: showDivider
             ? const Border(bottom: BorderSide(color: AppColors.border))
@@ -200,7 +206,9 @@ class _NotificationSettingRow extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(
+                  height: AppSpacing.predictionCalendarNotificationLabelGap,
+                ),
                 Text(
                   description,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -221,17 +229,17 @@ class _TogglePill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 48,
-      height: 28,
+      width: AppSpacing.predictionCalendarToggleWidth,
+      height: AppSpacing.predictionCalendarToggleHeight,
       decoration: BoxDecoration(
         color: _predictionPrimary,
         borderRadius: AppRadii.inputRadius,
       ),
       alignment: Alignment.centerRight,
-      padding: const EdgeInsets.all(2),
+      padding: AppSpacing.predictionCalendarTogglePadding,
       child: Container(
-        width: 24,
-        height: 24,
+        width: AppSpacing.predictionCalendarToggleKnob,
+        height: AppSpacing.predictionCalendarToggleKnob,
         decoration: const BoxDecoration(
           color: AppColors.onAccent,
           shape: BoxShape.circle,
@@ -258,17 +266,13 @@ class _StatCell extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 11,
-          ),
+          style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: AppSpacing.predictionCalendarStatGap),
         Text(
           value,
-          style: AppTextStyles.baseMedium.copyWith(
+          style: AppTextStyles.amountSm.copyWith(
             color: color,
-            fontSize: 20,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
@@ -296,12 +300,9 @@ class _EventMetric extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 10,
-          ),
+          style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 3),
+        const SizedBox(height: AppSpacing.predictionCalendarMetricGap),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(

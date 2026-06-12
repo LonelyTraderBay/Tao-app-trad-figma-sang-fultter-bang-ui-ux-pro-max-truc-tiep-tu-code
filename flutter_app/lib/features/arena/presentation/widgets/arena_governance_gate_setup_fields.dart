@@ -81,8 +81,8 @@ class _ChallengeTypeGrid extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         itemCount: types.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 3.2,
+          crossAxisCount: AppSpacing.arenaGovernanceGridColumns,
+          childAspectRatio: AppSpacing.arenaGovernanceDomainGridAspect,
           crossAxisSpacing: AppSpacing.x2,
           mainAxisSpacing: AppSpacing.x2,
         ),
@@ -146,7 +146,7 @@ class _WinConditionCard extends StatelessWidget {
               const Icon(
                 Icons.adjust_rounded,
                 color: AppColors.accent,
-                size: 16,
+                size: AppSpacing.arenaGovernanceIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -163,12 +163,12 @@ class _WinConditionCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x3),
           GridView.count(
-            crossAxisCount: 2,
+            crossAxisCount: AppSpacing.arenaGovernanceGridColumns,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisSpacing: AppSpacing.x2,
             mainAxisSpacing: AppSpacing.x2,
-            childAspectRatio: 2.45,
+            childAspectRatio: AppSpacing.arenaGovernanceWinGridAspect,
             children: [
               _BuilderField(
                 label: 'A. Chủ thể',

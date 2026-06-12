@@ -7,13 +7,10 @@ class _HealthCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      borderColor: _portfolioGreen.withValues(alpha: .30),
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
-      decoration: BoxDecoration(
-        color: _portfolioGreen.withValues(alpha: .10),
-        border: Border.all(color: _portfolioGreen.withValues(alpha: .30)),
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,7 +38,6 @@ class _HealthCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: _portfolioGreen,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -69,7 +65,6 @@ class _HealthCard extends StatelessWidget {
                     item,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      fontSize: 11,
                       height: 1.45,
                     ),
                   ),
@@ -92,47 +87,7 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        color: _portfolioPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: child,
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 15,
-          decoration: BoxDecoration(
-            color: _portfolioPrimary,
-            borderRadius: BorderRadius.circular(3),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontSize: 12,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
-    );
+    return VitCard(padding: padding, child: child);
   }
 }
 
@@ -158,7 +113,6 @@ class _EquityPainter extends CustomPainter {
         '\$$value',
         Offset(10, y - 6),
         AppColors.text3,
-        10,
         width: 48,
         align: TextAlign.right,
       );
@@ -171,7 +125,6 @@ class _EquityPainter extends CustomPainter {
         points[i].date,
         Offset(x - 14, chart.bottom + 10),
         AppColors.text3,
-        10,
         width: 30,
         align: TextAlign.center,
       );
@@ -242,18 +195,15 @@ void _paintText(
   Canvas canvas,
   String text,
   Offset offset,
-  Color color,
-  double fontSize, {
+  Color color, {
   double width = 80,
   TextAlign align = TextAlign.left,
 }) {
   final painter = TextPainter(
     text: TextSpan(
       text: text,
-      style: TextStyle(
+      style: AppTextStyles.micro.copyWith(
         color: color,
-        fontSize: fontSize,
-        fontFamily: 'Roboto',
         fontWeight: FontWeight.w500,
         height: 1,
         decoration: TextDecoration.none,

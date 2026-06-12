@@ -129,7 +129,7 @@ class _NoteCard extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.55,
+                height: AppSpacing.autoCompoundSettingsBodyLineHeight,
               ),
             ),
           ),

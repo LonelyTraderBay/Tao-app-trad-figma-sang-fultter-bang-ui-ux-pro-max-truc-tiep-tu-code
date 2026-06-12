@@ -16,35 +16,28 @@ class _InputCard extends StatelessWidget {
     return _Panel(
       minHeight: 90,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 18,
         children: [
           Row(
             children: [
               Expanded(
                 child: Text(
                   label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ),
               Text(
                 suffix,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 10,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
-          const SizedBox(height: 22),
           Text(
             value,
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.onAccent,
-              fontSize: 20,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
@@ -61,7 +54,7 @@ class _PriceInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _InputCard(label: 'Giá đặt lệnh', suffix: 'USDT', value: price);
+    return _InputCard(label: 'Gia dat lenh', suffix: 'USDT', value: price);
   }
 }
 
@@ -76,52 +69,31 @@ class _AmountInput extends StatelessWidget {
     return _Panel(
       minHeight: 97,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 18,
         children: [
           Row(
             children: [
               Expanded(
                 child: Text(
-                  'Số lượng (BTC)',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 12,
-                  ),
+                  'So luong (BTC)',
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ),
-              InkWell(
+              VitStatusPill(
                 key: MarginTradingPage.maxAmountKey,
+                label: 'Toi da',
+                status: VitStatusPillStatus.info,
+                size: VitStatusPillSize.sm,
                 onTap: onMaxAmount,
-                borderRadius: AppRadii.smRadius,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 7,
-                  ),
-                  decoration: BoxDecoration(
-                    color: _marginPrimary.withValues(alpha: .08),
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                  child: Text(
-                    'Tối đa',
-                    style: AppTextStyles.micro.copyWith(
-                      color: _marginPrimary,
-                      fontSize: 11,
-                      fontWeight: AppTextStyles.bold,
-                      height: 1,
-                    ),
-                  ),
-                ),
               ),
             ],
           ),
-          const SizedBox(height: 20),
           Text(
             amount,
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text2,
-              fontSize: 21,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),

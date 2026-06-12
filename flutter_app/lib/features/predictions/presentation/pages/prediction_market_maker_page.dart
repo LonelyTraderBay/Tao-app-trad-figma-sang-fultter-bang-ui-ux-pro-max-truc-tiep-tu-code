@@ -97,7 +97,9 @@ class _PredictionMarketMakerPageState
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.predictionMarketMakerBottomInsetVisual
+            : AppSpacing.predictionMarketMakerBottomInsetNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -124,10 +126,12 @@ class _PredictionMarketMakerPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionMarketMakerPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.predictionMarketMakerScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 16,
+                      customGap: AppSpacing.predictionMarketMakerContentGap,
                       children: _activeTab == _MarketMakerTab.provide
                           ? [
                               _LiquidityOverview(snapshot: snapshot),

@@ -184,43 +184,52 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                   child: VitPageContent(
                     customGap: 16,
                     children: [
-                      _RegisterSegmentedControl(
-                        contactType: _contactType,
-                        onChanged: _setContactType,
-                      ),
-                      VitInput(
-                        controller: _nameController,
-                        fieldKey: RegisterPage.nameFieldKey,
-                        label: 'Họ và tên',
-                        hintText: 'Nguyễn Văn A',
-                        prefix: const Icon(Icons.person_outline_rounded),
-                        errorText: _errors['name'],
-                        keyboardType: TextInputType.name,
-                        textInputAction: TextInputAction.next,
-                        autofillHints: const [AutofillHints.name],
-                        onChanged: (_) => _clearError('name'),
-                      ),
-                      VitInput(
-                        controller: _contactController,
-                        fieldKey: RegisterPage.contactFieldKey,
-                        label: isEmail ? 'Email' : 'Số điện thoại',
-                        hintText: isEmail
-                            ? 'you@example.com'
-                            : '+84 912 345 678',
-                        prefix: Icon(
-                          isEmail
-                              ? Icons.mail_outline_rounded
-                              : Icons.phone_iphone_rounded,
+                      VitCard(
+                        padding: EdgeInsets.zero,
+                        child: _RegisterSegmentedControl(
+                          contactType: _contactType,
+                          onChanged: _setContactType,
                         ),
-                        errorText: _errors['contact'],
-                        keyboardType: isEmail
-                            ? TextInputType.emailAddress
-                            : TextInputType.phone,
-                        textInputAction: TextInputAction.next,
-                        autofillHints: isEmail
-                            ? const [AutofillHints.email]
-                            : const [AutofillHints.telephoneNumber],
-                        onChanged: (_) => _clearError('contact'),
+                      ),
+                      VitCard(
+                        padding: EdgeInsets.zero,
+                        child: VitInput(
+                          controller: _nameController,
+                          fieldKey: RegisterPage.nameFieldKey,
+                          label: 'Họ và tên',
+                          hintText: 'Nguyễn Văn A',
+                          prefix: const Icon(Icons.person_outline_rounded),
+                          errorText: _errors['name'],
+                          keyboardType: TextInputType.name,
+                          textInputAction: TextInputAction.next,
+                          autofillHints: const [AutofillHints.name],
+                          onChanged: (_) => _clearError('name'),
+                        ),
+                      ),
+                      VitCard(
+                        padding: EdgeInsets.zero,
+                        child: VitInput(
+                          controller: _contactController,
+                          fieldKey: RegisterPage.contactFieldKey,
+                          label: isEmail ? 'Email' : 'Số điện thoại',
+                          hintText: isEmail
+                              ? 'you@example.com'
+                              : '+84 912 345 678',
+                          prefix: Icon(
+                            isEmail
+                                ? Icons.mail_outline_rounded
+                                : Icons.phone_iphone_rounded,
+                          ),
+                          errorText: _errors['contact'],
+                          keyboardType: isEmail
+                              ? TextInputType.emailAddress
+                              : TextInputType.phone,
+                          textInputAction: TextInputAction.next,
+                          autofillHints: isEmail
+                              ? const [AutofillHints.email]
+                              : const [AutofillHints.telephoneNumber],
+                          onChanged: (_) => _clearError('contact'),
+                        ),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -304,7 +313,6 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                           formError,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.sell,
-                            fontSize: 12,
                           ),
                         ),
                       VitCtaButton(

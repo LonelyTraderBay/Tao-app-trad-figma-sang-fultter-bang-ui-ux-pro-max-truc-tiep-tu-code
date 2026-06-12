@@ -9,8 +9,8 @@ class WalletTokenRiskBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = walletTokenApprovalRiskColor(risk);
     return Container(
-      height: 17,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      height: AppSpacing.walletTokenRiskBadgeHeight,
+      padding: AppSpacing.walletTokenRiskBadgePadding,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .13),
@@ -20,9 +20,7 @@ class WalletTokenRiskBadge extends StatelessWidget {
         risk.toUpperCase(),
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
-          fontWeight: FontWeight.w900,
-          height: 1,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -37,8 +35,8 @@ class WalletTokenApprovalAmount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 36,
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      height: AppSpacing.walletTokenAmountHeight,
+      padding: AppSpacing.walletTokenAmountPadding,
       decoration: BoxDecoration(
         color: approval.unlimited
             ? walletTokenApprovalRed.withValues(alpha: .08)
@@ -50,11 +48,7 @@ class WalletTokenApprovalAmount extends StatelessWidget {
           Expanded(
             child: Text(
               'Approved Amount',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: 10,
-                height: 1,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ),
           Text(
@@ -65,10 +59,8 @@ class WalletTokenApprovalAmount extends StatelessWidget {
               color: approval.unlimited
                   ? walletTokenApprovalRed
                   : AppColors.text1,
-              fontSize: 13,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'Roboto',
-              height: 1,
+              fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],
@@ -95,20 +87,14 @@ class WalletTokenApprovalStat extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 10,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.walletTokenStatValueGap),
           Text(
             value,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text1,
-              fontSize: 11,
-              fontWeight: FontWeight.w900,
-              height: 1,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
         ],

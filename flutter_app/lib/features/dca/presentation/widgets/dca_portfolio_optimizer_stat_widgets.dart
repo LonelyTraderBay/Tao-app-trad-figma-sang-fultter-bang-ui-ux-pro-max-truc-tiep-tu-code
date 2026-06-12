@@ -20,12 +20,12 @@ class _StatCell extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         Text(
           value,
           style: AppTextStyles.sectionTitle.copyWith(
             color: color,
-            fontWeight: FontWeight.w900,
+            fontWeight: AppTextStyles.heavy,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
@@ -59,14 +59,14 @@ class _MiniStatCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
               value,
               style: AppTextStyles.sectionTitle.copyWith(
                 color: color,
-                fontWeight: FontWeight.w900,
+                fontWeight: AppTextStyles.heavy,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
@@ -132,7 +132,7 @@ class _DisclaimerCard extends StatelessWidget {
               text,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.35,
+                height: AppSpacing.dcaPortfolioOptimizerBodyLineHeight,
               ),
             ),
           ),

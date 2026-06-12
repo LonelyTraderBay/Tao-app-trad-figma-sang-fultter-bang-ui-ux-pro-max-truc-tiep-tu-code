@@ -186,10 +186,7 @@ class _TitleBlock extends StatelessWidget {
                 child: Text(
                   title,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    fontSize: AppTopHeaderTokens.detailTitleSize,
-                    height: AppTopHeaderTokens.detailTitleLineHeight,
-                  ),
+                  style: AppTextStyles.baseMedium,
                 ),
               ),
               if (showTitleBadge) ...[
@@ -202,10 +199,7 @@ class _TitleBlock extends StatelessWidget {
           Text(
             subtitle,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              fontSize: AppTopHeaderTokens.subtitleSize,
-              height: AppTopHeaderTokens.detailSubtitleLineHeight,
-            ),
+            style: AppTextStyles.caption,
           ),
       ],
     );

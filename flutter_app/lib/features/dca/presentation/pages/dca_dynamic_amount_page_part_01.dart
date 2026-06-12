@@ -63,7 +63,7 @@ class _DynamicHero extends StatelessWidget {
             'Lần mua tiếp theo',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.portfolioTextMuted,
-              height: 1.2,
+              height: AppSpacing.dcaDynamicCaptionLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x2),
@@ -152,7 +152,7 @@ class _DynamicHero extends StatelessWidget {
                   adjustment.reason,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.portfolioTextDim,
-                    height: 1.45,
+                    height: AppSpacing.dcaDynamicBodyLineHeight,
                   ),
                 ),
               ],
@@ -439,7 +439,7 @@ class _GenericStrategyCard extends StatelessWidget {
                 option.description,
                 style: AppTextStyles.base.copyWith(
                   color: AppColors.text2,
-                  height: 1.5,
+                  height: AppSpacing.dcaDynamicDescriptionLineHeight,
                 ),
               ),
             ),

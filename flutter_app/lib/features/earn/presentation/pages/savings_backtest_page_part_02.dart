@@ -14,8 +14,8 @@ class _AllocationRow extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 9,
-            height: 9,
+            width: AppSpacing.savingsBacktestLegendDot,
+            height: AppSpacing.savingsBacktestLegendDot,
             decoration: BoxDecoration(color: color, shape: BoxShape.circle),
           ),
           const SizedBox(width: AppSpacing.x2),
@@ -282,7 +282,7 @@ class _CompareBar extends StatelessWidget {
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
             value: pct,
-            minHeight: 7,
+            minHeight: AppSpacing.savingsBacktestProgressHeight,
             color: color,
             backgroundColor: AppColors.surface3,
           ),
@@ -418,7 +418,7 @@ class _GrowthChart extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: 150,
+            height: AppSpacing.savingsBacktestGrowthChartHeight,
             child: CustomPaint(
               painter: _GrowthPainter(
                 points: points,

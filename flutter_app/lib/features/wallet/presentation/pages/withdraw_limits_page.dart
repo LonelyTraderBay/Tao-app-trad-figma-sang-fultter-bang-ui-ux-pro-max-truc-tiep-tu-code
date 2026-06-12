@@ -63,7 +63,12 @@ class WithdrawLimitsPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: WithdrawLimitsPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.pageHorizontalPadding,
+                    AppSpacing.rowPy,
+                    AppSpacing.pageHorizontalPadding,
+                    bottomInset,
+                  ),
                   physics: const BouncingScrollPhysics(),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
@@ -71,11 +76,9 @@ class WithdrawLimitsPage extends ConsumerWidget {
                     fullBleed: true,
                     children: [
                       _CurrentTierCard(snapshot: snapshot),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: AppSpacing.transferSectionGap),
                       _QuickStats(tier: snapshot.currentTier),
-                      const SizedBox(height: 16),
-                      const _LimitWarning(),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: AppSpacing.sectionGapCompact),
                       const _SectionLabel(
                         label:
                             'So s\u00E1nh h\u1EA1n m\u1EE9c theo c\u1EA5p KYC',
@@ -89,6 +92,8 @@ class WithdrawLimitsPage extends ConsumerWidget {
                         if (tier != snapshot.tiers.last)
                           const SizedBox(height: 10),
                       ],
+                      const SizedBox(height: 18),
+                      const _LimitWarning(),
                       const SizedBox(height: 18),
                       _FaqCard(faqs: snapshot.faqs),
                       const SizedBox(height: 14),

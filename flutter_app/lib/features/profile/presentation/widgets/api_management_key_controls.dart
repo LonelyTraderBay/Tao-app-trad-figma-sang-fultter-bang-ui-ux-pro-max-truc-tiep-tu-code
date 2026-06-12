@@ -18,7 +18,6 @@ class _StatusBadge extends StatelessWidget {
         active ? '\u2022 Active' : '\u2022 Disabled',
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 11,
           fontWeight: FontWeight.w800,
           height: 1,
         ),
@@ -93,7 +92,6 @@ class _SecretRow extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: labelColor,
-                fontSize: 10,
                 fontWeight: FontWeight.w800,
                 height: 1,
               ),
@@ -106,7 +104,6 @@ class _SecretRow extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
-                fontSize: 11,
                 fontWeight: FontWeight.w800,
                 height: 1,
               ),
@@ -203,7 +200,6 @@ class _SmallBadge extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: color,
-              fontSize: 12,
               fontWeight: FontWeight.w800,
               height: 1,
             ),
@@ -230,20 +226,12 @@ class _UsageRow extends StatelessWidget {
             'D\u00F9ng l\u1EA7n cu\u1ED1i: ${apiKey.lastUsed ?? 'Ch\u01B0a d\u00F9ng'}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: _apiMuted,
-              fontSize: 11,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: _apiMuted, height: 1),
           ),
         ),
         Text(
           '${_formatInt(apiKey.requestCount)} requests',
-          style: AppTextStyles.micro.copyWith(
-            color: _apiMuted,
-            fontSize: 11,
-            height: 1,
-          ),
+          style: AppTextStyles.micro.copyWith(color: _apiMuted, height: 1),
         ),
       ],
     );
@@ -277,7 +265,6 @@ class _RegenerateButton extends StatelessWidget {
               'T\u1EA1o l\u1EA1i Secret',
               style: AppTextStyles.micro.copyWith(
                 color: _apiPrimary,
-                fontSize: 13,
                 fontWeight: FontWeight.w800,
                 height: 1,
               ),

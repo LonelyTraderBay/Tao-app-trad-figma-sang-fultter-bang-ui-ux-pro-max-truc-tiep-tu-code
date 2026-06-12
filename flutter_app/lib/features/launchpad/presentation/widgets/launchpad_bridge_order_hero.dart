@@ -17,14 +17,18 @@ class _BridgeStatusHero extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 64,
-            height: 64,
+            width: AppSpacing.launchpadBox64,
+            height: AppSpacing.launchpadBox64,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .14),
               shape: BoxShape.circle,
             ),
-            child: Icon(_statusIcon(order.status), color: color, size: 30),
+            child: Icon(
+              _statusIcon(order.status),
+              color: color,
+              size: AppSpacing.launchpadBox30,
+            ),
           ),
           const SizedBox(height: AppSpacing.x4),
           Text(

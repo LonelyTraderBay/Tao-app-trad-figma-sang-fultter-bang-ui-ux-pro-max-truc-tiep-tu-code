@@ -4,6 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 
 const walletTokenApprovalBackground = AppColors.bg;
 const walletTokenApprovalPanel = AppColors.surface;
@@ -69,21 +70,21 @@ class WalletTokenApprovalSectionLabel extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 14,
+          width: AppSpacing.walletTokenSectionMarkerWidth,
+          height: AppSpacing.walletTokenSectionMarkerHeight,
           decoration: BoxDecoration(
             color: walletTokenApprovalPrimary,
-            borderRadius: BorderRadius.circular(2),
+            borderRadius: BorderRadius.circular(
+              AppSpacing.walletTokenSectionMarkerRadius,
+            ),
           ),
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: AppSpacing.walletAddressSectionGap),
         Text(
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.textMutedBlue,
-            fontSize: 12,
-            fontWeight: FontWeight.w900,
-            height: 1,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ],
@@ -101,45 +102,13 @@ class WalletTokenApprovalRevokeAllButton extends StatelessWidget {
     return Semantics(
       button: true,
       label: 'Revoke all high-risk token approvals',
-      child: GestureDetector(
+      child: VitCtaButton(
         key: walletTokenApprovalRevokeAllKey,
-        onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: Container(
-          height: AppSpacing.inputHeight,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: walletTokenApprovalRed.withValues(alpha: .10),
-            borderRadius: AppRadii.inputRadius,
-            border: Border.all(
-              color: walletTokenApprovalRed.withValues(alpha: .26),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.delete_outline_rounded,
-                color: walletTokenApprovalRed,
-                size: 18,
-              ),
-              const SizedBox(width: 8),
-              Flexible(
-                child: Text(
-                  'Revoke All High-Risk Approvals',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: walletTokenApprovalRed,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        onPressed: onTap,
+        variant: VitCtaButtonVariant.danger,
+        height: AppSpacing.inputHeight,
+        leading: const Icon(Icons.delete_outline_rounded),
+        child: const Text('Revoke All High-Risk Approvals'),
       ),
     );
   }
@@ -151,8 +120,10 @@ class WalletTokenApprovalInfoNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minHeight: 58),
-      padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.walletTokenNoticeMinHeight,
+      ),
+      padding: AppSpacing.walletTokenNoticePadding,
       decoration: BoxDecoration(
         color: walletTokenApprovalPrimary.withValues(alpha: .08),
         borderRadius: AppRadii.cardRadius,
@@ -166,15 +137,14 @@ class WalletTokenApprovalInfoNotice extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: walletTokenApprovalPrimary,
-            size: 14,
+            size: AppSpacing.walletTokenNoticeIcon,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.walletTokenApprovalHeaderGap),
           Expanded(
             child: Text(
               'Token approvals allow smart contracts to spend your tokens. Revoke unused or suspicious approvals to protect your assets.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
                 height: 1.48,
               ),
             ),

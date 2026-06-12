@@ -89,12 +89,12 @@ class _PhaseStats extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           GridView.count(
-            crossAxisCount: 4,
+            crossAxisCount: AppSpacing.devRouteGridColumns,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             mainAxisSpacing: AppSpacing.x3,
             crossAxisSpacing: AppSpacing.x3,
-            childAspectRatio: 1.18,
+            childAspectRatio: AppSpacing.devRouteGridAspect,
             children: [
               for (final phase in snapshot.phases)
                 _PhaseStatTile(

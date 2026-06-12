@@ -30,7 +30,9 @@ class _ExportSheet extends StatelessWidget {
           onTap: () {},
           child: Container(
             width: double.infinity,
-            constraints: const BoxConstraints(maxWidth: 440),
+            constraints: const BoxConstraints(
+              maxWidth: AppSpacing.launchpadSheetMaxWidth,
+            ),
             decoration: const BoxDecoration(
               color: AppColors.surface,
               borderRadius: BorderRadius.vertical(
@@ -49,8 +51,8 @@ class _ExportSheet extends StatelessWidget {
               children: [
                 Center(
                   child: Container(
-                    width: 44,
-                    height: 4,
+                    width: AppSpacing.launchpadBox44,
+                    height: AppSpacing.launchpadSheetHandleHeight,
                     decoration: BoxDecoration(
                       color: AppColors.borderSolid,
                       borderRadius: AppRadii.xlRadius,
@@ -65,7 +67,7 @@ class _ExportSheet extends StatelessWidget {
                         'Export Event Log',
                         style: AppTextStyles.base.copyWith(
                           color: AppColors.text1,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: AppTextStyles.extraBold,
                         ),
                       ),
                     ),
@@ -86,7 +88,7 @@ class _ExportSheet extends StatelessWidget {
                         '$count',
                         style: AppTextStyles.pageTitle.copyWith(
                           color: AppColors.text1,
-                          fontWeight: FontWeight.w900,
+                          fontWeight: AppTextStyles.heavy,
                           fontFeatures: const [FontFeature.tabularFigures()],
                         ),
                       ),
@@ -131,7 +133,7 @@ class _ExportSheet extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1.45,
+                      height: AppSpacing.launchpadLineHeightReadable,
                     ),
                   ),
                 ),
@@ -145,7 +147,7 @@ class _ExportSheet extends StatelessWidget {
                   leading: Icon(
                     copied ? Icons.check_rounded : Icons.copy_rounded,
                     color: AppColors.onAccent,
-                    size: 18,
+                    size: AppSpacing.launchpadIcon2xl,
                   ),
                   child: Text(
                     copied
@@ -203,13 +205,19 @@ class _ExportFormatTile extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Icon(_formatIcon(format.iconKey), color: color, size: 20),
+            Icon(
+              _formatIcon(format.iconKey),
+              color: color,
+              size: AppSpacing.launchpadIcon3xl,
+            ),
             const SizedBox(height: AppSpacing.x2),
             Text(
               format.label,
               style: AppTextStyles.caption.copyWith(
                 color: color,
-                fontWeight: active ? FontWeight.w800 : FontWeight.w600,
+                fontWeight: active
+                    ? AppTextStyles.extraBold
+                    : AppTextStyles.medium,
               ),
             ),
           ],

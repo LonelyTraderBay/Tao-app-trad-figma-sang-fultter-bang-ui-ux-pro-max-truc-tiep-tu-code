@@ -7,27 +7,18 @@ class _LegalHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _legalPrimary.withValues(alpha: .04),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _legalPrimary, width: 2),
-      ),
+      borderColor: _legalPrimary,
       child: Row(
         children: [
-          Container(
+          const VitCard(
             width: 48,
             height: 48,
-            decoration: const BoxDecoration(
-              color: _legalPrimary,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.balance_rounded,
-              color: AppColors.onAccent,
-              size: 24,
-            ),
+            variant: VitCardVariant.inner,
+            alignment: Alignment.center,
+            child: Icon(Icons.balance_rounded, color: _legalPrimary, size: 24),
           ),
           const SizedBox(width: 13),
           Expanded(
@@ -40,7 +31,6 @@ class _LegalHero extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
                     color: _legalPrimary,
-                    fontSize: 15,
                     fontWeight: AppTextStyles.bold,
                     height: 1.08,
                   ),
@@ -52,7 +42,6 @@ class _LegalHero extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: _legalPrimary,
-                    fontSize: 10.5,
                     height: 1.2,
                   ),
                 ),
@@ -78,9 +67,9 @@ class _LegalTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: 53,
-      color: _legalTabsBackground,
+      variant: VitCardVariant.inner,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -100,17 +89,16 @@ class _LegalTabs extends StatelessWidget {
                             color: tab.id == activeId
                                 ? _legalPrimary
                                 : AppColors.text3,
-                            fontSize: 11,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),
                         ),
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: tab.id == activeId ? 65 : 0,
                       height: 2,
-                      color: _legalPrimary,
+                      child: const ColoredBox(color: _legalPrimary),
                     ),
                   ],
                 ),

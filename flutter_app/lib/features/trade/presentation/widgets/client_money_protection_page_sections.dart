@@ -20,7 +20,6 @@ class _ProtectionNotice extends StatelessWidget {
                   'Your Funds Are Protected',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -31,7 +30,6 @@ class _ProtectionNotice extends StatelessWidget {
                   'reconciled daily per FCA CASS 7 rules.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                     height: 1.35,
                   ),
@@ -59,13 +57,12 @@ class _BalanceCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              VitCard(
                 width: 56,
                 height: 56,
-                decoration: BoxDecoration(
-                  color: _moneyGreen.withValues(alpha: .13),
-                  borderRadius: AppRadii.cardRadius,
-                ),
+                variant: VitCardVariant.inner,
+                alignment: Alignment.center,
+                borderColor: _moneyGreen.withValues(alpha: .35),
                 child: const Icon(
                   Icons.lock_outline_rounded,
                   color: _moneyGreen,
@@ -81,7 +78,6 @@ class _BalanceCard extends StatelessWidget {
                       'Your Segregated Balance',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
                         height: 1,
                       ),
                     ),
@@ -90,7 +86,6 @@ class _BalanceCard extends StatelessWidget {
                       _formatUsd(snapshot.balance),
                       style: AppTextStyles.heroNumber.copyWith(
                         color: AppColors.text1,
-                        fontSize: 24,
                         height: 1,
                       ),
                     ),
@@ -99,7 +94,6 @@ class _BalanceCard extends StatelessWidget {
                       'Fully segregated and protected',
                       style: AppTextStyles.micro.copyWith(
                         color: _moneyGreen,
-                        fontSize: 11,
                         height: 1,
                       ),
                     ),
@@ -145,9 +139,9 @@ class _Tabs extends StatelessWidget {
       ('reconciliation', 'Reconciliation'),
       ('documents', 'Documents'),
     ];
-    return Container(
+    return VitCard(
       height: 53,
-      color: _moneyPanel,
+      variant: VitCardVariant.inner,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -167,7 +161,6 @@ class _Tabs extends StatelessWidget {
                             color: activeId == tab.$1
                                 ? _moneyPrimary
                                 : AppColors.text3,
-                            fontSize: 12,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),
@@ -196,72 +189,77 @@ class _Overview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: 12,
       children: [
-        const _SectionLabel('How Your Money Is Protected'),
-        const SizedBox(height: 12),
-        _Card(
-          padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
-          child: Column(
-            children: [
-              for (final item in snapshot.protections) ...[
-                _ProtectionItem(item: item),
-                if (item != snapshot.protections.last)
-                  const SizedBox(height: 22),
-              ],
-            ],
-          ),
+        VitPageSection(
+          label: 'How Your Money Is Protected',
+          children: [
+            _Card(
+              padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+              child: VitPageContent(
+                padding: VitContentPadding.none,
+                fullBleed: true,
+                customGap: 22,
+                children: [
+                  for (final item in snapshot.protections)
+                    _ProtectionItem(item: item),
+                ],
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 25),
-        const _SectionLabel('In Case of Insolvency'),
-        const SizedBox(height: 12),
-        _Card(
-          padding: const EdgeInsets.fromLTRB(16, 28, 16, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+        VitPageSection(
+          label: 'In Case of Insolvency',
+          children: [
+            _Card(
+              padding: const EdgeInsets.fromLTRB(16, 28, 16, 16),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(
-                    Icons.info_outline_rounded,
-                    color: AppColors.text1,
-                    size: 14,
-                  ),
-                  const SizedBox(width: 9),
-                  Expanded(
-                    child: RichText(
-                      text: TextSpan(
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text1,
-                          fontSize: 10,
-                          fontWeight: AppTextStyles.bold,
-                          height: 1.35,
-                        ),
-                        children: [
-                          const TextSpan(
-                            text: 'Client Money Protection: ',
-                            style: TextStyle(fontWeight: FontWeight.w700),
-                          ),
-                          TextSpan(text: snapshot.insolvencySummary),
-                        ],
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.info_outline_rounded,
+                        color: AppColors.text1,
+                        size: 14,
                       ),
+                      const SizedBox(width: 9),
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
+                              height: 1.35,
+                            ),
+                            children: [
+                              const TextSpan(
+                                text: 'Client Money Protection: ',
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                              ),
+                              TextSpan(text: snapshot.insolvencySummary),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 26),
+                  Text(
+                    snapshot.insolvencyDetail,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                      height: 1.4,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 26),
-              Text(
-                snapshot.insolvencyDetail,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontSize: 11,
-                  height: 1.4,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );
@@ -288,7 +286,6 @@ class _ProtectionItem extends StatelessWidget {
                 item.title,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -298,7 +295,6 @@ class _ProtectionItem extends StatelessWidget {
                 item.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
                   height: 1.3,
                 ),
               ),

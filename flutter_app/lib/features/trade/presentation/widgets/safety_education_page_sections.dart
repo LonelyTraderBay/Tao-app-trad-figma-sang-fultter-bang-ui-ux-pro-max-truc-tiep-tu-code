@@ -38,7 +38,6 @@ class _HeroBanner extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
                     color: _safetyPrimary,
-                    fontSize: 15,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -50,7 +49,6 @@ class _HeroBanner extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: _safetyPrimary,
-                    fontSize: 11,
                     height: 1.45,
                   ),
                 ),
@@ -76,9 +74,10 @@ class _SafetyTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       height: 54,
-      color: _safetyTabs,
+      padding: EdgeInsets.zero,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -99,7 +98,6 @@ class _SafetyTabs extends StatelessWidget {
                             color: tab.id == activeId
                                 ? _safetyPrimary
                                 : AppColors.text3,
-                            fontSize: 12,
                             fontWeight: AppTextStyles.bold,
                             height: 1.12,
                           ),
@@ -141,7 +139,6 @@ class _ScamsTab extends StatelessWidget {
           '${scams.length} loại scam phổ biến trong copy trading. Tap để xem chi tiết.',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             height: 1.5,
           ),
         ),
@@ -203,7 +200,6 @@ class _ScamCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.body.copyWith(
                               color: AppColors.text1,
-                              fontSize: 13,
                               fontWeight: AppTextStyles.bold,
                               height: 1,
                             ),
@@ -215,7 +211,6 @@ class _ScamCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              fontSize: 10,
                               height: 1.2,
                             ),
                           ),
@@ -308,7 +303,6 @@ class _ExpandedList extends StatelessWidget {
           title,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            fontSize: 11,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -317,11 +311,7 @@ class _ExpandedList extends StatelessWidget {
         for (final item in items) ...[
           Text(
             '$bullet $item',
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              fontSize: 10,
-              height: 1.4,
-            ),
+            style: AppTextStyles.micro.copyWith(color: color, height: 1.4),
           ),
           if (item != items.last) const SizedBox(height: 4),
         ],
@@ -344,7 +334,6 @@ class _RedFlagsTab extends StatelessWidget {
           'Checklist để đánh giá provider trước khi copy. Nếu có ≥2 red flags nghiêm trọng, KHÔNG nên copy.',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             height: 1.5,
           ),
         ),

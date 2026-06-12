@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class WalletTokenApprovalHistoryTab extends StatelessWidget {
   const WalletTokenApprovalHistoryTab({required this.snapshot, super.key});
@@ -17,24 +18,20 @@ class WalletTokenApprovalHistoryTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const WalletTokenApprovalSectionLabel(label: 'Revoked Approvals'),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.walletTokenStatValueGap),
         for (final revoked in snapshot.revokedApprovals) ...[
-          Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: walletTokenApprovalPanel,
-              borderRadius: AppRadii.inputRadius,
-              border: Border.all(color: walletTokenApprovalBorder),
-            ),
+          VitCard(
+            padding: AppSpacing.walletTokenHistoryRowPadding,
+            borderColor: walletTokenApprovalBorder,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Icon(
                   Icons.check_circle_outline_rounded,
                   color: walletTokenApprovalGreen,
-                  size: 18,
+                  size: AppSpacing.iconMd,
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: AppSpacing.walletTokenApprovalHeaderGap),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,16 +40,16 @@ class WalletTokenApprovalHistoryTab extends StatelessWidget {
                         '${revoked.token} \u2192 ${revoked.spenderName}',
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w900,
+                          fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(
+                        height: AppSpacing.walletAddressSectionGap,
+                      ),
                       Text(
                         revoked.reason,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          fontSize: 11,
                         ),
                       ),
                     ],
@@ -60,24 +57,17 @@ class WalletTokenApprovalHistoryTab extends StatelessWidget {
                 ),
                 Text(
                   revoked.revokedAtLabel,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 10,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.walletTokenStatValueGap),
         ],
-        const SizedBox(height: 4),
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: walletTokenApprovalPanel,
-            borderRadius: AppRadii.cardRadius,
-            border: Border.all(color: walletTokenApprovalBorder),
-          ),
+        const SizedBox(height: AppSpacing.x1),
+        VitCard(
+          padding: AppSpacing.cardPadding,
+          borderColor: walletTokenApprovalBorder,
           child: const Row(
             children: [
               WalletTokenApprovalHistoryMetric(
@@ -117,19 +107,15 @@ class WalletTokenApprovalHistoryMetric extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 11,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.rowGap),
           Text(
             value,
             style: AppTextStyles.sectionTitle.copyWith(
               color: color,
-              fontSize: 18,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'Roboto',
+              fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],

@@ -95,7 +95,11 @@ class _InfoRow extends StatelessWidget {
             ),
           ),
           if (icon != null) ...[
-            Icon(icon, size: 16, color: AppColors.primary),
+            Icon(
+              icon,
+              size: AppSpacing.arenaJoinInlineIcon,
+              color: AppColors.primary,
+            ),
             const SizedBox(width: AppSpacing.x1),
           ],
           Text(
@@ -123,8 +127,8 @@ class _CreatorCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 44,
-            height: 44,
+            width: AppSpacing.arenaJoinCreatorAvatar,
+            height: AppSpacing.arenaJoinCreatorAvatar,
             decoration: BoxDecoration(
               color: AppColors.surface2,
               borderRadius: AppRadii.mdRadius,
@@ -212,7 +216,7 @@ class _RuleLine extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 24,
+          width: AppSpacing.arenaJoinRuleNumberWidth,
           child: Text(
             '$index.',
             style: AppTextStyles.caption.copyWith(
@@ -226,7 +230,7 @@ class _RuleLine extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.45,
+              height: AppSpacing.arenaJoinBodyLineHeight,
             ),
           ),
         ),
@@ -332,7 +336,7 @@ class _NoticeCard extends StatelessWidget {
         children: [
           const Icon(
             Icons.info_outline_rounded,
-            size: 16,
+            size: AppSpacing.arenaJoinInlineIcon,
             color: AppColors.primary,
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -341,7 +345,7 @@ class _NoticeCard extends StatelessWidget {
               text,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: 1.45,
+                height: AppSpacing.arenaJoinNoticeLineHeight,
               ),
             ),
           ),
@@ -362,7 +366,10 @@ class _SafetyPolicyLink extends StatelessWidget {
       child: TextButton.icon(
         key: ArenaJoinPage.safetyPolicyKey,
         onPressed: onTap,
-        icon: const Icon(Icons.shield_outlined, size: 16),
+        icon: const Icon(
+          Icons.shield_outlined,
+          size: AppSpacing.arenaJoinInlineIcon,
+        ),
         label: Text(
           'Xem chính sách hủy/void',
           style: AppTextStyles.caption.copyWith(

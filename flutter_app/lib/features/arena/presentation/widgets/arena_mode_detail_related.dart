@@ -40,7 +40,10 @@ class ArenaModeRelatedRooms extends StatelessWidget {
                   onTap: () => onRoom(rooms[index].id),
                 ),
                 if (index != rooms.length - 1)
-                  const Divider(height: 1, color: AppColors.divider),
+                  const Divider(
+                    height: AppSpacing.arenaModeRelatedDividerHeight,
+                    color: AppColors.divider,
+                  ),
               ],
             ],
           ),
@@ -138,7 +141,7 @@ class ArenaModeRelatedModes extends StatelessWidget {
             children: [
               for (final item in modes) ...[
                 SizedBox(
-                  width: 184,
+                  width: AppSpacing.arenaModeRelatedCardWidth,
                   child: _RelatedModeCard(
                     cardKey: relatedModeKey(item.id),
                     mode: item,
@@ -173,7 +176,9 @@ class _RelatedModeCard extends StatelessWidget {
       key: cardKey,
       onTap: onTap,
       padding: const EdgeInsets.all(AppSpacing.x4),
-      constraints: const BoxConstraints(minHeight: 132),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.arenaModeRelatedCardMinHeight,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -192,7 +197,7 @@ class _RelatedModeCard extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.2,
+                    height: AppSpacing.arenaModeRelatedTitleLineHeight,
                   ),
                 ),
               ),
@@ -205,7 +210,7 @@ class _RelatedModeCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.35,
+              height: AppSpacing.arenaModeRelatedDescriptionLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),

@@ -55,9 +55,25 @@ class _Podium extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Expanded(child: _PodiumItem(entry: second, size: 54)),
-          Expanded(child: _PodiumItem(entry: first, size: 70, crown: true)),
-          Expanded(child: _PodiumItem(entry: third, size: 54)),
+          Expanded(
+            child: _PodiumItem(
+              entry: second,
+              size: AppSpacing.arenaLeaderboardPodiumSideSize,
+            ),
+          ),
+          Expanded(
+            child: _PodiumItem(
+              entry: first,
+              size: AppSpacing.arenaLeaderboardPodiumWinnerSize,
+              crown: true,
+            ),
+          ),
+          Expanded(
+            child: _PodiumItem(
+              entry: third,
+              size: AppSpacing.arenaLeaderboardPodiumSideSize,
+            ),
+          ),
         ],
       ),
     );
@@ -89,19 +105,27 @@ class _PodiumItem extends StatelessWidget {
           height: size,
           decoration: BoxDecoration(
             color: AppColors.surface2,
-            border: Border.all(color: color, width: 2),
+            border: Border.all(
+              color: color,
+              width: AppSpacing.arenaLeaderboardPodiumBorderWidth,
+            ),
             borderRadius: crown ? AppRadii.cardRadius : AppRadii.mdRadius,
             boxShadow: crown
                 ? [
                     BoxShadow(
                       color: AppColors.warn.withValues(alpha: .24),
-                      blurRadius: 18,
-                      spreadRadius: -2,
+                      blurRadius: AppSpacing.arenaLeaderboardPodiumShadowBlur,
+                      spreadRadius:
+                          AppSpacing.arenaLeaderboardPodiumShadowSpread,
                     ),
                   ]
                 : null,
           ),
-          child: Icon(_leaderboardIcon(entry.icon), color: color, size: 26),
+          child: Icon(
+            _leaderboardIcon(entry.icon),
+            color: color,
+            size: AppSpacing.arenaLeaderboardPodiumIcon,
+          ),
         ),
         const SizedBox(height: AppSpacing.x2),
         Text(
@@ -109,7 +133,7 @@ class _PodiumItem extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.arenaLeaderboardLineHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
@@ -121,7 +145,7 @@ class _PodiumItem extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text1,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.arenaLeaderboardLineHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
@@ -130,7 +154,7 @@ class _PodiumItem extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.buy,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.arenaLeaderboardLineHeight,
           ),
         ),
       ],
@@ -173,7 +197,10 @@ class _EntrySection extends StatelessWidget {
                       : () => onCreator(entry.creatorId!),
                 ),
                 if (entry != entries.last)
-                  const Divider(height: 1, color: AppColors.divider),
+                  const Divider(
+                    height: AppSpacing.arenaLeaderboardDividerHeight,
+                    color: AppColors.divider,
+                  ),
               ],
             ],
           ),
@@ -194,8 +221,8 @@ class _SectionLabel extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 16,
+          width: AppSpacing.arenaLeaderboardSectionMarkerWidth,
+          height: AppSpacing.arenaLeaderboardSectionMarkerHeight,
           decoration: BoxDecoration(
             color: accentColor,
             borderRadius: AppRadii.xsRadius,

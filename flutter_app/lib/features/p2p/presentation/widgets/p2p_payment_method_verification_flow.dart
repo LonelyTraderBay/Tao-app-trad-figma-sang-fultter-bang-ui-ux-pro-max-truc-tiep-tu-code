@@ -1,4 +1,4 @@
-﻿part of '../pages/p2p_payment_method_verification_page.dart';
+part of '../pages/p2p_payment_method_verification_page.dart';
 
 class _VerificationFlow extends StatelessWidget {
   const _VerificationFlow({
@@ -33,7 +33,7 @@ class _VerificationFlow extends StatelessWidget {
         _CenteredMethodIntro(method: method),
         const SizedBox(height: AppSpacing.x5),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pPaymentCardPadding,
           child: Column(
             children: [
               for (var i = 0; i < snapshot.microDepositSteps.length; i++) ...[
@@ -78,8 +78,8 @@ class _CenteredMethodIntro extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 64,
-          height: 64,
+          width: AppSpacing.p2pPaymentVerificationIntroIconBox,
+          height: AppSpacing.p2pPaymentVerificationIntroIconBox,
           decoration: const BoxDecoration(
             color: AppColors.primary12,
             shape: BoxShape.circle,
@@ -87,7 +87,7 @@ class _CenteredMethodIntro extends StatelessWidget {
           child: const Icon(
             Icons.credit_card_rounded,
             color: AppColors.primary,
-            size: 32,
+            size: AppSpacing.p2pPaymentVerificationIntroIcon,
           ),
         ),
         const SizedBox(height: AppSpacing.x4),
@@ -137,8 +137,8 @@ class _StepRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          width: 24,
-          height: 24,
+          width: AppSpacing.p2pPaymentVerificationStepDot,
+          height: AppSpacing.p2pPaymentVerificationStepDot,
           decoration: const BoxDecoration(
             color: AppColors.primary12,
             shape: BoxShape.circle,
@@ -156,10 +156,7 @@ class _StepRow extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              height: 1.45,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
         ),
       ],
@@ -196,7 +193,7 @@ class _WarningNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pPaymentCompactCardPadding,
       borderColor: AppColors.warningBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,10 +207,7 @@ class _WarningNote extends StatelessWidget {
           Expanded(
             child: Text(
               note,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                height: 1.45,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
             ),
           ),
         ],

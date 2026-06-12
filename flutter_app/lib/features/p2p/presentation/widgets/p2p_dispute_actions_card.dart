@@ -24,7 +24,7 @@ class P2PDisputeActionsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDisputeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -98,7 +98,7 @@ class _ActionTile extends StatelessWidget {
           constraints: const BoxConstraints(
             minHeight: AppSpacing.buttonStandard,
           ),
-          padding: const EdgeInsets.all(AppSpacing.x3),
+          padding: AppSpacing.p2pDisputeActionTilePadding,
           decoration: BoxDecoration(
             border: Border.all(color: color.withValues(alpha: .18)),
             borderRadius: AppRadii.inputRadius,
@@ -106,8 +106,8 @@ class _ActionTile extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                width: 38,
-                height: 38,
+                width: AppSpacing.p2pDisputeActionIconBox,
+                height: AppSpacing.p2pDisputeActionIconBox,
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: .14),
                   borderRadius: AppRadii.smRadius,

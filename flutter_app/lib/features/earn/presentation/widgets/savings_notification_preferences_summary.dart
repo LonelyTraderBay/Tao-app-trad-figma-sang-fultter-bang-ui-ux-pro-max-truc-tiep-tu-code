@@ -33,8 +33,8 @@ class SavingsNotificationMasterSummaryCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 44,
-            height: 44,
+            width: AppSpacing.savingsNotificationSummaryIconBox,
+            height: AppSpacing.savingsNotificationSummaryIconBox,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .14),
               shape: BoxShape.circle,
@@ -44,7 +44,7 @@ class SavingsNotificationMasterSummaryCard extends StatelessWidget {
                   ? Icons.notifications_none_rounded
                   : Icons.notifications_off_outlined,
               color: color,
-              size: 22,
+              size: AppSpacing.savingsNotificationSummaryIcon,
             ),
           ),
           const SizedBox(width: AppSpacing.x3),

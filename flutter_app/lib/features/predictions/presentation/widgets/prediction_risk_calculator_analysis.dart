@@ -12,7 +12,7 @@ class _RiskAnalysis extends StatelessWidget {
       accentColor: _predictionPrimary,
       children: [
         VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.predictionRiskCardPadding,
           child: Column(
             children: [
               _RiskMetricRow(
@@ -80,7 +80,7 @@ class _KellyRecommendation extends StatelessWidget {
 
     return VitCard(
       borderColor: AppColors.primary15,
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.predictionRiskCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -90,9 +90,9 @@ class _KellyRecommendation extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: _predictionPrimary,
-                size: 17,
+                size: AppSpacing.predictionRiskKellyIcon,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.predictionRiskKellyIconGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,12 +104,13 @@ class _KellyRecommendation extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: 3),
+                    const SizedBox(
+                      height: AppSpacing.predictionRiskKellySubtitleGap,
+                    ),
                     Text(
                       'Suggested exposure based on risk budget and edge',
-                      style: AppTextStyles.micro.copyWith(
+                      style: AppTextStyles.numericMicro.copyWith(
                         color: AppColors.text2,
-                        fontSize: 11,
                       ),
                     ),
                   ],
@@ -117,25 +118,21 @@ class _KellyRecommendation extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.predictionRiskKellyValueGap),
           Wrap(
             crossAxisAlignment: WrapCrossAlignment.end,
-            spacing: 8,
-            runSpacing: 4,
+            spacing: AppSpacing.predictionRiskKellyValueWrapGap,
+            runSpacing: AppSpacing.predictionRiskKellyValueRunGap,
             children: [
               Text(
                 _formatMoney(metrics.suggestedExposure),
-                style: AppTextStyles.sectionTitle.copyWith(
+                style: AppTextStyles.amountSm.copyWith(
                   color: _predictionPrimary,
-                  fontSize: 20,
                 ),
               ),
               Text(
                 '(${pct.toStringAsFixed(1)}% of risk budget)',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 12,
-                ),
+                style: AppTextStyles.badge.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -152,22 +149,21 @@ class _RiskWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.predictionRiskWarningPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: 15,
+            size: AppSpacing.predictionRiskWarningIcon,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.predictionRiskWarningGap),
           Expanded(
             child: Text(
               'Phan tich rui ro chi mang tinh tham khao. Ket qua thuc te co the khac. Luon quan ly von than trong.',
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.numericMicro.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
               ),
             ),
           ),

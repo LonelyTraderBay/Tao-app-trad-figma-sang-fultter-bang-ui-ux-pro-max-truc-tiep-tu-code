@@ -39,8 +39,8 @@ class _HistoricalProjectCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 44,
-                height: 44,
+                width: AppSpacing.launchpadBox44,
+                height: AppSpacing.launchpadBox44,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: project.accent.withValues(alpha: .12),
@@ -66,7 +66,7 @@ class _HistoricalProjectCard extends StatelessWidget {
                       project.name,
                       style: AppTextStyles.baseMedium.copyWith(
                         fontWeight: AppTextStyles.bold,
-                        height: 1.15,
+                        height: AppSpacing.launchpadLineHeightLabel,
                       ),
                     ),
                     Text(

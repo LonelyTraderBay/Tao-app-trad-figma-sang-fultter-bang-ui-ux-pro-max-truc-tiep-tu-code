@@ -120,8 +120,8 @@ class _BalanceCard extends StatelessWidget {
               ),
             ),
             Container(
-              width: 34,
-              height: 34,
+              width: AppSpacing.arenaPointsEntryBalanceArrowBox,
+              height: AppSpacing.arenaPointsEntryBalanceArrowBox,
               decoration: BoxDecoration(
                 color: entry.amount >= 0 ? AppColors.buy10 : AppColors.sell10,
                 borderRadius: AppRadii.xlRadius,
@@ -129,7 +129,7 @@ class _BalanceCard extends StatelessWidget {
               child: Icon(
                 Icons.arrow_forward_rounded,
                 color: entry.amount >= 0 ? AppColors.buy : AppColors.sell,
-                size: 16,
+                size: AppSpacing.arenaPointsInlineIcon,
               ),
             ),
             Expanded(
@@ -170,7 +170,7 @@ class _ReferenceCard extends StatelessWidget {
                 entry.refId,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  height: 1.35,
+                  height: AppSpacing.arenaPointsBodyLineHeight,
                 ),
               ),
             ),
@@ -189,7 +189,7 @@ class _ReferenceCard extends StatelessWidget {
                 children: [
                   Icon(
                     copied ? Icons.check_rounded : Icons.copy_rounded,
-                    size: 14,
+                    size: AppSpacing.arenaPointsSmallIcon,
                     color: copied ? AppColors.buy : AppColors.text2,
                   ),
                   const SizedBox(width: AppSpacing.x1),
@@ -222,14 +222,18 @@ class _AuditNotice extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.accent, size: 16),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.accent,
+            size: AppSpacing.arenaPointsInlineIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               '$disclaimer Bản ghi này được hệ thống tạo tự động và không thể chỉnh sửa.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: 1.45,
+                height: AppSpacing.arenaPointsNoticeLineHeight,
               ),
             ),
           ),
@@ -262,7 +266,10 @@ class _EntryActions extends StatelessWidget {
           key: ArenaPointsEntryDetailPage.supportKey,
           variant: VitCtaButtonVariant.secondary,
           onPressed: onSupport,
-          leading: const Icon(Icons.help_outline_rounded, size: 16),
+          leading: const Icon(
+            Icons.help_outline_rounded,
+            size: AppSpacing.arenaPointsInlineIcon,
+          ),
           child: const Text('Liên hệ hỗ trợ'),
         ),
       ],
@@ -289,8 +296,8 @@ class _Section extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: 4,
-              height: 18,
+              width: AppSpacing.arenaPointsEntrySectionMarkerWidth,
+              height: AppSpacing.arenaPointsEntrySectionMarkerHeight,
               decoration: BoxDecoration(
                 color: accentColor,
                 borderRadius: AppRadii.xsRadius,
@@ -329,7 +336,7 @@ class _DetailRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 105,
+            width: AppSpacing.arenaPointsEntryDetailLabelWidth,
             child: Text(
               label,
               style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -342,7 +349,7 @@ class _DetailRow extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1.35,
+                height: AppSpacing.arenaPointsBodyLineHeight,
               ),
             ),
           ),

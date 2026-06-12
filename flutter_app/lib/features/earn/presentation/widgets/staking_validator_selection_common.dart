@@ -101,14 +101,14 @@ class StakingValidatorSelectionStatusPill extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.x2,
-          vertical: 3,
+          vertical: AppSpacing.x1,
         ),
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.stakingValidatorSelectionPillLineHeight,
           ),
         ),
       ),

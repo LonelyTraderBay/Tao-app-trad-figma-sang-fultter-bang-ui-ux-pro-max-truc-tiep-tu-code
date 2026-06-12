@@ -17,6 +17,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 part '../widgets/bot_backtesting_widgets.dart';
 
 const _backtestBackground = AppColors.bg;
@@ -144,6 +146,21 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
                       ),
                       const SizedBox(height: 18),
                       _RunFooter(onRun: () => _handleRun(snapshot)),
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(20, 14, 20, 0),
+                        child: TradeBodyReviewSection(
+                          title: 'Backtest body review',
+                          message: 'Bot backtesting body reviewed',
+                          detail:
+                              'Strategy, pair, range, capital, simulated period, submitting, and result states stay visible.',
+                          primary:
+                              'Assumption review remains above strategy and capital controls.',
+                          secondary:
+                              'Selected strategy, pair, and range stay visible before running.',
+                          tertiary:
+                              'Backtest output is framed as simulation, not guaranteed performance.',
+                        ),
+                      ),
                       SizedBox(height: bottomGap),
                     ],
                   ),

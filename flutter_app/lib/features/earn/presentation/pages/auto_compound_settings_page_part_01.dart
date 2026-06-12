@@ -70,6 +70,13 @@ class _AutoCompoundSettingsPageState
                           ),
                           _CalculatorPreview(),
                           _NoteCard(text: snapshot.note),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Auto-compound settings review',
+                            message:
+                                'Position toggles, compound frequency, threshold changes, yield impact, save confirmation, and success feedback are reviewed before automation is updated.',
+                            contractId: 'SC-341',
+                          ),
                         ],
                       ),
                     ),
@@ -491,7 +498,7 @@ class _DisabledWarning extends StatelessWidget {
               'Auto-compound đang tắt — lãi sẽ tích luỹ riêng, không cộng vào gốc',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.warn,
-                height: 1.45,
+                height: AppSpacing.autoCompoundSettingsWarningLineHeight,
               ),
             ),
           ),

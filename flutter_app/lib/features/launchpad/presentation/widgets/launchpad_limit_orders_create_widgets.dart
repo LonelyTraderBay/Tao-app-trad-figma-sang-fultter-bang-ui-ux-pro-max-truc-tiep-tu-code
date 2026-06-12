@@ -127,7 +127,10 @@ class _CreateOrderSection extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: AppSpacing.x4),
-                    const Divider(height: 1, color: AppColors.border),
+                    const Divider(
+                      height: AppSpacing.launchpadDividerHeight,
+                      color: AppColors.border,
+                    ),
                     const SizedBox(height: AppSpacing.x3),
                     Row(
                       children: [
@@ -192,7 +195,7 @@ class _CreateOrderSection extends StatelessWidget {
                       submissionMessage!,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: 1.45,
+                        height: AppSpacing.launchpadLineHeightReadable,
                       ),
                     ),
                   ),

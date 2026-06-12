@@ -11,51 +11,25 @@ class _ExportBar extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.walletHistoryExportBarPadH,
+        vertical: AppSpacing.walletHistoryExportBarPadV,
+      ),
       child: Row(
         children: [
           Expanded(
             child: Text(
               '$count giao dịch',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: 11,
-                height: 1,
-              ),
+              style: AppTextStyles.badge.copyWith(color: AppColors.text3),
             ),
           ),
-          GestureDetector(
+          VitStatusPill(
             key: TransactionHistoryPage.exportKey,
+            label: 'Xuất CSV',
+            icon: Icons.cloud_download_outlined,
+            status: VitStatusPillStatus.info,
+            size: VitStatusPillSize.lg,
             onTap: onExport,
-            behavior: HitTestBehavior.opaque,
-            child: Container(
-              height: 30,
-              padding: const EdgeInsets.symmetric(horizontal: 11),
-              decoration: BoxDecoration(
-                color: _historyPrimary.withValues(alpha: .14),
-                borderRadius: AppRadii.mdRadius,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.cloud_download_outlined,
-                    color: _historyPrimary,
-                    size: 12,
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    'Xuất CSV',
-                    style: AppTextStyles.micro.copyWith(
-                      color: _historyPrimary,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700,
-                      height: 1,
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ),
         ],
       ),
@@ -87,7 +61,8 @@ class _FilterTabs extends StatelessWidget {
               active: filters[i].id == active,
               onTap: () => onChanged(filters[i].id),
             ),
-            if (i != filters.length - 1) const SizedBox(width: 12),
+            if (i != filters.length - 1)
+              const SizedBox(width: AppSpacing.walletHistoryFilterGap),
           ],
         ],
       ),
@@ -108,35 +83,13 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitStatusPill(
       key: TransactionHistoryPage.filterKey(filter.id),
+      label: filter.label,
+      status: active ? VitStatusPillStatus.info : VitStatusPillStatus.neutral,
+      size: VitStatusPillSize.lg,
+      outline: !active,
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 30,
-        padding: const EdgeInsets.symmetric(horizontal: 13),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active
-              ? _historyPrimary.withValues(alpha: .18)
-              : AppColors.transparent,
-          borderRadius: AppRadii.inputRadius,
-          border: Border.all(
-            color: active
-                ? _historyPrimary.withValues(alpha: .48)
-                : AppColors.transparent,
-          ),
-        ),
-        child: Text(
-          filter.label,
-          style: AppTextStyles.micro.copyWith(
-            color: active ? _historyPrimary : AppColors.text2,
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
-            height: 1,
-          ),
-        ),
-      ),
     );
   }
 }
@@ -162,22 +115,28 @@ class _TransactionGroup extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Container(
-          height: 41,
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.only(left: 19),
-          decoration: const BoxDecoration(
-            border: Border(bottom: BorderSide(color: AppColors.divider)),
-          ),
-          child: Text(
-            _formatDate(group.date),
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-              height: 1,
+        SizedBox(
+          height: AppSpacing.walletHistorySectionHeaderHeight,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: AppSpacing.walletAssetHeroPaddingBottom,
+              ),
+              child: Text(
+                _formatDate(group.date),
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
             ),
           ),
+        ),
+        const Divider(
+          height: AppSpacing.walletHistoryDividerHeight,
+          thickness: AppSpacing.walletHistoryDividerHeight,
+          color: AppColors.divider,
         ),
         for (final tx in group.transactions)
           _TransactionRow(tx: tx, onTap: () => onTransactionTap(tx)),
@@ -200,29 +159,42 @@ class _TransactionRow extends StatelessWidget {
       key: TransactionHistoryPage.transactionKey(tx.id),
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
-        constraints: const BoxConstraints(minHeight: 84),
-        padding: const EdgeInsets.fromLTRB(17, 13, 16, 13),
-        decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(color: AppColors.divider)),
-        ),
-        child: Row(
-          children: [
-            _TransactionIcon(meta: meta),
-            const SizedBox(width: 56),
-            Expanded(
-              child: _TransactionInfo(tx: tx, meta: meta),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+              minHeight: AppSpacing.walletHistoryItemMinHeight,
             ),
-            const SizedBox(width: 8),
-            _AmountStatus(tx: tx, meta: meta),
-            const SizedBox(width: 9),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: 16,
+            child: Padding(
+              padding: AppSpacing.cardPaddingCompact,
+              child: Row(
+                children: [
+                  _TransactionIcon(meta: meta),
+                  const SizedBox(
+                    width: AppSpacing.walletHistoryAmountColumnWidth,
+                  ),
+                  Expanded(
+                    child: _TransactionInfo(tx: tx, meta: meta),
+                  ),
+                  const SizedBox(width: AppSpacing.rowGapCompact),
+                  _AmountStatus(tx: tx, meta: meta),
+                  const SizedBox(width: AppSpacing.walletHistoryRowChevronGap),
+                  const Icon(
+                    Icons.chevron_right_rounded,
+                    color: AppColors.text3,
+                    size: AppSpacing.walletTransactionActionIcon,
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+          const Divider(
+            height: AppSpacing.walletHistoryDividerHeight,
+            thickness: AppSpacing.walletHistoryDividerHeight,
+            color: AppColors.divider,
+          ),
+        ],
       ),
     );
   }
@@ -237,37 +209,37 @@ class _TransactionIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     if (meta.isTrade) {
       return Container(
-        width: 40,
-        height: 40,
+        width: AppSpacing.walletAssetActionIcon,
+        height: AppSpacing.walletAssetActionIcon,
         decoration: BoxDecoration(
           color: meta.color.withValues(alpha: .12),
           shape: BoxShape.circle,
         ),
         alignment: Alignment.center,
         child: Container(
-          width: 24,
-          height: 24,
+          width: AppSpacing.walletHistoryTradeIcon,
+          height: AppSpacing.walletHistoryTradeIcon,
           decoration: BoxDecoration(
             color: _historyPrimary,
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: AppRadii.walletHistoryTradeBadgeRadius,
           ),
           child: const Icon(
             Icons.currency_exchange_rounded,
             color: AppColors.onAccent,
-            size: 14,
+            size: AppSpacing.walletHistoryTradeIconGlyph,
           ),
         ),
       );
     }
 
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.walletAssetActionIcon,
+      height: AppSpacing.walletAssetActionIcon,
       decoration: BoxDecoration(
         color: meta.color.withValues(alpha: .12),
         shape: BoxShape.circle,
       ),
-      child: Icon(meta.icon, color: AppColors.text1, size: 22),
+      child: Icon(meta.icon, color: AppColors.text1, size: AppSpacing.iconMd),
     );
   }
 }
@@ -290,47 +262,32 @@ class _TransactionInfo extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.body.copyWith(
             color: AppColors.text1,
-            fontSize: 15,
-            fontWeight: FontWeight.w700,
-            height: 1.15,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.walletHistoryLineSpacing),
         Text(
           _timePart(tx.createdAt),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 12,
-            height: 1,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         if (tx.network != null) ...[
-          const SizedBox(height: 5),
+          const SizedBox(height: AppSpacing.walletHistoryTextSpacing),
           Text(
             'Mạng: ${tx.network}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 11,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
         if (tx.txHash != null) ...[
-          const SizedBox(height: 5),
+          const SizedBox(height: AppSpacing.walletHistoryTextSpacing),
           Text(
             tx.txHash!,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: _historyPrimary,
-              fontSize: 11,
-              fontFamily: 'Roboto',
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: _historyPrimary),
           ),
         ],
       ],

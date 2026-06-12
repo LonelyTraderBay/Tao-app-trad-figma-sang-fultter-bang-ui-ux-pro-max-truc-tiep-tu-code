@@ -124,15 +124,15 @@ class _BridgeHero extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.primary,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.2,
+                    height: AppSpacing.arenaBridgeHeroLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   'Nền tảng kết nối an toàn giữa Open Arena và Prediction Markets. Khóa boundary trước khi nối flow.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.45,
+                    height: AppSpacing.arenaBridgeBodyLineHeight,
                   ),
                 ),
               ],
@@ -194,7 +194,7 @@ class _BridgeTabPill extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
         child: Container(
-          height: 44,
+          height: AppSpacing.arenaBridgeTabHeight,
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
           decoration: BoxDecoration(
             color: active
@@ -214,7 +214,7 @@ class _BridgeTabPill extends StatelessWidget {
               Icon(
                 config.icon,
                 color: active ? AppColors.primary : AppColors.text2,
-                size: 15,
+                size: AppSpacing.arenaBridgeChipIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -283,33 +283,33 @@ class _PrinciplesSection extends StatelessWidget {
           title: '1 - Cross-Module Principles',
           accentColor: AppColors.primary,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         Text(
           '6 nguyên tắc bắt buộc khi kết nối Arena - Prediction Markets. Vi phạm = reject trong code review.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1.5,
+            height: AppSpacing.arenaBridgeIntroLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         for (final principle in snapshot.principles) ...[
           _PrincipleCard(principle: principle),
           if (principle != snapshot.principles.last)
-            const SizedBox(height: AppSpacing.x4),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         ],
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         const VitModuleSectionHeader(
           title: 'Allowed vs Not Allowed',
           accentColor: AppColors.buy,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         _RuleBoard(
           title: 'Allowed',
           icon: Icons.check_rounded,
           color: AppColors.buy,
           items: snapshot.allowedItems,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         _RuleBoard(
           title: 'Not Allowed',
           icon: Icons.close_rounded,
@@ -330,7 +330,9 @@ class _PrincipleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final tone = _toneColor(principle.tone);
     return VitCard(
-      constraints: const BoxConstraints(minHeight: 84),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.arenaBridgePrincipleMinHeight,
+      ),
       padding: const EdgeInsets.all(AppSpacing.x4),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -345,7 +347,9 @@ class _PrincipleCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 2),
+                      padding: const EdgeInsets.only(
+                        top: AppSpacing.arenaBridgeTinyGap,
+                      ),
                       child: Text(
                         '#${principle.number}',
                         style: AppTextStyles.micro.copyWith(
@@ -361,18 +365,18 @@ class _PrincipleCard extends StatelessWidget {
                         style: AppTextStyles.body.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: 1.25,
+                          height: AppSpacing.arenaBridgeTitleLineHeight,
                         ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   principle.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.45,
+                    height: AppSpacing.arenaBridgeBodyLineHeight,
                   ),
                 ),
               ],
@@ -407,7 +411,7 @@ class _RuleBoard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(icon, color: color, size: 15),
+              Icon(icon, color: color, size: AppSpacing.arenaBridgeChipIcon),
               const SizedBox(width: AppSpacing.x2),
               Text(
                 title,
@@ -418,10 +422,11 @@ class _RuleBoard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           for (final item in items) ...[
             _RuleRow(item: item, color: color),
-            if (item != items.last) const SizedBox(height: AppSpacing.x3),
+            if (item != items.last)
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           ],
         ],
       ),
@@ -443,7 +448,7 @@ class _RuleRow extends StatelessWidget {
         Icon(
           item.allowed ? Icons.check_rounded : Icons.close_rounded,
           color: color,
-          size: 13,
+          size: AppSpacing.arenaBridgeMicroIcon,
         ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
@@ -455,15 +460,15 @@ class _RuleRow extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.35,
+                  height: AppSpacing.arenaBridgeMetricLineHeight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x1),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
               Text(
                 item.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1.45,
+                  height: AppSpacing.arenaBridgeBodyLineHeight,
                 ),
               ),
             ],

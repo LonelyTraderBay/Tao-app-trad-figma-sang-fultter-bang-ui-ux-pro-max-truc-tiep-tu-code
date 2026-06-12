@@ -11,23 +11,20 @@ class _OrderSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-      decoration: BoxDecoration(
-        color: _marginPanel,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Column(
+      variant: VitCardVariant.inner,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 9,
         children: [
           _SummaryRow(
-            'Margin khả dụng',
+            'Margin kha dung',
             _formatMoney(available),
             AppColors.onAccent,
           ),
-          const SizedBox(height: 9),
-          _SummaryRow('Giá thanh lý (ước tính)', liquidationPrice, _marginRed),
-          const SizedBox(height: 9),
-          const _SummaryRow('Phí giao dịch (0.05%)', '--', AppColors.text2),
+          _SummaryRow('Liquidation estimate', liquidationPrice, _marginRed),
+          const _SummaryRow('Trading fee (0.05%)', '--', AppColors.text2),
         ],
       ),
     );
@@ -50,7 +47,6 @@ class _SummaryRow extends StatelessWidget {
             label,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              fontSize: 12,
               height: 1,
             ),
           ),
@@ -59,7 +55,6 @@ class _SummaryRow extends StatelessWidget {
           value,
           style: AppTextStyles.caption.copyWith(
             color: color,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
             height: 1,
@@ -85,23 +80,26 @@ class _MarginOrderReviewCard extends StatelessWidget {
       color: _marginAmber.withValues(alpha: .06),
       borderColor: _marginAmber.withValues(alpha: .28),
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        customGap: 10,
         children: [
           Text(
             'Margin order review',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.onAccent,
-              fontSize: 13,
               fontWeight: AppTextStyles.bold,
               height: 1.1,
             ),
           ),
-          const SizedBox(height: 10),
-          for (final check in checks) ...[
-            _Bullet(text: check, color: _marginAmber),
-            if (check != checks.last) const SizedBox(height: 7),
-          ],
+          VitPageContent(
+            padding: VitContentPadding.none,
+            customGap: 7,
+            children: [
+              for (final check in checks)
+                _Bullet(text: check, color: _marginAmber),
+            ],
+          ),
         ],
       ),
     );
@@ -123,25 +121,15 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCtaButton(
       key: MarginTradingPage.submitKey,
       height: 52,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: disabled
-            ? _marginPrimary.withValues(alpha: .06)
-            : (side == 'long' ? _marginGreen : _marginRed),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      onPressed: disabled ? null : () {},
+      variant: side == 'long'
+          ? VitCtaButtonVariant.success
+          : VitCtaButtonVariant.danger,
       child: Text(
-        'Mở ${side == 'long' ? 'Long' : 'Short'} $pairSymbol (${leverage}x)',
-        style: AppTextStyles.body.copyWith(
-          color: disabled
-              ? AppColors.text3.withValues(alpha: .45)
-              : AppColors.onAccent,
-          fontSize: 15,
-          fontWeight: AppTextStyles.bold,
-        ),
+        'Open ${side == 'long' ? 'Long' : 'Short'} $pairSymbol (${leverage}x)',
       ),
     );
   }

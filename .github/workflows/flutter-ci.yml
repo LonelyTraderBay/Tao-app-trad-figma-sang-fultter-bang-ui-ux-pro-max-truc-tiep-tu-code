@@ -63,6 +63,22 @@ jobs:
       - name: Architecture guardrails
         run: flutter test test/quality/architecture_baseline_guardrails_test.dart --reporter=compact
 
+      - name: Design token consistency artifact is current
+        run: dart run tool/design_token_consistency_audit.dart --check
+
+      - name: Upload design token consistency reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: design-token-consistency-audit
+          path: |
+            docs/02_FLUTTER_MIGRATION/VitTrade-Design-Token-Consistency-Audit.md
+            docs/02_FLUTTER_MIGRATION/VitTrade-Design-Token-Consistency-Audit.csv
+          if-no-files-found: error
+
+      - name: Design token consistency guardrails
+        run: flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact
+
       - name: Product copy guardrails
         run: >
           flutter test

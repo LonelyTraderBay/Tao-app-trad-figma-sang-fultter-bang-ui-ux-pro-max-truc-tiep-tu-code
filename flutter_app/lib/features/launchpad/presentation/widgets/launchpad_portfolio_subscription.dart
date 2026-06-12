@@ -36,7 +36,7 @@ class _SubscriptionCard extends StatelessWidget {
                       subscription.projectName,
                       style: AppTextStyles.baseMedium.copyWith(
                         fontWeight: AppTextStyles.bold,
-                        height: 1.15,
+                        height: AppSpacing.launchpadLineHeightLabel,
                       ),
                     ),
                     Text(
@@ -118,8 +118,8 @@ class _SubscriptionAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 44,
-      height: 44,
+      width: AppSpacing.launchpadBox44,
+      height: AppSpacing.launchpadBox44,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: subscription.accent.withValues(alpha: .12),
@@ -273,7 +273,7 @@ class _InlineNotice extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: 1.25,
+              height: AppSpacing.launchpadLineHeightBody,
             ),
           ),
         ),
@@ -354,7 +354,7 @@ class _StatusPill extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: style.color,
           fontWeight: AppTextStyles.bold,
-          height: 1.2,
+          height: AppSpacing.launchpadLineHeightShort,
         ),
       ),
     );

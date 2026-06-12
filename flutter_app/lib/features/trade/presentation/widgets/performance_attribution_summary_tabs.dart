@@ -72,16 +72,16 @@ class _MetricTile extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
+              height: 1.15,
             ),
           ),
           const SizedBox(height: 7),
           Text(
             value,
-            style: AppTextStyles.sectionTitle.copyWith(
+            style: AppTextStyles.baseMedium.copyWith(
               color: valueColor,
               fontWeight: FontWeight.w800,
-              fontSize: 18,
+              height: 1.15,
             ),
           ),
           const SizedBox(height: 3),
@@ -89,7 +89,7 @@ class _MetricTile extends StatelessWidget {
             caption,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
+              height: 1.15,
             ),
           ),
         ],
@@ -113,9 +113,10 @@ class _AttributionTabs extends StatelessWidget {
       ('correlation', 'Correlation'),
     ];
 
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       height: 54,
-      color: AppColors.surface,
+      padding: EdgeInsets.zero,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -137,7 +138,6 @@ class _AttributionTabs extends StatelessWidget {
                                 ? _attributionPrimary
                                 : AppColors.text3,
                             fontWeight: FontWeight.w800,
-                            fontSize: 12,
                           ),
                         ),
                       ),

@@ -26,7 +26,10 @@ class _AbiEntryCard extends StatelessWidget {
             left: 0,
             top: 0,
             bottom: 0,
-            child: Container(width: 3, color: change.color),
+            child: Container(
+              width: AppSpacing.launchpadVerticalMarkerWidth,
+              color: change.color,
+            ),
           ),
           Column(
             children: [
@@ -52,7 +55,7 @@ class _AbiEntryCard extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                     style: AppTextStyles.base.copyWith(
                                       color: AppColors.text1,
-                                      fontWeight: FontWeight.w900,
+                                      fontWeight: AppTextStyles.heavy,
                                     ),
                                   ),
                                 ),
@@ -88,7 +91,7 @@ class _AbiEntryCard extends StatelessWidget {
                             ? Icons.keyboard_arrow_up_rounded
                             : Icons.keyboard_arrow_down_rounded,
                         color: AppColors.text3,
-                        size: 18,
+                        size: AppSpacing.launchpadIcon2xl,
                       ),
                     ],
                   ),
@@ -111,13 +114,17 @@ class _ChangeIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 30,
-      height: 30,
+      width: AppSpacing.launchpadBox30,
+      height: AppSpacing.launchpadBox30,
       decoration: BoxDecoration(
         color: change.color.withValues(alpha: .14),
         borderRadius: AppRadii.mdRadius,
       ),
-      child: Icon(change.icon, color: change.color, size: 16),
+      child: Icon(
+        change.icon,
+        color: change.color,
+        size: AppSpacing.launchpadIconXl,
+      ),
     );
   }
 }
@@ -144,14 +151,14 @@ class _SmallBadge extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) ...[
-            Icon(icon, color: color, size: 10),
-            const SizedBox(width: 2),
+            Icon(icon, color: color, size: AppSpacing.launchpadIconXxs),
+            const SizedBox(width: AppSpacing.launchpadGapXxs),
           ],
           Text(
             label,
             style: AppTextStyles.micro.copyWith(
               color: color,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.heavy,
             ),
           ),
         ],
@@ -228,7 +235,7 @@ class _AbiEntryDetails extends StatelessWidget {
                   Icon(
                     entry.riskLevel.icon,
                     color: entry.riskLevel.color,
-                    size: 14,
+                    size: AppSpacing.launchpadIconMd,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(
@@ -236,7 +243,7 @@ class _AbiEntryDetails extends StatelessWidget {
                       entry.riskNote!,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1.35,
+                        height: AppSpacing.launchpadLineHeightDense,
                       ),
                     ),
                   ),
@@ -283,8 +290,8 @@ class _SignatureBlock extends StatelessWidget {
               value,
               style: AppTextStyles.micro.copyWith(
                 color: color,
-                fontWeight: FontWeight.w800,
-                height: 1.35,
+                fontWeight: AppTextStyles.extraBold,
+                height: AppSpacing.launchpadLineHeightDense,
               ),
             ),
           ),
@@ -316,7 +323,7 @@ class _DetailLine extends StatelessWidget {
             value,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text1,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
             ),
           ),
         ],
@@ -344,7 +351,7 @@ class _RiskWarning extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: 16,
+            size: AppSpacing.launchpadIconXl,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -352,7 +359,7 @@ class _RiskWarning extends StatelessWidget {
               'Day la so sanh ABI tu dong. Can kiem tra source code thuc te de hieu day du anh huong cua cac thay doi.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.45,
+                height: AppSpacing.launchpadLineHeightReadable,
               ),
             ),
           ),

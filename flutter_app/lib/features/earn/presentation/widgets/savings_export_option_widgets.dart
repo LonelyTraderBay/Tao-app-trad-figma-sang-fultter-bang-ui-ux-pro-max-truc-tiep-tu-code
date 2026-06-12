@@ -55,7 +55,11 @@ class _FormatCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.x4),
       child: Column(
         children: [
-          Icon(Icons.description_outlined, color: color, size: 24),
+          Icon(
+            Icons.description_outlined,
+            color: color,
+            size: AppSpacing.earnExportFormatIcon,
+          ),
           const SizedBox(height: AppSpacing.x3),
           Text(
             format.label,
@@ -71,7 +75,7 @@ class _FormatCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.25,
+              height: AppSpacing.earnExportCardLineHeight,
             ),
           ),
         ],

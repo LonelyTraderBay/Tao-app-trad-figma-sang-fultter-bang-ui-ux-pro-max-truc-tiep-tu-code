@@ -45,7 +45,7 @@ class _AdvancedMetricsGrid extends StatelessWidget {
       crossAxisCount: 2,
       crossAxisSpacing: 12,
       mainAxisSpacing: 12,
-      childAspectRatio: 1.48,
+      childAspectRatio: 1.22,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       children: [for (final item in items) _AdvancedMetricCard(item: item)],
@@ -89,7 +89,6 @@ class _AdvancedMetricCard extends StatelessWidget {
             item.label,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              fontSize: 12,
               height: 1,
             ),
           ),
@@ -98,9 +97,7 @@ class _AdvancedMetricCard extends StatelessWidget {
             item.value,
             style: AppTextStyles.sectionTitle.copyWith(
               color: item.valueColor ?? AppColors.text1,
-              fontSize: 20,
               height: 1,
-              fontFamily: 'Roboto',
             ),
           ),
           const SizedBox(height: 10),
@@ -108,7 +105,6 @@ class _AdvancedMetricCard extends StatelessWidget {
             item.helper,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -163,7 +159,6 @@ class _PerformanceSummaryCard extends StatelessWidget {
             'Performance Summary',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -192,13 +187,10 @@ class _SummaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       constraints: const BoxConstraints(minHeight: 48),
       padding: const EdgeInsets.fromLTRB(10, 9, 10, 9),
-      decoration: BoxDecoration(
-        color: _analyticsPanel2,
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: Row(
         children: [
           Expanded(
@@ -206,7 +198,6 @@ class _SummaryRow extends StatelessWidget {
               label,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                fontSize: 12,
                 height: 1,
               ),
             ),
@@ -219,10 +210,8 @@ class _SummaryRow extends StatelessWidget {
                 value,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
-                  fontFamily: 'Roboto',
                 ),
               ),
               if (suffix.isNotEmpty) ...[
@@ -231,7 +220,6 @@ class _SummaryRow extends StatelessWidget {
                   suffix,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1,
                   ),
                 ),
@@ -249,13 +237,10 @@ class _RatingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-      decoration: BoxDecoration(
-        color: _analyticsGreen.withValues(alpha: .08),
-        border: Border.all(color: _analyticsGreen.withValues(alpha: .22)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _analyticsGreen.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -273,7 +258,6 @@ class _RatingCard extends StatelessWidget {
                   'Excellent Performance (A+)',
                   style: AppTextStyles.caption.copyWith(
                     color: _analyticsGreen,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -283,7 +267,6 @@ class _RatingCard extends StatelessWidget {
                   'Your bots are performing above average. Sharpe ratio > 1.5, win rate > 65%, and profit factor > 2 indicate strong risk-adjusted returns. Keep monitoring and adjusting as market conditions change.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1.6,
                   ),
                 ),
@@ -304,15 +287,7 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        color: _analyticsPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: child,
-    );
+    return VitCard(padding: padding, child: child);
   }
 }
 
@@ -325,12 +300,14 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: 4,
           height: 15,
-          decoration: BoxDecoration(
-            color: _analyticsPrimary,
-            borderRadius: BorderRadius.circular(3),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: _analyticsPrimary,
+              borderRadius: AppRadii.smRadius,
+            ),
           ),
         ),
         const SizedBox(width: 7),
@@ -338,7 +315,6 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

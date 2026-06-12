@@ -25,7 +25,7 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Text(
             value,
             maxLines: 1,
@@ -191,7 +191,7 @@ class _TinyPill extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          height: 1.2,
+          height: AppSpacing.referralLineHeightShort,
         ),
       ),
     );
@@ -243,7 +243,7 @@ class _ProgressBar extends StatelessWidget {
     return ClipRRect(
       borderRadius: AppRadii.xsRadius,
       child: SizedBox(
-        height: 8,
+        height: AppSpacing.referralProgressHeight,
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -269,8 +269,8 @@ class _Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 34,
-      height: 34,
+      width: AppSpacing.referralCampaignIconBox,
+      height: AppSpacing.referralCampaignIconBox,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),

@@ -10,8 +10,8 @@ class _MetricGrid extends StatelessWidget {
     return GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: 2,
-      childAspectRatio: 1.72,
+      crossAxisCount: AppSpacing.savingsLadderMetricGridColumns,
+      childAspectRatio: AppSpacing.savingsLadderGridAspect,
       crossAxisSpacing: AppSpacing.x3,
       mainAxisSpacing: AppSpacing.x3,
       children: [
@@ -121,12 +121,14 @@ class _DurationBreakdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final total = _totalAllocated(rungs);
-    return Column(
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: AppSpacing.x3,
       children: [
         for (final days in [30, 60, 90]) ...[
           if (rungs.any((rung) => rung.lockDays == days))
             _DurationTile(days: days, rungs: rungs, totalUsd: total),
-          if (days != 90) const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -213,8 +215,8 @@ class _BreakdownRow extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: 9,
-              height: 9,
+              width: AppSpacing.savingsLadderBreakdownDot,
+              height: AppSpacing.savingsLadderBreakdownDot,
               decoration: BoxDecoration(color: color, shape: BoxShape.circle),
             ),
             const SizedBox(width: AppSpacing.x2),
@@ -238,9 +240,9 @@ class _BreakdownRow extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         ClipRRect(
-          borderRadius: BorderRadius.circular(999),
+          borderRadius: AppRadii.pillRadius,
           child: LinearProgressIndicator(
-            minHeight: 6,
+            minHeight: AppSpacing.savingsLadderProgressHeight,
             value: percent.clamp(0.0, 1.0),
             color: color,
             backgroundColor: AppColors.surface3,
@@ -274,8 +276,8 @@ class _LiquidityCard extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: 66,
-                height: 66,
+                width: AppSpacing.savingsLadderLiquidityRing,
+                height: AppSpacing.savingsLadderLiquidityRing,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -313,7 +315,7 @@ class _LiquidityCard extends StatelessWidget {
                           : 'Hầu hết vốn bị khóa dài hạn. Cân nhắc thêm bậc 30D.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        height: 1.3,
+                        height: AppSpacing.savingsLadderLiquidityLineHeight,
                       ),
                     ),
                   ],
@@ -455,7 +457,7 @@ class _OptimizationTip extends StatelessWidget {
                   text,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.35,
+                    height: AppSpacing.savingsLadderDisclaimerLineHeight,
                   ),
                 ),
               ],
@@ -520,8 +522,8 @@ class _SectionTitle extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 15,
+          width: AppSpacing.savingsLadderSectionMarkerWidth,
+          height: AppSpacing.savingsLadderSectionMarkerHeight,
           decoration: const BoxDecoration(
             color: AppColors.primary,
             borderRadius: AppRadii.xsRadius,

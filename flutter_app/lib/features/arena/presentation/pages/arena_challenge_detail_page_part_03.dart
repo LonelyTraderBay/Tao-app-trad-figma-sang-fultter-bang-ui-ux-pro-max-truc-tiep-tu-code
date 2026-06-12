@@ -18,7 +18,7 @@ class _SafetySnapshotCard extends StatelessWidget {
               const Icon(
                 Icons.health_and_safety_outlined,
                 color: AppColors.buy,
-                size: 18,
+                size: AppSpacing.arenaChallengeLgIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -32,10 +32,10 @@ class _SafetySnapshotCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           for (final row in rows)
             _SummaryRow(label: row.label, value: row.value),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           _InlineAction(
             label: 'An toàn & báo cáo',
             icon: Icons.flag_outlined,
@@ -68,8 +68,8 @@ class _ActionStack extends StatelessWidget {
         Row(
           children: [
             VitCard(
-              width: 52,
-              height: 52,
+              width: AppSpacing.arenaChallengeActionShareSize,
+              height: AppSpacing.arenaChallengeActionShareSize,
               radius: VitCardRadius.lg,
               onTap: () => HapticFeedback.selectionClick(),
               child: const Center(
@@ -87,7 +87,7 @@ class _ActionStack extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Row(
           children: [
             Expanded(
@@ -135,7 +135,10 @@ class _CommunityRulesLink extends StatelessWidget {
     return Center(
       child: TextButton.icon(
         onPressed: onTap,
-        icon: const Icon(Icons.menu_book_outlined, size: 16),
+        icon: const Icon(
+          Icons.menu_book_outlined,
+          size: AppSpacing.arenaChallengeCommunityIcon,
+        ),
         label: Text(
           'Quy tắc cộng đồng',
           style: AppTextStyles.caption.copyWith(
@@ -165,7 +168,7 @@ class _RowsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         VitModuleSectionHeader(title: title, accentColor: accentColor),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         VitCard(
           padding: const EdgeInsets.all(AppSpacing.x4),
           child: Column(
@@ -194,7 +197,7 @@ class _SummaryRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 108,
+            width: AppSpacing.arenaChallengeSummaryLabelWidth,
             child: Text(
               label,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -208,7 +211,7 @@ class _SummaryRow extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1.35,
+                height: AppSpacing.arenaChallengeSummaryLineHeight,
               ),
             ),
           ),
@@ -251,12 +254,12 @@ class _InfoCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   text,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.arenaChallengeBodyLineHeight,
                   ),
                 ),
               ],
@@ -287,14 +290,14 @@ class _InfoBanner extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color, size: 15),
+          Icon(icon, color: color, size: AppSpacing.arenaChallengeBannerIcon),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: color,
-                height: 1.4,
+                height: AppSpacing.arenaChallengeBannerLineHeight,
                 fontWeight: AppTextStyles.medium,
               ),
             ),
@@ -328,7 +331,11 @@ class _SecondaryAction extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, color: color, size: 14),
+          Icon(
+            icon,
+            color: color,
+            size: AppSpacing.arenaChallengeSecondaryIcon,
+          ),
           const SizedBox(width: AppSpacing.x1),
           Flexible(
             child: Text(
@@ -384,7 +391,11 @@ class _InlineAction extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.x1),
-              Icon(icon, color: color, size: 14),
+              Icon(
+                icon,
+                color: color,
+                size: AppSpacing.arenaChallengeInlineIcon,
+              ),
             ],
           ),
         ),
@@ -412,11 +423,11 @@ class _StatColumn extends StatelessWidget {
           value,
           style: AppTextStyles.sectionTitle.copyWith(
             color: color,
-            fontWeight: FontWeight.w900,
+            fontWeight: AppTextStyles.heavy,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
-        const SizedBox(height: AppSpacing.x1),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -432,8 +443,8 @@ class _LiveDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 8,
-      height: 8,
+      width: AppSpacing.arenaChallengeLiveDot,
+      height: AppSpacing.arenaChallengeLiveDot,
       decoration: const BoxDecoration(
         color: AppColors.buy,
         shape: BoxShape.circle,
@@ -450,7 +461,7 @@ class _SmallIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(icon, color: color, size: 17);
+    return Icon(icon, color: color, size: AppSpacing.arenaChallengeMdIcon);
   }
 }
 
@@ -463,14 +474,18 @@ class _IconBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 38,
-      height: 38,
+      width: AppSpacing.arenaChallengeIconBubble,
+      height: AppSpacing.arenaChallengeIconBubble,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.mdRadius,
         border: Border.all(color: color.withValues(alpha: .22)),
       ),
-      child: Icon(icon, color: color, size: 19),
+      child: Icon(
+        icon,
+        color: color,
+        size: AppSpacing.arenaChallengeIconBubbleIcon,
+      ),
     );
   }
 }
@@ -485,8 +500,8 @@ class _InitialBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final initial = name.trim().isEmpty ? '?' : name.trim()[0].toUpperCase();
     return Container(
-      width: 16,
-      height: 16,
+      width: AppSpacing.arenaChallengeInitialBadge,
+      height: AppSpacing.arenaChallengeInitialBadge,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .16),
@@ -497,7 +512,7 @@ class _InitialBadge extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.arenaChallengeInitialLineHeight,
         ),
       ),
     );

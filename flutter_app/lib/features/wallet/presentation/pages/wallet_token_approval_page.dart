@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 
 class WalletTokenApprovalPage extends ConsumerStatefulWidget {
@@ -77,7 +78,7 @@ class _WalletTokenApprovalPageState
                 child: SingleChildScrollView(
                   key: WalletTokenApprovalPage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
-                  child: _contentForTab(controller),
+                  child: _tabSurface(_contentForTab(controller)),
                 ),
               ),
             ],
@@ -133,6 +134,15 @@ class _WalletTokenApprovalPageState
           onRevokeAll: () => _showRevokeSheet(controller, null),
         ),
       ],
+    );
+  }
+
+  Widget _tabSurface(Widget child) {
+    return VitCard(
+      variant: VitCardVariant.standard,
+      radius: VitCardRadius.md,
+      padding: const EdgeInsets.all(16),
+      child: child,
     );
   }
 

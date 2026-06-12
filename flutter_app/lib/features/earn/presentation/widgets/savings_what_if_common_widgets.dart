@@ -22,7 +22,7 @@ class _MetricTile extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
@@ -67,7 +67,7 @@ class _ImpactBadge extends StatelessWidget {
                   ? Icons.arrow_upward_rounded
                   : Icons.arrow_downward_rounded,
               color: color,
-              size: 13,
+              size: AppSpacing.savingsWhatIfBadgeIcon,
             ),
             const SizedBox(width: AppSpacing.x1),
             Text(
@@ -94,8 +94,8 @@ class _SectionTitle extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 16,
+          width: AppSpacing.savingsWhatIfSectionMarkerWidth,
+          height: AppSpacing.savingsWhatIfSectionMarkerHeight,
           decoration: const BoxDecoration(
             color: AppColors.primary,
             borderRadius: AppRadii.xsRadius,
@@ -129,11 +129,14 @@ class _RiskPill extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.x2,
-          vertical: 2,
+          vertical: AppSpacing.savingsWhatIfRiskPillPadV,
         ),
         child: Text(
           _riskLabel(level),
-          style: _microBold.copyWith(color: color, height: 1.2),
+          style: _microBold.copyWith(
+            color: color,
+            height: AppSpacing.savingsWhatIfRiskPillLineHeight,
+          ),
         ),
       ),
     );
@@ -167,13 +170,13 @@ class _RoundIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.savingsWhatIfRoundIconBox,
+      height: AppSpacing.savingsWhatIfRoundIconBox,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .14),
         borderRadius: AppRadii.lgRadius,
       ),
-      child: Icon(icon, color: color, size: 18),
+      child: Icon(icon, color: color, size: AppSpacing.savingsWhatIfInlineIcon),
     );
   }
 }
@@ -193,15 +196,16 @@ class _Disclaimer extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.warning_amber_rounded, color: tone, size: 18),
+          Icon(
+            Icons.warning_amber_rounded,
+            color: tone,
+            size: AppSpacing.savingsWhatIfInlineIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               text,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontSize: 12,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],
@@ -233,7 +237,7 @@ class _InfoCallout extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color, size: 18),
+          Icon(icon, color: color, size: AppSpacing.savingsWhatIfInlineIcon),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
@@ -243,13 +247,10 @@ class _InfoCallout extends StatelessWidget {
                   title,
                   style: _captionBold.copyWith(color: AppColors.text1),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   text,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],
             ),
@@ -269,8 +270,8 @@ class _ScoreRing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 64,
-      height: 64,
+      width: AppSpacing.savingsWhatIfScoreRing,
+      height: AppSpacing.savingsWhatIfScoreRing,
       child: CustomPaint(
         painter: _RingPainter(score: score, color: color),
         child: Center(
@@ -299,8 +300,8 @@ class _LegendDot extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 9,
-          height: 9,
+          width: AppSpacing.savingsWhatIfLegendDot,
+          height: AppSpacing.savingsWhatIfLegendDot,
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         const SizedBox(width: AppSpacing.x2),

@@ -21,14 +21,14 @@ class _TransactionDetailContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SummaryCard(tx: tx, type: type, status: status),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.walletTransactionSummaryTopGap),
         _ProgressCard(tx: tx),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.walletTransactionSummaryTopGap),
         _DetailsCard(rows: details, onCopy: onCopy),
-        const SizedBox(height: 18),
+        const SizedBox(height: AppSpacing.walletTransactionProgressBottomGap),
         if (tx.txHash != null) ...[
           const _ExplorerButton(),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.walletTransactionDetailsBottomPad),
         ],
         _SupportButton(onTap: onSupport),
       ],
@@ -49,67 +49,49 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(20, 21, 20, 20),
+    return _VitCardSurface(
+      padding: AppSpacing.walletTransactionSummaryPadding,
       child: Column(
         children: [
           Container(
-            width: 56,
-            height: 56,
+            width: AppSpacing.walletTransactionSummaryIconSize,
+            height: AppSpacing.walletTransactionSummaryIconSize,
             decoration: BoxDecoration(
               color: type.color.withValues(alpha: .13),
               borderRadius: AppRadii.cardRadius,
             ),
             alignment: Alignment.center,
-            child: Icon(type.icon, color: AppColors.text1, size: 29),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            type.label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 13,
-              height: 1,
+            child: Icon(
+              type.icon,
+              color: AppColors.text1,
+              size: AppSpacing.walletTransactionSummaryStatusIcon,
             ),
           ),
-          const SizedBox(height: 21),
+          const SizedBox(height: AppSpacing.walletTransactionSummaryTopGap),
+          Text(
+            type.label,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+          ),
+          const SizedBox(
+            height: AppSpacing.walletTransactionSummarySectionVPad,
+          ),
           Text(
             '${type.isDebit ? '-' : '+'}${_formatAmount(tx)} ${tx.asset}',
             textAlign: TextAlign.center,
             style: AppTextStyles.heroNumber.copyWith(
               color: type.color,
-              fontSize: 26,
-              fontWeight: FontWeight.w800,
-              fontFamily: 'Roboto',
+              fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
             ),
           ),
-          const SizedBox(height: 21),
-          Container(
-            height: 34,
-            padding: const EdgeInsets.symmetric(horizontal: 13),
-            decoration: BoxDecoration(
-              color: status.color.withValues(alpha: .12),
-              borderRadius: AppRadii.cardRadius,
-              border: Border.all(color: status.color.withValues(alpha: .28)),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(status.icon, color: status.color, size: 15),
-                const SizedBox(width: 6),
-                Text(
-                  status.label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: status.color,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w800,
-                    height: 1,
-                  ),
-                ),
-              ],
-            ),
+          const SizedBox(
+            height: AppSpacing.walletTransactionSummarySectionVPad,
+          ),
+          VitStatusPill(
+            label: status.label,
+            icon: status.icon,
+            status: _detailPillStatus(tx.status),
+            size: VitStatusPillSize.lg,
           ),
         ],
       ),
@@ -143,20 +125,16 @@ class _ProgressCard extends StatelessWidget {
       ),
     ];
 
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 18),
+    return _VitCardSurface(
+      padding: AppSpacing.walletTransactionProgressCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Tiến trình',
-            style: AppTextStyles.body.copyWith(
-              fontSize: 16,
-              fontWeight: FontWeight.w800,
-              height: 1,
-            ),
+            style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: 23),
+          const SizedBox(height: AppSpacing.walletTransactionStepSpacing),
           for (var i = 0; i < steps.length; i++)
             _ProgressRow(step: steps[i], isLast: i == steps.length - 1),
         ],
@@ -184,22 +162,26 @@ class _ProgressRow extends StatelessWidget {
         Column(
           children: [
             Container(
-              width: 13,
-              height: 13,
+              width: AppSpacing.walletTransactionProgressDotSize,
+              height: AppSpacing.walletTransactionProgressDotSize,
               decoration: BoxDecoration(color: color, shape: BoxShape.circle),
             ),
             if (!isLast)
               Container(
-                width: 2,
-                height: 36,
-                margin: const EdgeInsets.symmetric(vertical: 4),
+                width: AppSpacing.walletTransactionProgressLineWidth,
+                height: AppSpacing.walletTransactionStepLineHeight,
+                margin: const EdgeInsets.symmetric(
+                  vertical: AppSpacing.walletTransactionProgressLineSpacing,
+                ),
                 color: step.done ? _detailGreen : AppColors.borderSolid,
               ),
           ],
         ),
-        const SizedBox(width: 13),
+        const SizedBox(width: AppSpacing.walletTransactionSummarySectionVPad),
         Padding(
-          padding: EdgeInsets.only(bottom: isLast ? 0 : 17),
+          padding: EdgeInsets.only(
+            bottom: isLast ? 0 : AppSpacing.walletTransactionSummarySectionVPad,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -209,20 +191,16 @@ class _ProgressRow extends StatelessWidget {
                   color: step.done || step.failed
                       ? AppColors.text1
                       : AppColors.text3,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w800,
-                  height: 1,
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
               if (step.time != null) ...[
-                const SizedBox(height: 9),
+                const SizedBox(
+                  height: AppSpacing.walletTransactionProgressVerticalGap,
+                ),
                 Text(
                   step.time!,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 12,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ],
@@ -241,19 +219,17 @@ class _DetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
+    return _VitCardSurface(
       padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
+            padding: AppSpacing.walletTransactionSummaryHeaderPadding,
             child: Text(
               'Thông tin chi tiết',
               style: AppTextStyles.body.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.w800,
-                height: 1,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
           ),
@@ -273,64 +249,70 @@ class _DetailInfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 44),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              row.label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontSize: 13,
-                height: 1,
-              ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Divider(
+          height: AppSpacing.walletHistoryDividerHeight,
+          thickness: AppSpacing.walletHistoryDividerHeight,
+          color: AppColors.divider,
+        ),
+        ConstrainedBox(
+          constraints: const BoxConstraints(
+            minHeight: AppSpacing.walletTransactionInfoRowMinHeight,
+          ),
+          child: Padding(
+            padding: AppSpacing.walletTransactionDetailRowPadding,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    row.label,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.walletHistoryFilterGap),
+                Flexible(
+                  child: Text(
+                    row.value,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.right,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                ),
+                if (row.copyable) ...[
+                  const SizedBox(width: AppSpacing.walletHistoryEndListGap),
+                  GestureDetector(
+                    key: TransactionDetailPage.copyTxIdKey,
+                    onTap: onCopy,
+                    behavior: HitTestBehavior.opaque,
+                    child: Container(
+                      width: AppSpacing.walletTransactionCopyIconSize,
+                      height: AppSpacing.walletTransactionCopyIconSize,
+                      decoration: BoxDecoration(
+                        color: AppColors.hoverBg,
+                        borderRadius: AppRadii.smRadius,
+                      ),
+                      child: const Icon(
+                        Icons.copy_rounded,
+                        color: AppColors.text2,
+                        size: AppSpacing.walletTransactionCopyIconGlyph,
+                      ),
+                    ),
+                  ),
+                ],
+              ],
             ),
           ),
-          const SizedBox(width: 12),
-          Flexible(
-            child: Text(
-              row.value,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.right,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontSize: 13,
-                fontWeight: FontWeight.w800,
-                fontFamily: 'Roboto',
-                fontFeatures: AppTextStyles.tabularFigures,
-                height: 1,
-              ),
-            ),
-          ),
-          if (row.copyable) ...[
-            const SizedBox(width: 10),
-            GestureDetector(
-              key: TransactionDetailPage.copyTxIdKey,
-              onTap: onCopy,
-              behavior: HitTestBehavior.opaque,
-              child: Container(
-                width: 27,
-                height: 27,
-                decoration: BoxDecoration(
-                  color: AppColors.hoverBg,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Icon(
-                  Icons.copy_rounded,
-                  color: AppColors.text2,
-                  size: 14,
-                ),
-              ),
-            ),
-          ],
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -340,31 +322,26 @@ class _ExplorerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       key: TransactionDetailPage.explorerKey,
-      height: 48,
+      height: AppSpacing.walletTransactionExplorerHeight,
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: _detailPanel2,
-        border: Border.all(color: _detailPrimary.withValues(alpha: .28)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.inner,
+      borderColor: _detailPrimary.withValues(alpha: .28),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Icon(
             Icons.open_in_new_rounded,
             color: _detailPrimary,
-            size: 16,
+            size: AppSpacing.walletTransactionActionIcon,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.rowGapCompact),
           Text(
             'Xem trên Explorer',
             style: AppTextStyles.caption.copyWith(
               color: _detailPrimary,
-              fontSize: 14,
-              fontWeight: FontWeight.w800,
-              height: 1,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
         ],

@@ -162,7 +162,10 @@ class _QuickTogglesCard extends StatelessWidget {
             enabled: vibrate,
             onTap: onVibrate,
           ),
-          const Divider(color: AppColors.divider, height: 1),
+          const Divider(
+            color: AppColors.divider,
+            height: AppSpacing.launchpadDividerHeight,
+          ),
           _QuickToggleRow(
             id: 'dnd',
             icon: Icons.nightlight_round,

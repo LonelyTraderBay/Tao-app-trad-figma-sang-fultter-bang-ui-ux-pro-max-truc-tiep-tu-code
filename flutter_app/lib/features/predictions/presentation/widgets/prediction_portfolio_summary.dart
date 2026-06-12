@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/domain/entities/predictions_entities.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
@@ -24,7 +25,7 @@ class PredictionPortfolioSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final pnlColor = snapshot.totalPnl >= 0 ? AppColors.buy : AppColors.sell;
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 15, 20, 20),
+      padding: AppSpacing.predictionPortfolioSummaryPadding,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
@@ -49,17 +50,15 @@ class PredictionPortfolioSummaryCard extends StatelessWidget {
             children: [
               Text(
                 'Portfolio Value',
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.badge.copyWith(
                   color: AppColors.portfolioTextDim,
-                  fontSize: 12,
-                  fontWeight: AppTextStyles.bold,
                 ),
               ),
               const Spacer(),
               SizedBox(
                 key: predictionPortfolioVisibilityToggleKey,
-                width: 32,
-                height: 32,
+                width: AppSpacing.predictionPortfolioVisibilityButton,
+                height: AppSpacing.predictionPortfolioVisibilityButton,
                 child: IconButton(
                   onPressed: onToggleHidden,
                   padding: EdgeInsets.zero,
@@ -68,34 +67,26 @@ class PredictionPortfolioSummaryCard extends StatelessWidget {
                         ? Icons.visibility_off_outlined
                         : Icons.visibility_outlined,
                     color: AppColors.portfolioTextDim,
-                    size: 17,
+                    size: AppSpacing.predictionPortfolioVisibilityIcon,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.predictionPortfolioValueGap),
           Text(
             isHidden
                 ? '\u2022\u2022\u2022\u2022\u2022\u2022'
                 : formatPredictionPortfolioMoney(snapshot.totalCurrentValue),
-            style: AppTextStyles.heroNumber.copyWith(
-              color: AppColors.onAccent,
-              fontSize: 29,
-              height: 1.05,
-              fontWeight: FontWeight.w800,
-            ),
+            style: AppTextStyles.amountMd.copyWith(color: AppColors.onAccent),
           ),
           if (!isHidden) ...[
-            const SizedBox(height: 6),
+            const SizedBox(height: AppSpacing.predictionPortfolioPnlGap),
             Row(
               children: [
                 Flexible(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 6,
-                    ),
+                    padding: AppSpacing.predictionPortfolioPnlPillPadding,
                     decoration: BoxDecoration(
                       color: pnlColor.withValues(alpha: .16),
                       border: Border.all(
@@ -111,19 +102,19 @@ class PredictionPortfolioSummaryCard extends StatelessWidget {
                               ? Icons.trending_up_rounded
                               : Icons.trending_down_rounded,
                           color: pnlColor,
-                          size: 13,
+                          size: AppSpacing.predictionPortfolioPnlIcon,
                         ),
-                        const SizedBox(width: 4),
+                        const SizedBox(
+                          width: AppSpacing.predictionPortfolioPnlIconGap,
+                        ),
                         Flexible(
                           child: Text(
                             '${formatPredictionPortfolioSignedMoney(snapshot.totalPnl)} '
                             '(${snapshot.totalPnlPct.toStringAsFixed(1)}%)',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.micro.copyWith(
+                            style: AppTextStyles.badge.copyWith(
                               color: pnlColor,
-                              fontSize: 12,
-                              fontWeight: AppTextStyles.bold,
                               fontFeatures: AppTextStyles.tabularFigures,
                             ),
                           ),
@@ -132,7 +123,7 @@ class PredictionPortfolioSummaryCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.predictionPortfolioPnlIconGap),
                 Text(
                   'all time',
                   style: AppTextStyles.micro.copyWith(
@@ -143,7 +134,7 @@ class PredictionPortfolioSummaryCard extends StatelessWidget {
               ],
             ),
           ],
-          const SizedBox(height: 18),
+          const SizedBox(height: AppSpacing.predictionPortfolioSummaryStatsGap),
           Row(
             children: [
               Expanded(
@@ -152,7 +143,9 @@ class PredictionPortfolioSummaryCard extends StatelessWidget {
                   value: isHidden ? '\u2022\u2022' : '${snapshot.activeCount}',
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(
+                width: AppSpacing.predictionPortfolioSummaryStatGap,
+              ),
               Expanded(
                 child: PredictionPortfolioSummaryStat(
                   label: 'P/L',
@@ -164,7 +157,9 @@ class PredictionPortfolioSummaryCard extends StatelessWidget {
                         ),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(
+                width: AppSpacing.predictionPortfolioSummaryStatGap,
+              ),
               Expanded(
                 child: PredictionPortfolioSummaryStat(
                   label: 'Open Orders',
@@ -192,8 +187,8 @@ class PredictionPortfolioSummaryStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 51,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 9),
+      height: AppSpacing.predictionPortfolioSummaryStatHeight,
+      padding: AppSpacing.predictionPortfolioSummaryStatPadding,
       decoration: BoxDecoration(
         color: AppColors.onAccent.withValues(alpha: .10),
         borderRadius: AppRadii.cardRadius,
@@ -205,21 +200,16 @@ class PredictionPortfolioSummaryStat extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
+            style: AppTextStyles.numericMicro.copyWith(
               color: AppColors.portfolioTextMuted,
-              fontSize: 9,
-              fontWeight: AppTextStyles.bold,
             ),
           ),
           Text(
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.badge.copyWith(
               color: AppColors.onAccent,
-              fontSize: 13,
-              height: 1.2,
-              fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
@@ -235,7 +225,7 @@ class PredictionPortfolioSharesNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
+      padding: AppSpacing.predictionPortfolioSharesNotePadding,
       decoration: BoxDecoration(
         color: predictionPortfolioPrimary.withValues(alpha: .07),
         border: Border.all(
@@ -249,9 +239,9 @@ class PredictionPortfolioSharesNote extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: predictionPortfolioPrimary,
-            size: 15,
+            size: AppSpacing.predictionPortfolioSharesNoteIcon,
           ),
-          const SizedBox(width: 9),
+          const SizedBox(width: AppSpacing.predictionPortfolioSharesNoteGap),
           Expanded(
             child: Text.rich(
               TextSpan(
@@ -281,8 +271,6 @@ class PredictionPortfolioSharesNote extends StatelessWidget {
               ),
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
-                height: 1.45,
                 fontWeight: AppTextStyles.bold,
               ),
             ),

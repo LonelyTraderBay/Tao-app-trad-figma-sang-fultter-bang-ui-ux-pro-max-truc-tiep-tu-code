@@ -120,7 +120,10 @@ class _TransactionCard extends StatelessWidget {
           ),
           if (tx.costBasis != null) ...[
             const SizedBox(height: AppSpacing.x3),
-            const Divider(color: AppColors.borderSolid, height: 1),
+            const Divider(
+              color: AppColors.borderSolid,
+              height: AppSpacing.stakingTransactionReportingDividerHeight,
+            ),
             const SizedBox(height: AppSpacing.x3),
             Row(
               children: [
@@ -208,7 +211,8 @@ class _ExportTab extends StatelessWidget {
                       snapshot.taxNotice,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: 1.55,
+                        height: AppSpacing
+                            .stakingTransactionReportingBodyLineHeight,
                       ),
                     ),
                   ],

@@ -85,7 +85,8 @@ class _ProductCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text2,
-                              fontSize: 12,
+                              fontSize: AppSpacing
+                                  .stakingCommunityProductCaptionFontSize,
                             ),
                           ),
                         ),
@@ -102,7 +103,7 @@ class _ProductCard extends StatelessWidget {
                     product.apy,
                     style: AppTextStyles.sectionTitle.copyWith(
                       color: AppColors.buy,
-                      fontSize: 22,
+                      fontSize: AppSpacing.stakingCommunityProductRateFontSize,
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),

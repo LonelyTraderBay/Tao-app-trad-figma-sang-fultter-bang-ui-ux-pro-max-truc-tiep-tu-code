@@ -52,7 +52,6 @@ class _VenueCard extends StatelessWidget {
                   '#$rank',
                   style: AppTextStyles.caption.copyWith(
                     color: isWinner ? _venueAmber : AppColors.text2,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -69,7 +68,6 @@ class _VenueCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.body.copyWith(
                         color: AppColors.text1,
-                        fontSize: 14,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),
@@ -81,7 +79,6 @@ class _VenueCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 10,
                         height: 1,
                       ),
                     ),
@@ -142,13 +139,10 @@ class _MetricBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       height: 50,
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 7),
-      decoration: BoxDecoration(
-        color: _venuePanel2,
-        borderRadius: AppRadii.mdRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -159,7 +153,6 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
               height: 1,
             ),
           ),
@@ -170,7 +163,6 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 13,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
@@ -219,7 +211,6 @@ class _CostCard extends StatelessWidget {
             venue.venue,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -254,7 +245,6 @@ class _CostCard extends StatelessWidget {
                   'Total Cost',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -263,7 +253,6 @@ class _CostCard extends StatelessWidget {
                 '${venue.totalCost.toStringAsFixed(2)} bps',
                 style: AppTextStyles.caption.copyWith(
                   color: _venuePrimary,
-                  fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),

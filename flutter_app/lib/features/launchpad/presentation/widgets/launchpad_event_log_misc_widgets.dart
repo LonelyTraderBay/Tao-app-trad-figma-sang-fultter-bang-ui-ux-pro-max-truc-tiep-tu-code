@@ -42,7 +42,9 @@ class _FilterChipButton extends StatelessWidget {
               label,
               style: AppTextStyles.caption.copyWith(
                 color: active ? color : AppColors.text3,
-                fontWeight: active ? FontWeight.w800 : FontWeight.w600,
+                fontWeight: active
+                    ? AppTextStyles.extraBold
+                    : AppTextStyles.medium,
               ),
             ),
             if (count != null) ...[
@@ -102,19 +104,21 @@ class _SmallActionButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (icon != null) ...[
-              Icon(icon, color: color, size: 14),
+              Icon(icon, color: color, size: AppSpacing.launchpadIconMd),
               const SizedBox(width: AppSpacing.x1),
             ],
             Text(
               label,
               style: AppTextStyles.caption.copyWith(
                 color: color,
-                fontWeight: active ? FontWeight.w800 : FontWeight.w600,
+                fontWeight: active
+                    ? AppTextStyles.extraBold
+                    : AppTextStyles.medium,
               ),
             ),
             if (trailing != null) ...[
               const SizedBox(width: AppSpacing.x1),
-              Icon(trailing, color: color, size: 14),
+              Icon(trailing, color: color, size: AppSpacing.launchpadIconMd),
             ],
           ],
         ),
@@ -142,8 +146,8 @@ class _SelectBox extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 160),
-        width: 18,
-        height: 18,
+        width: AppSpacing.launchpadBox18,
+        height: AppSpacing.launchpadBox18,
         decoration: BoxDecoration(
           color: selected ? color : AppColors.transparent,
           border: Border.all(color: selected ? color : AppColors.borderSolid),
@@ -153,7 +157,7 @@ class _SelectBox extends StatelessWidget {
             ? const Icon(
                 Icons.check_rounded,
                 color: AppColors.onAccent,
-                size: 13,
+                size: AppSpacing.launchpadIconSm,
               )
             : null,
       ),
@@ -169,13 +173,17 @@ class _EventIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 30,
-      height: 30,
+      width: AppSpacing.launchpadBox30,
+      height: AppSpacing.launchpadBox30,
       decoration: BoxDecoration(
         color: level.color.withValues(alpha: .16),
         borderRadius: AppRadii.mdRadius,
       ),
-      child: Icon(level.icon, color: level.color, size: 16),
+      child: Icon(
+        level.icon,
+        color: level.color,
+        size: AppSpacing.launchpadIconXl,
+      ),
     );
   }
 }
@@ -200,7 +208,7 @@ class _LevelBadge extends StatelessWidget {
         level.label.toUpperCase(),
         style: AppTextStyles.micro.copyWith(
           color: level.color,
-          fontWeight: FontWeight.w900,
+          fontWeight: AppTextStyles.heavy,
         ),
       ),
     );
@@ -244,14 +252,14 @@ class _EmptyEvents extends StatelessWidget {
           const Icon(
             Icons.search_off_rounded,
             color: AppColors.text3,
-            size: 34,
+            size: AppSpacing.launchpadIcon7xl,
           ),
           const SizedBox(height: AppSpacing.x3),
           Text(
             'Khong tim thay event',
             style: AppTextStyles.base.copyWith(
               color: AppColors.text1,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
             ),
           ),
           const SizedBox(height: AppSpacing.x1),

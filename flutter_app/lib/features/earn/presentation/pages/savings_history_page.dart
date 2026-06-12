@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
@@ -75,7 +76,12 @@ class _SavingsHistoryPageState extends ConsumerState<SavingsHistoryPage> {
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
-                      _SummaryPills(snapshot: snapshot),
+                      VitCard(
+                        variant: VitCardVariant.standard,
+                        radius: VitCardRadius.md,
+                        padding: EdgeInsets.zero,
+                        child: _SummaryPills(snapshot: snapshot),
+                      ),
                       _SearchField(placeholder: snapshot.searchPlaceholder),
                       _TypeFilterRow(
                         active: _typeFilter,

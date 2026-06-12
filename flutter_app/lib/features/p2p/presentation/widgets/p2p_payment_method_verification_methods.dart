@@ -36,7 +36,7 @@ class _OwnershipHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pPaymentCardPadding,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +51,7 @@ class _OwnershipHero extends StatelessWidget {
             child: const Icon(
               Icons.shield_outlined,
               color: AppColors.text1,
-              size: 28,
+              size: AppSpacing.p2pPaymentHeroIcon,
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -68,10 +68,7 @@ class _OwnershipHero extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Xác minh tài khoản ngân hàng thuộc sở hữu của bạn để đảm bảo an toàn giao dịch.',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: 1.45,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],
             ),
@@ -93,7 +90,7 @@ class _VerificationMethodCard extends StatelessWidget {
     return VitCard(
       key: P2PPaymentMethodVerificationPage.methodKey(method.id),
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pPaymentCardPadding,
       borderColor: method.recommended
           ? AppColors.primary30
           : AppColors.borderSolid,
@@ -140,7 +137,7 @@ class _VerificationMethodCard extends StatelessWidget {
                     const Icon(
                       Icons.schedule_rounded,
                       color: AppColors.text3,
-                      size: 11,
+                      size: AppSpacing.p2pPaymentMetaIcon,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Text(
@@ -158,7 +155,7 @@ class _VerificationMethodCard extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: 20,
+            size: AppSpacing.p2pPaymentChevronIcon,
           ),
         ],
       ),

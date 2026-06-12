@@ -20,7 +20,6 @@ part '../widgets/bot_risk_disclosure_page_sections.dart';
 part '../widgets/bot_risk_disclosure_page_common.dart';
 
 const _botRiskBackground = AppColors.bg;
-const _botRiskPanel = AppColors.surface;
 const _botRiskPanel2 = AppColors.surface2;
 const _botRiskRed = AppColors.sell;
 const _botRiskAmber = AppColors.caution;

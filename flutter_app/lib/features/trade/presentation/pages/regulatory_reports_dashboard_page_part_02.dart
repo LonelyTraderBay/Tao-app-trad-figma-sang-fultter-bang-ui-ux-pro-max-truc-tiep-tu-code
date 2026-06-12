@@ -8,25 +8,23 @@ class _DistributionLegend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      customGap: 8,
       children: [
-        for (final item in items) ...[
-          Container(
+        for (final item in items)
+          VitCard(
             height: 38,
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              color: _dashPanel2,
-              borderRadius: AppRadii.smRadius,
-            ),
+            variant: VitCardVariant.inner,
             child: Row(
               children: [
-                Container(
-                  width: 12,
-                  height: 12,
+                DecoratedBox(
                   decoration: BoxDecoration(
                     color: Color(item.colorHex),
-                    borderRadius: BorderRadius.circular(3),
+                    borderRadius: AppRadii.xsRadius,
                   ),
+                  child: const SizedBox(width: 12, height: 12),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
@@ -36,7 +34,6 @@ class _DistributionLegend extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      fontSize: 12,
                       height: 1,
                     ),
                   ),
@@ -45,7 +42,6 @@ class _DistributionLegend extends StatelessWidget {
                   _formatInt(item.value),
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -53,29 +49,30 @@ class _DistributionLegend extends StatelessWidget {
               ],
             ),
           ),
-          if (item != items.last) const SizedBox(height: 8),
-        ],
-        Container(
+        VitCard(
           margin: const EdgeInsets.only(top: 10),
           padding: const EdgeInsets.only(top: 11),
-          decoration: const BoxDecoration(
-            border: Border(top: BorderSide(color: _dashBorder)),
-          ),
+          variant: VitCardVariant.ghost,
+          borderColor: _dashBorder,
           child: Row(
             children: [
-              Text(
-                'Total',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 11,
+              Expanded(
+                child: Text(
+                  'Total',
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ),
-              const Spacer(),
-              Text(
-                _formatInt(total),
-                style: AppTextStyles.body.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    _formatInt(total),
+                    style: AppTextStyles.body.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -102,10 +99,9 @@ class _ProviderCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                width: 8,
-                height: 8,
+              DecoratedBox(
                 decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+                child: const SizedBox(width: 8, height: 8),
               ),
               const SizedBox(width: 8),
               Expanded(
@@ -122,7 +118,6 @@ class _ProviderCard extends StatelessWidget {
                 '${_formatInt(provider.reports)} reports',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  fontSize: 11,
                   height: 1,
                 ),
               ),
@@ -166,12 +161,11 @@ class _QueueTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Submission Queue Summary',
+      customGap: 10,
       children: [
-        _SectionLabel('Submission Queue Summary'),
-        const SizedBox(height: 12),
-        for (final stat in snapshot.dailyStats.take(4)) ...[
+        for (final stat in snapshot.dailyStats.take(4))
           _Card(
             padding: const EdgeInsets.all(12),
             child: Row(
@@ -200,8 +194,6 @@ class _QueueTab extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 10),
-        ],
       ],
     );
   }
@@ -230,31 +222,28 @@ class _ComplianceTab extends StatelessWidget {
         _dashGreen,
       ),
     ];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Compliance Metrics',
+      customGap: 12,
       children: [
-        _SectionLabel('Compliance Metrics'),
-        const SizedBox(height: 12),
         _Card(
           padding: const EdgeInsets.all(16),
-          child: Column(
+          child: VitPageContent(
+            padding: VitContentPadding.none,
+            customGap: 18,
             children: [
-              for (final item in items) ...[
+              for (final item in items)
                 _ProgressMetric(
                   label: item.$1,
                   pct: item.$2,
                   value: item.$3,
                   color: item.$4,
                 ),
-                if (item != items.last) const SizedBox(height: 18),
-              ],
-              Container(
+              VitCard(
                 margin: const EdgeInsets.only(top: 18),
                 padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                decoration: BoxDecoration(
-                  color: _dashGreen.withValues(alpha: .10),
-                  borderRadius: AppRadii.cardRadius,
-                ),
+                variant: VitCardVariant.inner,
+                borderColor: _dashGreen.withValues(alpha: .25),
                 child: Row(
                   children: [
                     const Icon(
@@ -268,7 +257,6 @@ class _ComplianceTab extends StatelessWidget {
                         'Full regulatory compliance maintained for 90 consecutive days',
                         style: AppTextStyles.caption.copyWith(
                           color: _dashGreen,
-                          fontSize: 11,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
@@ -291,11 +279,10 @@ class _ExportsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Export Reports',
+      customGap: 10,
       children: [
-        _SectionLabel('Export Reports'),
-        const SizedBox(height: 12),
         _ExportCard(
           title: 'ISO 20022 XML Export',
           subtitle: 'Standard regulatory format',
@@ -303,7 +290,6 @@ class _ExportsTab extends StatelessWidget {
           color: _dashPrimary,
           onTap: () => onNotice('XML export queued'),
         ),
-        const SizedBox(height: 10),
         _ExportCard(
           title: 'Compliance Report (PDF)',
           subtitle: 'Executive summary',
@@ -311,7 +297,6 @@ class _ExportsTab extends StatelessWidget {
           color: _dashGreen,
           onTap: () => onNotice('PDF export queued'),
         ),
-        const SizedBox(height: 10),
         _ExportCard(
           title: 'Raw Data Export (CSV)',
           subtitle: 'All fields, all reports',
@@ -341,52 +326,44 @@ class _ExportCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return _Card(
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: _Card(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          children: [
-            Container(
+      padding: const EdgeInsets.all(12),
+      child: Row(
+        children: [
+          DecoratedBox(
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: .12),
+              borderRadius: AppRadii.cardRadius,
+            ),
+            child: SizedBox(
               width: 40,
               height: 40,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: .12),
-                borderRadius: AppRadii.cardRadius,
-              ),
               child: Icon(icon, color: color, size: 19),
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: VitPageContent(
+              padding: VitContentPadding.none,
+              customGap: 4,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    subtitle,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 10,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                Text(
+                  subtitle,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
             ),
-            const Icon(
-              Icons.download_rounded,
-              color: AppColors.text3,
-              size: 19,
-            ),
-          ],
-        ),
+          ),
+          const Icon(Icons.download_rounded, color: AppColors.text3, size: 19),
+        ],
       ),
     );
   }
@@ -414,17 +391,13 @@ class _ProgressMetric extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontSize: 12,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
             ),
             Text(
               value,
               style: AppTextStyles.caption.copyWith(
                 color: color,
-                fontSize: 14,
                 fontWeight: AppTextStyles.bold,
               ),
             ),

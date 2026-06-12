@@ -235,7 +235,7 @@ class _InfoBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -282,10 +282,13 @@ class _SummaryCard extends StatelessWidget {
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                     Text(
                       '$active/${positions.length}',
-                      style: AppTextStyles.heroNumber.copyWith(fontSize: 30),
+                      style: AppTextStyles.heroNumber.copyWith(
+                        fontSize:
+                            AppSpacing.stakingAutoCompoundHeroStatFontSize,
+                      ),
                     ),
                     Text(
                       'positions',
@@ -302,7 +305,10 @@ class _SummaryCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: AppColors.buy10,
                   borderRadius: AppRadii.xlRadius,
-                  border: Border.all(color: AppColors.buy20, width: 3),
+                  border: Border.all(
+                    color: AppColors.buy20,
+                    width: AppSpacing.stakingAutoCompoundHeroIconBorderWidth,
+                  ),
                 ),
                 alignment: Alignment.center,
                 child: const Icon(
@@ -313,7 +319,7 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
           Row(
             children: [
               Expanded(
@@ -359,7 +365,7 @@ class _SummaryTile extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Text(value, style: AppTextStyles.baseMedium),
         ],
       ),
@@ -399,7 +405,7 @@ class _SettingsCard extends StatelessWidget {
             'Tần suất tái đầu tư',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Row(
             children: [
               for (var i = 0; i < snapshot.frequencies.length; i++) ...[
@@ -415,7 +421,7 @@ class _SettingsCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
           VitInput(
             fieldKey: StakingAutoCompoundPage.thresholdKey,
             controller: thresholdController,
@@ -423,17 +429,17 @@ class _SettingsCard extends StatelessWidget {
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             onChanged: onThresholdChanged,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           Text(
             'Chỉ tái đầu tư khi phần thưởng >= ${_formatCurrency(_parseDouble(thresholdController.text, 10), compact: true)}',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
           _GasOptimizationTile(
             enabled: gasOptimization,
             onTap: onGasOptimizationChanged,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.primary20,

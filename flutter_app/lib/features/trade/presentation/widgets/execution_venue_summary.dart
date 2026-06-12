@@ -67,7 +67,6 @@ class _SummaryCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -78,7 +77,6 @@ class _SummaryCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
-              fontSize: 20,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
@@ -91,7 +89,6 @@ class _SummaryCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: subtitleColor,
-              fontSize: 9,
               height: 1,
             ),
           ),
@@ -125,7 +122,6 @@ class _SortSelector extends StatelessWidget {
             'Sort\nby:',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 11,
               height: 1.15,
             ),
           ),
@@ -151,7 +147,6 @@ class _SortSelector extends StatelessWidget {
                     color: activeId == option.$1
                         ? AppColors.onAccent
                         : AppColors.text2,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1.15,
                   ),
@@ -200,17 +195,16 @@ class _Tabs extends StatelessWidget {
                             color: activeId == tab.$1
                                 ? _venuePrimary
                                 : AppColors.text3,
-                            fontSize: 12,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),
                         ),
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: activeId == tab.$1 ? 72 : 0,
                       height: 2,
-                      color: _venuePrimary,
+                      child: const ColoredBox(color: _venuePrimary),
                     ),
                   ],
                 ),

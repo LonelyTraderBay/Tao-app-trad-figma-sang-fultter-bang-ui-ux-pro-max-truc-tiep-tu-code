@@ -17,7 +17,12 @@ class _DemoSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(title, style: AppTextStyles.sectionTitle.copyWith(fontSize: 18)),
+        Text(
+          title,
+          style: AppTextStyles.sectionTitle.copyWith(
+            fontSize: AppSpacing.dcaOverviewSectionTitleFontSize,
+          ),
+        ),
         const SizedBox(height: AppSpacing.x2),
         Text(
           description,
@@ -127,7 +132,7 @@ class _HeaderRow extends StatelessWidget {
                 ? Icons.visibility_off_outlined
                 : Icons.visibility_outlined,
             color: AppColors.portfolioTextMuted,
-            size: 18,
+            size: AppSpacing.dcaOverviewInlineIcon,
           ),
         ),
       ],
@@ -161,9 +166,9 @@ class _ValueRow extends StatelessWidget {
                   : '₫${_formatFullVnd(data.currentValueVnd)}',
               maxLines: 1,
               style: AppTextStyles.heroNumber.copyWith(
-                fontSize: 31,
-                fontWeight: FontWeight.w900,
-                height: 1,
+                fontSize: AppSpacing.dcaOverviewHeroFontSize,
+                fontWeight: AppTextStyles.heavy,
+                height: AppSpacing.dcaOverviewHeroLineHeight,
                 color: AppColors.text1,
               ),
             ),

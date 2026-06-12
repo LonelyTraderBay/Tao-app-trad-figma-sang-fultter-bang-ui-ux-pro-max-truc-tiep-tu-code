@@ -8,7 +8,7 @@ class _StatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      padding: AppSpacing.predictionCalendarStatsPadding,
       child: Row(
         children: [
           Expanded(
@@ -72,7 +72,7 @@ class _CalendarEventCard extends StatelessWidget {
         borderRadius: AppRadii.cardRadius,
         child: VitCard(
           borderColor: urgent ? AppColors.warningBorder : AppColors.border,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: AppSpacing.predictionCalendarEventPadding,
           child: Column(
             children: [
               Row(
@@ -82,16 +82,20 @@ class _CalendarEventCard extends StatelessWidget {
                     const Icon(
                       Icons.star_rounded,
                       color: AppColors.warn,
-                      size: 17,
+                      size: AppSpacing.predictionCalendarWatchIcon,
                     ),
-                    const SizedBox(width: 6),
+                    const SizedBox(
+                      width: AppSpacing.predictionCalendarLeadingGap,
+                    ),
                   ] else if (urgent) ...[
                     const Icon(
                       Icons.warning_amber_rounded,
                       color: AppColors.warn,
-                      size: 16,
+                      size: AppSpacing.predictionCalendarUrgentIcon,
                     ),
-                    const SizedBox(width: 6),
+                    const SizedBox(
+                      width: AppSpacing.predictionCalendarLeadingGap,
+                    ),
                   ],
                   Expanded(
                     child: Text(
@@ -100,32 +104,31 @@ class _CalendarEventCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.body.copyWith(
                         fontWeight: AppTextStyles.bold,
-                        fontSize: 14,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(
+                    width: AppSpacing.predictionCalendarTitleTrailingGap,
+                  ),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 7,
-                      vertical: 4,
-                    ),
+                    padding: AppSpacing.predictionCalendarStatusPadding,
                     decoration: BoxDecoration(
                       color: statusBg,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: AppRadii.smRadius,
                     ),
                     child: Text(
                       _statusLabel(event.status),
-                      style: AppTextStyles.micro.copyWith(
+                      style: AppTextStyles.numericMicro.copyWith(
                         color: statusColor,
                         fontWeight: AppTextStyles.bold,
-                        fontSize: 10,
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(
+                height: AppSpacing.predictionCalendarEventMetricGap,
+              ),
               Row(
                 children: [
                   Expanded(
@@ -149,45 +152,46 @@ class _CalendarEventCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(
+                height: AppSpacing.predictionCalendarEventMetricGap,
+              ),
               Row(
                 children: [
                   const Icon(
                     Icons.access_time_rounded,
                     color: AppColors.text3,
-                    size: 12,
+                    size: AppSpacing.predictionCalendarTimeIcon,
                   ),
-                  const SizedBox(width: 5),
+                  const SizedBox(
+                    width: AppSpacing.predictionCalendarTimeIconGap,
+                  ),
                   Text(
                     _daysUntil(event.resolutionDate),
-                    style: AppTextStyles.micro.copyWith(
+                    style: AppTextStyles.numericMicro.copyWith(
                       color: urgent ? AppColors.warn : AppColors.text3,
-                      fontSize: 11,
                     ),
                   ),
                   const Spacer(),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
+                    padding: AppSpacing.predictionCalendarCategoryBadgePadding,
                     decoration: BoxDecoration(
                       color: AppColors.searchBg,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: AppRadii.smRadius,
                     ),
                     child: Text(
                       event.category,
-                      style: AppTextStyles.micro.copyWith(
+                      style: AppTextStyles.numericMicro.copyWith(
                         color: AppColors.text2,
-                        fontSize: 10,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(
+                    width: AppSpacing.predictionCalendarCategoryGap,
+                  ),
                   const Icon(
                     Icons.chevron_right_rounded,
                     color: AppColors.text3,
-                    size: 16,
+                    size: AppSpacing.predictionCalendarChevron,
                   ),
                 ],
               ),

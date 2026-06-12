@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -165,6 +166,19 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
                           child: Text(
                             _saved ? 'Đã lưu thành công!' : 'Lưu cài đặt',
                           ),
+                        ),
+                        VitPageContent(
+                          padding: VitContentPadding.compact,
+                          customGap: 0,
+                          children: const [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'P2P settings state review',
+                              message:
+                                  'Trade defaults, notification toggles, privacy controls, security toggles, active hours, auto reply, and saved state remain visible before applying settings.',
+                              contractId: 'SC-279',
+                            ),
+                          ],
                         ),
                       ],
                     ),

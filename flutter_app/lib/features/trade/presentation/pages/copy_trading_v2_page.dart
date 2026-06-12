@@ -21,8 +21,6 @@ part '../widgets/copy_trading_v2_list.dart';
 part '../widgets/copy_trading_v2_common.dart';
 
 const _copyPrimary = AppColors.primary;
-const _copyPanel = AppColors.surface;
-const _copyPanelAlt = AppColors.surface2;
 const _copyPurple = AppColors.accent;
 
 class CopyTradingV2Page extends ConsumerStatefulWidget {
@@ -80,7 +78,7 @@ class _CopyTradingV2PageState extends ConsumerState<CopyTradingV2Page> {
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 0,
+                    customGap: 12,
                     children: [
                       _VariantSwitcher(
                         variants: snapshot.heroVariants,
@@ -88,16 +86,13 @@ class _CopyTradingV2PageState extends ConsumerState<CopyTradingV2Page> {
                         onChanged: (value) =>
                             setState(() => _heroVariant = value),
                       ),
-                      const SizedBox(height: 24),
                       _HeroCard(snapshot: copyTrading, variant: _heroVariant),
-                      const SizedBox(height: 24),
                       _RiskWarningCard(
                         title: copyTrading.riskWarningTitle,
                         message: copyTrading.riskWarningText,
                       ),
-                      const SizedBox(height: 24),
                       VitPageSection(
-                        customGap: 0,
+                        customGap: 12,
                         children: [
                           _SortChips(
                             options: copyTrading.sortOptions,
@@ -105,8 +100,7 @@ class _CopyTradingV2PageState extends ConsumerState<CopyTradingV2Page> {
                             onChanged: (value) =>
                                 setState(() => _sortBy = value),
                           ),
-                          const SizedBox(height: 20),
-                          for (final trader in traders) ...[
+                          for (final trader in traders)
                             _TraderCard(
                               trader: trader,
                               onOpen: () => context.go(
@@ -116,9 +110,6 @@ class _CopyTradingV2PageState extends ConsumerState<CopyTradingV2Page> {
                                 ),
                               ),
                             ),
-                            if (trader != traders.last)
-                              const SizedBox(height: 20),
-                          ],
                         ],
                       ),
                     ],

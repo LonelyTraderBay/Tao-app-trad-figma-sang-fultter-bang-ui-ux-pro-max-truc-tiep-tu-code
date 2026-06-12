@@ -33,7 +33,7 @@ class _InfoBanner extends StatelessWidget {
                   'Smart Scheduling tự động điều chỉnh thời gian DCA dựa trên điều kiện thị trường, giúp tối ưu chi phí và giảm rủi ro.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
+                    fontSize: AppSpacing.dcaScheduleInfoFontSize,
                   ),
                 ),
               ],

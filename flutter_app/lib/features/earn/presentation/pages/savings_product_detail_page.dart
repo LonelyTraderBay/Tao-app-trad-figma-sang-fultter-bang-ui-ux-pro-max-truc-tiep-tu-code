@@ -51,7 +51,12 @@ class SavingsProductDetailPage extends ConsumerWidget {
                 padding: VitContentPadding.compact,
                 children: [
                   const SizedBox(height: AppSpacing.x7 + AppSpacing.x6),
-                  _NotFoundProductState(snapshot: snapshot),
+                  VitCard(
+                    variant: VitCardVariant.standard,
+                    radius: VitCardRadius.md,
+                    padding: EdgeInsets.zero,
+                    child: _NotFoundProductState(snapshot: snapshot),
+                  ),
                   const Spacer(),
                 ],
               ),
@@ -89,7 +94,7 @@ class _NotFoundProductState extends StatelessWidget {
           child: VitCtaButton(
             key: SavingsProductDetailPage.backButtonKey,
             fullWidth: false,
-            height: 45,
+            height: AppSpacing.savingsFlowHeroHeight,
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x5),
             onPressed: () {
               HapticFeedback.selectionClick();

@@ -13,18 +13,20 @@ class _SafetyControlsCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: 12,
                 height: 12,
-                decoration: BoxDecoration(
-                  color: _riskGreen,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: _riskGreen.withValues(alpha: .7),
-                      blurRadius: 10,
-                    ),
-                  ],
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: _riskGreen,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: _riskGreen.withValues(alpha: .7),
+                        blurRadius: 10,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
@@ -36,7 +38,6 @@ class _SafetyControlsCard extends StatelessWidget {
                       'Circuit Breaker',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
-                        fontSize: 13,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),
@@ -46,7 +47,6 @@ class _SafetyControlsCard extends StatelessWidget {
                       'Auto-stop at limit breach',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
                         height: 1,
                       ),
                     ),
@@ -57,7 +57,6 @@ class _SafetyControlsCard extends StatelessWidget {
                 'Active',
                 style: AppTextStyles.caption.copyWith(
                   color: _riskGreen,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -66,12 +65,9 @@ class _SafetyControlsCard extends StatelessWidget {
           ),
           const SizedBox(height: 17),
           for (final control in controls) ...[
-            Container(
+            VitCard(
+              variant: VitCardVariant.inner,
               padding: const EdgeInsets.fromLTRB(12, 10, 10, 10),
-              decoration: BoxDecoration(
-                color: _riskPanel2,
-                borderRadius: AppRadii.inputRadius,
-              ),
               child: Row(
                 children: [
                   Expanded(
@@ -79,7 +75,6 @@ class _SafetyControlsCard extends StatelessWidget {
                       control.label,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        fontSize: 11,
                         height: 1,
                       ),
                     ),
@@ -88,18 +83,19 @@ class _SafetyControlsCard extends StatelessWidget {
                     control.value,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontSize: 11,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),
                   ),
                   const SizedBox(width: 9),
-                  Container(
+                  const SizedBox(
                     width: 8,
                     height: 8,
-                    decoration: const BoxDecoration(
-                      color: _riskGreen,
-                      shape: BoxShape.circle,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: _riskGreen,
+                        shape: BoxShape.circle,
+                      ),
                     ),
                   ),
                 ],
@@ -125,14 +121,11 @@ class _EmergencyActionCard extends StatelessWidget {
       key: BotRiskDashboardPage.emergencyButtonKey,
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
-      child: Container(
+      child: VitCard(
+        variant: VitCardVariant.ghost,
         constraints: const BoxConstraints(minHeight: 70),
         padding: const EdgeInsets.fromLTRB(16, 15, 12, 15),
-        decoration: BoxDecoration(
-          color: _riskRed.withValues(alpha: .08),
-          border: Border.all(color: _riskRed.withValues(alpha: .48), width: 2),
-          borderRadius: AppRadii.cardRadius,
-        ),
+        borderColor: _riskRed.withValues(alpha: .48),
         child: Row(
           children: [
             const Icon(Icons.error_outline_rounded, color: _riskRed, size: 24),
@@ -146,7 +139,6 @@ class _EmergencyActionCard extends StatelessWidget {
                     'Emergency Stop All Bots',
                     style: AppTextStyles.caption.copyWith(
                       color: _riskRed,
-                      fontSize: 14,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),
@@ -156,7 +148,6 @@ class _EmergencyActionCard extends StatelessWidget {
                     'Stop all $runningBots running bots immediately',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      fontSize: 11,
                       height: 1,
                     ),
                   ),
@@ -184,12 +175,9 @@ class _RiskExplanationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
-      decoration: BoxDecoration(
-        color: _riskPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -197,7 +185,6 @@ class _RiskExplanationCard extends StatelessWidget {
             'How Risk Score is Calculated',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -211,7 +198,6 @@ class _RiskExplanationCard extends StatelessWidget {
                   '-',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 11,
                     height: 1,
                   ),
                 ),
@@ -221,7 +207,6 @@ class _RiskExplanationCard extends StatelessWidget {
                     item,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      fontSize: 11,
                       height: 1,
                     ),
                   ),
@@ -245,12 +230,14 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: 4,
           height: 15,
-          decoration: BoxDecoration(
-            color: _riskPrimary,
-            borderRadius: BorderRadius.circular(3),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: _riskPrimary,
+              borderRadius: AppRadii.smRadius,
+            ),
           ),
         ),
         const SizedBox(width: 7),
@@ -258,7 +245,6 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -276,14 +262,6 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        color: _riskPanel,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: child,
-    );
+    return VitCard(padding: padding, child: child);
   }
 }

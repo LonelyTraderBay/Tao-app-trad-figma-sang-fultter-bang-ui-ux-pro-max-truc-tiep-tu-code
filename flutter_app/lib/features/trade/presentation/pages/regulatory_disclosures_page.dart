@@ -24,8 +24,6 @@ part '../widgets/regulatory_disclosures_actions.dart';
 
 const _legalPrimary = AppColors.primary;
 const _legalBackground = AppColors.bg;
-const _legalTabsBackground = AppColors.surface;
-const _legalCard = AppColors.surface2;
 const _legalGreen = AppColors.buy;
 const _legalAmber = AppColors.caution;
 
@@ -85,32 +83,31 @@ class _RegulatoryDisclosuresPageState
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: 0,
+                        customGap: 24,
                         children: [
                           _LegalHero(snapshot: snapshot),
-                          const SizedBox(height: 24),
                           _LegalTabs(
                             tabs: snapshot.tabs,
                             activeId: _activeTabId!,
                             onChanged: (id) =>
                                 setState(() => _activeTabId = id),
                           ),
-                          const SizedBox(height: 27),
                           _LegalTabBody(
                             snapshot: snapshot,
                             activeTabId: _activeTabId!,
                             onNotice: (notice) =>
                                 setState(() => _notice = notice),
                           ),
-                          const SizedBox(height: 12),
                           const VitPageSection(
                             customGap: 0,
                             children: [
                               VitCard(
                                 variant: VitCardVariant.inner,
                                 padding: EdgeInsets.all(12),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                child: VitPageContent(
+                                  padding: VitContentPadding.none,
+                                  fullBleed: true,
+                                  customGap: 8,
                                   children: [
                                     VitHighRiskStatePanel(
                                       state: VitHighRiskUiState.riskReview,
@@ -120,7 +117,6 @@ class _RegulatoryDisclosuresPageState
                                       contractId:
                                           'regulatory-disclosures-review',
                                     ),
-                                    SizedBox(height: 8),
                                     VitStatusPill(
                                       label: 'Disclosure route visible',
                                       status: VitStatusPillStatus.info,

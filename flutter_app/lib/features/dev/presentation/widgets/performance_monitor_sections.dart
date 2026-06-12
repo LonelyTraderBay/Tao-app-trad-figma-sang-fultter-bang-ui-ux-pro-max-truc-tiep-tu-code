@@ -35,7 +35,7 @@ class _PerformanceScoreCard extends StatelessWidget {
                       snapshot.subtitle,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 12,
+                        fontSize: AppSpacing.devFontLg,
                       ),
                     ),
                   ],
@@ -87,7 +87,7 @@ class _SummaryTile extends StatelessWidget {
                 maxLines: 1,
                 style: AppTextStyles.sectionTitle.copyWith(
                   color: toneColor,
-                  fontSize: 20,
+                  fontSize: AppSpacing.adminFont3xl,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
@@ -148,7 +148,7 @@ class _VitalRow extends StatelessWidget {
                   metric.label,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
+                    fontSize: AppSpacing.devFontLg,
                   ),
                 ),
               ),
@@ -333,7 +333,7 @@ class _ResourceRow extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 9,
+                    fontSize: AppSpacing.devFontXs,
                   ),
                 ),
               ],

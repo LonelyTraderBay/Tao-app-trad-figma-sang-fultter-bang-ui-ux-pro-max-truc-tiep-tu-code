@@ -31,7 +31,7 @@ class _SavingsHero extends StatelessWidget {
                     Text(
                       snapshot.totalDepositedUsd,
                       style: AppTextStyles.sectionTitle.copyWith(
-                        fontSize: 26,
+                        fontSize: AppSpacing.savingsConsumerHeroAmountFontSize,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
@@ -203,7 +203,7 @@ class _InsightList extends StatelessWidget {
                         insight.subtitle,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          fontSize: 12,
+                          fontSize: AppSpacing.savingsConsumerCaptionFontSize,
                         ),
                       ),
                     ],

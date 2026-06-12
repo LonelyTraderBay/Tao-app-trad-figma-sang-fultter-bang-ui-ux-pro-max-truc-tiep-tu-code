@@ -7,16 +7,15 @@ class _TipsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: AppSpacing.walletGasSecondaryContentGap,
       children: [
         const _SectionLabel(label: 'Gas Optimization Tips'),
-        const SizedBox(height: 10),
         for (var i = 0; i < snapshot.tips.length; i++) ...[
           _TipCard(tip: snapshot.tips[i]),
-          if (i != snapshot.tips.length - 1) const SizedBox(height: 10),
         ],
-        const SizedBox(height: 14),
         const _QuickActionsCard(),
       ],
     );
@@ -37,26 +36,26 @@ class _TipCard extends StatelessWidget {
       _ => AppColors.text3,
     };
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.walletGasTipPadding,
       borderColor: _gasBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 32,
-            height: 32,
+            width: AppSpacing.walletGasTipIconBox,
+            height: AppSpacing.walletGasTipIconBox,
             decoration: BoxDecoration(
               color: _gasAmber.withValues(alpha: .10),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: AppRadii.smRadius,
             ),
             alignment: Alignment.center,
             child: const Icon(
               Icons.lightbulb_outline_rounded,
               color: _gasAmber,
-              size: 17,
+              size: AppSpacing.walletGasTipIcon,
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.walletGasTipIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -68,8 +67,7 @@ class _TipCard extends StatelessWidget {
                         tip.title,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w900,
+                          fontWeight: AppTextStyles.bold,
                           height: 1.1,
                         ),
                       ),
@@ -80,16 +78,15 @@ class _TipCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.walletGasTipTitleGap),
                 Text(
                   tip.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 11,
                     height: 1.45,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.walletGasTipFooterGap),
                 Row(
                   children: [
                     _CategoryPill(label: tip.category),
@@ -97,14 +94,13 @@ class _TipCard extends StatelessWidget {
                     const Icon(
                       Icons.attach_money_rounded,
                       color: _gasGreen,
-                      size: 13,
+                      size: AppSpacing.walletGasSavingIcon,
                     ),
                     Text(
                       tip.potentialSaving,
                       style: AppTextStyles.caption.copyWith(
                         color: _gasGreen,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),
                     ),
@@ -128,19 +124,18 @@ class _SmallBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 18,
-      padding: const EdgeInsets.symmetric(horizontal: 7),
+      height: AppSpacing.walletGasBadgeHeight,
+      padding: AppSpacing.walletGasSmallBadgePadding,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .13),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: AppRadii.smRadius,
       ),
       child: Text(
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
-          fontWeight: FontWeight.w900,
+          fontWeight: AppTextStyles.bold,
           height: 1,
         ),
       ),
@@ -156,18 +151,17 @@ class _CategoryPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 18,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      height: AppSpacing.walletGasBadgeHeight,
+      padding: AppSpacing.walletGasBadgePadding,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: AppColors.overlaySubtle,
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: AppRadii.badgeRadius,
       ),
       child: Text(
         label,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.textSoftBlue,
-          fontSize: 10,
           height: 1,
         ),
       ),
@@ -181,7 +175,7 @@ class _QuickActionsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.walletGasTipPadding,
       borderColor: _gasBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -189,21 +183,22 @@ class _QuickActionsCard extends StatelessWidget {
           Text(
             'Quick Actions',
             style: AppTextStyles.baseMedium.copyWith(
-              fontSize: 13,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.walletGasQuickActionsTitleGap),
           for (final label in const [
             'Set Gas Price Alert',
             'Schedule Transaction',
             'View L2 Options',
           ])
             Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(
+                bottom: AppSpacing.walletGasQuickActionBottomGap,
+              ),
               child: Container(
-                height: 44,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                height: AppSpacing.walletGasQuickActionHeight,
+                padding: AppSpacing.walletGasQuickActionPadding,
                 decoration: BoxDecoration(
                   color: _gasBackground,
                   borderRadius: AppRadii.mdRadius,
@@ -214,23 +209,24 @@ class _QuickActionsCard extends StatelessWidget {
                     const Icon(
                       Icons.bolt_outlined,
                       color: AppColors.text3,
-                      size: 16,
+                      size: AppSpacing.walletGasQuickActionIcon,
                     ),
-                    const SizedBox(width: 9),
+                    const SizedBox(
+                      width: AppSpacing.walletGasQuickActionIconGap,
+                    ),
                     Expanded(
                       child: Text(
                         label,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: AppTextStyles.medium,
                         ),
                       ),
                     ),
                     const Icon(
                       Icons.arrow_forward_rounded,
                       color: AppColors.text3,
-                      size: 15,
+                      size: AppSpacing.walletGasQuickActionArrow,
                     ),
                   ],
                 ),
@@ -250,7 +246,12 @@ class _GasLineChartPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (points.length < 2) return;
-    final chart = Rect.fromLTWH(10, 4, size.width - 20, size.height - 24);
+    final chart = Rect.fromLTWH(
+      AppSpacing.walletGasLineChartInsetX,
+      AppSpacing.walletGasLineChartInsetTop,
+      size.width - AppSpacing.walletGasLineChartInsetX * 2,
+      size.height - AppSpacing.walletGasLineChartInsetBottom,
+    );
     _drawGasLine(canvas, chart, points.map((p) => p.slow).toList(), _gasGreen);
     _drawGasLine(
       canvas,
@@ -277,7 +278,7 @@ class _GasLineChartPainter extends CustomPainter {
     }
     final paint = Paint()
       ..color = color
-      ..strokeWidth = 2
+      ..strokeWidth = AppSpacing.walletGasChartStroke
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round
       ..style = PaintingStyle.stroke;
@@ -299,15 +300,20 @@ class _NetworkBarChartPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (points.isEmpty) return;
     final maxTx = points.map((point) => point.txCount).reduce(math.max);
-    final barWidth = size.width / (points.length * 2.2);
-    final gap = barWidth * 1.2;
+    final barWidth =
+        size.width /
+        (points.length * AppSpacing.walletGasNetworkBarWidthDivisor);
+    final gap = barWidth * AppSpacing.walletGasNetworkBarGapMultiplier;
     final paint = Paint()..color = _gasPrimary;
     for (var i = 0; i < points.length; i++) {
-      final barHeight = (points[i].txCount / maxTx) * (size.height - 10);
-      final left = i * (barWidth + gap) + 12;
+      final barHeight =
+          (points[i].txCount / maxTx) *
+          (size.height - AppSpacing.walletGasNetworkBarHeightInset);
+      final left =
+          i * (barWidth + gap) + AppSpacing.walletGasNetworkBarLeftPadding;
       final rect = RRect.fromRectAndRadius(
         Rect.fromLTWH(left, size.height - barHeight, barWidth, barHeight),
-        const Radius.circular(4),
+        AppRadii.statusBarCorner,
       );
       canvas.drawRRect(rect, paint);
     }

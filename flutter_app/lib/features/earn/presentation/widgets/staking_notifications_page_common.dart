@@ -35,9 +35,11 @@ class _ToggleSwitch extends StatelessWidget {
         onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
-          width: 48,
-          height: 26,
-          padding: const EdgeInsets.all(4),
+          width: AppSpacing.stakingNotificationsSwitchWidth,
+          height: AppSpacing.stakingNotificationsSwitchHeight,
+          padding: const EdgeInsets.all(
+            AppSpacing.stakingNotificationsSwitchPadding,
+          ),
           decoration: BoxDecoration(
             color: on ? AppColors.buy : AppColors.primary30,
             borderRadius: AppRadii.lgRadius,
@@ -46,8 +48,8 @@ class _ToggleSwitch extends StatelessWidget {
             duration: const Duration(milliseconds: 180),
             alignment: on ? Alignment.centerRight : Alignment.centerLeft,
             child: const SizedBox(
-              width: 18,
-              height: 18,
+              width: AppSpacing.stakingNotificationsSwitchThumb,
+              height: AppSpacing.stakingNotificationsSwitchThumb,
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   color: AppColors.onAccent,
@@ -82,7 +84,7 @@ class _PriorityPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.sell,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.stakingNotificationsPillLineHeight,
           ),
         ),
       ),

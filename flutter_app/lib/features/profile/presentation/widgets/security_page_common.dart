@@ -14,8 +14,8 @@ class _AntiPhishingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.buttonHero + AppSpacing.inputHeight,
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+      height: AppSpacing.securityAntiPhishingHeight,
+      padding: AppSpacing.securityCardPadding,
       borderColor: _securityBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -25,32 +25,26 @@ class _AntiPhishingCard extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: _securityPrimary,
-                size: 18,
+                size: AppSpacing.securityAntiPhishingIcon,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.securityIconGap),
               Text(
                 'M\u00E3 ch\u1ED1ng l\u1EEBa \u0111\u1EA3o',
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.control.copyWith(
                   color: AppColors.text1,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w900,
-                  height: 1,
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: AppSpacing.securityAntiPhishingTitleGap),
           Text(
             '\u0110\u1EB7t m\u00E3 c\u00E1 nh\u00E2n. Email t\u1EEB VitTrade s\u1EBD lu\u00F4n hi\u1EC3n th\u1ECB m\u00E3 n\u00E0y.',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text2,
-              fontSize: 12,
-              height: 1,
-            ),
+            style: AppTextStyles.numericMicro.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.securityAntiPhishingInputGap),
           VitInput(
             fieldKey: SecurityPage.antiPhishingFieldKey,
             controller: controller,
@@ -58,12 +52,12 @@ class _AntiPhishingCard extends StatelessWidget {
             hintText: 'Nh\u1EADp m\u00E3 4\u20138 k\u00FD t\u1EF1',
             inputFormatters: [LengthLimitingTextInputFormatter(8)],
             suffix: SizedBox(
-              width: 58,
+              width: AppSpacing.securitySaveButtonWidth,
               child: VitCtaButton(
                 key: SecurityPage.antiPhishingSaveKey,
                 onPressed: saving ? null : onSave,
                 loading: saving,
-                height: 32,
+                height: AppSpacing.securitySaveButtonHeight,
                 padding: EdgeInsets.zero,
                 child: Text(saving ? '...' : 'L\u01B0u'),
               ),
@@ -87,14 +81,14 @@ class _SecuritySupportCard extends StatelessWidget {
       onTap: () => context.go(supportRoute),
       behavior: HitTestBehavior.opaque,
       child: VitCard(
-        height: 68,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        height: AppSpacing.securitySupportHeight,
+        padding: AppSpacing.securitySupportPadding,
         borderColor: _securityBorder,
         child: Row(
           children: [
             Container(
-              width: 38,
-              height: 38,
+              width: AppSpacing.securitySupportIconBox,
+              height: AppSpacing.securitySupportIconBox,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: _securityPrimary.withValues(alpha: .13),
@@ -103,10 +97,10 @@ class _SecuritySupportCard extends StatelessWidget {
               child: const Icon(
                 Icons.support_agent_rounded,
                 color: _securityPrimary,
-                size: 20,
+                size: AppSpacing.securitySupportIcon,
               ),
             ),
-            const SizedBox(width: 14),
+            const SizedBox(width: AppSpacing.securitySupportGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -114,23 +108,19 @@ class _SecuritySupportCard extends StatelessWidget {
                 children: [
                   Text(
                     'Hỗ trợ bảo mật',
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.control.copyWith(
                       color: AppColors.text1,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w900,
-                      height: 1,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.securitySupportTextGap),
                   Text(
                     'Mở hồ sơ hỗ trợ kèm ngữ cảnh tài khoản',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
+                    style: AppTextStyles.numericMicro.copyWith(
                       color: _securityMuted,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1,
+                      fontWeight: AppTextStyles.medium,
                     ),
                   ),
                 ],
@@ -139,7 +129,7 @@ class _SecuritySupportCard extends StatelessWidget {
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.text3,
-              size: 19,
+              size: AppSpacing.securityChevron,
             ),
           ],
         ),

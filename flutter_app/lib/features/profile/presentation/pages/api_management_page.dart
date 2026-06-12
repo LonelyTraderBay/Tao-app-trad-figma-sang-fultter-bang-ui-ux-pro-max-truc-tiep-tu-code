@@ -98,41 +98,51 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
                     customGap: 18,
                     fullBleed: true,
                     children: [
-                      VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review API access',
-                        message:
-                            'Ki\u1EC3m tra quy\u1EC1n giao d\u1ECBch, IP whitelist, secret v\u00E0 key \u0111ang b\u1EADt tr\u01B0\u1EDBc khi ti\u1EBFp t\u1EE5c.',
-                        contractId:
-                            'Active keys: ${_keys.where((key) => key.isActive).length}/${_keys.length}',
-                      ),
-                      if (_keys.isEmpty)
-                        const VitEmptyState(
-                          title: 'Ch\u01B0a c\u00F3 API key',
+                      VitCard(
+                        padding: EdgeInsets.zero,
+                        child: VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Review API access',
                           message:
-                              'T\u1EA1o key m\u1EDBi v\u00E0 ch\u1EC9 c\u1EA5p quy\u1EC1n th\u1EADt s\u1EF1 c\u1EA7n.',
-                          icon: Icons.key_off_outlined,
-                        )
-                      else
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            for (final apiKey in _keys) ...[
-                              _ApiKeyCard(
-                                apiKey: apiKey,
-                                showSecret: _showSecretId == apiKey.id,
-                                copiedId: _copiedId,
-                                onToggle: () => _toggleKey(apiKey.id),
-                                onReveal: () => _toggleSecret(apiKey.id),
-                                onCopy: _copyText,
-                                onDelete: () => _confirmDelete(apiKey),
-                              ),
-                              if (apiKey != _keys.last)
-                                const SizedBox(height: 18),
-                            ],
-                          ],
+                              'Ki\u1EC3m tra quy\u1EC1n giao d\u1ECBch, IP whitelist, secret v\u00E0 key \u0111ang b\u1EADt tr\u01B0\u1EDBc khi ti\u1EBFp t\u1EE5c.',
+                          contractId:
+                              'Active keys: ${_keys.where((key) => key.isActive).length}/${_keys.length}',
                         ),
-                      const _ApiDocsCard(),
+                      ),
+                      VitCard(
+                        padding: EdgeInsets.zero,
+                        child: _keys.isEmpty
+                            ? const VitEmptyState(
+                                title: 'Ch\u01B0a c\u00F3 API key',
+                                message:
+                                    'T\u1EA1o key m\u1EDBi v\u00E0 ch\u1EC9 c\u1EA5p quy\u1EC1n th\u1EADt s\u1EF1 c\u1EA7n.',
+                                icon: Icons.key_off_outlined,
+                              )
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  for (final apiKey in _keys) ...[
+                                    _ApiKeyCard(
+                                      apiKey: apiKey,
+                                      showSecret: _showSecretId == apiKey.id,
+                                      copiedId: _copiedId,
+                                      onToggle: () => _toggleKey(apiKey.id),
+                                      onReveal: () => _toggleSecret(apiKey.id),
+                                      onCopy: _copyText,
+                                      onDelete: () => _confirmDelete(apiKey),
+                                    ),
+                                    if (apiKey != _keys.last)
+                                      const Padding(
+                                        padding: EdgeInsets.only(top: 18),
+                                      ),
+                                  ],
+                                ],
+                              ),
+                      ),
+                      const VitCard(
+                        padding: EdgeInsets.zero,
+                        child: _ApiDocsCard(),
+                      ),
                     ],
                   ),
                 ),

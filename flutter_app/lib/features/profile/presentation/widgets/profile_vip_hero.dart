@@ -74,7 +74,6 @@ class _VipHero extends StatelessWidget {
                                       style: AppTextStyles.sectionTitle
                                           .copyWith(
                                             color: _vipGold,
-                                            fontSize: 20,
                                             fontWeight: FontWeight.w900,
                                             height: 1,
                                           ),
@@ -82,14 +81,15 @@ class _VipHero extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: AppSpacing.x3),
+                              const Padding(
+                                padding: EdgeInsets.only(top: AppSpacing.x3),
+                              ),
                               Text(
                                 'Th\u00E0nh vi\u00EAn t\u1EEB ${snapshot.memberSince}',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTextStyles.caption.copyWith(
                                   color: AppColors.portfolioTextDim,
-                                  fontSize: 13,
                                   fontWeight: FontWeight.w700,
                                   height: 1,
                                 ),
@@ -152,17 +152,15 @@ class _HeroFeeBox extends StatelessWidget {
             label,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.portfolioTextMuted,
-              fontSize: 12,
               fontWeight: FontWeight.w700,
               height: 1,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             value,
             style: AppTextStyles.sectionTitle.copyWith(
               color: _vipSuccess,
-              fontSize: 22,
               fontWeight: FontWeight.w900,
               height: 1,
               fontFeatures: AppTextStyles.tabularFigures,

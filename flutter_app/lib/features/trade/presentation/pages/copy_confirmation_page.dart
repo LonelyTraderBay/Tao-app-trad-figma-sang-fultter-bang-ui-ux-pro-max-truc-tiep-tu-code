@@ -122,6 +122,14 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
                       _CoolingOffCard(hours: snapshot.coolingOffHours),
                       const SizedBox(height: 16),
                       _NextStepsCard(snapshot: snapshot),
+                      const SizedBox(height: 16),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Copy confirmation state review',
+                        message:
+                            'Critical warning, suitability review, fees, scenarios, max loss, required consents, cooling-off period, next steps, and submitting state remain visible before starting copy trading.',
+                        contractId: 'SC-073',
+                      ),
                     ],
                   ),
                 ),

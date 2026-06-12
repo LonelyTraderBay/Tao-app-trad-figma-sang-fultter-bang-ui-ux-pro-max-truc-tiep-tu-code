@@ -41,7 +41,7 @@ class _FlowCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           for (var i = 0; i < flow.steps.length; i++)
             _FlowStepRow(
               flowId: flow.id,
@@ -83,21 +83,25 @@ class _FlowStepRow extends StatelessWidget {
         Column(
           children: [
             Container(
-              width: 22,
-              height: 22,
+              width: AppSpacing.arenaEcosystemFlowDot,
+              height: AppSpacing.arenaEcosystemFlowDot,
               decoration: BoxDecoration(
                 color: step.isBridge
                     ? color.withValues(alpha: .18)
                     : AppColors.surface2,
                 border: Border.all(
                   color: step.isBridge ? color : AppColors.borderSolid,
-                  width: 1.5,
+                  width: AppSpacing.arenaEcosystemFlowBorderWidth,
                 ),
                 shape: BoxShape.circle,
               ),
               child: Center(
                 child: step.isBridge
-                    ? Icon(Icons.link_rounded, color: color, size: 11)
+                    ? Icon(
+                        Icons.link_rounded,
+                        color: color,
+                        size: AppSpacing.arenaEcosystemFlowBridgeIcon,
+                      )
                     : Text(
                         '${index + 1}',
                         style: AppTextStyles.micro.copyWith(
@@ -109,8 +113,8 @@ class _FlowStepRow extends StatelessWidget {
             ),
             if (!isLast)
               Container(
-                width: 1.5,
-                height: 38,
+                width: AppSpacing.arenaEcosystemFlowLineWidth,
+                height: AppSpacing.arenaEcosystemFlowLineHeight,
                 color: (step.isBridge ? color : AppColors.borderSolid)
                     .withValues(alpha: .35),
               ),
@@ -142,15 +146,15 @@ class _FlowStepRow extends StatelessWidget {
                     ],
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   step.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.4,
+                    height: AppSpacing.arenaEcosystemCheckLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 _SmallTextAction(
                   label: step.route,
                   icon: Icons.chevron_right_rounded,
@@ -186,38 +190,38 @@ class _RegistrySection extends StatelessWidget {
           title: 'Shared vs Separate Registry',
           accentColor: AppModuleAccents.predictions,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         Text(
           'Ranh giới rõ ràng: items nào được share, items nào phải tách biệt.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            height: 1.5,
+            height: AppSpacing.arenaEcosystemIntroLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         _RegistryBoard(
           title: 'Shared (Connect by Content)',
           items: sharedItems,
           color: AppColors.buy,
           icon: Icons.link_rounded,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         _RegistryBoard(
           title: 'Separate (Never Merge)',
           items: separateItems,
           color: AppColors.sell,
           icon: Icons.shield_outlined,
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         const VitModuleSectionHeader(
           title: 'Forbidden UX Patterns',
           accentColor: AppColors.sell,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         for (final pattern in forbiddenPatterns) ...[
           _ForbiddenPatternCard(pattern: pattern),
           if (pattern != forbiddenPatterns.last)
-            const SizedBox(height: AppSpacing.x3),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ],
       ],
     );
@@ -260,10 +264,11 @@ class _RegistryBoard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           for (final item in items) ...[
             _RegistryItemRow(item: item, color: color),
-            if (item != items.last) const SizedBox(height: AppSpacing.x3),
+            if (item != items.last)
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           ],
         ],
       ),
@@ -282,7 +287,11 @@ class _RegistryItemRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(Icons.check_rounded, color: color, size: 13),
+        Icon(
+          Icons.check_rounded,
+          color: color,
+          size: AppSpacing.arenaEcosystemCompactIcon,
+        ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Column(
@@ -295,12 +304,12 @@ class _RegistryItemRow extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x1),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
               Text(
                 item.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1.4,
+                  height: AppSpacing.arenaEcosystemCheckLineHeight,
                 ),
               ),
             ],
@@ -326,7 +335,11 @@ class _ForbiddenPatternCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.block_rounded, color: color, size: 15),
+          Icon(
+            Icons.block_rounded,
+            color: color,
+            size: AppSpacing.arenaEcosystemBlockIcon,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
@@ -349,12 +362,12 @@ class _ForbiddenPatternCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 Text(
                   pattern.reason,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    height: 1.4,
+                    height: AppSpacing.arenaEcosystemCheckLineHeight,
                   ),
                 ),
               ],
@@ -386,7 +399,7 @@ class _HandoffSection extends StatelessWidget {
           title: 'Dev / QA Handoff Pack',
           accentColor: AppColors.primary,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
@@ -404,7 +417,7 @@ class _HandoffSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         if (activeBoard == 'routes')
           _RouteRegistry(routes: snapshot.routeRegistry)
         else if (activeBoard == 'components')
@@ -439,7 +452,7 @@ class _BoardChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: Container(
-          height: 38,
+          height: AppSpacing.arenaEcosystemBoardChipHeight,
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
           decoration: BoxDecoration(
             color: active
@@ -458,7 +471,7 @@ class _BoardChip extends StatelessWidget {
               Icon(
                 board.icon,
                 color: active ? AppColors.primary : AppColors.text2,
-                size: 14,
+                size: AppSpacing.arenaEcosystemSmallIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(

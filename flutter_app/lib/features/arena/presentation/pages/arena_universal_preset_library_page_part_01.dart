@@ -74,7 +74,7 @@ class _SectionChip extends StatelessWidget {
           Icon(
             _sectionIcon(section.id),
             color: active ? AppColors.warn : AppColors.text3,
-            size: 14,
+            size: AppSpacing.arenaPresetSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Text(
@@ -111,14 +111,14 @@ class _DomainPacksSection extends StatelessWidget {
           subtitle: '10 lĩnh vực bao phủ mọi loại challenge',
           accentColor: AppColors.accent,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         for (final pack in packs) ...[
           _DomainPackCard(
             pack: pack,
             expanded: expandedId == pack.id,
             onTap: () => onToggle(pack.id),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
         ],
       ],
     );
@@ -163,14 +163,16 @@ class _DomainPackCard extends StatelessWidget {
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x1),
+                      const Padding(
+                        padding: EdgeInsets.only(top: AppSpacing.x1),
+                      ),
                       Text(
                         pack.description,
                         maxLines: expanded ? 3 : 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          height: 1.3,
+                          height: AppSpacing.arenaPresetCaptionLineHeight,
                         ),
                       ),
                     ],
@@ -182,7 +184,7 @@ class _DomainPackCard extends StatelessWidget {
                       ? Icons.keyboard_arrow_up_rounded
                       : Icons.keyboard_arrow_down_rounded,
                   color: AppColors.text3,
-                  size: 20,
+                  size: AppSpacing.arenaPresetDomainIcon,
                 ),
               ],
             ),
@@ -198,8 +200,11 @@ class _DomainPackCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Divider(color: AppColors.borderSolid, height: 1),
-                  const SizedBox(height: AppSpacing.x3),
+                  const Divider(
+                    color: AppColors.borderSolid,
+                    height: AppSpacing.arenaPresetDividerHeight,
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                   Text(
                     'CHALLENGE TYPES HỖ TRỢ',
                     style: AppTextStyles.micro.copyWith(
@@ -207,7 +212,7 @@ class _DomainPackCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                   Wrap(
                     spacing: AppSpacing.x2,
                     runSpacing: AppSpacing.x2,
@@ -216,7 +221,7 @@ class _DomainPackCard extends StatelessWidget {
                         _SmallPill(label: type, accentColor: _arenaAccent),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                   Text(
                     'GỢI Ý MẪU',
                     style: AppTextStyles.micro.copyWith(
@@ -224,7 +229,7 @@ class _DomainPackCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                   for (final example in pack.examples)
                     Padding(
                       padding: const EdgeInsets.only(bottom: AppSpacing.x2),
@@ -275,7 +280,7 @@ class _SuggestionsSection extends StatelessWidget {
           subtitle: '6-8 gợi ý cho mỗi lĩnh vực',
           accentColor: _arenaAccent,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
@@ -292,7 +297,7 @@ class _SuggestionsSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         VitCard(
           padding: const EdgeInsets.all(AppSpacing.x4),
           child: Column(
@@ -303,7 +308,7 @@ class _SuggestionsSection extends StatelessWidget {
                 label: 'Gợi ý — ${activePack.title}',
                 count: suggestions.length,
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
               Wrap(
                 spacing: AppSpacing.x2,
                 runSpacing: AppSpacing.x2,
@@ -319,7 +324,7 @@ class _SuggestionsSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         VitCard(
           padding: const EdgeInsets.all(AppSpacing.x4),
           child: Column(
@@ -329,9 +334,9 @@ class _SuggestionsSection extends StatelessWidget {
                 icon: Icons.search_rounded,
                 label: 'SmartAutocompleteList',
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
               const _SearchBox(text: 'Gõ để tìm gợi ý...'),
-              const SizedBox(height: AppSpacing.x3),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
               for (final item in suggestions.take(3))
                 _AutocompleteRow(
                   item: item,
@@ -341,7 +346,7 @@ class _SuggestionsSection extends StatelessWidget {
           ),
         ),
         if (selectedSuggestion != null) ...[
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           VitCard(
             key: ArenaUniversalPresetLibraryPage.selectedSuggestionKey,
             variant: VitCardVariant.inner,
@@ -376,7 +381,7 @@ class _DropdownsSection extends StatelessWidget {
           subtitle: 'Component set có đầy đủ states',
           accentColor: AppColors.accent,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         for (final group in groups) ...[
           VitCard(
             padding: const EdgeInsets.all(AppSpacing.x4),
@@ -392,12 +397,12 @@ class _DropdownsSection extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 _DropdownPreview(group: group),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ],
       ],
     );
@@ -426,7 +431,7 @@ class _DemoFlowsSection extends StatelessWidget {
           subtitle: 'Demo mini-flow minh họa end-to-end',
           accentColor: AppColors.buy,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
@@ -443,9 +448,9 @@ class _DemoFlowsSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         _DemoFlowCard(flow: activeFlow),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         VitCard(
           padding: const EdgeInsets.all(AppSpacing.x4),
           child: Column(
@@ -455,7 +460,7 @@ class _DemoFlowsSection extends StatelessWidget {
                 icon: Icons.menu_book_outlined,
                 label: 'Tổng quan demo flows',
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
               for (var i = 0; i < flows.length; i++)
                 _DemoSummaryRow(
                   flow: flows[i],

@@ -12,67 +12,48 @@ class TransferAssetCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       key: const Key('sc146_transfer_asset'),
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 99,
-        padding: const EdgeInsets.fromLTRB(16, 14, 15, 14),
-        decoration: BoxDecoration(
-          color: _transferPanel,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: AppColors.overlayStroke),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Tài sản',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: 11,
-                height: 1,
+      variant: VitCardVariant.standard,
+      padding: AppSpacing.transferCardPadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'T\u00e0i s\u1ea3n',
+            style: AppTextStyles.badge.copyWith(color: AppColors.text3),
+          ),
+          const SizedBox(height: AppSpacing.transferTileGap),
+          Row(
+            children: [
+              _AssetLogo(asset: asset, size: AppSpacing.transferIcon),
+              const SizedBox(
+                width: AppSpacing.searchBarHorizontalTrailingPadding,
               ),
-            ),
-            const SizedBox(height: 11),
-            Row(
-              children: [
-                _AssetLogo(asset: asset, size: 40),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        asset.symbol,
-                        style: AppTextStyles.baseMedium.copyWith(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w800,
-                          height: 1,
-                        ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(asset.symbol, style: AppTextStyles.baseMedium),
+                    const SizedBox(height: AppSpacing.x2 + AppSpacing.x1),
+                    Text(
+                      'Kh\u1ea3 d\u1ee5ng: ${formatTransferAssetAmount(asset.available)} ${asset.symbol}',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
                       ),
-                      const SizedBox(height: 7),
-                      Text(
-                        'Khả dụng: ${formatTransferAssetAmount(asset.available)} ${asset.symbol}',
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text2,
-                          fontSize: 12,
-                          height: 1,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: AppColors.text3,
-                  size: 20,
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+              Icon(
+                Icons.keyboard_arrow_down_rounded,
+                color: AppColors.text3,
+                size: AppSpacing.transferActionIcon,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -92,7 +73,7 @@ class _AssetLogo extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .15),
-        borderRadius: BorderRadius.circular(size / 2),
+        borderRadius: AppRadii.avatarRadius,
       ),
       alignment: Alignment.center,
       child: Text(
@@ -100,11 +81,7 @@ class _AssetLogo extends StatelessWidget {
           0,
           asset.symbol.length < 3 ? asset.symbol.length : 3,
         ),
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: size >= 40 ? 10 : 9,
-          fontWeight: FontWeight.w800,
-        ),
+        style: AppTextStyles.numericMicro.copyWith(color: color),
       ),
     );
   }
@@ -126,26 +103,17 @@ class TransferAmountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 90,
-      padding: const EdgeInsets.fromLTRB(16, 15, 16, 14),
-      decoration: BoxDecoration(
-        color: _transferPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.overlayStroke),
-      ),
+    return VitCard(
+      variant: VitCardVariant.standard,
+      padding: AppSpacing.transferCardPadding,
       child: Column(
         children: [
           Row(
             children: [
               Expanded(
                 child: Text(
-                  'Số lượng',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 11,
-                    height: 1,
-                  ),
+                  'S\u1ed1 l\u01b0\u1ee3ng',
+                  style: AppTextStyles.badge.copyWith(color: AppColors.text3),
                 ),
               ),
               GestureDetector(
@@ -153,18 +121,13 @@ class TransferAmountCard extends StatelessWidget {
                 onTap: onMax,
                 behavior: HitTestBehavior.opaque,
                 child: Text(
-                  'Tối đa',
-                  style: AppTextStyles.micro.copyWith(
-                    color: _transferPrimary,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w800,
-                    height: 1,
-                  ),
+                  'T\u1edbi \u0111a',
+                  style: AppTextStyles.badge.copyWith(color: _transferPrimary),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.rowGap),
           Row(
             children: [
               Expanded(
@@ -178,19 +141,11 @@ class TransferAmountCard extends StatelessWidget {
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
                   ],
                   onChanged: (_) => onChanged(),
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800,
-                    fontFamily: 'Roboto',
-                    height: 1,
-                  ),
+                  style: AppTextStyles.amountSm,
                   decoration: InputDecoration(
                     hintText: '0.00',
-                    hintStyle: AppTextStyles.sectionTitle.copyWith(
+                    hintStyle: AppTextStyles.amountSm.copyWith(
                       color: AppColors.text2,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w800,
-                      fontFamily: 'Roboto',
                     ),
                     border: InputBorder.none,
                     isCollapsed: true,
@@ -199,11 +154,7 @@ class TransferAmountCard extends StatelessWidget {
               ),
               Text(
                 asset.symbol,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w800,
-                ),
+                style: AppTextStyles.control.copyWith(color: AppColors.text2),
               ),
             ],
           ),
@@ -219,8 +170,10 @@ class TransferInfoNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minHeight: 59),
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.transferNoticeMinHeight,
+      ),
+      padding: AppSpacing.transferNoticePadding,
       decoration: BoxDecoration(
         color: AppColors.primary08,
         borderRadius: AppRadii.cardRadius,
@@ -228,23 +181,19 @@ class TransferInfoNotice extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 2),
+          Padding(
+            padding: AppSpacing.walletTransferNoteIconPadding,
             child: Icon(
               Icons.info_outline_rounded,
               color: _transferPrimary,
-              size: 14,
+              size: AppSpacing.transferBadgeIcon,
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
-              'Chuyển nội bộ giữa các ví miễn phí, xử lý ngay lập tức. Không cần xác nhận blockchain.',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontSize: 12,
-                height: 1.5,
-              ),
+              'Chuy\u1ec3n n\u1ed9i b\u1ed9 gi\u00e1 tr\u1ecb v\u00ed, t\u00ednh ph\u00ed, x\u1eed l\u00fd ngay l\u1eadp t\u1ee5c. Kh\u00f4ng c\u1ea7n x\u00e1c nh\u1eadn blockchain.',
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],
@@ -261,26 +210,12 @@ class TransferButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      key: const Key('sc146_transfer_submit'),
-      onTap: enabled ? onTap : null,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 52,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: enabled ? _transferPrimary : AppColors.surfacePressed,
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Text(
-          'Xác nhận chuyển',
-          style: AppTextStyles.baseMedium.copyWith(
-            color: enabled
-                ? AppColors.onAccent
-                : AppColors.controlBorderDisabled,
-            fontSize: 15,
-            fontWeight: FontWeight.w800,
-          ),
+    return VitCtaButton(
+      onPressed: enabled ? onTap : null,
+      child: Text(
+        'X\u00e1c nh\u1eadn chuy\u1ec3n',
+        style: AppTextStyles.control.copyWith(
+          color: enabled ? AppColors.onAccent : AppColors.text3,
         ),
       ),
     );

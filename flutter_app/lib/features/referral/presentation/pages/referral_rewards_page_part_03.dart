@@ -37,7 +37,7 @@ class _DisputeInfo extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                 Text(
                   'Bấm vào biểu tượng cảnh báo bên cạnh mỗi giao dịch để báo lỗi. Đội ngũ hỗ trợ sẽ xử lý trong 24-48 giờ.',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -116,7 +116,7 @@ class _DisputeTypeRow extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Text(
             type.description,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -155,13 +155,13 @@ class _DisputeHistoryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             dispute.description,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           if (dispute.resolution != null) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
             Text(
               dispute.resolution!,
               style: AppTextStyles.caption.copyWith(color: AppColors.text1),

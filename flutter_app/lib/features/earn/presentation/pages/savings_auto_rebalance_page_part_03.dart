@@ -13,7 +13,7 @@ class _CompareRow extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: 74,
+            width: AppSpacing.savingsRebalanceCompareLabelWidth,
             child: Text(
               label,
               style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -50,7 +50,11 @@ class _SettingsRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
       child: Row(
         children: [
-          Icon(icon, color: AppColors.primary, size: 18),
+          Icon(
+            icon,
+            color: AppColors.primary,
+            size: AppSpacing.savingsRebalanceInlineIcon,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(

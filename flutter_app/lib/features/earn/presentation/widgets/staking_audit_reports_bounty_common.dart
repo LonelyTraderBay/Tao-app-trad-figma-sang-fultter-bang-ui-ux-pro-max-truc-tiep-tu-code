@@ -49,7 +49,7 @@ class _BugBountySection extends StatelessWidget {
                 bugBounty.body,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.55,
+                  height: AppSpacing.stakingAuditBodyLineHeight,
                 ),
               ),
               const SizedBox(height: AppSpacing.x4),
@@ -59,8 +59,8 @@ class _BugBountySection extends StatelessWidget {
                 child: GridView.count(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
-                  childAspectRatio: 2.55,
+                  crossAxisCount: AppSpacing.stakingAuditPayoutGridColumns,
+                  childAspectRatio: AppSpacing.stakingAuditPayoutGridAspect,
                   crossAxisSpacing: AppSpacing.x3,
                   mainAxisSpacing: AppSpacing.x2,
                   children: [
@@ -187,7 +187,7 @@ class _FooterNote extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: 1.5,
+          height: AppSpacing.stakingAuditFooterLineHeight,
         ),
       ),
     );
@@ -241,8 +241,8 @@ class _RoundIcon extends StatelessWidget {
         borderRadius: AppRadii.xlRadius,
       ),
       child: SizedBox(
-        width: 48,
-        height: 48,
+        width: AppSpacing.stakingAuditRoundIconBox,
+        height: AppSpacing.stakingAuditRoundIconBox,
         child: Icon(icon, color: color, size: AppSpacing.iconMd),
       ),
     );

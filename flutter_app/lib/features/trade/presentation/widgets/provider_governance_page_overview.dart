@@ -38,7 +38,6 @@ class _ProviderDashboard extends StatelessWidget {
                       'Provider Dashboard',
                       style: AppTextStyles.body.copyWith(
                         color: _governancePrimary,
-                        fontSize: 15,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),
@@ -48,7 +47,6 @@ class _ProviderDashboard extends StatelessWidget {
                       'Managing ${stats.followers} followers',
                       style: AppTextStyles.caption.copyWith(
                         color: _governancePrimary,
-                        fontSize: 11,
                         height: 1,
                       ),
                     ),
@@ -97,7 +95,6 @@ class _DashboardStat extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: _governancePrimary,
-            fontSize: 10,
             height: 1,
           ),
         ),
@@ -106,7 +103,6 @@ class _DashboardStat extends StatelessWidget {
           value,
           style: AppTextStyles.caption.copyWith(
             color: _governancePrimary,
-            fontSize: 14,
             fontWeight: AppTextStyles.bold,
             height: 1,
             fontFeatures: AppTextStyles.tabularFigures,
@@ -152,7 +148,6 @@ class _GovernanceTabs extends StatelessWidget {
                             color: tab.id == activeId
                                 ? _governancePrimary
                                 : AppColors.text3,
-                            fontSize: 12,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),
@@ -238,7 +233,6 @@ class _Notice extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: _governanceWarning,
-                fontSize: 10,
                 fontWeight: AppTextStyles.bold,
                 height: 1.45,
               ),

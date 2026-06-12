@@ -214,7 +214,8 @@ class _NotificationCard extends StatelessWidget {
                                 fontWeight: notification.read
                                     ? AppTextStyles.medium
                                     : AppTextStyles.bold,
-                                height: 1.25,
+                                height: AppSpacing
+                                    .savingsNotificationHistoryTitleLineHeight,
                               ),
                             ),
                           ),
@@ -231,7 +232,8 @@ class _NotificationCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          height: 1.45,
+                          height: AppSpacing
+                              .savingsNotificationHistoryBodyLineHeight,
                         ),
                       ),
                       const SizedBox(height: AppSpacing.x2),

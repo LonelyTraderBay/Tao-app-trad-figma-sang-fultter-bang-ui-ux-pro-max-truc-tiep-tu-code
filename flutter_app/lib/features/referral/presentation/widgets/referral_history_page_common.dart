@@ -52,7 +52,7 @@ class _FriendCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x1),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                     Text(
                       'Tham gia: ${friend.joinedDate}',
                       style: AppTextStyles.micro.copyWith(
@@ -86,7 +86,7 @@ class _FriendCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Row(
             children: [
               Expanded(
@@ -120,13 +120,13 @@ class _FriendCard extends StatelessWidget {
             ],
           ),
           if (friend.canRemindKyc) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
             InkWell(
               key: ReferralHistoryPage.remindKey(friend.id),
               onTap: onRemind,
               borderRadius: AppRadii.mdRadius,
               child: Container(
-                height: 44,
+                height: AppSpacing.referralHistoryFilterHeight,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: AppColors.primary08,
@@ -139,7 +139,7 @@ class _FriendCard extends StatelessWidget {
                     Icon(
                       reminded ? Icons.check_rounded : Icons.send_rounded,
                       color: AppColors.primary,
-                      size: 15,
+                      size: AppSpacing.referralHistoryIconMd,
                     ),
                     const SizedBox(width: AppSpacing.x3),
                     Text(
@@ -168,8 +168,8 @@ class _Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 44,
-      height: 44,
+      width: AppSpacing.referralHistoryAvatarBox,
+      height: AppSpacing.referralHistoryFilterHeight,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: AppColors.surface2,
@@ -247,11 +247,15 @@ class _FriendMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
           Row(
             children: [
               if (icon != null) ...[
-                Icon(icon, color: color, size: 13),
+                Icon(
+                  icon,
+                  color: color,
+                  size: AppSpacing.referralHistoryIconSm,
+                ),
                 const SizedBox(width: AppSpacing.x1),
               ],
               Flexible(

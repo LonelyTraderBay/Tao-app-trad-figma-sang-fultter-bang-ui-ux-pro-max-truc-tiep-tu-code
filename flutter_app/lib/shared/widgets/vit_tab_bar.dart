@@ -55,6 +55,10 @@ class VitTabBar extends StatelessWidget {
               active: tab.key == activeKey,
               onChanged: onChanged,
               fillParent: true,
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.rowGapRegular,
+                vertical: AppSpacing.tabBarPillVertical,
+              ),
             ),
         ],
       );
@@ -70,6 +74,10 @@ class VitTabBar extends StatelessWidget {
             active: tab.key == activeKey,
             onChanged: onChanged,
             fillParent: false,
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.rowGapRegular,
+              vertical: AppSpacing.tabBarPillVertical,
+            ),
           ),
       ],
     );
@@ -82,18 +90,20 @@ class _PillTab extends StatelessWidget {
     required this.active,
     required this.onChanged,
     required this.fillParent,
+    required this.padding,
   });
 
   final VitTabItem tab;
   final bool active;
   final ValueChanged<String> onChanged;
   final bool fillParent;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     final content = AnimatedContainer(
       duration: const Duration(milliseconds: 180),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+      padding: padding,
       decoration: BoxDecoration(
         color: active ? AppColors.primary12 : AppColors.surface2,
         border: Border.all(
@@ -109,7 +119,7 @@ class _PillTab extends StatelessWidget {
             Icon(
               tab.icon,
               color: active ? AppColors.primary : AppColors.text2,
-              size: 14,
+              size: AppSpacing.iconSm,
             ),
             const SizedBox(width: AppSpacing.x2),
           ],
@@ -149,10 +159,9 @@ class _PillTabLabel extends StatelessWidget {
       tab.label,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
-      style: AppTextStyles.caption.copyWith(
+      style: AppTextStyles.control.copyWith(
         color: active ? AppColors.primary : AppColors.text2,
         fontWeight: active ? AppTextStyles.medium : AppTextStyles.normal,
-        height: 1,
       ),
     );
   }
@@ -182,7 +191,7 @@ class _UnderlineTab extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
               child: Text(
                 tab.label,
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.control.copyWith(
                   color: active ? AppColors.primary : AppColors.text2,
                   fontWeight: active
                       ? AppTextStyles.medium
@@ -192,11 +201,13 @@ class _UnderlineTab extends StatelessWidget {
             ),
             AnimatedContainer(
               duration: const Duration(milliseconds: 180),
-              height: 2,
-              width: active ? 28 : 0,
+              height: AppSpacing.tabBarUnderlineHeight,
+              width: active ? AppSpacing.tabBarUnderlineWidth : 0,
               decoration: BoxDecoration(
                 color: AppColors.primary,
-                borderRadius: BorderRadius.circular(1),
+                borderRadius: BorderRadius.circular(
+                  AppSpacing.tabBarPillRadius,
+                ),
               ),
             ),
           ],

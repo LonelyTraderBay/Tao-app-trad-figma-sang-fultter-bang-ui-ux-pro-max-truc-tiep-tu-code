@@ -7,18 +7,14 @@ class _Disclaimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: const EdgeInsets.fromLTRB(18, 14, 18, 15),
-      decoration: BoxDecoration(
-        color: _leaderPanel,
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Text(
         text,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          fontSize: 9,
           height: 1.5,
         ),
       ),

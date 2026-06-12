@@ -108,7 +108,7 @@ class _StakingTabs extends StatelessWidget {
                       const SizedBox(height: AppSpacing.x4),
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 160),
-                        height: 2,
+                        height: AppSpacing.launchpadGapXxs,
                         width: tab == activeTab ? 116 : 0,
                         decoration: BoxDecoration(
                           color: AppColors.primary,
@@ -175,7 +175,7 @@ class _StakingHero extends StatelessWidget {
                       _formatUsd(snapshot.totalStaked),
                       style: AppTextStyles.heroNumber.copyWith(
                         color: AppColors.text1,
-                        fontSize: 24,
+                        fontSize: AppSpacing.launchpadFont3xl,
                       ),
                     ),
                   ],
@@ -274,7 +274,7 @@ class _PoolCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.baseMedium.copyWith(
                               color: AppColors.text1,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: AppTextStyles.extraBold,
                             ),
                           ),
                         ),
@@ -305,7 +305,7 @@ class _PoolCard extends StatelessWidget {
                     '${_formatApy(pool.effectiveApy)}%',
                     style: AppTextStyles.sectionTitle.copyWith(
                       color: pool.accent,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: AppTextStyles.extraBold,
                     ),
                   ),
                   Text(

@@ -9,15 +9,15 @@ class WalletAllocationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final total = assets.fold<double>(0, (sum, asset) => sum + asset.usdValue);
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.cardPadding,
       variant: VitCardVariant.standard,
       child: Row(
         children: [
           CustomPaint(
-            size: const Size(92, 92),
+            size: const Size.square(AppSpacing.walletAllocationChartSize),
             painter: _AllocationPainter(assets: assets, total: total),
           ),
-          const SizedBox(width: 20),
+          const SizedBox(width: AppSpacing.contentPad),
           Expanded(
             child: Column(
               children: [
@@ -25,20 +25,21 @@ class WalletAllocationCard extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        width: 10,
-                        height: 10,
+                        width: AppSpacing.walletAllocationLegendMarker,
+                        height: AppSpacing.walletAllocationLegendMarker,
                         decoration: BoxDecoration(
                           color: Color(asset.colorHex),
                           shape: BoxShape.circle,
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(
+                        width: AppSpacing.walletAllocationLegendGap,
+                      ),
                       Expanded(
                         child: Text(
                           asset.symbol,
-                          style: AppTextStyles.micro.copyWith(
+                          style: AppTextStyles.caption.copyWith(
                             color: AppColors.text2,
-                            fontSize: 12,
                           ),
                         ),
                       ),
@@ -46,15 +47,17 @@ class WalletAllocationCard extends StatelessWidget {
                         total <= 0
                             ? '0.0%'
                             : '${(asset.usdValue / total * 100).toStringAsFixed(1)}%',
-                        style: AppTextStyles.micro.copyWith(
+                        style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
-                          fontSize: 12,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
                     ],
                   ),
-                  if (asset != assets.take(6).last) const SizedBox(height: 10),
+                  if (asset != assets.take(6).last)
+                    const SizedBox(
+                      height: AppSpacing.walletAllocationLegendItemGap,
+                    ),
                 ],
               ],
             ),
@@ -76,18 +79,22 @@ class _AllocationPainter extends CustomPainter {
     if (total <= 0) {
       final trackPaint = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 16
+        ..strokeWidth = AppSpacing.walletAllocationChartStroke
         ..color = AppColors.surface3;
       final rect = Offset.zero & size;
       canvas.drawArc(
-        rect.deflate(8),
+        rect.deflate(AppSpacing.walletAllocationChartInset),
         -math.pi / 2,
         math.pi * 2,
         false,
         trackPaint,
       );
       final centerPaint = Paint()..color = _walletPanel;
-      canvas.drawCircle(rect.center, 22, centerPaint);
+      canvas.drawCircle(
+        rect.center,
+        AppSpacing.walletAllocationCenterRadius,
+        centerPaint,
+      );
       return;
     }
 
@@ -95,15 +102,25 @@ class _AllocationPainter extends CustomPainter {
     var start = -math.pi / 2;
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 16;
+      ..strokeWidth = AppSpacing.walletAllocationChartStroke;
     for (final asset in assets.take(6)) {
       final sweep = (asset.usdValue / total) * math.pi * 2;
       paint.color = Color(asset.colorHex).withValues(alpha: .88);
-      canvas.drawArc(rect.deflate(8), start, sweep, false, paint);
+      canvas.drawArc(
+        rect.deflate(AppSpacing.walletAllocationChartInset),
+        start,
+        sweep,
+        false,
+        paint,
+      );
       start += sweep;
     }
     final centerPaint = Paint()..color = _walletPanel;
-    canvas.drawCircle(rect.center, 22, centerPaint);
+    canvas.drawCircle(
+      rect.center,
+      AppSpacing.walletAllocationCenterRadius,
+      centerPaint,
+    );
   }
 
   @override

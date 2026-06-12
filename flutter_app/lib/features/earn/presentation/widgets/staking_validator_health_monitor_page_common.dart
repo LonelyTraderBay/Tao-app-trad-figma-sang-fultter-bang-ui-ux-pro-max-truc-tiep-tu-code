@@ -31,7 +31,7 @@ class _ActionRequiredCard extends StatelessWidget {
                   snapshot.actionBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.stakingValidatorHealthBodyLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x3),
@@ -75,7 +75,7 @@ class _FooterNote extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: 1.55,
+          height: AppSpacing.stakingValidatorHealthFooterLineHeight,
         ),
       ),
     );
@@ -97,7 +97,7 @@ class _StatusPill extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: AppRadii.pillRadius,
       ),
       child: Text(
         label,

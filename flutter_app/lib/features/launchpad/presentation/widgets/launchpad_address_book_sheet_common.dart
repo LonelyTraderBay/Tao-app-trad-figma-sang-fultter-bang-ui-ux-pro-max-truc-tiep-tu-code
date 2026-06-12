@@ -13,7 +13,9 @@ class _AddAddressSheet extends StatelessWidget {
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          constraints: const BoxConstraints(maxWidth: 440),
+          constraints: const BoxConstraints(
+            maxWidth: AppSpacing.launchpadSheetMaxWidth,
+          ),
           padding: const EdgeInsets.all(AppSpacing.x5),
           decoration: const BoxDecoration(
             color: AppColors.surface,
@@ -27,8 +29,8 @@ class _AddAddressSheet extends StatelessWidget {
             children: [
               Center(
                 child: Container(
-                  width: 44,
-                  height: 4,
+                  width: AppSpacing.launchpadBox44,
+                  height: AppSpacing.launchpadSheetHandleHeight,
                   decoration: BoxDecoration(
                     color: AppColors.borderSolid,
                     borderRadius: AppRadii.xlRadius,
@@ -84,7 +86,7 @@ class _InfoBanner extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.primary,
-            size: 16,
+            size: AppSpacing.launchpadIconXl,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -92,7 +94,7 @@ class _InfoBanner extends StatelessWidget {
               'So dia chi duoc luu tren thiet bi. Luon kiem tra lai dia chi truoc khi thuc hien giao dich.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.45,
+                height: AppSpacing.launchpadLineHeightReadable,
               ),
             ),
           ),
@@ -139,7 +141,7 @@ class _FilterChip extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: active ? color : AppColors.text3,
-            fontWeight: active ? FontWeight.w800 : FontWeight.w600,
+            fontWeight: active ? AppTextStyles.extraBold : AppTextStyles.medium,
           ),
         ),
       ),
@@ -175,13 +177,13 @@ class _StatPill extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: color, size: 14),
+            Icon(icon, color: color, size: AppSpacing.launchpadIconMd),
             const SizedBox(width: AppSpacing.x1),
             Text(
               value,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
-                fontWeight: FontWeight.w900,
+                fontWeight: AppTextStyles.heavy,
               ),
             ),
             const SizedBox(width: AppSpacing.x1),
@@ -207,14 +209,18 @@ class _ChainIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 44,
-      height: 44,
+      width: AppSpacing.launchpadBox44,
+      height: AppSpacing.launchpadBox44,
       decoration: BoxDecoration(
         color: address.accent.withValues(alpha: .16),
         border: Border.all(color: address.accent.withValues(alpha: .28)),
         borderRadius: AppRadii.lgRadius,
       ),
-      child: Icon(_chainIcon(address.iconKey), color: address.accent, size: 20),
+      child: Icon(
+        _chainIcon(address.iconKey),
+        color: address.accent,
+        size: AppSpacing.launchpadIcon3xl,
+      ),
     );
   }
 }
@@ -240,7 +246,7 @@ class _Badge extends StatelessWidget {
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontWeight: FontWeight.w800,
+          fontWeight: AppTextStyles.extraBold,
         ),
       ),
     );
@@ -269,7 +275,7 @@ class _DetailRow extends StatelessWidget {
             value,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text1,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
             ),
           ),
         ],

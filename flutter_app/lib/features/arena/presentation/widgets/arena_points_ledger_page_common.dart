@@ -22,7 +22,7 @@ class _CommunityRulesButton extends StatelessWidget {
           const Icon(
             Icons.menu_book_outlined,
             color: AppColors.primary,
-            size: 16,
+            size: AppSpacing.arenaPointsInlineIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Text(

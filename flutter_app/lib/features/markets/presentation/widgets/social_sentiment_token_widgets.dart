@@ -240,7 +240,7 @@ class _TokenDetailCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           ClipRRect(
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: AppRadii.smRadius,
             child: SizedBox(
               width: double.infinity,
               height: 6,
@@ -248,15 +248,15 @@ class _TokenDetailCard extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: token.bullishPct,
-                    child: Container(color: AppColors.buy),
+                    child: const ColoredBox(color: AppColors.buy),
                   ),
                   Expanded(
                     flex: token.neutralPct,
-                    child: Container(color: AppColors.text3),
+                    child: const ColoredBox(color: AppColors.text3),
                   ),
                   Expanded(
                     flex: token.bearishPct,
-                    child: Container(color: AppColors.sell),
+                    child: const ColoredBox(color: AppColors.sell),
                   ),
                 ],
               ),

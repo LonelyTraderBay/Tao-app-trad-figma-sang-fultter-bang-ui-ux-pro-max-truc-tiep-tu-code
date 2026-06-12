@@ -88,7 +88,10 @@ class _ProgressSection extends StatelessWidget {
               for (final entry in leaderboard) ...[
                 _LeaderboardRow(entry: entry),
                 if (entry != leaderboard.last)
-                  const Divider(height: 1, color: AppColors.divider),
+                  const Divider(
+                    height: AppSpacing.arenaPointsDividerHeight,
+                    color: AppColors.divider,
+                  ),
               ],
             ],
           ),
@@ -150,14 +153,18 @@ class _RewardsDisclaimer extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.accent, size: 17),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.accent,
+            size: AppSpacing.arenaPointsCheckInIcon,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1.35,
+                height: AppSpacing.arenaPointsBodyLineHeight,
               ),
             ),
           ),
@@ -184,7 +191,7 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: color, size: 16),
+        Icon(icon, color: color, size: AppSpacing.arenaPointsInlineIcon),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
@@ -286,7 +293,7 @@ class _TinyStat extends StatelessWidget {
           ? MainAxisAlignment.end
           : MainAxisAlignment.start,
       children: [
-        Icon(icon, color: color, size: 13),
+        Icon(icon, color: color, size: AppSpacing.arenaPointsMicroIcon),
         const SizedBox(width: AppSpacing.x2),
         Text(
           label,
@@ -351,7 +358,7 @@ class _MiniBadge extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: AppColors.bg,
           fontWeight: AppTextStyles.bold,
-          height: 1.2,
+          height: AppSpacing.arenaPointsBadgeLineHeight,
         ),
       ),
     );

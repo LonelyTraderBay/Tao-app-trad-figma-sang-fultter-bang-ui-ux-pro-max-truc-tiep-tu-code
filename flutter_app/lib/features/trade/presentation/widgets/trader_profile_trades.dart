@@ -37,7 +37,6 @@ class _TradeCard extends StatelessWidget {
                 trade.pair,
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -56,7 +55,6 @@ class _TradeCard extends StatelessWidget {
                     _signedUsd(trade.pnl),
                     style: AppTextStyles.caption.copyWith(
                       color: isProfit ? _profileGreen : _profileRed,
-                      fontSize: 13,
                       fontWeight: AppTextStyles.bold,
                       fontFeatures: AppTextStyles.tabularFigures,
                       height: 1,
@@ -67,7 +65,6 @@ class _TradeCard extends StatelessWidget {
                     '${trade.pnlPct >= 0 ? '+' : ''}${trade.pnlPct.toStringAsFixed(2)}%',
                     style: AppTextStyles.micro.copyWith(
                       color: isProfit ? _profileGreen : _profileRed,
-                      fontSize: 10,
                       height: 1,
                     ),
                   ),
@@ -102,7 +99,6 @@ class _TradeCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
                   height: 1,
                 ),
               ),
@@ -124,18 +120,13 @@ class _TradePrice extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: 10,
-          height: 1,
-        ),
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3, height: 1),
         children: [
           TextSpan(text: '$label '),
           TextSpan(
             text: '\$$value',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              fontSize: 11,
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
             ),

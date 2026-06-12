@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 
 const predictionPortfolioPrimary = AppColors.primary;
@@ -51,20 +53,12 @@ class PredictionPortfolioTinyBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+      padding: AppSpacing.predictionPortfolioTinyBadgePadding,
       decoration: BoxDecoration(
         color: background,
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: AppRadii.xsRadius,
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 9,
-          height: 1.1,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
+      child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
     );
   }
 }

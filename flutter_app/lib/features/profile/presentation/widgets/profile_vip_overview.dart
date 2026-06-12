@@ -11,10 +11,10 @@ class _OverviewTab extends StatelessWidget {
     final children = <Widget>[];
     if (nextTier != null) {
       children.add(_ProgressCard(snapshot: snapshot, nextTier: nextTier));
-      children.add(const SizedBox(height: AppSpacing.x5));
+      children.add(const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)));
     }
     children.add(_TierTable(snapshot: snapshot));
-    children.add(const SizedBox(height: AppSpacing.x5));
+    children.add(const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)));
     children.add(const _FeeSavingsCard());
 
     return Column(
@@ -54,7 +54,7 @@ class _ProgressCard extends StatelessWidget {
               _TierIcon(tier: nextTier),
             ],
           ),
-          const SizedBox(height: 16),
+          const Padding(padding: EdgeInsets.only(top: 16)),
           _ProgressLine(
             label: 'Kh\u1ED1i l\u01B0\u1EE3ng 30 ng\u00E0y',
             value:
@@ -64,7 +64,7 @@ class _ProgressCard extends StatelessWidget {
             helper:
                 'C\u1EA7n th\u00EAm ${_formatUsd(nextTier.monthlyVolume - snapshot.monthlyVolume)} \u0111\u1EC3 \u0111\u1EA1t m\u1EE5c ti\u00EAu',
           ),
-          const SizedBox(height: 17),
+          const Padding(padding: EdgeInsets.only(top: 17)),
           _ProgressLine(
             label: 'T\u00E0i s\u1EA3n \u0111ang gi\u1EEF',
             value:
@@ -125,7 +125,7 @@ class _ProgressLine extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         ClipRRect(
           borderRadius: BorderRadius.circular(999),
           child: LinearProgressIndicator(
@@ -135,14 +135,10 @@ class _ProgressLine extends StatelessWidget {
             backgroundColor: AppColors.surface3,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text(
           helper,
-          style: AppTextStyles.micro.copyWith(
-            color: helperColor,
-            fontSize: 11,
-            height: 1,
-          ),
+          style: AppTextStyles.micro.copyWith(color: helperColor, height: 1),
         ),
       ],
     );
@@ -267,10 +263,7 @@ class _TierRow extends StatelessWidget {
               tier.monthlyVolume == 0
                   ? '-'
                   : _formatCompactUsd(tier.monthlyVolume),
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                fontSize: 12,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
             ),
           ),
           _TableCell(
@@ -289,7 +282,6 @@ class _TierRow extends StatelessWidget {
   TextStyle _feeStyle(bool active) {
     return AppTextStyles.micro.copyWith(
       color: active ? _vipSuccess : AppColors.text1,
-      fontSize: 12,
       fontWeight: FontWeight.w900,
       fontFeatures: AppTextStyles.tabularFigures,
     );
@@ -333,7 +325,7 @@ class _FeeSavingsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           Row(
             children: const [
               Expanded(
@@ -380,7 +372,7 @@ class _SavingBox extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(label, style: AppTextStyles.micro.copyWith(color: _vipMuted)),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             value,
             style: AppTextStyles.base.copyWith(
@@ -390,14 +382,10 @@ class _SavingBox extends StatelessWidget {
               height: 1,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
             sub,
-            style: AppTextStyles.micro.copyWith(
-              color: _vipMuted,
-              fontSize: 10,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: _vipMuted, height: 1),
           ),
         ],
       ),

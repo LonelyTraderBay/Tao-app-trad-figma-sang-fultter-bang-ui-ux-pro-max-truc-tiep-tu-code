@@ -250,41 +250,56 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                   gap: VitContentGap.relaxed,
                   children: [
                     if (_step == _ForgotPasswordStep.input)
-                      _EmailStep(
-                        controller: _emailController,
-                        error: _emailError,
-                        onChanged: _clearEmailError,
+                      VitCard(
+                        padding: EdgeInsets.zero,
+                        child: _EmailStep(
+                          controller: _emailController,
+                          error: _emailError,
+                          onChanged: _clearEmailError,
+                        ),
                       ),
                     if (_step == _ForgotPasswordStep.otp)
-                      _OtpStep(
-                        controller: _otpController,
-                        email: _email,
-                        error: _otpError,
-                        onChanged: _handleOtpChanged,
+                      VitCard(
+                        padding: EdgeInsets.zero,
+                        child: _OtpStep(
+                          controller: _otpController,
+                          email: _email,
+                          error: _otpError,
+                          onChanged: _handleOtpChanged,
+                        ),
                       ),
                     if (_step == _ForgotPasswordStep.reset)
-                      _ResetStep(
-                        newPasswordController: _newPasswordController,
-                        confirmPasswordController: _confirmPasswordController,
-                        showPassword: _showPassword,
-                        error: _passwordError,
-                        onChanged: _clearPasswordError,
-                        onTogglePassword: () {
-                          setState(() => _showPassword = !_showPassword);
-                        },
+                      VitCard(
+                        padding: EdgeInsets.zero,
+                        child: _ResetStep(
+                          newPasswordController: _newPasswordController,
+                          confirmPasswordController: _confirmPasswordController,
+                          showPassword: _showPassword,
+                          error: _passwordError,
+                          onChanged: _clearPasswordError,
+                          onTogglePassword: () {
+                            setState(() => _showPassword = !_showPassword);
+                          },
+                        ),
                       ),
                     if (_step == _ForgotPasswordStep.success)
-                      const _SuccessStep(),
-                    VitCtaButton(
-                      key: _step == _ForgotPasswordStep.success
-                          ? ForgotPasswordPage.loginKey
-                          : ForgotPasswordPage.submitKey,
-                      onPressed: _canSubmit ? _handlePrimaryAction : null,
-                      loading: _submitting,
-                      variant: _step == _ForgotPasswordStep.success
-                          ? VitCtaButtonVariant.auth
-                          : VitCtaButtonVariant.auth,
-                      child: Text(_buttonLabel),
+                      const VitCard(
+                        padding: EdgeInsets.zero,
+                        child: _SuccessStep(),
+                      ),
+                    VitCard(
+                      padding: EdgeInsets.zero,
+                      child: VitCtaButton(
+                        key: _step == _ForgotPasswordStep.success
+                            ? ForgotPasswordPage.loginKey
+                            : ForgotPasswordPage.submitKey,
+                        onPressed: _canSubmit ? _handlePrimaryAction : null,
+                        loading: _submitting,
+                        variant: _step == _ForgotPasswordStep.success
+                            ? VitCtaButtonVariant.auth
+                            : VitCtaButtonVariant.auth,
+                        child: Text(_buttonLabel),
+                      ),
                     ),
                   ],
                 ),

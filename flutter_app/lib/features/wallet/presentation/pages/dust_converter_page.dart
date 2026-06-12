@@ -69,7 +69,9 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
             : DeviceMetrics.nativeBottomChrome) +
         MediaQuery.paddingOf(context).bottom;
     final inlineFooter =
-        mode.usesVisualQaFrame && MediaQuery.sizeOf(context).height > 1000;
+        mode.usesVisualQaFrame &&
+        MediaQuery.sizeOf(context).height >
+            AppSpacing.walletDustInlineFooterHeightThreshold;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -88,11 +90,11 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: DustConverterPage.contentKey,
-                  padding: const EdgeInsets.fromLTRB(20, 14, 20, 16),
+                  padding: AppSpacing.walletDustScrollPadding,
                   physics: const BouncingScrollPhysics(),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 16,
+                    customGap: AppSpacing.walletDustContentGap,
                     fullBleed: true,
                     children: [
                       if (_converted)
@@ -142,14 +144,19 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                           }
                         }),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.walletDustAssetListTopGap,
+                      ),
                       for (final asset in assets) ...[
                         _DustAssetRow(
                           asset: asset,
                           selected: _selectedIds.contains(asset.id),
                           onTap: () => _toggleAsset(asset.id),
                         ),
-                        if (asset != assets.last) const SizedBox(height: 8),
+                        if (asset != assets.last)
+                          const SizedBox(
+                            height: AppSpacing.walletDustAssetRowGap,
+                          ),
                       ],
                       if (inlineFooter) ...[
                         _ConvertFooter(
@@ -165,7 +172,11 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                             selectedTotal,
                           ),
                         ),
-                        const SizedBox(height: DeviceMetrics.bottomChrome + 96),
+                        const SizedBox(
+                          height:
+                              DeviceMetrics.bottomChrome +
+                              AppSpacing.walletDustInlineFooterBottomGap,
+                        ),
                       ],
                     ],
                   ),
@@ -216,14 +227,14 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
       context: context,
       backgroundColor: _dustPanel,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) {
         return SafeArea(
           top: false,
           child: Container(
             key: DustConverterPage.confirmSheetKey,
-            padding: const EdgeInsets.fromLTRB(20, 18, 20, 20),
+            padding: AppSpacing.walletDustSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -232,15 +243,14 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                   'X\u00E1c nh\u1EADn chuy\u1EC3n \u0111\u1ED5i',
                   textAlign: TextAlign.center,
                   style: AppTextStyles.baseMedium.copyWith(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.walletDustSheetGap),
                 VitCard(
                   variant: VitCardVariant.inner,
                   radius: VitCardRadius.sm,
-                  padding: const EdgeInsets.all(14),
+                  padding: AppSpacing.walletDustPreviewPadding,
                   borderColor: _dustBorder,
                   child: Column(
                     children: [
@@ -266,7 +276,7 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: AppSpacing.walletDustPreviewGap),
                 _PrimaryButton(
                   key: DustConverterPage.confirmButtonKey,
                   label: 'Chuy\u1EC3n \u0111\u1ED5i sang $_targetSymbol',

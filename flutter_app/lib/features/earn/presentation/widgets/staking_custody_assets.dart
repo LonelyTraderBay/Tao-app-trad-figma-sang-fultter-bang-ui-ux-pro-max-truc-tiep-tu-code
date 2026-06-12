@@ -30,14 +30,14 @@ class StakingCustodySegregationSection extends StatelessWidget {
                 snapshot.segregationBody,
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text2,
-                  height: 1.55,
+                  height: AppSpacing.stakingCustodyBodyLineHeight,
                 ),
               ),
               const SizedBox(height: AppSpacing.x4),
               Center(
                 child: StakingCustodyPieChart(
                   allocations: snapshot.segregation,
-                  size: 190,
+                  size: AppSpacing.stakingCustodySegregationChart,
                   donut: false,
                 ),
               ),
@@ -81,14 +81,14 @@ class StakingCustodyHotColdSection extends StatelessWidget {
                 snapshot.hotColdBody,
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text2,
-                  height: 1.55,
+                  height: AppSpacing.stakingCustodyBodyLineHeight,
                 ),
               ),
               const SizedBox(height: AppSpacing.x4),
               Center(
                 child: StakingCustodyPieChart(
                   allocations: snapshot.hotCold,
-                  size: 170,
+                  size: AppSpacing.stakingCustodyHotColdChart,
                   donut: true,
                 ),
               ),

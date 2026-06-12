@@ -73,6 +73,13 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
                       _UseCasesSection(useCases: snapshot.useCases),
                       _CurrentStatusSection(statusCards: snapshot.statusCards),
                       _FooterNote(note: snapshot.footerNote),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Emergency action confirmation review',
+                        message:
+                            'Pause, emergency withdrawal, penalty impact, current status, monitoring, and support next steps are reviewed before Earn emergency actions execute.',
+                        contractId: 'SC-385',
+                      ),
                     ],
                   ),
                 ),
@@ -107,7 +114,7 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
       backgroundColor: AppColors.surface,
       barrierColor: AppColors.bg.withValues(alpha: 0.72),
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(21)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (sheetContext) {
         final color = _toneColor(sheet.tone);
@@ -138,7 +145,8 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
                         sheet.body,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text2,
-                          height: 1.55,
+                          height:
+                              AppSpacing.stakingEmergencySheetBodyLineHeight,
                         ),
                       ),
                       if (sheet.bullets.isNotEmpty) ...[
@@ -152,7 +160,8 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
                               '- $bullet',
                               style: AppTextStyles.micro.copyWith(
                                 color: AppColors.text3,
-                                height: 1.55,
+                                height: AppSpacing
+                                    .stakingEmergencySheetBodyLineHeight,
                               ),
                             ),
                           ),
@@ -211,7 +220,7 @@ class _WarningBanner extends StatelessWidget {
                   snapshot.warningBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.stakingEmergencySheetBodyLineHeight,
                   ),
                 ),
               ],
@@ -280,7 +289,7 @@ class _EmergencyActionCard extends StatelessWidget {
                   action.body,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.45,
+                    height: AppSpacing.stakingEmergencyActionLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -353,7 +362,11 @@ class _UseCaseRow extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(Icons.warning_amber_rounded, color: color, size: 17),
+            Icon(
+              Icons.warning_amber_rounded,
+              color: color,
+              size: AppSpacing.stakingEmergencyUseCaseIcon,
+            ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: Column(
@@ -371,7 +384,7 @@ class _UseCaseRow extends StatelessWidget {
                     useCase.description,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1.45,
+                      height: AppSpacing.stakingEmergencyActionLineHeight,
                     ),
                   ),
                 ],
@@ -468,7 +481,7 @@ class _FooterNote extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: 1.55,
+          height: AppSpacing.stakingEmergencySheetBodyLineHeight,
         ),
       ),
     );

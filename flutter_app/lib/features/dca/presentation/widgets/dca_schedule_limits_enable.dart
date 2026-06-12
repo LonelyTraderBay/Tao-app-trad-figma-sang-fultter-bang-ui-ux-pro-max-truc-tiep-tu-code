@@ -96,7 +96,11 @@ class _ThresholdCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(icon, color: accent, size: 18),
+              Icon(
+                icon,
+                color: accent,
+                size: AppSpacing.dcaScheduleSectionIcon,
+              ),
               const SizedBox(width: AppSpacing.x3),
               Text(
                 title,
@@ -178,7 +182,7 @@ class _SliderField extends StatelessWidget {
             inactiveTrackColor: AppColors.borderSolid,
             thumbColor: activeColor,
             overlayColor: activeColor.withValues(alpha: .12),
-            trackHeight: 6,
+            trackHeight: AppSpacing.dcaScheduleSliderTrackHeight,
           ),
           child: Slider(
             value: value.clamp(min, max).toDouble(),

@@ -118,7 +118,6 @@ class _ToolChip extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 12,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -142,7 +141,6 @@ class _ToolChip extends StatelessWidget {
                   '1',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.onAccent,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -200,7 +198,6 @@ class _PairMiniCard extends StatelessWidget {
             '$fromSymbol/$toSymbol · 24h',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -284,10 +281,7 @@ class _SlippageCard extends StatelessWidget {
                   'Slippage tolerance',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
               const SizedBox(width: 8),
@@ -295,7 +289,6 @@ class _SlippageCard extends StatelessWidget {
                 'Tùy chỉnh',
                 style: AppTextStyles.micro.copyWith(
                   color: _tradePrimary,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -367,7 +360,6 @@ class _SlippageChip extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: active ? AppColors.onAccent : AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
           ),
         ),
@@ -451,7 +443,6 @@ class _HistoryHeader extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.baseMedium.copyWith(
-              fontSize: 16,
               fontWeight: AppTextStyles.bold,
             ),
           ),

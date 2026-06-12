@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -23,9 +24,6 @@ part '../widgets/bot_strategy_compare_recommendations_common.dart';
 part '../widgets/bot_strategy_compare_painters.dart';
 
 const _compareBackground = AppColors.bg;
-const _comparePanel = AppColors.surface;
-const _comparePanel2 = AppColors.surface2;
-const _comparePrimary = AppColors.primary;
 const _compareGreen = AppColors.buy;
 const _compareAxis = AppColors.chartAxisStrong;
 
@@ -85,50 +83,55 @@ class _BotStrategyComparePageState
                 child: SingleChildScrollView(
                   key: BotStrategyComparePage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 12,
                     children: [
-                      const _SectionLabel('Select Strategies (2-4)'),
-                      const SizedBox(height: 10),
-                      _StrategySelectionGrid(
-                        strategies: snapshot.strategies,
-                        selectedIds: _selected,
-                        onToggle: _toggleStrategy,
-                      ),
-                      const SizedBox(height: 18),
-                      _BestStrategyCard(strategy: best),
-                      const SizedBox(height: 18),
-                      const _SectionLabel('Equity Curves Comparison'),
-                      const SizedBox(height: 12),
-                      _EquityChartCard(
-                        points: snapshot.equityPoints,
-                        strategies: selectedStrategies,
-                      ),
-                      const SizedBox(height: 18),
-                      const _SectionLabel('Performance Radar'),
-                      const SizedBox(height: 12),
-                      _RadarCard(strategies: selectedStrategies),
-                      const SizedBox(height: 18),
-                      const _SectionLabel('Detailed Metrics'),
-                      const SizedBox(height: 12),
-                      _MetricsTable(strategies: selectedStrategies),
-                      const SizedBox(height: 18),
-                      const _SectionLabel('Which Strategy to Choose?'),
-                      const SizedBox(height: 12),
-                      for (final recommendation
-                          in snapshot.recommendations) ...[
-                        _RecommendationCard(
-                          recommendation: recommendation,
-                          strategy: snapshot.strategies.firstWhere(
-                            (item) => item.id == recommendation.strategyId,
+                      VitPageSection(
+                        label: 'Select Strategies (2-4)',
+                        children: [
+                          _StrategySelectionGrid(
+                            strategies: snapshot.strategies,
+                            selectedIds: _selected,
+                            onToggle: _toggleStrategy,
                           ),
-                        ),
-                        if (recommendation != snapshot.recommendations.last)
-                          const SizedBox(height: 12),
-                      ],
-                      const SizedBox(height: 18),
+                        ],
+                      ),
+                      _BestStrategyCard(strategy: best),
+                      VitPageSection(
+                        label: 'Equity Curves Comparison',
+                        children: [
+                          _EquityChartCard(
+                            points: snapshot.equityPoints,
+                            strategies: selectedStrategies,
+                          ),
+                        ],
+                      ),
+                      VitPageSection(
+                        label: 'Performance Radar',
+                        children: [_RadarCard(strategies: selectedStrategies)],
+                      ),
+                      VitPageSection(
+                        label: 'Detailed Metrics',
+                        children: [
+                          _MetricsTable(strategies: selectedStrategies),
+                        ],
+                      ),
+                      VitPageSection(
+                        label: 'Which Strategy to Choose?',
+                        customGap: 12,
+                        children: [
+                          for (final recommendation in snapshot.recommendations)
+                            _RecommendationCard(
+                              recommendation: recommendation,
+                              strategy: snapshot.strategies.firstWhere(
+                                (item) => item.id == recommendation.strategyId,
+                              ),
+                            ),
+                        ],
+                      ),
                       _AnalysisPeriodCard(text: snapshot.analysisPeriod),
-                      const SizedBox(height: 12),
                       const VitCard(
                         variant: VitCardVariant.inner,
                         padding: EdgeInsets.all(12),

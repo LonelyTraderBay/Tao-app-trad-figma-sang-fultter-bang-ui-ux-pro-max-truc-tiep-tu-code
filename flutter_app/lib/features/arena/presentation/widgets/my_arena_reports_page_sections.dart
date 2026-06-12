@@ -91,7 +91,7 @@ class _FilterRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 44,
+      height: AppSpacing.myArenaReportsFilterHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
@@ -133,7 +133,7 @@ class _FilterChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
         child: Container(
-          height: 44,
+          height: AppSpacing.myArenaReportsFilterHeight,
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
           decoration: BoxDecoration(
             color: active ? AppColors.primary12 : AppColors.cardBg,
@@ -155,10 +155,14 @@ class _FilterChip extends StatelessWidget {
               if (filter.count > 0) ...[
                 const SizedBox(width: AppSpacing.x2),
                 Container(
-                  height: 20,
-                  constraints: const BoxConstraints(minWidth: 20),
+                  height: AppSpacing.myArenaReportsBadgeHeight,
+                  constraints: const BoxConstraints(
+                    minWidth: AppSpacing.myArenaReportsBadgeMinWidth,
+                  ),
                   alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.myArenaReportsBadgePaddingHorizontal,
+                  ),
                   decoration: BoxDecoration(
                     color: active
                         ? accentColor.withValues(alpha: 0.18)
@@ -170,7 +174,7 @@ class _FilterChip extends StatelessWidget {
                     style: AppTextStyles.micro.copyWith(
                       color: active ? accentColor : AppColors.text3,
                       fontWeight: AppTextStyles.bold,
-                      height: 1,
+                      height: AppSpacing.myArenaReportsCompactLineHeight,
                     ),
                   ),
                 ),
@@ -214,7 +218,7 @@ class _ProcessBanner extends StatelessWidget {
                   snapshot.bannerDescription,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.myArenaReportsBodyLineHeight,
                   ),
                 ),
               ],
@@ -316,7 +320,7 @@ class _ReportRow extends StatelessWidget {
                       const SizedBox(height: AppSpacing.x1),
                       Wrap(
                         spacing: AppSpacing.x2,
-                        runSpacing: 2,
+                        runSpacing: AppSpacing.myArenaReportsWrapRunSpacing,
                         children: [
                           Text(
                             _targetLabel(report.targetType),
@@ -345,7 +349,7 @@ class _ReportRow extends StatelessWidget {
                 const Icon(
                   Icons.chevron_right,
                   color: AppColors.text3,
-                  size: 18,
+                  size: AppSpacing.myArenaReportsChevron,
                 ),
               ],
             ),
@@ -365,13 +369,13 @@ class _ReportIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.myArenaReportsIconBox,
+      height: AppSpacing.myArenaReportsIconBox,
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.14),
         borderRadius: AppRadii.mdRadius,
       ),
-      child: Icon(icon, color: color, size: 19),
+      child: Icon(icon, color: color, size: AppSpacing.myArenaReportsIcon),
     );
   }
 }

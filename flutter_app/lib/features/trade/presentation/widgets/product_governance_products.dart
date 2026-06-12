@@ -7,15 +7,11 @@ class _ProductsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Copy Trading Products',
+      customGap: 12,
       children: [
-        const _SectionLabel('Copy Trading Products'),
-        const SizedBox(height: 12),
-        for (final product in products) ...[
-          _ProductCard(product: product),
-          if (product != products.last) const SizedBox(height: 12),
-        ],
+        for (final product in products) _ProductCard(product: product),
       ],
     );
   }
@@ -49,7 +45,6 @@ class _ProductCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
-                        fontSize: 16,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),
@@ -74,13 +69,11 @@ class _ProductCard extends StatelessWidget {
                   ),
                 ),
                 borderRadius: AppRadii.cardRadius,
-                child: Container(
+                child: VitCard(
                   width: 34,
                   height: 34,
-                  decoration: BoxDecoration(
-                    color: _govPanel2,
-                    borderRadius: AppRadii.cardRadius,
-                  ),
+                  variant: VitCardVariant.inner,
+                  alignment: Alignment.center,
                   child: const Icon(
                     Icons.chevron_right_rounded,
                     color: AppColors.text3,
@@ -133,7 +126,6 @@ class _TagSection extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
             height: 1,
           ),
         ),
@@ -143,17 +135,14 @@ class _TagSection extends StatelessWidget {
           runSpacing: 6,
           children: [
             for (final tag in tags)
-              Container(
+              VitCard(
+                variant: VitCardVariant.inner,
+                radius: VitCardRadius.sm,
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                decoration: BoxDecoration(
-                  color: _govPanel2,
-                  borderRadius: BorderRadius.circular(5),
-                ),
                 child: Text(
                   tag,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    fontSize: 9,
                     height: 1,
                   ),
                 ),
@@ -179,7 +168,6 @@ class _NegativeTarget extends StatelessWidget {
           'Negative Target:',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
             height: 1,
           ),
         ),
@@ -193,7 +181,6 @@ class _NegativeTarget extends StatelessWidget {
                 tag,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
-                  fontSize: 9,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -213,13 +200,11 @@ class _DateBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       height: 47,
       padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-      decoration: BoxDecoration(
-        color: _govPanel2,
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -227,7 +212,6 @@ class _DateBox extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
               height: 1,
             ),
           ),
@@ -236,7 +220,6 @@ class _DateBox extends StatelessWidget {
             value,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),

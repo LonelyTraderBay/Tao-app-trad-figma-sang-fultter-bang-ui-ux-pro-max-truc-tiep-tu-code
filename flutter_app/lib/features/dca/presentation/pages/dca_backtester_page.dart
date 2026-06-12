@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class DCABacktesterPage extends ConsumerStatefulWidget {
   const DCABacktesterPage({super.key, this.shellRenderMode});
@@ -68,34 +69,49 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
                   customGap: AppSpacing.x5,
                   children: [
                     if (_activeTab == DcaBacktesterTab.setup)
-                      DcaBacktesterSetup(
-                        snapshot: snapshot,
-                        asset: _asset,
-                        frequency: _frequency,
-                        strategy: _strategy,
-                        runKey: DCABacktesterPage.runKey,
-                        strategyKey: DCABacktesterPage.strategyKey,
-                        onAssetChanged: (asset) =>
-                            setState(() => _asset = asset),
-                        onFrequencyChanged: (frequency) =>
-                            setState(() => _frequency = frequency),
-                        onStrategyChanged: (strategy) =>
-                            setState(() => _strategy = strategy),
-                        onRun: _runBacktest,
+                      VitCard(
+                        padding: EdgeInsets.zero,
+                        child: DcaBacktesterSetup(
+                          snapshot: snapshot,
+                          asset: _asset,
+                          frequency: _frequency,
+                          strategy: _strategy,
+                          runKey: DCABacktesterPage.runKey,
+                          strategyKey: DCABacktesterPage.strategyKey,
+                          onAssetChanged: (asset) =>
+                              setState(() => _asset = asset),
+                          onFrequencyChanged: (frequency) =>
+                              setState(() => _frequency = frequency),
+                          onStrategyChanged: (strategy) =>
+                              setState(() => _strategy = strategy),
+                          onRun: _runBacktest,
+                        ),
                       ),
                     if (_activeTab == DcaBacktesterTab.results)
                       if (_hasResults)
-                        DcaBacktesterResults(snapshot: snapshot)
-                      else
-                        const DcaNoResultsCard(),
-                    if (_activeTab == DcaBacktesterTab.analysis)
-                      if (_hasResults)
-                        DcaBacktesterAnalysis(
-                          snapshot: snapshot,
-                          onDownloadReport: _downloadReport,
+                        VitCard(
+                          padding: EdgeInsets.zero,
+                          child: DcaBacktesterResults(snapshot: snapshot),
                         )
                       else
-                        const DcaNoResultsCard(),
+                        const VitCard(
+                          padding: EdgeInsets.zero,
+                          child: DcaNoResultsCard(),
+                        ),
+                    if (_activeTab == DcaBacktesterTab.analysis)
+                      if (_hasResults)
+                        VitCard(
+                          padding: EdgeInsets.zero,
+                          child: DcaBacktesterAnalysis(
+                            snapshot: snapshot,
+                            onDownloadReport: _downloadReport,
+                          ),
+                        )
+                      else
+                        const VitCard(
+                          padding: EdgeInsets.zero,
+                          child: DcaNoResultsCard(),
+                        ),
                   ],
                 ),
               ),

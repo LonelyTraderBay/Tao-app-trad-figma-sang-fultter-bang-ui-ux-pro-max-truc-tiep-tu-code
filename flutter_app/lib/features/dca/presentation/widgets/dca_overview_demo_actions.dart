@@ -82,7 +82,11 @@ class _ActionButton extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(AppSpacing.x3),
-                  child: Icon(spec.icon, color: spec.color, size: 18),
+                  child: Icon(
+                    spec.icon,
+                    color: spec.color,
+                    size: AppSpacing.dcaOverviewInlineIcon,
+                  ),
                 ),
               ),
               const SizedBox(height: AppSpacing.x2),
@@ -123,9 +127,16 @@ class _OverviewSkeleton extends StatelessWidget {
       children: [
         Row(
           children: [
-            VitSkeleton(width: 160, height: 14),
+            VitSkeleton(
+              width: AppSpacing.dcaOverviewSkeletonTitleWidth,
+              height: AppSpacing.dcaOverviewSkeletonTitleHeight,
+            ),
             Spacer(),
-            VitSkeleton(width: 21, height: 21, borderRadius: AppRadii.xlRadius),
+            VitSkeleton(
+              width: AppSpacing.dcaOverviewSkeletonToggleSize,
+              height: AppSpacing.dcaOverviewSkeletonToggleSize,
+              borderRadius: AppRadii.xlRadius,
+            ),
           ],
         ),
         SizedBox(height: AppSpacing.x5),
@@ -138,12 +149,15 @@ class _OverviewSkeleton extends StatelessWidget {
         Row(
           children: [
             VitSkeleton(
-              width: 130,
+              width: AppSpacing.dcaOverviewSkeletonChipWidth,
               height: AppSpacing.x5,
               borderRadius: AppRadii.smRadius,
             ),
             SizedBox(width: AppSpacing.x3),
-            VitSkeleton(width: 60, height: 12),
+            VitSkeleton(
+              width: AppSpacing.dcaOverviewSkeletonMetaWidth,
+              height: AppSpacing.dcaOverviewSkeletonMetaHeight,
+            ),
           ],
         ),
         SizedBox(height: AppSpacing.x5),

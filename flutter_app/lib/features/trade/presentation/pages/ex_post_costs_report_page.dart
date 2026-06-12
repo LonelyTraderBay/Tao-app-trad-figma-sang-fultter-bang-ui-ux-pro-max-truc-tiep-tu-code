@@ -17,6 +17,8 @@ import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart'
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 part '../widgets/ex_post_costs_report_summary.dart';
 part '../widgets/ex_post_costs_report_variance_common.dart';
 
@@ -155,6 +157,18 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
                       const _SectionLabel('Variance Analysis'),
                       const SizedBox(height: 12),
                       _VarianceCard(report: report),
+                      const TradeBodyReviewSection(
+                        title: 'Cost report body review',
+                        message: 'Ex-post cost report body reviewed',
+                        detail:
+                            'Year tabs, actual costs, estimates, variance, disclosure, empty, and result states stay visible.',
+                        primary:
+                            'Actual and estimated costs remain visible before variance details.',
+                        secondary:
+                            'Year switching preserves cost-report context.',
+                        tertiary:
+                            'Disclosure copy stays informational and not execution-oriented.',
+                      ),
                     ],
                   ),
                 ),

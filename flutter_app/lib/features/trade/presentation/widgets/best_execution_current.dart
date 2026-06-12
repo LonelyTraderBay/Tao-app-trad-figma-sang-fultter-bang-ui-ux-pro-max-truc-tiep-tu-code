@@ -15,21 +15,21 @@ class _CurrentReport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      customGap: 12,
       children: [
-        const _SectionLabel('Top 5 Execution Venues (By Volume)'),
-        const SizedBox(height: 12),
-        for (final venue in venues) ...[
-          _VenueCard(venue: venue),
-          if (venue != venues.last) const SizedBox(height: 12),
-        ],
-        const SizedBox(height: 20),
+        VitPageSection(
+          label: 'Top 5 Execution Venues (By Volume)',
+          customGap: 12,
+          children: [for (final venue in venues) _VenueCard(venue: venue)],
+        ),
         _AnalysisButton(onTap: onAnalysis),
-        const SizedBox(height: 26),
-        const _SectionLabel('Report Actions'),
-        const SizedBox(height: 12),
-        _ReportActions(onExport: onExport, onPublish: onPublish),
+        VitPageSection(
+          label: 'Report Actions',
+          children: [_ReportActions(onExport: onExport, onPublish: onPublish)],
+        ),
       ],
     );
   }
@@ -52,24 +52,16 @@ class _VenueCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              VitCard(
                 width: 40,
                 height: 40,
-                decoration: BoxDecoration(
-                  color: isWinner
-                      ? _bestAmber.withValues(alpha: .15)
-                      : _bestPanel2,
-                  border: isWinner
-                      ? Border.all(color: _bestAmber, width: 2)
-                      : null,
-                  borderRadius: AppRadii.cardRadius,
-                ),
                 alignment: Alignment.center,
+                variant: VitCardVariant.inner,
+                borderColor: isWinner ? _bestAmber : AppColors.transparent,
                 child: Text(
                   '#${venue.rank}',
                   style: AppTextStyles.body.copyWith(
                     color: isWinner ? _bestAmber : AppColors.text1,
-                    fontSize: 18,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -89,7 +81,6 @@ class _VenueCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.body.copyWith(
                               color: AppColors.text1,
-                              fontSize: 15,
                               fontWeight: AppTextStyles.bold,
                               height: 1,
                             ),
@@ -112,7 +103,6 @@ class _VenueCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 10,
                         height: 1,
                       ),
                     ),
@@ -127,7 +117,6 @@ class _VenueCard extends StatelessWidget {
                     venue.score.toStringAsFixed(1),
                     style: AppTextStyles.body.copyWith(
                       color: _bestGreen,
-                      fontSize: 20,
                       fontWeight: AppTextStyles.bold,
                       fontFeatures: AppTextStyles.tabularFigures,
                       height: 1,
@@ -138,7 +127,6 @@ class _VenueCard extends StatelessWidget {
                     'Quality',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 9,
                       height: 1,
                     ),
                   ),
@@ -188,7 +176,6 @@ class _VenueCard extends StatelessWidget {
                   'Composite Quality Score',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 9,
                     height: 1,
                   ),
                 ),
@@ -197,7 +184,6 @@ class _VenueCard extends StatelessWidget {
                 '${venue.score.toStringAsFixed(1)}/100',
                 style: AppTextStyles.micro.copyWith(
                   color: _bestGreen,
-                  fontSize: 10,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -206,7 +192,7 @@ class _VenueCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           ClipRRect(
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.xlRadius,
             child: SizedBox(
               height: 6,
               child: Stack(
@@ -234,13 +220,11 @@ class _VenueMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       height: 48,
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 7),
-      decoration: BoxDecoration(
-        color: _bestPanel2,
-        borderRadius: AppRadii.mdRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -251,7 +235,6 @@ class _VenueMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
               height: 1,
             ),
           ),
@@ -262,7 +245,6 @@ class _VenueMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
@@ -292,7 +274,6 @@ class _AnalysisButton extends StatelessWidget {
         'View Detailed Analysis',
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text1,
-          fontSize: 13,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),

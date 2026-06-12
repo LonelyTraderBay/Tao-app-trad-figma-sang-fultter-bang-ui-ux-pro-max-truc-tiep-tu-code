@@ -41,7 +41,7 @@ class StakingRecommendationsHeroCard extends StatelessWidget {
                   snapshot.heroSubtitle,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.stakingRecommendationsBodyLineHeight,
                   ),
                 ),
               ],

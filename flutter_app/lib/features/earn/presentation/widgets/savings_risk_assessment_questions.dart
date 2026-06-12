@@ -103,7 +103,7 @@ class _QuestionCard extends StatelessWidget {
                         question.helpText!,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          height: 1.55,
+                          height: AppSpacing.savingsConsumerBodyLineHeight,
                         ),
                       ),
                     ],
@@ -230,7 +230,8 @@ class _RiskOptionTile extends StatelessWidget {
                             option.description!,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text3,
-                              height: 1.45,
+                              height: AppSpacing
+                                  .savingsConsumerDescriptionLineHeight,
                             ),
                           ),
                         ],

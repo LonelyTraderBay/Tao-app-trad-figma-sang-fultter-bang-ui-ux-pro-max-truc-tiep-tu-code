@@ -20,7 +20,6 @@ class _SeveritySection extends StatelessWidget {
           title,
           style: AppTextStyles.caption.copyWith(
             color: color,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -39,7 +38,6 @@ class _SeveritySection extends StatelessWidget {
                   flag.flag,
                   style: AppTextStyles.micro.copyWith(
                     color: color,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1.35,
                   ),
@@ -49,7 +47,6 @@ class _SeveritySection extends StatelessWidget {
                   flag.explanation,
                   style: AppTextStyles.micro.copyWith(
                     color: color,
-                    fontSize: 9,
                     height: 1.35,
                   ),
                 ),
@@ -83,7 +80,6 @@ class _VerificationTab extends StatelessWidget {
           'Verification Tiers',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text1,
-            fontSize: 13,
             fontWeight: AppTextStyles.bold,
           ),
         ),
@@ -119,7 +115,6 @@ class _TierCard extends StatelessWidget {
                 tier.tier,
                 style: AppTextStyles.caption.copyWith(
                   color: color,
-                  fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -132,7 +127,6 @@ class _TierCard extends StatelessWidget {
               '• $req',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                fontSize: 10,
                 height: 1.4,
               ),
             ),
@@ -170,7 +164,6 @@ class _ReportTab extends StatelessWidget {
                 'Report Provider',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -189,7 +182,6 @@ class _ReportTab extends StatelessWidget {
                   'Submit Report',
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.onAccent,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -217,7 +209,6 @@ class _ReportField extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            fontSize: 11,
             height: 1,
           ),
         ),

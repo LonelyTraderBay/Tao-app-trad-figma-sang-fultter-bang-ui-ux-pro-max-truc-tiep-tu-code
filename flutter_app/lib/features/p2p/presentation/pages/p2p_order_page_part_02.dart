@@ -27,7 +27,7 @@ class _PaymentInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pOrderCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -62,7 +62,7 @@ class _PaymentInfoCard extends StatelessWidget {
             onTap: onToggleQr,
             borderRadius: AppRadii.smRadius,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+              padding: AppSpacing.p2pOrderQrTogglePadding,
               child: Row(
                 children: [
                   const Icon(
@@ -124,7 +124,7 @@ class _QrPanel extends StatelessWidget {
         borderRadius: AppRadii.cardRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.p2pOrderQrPanelPadding,
         child: Column(
           children: [
             DecoratedBox(
@@ -133,13 +133,16 @@ class _QrPanel extends StatelessWidget {
                 borderRadius: AppRadii.mdRadius,
               ),
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.x2),
+                padding: AppSpacing.p2pOrderQrInnerPadding,
                 child: CustomPaint(
                   painter: _QrPatternPainter(
                     data:
                         '${order.bankName}|${order.accountNumber}|${order.accountName}|${order.totalVnd}|${order.transferContent}',
                   ),
-                  size: const Size(140, 140),
+                  size: const Size(
+                    AppSpacing.p2pOrderQrSize,
+                    AppSpacing.p2pOrderQrSize,
+                  ),
                 ),
               ),
             ),
@@ -183,7 +186,7 @@ class _PaymentFieldLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.p2pOrderPaymentFieldPadding,
       child: Row(
         children: [
           Expanded(
@@ -236,7 +239,7 @@ class _ProofCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pOrderCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -288,7 +291,7 @@ class _TimelineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pOrderCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -343,7 +346,11 @@ class _TimelineItem extends StatelessWidget {
                 shape: BoxShape.circle,
                 border: Border.all(color: color),
               ),
-              child: Icon(_timelineIcon(item.iconKey), color: color, size: 15),
+              child: Icon(
+                _timelineIcon(item.iconKey),
+                color: color,
+                size: AppSpacing.p2pOrderTimelineIcon,
+              ),
             ),
             if (!isLast)
               Container(
@@ -356,7 +363,9 @@ class _TimelineItem extends StatelessWidget {
         const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.only(bottom: isLast ? 0 : AppSpacing.x2),
+            padding: isLast
+                ? AppSpacing.zeroInsets
+                : AppSpacing.p2pOrderTimelineItemPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -412,7 +421,7 @@ class _PaymentWarning extends StatelessWidget {
       messageColor: AppColors.sell,
       borderColor: AppColors.sell20,
       variant: VitCardVariant.standard,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pOrderCompactCardPadding,
       messageStyle: AppTextStyles.micro.copyWith(
         color: AppColors.sell,
         height: 1.4,
@@ -472,7 +481,7 @@ class _QuickActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pOrderCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

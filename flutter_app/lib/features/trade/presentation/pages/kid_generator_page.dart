@@ -15,6 +15,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 const _kidBackground = AppColors.bg;
 const _kidPanel = AppColors.surface;
 const _kidPanel2 = AppColors.surface2;
@@ -97,6 +99,19 @@ class KIDGeneratorPage extends ConsumerWidget {
                               'Risk indicator, performance scenarios, costs, holding period and download next steps are reviewed before distribution.',
                           contractId: 'kid-generator-review',
                         ),
+                      ),
+                      const SizedBox(height: 12),
+                      const TradeBodyReviewSection(
+                        title: 'KID body review',
+                        message: 'KID generator body reviewed',
+                        detail:
+                            'Document preview, sections, download, risk indicator, empty, and result states stay visible.',
+                        primary:
+                            'Regulatory notice remains above the generated document preview.',
+                        secondary:
+                            'Document sections stay visible before download actions.',
+                        tertiary:
+                            'Distribution copy remains disclosure-focused and non-promotional.',
                       ),
                     ],
                   ),

@@ -37,7 +37,7 @@ class ArenaModePredictionContext extends StatelessWidget {
               const Icon(
                 Icons.info_outline_rounded,
                 color: AppColors.accent,
-                size: 13,
+                size: AppSpacing.arenaModePredictionInfoIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -46,7 +46,7 @@ class ArenaModePredictionContext extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.accent,
                     fontWeight: AppTextStyles.bold,
-                    letterSpacing: .5,
+                    letterSpacing: AppSpacing.arenaModePredictionLetterSpacing,
                   ),
                 ),
               ),
@@ -71,7 +71,7 @@ class ArenaModePredictionContext extends StatelessWidget {
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1.35,
+              height: AppSpacing.arenaModePredictionTitleLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -80,7 +80,7 @@ class ArenaModePredictionContext extends StatelessWidget {
               const Icon(
                 Icons.track_changes_rounded,
                 color: AppColors.accent,
-                size: 14,
+                size: AppSpacing.arenaModePredictionMetricIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -102,7 +102,7 @@ class ArenaModePredictionContext extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
-              minHeight: 6,
+              minHeight: AppSpacing.arenaModePredictionProgressHeight,
               value: probability,
               backgroundColor: AppColors.surface3,
               color: color,
@@ -113,7 +113,10 @@ class ArenaModePredictionContext extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: TextButton.icon(
               onPressed: onTap,
-              icon: const Icon(Icons.open_in_new_rounded, size: 13),
+              icon: const Icon(
+                Icons.open_in_new_rounded,
+                size: AppSpacing.arenaModePredictionActionIcon,
+              ),
               label: const Text('Xem thị trường dự đoán'),
               style: TextButton.styleFrom(
                 foregroundColor: AppColors.accent,
@@ -130,7 +133,7 @@ class ArenaModePredictionContext extends StatelessWidget {
             'Thông tin chỉ mang tính tham khảo. Arena Points và Prediction Markets là 2 hệ thống hoàn toàn riêng biệt.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.35,
+              height: AppSpacing.arenaModePredictionNoticeLineHeight,
             ),
           ),
         ],

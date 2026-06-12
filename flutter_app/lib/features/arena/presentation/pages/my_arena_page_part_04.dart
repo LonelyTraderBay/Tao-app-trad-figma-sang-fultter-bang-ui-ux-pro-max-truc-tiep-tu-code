@@ -22,7 +22,7 @@ class _AccentPillButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
         child: Container(
-          height: 44,
+          height: AppSpacing.myArenaAccentPillHeight,
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
           decoration: BoxDecoration(
             color: color.withValues(alpha: .12),
@@ -32,14 +32,14 @@ class _AccentPillButton extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, color: color, size: 15),
+              Icon(icon, color: color, size: AppSpacing.myArenaAccentPillIcon),
               const SizedBox(width: AppSpacing.x2),
               Text(
                 label,
                 style: AppTextStyles.caption.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.myArenaAccentPillLineHeight,
                 ),
               ),
             ],
@@ -77,7 +77,11 @@ class _TextIconButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: color, size: 14),
+            Icon(
+              icon,
+              color: color,
+              size: AppSpacing.myArenaTextIconButtonIcon,
+            ),
             const SizedBox(width: AppSpacing.x1),
             Text(
               label,

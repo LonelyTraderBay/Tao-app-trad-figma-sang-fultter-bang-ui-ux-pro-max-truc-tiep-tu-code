@@ -9,7 +9,7 @@ class _SignalBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      padding: AppSpacing.predictionAdvancedSignalBadgePadding,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .15),
         borderRadius: AppRadii.smRadius,
@@ -36,14 +36,14 @@ class _LegendItem extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 12,
-          height: 12,
+          width: AppSpacing.predictionAdvancedLegendSwatch,
+          height: AppSpacing.predictionAdvancedLegendSwatch,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(2),
+            borderRadius: AppRadii.hairlineRadius,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.predictionAdvancedLegendGap),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text2),
@@ -97,10 +97,7 @@ class _ProbabilityPainter extends CustomPainter {
         text: value == .50
             ? '0.5'
             : value.toStringAsFixed(value == .565 ? 3 : 2),
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: 9,
-        ),
+        style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
       );
       textPainter.layout();
       textPainter.paint(canvas, Offset(left - textPainter.width - 8, y - 6));
@@ -109,10 +106,7 @@ class _ProbabilityPainter extends CustomPainter {
       final x = _scaleX(index, points.length, chart);
       textPainter.text = TextSpan(
         text: points[index].time,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: 9,
-        ),
+        style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
       );
       textPainter.layout();
       textPainter.paint(
@@ -268,8 +262,8 @@ class _VolumePainter extends CustomPainter {
           (chart.width / points.length - barWidth) / 2;
       final rect = RRect.fromRectAndCorners(
         Rect.fromLTWH(x, chart.bottom - height, barWidth, height),
-        topLeft: const Radius.circular(4),
-        topRight: const Radius.circular(4),
+        topLeft: AppRadii.xsCorner,
+        topRight: AppRadii.xsCorner,
       );
       canvas.drawRRect(rect, Paint()..color = _predictionPrimary);
     }
@@ -278,10 +272,7 @@ class _VolumePainter extends CustomPainter {
       final y = chart.bottom - chart.height * value / 32000;
       textPainter.text = TextSpan(
         text: '$value',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: 9,
-        ),
+        style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
       );
       textPainter.layout();
       textPainter.paint(canvas, Offset(left - textPainter.width - 8, y - 6));
@@ -290,10 +281,7 @@ class _VolumePainter extends CustomPainter {
       final x = chart.left + chart.width * (index + .5) / points.length;
       textPainter.text = TextSpan(
         text: points[index].time,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: 9,
-        ),
+        style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
       );
       textPainter.layout();
       textPainter.paint(
@@ -370,10 +358,7 @@ class _OrderFlowPainter extends CustomPainter {
       final y = chart.top + i * rowHeight + 7;
       textPainter.text = TextSpan(
         text: point.price.toStringAsFixed(2),
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: 9,
-        ),
+        style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
       );
       textPainter.layout();
       textPainter.paint(canvas, Offset(0, y + 5));
@@ -382,14 +367,14 @@ class _OrderFlowPainter extends CustomPainter {
       canvas.drawRRect(
         RRect.fromRectAndRadius(
           Rect.fromLTWH(chart.left, y, buyWidth, 11),
-          const Radius.circular(4),
+          AppRadii.xsCorner,
         ),
         Paint()..color = AppColors.buy,
       );
       canvas.drawRRect(
         RRect.fromRectAndRadius(
           Rect.fromLTWH(chart.left + buyWidth, y, sellWidth, 11),
-          const Radius.circular(4),
+          AppRadii.xsCorner,
         ),
         Paint()..color = AppColors.sell,
       );
@@ -501,7 +486,7 @@ void _paintLabel(Canvas canvas, String label, Offset offset, Color color) {
   final textPainter = TextPainter(
     text: TextSpan(
       text: label,
-      style: AppTextStyles.micro.copyWith(color: color, fontSize: 9),
+      style: AppTextStyles.numericMicro.copyWith(color: color),
     ),
     textDirection: TextDirection.ltr,
   )..layout();

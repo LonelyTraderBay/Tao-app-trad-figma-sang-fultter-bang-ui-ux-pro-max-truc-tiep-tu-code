@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -21,7 +22,6 @@ part '../widgets/bot_portfolio_dashboard_page_sections.dart';
 part '../widgets/bot_portfolio_dashboard_page_common.dart';
 
 const _portfolioBackground = AppColors.bg;
-const _portfolioPanel = AppColors.surface;
 const _portfolioPrimary = AppColors.primary;
 const _portfolioGreen = AppColors.buy;
 const _portfolioAmber = AppColors.caution;
@@ -65,25 +65,29 @@ class BotPortfolioDashboardPage extends ConsumerWidget {
                 child: SingleChildScrollView(
                   key: contentKey,
                   padding: EdgeInsets.fromLTRB(20, 11, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 12,
                     children: [
                       _SummaryGrid(summary: snapshot.summary),
-                      const SizedBox(height: 12),
-                      const _SectionLabel('Portfolio Equity Curve'),
-                      const SizedBox(height: 10),
-                      _EquityCard(points: snapshot.equityPoints),
-                      const SizedBox(height: 18),
-                      const _SectionLabel('Allocation Breakdown'),
-                      const SizedBox(height: 10),
-                      _AllocationCard(allocations: snapshot.allocations),
-                      const SizedBox(height: 18),
-                      const _SectionLabel('Bot Correlation Matrix'),
-                      const SizedBox(height: 10),
-                      _CorrelationCard(rows: snapshot.correlations),
-                      const SizedBox(height: 18),
+                      VitPageSection(
+                        label: 'Portfolio Equity Curve',
+                        children: [_EquityCard(points: snapshot.equityPoints)],
+                      ),
+                      VitPageSection(
+                        label: 'Allocation Breakdown',
+                        children: [
+                          _AllocationCard(allocations: snapshot.allocations),
+                        ],
+                      ),
+                      VitPageSection(
+                        label: 'Bot Correlation Matrix',
+                        children: [
+                          _CorrelationCard(rows: snapshot.correlations),
+                        ],
+                      ),
                       _HealthCard(items: snapshot.healthItems),
-                      const SizedBox(height: 12),
                       const VitCard(
                         variant: VitCardVariant.inner,
                         padding: EdgeInsets.all(12),

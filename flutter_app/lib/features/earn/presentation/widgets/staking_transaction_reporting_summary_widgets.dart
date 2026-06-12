@@ -31,7 +31,8 @@ class _InfoBanner extends StatelessWidget {
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height:
+                        AppSpacing.stakingTransactionReportingBodyLineHeight,
                   ),
                 ),
               ],
@@ -120,7 +121,7 @@ class _Selectors extends StatelessWidget {
             onTap: onOpenCostBasis,
             padding: const EdgeInsets.all(AppSpacing.x3),
             child: SizedBox(
-              height: 84,
+              height: AppSpacing.stakingTransactionReportingCardMinHeight,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -193,7 +194,8 @@ class _ReportingTabs extends StatelessWidget {
                         AnimatedContainer(
                           duration: const Duration(milliseconds: 160),
                           width: active == tab ? AppSpacing.buttonHero : 0,
-                          height: 2,
+                          height: AppSpacing
+                              .stakingTransactionReportingTabIndicatorHeight,
                           decoration: BoxDecoration(
                             color: active == tab
                                 ? AppColors.primarySoft
@@ -315,7 +317,7 @@ class _SummaryPanel extends StatelessWidget {
             body,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.5,
+              height: AppSpacing.stakingTransactionReportingMetricLineHeight,
             ),
           ),
         ],
@@ -379,7 +381,7 @@ class _GainsPanel extends StatelessWidget {
             'Reported on Form 8949 and Schedule D. Long-term gains taxed at lower rates.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.5,
+              height: AppSpacing.stakingTransactionReportingMetricLineHeight,
             ),
           ),
         ],

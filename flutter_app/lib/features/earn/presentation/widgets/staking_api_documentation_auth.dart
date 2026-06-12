@@ -51,7 +51,7 @@ class StakingApiDocumentationAuthTab extends StatelessWidget {
                               'Include your API key in the X-API-Key header with every request.',
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text2,
-                                height: 1.5,
+                                height: AppSpacing.stakingApiAuthLineHeight,
                               ),
                             ),
                           ],

@@ -20,7 +20,7 @@ class _PenaltyExampleCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Container(
             padding: const EdgeInsets.all(AppSpacing.x3),
             decoration: BoxDecoration(
@@ -34,7 +34,7 @@ class _PenaltyExampleCard extends StatelessWidget {
                     const Divider(color: AppColors.divider),
                   _CalculationRow(row: row),
                   if (row != example.rows.last)
-                    const SizedBox(height: AppSpacing.x2),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                 ],
               ],
             ),
@@ -107,13 +107,13 @@ class _EmergencyTab extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        width: 48,
-                        height: 48,
+                        width: AppSpacing.earnWithdrawalEmergencyIconBox,
+                        height: AppSpacing.earnWithdrawalEmergencyIconBox,
                         decoration: BoxDecoration(
                           color: AppColors.sell10,
                           border: Border.all(
                             color: AppColors.sell20,
-                            width: 1.5,
+                            width: AppSpacing.earnWithdrawalBorderWidth,
                           ),
                           borderRadius: AppRadii.cardRadius,
                         ),
@@ -134,13 +134,14 @@ class _EmergencyTab extends StatelessWidget {
                                 fontWeight: AppTextStyles.bold,
                               ),
                             ),
-                            const SizedBox(height: AppSpacing.x2),
+                            const Padding(
+                              padding: EdgeInsets.only(top: AppSpacing.x2),
+                            ),
                             Text(
                               snapshot.emergencyBody,
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text2,
-                                fontSize: 12,
-                                height: 1.6,
+                                height: AppSpacing.earnWithdrawalInfoLineHeight,
                               ),
                             ),
                           ],
@@ -148,18 +149,20 @@ class _EmergencyTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
                   for (final reason in snapshot.emergencyReasons) ...[
                     _BulletLine(text: reason, color: AppColors.sell),
                     if (reason != snapshot.emergencyReasons.last)
-                      const SizedBox(height: AppSpacing.x2),
+                      const Padding(
+                        padding: EdgeInsets.only(top: AppSpacing.x2),
+                      ),
                   ],
                 ],
               ),
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         VitPageSection(
           label: 'Quy trình Rút khẩn cấp',
           children: [
@@ -171,14 +174,16 @@ class _EmergencyTab extends StatelessWidget {
                   for (final step in snapshot.emergencySteps) ...[
                     _EmergencyStepRow(step: step),
                     if (step != snapshot.emergencySteps.last)
-                      const SizedBox(height: AppSpacing.x4),
+                      const Padding(
+                        padding: EdgeInsets.only(top: AppSpacing.x4),
+                      ),
                   ],
                 ],
               ),
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
         VitPageSection(
           label: 'Phí Rút khẩn cấp',
           children: [
@@ -192,10 +197,10 @@ class _EmergencyTab extends StatelessWidget {
                     'Phí rút khẩn cấp cao hơn phí rút sớm thông thường vì cần xử lý ưu tiên và bỏ qua unbonding period.',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.6,
+                      height: AppSpacing.earnWithdrawalInfoLineHeight,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
                   Wrap(
                     spacing: AppSpacing.x3,
                     runSpacing: AppSpacing.x3,
@@ -209,9 +214,9 @@ class _EmergencyTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         _WarningBox(text: snapshot.emergencyWarning),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         _SupportCard(contacts: snapshot.supportContacts),
       ],
     );
@@ -229,12 +234,15 @@ class _EmergencyStepRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          width: 34,
-          height: 34,
+          width: AppSpacing.earnWithdrawalEmergencyStepBox,
+          height: AppSpacing.earnWithdrawalEmergencyStepBox,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: AppColors.primary12,
-            border: Border.all(color: AppColors.primary20, width: 1.5),
+            border: Border.all(
+              color: AppColors.primary20,
+              width: AppSpacing.earnWithdrawalBorderWidth,
+            ),
             shape: BoxShape.circle,
           ),
           child: Text(
@@ -255,16 +263,16 @@ class _EmergencyStepRow extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.medium,
-                  height: 1.45,
+                  height: AppSpacing.earnWithdrawalEmergencyStepLineHeight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x1),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
               Row(
                 children: [
                   const Icon(
                     Icons.timer_outlined,
                     color: AppColors.text3,
-                    size: 14,
+                    size: AppSpacing.earnWithdrawalTimerIcon,
                   ),
                   const SizedBox(width: AppSpacing.x1),
                   Text(
@@ -289,9 +297,11 @@ class _EmergencyFeeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 174,
+      width: AppSpacing.earnWithdrawalFeeTileWidth,
       child: Container(
-        constraints: const BoxConstraints(minHeight: 84),
+        constraints: const BoxConstraints(
+          minHeight: AppSpacing.earnWithdrawalFeeTileMinHeight,
+        ),
         padding: const EdgeInsets.all(AppSpacing.x3),
         decoration: BoxDecoration(
           color: AppColors.surface2,
@@ -307,13 +317,13 @@ class _EmergencyFeeTile extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
             Text(
               fee.fee,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.sell,
                 fontWeight: AppTextStyles.bold,
-                height: 1.35,
+                height: AppSpacing.earnWithdrawalFeeLineHeight,
               ),
             ),
           ],
@@ -343,10 +353,11 @@ class _SupportCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           for (final contact in contacts) ...[
             _SupportRow(contact: contact),
-            if (contact != contacts.last) const SizedBox(height: AppSpacing.x2),
+            if (contact != contacts.last)
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           ],
         ],
       ),

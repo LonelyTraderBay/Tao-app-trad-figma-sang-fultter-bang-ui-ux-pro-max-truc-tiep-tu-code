@@ -78,10 +78,10 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
             accentColor: AppColors.primary,
             children: [
               GridView.count(
-                crossAxisCount: 2,
+                crossAxisCount: AppSpacing.launchpadGridColumns,
                 mainAxisSpacing: AppSpacing.x3,
                 crossAxisSpacing: AppSpacing.x3,
-                childAspectRatio: 1.65,
+                childAspectRatio: AppSpacing.launchpadGridAspectCompact,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
@@ -170,7 +170,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
                       submissionMessage!,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: 1.45,
+                        height: AppSpacing.launchpadLineHeightReadable,
                       ),
                     ),
                   ),
@@ -278,7 +278,11 @@ class _LabeledField extends StatelessWidget {
           decoration: InputDecoration(
             prefixIcon: prefixIcon == null
                 ? null
-                : Icon(prefixIcon, color: AppColors.text3, size: 18),
+                : Icon(
+                    prefixIcon,
+                    color: AppColors.text3,
+                    size: AppSpacing.launchpadIcon2xl,
+                  ),
             hintText: hintText,
             hintStyle: AppTextStyles.base.copyWith(color: AppColors.text3),
             isDense: true,
@@ -380,7 +384,7 @@ class _PreviewMetric extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
+              fontSize: AppSpacing.launchpadFontSm,
             ),
           ),
           Text(

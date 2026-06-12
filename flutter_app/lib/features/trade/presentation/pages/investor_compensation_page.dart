@@ -80,15 +80,16 @@ class _InvestorCompensationPageState
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 0,
+                    customGap: 12,
                     children: [
                       _ProtectionCard(snapshot: snapshot),
-                      const SizedBox(height: 12),
                       const VitCard(
                         variant: VitCardVariant.inner,
                         padding: EdgeInsets.all(12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: VitPageContent(
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          customGap: 8,
                           children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
@@ -97,7 +98,6 @@ class _InvestorCompensationPageState
                                   'Eligibility, coverage limit, claim path, exclusions and next steps are reviewed before relying on protection.',
                               contractId: 'investor-compensation-review',
                             ),
-                            SizedBox(height: 8),
                             VitStatusPill(
                               label: 'Coverage has limits',
                               status: VitStatusPillStatus.info,
@@ -106,23 +106,14 @@ class _InvestorCompensationPageState
                           ],
                         ),
                       ),
-                      const SizedBox(height: 39),
                       _InfoNotice(snapshot: snapshot),
-                      const SizedBox(height: 35),
                       _Tabs(activeId: _tab, onChanged: _setTab),
-                      const SizedBox(height: 27),
-                      VitPageSection(
-                        customGap: 0,
-                        children: [
-                          if (_tab == 'overview')
-                            _Overview(snapshot: snapshot)
-                          else if (_tab == 'eligibility')
-                            _Eligibility(snapshot: snapshot)
-                          else
-                            _ClaimGuide(snapshot: snapshot),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
+                      if (_tab == 'overview')
+                        _Overview(snapshot: snapshot)
+                      else if (_tab == 'eligibility')
+                        _Eligibility(snapshot: snapshot)
+                      else
+                        _ClaimGuide(snapshot: snapshot),
                       const _FaqButton(),
                     ],
                   ),

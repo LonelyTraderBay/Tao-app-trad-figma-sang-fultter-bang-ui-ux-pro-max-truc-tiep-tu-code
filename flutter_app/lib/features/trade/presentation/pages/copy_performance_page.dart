@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -23,7 +24,6 @@ const _performancePrimary = AppColors.primary;
 const _performancePurple = AppColors.accent;
 const _performanceGreen = AppColors.buy;
 const _performanceRed = AppColors.sell;
-const _performancePanel = AppColors.surfaceNavy;
 
 class CopyPerformancePage extends ConsumerStatefulWidget {
   const CopyPerformancePage({
@@ -78,11 +78,12 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
                 child: SingleChildScrollView(
                   key: CopyPerformancePage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 14,
                     children: [
                       _PerformanceSummary(snapshot: snapshot),
-                      const SizedBox(height: 12),
                       VitCard(
                         variant: VitCardVariant.inner,
                         padding: const EdgeInsets.all(12),
@@ -94,13 +95,11 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
                           contractId: 'copy-performance-${widget.copyId}',
                         ),
                       ),
-                      const SizedBox(height: 24),
                       _PerformanceTabs(
                         activeTab: _activeTab,
                         onChanged: (value) =>
                             setState(() => _activeTab = value),
                       ),
-                      const SizedBox(height: 22),
                       if (_activeTab == 'overview')
                         _OverviewTab(snapshot: snapshot)
                       else if (_activeTab == 'trades')

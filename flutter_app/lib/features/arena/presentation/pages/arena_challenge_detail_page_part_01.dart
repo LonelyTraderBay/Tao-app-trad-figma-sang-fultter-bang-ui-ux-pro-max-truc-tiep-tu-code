@@ -43,16 +43,16 @@ class _ChallengeIntro extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text(
           challenge.title,
           style: AppTextStyles.sectionTitle.copyWith(
             color: AppColors.text1,
-            fontWeight: FontWeight.w900,
-            height: 1.15,
+            fontWeight: AppTextStyles.heavy,
+            height: AppSpacing.arenaChallengeTitleLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         _InlineAction(
           key: ArenaChallengeDetailPage.modeLinkKey,
           label: challenge.modeName,
@@ -60,12 +60,12 @@ class _ChallengeIntro extends StatelessWidget {
           color: _arenaAccent,
           onTap: onMode,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         Text(
           challenge.description,
           style: AppTextStyles.body.copyWith(
             color: AppColors.text2,
-            height: 1.45,
+            height: AppSpacing.arenaChallengeBodyLineHeight,
           ),
         ),
       ],
@@ -102,14 +102,17 @@ class _LiveStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
-          const Divider(height: 1, color: AppColors.divider),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const Divider(
+            height: AppSpacing.arenaChallengeDividerHeight,
+            color: AppColors.divider,
+          ),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           Row(
             children: [
               const Icon(
                 Icons.schedule_outlined,
-                size: 15,
+                size: AppSpacing.arenaChallengeSmallIcon,
                 color: AppColors.text3,
               ),
               const SizedBox(width: AppSpacing.x2),
@@ -130,9 +133,9 @@ class _LiveStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Container(
-            height: 40,
+            height: AppSpacing.arenaChallengeCountdownHeight,
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
             decoration: BoxDecoration(
               color: AppColors.surface2,
@@ -150,7 +153,7 @@ class _LiveStatusCard extends StatelessWidget {
                 ),
                 const Icon(
                   Icons.timer_outlined,
-                  size: 15,
+                  size: AppSpacing.arenaChallengeSmallIcon,
                   color: AppColors.sell,
                 ),
                 const SizedBox(width: AppSpacing.x2),
@@ -164,7 +167,7 @@ class _LiveStatusCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           Row(
             children: [
               Expanded(
@@ -182,11 +185,11 @@ class _LiveStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
-              minHeight: 8,
+              minHeight: AppSpacing.arenaChallengeProgressHeight,
               value: challenge.fillPercent / 100,
               color: AppColors.sell,
               backgroundColor: AppColors.surface3,
@@ -273,7 +276,7 @@ class _RewardCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           for (final tier in tiers)
             Container(
               padding: const EdgeInsets.all(AppSpacing.x4),
@@ -286,7 +289,7 @@ class _RewardCard extends StatelessWidget {
                   const Icon(
                     Icons.emoji_events_outlined,
                     color: AppColors.primary,
-                    size: 17,
+                    size: AppSpacing.arenaChallengeMdIcon,
                   ),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(
@@ -345,7 +348,7 @@ class _TeamsSection extends StatelessWidget {
           title: 'Thành viên',
           accentColor: _arenaAccent,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -380,8 +383,8 @@ class _TeamCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 12,
-                height: 12,
+                width: AppSpacing.arenaChallengeTeamDot,
+                height: AppSpacing.arenaChallengeTeamDot,
                 decoration: BoxDecoration(
                   color: _color,
                   shape: BoxShape.circle,
@@ -401,7 +404,7 @@ class _TeamCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Wrap(
             spacing: AppSpacing.x1,
             runSpacing: AppSpacing.x1,
@@ -446,7 +449,7 @@ class _MemberChip extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
                 fontWeight: AppTextStyles.medium,
-                height: 1.2,
+                height: AppSpacing.arenaChallengeMemberLineHeight,
               ),
             ),
           ),
@@ -460,7 +463,7 @@ class _MemberChip extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.2,
+                  height: AppSpacing.arenaChallengeMemberLineHeight,
                 ),
               ),
             ),
@@ -501,7 +504,11 @@ class _GovernanceCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.shield_outlined, color: AppColors.buy, size: 18),
+              const Icon(
+                Icons.shield_outlined,
+                color: AppColors.buy,
+                size: AppSpacing.arenaChallengeLgIcon,
+              ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
@@ -536,7 +543,7 @@ class _GovernanceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           for (final row in rows)
             _SummaryRow(label: row.label, value: row.value),
         ],

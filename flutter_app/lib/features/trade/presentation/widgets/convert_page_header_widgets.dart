@@ -197,7 +197,6 @@ class _FavoritePairs extends StatelessWidget {
                 pair.label,
                 style: AppTextStyles.micro.copyWith(
                   color: active ? _tradePrimary : AppColors.text1,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -234,7 +233,6 @@ class _RateBar extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                fontSize: 13,
                 fontWeight: AppTextStyles.medium,
               ),
             ),

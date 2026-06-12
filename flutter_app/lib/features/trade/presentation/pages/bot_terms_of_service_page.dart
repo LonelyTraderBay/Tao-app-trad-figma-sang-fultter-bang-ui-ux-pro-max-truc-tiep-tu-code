@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -89,37 +90,30 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
                 child: SingleChildScrollView(
                   key: BotTermsOfServicePage.contentKey,
                   padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    customGap: 14,
                     children: [
                       _InfoBanner(snapshot: snapshot),
-                      const SizedBox(height: 18),
                       _TermsCard(
                         snapshot: snapshot,
                         controller: _termsController,
                       ),
-                      const SizedBox(height: 18),
                       _SectionLabel(snapshot.acceptSectionLabel),
-                      const SizedBox(height: 12),
-                      if (!_readToEnd) ...[
-                        _ScrollWarning(snapshot: snapshot),
-                        const SizedBox(height: 20),
-                      ],
+                      if (!_readToEnd) ...[_ScrollWarning(snapshot: snapshot)],
                       _AgreementCard(
                         snapshot: snapshot,
                         enabled: _readToEnd,
                         agreed: _agreed,
                         onTap: _toggleAgreement,
                       ),
-                      const SizedBox(height: 16),
                       _TermsCta(
                         snapshot: snapshot,
                         agreed: _agreed,
                         onPressed: _acceptTerms,
                       ),
-                      const SizedBox(height: 16),
                       _ComplianceNote(snapshot: snapshot),
-                      const SizedBox(height: 12),
                       const VitCard(
                         variant: VitCardVariant.inner,
                         padding: EdgeInsets.all(12),

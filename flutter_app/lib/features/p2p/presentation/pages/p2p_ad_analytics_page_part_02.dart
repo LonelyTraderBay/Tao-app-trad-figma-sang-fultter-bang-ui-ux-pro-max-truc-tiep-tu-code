@@ -19,10 +19,7 @@ class _VolumeCard extends StatelessWidget {
           ),
           Text(
             'Tổng giá trị giao dịch theo ngày (VND)',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 9,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
@@ -62,10 +59,7 @@ class _HeatmapCard extends StatelessWidget {
           ),
           Text(
             'Số đơn hàng phân bổ theo giờ trong ngày (0-23h)',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 9,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.x4),
           LayoutBuilder(
@@ -95,7 +89,6 @@ class _HeatmapCard extends StatelessWidget {
                               '${point.hour}h',
                               style: AppTextStyles.micro.copyWith(
                                 color: AppColors.text3,
-                                fontSize: 7,
                                 height: 1,
                               ),
                             ),
@@ -196,7 +189,6 @@ class _PaymentRow extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  fontSize: 11,
                 ),
               ),
             ),
@@ -249,10 +241,7 @@ class _CompetitorCard extends StatelessWidget {
           ),
           Text(
             'So với trung bình thị trường & top merchant',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 9,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.x3),
           SizedBox(
@@ -349,7 +338,6 @@ class _ComparisonTableRow extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: header ? AppColors.text3 : AppColors.text2,
                   fontWeight: weight,
-                  fontSize: 9,
                 ),
               ),
             ),
@@ -398,7 +386,6 @@ class _TableCell extends StatelessWidget {
       style: AppTextStyles.micro.copyWith(
         color: color,
         fontWeight: bold ? AppTextStyles.bold : AppTextStyles.medium,
-        fontSize: 9,
         fontFeatures: AppTextStyles.tabularFigures,
       ),
     );

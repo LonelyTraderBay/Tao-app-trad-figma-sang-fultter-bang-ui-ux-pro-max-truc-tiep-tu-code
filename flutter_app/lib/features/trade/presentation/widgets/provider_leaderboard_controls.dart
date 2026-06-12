@@ -7,13 +7,10 @@ class _SurvivorshipWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
-      decoration: BoxDecoration(
-        color: _leaderWarningBackground,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _leaderWarningBorder),
-      ),
+      borderColor: _leaderWarningBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,7 +28,6 @@ class _SurvivorshipWarning extends StatelessWidget {
                   snapshot.warningTitle,
                   style: AppTextStyles.micro.copyWith(
                     color: _leaderWarningText,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -41,7 +37,6 @@ class _SurvivorshipWarning extends StatelessWidget {
                   snapshot.warningText,
                   style: AppTextStyles.micro.copyWith(
                     color: _leaderWarningText,
-                    fontSize: 9,
                     fontWeight: AppTextStyles.medium,
                     height: 1.45,
                   ),
@@ -68,13 +63,10 @@ class _SortTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       height: AppSpacing.inputHeight,
       padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: _leaderPanel,
-        borderRadius: AppRadii.cardLargeRadius,
-      ),
       child: Row(
         children: [
           for (final option in options)
@@ -99,7 +91,6 @@ class _SortTabs extends StatelessWidget {
                       color: option.id == activeId
                           ? AppColors.onAccent
                           : AppColors.text3,
-                      fontSize: 12,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),
@@ -133,7 +124,6 @@ class _RiskFilters extends StatelessWidget {
           'Risk Level',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            fontSize: 11,
             height: 1,
           ),
         ),
@@ -187,7 +177,6 @@ class _RiskChip extends StatelessWidget {
           filter.label,
           style: AppTextStyles.caption.copyWith(
             color: selected ? AppColors.onAccent : AppColors.text2,
-            fontSize: 12,
             fontWeight: selected ? AppTextStyles.bold : AppTextStyles.medium,
             height: 1,
           ),
@@ -235,7 +224,6 @@ class _VerifiedToggle extends StatelessWidget {
                 label,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),

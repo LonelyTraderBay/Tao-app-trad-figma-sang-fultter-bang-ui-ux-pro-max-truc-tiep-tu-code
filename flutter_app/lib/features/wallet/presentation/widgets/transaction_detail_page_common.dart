@@ -25,16 +25,14 @@ class _SupportButton extends StatelessWidget {
             const Icon(
               Icons.chat_bubble_outline_rounded,
               color: _detailAmber,
-              size: 16,
+              size: AppSpacing.walletTransactionActionIcon,
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.rowGapCompact),
             Text(
               'Liên hệ hỗ trợ',
               style: AppTextStyles.caption.copyWith(
                 color: _detailAmber,
-                fontSize: 14,
-                fontWeight: FontWeight.w800,
-                height: 1,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
           ],
@@ -53,30 +51,32 @@ class _MissingTransaction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 56),
+        const SizedBox(height: AppSpacing.walletTransactionMissingTopPad),
         Container(
-          width: 64,
-          height: 64,
+          width: AppSpacing.walletTransactionMissingIcon,
+          height: AppSpacing.walletTransactionMissingIcon,
           decoration: BoxDecoration(
             color: _detailPanel2,
             borderRadius: AppRadii.cardRadius,
           ),
           child: const Icon(Icons.error_outline_rounded, color: _detailRed),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.walletTransactionSummaryTopGap),
         Text(
           'Không tìm thấy giao dịch',
           style: AppTextStyles.body.copyWith(
             color: AppColors.text2,
-            fontWeight: FontWeight.w700,
+            fontWeight: AppTextStyles.medium,
           ),
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: AppSpacing.walletTransactionAfterHashGap),
         GestureDetector(
           onTap: onBack,
           child: Container(
-            height: 42,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            height: AppSpacing.walletTransactionMissingActionHeight,
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.walletTransactionMissingActionPad,
+            ),
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: _detailPrimary,
@@ -86,7 +86,7 @@ class _MissingTransaction extends StatelessWidget {
               'Quay lại lịch sử',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.onAccent,
-                fontWeight: FontWeight.w800,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
           ),
@@ -96,8 +96,8 @@ class _MissingTransaction extends StatelessWidget {
   }
 }
 
-class _Card extends StatelessWidget {
-  const _Card({required this.child, required this.padding});
+class _VitCardSurface extends StatelessWidget {
+  const _VitCardSurface({required this.child, required this.padding});
 
   final Widget child;
   final EdgeInsetsGeometry padding;
@@ -168,35 +168,35 @@ final class _DetailTypeMeta {
 }
 
 final class _DetailStatusMeta {
-  const _DetailStatusMeta({
-    required this.label,
-    required this.color,
-    required this.icon,
-  });
+  const _DetailStatusMeta({required this.label, required this.icon});
 
   final String label;
-  final Color color;
   final IconData icon;
 
   factory _DetailStatusMeta.from(WalletTransactionStatus status) {
     return switch (status) {
       WalletTransactionStatus.completed => const _DetailStatusMeta(
         label: 'Hoàn thành',
-        color: _detailGreen,
         icon: Icons.check_circle_outline_rounded,
       ),
       WalletTransactionStatus.pending => const _DetailStatusMeta(
         label: 'Đang xử lý',
-        color: _detailAmber,
         icon: Icons.access_time_rounded,
       ),
       WalletTransactionStatus.failed => const _DetailStatusMeta(
         label: 'Thất bại',
-        color: _detailRed,
         icon: Icons.cancel_outlined,
       ),
     };
   }
+}
+
+VitStatusPillStatus _detailPillStatus(WalletTransactionStatus status) {
+  return switch (status) {
+    WalletTransactionStatus.completed => VitStatusPillStatus.success,
+    WalletTransactionStatus.pending => VitStatusPillStatus.warning,
+    WalletTransactionStatus.failed => VitStatusPillStatus.error,
+  };
 }
 
 final class _ProgressStep {

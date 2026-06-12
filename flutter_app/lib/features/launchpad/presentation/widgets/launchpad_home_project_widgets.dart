@@ -90,7 +90,7 @@ class _ProjectCard extends StatelessWidget {
                                   project.name,
                                   style: AppTextStyles.baseMedium.copyWith(
                                     fontWeight: AppTextStyles.bold,
-                                    height: 1.15,
+                                    height: AppSpacing.launchpadLineHeightLabel,
                                   ),
                                 ),
                                 _MiniPill(
@@ -120,7 +120,7 @@ class _ProjectCard extends StatelessWidget {
                     project.description,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.45,
+                      height: AppSpacing.launchpadLineHeightReadable,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x3),

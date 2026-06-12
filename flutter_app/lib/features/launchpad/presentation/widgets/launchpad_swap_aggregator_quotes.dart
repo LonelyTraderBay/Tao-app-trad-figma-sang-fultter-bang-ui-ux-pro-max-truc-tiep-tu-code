@@ -152,7 +152,7 @@ class _DexQuoteCard extends StatelessWidget {
                     ? Icons.keyboard_arrow_up_rounded
                     : Icons.keyboard_arrow_down_rounded,
                 color: AppColors.text3,
-                size: 18,
+                size: AppSpacing.launchpadIcon2xl,
               ),
             ],
           ),
@@ -170,8 +170,8 @@ class _DexLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40,
-      height: 40,
+      width: AppSpacing.launchpadBox40,
+      height: AppSpacing.launchpadBox40,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: quote.accent.withValues(alpha: .14),
@@ -205,8 +205,8 @@ class _BestPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.onAccent,
             fontWeight: AppTextStyles.bold,
-            fontSize: 8,
-            height: 1,
+            fontSize: AppSpacing.launchpadFontXxs,
+            height: AppSpacing.launchpadLineHeightTight,
           ),
         ),
       ),
@@ -242,7 +242,7 @@ class _Metric extends StatelessWidget {
             textAlign: align,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
+              fontSize: AppSpacing.launchpadFontSm,
             ),
           ),
           Text(
@@ -291,7 +291,7 @@ class _RouteDetails extends StatelessWidget {
                   const Icon(
                     Icons.chevron_right_rounded,
                     color: AppColors.text3,
-                    size: 14,
+                    size: AppSpacing.launchpadIconMd,
                   ),
               ],
             ],
@@ -304,7 +304,7 @@ class _RouteDetails extends StatelessWidget {
                 color: quote.security == LaunchpadSwapSecurity.high
                     ? AppColors.buy
                     : AppColors.primary,
-                size: 13,
+                size: AppSpacing.launchpadIconSm,
               ),
               const SizedBox(width: AppSpacing.x1),
               Text(
@@ -365,7 +365,7 @@ class _SwapWarning extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.warn,
-            size: 15,
+            size: AppSpacing.launchpadIconLg,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

@@ -35,7 +35,7 @@ class _ExpandedDetails extends StatelessWidget {
                 const Icon(
                   Icons.error_outline_rounded,
                   color: AppColors.warn,
-                  size: 16,
+                  size: AppSpacing.adminIconMd,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(
@@ -84,7 +84,7 @@ class _ExpandedDetails extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: const SizedBox(
-            height: 7,
+            height: AppSpacing.adminProgressHeight,
             child: ColoredBox(color: AppColors.surface2),
           ),
         ),
@@ -112,7 +112,7 @@ class _DetailStat extends StatelessWidget {
         Text(
           value,
           style: AppTextStyles.baseMedium.copyWith(
-            fontSize: 15,
+            fontSize: AppSpacing.adminFontXl,
             fontFamily: 'monospace',
             fontFeatures: AppTextStyles.tabularFigures,
           ),
@@ -131,7 +131,11 @@ class _EmptyTestsCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.x6),
       child: Column(
         children: [
-          const Icon(Icons.science_outlined, color: AppColors.text3, size: 48),
+          const Icon(
+            Icons.science_outlined,
+            color: AppColors.text3,
+            size: AppSpacing.adminIconHero,
+          ),
           const SizedBox(height: AppSpacing.x4),
           Text(
             'Chưa có A/B test nào',

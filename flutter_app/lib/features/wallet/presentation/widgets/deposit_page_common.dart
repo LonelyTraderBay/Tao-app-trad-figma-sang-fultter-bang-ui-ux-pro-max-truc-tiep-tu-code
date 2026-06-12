@@ -17,22 +17,18 @@ class _DepositInfoCard extends StatelessWidget {
     ];
 
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Thông tin nạp tiền',
-            style: AppTextStyles.body.copyWith(
-              fontSize: 14,
-              fontWeight: FontWeight.w800,
-              height: 1,
-            ),
+            style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: 19),
+          const SizedBox(height: AppSpacing.x3),
           for (var i = 0; i < rows.length; i++) ...[
             _InfoRow(label: rows[i].$1, value: rows[i].$2),
-            if (i != rows.length - 1) const SizedBox(height: 18),
+            if (i != rows.length - 1) const SizedBox(height: AppSpacing.x4),
           ],
         ],
       ),
@@ -55,14 +51,10 @@ class _InfoRow extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 14,
-              height: 1,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.x3),
         Flexible(
           child: Text(
             value,
@@ -71,9 +63,7 @@ class _InfoRow extends StatelessWidget {
             textAlign: TextAlign.end,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 14,
-              fontWeight: FontWeight.w800,
-              height: 1,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
         ),
@@ -93,26 +83,26 @@ class _RefreshButton extends StatelessWidget {
       key: DepositPage.refreshKey,
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
+      child: VitCard(
+        variant: VitCardVariant.ghost,
+        borderColor: _depositPrimary.withValues(alpha: .26),
+        padding: AppSpacing.cardPadding,
         height: AppSpacing.inputHeight,
-        decoration: BoxDecoration(
-          color: _depositPanel2,
-          border: Border.all(color: _depositPrimary.withValues(alpha: .26)),
-          borderRadius: AppRadii.mdRadius,
-        ),
         alignment: Alignment.center,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.refresh_rounded, color: AppColors.text2, size: 15),
-            const SizedBox(width: 8),
+            Icon(
+              Icons.refresh_rounded,
+              color: AppColors.text2,
+              size: AppSpacing.iconSm,
+            ),
+            const SizedBox(width: AppSpacing.rowGap),
             Text(
               'Làm mới địa chỉ nạp',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-                height: 1,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
           ],
@@ -139,15 +129,11 @@ class _NetworkOption extends StatelessWidget {
       key: DepositPage.networkKey(network.id),
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
-        margin: const EdgeInsets.only(bottom: 6),
-        decoration: BoxDecoration(
-          color: selected
-              ? _depositPrimary.withValues(alpha: .10)
-              : AppColors.transparent,
-          borderRadius: AppRadii.inputRadius,
-        ),
+      child: VitCard(
+        variant: VitCardVariant.inner,
+        padding: AppSpacing.cardPadding,
+        margin: const EdgeInsets.only(bottom: AppSpacing.x2),
+        borderColor: selected ? _depositPrimary : AppColors.border,
         child: Row(
           children: [
             Expanded(
@@ -157,19 +143,13 @@ class _NetworkOption extends StatelessWidget {
                   Text(
                     network.name,
                     style: AppTextStyles.body.copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800,
-                      height: 1,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     'Phí: ${network.fee} · ${network.arrivalTime} · ${network.confirmations} xác nhận',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 11,
-                      height: 1,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
@@ -178,7 +158,7 @@ class _NetworkOption extends StatelessWidget {
               const Icon(
                 Icons.check_circle_rounded,
                 color: _depositPrimary,
-                size: 18,
+                size: AppSpacing.iconMd,
               ),
           ],
         ),

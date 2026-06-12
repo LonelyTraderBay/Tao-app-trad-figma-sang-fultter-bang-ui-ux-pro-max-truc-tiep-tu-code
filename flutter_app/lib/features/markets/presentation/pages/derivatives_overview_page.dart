@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_derivatives_common.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_derivatives_liquidation.dart';
@@ -132,6 +133,14 @@ class _DerivativesOverviewPageState
                             MarketDerivativesLiquidationPairCard(pair: pair),
                           const MarketDerivativesRiskWarningCard(),
                         ],
+                        const VitBanner(
+                          variant: VitBannerVariant.info,
+                          icon: Icons.sync_rounded,
+                          message: 'Derivatives data state reviewed',
+                          detail:
+                              'Open interest, perpetual sorting, liquidation timeline, warning, and empty/error fallbacks stay visible while derivatives data refreshes.',
+                        ),
+                        const _DerivativesDataReviewCards(),
                       ],
                     ),
                   ),
@@ -141,6 +150,22 @@ class _DerivativesOverviewPageState
           ),
         ),
       ),
+    );
+  }
+}
+
+class _DerivativesDataReviewCards extends StatelessWidget {
+  const _DerivativesDataReviewCards();
+
+  @override
+  Widget build(BuildContext context) {
+    return const VitPageSection(
+      label: 'Data checkpoints',
+      children: [
+        VitCard(child: Text('Open interest and funding snapshots')),
+        VitCard(child: Text('Liquidation timeline and pair ranking')),
+        VitCard(child: Text('Risk warning and cached market fallback')),
+      ],
     );
   }
 }

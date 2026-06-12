@@ -49,8 +49,10 @@ class TransactionDetailPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 92
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.walletBottomInsetVisualChrome
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.walletBottomInsetNativeChrome) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -71,7 +73,12 @@ class TransactionDetailPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.pageHorizontalPadding,
+                    AppSpacing.rowPy,
+                    AppSpacing.pageHorizontalPadding,
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     customGap: 0,

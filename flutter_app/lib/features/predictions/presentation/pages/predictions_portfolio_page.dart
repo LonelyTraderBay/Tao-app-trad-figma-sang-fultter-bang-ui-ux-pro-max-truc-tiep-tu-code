@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
@@ -18,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class PredictionsPortfolioPage extends ConsumerStatefulWidget {
   const PredictionsPortfolioPage({
@@ -65,7 +67,9 @@ class _PredictionsPortfolioPageState
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.predictionPortfolioBottomInsetVisual
+            : AppSpacing.predictionPortfolioBottomInsetNative);
     final openOrders = controller.openOrdersExcluding(_cancelledOrderIds);
     final resolvedBackPath = resolveSafeBackPath(
       candidate: widget.backPath,
@@ -96,28 +100,39 @@ class _PredictionsPortfolioPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionsPortfolioPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.predictionPortfolioScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 16,
+                      customGap: AppSpacing.predictionPortfolioContentGap,
                       children: [
-                        PredictionPortfolioSummaryCard(
-                          snapshot: snapshot,
-                          openOrderCount: openOrders.length,
-                          isHidden: _isHidden,
-                          onToggleHidden: () => setState(() {
-                            _isHidden = !_isHidden;
-                          }),
+                        VitCard(
+                          padding: EdgeInsets.zero,
+                          child: PredictionPortfolioSummaryCard(
+                            snapshot: snapshot,
+                            openOrderCount: openOrders.length,
+                            isHidden: _isHidden,
+                            onToggleHidden: () => setState(() {
+                              _isHidden = !_isHidden;
+                            }),
+                          ),
                         ),
-                        const PredictionPortfolioSharesNote(),
-                        PredictionPortfolioTabs(
-                          activeTab: _activeTab,
-                          activeCount: snapshot.activeCount,
-                          closedCount: snapshot.closedCount,
-                          historyCount: snapshot.historyCount,
-                          onChanged: (tab) => setState(() {
-                            _activeTab = tab;
-                          }),
+                        const VitCard(
+                          padding: EdgeInsets.zero,
+                          child: PredictionPortfolioSharesNote(),
+                        ),
+                        VitCard(
+                          padding: EdgeInsets.zero,
+                          child: PredictionPortfolioTabs(
+                            activeTab: _activeTab,
+                            activeCount: snapshot.activeCount,
+                            closedCount: snapshot.closedCount,
+                            historyCount: snapshot.historyCount,
+                            onChanged: (tab) => setState(() {
+                              _activeTab = tab;
+                            }),
+                          ),
                         ),
                         if (_activeTab == PredictionPortfolioTab.active)
                           PredictionPortfolioPositionsList(

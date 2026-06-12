@@ -25,7 +25,10 @@ class _FlowGroupCard extends StatelessWidget {
               for (final node in group.nodes) ...[
                 _FlowNodeRow(node: node, onRoute: onRoute),
                 if (node != group.nodes.last)
-                  const Divider(height: 1, color: AppColors.divider),
+                  const Divider(
+                    height: AppSpacing.arenaFlowMapDividerHeight,
+                    color: AppColors.divider,
+                  ),
               ],
               Padding(
                 padding: const EdgeInsets.all(AppSpacing.x4),
@@ -35,7 +38,7 @@ class _FlowGroupCard extends StatelessWidget {
                     const Icon(
                       Icons.alt_route_rounded,
                       color: AppColors.text3,
-                      size: 14,
+                      size: AppSpacing.arenaFlowMapSmallIcon,
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(
@@ -43,7 +46,7 @@ class _FlowGroupCard extends StatelessWidget {
                         group.connectionNote,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: 1.35,
+                          height: AppSpacing.arenaFlowMapConnectionLineHeight,
                         ),
                       ),
                     ),
@@ -113,7 +116,11 @@ class _FlowNodeRow extends StatelessWidget {
               ],
               if (route != null) ...[
                 const SizedBox(width: AppSpacing.x2),
-                Icon(Icons.chevron_right_rounded, color: color, size: 18),
+                Icon(
+                  Icons.chevron_right_rounded,
+                  color: color,
+                  size: AppSpacing.arenaFlowMapInlineIcon,
+                ),
               ],
             ],
           ),
@@ -221,7 +228,7 @@ class _HandoffNotes extends StatelessWidget {
                         note.detail,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text2,
-                          height: 1.4,
+                          height: AppSpacing.arenaFlowMapBodyLineHeight,
                         ),
                       ),
                     ],

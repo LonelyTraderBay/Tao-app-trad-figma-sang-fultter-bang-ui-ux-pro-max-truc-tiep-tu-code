@@ -53,7 +53,6 @@ class _SubAccountCard extends StatelessWidget {
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTextStyles.baseMedium.copyWith(
-                                    fontSize: 14,
                                     fontWeight: FontWeight.w800,
                                     height: 1,
                                   ),
@@ -68,7 +67,7 @@ class _SubAccountCard extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 9),
+                          const Padding(padding: EdgeInsets.only(top: 9)),
                           Row(
                             children: [
                               Icon(
@@ -112,12 +111,11 @@ class _SubAccountCard extends StatelessWidget {
                               : _formatUsd(account.balance),
                           style: AppTextStyles.body.copyWith(
                             fontWeight: FontWeight.w800,
-                            fontSize: 14,
                             height: 1,
                             fontFeatures: AppTextStyles.tabularFigures,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const Padding(padding: EdgeInsets.only(top: 8)),
                         Text(
                           isBalanceHidden
                               ? '\u2022\u2022'

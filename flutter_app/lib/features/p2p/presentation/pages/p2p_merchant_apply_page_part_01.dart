@@ -73,14 +73,15 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
                             reviewSteps: snapshot.reviewSteps,
                             onBackToP2P: () => context.go(AppRoutePaths.p2p),
                           )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                        : VitPageContent(
+                            padding: VitContentPadding.none,
+                            fullBleed: true,
+                            customGap: AppSpacing.x6,
                             children: [
                               AnimatedSwitcher(
                                 duration: const Duration(milliseconds: 180),
                                 child: _stepContent(snapshot),
                               ),
-                              const SizedBox(height: AppSpacing.x6),
                               _NavigationButtons(
                                 step: _step,
                                 canProceed: _canProceed(snapshot),
@@ -240,7 +241,6 @@ class _ProgressHeader extends StatelessWidget {
                         color: i <= currentStep
                             ? AppColors.text1
                             : AppColors.text3,
-                        fontSize: 8,
                         fontWeight: i <= currentStep
                             ? AppTextStyles.bold
                             : AppTextStyles.normal,
@@ -388,7 +388,6 @@ class _BenefitCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              fontSize: 12,
             ),
           ),
           const SizedBox(height: AppSpacing.x1),

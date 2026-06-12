@@ -39,7 +39,9 @@ class _LinkedRow extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 155),
+                    constraints: const BoxConstraints(
+                      maxWidth: AppSpacing.arenaPointsEntryLinkMaxWidth,
+                    ),
                     child: Text(
                       value,
                       maxLines: 1,
@@ -53,7 +55,7 @@ class _LinkedRow extends StatelessWidget {
                   const Icon(
                     Icons.chevron_right_rounded,
                     color: AppColors.accent,
-                    size: 14,
+                    size: AppSpacing.arenaPointsSmallIcon,
                   ),
                 ],
               ),

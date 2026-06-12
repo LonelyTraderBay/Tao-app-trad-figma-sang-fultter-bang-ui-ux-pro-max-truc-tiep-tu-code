@@ -26,7 +26,7 @@ class _FrontierContent extends StatelessWidget {
             onTap: () {},
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         VitCard(
           padding: const EdgeInsets.all(AppSpacing.x4),
           child: Column(
@@ -38,9 +38,9 @@ class _FrontierContent extends StatelessWidget {
                 subtitle:
                     'Mỗi điểm đại diện một phân bổ tối ưu. Điểm càng cao = lợi nhuận lớn hơn.',
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
               SizedBox(
-                height: 220,
+                height: AppSpacing.dcaPortfolioOptimizerFrontierChartHeight,
                 width: double.infinity,
                 child: CustomPaint(
                   painter: _FrontierChartPainter(snapshot.frontier),
@@ -49,9 +49,9 @@ class _FrontierContent extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         SizedBox(
-          height: 64,
+          height: AppSpacing.dcaPortfolioOptimizerFrontierChipListHeight,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
@@ -64,9 +64,9 @@ class _FrontierContent extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         _SelectedPortfolioCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x4),
+        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
         _SuggestionsCard(
           suggestions: snapshot.suggestions,
           expanded: showSuggestions,
@@ -120,7 +120,7 @@ class _SelectedPortfolioCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x1),
+                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                     Text(
                       'Phân bổ đề xuất',
                       style: AppTextStyles.caption.copyWith(
@@ -136,7 +136,7 @@ class _SelectedPortfolioCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           VitCard(
             variant: VitCardVariant.inner,
             padding: const EdgeInsets.all(AppSpacing.x4),
@@ -151,7 +151,7 @@ class _SelectedPortfolioCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: 1,
+                  width: AppSpacing.dcaPortfolioOptimizerDividerWidth,
                   height: AppSpacing.x7,
                   color: AppColors.border,
                 ),
@@ -165,11 +165,11 @@ class _SelectedPortfolioCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
           for (final allocation in optimalAllocations) ...[
             _SimpleAllocationBar(allocation: allocation),
             if (allocation != optimalAllocations.last)
-              const SizedBox(height: AppSpacing.x3),
+              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           ],
         ],
       ),
@@ -224,11 +224,11 @@ class _SuggestionsCard extends StatelessWidget {
             ),
           ),
           if (expanded) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
             for (final suggestion in suggestions) ...[
               _SuggestionRow(suggestion: suggestion),
               if (suggestion != suggestions.last)
-                const SizedBox(height: AppSpacing.x3),
+                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
             ],
           ],
         ],

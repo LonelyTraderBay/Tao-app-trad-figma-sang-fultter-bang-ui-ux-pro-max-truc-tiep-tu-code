@@ -19,10 +19,7 @@ class _WebSocketView extends StatelessWidget {
             children: [
               Text(
                 'Connect to real-time bot events:',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontSize: 12,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
               const SizedBox(height: 10),
               _CodeBlock(text: url, compact: true),
@@ -49,7 +46,6 @@ class _WebSocketView extends StatelessWidget {
                       event.event,
                       style: AppTextStyles.caption.copyWith(
                         color: _apiPrimary,
-                        fontSize: 12,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),
@@ -59,10 +55,7 @@ class _WebSocketView extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   event.description,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 12,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
                 const SizedBox(height: 10),
                 _CodeBlock(text: event.payload),
@@ -107,23 +100,23 @@ class _ExamplesView extends StatelessWidget {
                 key: BotApiDocumentationPage.languageKey(example.language),
                 behavior: HitTestBehavior.opaque,
                 onTap: () => onLanguageChanged(example.language),
-                child: Container(
+                child: VitCard(
+                  variant: selected.language == example.language
+                      ? VitCardVariant.inner
+                      : VitCardVariant.ghost,
                   height: 36,
+                  width: 86,
                   padding: const EdgeInsets.symmetric(horizontal: 14),
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: selected.language == example.language
-                        ? _apiPrimary
-                        : _apiPanel,
-                    borderRadius: AppRadii.inputRadius,
-                  ),
+                  borderColor: selected.language == example.language
+                      ? _apiPrimary.withValues(alpha: .42)
+                      : AppColors.cardBorder,
                   child: Text(
                     example.label,
                     style: AppTextStyles.caption.copyWith(
                       color: selected.language == example.language
-                          ? AppColors.onAccent
+                          ? _apiPrimary
                           : AppColors.text1,
-                      fontSize: 12,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),
@@ -154,7 +147,6 @@ class _ExamplesView extends StatelessWidget {
                       selected.title,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
-                        fontSize: 13,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),
@@ -186,7 +178,6 @@ class _ExamplesView extends StatelessWidget {
                             copied ? 'Copied!' : 'Copy',
                             style: AppTextStyles.micro.copyWith(
                               color: copied ? _apiGreen : AppColors.text3,
-                              fontSize: 11,
                               fontWeight: copied
                                   ? AppTextStyles.bold
                                   : FontWeight.w500,

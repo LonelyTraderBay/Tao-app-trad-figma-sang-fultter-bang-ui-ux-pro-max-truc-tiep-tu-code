@@ -11,7 +11,7 @@ class _AmountStatus extends StatelessWidget {
     final status = _StatusMeta.from(tx.status);
 
     return SizedBox(
-      width: 126,
+      width: AppSpacing.walletHistoryAmountColumnWidth,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -23,39 +23,23 @@ class _AmountStatus extends StatelessWidget {
             softWrap: false,
             style: AppTextStyles.caption.copyWith(
               color: meta.color,
-              fontSize: 14,
-              fontWeight: FontWeight.w800,
-              fontFamily: 'Roboto',
+              fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
             ),
           ),
-          const SizedBox(height: 7),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-            decoration: BoxDecoration(
-              color: status.color.withValues(alpha: .14),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Text(
-              status.label,
-              style: AppTextStyles.micro.copyWith(
-                color: status.color,
-                fontSize: 12,
-                fontWeight: FontWeight.w800,
-                height: 1,
-              ),
-            ),
+          const SizedBox(height: AppSpacing.walletAssetSmallGap),
+          VitStatusPill(
+            label: status.label,
+            status: _pillStatus(tx.status),
+            size: VitStatusPillSize.sm,
           ),
           if (tx.fee != null && tx.fee! > 0) ...[
-            const SizedBox(height: 6),
+            const SizedBox(
+              height: AppSpacing.walletHistoryStatusBadgeHeightGap,
+            ),
             Text(
               'Phí: \$${tx.fee!.toStringAsFixed(2)}',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: 11,
-                height: 1,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ],
         ],
@@ -70,22 +54,35 @@ class _EndOfList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 28, bottom: 20),
+      padding: const EdgeInsets.only(
+        top: AppSpacing.walletHistoryEndListTopPad,
+        bottom: AppSpacing.walletHistoryEndListBottomPad,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(width: 31, height: 1, color: AppColors.borderSolid),
-          const SizedBox(width: 10),
-          Text(
-            'Đã tải hết',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 11,
-              height: 1,
+          const SizedBox(
+            width: AppSpacing.walletHistoryDividerWidth,
+            child: Divider(
+              height: AppSpacing.walletHistoryDividerHeight,
+              thickness: AppSpacing.walletHistoryDividerHeight,
+              color: AppColors.borderSolid,
             ),
           ),
-          const SizedBox(width: 10),
-          Container(width: 31, height: 1, color: AppColors.borderSolid),
+          const SizedBox(width: AppSpacing.walletHistoryEndListGap),
+          Text(
+            'Đã tải hết',
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+          const SizedBox(width: AppSpacing.walletHistoryEndListGap),
+          const SizedBox(
+            width: AppSpacing.walletHistoryDividerWidth,
+            child: Divider(
+              height: AppSpacing.walletHistoryDividerHeight,
+              thickness: AppSpacing.walletHistoryDividerHeight,
+              color: AppColors.borderSolid,
+            ),
+          ),
         ],
       ),
     );
@@ -156,27 +153,27 @@ final class _TransactionMeta {
 }
 
 final class _StatusMeta {
-  const _StatusMeta({required this.label, required this.color});
+  const _StatusMeta({required this.label});
 
   final String label;
-  final Color color;
 
   factory _StatusMeta.from(WalletTransactionStatus status) {
     return switch (status) {
       WalletTransactionStatus.completed => const _StatusMeta(
         label: 'Hoàn thành',
-        color: _historyGreen,
       ),
-      WalletTransactionStatus.pending => const _StatusMeta(
-        label: 'Đang xử lý',
-        color: _historyAmber,
-      ),
-      WalletTransactionStatus.failed => const _StatusMeta(
-        label: 'Thất bại',
-        color: _historyRed,
-      ),
+      WalletTransactionStatus.pending => const _StatusMeta(label: 'Đang xử lý'),
+      WalletTransactionStatus.failed => const _StatusMeta(label: 'Thất bại'),
     };
   }
+}
+
+VitStatusPillStatus _pillStatus(WalletTransactionStatus status) {
+  return switch (status) {
+    WalletTransactionStatus.completed => VitStatusPillStatus.success,
+    WalletTransactionStatus.pending => VitStatusPillStatus.warning,
+    WalletTransactionStatus.failed => VitStatusPillStatus.error,
+  };
 }
 
 String _formatDate(String rawDate) {

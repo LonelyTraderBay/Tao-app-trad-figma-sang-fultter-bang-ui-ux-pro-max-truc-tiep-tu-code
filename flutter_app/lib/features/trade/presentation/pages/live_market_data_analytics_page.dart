@@ -14,6 +14,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/live_market_data_analytics_widgets.dart';
 
+import '../widgets/trade_body_review_widgets.dart';
+
 const _liveBackground = AppColors.bg;
 
 class LiveMarketDataAnalyticsPage extends ConsumerStatefulWidget {
@@ -82,6 +84,18 @@ class _LiveMarketDataAnalyticsPageState
                         keyBuilder: LiveMarketDataAnalyticsPage.tabKey,
                       ),
                       LiveMarketTabContent(activeTab: _tab, snapshot: snapshot),
+                      const TradeBodyReviewSection(
+                        title: 'Live data review',
+                        message: 'Live market analytics body reviewed',
+                        detail:
+                            'Feed, liquidity, latency, tab, empty, and reconnect states remain visible before trading.',
+                        primary:
+                            'Pair and feed health stay above tabbed analytics.',
+                        secondary:
+                            'Latency and liquidity metrics remain informational before execution.',
+                        tertiary:
+                            'Disconnected or delayed data remains separated from order placement.',
+                      ),
                     ],
                   ),
                 ),

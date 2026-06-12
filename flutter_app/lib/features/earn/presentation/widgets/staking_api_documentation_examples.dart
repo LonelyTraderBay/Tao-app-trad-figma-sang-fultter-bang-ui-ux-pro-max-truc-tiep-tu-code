@@ -79,7 +79,10 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Divider(color: AppColors.borderSolid, height: 1),
+                  const Divider(
+                    color: AppColors.borderSolid,
+                    height: AppSpacing.stakingApiDividerHeight,
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(AppSpacing.x3),
                     child: StakingApiDocumentationCodeBlock(
@@ -133,7 +136,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                               'Test your integration with fake data before going live. No real funds involved.',
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text2,
-                                height: 1.45,
+                                height: AppSpacing.stakingApiSandboxLineHeight,
                               ),
                             ),
                           ],
