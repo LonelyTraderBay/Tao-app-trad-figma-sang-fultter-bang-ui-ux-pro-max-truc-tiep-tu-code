@@ -212,9 +212,7 @@ class _HeroCard extends StatelessWidget {
                     children: [
                       Text(
                         fundamentals.name,
-                        style: AppTextStyles.sectionTitle.copyWith(
-                          fontSize: 22,
-                        ),
+                        style: AppTextStyles.sectionTitle,
                       ),
                       const SizedBox(height: 2),
                       Text(
@@ -239,8 +237,7 @@ class _HeroCard extends StatelessWidget {
                     _formatPrice(pair.price),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.pageTitle.copyWith(
-                      fontSize: 28,
+                    style: AppTextStyles.amountMd.copyWith(
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),

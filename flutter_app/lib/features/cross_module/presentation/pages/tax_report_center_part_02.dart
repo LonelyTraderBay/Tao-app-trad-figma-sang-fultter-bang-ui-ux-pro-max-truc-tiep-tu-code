@@ -136,10 +136,9 @@ class _NonTaxableBadge extends StatelessWidget {
         ),
         child: Text(
           'NON-TAXABLE',
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.chartLabelTiny.copyWith(
             color: AppColors.warn,
             fontWeight: AppTextStyles.bold,
-            fontSize: AppSpacing.x3,
           ),
         ),
       ),

@@ -160,8 +160,11 @@ class _EventVolumePainter extends CustomPainter {
         canvas,
         '${4 - i}',
         Offset(0, y - 8),
-        color: AppColors.text3,
-        fontSize: AppSpacing.adminFontMd,
+        style: AppTextStyles.navLabel.copyWith(
+          color: AppColors.text3,
+          height: AppSpacing.adminLineHeightTight,
+          fontFeatures: AppTextStyles.tabularFigures,
+        ),
       );
     }
 
@@ -173,8 +176,10 @@ class _EventVolumePainter extends CustomPainter {
         canvas,
         stats[i].label,
         Offset(x - 22, chartBottom + 6),
-        color: AppColors.text3,
-        fontSize: AppSpacing.adminFontSm,
+        style: AppTextStyles.numericMicro.copyWith(
+          color: AppColors.text3,
+          height: AppSpacing.adminLineHeightTight,
+        ),
       );
     }
 
@@ -188,19 +193,10 @@ class _EventVolumePainter extends CustomPainter {
     Canvas canvas,
     String text,
     Offset offset, {
-    required Color color,
-    required double fontSize,
+    required TextStyle style,
   }) {
     final painter = TextPainter(
-      text: TextSpan(
-        text: text,
-        style: TextStyle(
-          color: color,
-          fontSize: fontSize,
-          height: AppSpacing.adminLineHeightTight,
-          fontFeatures: AppTextStyles.tabularFigures,
-        ),
-      ),
+      text: TextSpan(text: text, style: style),
       textDirection: TextDirection.ltr,
     )..layout();
     painter.paint(canvas, offset);

@@ -220,7 +220,6 @@ class _ScheduleMetric extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text1,
             fontWeight: AppTextStyles.bold,
-            fontSize: 12,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
@@ -314,9 +313,8 @@ class _AmlCheckRow extends StatelessWidget {
                   check.detail,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
                   ),
                 ),
               ],
@@ -358,10 +356,9 @@ class _AmlInfoNotice extends StatelessWidget {
               children: [
                 Text(
                   snapshot.infoTitle,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppModuleAccents.p2p,
                     fontWeight: AppTextStyles.bold,
-                    fontSize: 12,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),

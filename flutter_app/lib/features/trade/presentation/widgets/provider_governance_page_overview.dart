@@ -186,9 +186,8 @@ class _ModificationsTab extends StatelessWidget {
           padding: const EdgeInsets.only(left: 10),
           child: Text(
             'Strategy Modification Log',
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),

@@ -419,21 +419,21 @@ class _LegalFooter extends StatelessWidget {
     return Text.rich(
       TextSpan(
         text: 'Bằng cách đăng nhập, bạn đồng ý với ',
-        children: const [
+        children: [
           TextSpan(
             text: 'Điều khoản dịch vụ',
-            style: TextStyle(color: AppColors.text2),
+            style: AppTextStyles.navLabel.copyWith(color: AppColors.text2),
           ),
-          TextSpan(text: ' và '),
+          const TextSpan(text: ' và '),
           TextSpan(
             text: 'Chính sách bảo mật',
-            style: TextStyle(color: AppColors.text2),
+            style: AppTextStyles.navLabel.copyWith(color: AppColors.text2),
           ),
-          TextSpan(text: ' của VitTrade.'),
+          const TextSpan(text: ' của VitTrade.'),
         ],
       ),
       textAlign: TextAlign.center,
-      style: AppTextStyles.micro.copyWith(color: AppColors.text3, fontSize: 11),
+      style: AppTextStyles.navLabel.copyWith(color: AppColors.text3),
     );
   }
 }

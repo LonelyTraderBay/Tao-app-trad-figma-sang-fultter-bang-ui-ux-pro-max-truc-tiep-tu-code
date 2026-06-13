@@ -28,6 +28,17 @@
 - [ ] Changed files do not add local hardcoded `fontSize`, `EdgeInsets`,
       numeric radius, near-1 text height, fixed grid sizing, or duplicate
       `Container` + `BoxDecoration` patterns without a documented exception.
+- [ ] Typography uses `AppTextStyles` semantic tokens; color-only changes use
+      `.copyWith(color: ...)` and do not introduce local
+      `copyWith(fontSize: ...)` unless an exception is documented.
+- [ ] Amount, price, P/L, percent, order id, address, hash, and API-key text
+      uses the amount/numeric/code token family (`amount*`, `numeric*`,
+      `monoCode`) instead of ad hoc `TextStyle` or local monospace usage.
+- [ ] Local `fontFamily` is limited to approved code/hash/address/API or
+      documented chart/canvas exceptions; `FontWeight.w800/w900` uses
+      `AppTextStyles.extraBold/heavy` or a semantic text token.
+- [ ] The `Typography Debt By Module` section in the design-token audit was
+      reviewed when UI or theme files changed.
 - [ ] `dart run tool/design_token_consistency_audit.dart --check` passes,
       including P0 financial module baseline gates.
 - [ ] CI design-token report artifact was reviewed when UI or theme files

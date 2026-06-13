@@ -104,6 +104,31 @@ final class TokenAuditFileMetric {
   }
 }
 
+final class TypographyModuleMetric {
+  const TypographyModuleMetric({
+    required this.module,
+    required this.fontSizeCount,
+    required this.fontFamilyCount,
+    required this.weightCount,
+  });
+
+  final String module;
+  final int fontSizeCount;
+  final int fontFamilyCount;
+  final int weightCount;
+
+  int get total => fontSizeCount + fontFamilyCount + weightCount;
+
+  TypographyModuleMetric add(TokenAuditFileMetric metric) {
+    return TypographyModuleMetric(
+      module: module,
+      fontSizeCount: fontSizeCount + metric.fontSizeCount,
+      fontFamilyCount: fontFamilyCount + metric.fontFamilyCount,
+      weightCount: weightCount + metric.weightCount,
+    );
+  }
+}
+
 void main(List<String> args) {
   final checkOnly = args.contains('--check');
   final appRoot = _findAppRoot();
@@ -135,6 +160,7 @@ void main(List<String> args) {
       failures.add('Token consistency CSV artifact is stale.');
     }
     failures.addAll(_collectP0ModuleGateFailures(metrics));
+    failures.addAll(_collectStrictTypographyGateFailures(appRoot, repoRoot));
 
     if (failures.isNotEmpty) {
       for (final failure in failures) {
@@ -150,6 +176,7 @@ void main(List<String> args) {
     stdout.writeln('Token consistency artifacts are current.');
     stdout.writeln(_renderSummary(metrics));
     stdout.writeln(_renderP0ModuleGateSummary(metrics));
+    stdout.writeln(_renderStrictTypographyGateSummary(appRoot, repoRoot));
     return;
   }
 
@@ -433,6 +460,53 @@ List<String> _collectP0ModuleGateFailures(List<TokenAuditFileMetric> metrics) {
   return failures;
 }
 
+List<String> _collectStrictTypographyGateFailures(
+  Directory appRoot,
+  String repoRoot,
+) {
+  final residuals = _collectStrictTypographyResiduals(appRoot, repoRoot);
+  if (residuals.isEmpty) return const [];
+
+  final shown = residuals
+      .take(20)
+      .map((residual) => '  - $residual')
+      .join('\n');
+  final hidden = residuals.length > 20
+      ? '\n  ... ${residuals.length - 20} more'
+      : '';
+  return [
+    'Strict typography gate failed: ${residuals.length} residual(s) outside '
+        'lib/app/theme/**.\n$shown$hidden',
+  ];
+}
+
+List<String> _collectStrictTypographyResiduals(
+  Directory appRoot,
+  String repoRoot,
+) {
+  final libDir = Directory('${appRoot.path}/lib');
+  if (!libDir.existsSync()) return const [];
+
+  final residuals = <String>[];
+  for (final entity in libDir.listSync(recursive: true)) {
+    if (entity is! File || !entity.path.endsWith('.dart')) continue;
+
+    final path = _relativePath(entity.path, repoRoot).replaceAll('\\', '/');
+    if (path.startsWith('flutter_app/lib/app/theme/')) continue;
+
+    final source = entity.readAsStringSync();
+    for (final entry in _strictTypographyGatePatterns.entries) {
+      for (final match in entry.value.allMatches(source)) {
+        final line = _lineForOffset(source, match.start);
+        residuals.add('$path:$line ${entry.key}');
+      }
+    }
+  }
+
+  residuals.sort();
+  return residuals;
+}
+
 Map<String, int> _collectP0ModuleDebts(List<TokenAuditFileMetric> metrics) {
   final moduleDebts = <String, int>{};
   for (final metric in metrics) {
@@ -450,6 +524,56 @@ Map<String, int> _collectP0ModuleDebts(List<TokenAuditFileMetric> metrics) {
     );
   }
   return moduleDebts;
+}
+
+List<TypographyModuleMetric> _collectTypographyModuleSummaries(
+  List<TokenAuditFileMetric> metrics,
+) {
+  final summaries = <String, TypographyModuleMetric>{};
+  for (final metric in metrics) {
+    if (!_isFileMetricScope(metric.scope)) continue;
+    final module = _moduleNameForPath(metric.path);
+    if (module == null) continue;
+
+    final current =
+        summaries[module] ??
+        TypographyModuleMetric(
+          module: module,
+          fontSizeCount: 0,
+          fontFamilyCount: 0,
+          weightCount: 0,
+        );
+    summaries[module] = current.add(metric);
+  }
+
+  return summaries.values.toList()..sort((a, b) {
+    final totalCompare = b.total.compareTo(a.total);
+    if (totalCompare != 0) return totalCompare;
+    return a.module.compareTo(b.module);
+  });
+}
+
+bool _isFileMetricScope(String scope) {
+  return scope == 'root_page' ||
+      scope == 'feature_widget' ||
+      scope == 'shared_layout' ||
+      scope == 'shared_widget';
+}
+
+String? _moduleNameForPath(String path) {
+  final feature = _featureNameForPath(path);
+  if (feature != null) return feature;
+  if (path.startsWith('flutter_app/lib/shared/layout/')) {
+    return 'shared/layout';
+  }
+  if (path.startsWith('flutter_app/lib/shared/widgets/')) {
+    return 'shared/widgets';
+  }
+  return null;
+}
+
+String _summaryKey(String value) {
+  return value.replaceAll(RegExp(r'[^a-zA-Z0-9]+'), '_').toLowerCase();
 }
 
 String? _featureNameForPath(String path) {
@@ -472,8 +596,15 @@ String _renderP0ModuleGateSummary(List<TokenAuditFileMetric> metrics) {
   return buffer.toString();
 }
 
+String _renderStrictTypographyGateSummary(Directory appRoot, String repoRoot) {
+  final residuals = _collectStrictTypographyResiduals(appRoot, repoRoot);
+  final status = residuals.isEmpty ? 'pass' : 'fail';
+  return 'strict_typography_gate=zero_residual $status residuals=${residuals.length}';
+}
+
 String _renderSummary(List<TokenAuditFileMetric> metrics) {
   final scopeTotals = <String, int>{};
+  final typographySummaries = _collectTypographyModuleSummaries(metrics);
   var totalFiles = 0;
   var debtTotal = 0;
   var exceptions = 0;
@@ -499,6 +630,14 @@ String _renderSummary(List<TokenAuditFileMetric> metrics) {
   for (final entry in _p0ModuleDebtBaselines.entries) {
     buffer.writeln('p0_${entry.key}_debt=${moduleDebts[entry.key] ?? 0}');
   }
+  for (final summary in typographySummaries) {
+    buffer.writeln(
+      'typography_${_summaryKey(summary.module)}_debt=${summary.total} '
+      'fontSize=${summary.fontSizeCount} '
+      'fontFamily=${summary.fontFamilyCount} '
+      'w800w900=${summary.weightCount}',
+    );
+  }
   return buffer.toString();
 }
 
@@ -506,6 +645,7 @@ String _renderMarkdown(List<TokenAuditFileMetric> metrics) {
   final topDebt = metrics.where((metric) => !metric.isException).toList()
     ..sort((a, b) => b.totalDebt.compareTo(a.totalDebt));
   final p0ModuleDebts = _collectP0ModuleDebts(metrics);
+  final typographySummaries = _collectTypographyModuleSummaries(metrics);
 
   final failCount = metrics.where((metric) => metric.status == 'fail').length;
   final warnCount = metrics.where((metric) => metric.status == 'warn').length;
@@ -552,6 +692,27 @@ String _renderMarkdown(List<TokenAuditFileMetric> metrics) {
     final current = p0ModuleDebts[entry.key] ?? 0;
     final status = current <= entry.value ? 'pass' : 'fail';
     buffer.writeln('| ${entry.key} | $current | ${entry.value} | $status |');
+  }
+
+  buffer
+    ..writeln()
+    ..writeln('## Typography Debt By Module')
+    ..writeln()
+    ..writeln(
+      'This section counts only local typography drift: `fontSize`, '
+      '`fontFamily`, and `FontWeight.w800/w900`. Bundle summary rows are '
+      'excluded to avoid double-counting root page part files.',
+    )
+    ..writeln()
+    ..writeln(
+      '| module | total typography debt | fontSize | fontFamily | w800/w900 |',
+    )
+    ..writeln('| --- | ---: | ---: | ---: | ---: |');
+  for (final summary in typographySummaries) {
+    buffer.writeln(
+      '| ${summary.module} | ${summary.total} | ${summary.fontSizeCount} | '
+      '${summary.fontFamilyCount} | ${summary.weightCount} |',
+    );
   }
 
   buffer
@@ -700,6 +861,14 @@ int _countDimensionBeyondThreshold(
   return count;
 }
 
+int _lineForOffset(String source, int offset) {
+  var line = 1;
+  for (var i = 0; i < offset && i < source.length; i += 1) {
+    if (source.codeUnitAt(i) == 10) line += 1;
+  }
+  return line;
+}
+
 String _relativePath(String filePath, String repoRoot) {
   final root = repoRoot.replaceAll('\\', '/');
   final path = filePath.replaceAll('\\', '/');
@@ -723,6 +892,12 @@ final RegExp _partPattern = RegExp(r'''part\s+['"]([^'"]+)['"]''');
 final RegExp _fontSizePattern = RegExp(r'fontSize:\s*([0-9]+(?:\.[0-9]+)?)');
 final RegExp _fontFamilyPattern = RegExp(r'fontFamily:');
 final RegExp _heavyWeightPattern = RegExp(r'FontWeight\.w[89]00');
+final Map<String, RegExp> _strictTypographyGatePatterns = <String, RegExp>{
+  'local fontSize parameter': RegExp(r'\bfontSize\s*:'),
+  'local TextStyle': RegExp(r'TextStyle\('),
+  'local fontFamily': RegExp(r'fontFamily:'),
+  'direct heavy FontWeight': RegExp(r'FontWeight\.w[89]00'),
+};
 final RegExp _heightPattern = RegExp(r'height:\s*([0-9]+(?:\.[0-9]+)?)');
 final RegExp _edgeInsetsPattern = RegExp(
   r'EdgeInsets\.(all|symmetric|only|fromLTRB)\(',

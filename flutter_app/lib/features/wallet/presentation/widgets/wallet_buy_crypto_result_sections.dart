@@ -28,9 +28,7 @@ class _BuyButton extends StatelessWidget {
           enabled ? 'Mua $symbol' : 'Nhập số tiền mua',
           style: AppTextStyles.baseMedium.copyWith(
             color: enabled ? AppColors.onAccent : AppColors.text3,
-            fontSize: 15,
-            fontWeight: FontWeight.w800,
-            height: 1,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ),
@@ -156,7 +154,7 @@ class BuySuccessState extends StatelessWidget {
                     const SizedBox(height: 22),
                     Text(
                       'Đặt lệnh thành công!',
-                      style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
+                      style: AppTextStyles.sectionTitle,
                     ),
                     const SizedBox(height: 10),
                     Text(
@@ -164,7 +162,6 @@ class BuySuccessState extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        fontSize: 14,
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -204,7 +201,7 @@ class _ActionButton extends StatelessWidget {
           label,
           style: AppTextStyles.baseMedium.copyWith(
             color: AppColors.onAccent,
-            fontWeight: FontWeight.w800,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ),
@@ -235,7 +232,7 @@ class _GhostButton extends StatelessWidget {
           label,
           style: AppTextStyles.baseMedium.copyWith(
             color: AppColors.text2,
-            fontWeight: FontWeight.w800,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ),
@@ -313,11 +310,11 @@ class _CryptoLogo extends StatelessWidget {
         option.symbol.length > 3
             ? option.symbol.substring(0, 3)
             : option.symbol,
-        style: AppTextStyles.micro.copyWith(
-          color: Color(option.colorHex),
-          fontSize: size <= 26 ? 8 : 10,
-          fontWeight: FontWeight.w800,
-        ),
+        style: (size <= 26 ? AppTextStyles.micro : AppTextStyles.caption)
+            .copyWith(
+              color: Color(option.colorHex),
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
       ),
     );
   }

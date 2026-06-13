@@ -93,10 +93,7 @@ class _LimitOrderCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Distance to target',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: AppSpacing.launchpadFontSm,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
               Text(
@@ -134,10 +131,7 @@ class _LimitOrderCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Expires: ${order.expiresAt}',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: AppSpacing.launchpadFontSm,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
               if (order.partialFill)
@@ -258,10 +252,7 @@ class _MetricBlock extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: AppSpacing.launchpadFontSm,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: AppSpacing.x1),
         Text(
@@ -346,10 +337,9 @@ class _TinyPill extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
         child: Text(
           label,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.badge.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: AppSpacing.launchpadFontXxs,
             height: AppSpacing.launchpadLineHeightTight,
           ),
         ),

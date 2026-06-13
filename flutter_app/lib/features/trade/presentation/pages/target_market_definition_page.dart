@@ -154,7 +154,6 @@ class _SummaryCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.base.copyWith(
                     color: AppColors.text1,
-                    fontSize: 16,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -165,9 +164,9 @@ class _SummaryCard extends StatelessWidget {
                   'significant capital.',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.navLabel.copyWith(
                     color: AppColors.text3,
-                    fontSize: 11,
+                    fontWeight: AppTextStyles.normal,
                     height: 1.35,
                   ),
                 ),
@@ -195,9 +194,8 @@ class _DimensionCard extends StatelessWidget {
         children: [
           Text(
             dimension.category,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.control.copyWith(
               color: AppColors.text1,
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -242,11 +240,7 @@ class _CriteriaGroup extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontSize: 10,
-            height: 1,
-          ),
+          style: AppTextStyles.micro.copyWith(color: color, height: 1),
         ),
         const SizedBox(height: 7),
         for (final value in values) ...[
@@ -258,9 +252,9 @@ class _CriteriaGroup extends StatelessWidget {
               Expanded(
                 child: Text(
                   value,
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.navLabel.copyWith(
                     color: AppColors.text2,
-                    fontSize: 11,
+                    fontWeight: AppTextStyles.normal,
                     height: 1.28,
                   ),
                 ),
@@ -294,10 +288,8 @@ class _SectionLabel extends StatelessWidget {
         const SizedBox(width: 7),
         Text(
           text,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.badge.copyWith(
             color: AppColors.text2,
-            fontSize: 11,
-            fontWeight: AppTextStyles.bold,
             height: 1,
           ),
         ),

@@ -29,9 +29,8 @@ class DesignSystemFooter extends StatelessWidget {
             Text(
               snapshot.footerSubtitle,
               textAlign: TextAlign.center,
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.chartLabelXs.copyWith(
                 color: AppColors.text3,
-                fontSize: AppSpacing.devFontXs,
               ),
             ),
           ],

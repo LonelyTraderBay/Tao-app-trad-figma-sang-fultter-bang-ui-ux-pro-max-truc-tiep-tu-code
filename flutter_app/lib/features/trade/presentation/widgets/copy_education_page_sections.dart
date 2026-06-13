@@ -1,4 +1,4 @@
-part of '../pages/copy_education_page.dart';
+﻿part of '../pages/copy_education_page.dart';
 
 class _IntroBanner extends StatelessWidget {
   const _IntroBanner({required this.snapshot});
@@ -22,21 +22,14 @@ class _IntroBanner extends StatelessWidget {
               children: [
                 Text(
                   snapshot.introTitle,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: _copyPrimary,
-                    fontSize: 16,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1.2,
-                  ),
+                  style: AppTextStyles.baseMedium.copyWith(color: _copyPrimary),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   snapshot.introDescription,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 12,
-                    height: 1.42,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
@@ -81,16 +74,15 @@ class _EducationTabs extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
-                        style: AppTextStyles.caption.copyWith(
-                          color: active == tab.id
-                              ? _copyPrimary
-                              : AppColors.text3,
-                          fontSize: 12,
-                          fontWeight: active == tab.id
-                              ? AppTextStyles.bold
-                              : AppTextStyles.medium,
-                          height: 1.25,
-                        ),
+                        style:
+                            (active == tab.id
+                                    ? AppTextStyles.baseMedium
+                                    : AppTextStyles.caption)
+                                .copyWith(
+                                  color: active == tab.id
+                                      ? _copyPrimary
+                                      : AppColors.text3,
+                                ),
                       ),
                     ),
                     if (active == tab.id)
@@ -148,10 +140,7 @@ class _StepsCard extends StatelessWidget {
         children: [
           Text(
             'Copy Trading hoạt động như thế nào?',
-            style: AppTextStyles.baseMedium.copyWith(
-              fontSize: 16,
-              fontWeight: AppTextStyles.bold,
-            ),
+            style: AppTextStyles.baseMedium,
           ),
           const SizedBox(height: 17),
           for (final step in steps) ...[
@@ -181,12 +170,7 @@ class _StepRow extends StatelessWidget {
             child: Text(
               '${step.number}',
               textAlign: TextAlign.center,
-              style: AppTextStyles.caption.copyWith(
-                color: _copyPrimary,
-                fontSize: 14,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
+              style: AppTextStyles.baseMedium.copyWith(color: _copyPrimary),
             ),
           ),
         ),
@@ -206,13 +190,10 @@ class _StepRow extends StatelessWidget {
                   Expanded(
                     child: Text(
                       step.title,
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption.copyWith(
+                      style: AppTextStyles.baseMedium.copyWith(
                         color: AppColors.text1,
-                        fontSize: 14,
-                        fontWeight: AppTextStyles.bold,
-                        height: 1.2,
                       ),
                     ),
                   ),
@@ -221,11 +202,9 @@ class _StepRow extends StatelessWidget {
               const SizedBox(height: 7),
               Text(
                 step.description,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 11,
-                  height: 1.38,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
@@ -247,13 +226,7 @@ class _CopyModesCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Các chế độ sao chép',
-            style: AppTextStyles.baseMedium.copyWith(
-              fontSize: 16,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
+          Text('Các chế độ sao chép', style: AppTextStyles.baseMedium),
           const SizedBox(height: 14),
           for (final mode in modes) ...[
             _CopyModeTile(mode: mode),
@@ -292,11 +265,8 @@ class _CopyModeTile extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 mode.title,
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.text1,
-                  fontSize: 14,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1.2,
                 ),
               ),
             ],
@@ -304,11 +274,9 @@ class _CopyModeTile extends StatelessWidget {
           const SizedBox(height: 13),
           Text(
             mode.description,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text2,
-              fontSize: 11,
-              height: 1.42,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            maxLines: 4,
+            overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 12),
           Row(
@@ -349,13 +317,7 @@ class _ConceptsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Khái niệm quan trọng',
-            style: AppTextStyles.baseMedium.copyWith(
-              fontSize: 16,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
+          Text('Khái niệm quan trọng', style: AppTextStyles.baseMedium),
           const SizedBox(height: 14),
           for (final concept in concepts) ...[
             _ConceptRow(concept: concept),

@@ -289,7 +289,6 @@ class _PriceRecordCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              fontSize: 14,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),

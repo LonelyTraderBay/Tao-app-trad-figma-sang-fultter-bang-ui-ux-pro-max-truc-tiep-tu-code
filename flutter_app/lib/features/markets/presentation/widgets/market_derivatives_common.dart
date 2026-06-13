@@ -158,6 +158,9 @@ class MarketDerivativesPairLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final base = pair.symbol.split('/').first;
+    final labelStyle = size <= 30
+        ? AppTextStyles.micro
+        : AppTextStyles.captionSm;
     return Container(
       width: size,
       height: size,
@@ -168,10 +171,9 @@ class MarketDerivativesPairLogo extends StatelessWidget {
       ),
       child: Text(
         base.length <= 2 ? base : base.substring(0, 2),
-        style: AppTextStyles.caption.copyWith(
+        style: labelStyle.copyWith(
           color: pair.color,
           fontWeight: AppTextStyles.bold,
-          fontSize: size <= 30 ? 10 : 12,
         ),
       ),
     );

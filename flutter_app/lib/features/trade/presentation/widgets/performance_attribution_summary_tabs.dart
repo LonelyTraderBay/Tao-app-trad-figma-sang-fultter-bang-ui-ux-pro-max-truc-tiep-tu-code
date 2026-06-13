@@ -80,7 +80,7 @@ class _MetricTile extends StatelessWidget {
             value,
             style: AppTextStyles.baseMedium.copyWith(
               color: valueColor,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
               height: 1.15,
             ),
           ),
@@ -137,7 +137,7 @@ class _AttributionTabs extends StatelessWidget {
                             color: activeTab == tab.$1
                                 ? _attributionPrimary
                                 : AppColors.text3,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: AppTextStyles.extraBold,
                           ),
                         ),
                       ),

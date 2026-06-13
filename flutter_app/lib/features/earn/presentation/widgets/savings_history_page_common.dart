@@ -73,9 +73,8 @@ class _TransactionCard extends StatelessWidget {
                     '${tx.product} · ${tx.time}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.captionSm.copyWith(
                       color: AppColors.text3,
-                      fontSize: AppSpacing.savingsHistoryMetaFontSize,
                     ),
                   ),
                 ],

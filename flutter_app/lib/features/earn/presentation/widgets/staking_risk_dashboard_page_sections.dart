@@ -40,10 +40,8 @@ class _OverallRiskCard extends StatelessWidget {
                 children: [
                   Text(
                     snapshot.overallScore.toString(),
-                    style: AppTextStyles.display.copyWith(
+                    style: AppTextStyles.numericDisplay4xl.copyWith(
                       color: color,
-                      fontSize: AppSpacing.stakingRiskDashboardScoreFontSize,
-                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
                   Text(

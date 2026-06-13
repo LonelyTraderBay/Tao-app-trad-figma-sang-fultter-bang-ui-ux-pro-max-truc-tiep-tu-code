@@ -80,10 +80,7 @@ class _PreviewMetric extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: AppSpacing.launchpadFontSm,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           Text(
             value,

@@ -171,8 +171,7 @@ class _DcaOverviewCard extends StatelessWidget {
                   '₫${_formatFullVnd(overview.currentValueVnd)}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.heroNumber.copyWith(
-                    fontSize: AppSpacing.dcaMainHeroAmountFontSize,
+                  style: AppTextStyles.numericDisplayHeroXs.copyWith(
                     fontWeight: AppTextStyles.heavy,
                     height: AppSpacing.dcaMainTightLineHeight,
                   ),
@@ -415,12 +414,10 @@ class _OverviewMetric extends StatelessWidget {
               value,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.sectionTitle.copyWith(
+              style: AppTextStyles.amountXs.copyWith(
                 color: color,
-                fontSize: AppSpacing.dcaMainStatValueFontSize,
                 fontWeight: AppTextStyles.heavy,
                 height: AppSpacing.dcaMainTightLineHeight,
-                fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
             const SizedBox(height: AppSpacing.x2),

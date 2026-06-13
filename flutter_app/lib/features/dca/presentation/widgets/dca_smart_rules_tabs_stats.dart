@@ -119,12 +119,7 @@ class _StatsCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Smart Rules',
-                      style: AppTextStyles.sectionTitle.copyWith(
-                        fontSize: AppSpacing.dcaSmartSectionFontSize,
-                      ),
-                    ),
+                    Text('Smart Rules', style: AppTextStyles.sectionTitleXs),
                     Text(
                       'Automated DCA optimization',
                       style: AppTextStyles.caption.copyWith(

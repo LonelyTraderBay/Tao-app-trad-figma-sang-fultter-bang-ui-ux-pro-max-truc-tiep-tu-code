@@ -142,19 +142,15 @@ class _IntroCard extends StatelessWidget {
                 children: [
                   Text(
                     snapshot.infoTitle,
-                    style: AppTextStyles.base.copyWith(
+                    style: AppTextStyles.baseMedium.copyWith(
                       color: AppColors.text1,
-                      fontSize: 16,
-                      fontWeight: AppTextStyles.bold,
-                      height: 1.1,
                     ),
                   ),
                   const SizedBox(height: 7),
                   Text(
                     snapshot.infoDescription,
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.captionSm.copyWith(
                       color: AppColors.text3,
-                      fontSize: 11,
                       height: 1.4,
                     ),
                   ),
@@ -214,10 +210,8 @@ class _EligibilityRow extends StatelessWidget {
             children: [
               Text(
                 item.title,
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.text1,
-                  fontSize: 12,
-                  fontWeight: AppTextStyles.bold,
                   height: 1.1,
                 ),
               ),
@@ -226,7 +220,6 @@ class _EligibilityRow extends StatelessWidget {
                 item.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
                   height: 1.25,
                 ),
               ),
@@ -298,25 +291,24 @@ class _ContactRow extends StatelessWidget {
                 contact.label,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 9,
                   height: 1,
                 ),
               ),
               const SizedBox(height: 5),
               Text(
                 contact.value,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontSize: contact.icon == TradeOmbudsmanContactIcon.address
-                      ? 11
-                      : 13,
-                  fontWeight: contact.icon == TradeOmbudsmanContactIcon.address
-                      ? AppTextStyles.normal
-                      : AppTextStyles.bold,
-                  height: contact.icon == TradeOmbudsmanContactIcon.address
-                      ? 1.4
-                      : 1.1,
-                ),
+                style:
+                    (contact.icon == TradeOmbudsmanContactIcon.address
+                            ? AppTextStyles.monoCode
+                            : AppTextStyles.base)
+                        .copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.medium,
+                          height:
+                              contact.icon == TradeOmbudsmanContactIcon.address
+                              ? 1.4
+                              : 1.1,
+                        ),
               ),
               if (contact.detail != null) ...[
                 const SizedBox(height: 5),
@@ -324,7 +316,6 @@ class _ContactRow extends StatelessWidget {
                   contact.detail!,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 9,
                     height: 1.2,
                   ),
                 ),
@@ -361,7 +352,6 @@ class _ProcessStepCard extends StatelessWidget {
               '${step.step}',
               style: AppTextStyles.caption.copyWith(
                 color: _ombudsmanPrimary,
-                fontSize: 14,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
@@ -376,10 +366,8 @@ class _ProcessStepCard extends StatelessWidget {
                 children: [
                   Text(
                     step.title,
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.baseMedium.copyWith(
                       color: AppColors.text1,
-                      fontSize: 12,
-                      fontWeight: AppTextStyles.bold,
                       height: 1.1,
                     ),
                   ),
@@ -388,7 +376,6 @@ class _ProcessStepCard extends StatelessWidget {
                     step.description,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      fontSize: 10,
                       height: 1.1,
                     ),
                   ),
@@ -415,10 +402,8 @@ class _VisitButton extends StatelessWidget {
       leading: const Icon(Icons.open_in_new_rounded, size: 18),
       child: Text(
         snapshot.ctaLabel,
-        style: AppTextStyles.body.copyWith(
+        style: AppTextStyles.control.copyWith(
           color: AppColors.onAccent,
-          fontFamily: 'Roboto',
-          fontSize: 14,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -449,7 +434,6 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

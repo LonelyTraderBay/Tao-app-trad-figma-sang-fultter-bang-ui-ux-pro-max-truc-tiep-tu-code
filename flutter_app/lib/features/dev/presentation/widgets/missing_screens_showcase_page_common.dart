@@ -115,10 +115,7 @@ class _ChangeRow extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: AppSpacing.devFontLg,
-            ),
+            style: AppTextStyles.captionSm.copyWith(color: AppColors.text2),
           ),
         ),
       ],

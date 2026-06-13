@@ -38,9 +38,8 @@ class _SubmissionFooter extends StatelessWidget {
                 const SizedBox(width: 9),
                 Text(
                   'Submit Complaint',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.control.copyWith(
                     color: enabled ? AppColors.onAccent : AppColors.text3,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -63,11 +62,7 @@ class _FieldLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: AppTextStyles.caption.copyWith(
-        color: AppColors.text2,
-        fontSize: 11,
-        height: 1,
-      ),
+      style: AppTextStyles.navLabel.copyWith(color: AppColors.text2, height: 1),
     );
   }
 }
@@ -92,9 +87,8 @@ class _SectionLabel extends StatelessWidget {
         const SizedBox(width: 7),
         Text(
           text,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

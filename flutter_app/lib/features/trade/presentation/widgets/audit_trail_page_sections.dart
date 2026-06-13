@@ -25,10 +25,8 @@ class _ComplianceNotice extends StatelessWidget {
             children: [
               Text(
                 snapshot.noticeTitle,
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.badge.copyWith(
                   color: AppColors.text1,
-                  fontSize: 11,
-                  fontWeight: AppTextStyles.bold,
                   height: 1.1,
                 ),
               ),
@@ -37,7 +35,6 @@ class _ComplianceNotice extends StatelessWidget {
                 snapshot.noticeDescription,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
-                  fontSize: 10,
                   fontWeight: AppTextStyles.bold,
                   height: 1.25,
                 ),
@@ -89,7 +86,6 @@ class _StatCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -98,7 +94,7 @@ class _StatCard extends StatelessWidget {
             stat.value,
             style: AppTextStyles.sectionTitle.copyWith(
               color: stat.emphasized ? _auditGreen : AppColors.text1,
-              fontSize: 21,
+              fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
             ),
           ),
@@ -188,7 +184,6 @@ class _AuditTabs extends StatelessWidget {
                             color: tab.id == activeId
                                 ? _auditPrimary
                                 : AppColors.text3,
-                            fontSize: tab.id == 'client' ? 11 : 12,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),
@@ -232,9 +227,8 @@ class _SectionLabel extends StatelessWidget {
         const SizedBox(width: 6),
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

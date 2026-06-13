@@ -241,10 +241,9 @@ class _SafeSelector extends StatelessWidget {
                             safe.label,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.micro.copyWith(
+                            style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
-                              fontSize: AppSpacing.launchpadFontMd,
                             ),
                           ),
                         ),
@@ -258,15 +257,13 @@ class _SafeSelector extends StatelessWidget {
                           style: AppTextStyles.micro.copyWith(
                             color: safe.accent,
                             fontWeight: AppTextStyles.bold,
-                            fontSize: AppSpacing.launchpadFontXs,
                           ),
                         ),
                         const SizedBox(width: AppSpacing.x2),
                         Text(
                           '${safe.threshold}/${safe.owners.length}',
-                          style: AppTextStyles.micro.copyWith(
+                          style: AppTextStyles.numericMicro.copyWith(
                             color: AppColors.text3,
-                            fontSize: AppSpacing.launchpadFontXs,
                           ),
                         ),
                       ],
@@ -362,18 +359,14 @@ class _StatChip extends StatelessWidget {
           children: [
             Text(
               value,
-              style: AppTextStyles.caption.copyWith(
+              style: AppTextStyles.numericCode.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                fontSize: AppSpacing.launchpadFontMd,
               ),
             ),
             Text(
               label,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: AppSpacing.launchpadFontXs,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ],
         ),

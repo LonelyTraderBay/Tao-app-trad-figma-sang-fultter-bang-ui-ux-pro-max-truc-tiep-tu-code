@@ -151,11 +151,7 @@ class _CategoryBadge extends StatelessWidget {
       ),
       child: Text(
         category?.label ?? 'Khác',
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 8,
-          height: 1.2,
-        ),
+        style: AppTextStyles.micro.copyWith(color: color, height: 1.2),
       ),
     );
   }
@@ -241,11 +237,13 @@ class _IndicatorDetails extends StatelessWidget {
                           children: [
                             TextSpan(
                               text: '${param.label}: ',
-                              style: const TextStyle(color: AppColors.text3),
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                              ),
                             ),
                             TextSpan(
                               text: '${param.value}',
-                              style: const TextStyle(
+                              style: AppTextStyles.micro.copyWith(
                                 color: AppColors.text1,
                                 fontWeight: AppTextStyles.bold,
                               ),
@@ -344,10 +342,7 @@ class _DrawingToolsGrid extends StatelessWidget {
                 const SizedBox(height: 3),
                 Text(
                   _categoryFor(categories, tool.categoryId)?.label ?? '',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 8,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),

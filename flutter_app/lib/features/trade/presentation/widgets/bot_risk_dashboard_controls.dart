@@ -154,7 +154,10 @@ class _EmergencyActionCard extends StatelessWidget {
                 ],
               ),
             ),
-            const Text('->', style: TextStyle(color: AppColors.text3)),
+            Text(
+              '->',
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+            ),
           ],
         ),
       ),

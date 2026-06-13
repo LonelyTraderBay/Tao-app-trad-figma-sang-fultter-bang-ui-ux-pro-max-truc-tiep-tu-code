@@ -26,11 +26,9 @@ class _OpenInterestCard extends StatelessWidget {
             children: [
               Text(
                 formatLiveMarketMillions(data.current),
-                style: AppTextStyles.sectionTitle.copyWith(
+                style: AppTextStyles.numericDisplayMd.copyWith(
                   color: AppColors.text1,
-                  fontSize: 26,
                   fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
                   height: 1,
                 ),
               ),

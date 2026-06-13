@@ -43,21 +43,17 @@ class _LeverageHero extends StatelessWidget {
             children: [
               Icon(Icons.bolt_rounded, color: riskColor, size: 21),
               const SizedBox(width: 8),
-              Text(
-                '\u0110\u00F2n b\u1EA9y',
-                style: AppTextStyles.caption.copyWith(fontSize: 12),
-              ),
+              Text('\u0110\u00F2n b\u1EA9y', style: AppTextStyles.captionSm),
             ],
           ),
           const SizedBox(height: 8),
           Text(
             '${preview.leverage}x',
-            style: AppTextStyles.display.copyWith(
+            style: AppTextStyles.jumbo.copyWith(
               color: riskColor,
-              fontSize: 56,
               height: 1,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'monospace',
+              fontWeight: AppTextStyles.heavy,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
           const SizedBox(height: 14),
@@ -70,9 +66,8 @@ class _LeverageHero extends StatelessWidget {
             ),
             child: Text(
               'R\u1EE7i ro: ${preview.riskLabel}',
-              style: AppTextStyles.caption.copyWith(
+              style: AppTextStyles.captionSm.copyWith(
                 color: riskColor,
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
@@ -102,16 +97,12 @@ class _RiskMeter extends StatelessWidget {
             children: [
               Text(
                 'M\u1EE9c r\u1EE7i ro',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 12,
-                ),
+                style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
               ),
               Text(
                 preview.riskLabel,
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.captionSm.copyWith(
                   color: riskColor,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),

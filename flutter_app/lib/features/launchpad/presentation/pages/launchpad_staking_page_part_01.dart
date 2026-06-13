@@ -173,9 +173,8 @@ class _StakingHero extends StatelessWidget {
                     ),
                     Text(
                       _formatUsd(snapshot.totalStaked),
-                      style: AppTextStyles.heroNumber.copyWith(
+                      style: AppTextStyles.numericDisplayXl.copyWith(
                         color: AppColors.text1,
-                        fontSize: AppSpacing.launchpadFont3xl,
                       ),
                     ),
                   ],

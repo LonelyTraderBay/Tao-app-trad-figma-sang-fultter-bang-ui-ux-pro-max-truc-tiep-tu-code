@@ -81,7 +81,6 @@ class _HistorySection extends StatelessWidget {
                           order.createdAt,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            fontSize: AppSpacing.launchpadFontSm,
                           ),
                         ),
                       ),

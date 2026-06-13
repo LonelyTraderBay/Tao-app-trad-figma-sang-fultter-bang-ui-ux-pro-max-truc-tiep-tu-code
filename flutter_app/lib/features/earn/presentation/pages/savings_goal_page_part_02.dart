@@ -30,9 +30,8 @@ class _MilestoneDot extends StatelessWidget {
             : Center(
                 child: Text(
                   '${milestone.percentage}',
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.microTiny.copyWith(
                     color: AppColors.text3,
-                    fontSize: AppSpacing.savingsGoalMilestoneFontSize,
                     height: AppSpacing.savingsGoalMilestoneLineHeight,
                   ),
                 ),
@@ -72,9 +71,8 @@ class _TipCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   tip.description,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text3,
-                    fontSize: AppSpacing.savingsGoalTipFontSize,
                   ),
                 ),
               ],

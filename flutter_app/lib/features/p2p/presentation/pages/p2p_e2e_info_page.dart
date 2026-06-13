@@ -126,7 +126,7 @@ class _Hero extends StatelessWidget {
         Text(
           snapshot.heroTitle,
           textAlign: TextAlign.center,
-          style: AppTextStyles.sectionTitle.copyWith(fontSize: 20),
+          style: AppTextStyles.sectionTitleSm,
         ),
         const SizedBox(height: AppSpacing.x2),
         Text(
@@ -298,9 +298,9 @@ class _InfoItemCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   item.description,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.navLabel.copyWith(
                     color: AppColors.text3,
-                    fontSize: 11,
+                    fontWeight: AppTextStyles.normal,
                     height: 1.6,
                   ),
                 ),

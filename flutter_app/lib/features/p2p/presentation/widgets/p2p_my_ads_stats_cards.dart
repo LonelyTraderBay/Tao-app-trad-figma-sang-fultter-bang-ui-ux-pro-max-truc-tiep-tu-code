@@ -68,7 +68,6 @@ class _StatCard extends StatelessWidget {
             value,
             style: AppTextStyles.sectionTitle.copyWith(
               color: color,
-              fontFamily: 'Roboto',
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
@@ -141,7 +140,6 @@ class _MyAdCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.sectionTitle.copyWith(
                       color: AppColors.text1,
-                      fontFamily: 'Roboto',
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
@@ -312,7 +310,6 @@ class _DetailColumn extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              fontFamily: 'Roboto',
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),

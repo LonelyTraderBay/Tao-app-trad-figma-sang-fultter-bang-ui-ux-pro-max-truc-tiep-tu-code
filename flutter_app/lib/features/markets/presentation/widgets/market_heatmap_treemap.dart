@@ -193,25 +193,26 @@ class _HeatmapTile extends StatelessWidget {
             children: [
               Text(
                 coin.symbol,
-                style: AppTextStyles.baseMedium.copyWith(
-                  color: AppColors.onAccent,
-                  fontSize: large ? 16 : 13,
-                  fontWeight: AppTextStyles.bold,
-                  shadows: marketHeatmapTextShadow,
-                  height: 1.08,
-                ),
+                style:
+                    (large ? AppTextStyles.baseMedium : AppTextStyles.caption)
+                        .copyWith(
+                          color: AppColors.onAccent,
+                          fontWeight: AppTextStyles.bold,
+                          shadows: marketHeatmapTextShadow,
+                          height: 1.08,
+                        ),
               ),
               const SizedBox(height: 4),
               Text(
                 marketHeatmapFormatPercent(change),
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.onAccent.withValues(alpha: .92),
-                  fontSize: large ? 12 : 10,
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
-                  shadows: marketHeatmapTextShadow,
-                  height: 1,
-                ),
+                style: (large ? AppTextStyles.captionSm : AppTextStyles.micro)
+                    .copyWith(
+                      color: AppColors.onAccent.withValues(alpha: .92),
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                      shadows: marketHeatmapTextShadow,
+                      height: 1,
+                    ),
               ),
               if (large) ...[
                 const SizedBox(height: 7),

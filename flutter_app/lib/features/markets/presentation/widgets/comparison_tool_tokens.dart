@@ -62,7 +62,6 @@ class ComparisonSelectedTokensStrip extends StatelessWidget {
                       'Thêm',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 12,
                         height: 1,
                       ),
                     ),
@@ -94,7 +93,6 @@ class ComparisonSelectedTokensStrip extends StatelessWidget {
                       pair.baseAsset,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
-                        fontSize: 13,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),
@@ -212,12 +210,11 @@ class ComparisonTokenPickerCard extends StatelessWidget {
                     onChanged: (_) => onChanged(),
                     autofocus: true,
                     cursorColor: comparisonToolPrimary,
-                    style: AppTextStyles.caption.copyWith(fontSize: 12),
+                    style: AppTextStyles.caption,
                     decoration: InputDecoration.collapsed(
                       hintText: 'Tìm BTC, ETH...',
                       hintStyle: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 12,
                       ),
                     ),
                   ),
@@ -296,7 +293,6 @@ class _PickerQuickChip extends StatelessWidget {
           pair.baseAsset,
           style: AppTextStyles.caption.copyWith(
             color: pair.logoColor,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -347,3 +343,5 @@ class _PickerRow extends StatelessWidget {
     );
   }
 }
+
+

@@ -65,10 +65,7 @@ class _AmountInput extends StatelessWidget {
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
           ],
-          textStyle: AppTextStyles.sectionTitle.copyWith(
-            fontSize: 18,
-            fontFeatures: AppTextStyles.tabularFigures,
-          ),
+          textStyle: AppTextStyles.amountSm,
           suffix: Text(
             asset,
             style: AppTextStyles.baseMedium.copyWith(

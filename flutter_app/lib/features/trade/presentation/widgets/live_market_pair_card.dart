@@ -53,7 +53,6 @@ class LiveMarketPairCard extends StatelessWidget {
                 value: '\$${formatLiveMarketMoney(snapshot.markPrice)}',
                 color: liveMarketGreen,
                 alignRight: true,
-                monospace: true,
               ),
             ],
           ),
@@ -69,14 +68,12 @@ class _PairValue extends StatelessWidget {
     required this.value,
     this.color = AppColors.text1,
     this.alignRight = false,
-    this.monospace = false,
   });
 
   final String label;
   final String value;
   final Color color;
   final bool alignRight;
-  final bool monospace;
 
   @override
   Widget build(BuildContext context) {
@@ -87,20 +84,17 @@ class _PairValue extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: AppColors.text3,
-            fontSize: 12,
             height: 1,
           ),
         ),
         const SizedBox(height: 9),
         Text(
           value,
-          style: AppTextStyles.baseMedium.copyWith(
+          style: AppTextStyles.sectionTitleSm.copyWith(
             color: color,
-            fontSize: 20,
             fontWeight: AppTextStyles.bold,
-            fontFamily: monospace ? 'monospace' : null,
             fontFeatures: AppTextStyles.tabularFigures,
             height: 1,
           ),

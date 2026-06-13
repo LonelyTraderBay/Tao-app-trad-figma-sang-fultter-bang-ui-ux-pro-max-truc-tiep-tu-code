@@ -69,11 +69,10 @@ class _CategoryTabs extends StatelessWidget {
                     categories[i].id,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.captionSm.copyWith(
                       color: activeId == categories[i].id
                           ? _faqPrimary
                           : AppColors.text3,
-                      fontSize: 12,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),

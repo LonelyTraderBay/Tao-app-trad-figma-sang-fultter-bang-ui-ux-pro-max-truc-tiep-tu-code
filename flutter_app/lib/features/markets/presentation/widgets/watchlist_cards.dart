@@ -47,10 +47,7 @@ class _WatchlistCard extends StatelessWidget {
                       children: [
                         Text(
                           pair.baseAsset,
-                          style: AppTextStyles.baseMedium.copyWith(
-                            fontSize: 15,
-                            height: 1.2,
-                          ),
+                          style: AppTextStyles.baseMedium.copyWith(height: 1.2),
                         ),
                         const SizedBox(height: 4),
                         Text(

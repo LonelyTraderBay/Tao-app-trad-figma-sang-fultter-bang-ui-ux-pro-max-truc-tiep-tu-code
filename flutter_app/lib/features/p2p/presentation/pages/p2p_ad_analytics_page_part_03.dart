@@ -317,7 +317,7 @@ void _paintTinyText(Canvas canvas, String text, Offset offset) {
   final painter = TextPainter(
     text: TextSpan(
       text: text,
-      style: AppTextStyles.micro.copyWith(color: AppColors.text3, fontSize: 8),
+      style: AppTextStyles.chartLabelTiny.copyWith(color: AppColors.text3),
     ),
     textDirection: TextDirection.ltr,
   )..layout(maxWidth: AppSpacing.x7 + AppSpacing.x4);

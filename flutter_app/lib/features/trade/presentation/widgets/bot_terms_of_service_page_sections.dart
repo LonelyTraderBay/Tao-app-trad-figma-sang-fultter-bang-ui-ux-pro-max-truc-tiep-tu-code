@@ -193,7 +193,10 @@ class _CriticalWarning extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: '${section.warningTitle} ',
-                    style: const TextStyle(fontWeight: FontWeight.w700),
+                    style: AppTextStyles.caption.copyWith(
+                      color: _termsRed,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
                   TextSpan(text: section.warningBody),
                 ],

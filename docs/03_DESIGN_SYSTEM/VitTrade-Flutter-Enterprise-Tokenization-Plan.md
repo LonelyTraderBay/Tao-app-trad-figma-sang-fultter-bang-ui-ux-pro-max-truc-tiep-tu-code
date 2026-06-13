@@ -730,6 +730,149 @@ Trinh tu bat buoc:
 9. Chay test/analyze.
 10. Cap nhat checklist trong tai lieu nay neu phase do hoan thanh.
 
+## Prompt Thuc Thi Tiet Kiem Token Cho AI
+
+Copy prompt duoi day khi can AI tiep tuc tokenization work. Prompt nay duoc
+viet de AI doc dung file, lam dung thu tu, khong mo qua nhieu context, va van
+giu chat luong UI/product safety.
+
+````text
+You are working in the VitTrade Flutter repo:
+
+C:\Users\C-PC\Documents\Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code
+
+PRIMARY OBJECTIVE:
+Continue the Flutter enterprise tokenization work from:
+
+docs/03_DESIGN_SYSTEM/VitTrade-Flutter-Enterprise-Tokenization-Plan.md
+
+The goal is not a redesign. The goal is to reduce local UI drift by replacing
+hardcoded typography, spacing, radius, sizing, container/card, and density
+patterns with existing VitTrade tokens and shared primitives, while preserving
+all product behavior and financial-safety copy.
+
+TOKEN-EFFICIENT READ ORDER:
+Read only what is needed for the current batch.
+
+Always read first:
+1. AGENTS.md
+2. docs/00_START_HERE.md
+3. docs/03_DESIGN_SYSTEM/VitTrade-Flutter-Enterprise-Tokenization-Plan.md
+4. The source files and tests for the specific batch you will edit
+
+Read these only when relevant:
+- docs/03_DESIGN_SYSTEM/VitTrade-Typography-Standardization-Plan.md
+  when the batch touches font/text styles.
+- docs/02_FLUTTER_MIGRATION/Enterprise-PR-Review-Checklist.md
+  when updating enforcement, checklist, or PR gates.
+- docs/02_FLUTTER_MIGRATION/Future-Feature-Onboarding-Checklist.md
+  when changing new-feature rules.
+- docs/03_DESIGN_SYSTEM/Guidelines.md
+  when visual/product design rules are unclear.
+
+DO NOT load large unrelated docs or paste huge rg/audit output into chat.
+Summarize only counts, top files, and decisions.
+
+PHASE ROUTING:
+Before editing, inspect this plan and current source/audit state.
+
+If a phase is marked done, verify it from source or audit before trusting it.
+If a phase is incomplete or stale, resume the earliest incomplete phase.
+If analyze/audit is blocked, fix the blocker first.
+
+Use this order unless the user explicitly says otherwise:
+1. Restore baseline health: format/analyze/audit artifacts current.
+2. Foundation/shared token gaps.
+3. P0 financial screens.
+4. Product expansion modules.
+5. Enforcement/reporting/checklists.
+
+BATCH SIZE:
+Work in small batches:
+- 1 module or 1 flow at a time.
+- 2 to 5 related files per batch.
+- Never blind-replace the whole app.
+- Do not start the next batch until the current batch is formatted and verified.
+
+SEARCH COMMANDS:
+Run from flutter_app/ and keep output focused:
+
+```bash
+rg -n "fontSize:\s*[0-9]|fontFamily:|FontWeight\.w[89]00" lib/features/<module>
+rg -n "EdgeInsets\.(all|symmetric|only|fromLTRB)\(|SizedBox\([^)]*(width|height):\s*[0-9]" lib/features/<module>
+rg -n "BorderRadius\.circular\(|Radius\.circular\(|Container\(|BoxDecoration\(" lib/features/<module>
+dart run tool/design_token_consistency_audit.dart --check
+```
+
+If output is large, identify top files only. Do not paste the full output.
+
+EDITING RULES:
+- Prefer existing tokens in flutter_app/lib/app/theme/.
+- Prefer shared primitives before local UI:
+  VitPageLayout, VitPageContent, VitCard, VitCtaButton, VitInput, VitTabBar,
+  VitStatusPill, VitMetricCard, VitServiceTile, VitModuleHeroCard.
+- If a number repeats in 3+ places and no token exists, add a semantic token.
+- If a card/list/input pattern repeats, update or create a shared primitive.
+- Keep module identity as accent only; do not create local module palettes.
+- Do not change routes, providers, controller behavior, or product copy unless
+  the batch explicitly requires it.
+- Preserve financial safety: preview, confirm, fee, risk, limit, masking,
+  loading, error, offline, submitting, success, and next-step states.
+- Keep Prediction Markets and Open Arena separate. Arena remains points-only.
+
+QUALITY RULES:
+- Phone 360 px is the baseline.
+- No text overlap, no clipped CTA, no bottom nav covering risk/confirmation
+  content.
+- Dark theme contrast must remain readable.
+- Do not make body text tiny to fit content.
+- Do not remove disclosure or risk text to save space.
+- Do not replace local magic numbers with new local magic numbers.
+
+VERIFY PER BATCH:
+Docs-only change:
+- No Flutter test required.
+
+Small feature batch:
+```bash
+dart format <changed dart files>
+flutter analyze
+flutter test test/features/<module> --reporter=compact
+```
+
+Shared/theme/audit/guardrail batch:
+```bash
+dart format .
+dart run tool/design_token_consistency_audit.dart
+dart run tool/design_token_consistency_audit.dart --check
+flutter analyze
+flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact
+```
+
+High-risk financial UI batch:
+Run the focused feature tests plus any relevant quality/product-copy guardrails.
+Use responsive/visual QA when layout or first viewport changes.
+
+PLAN UPDATE RULE:
+Update this plan only after a real batch completes. Record:
+- date
+- files changed
+- debt before -> after
+- verify commands
+- visual review if UI changed
+- exceptions, if any
+
+FINAL RESPONSE RULE:
+Report only:
+- what changed
+- verification result
+- remaining blocker or next resume point
+
+If blocked or interrupted, end with exactly:
+
+RESUME FROM: <phase id> - <specific file or checklist item>
+````
+
 ## Khong Nen Lam
 
 - Khong thay toan bo UI bang mot lan refactor lon.

@@ -26,11 +26,7 @@ class _PaymentMethodGroup extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text3,
-                fontSize: 12,
-                height: 1,
-              ),
+              style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
             ),
           ],
         ),
@@ -89,11 +85,13 @@ class _PaymentMethodCard extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 method.logo,
-                style: AppTextStyles.micro.copyWith(
-                  color: Color(method.logoColorHex),
-                  fontSize: method.logo.length > 3 ? 9 : 11,
-                  fontWeight: FontWeight.w800,
-                ),
+                style: method.logo.length > 3
+                    ? AppTextStyles.micro.copyWith(
+                        color: Color(method.logoColorHex),
+                      )
+                    : AppTextStyles.badge.copyWith(
+                        color: Color(method.logoColorHex),
+                      ),
               ),
             ),
             const SizedBox(width: 13),
@@ -109,11 +107,7 @@ class _PaymentMethodCard extends StatelessWidget {
                           method.name,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.baseMedium.copyWith(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w800,
-                            height: 1,
-                          ),
+                          style: AppTextStyles.captionSm,
                         ),
                       ),
                       if (method.isPopular) ...[
@@ -122,7 +116,7 @@ class _PaymentMethodCard extends StatelessWidget {
                       ],
                     ],
                   ),
-                  const SizedBox(height: 9),
+                  const SizedBox(height: 6),
                   Row(
                     children: [
                       Icon(
@@ -136,9 +130,8 @@ class _PaymentMethodCard extends StatelessWidget {
                       Text(
                         method.processingTime,
                         style: AppTextStyles.micro.copyWith(
+                          height: 1.2,
                           color: instant ? _buyGreen : AppColors.text3,
-                          fontSize: 11,
-                          height: 1,
                         ),
                       ),
                     ],
@@ -167,12 +160,7 @@ class _PopularBadge extends StatelessWidget {
       ),
       child: Text(
         'Phổ biến',
-        style: AppTextStyles.micro.copyWith(
-          color: _buyGreen,
-          fontSize: 11,
-          fontWeight: FontWeight.w800,
-          height: 1,
-        ),
+        style: AppTextStyles.badge.copyWith(color: _buyGreen),
       ),
     );
   }
@@ -262,20 +250,14 @@ class _RateRow extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 13,
-              height: 1,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
         ),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
             color: valueColor ?? AppColors.text1,
-            fontSize: 13,
-            fontWeight: FontWeight.w800,
-            height: 1,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ],

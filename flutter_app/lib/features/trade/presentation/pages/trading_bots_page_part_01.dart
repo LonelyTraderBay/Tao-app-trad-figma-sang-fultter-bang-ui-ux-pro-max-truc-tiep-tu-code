@@ -33,17 +33,13 @@ class _TradingBotsHeader extends StatelessWidget {
               children: [
                 Text(
                   'Trading Bots',
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    fontSize: 18,
-                    height: 1.12,
-                  ),
+                  style: AppTextStyles.sectionTitle.copyWith(height: 1.12),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   'Bot giao dịch · Trade',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1,
                   ),
                 ),
@@ -118,7 +114,6 @@ class _BotsHero extends StatelessWidget {
                       'Giao dịch tự động 24/7',
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: AppColors.onAccent,
-                        fontSize: 20,
                         height: 1.2,
                       ),
                     ),
@@ -127,7 +122,6 @@ class _BotsHero extends StatelessWidget {
                       'Bot hoạt động ngay cả khi bạn ngủ',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.onAccent.withValues(alpha: .65),
-                        fontSize: 13,
                       ),
                     ),
                   ],
@@ -152,7 +146,7 @@ class _BotsHero extends StatelessWidget {
               const SizedBox(width: 12),
               _HeroStat(
                 value: _formatSignedMoney(totalProfit),
-                label: 'Lợi nhuận',
+                label: 'Lãi nhuận',
                 valueColor: totalProfit >= 0 ? AppColors.buy : AppColors.sell,
               ),
             ],
@@ -190,11 +184,10 @@ class _HeroStat extends StatelessWidget {
           children: [
             Text(
               value,
-              style: AppTextStyles.caption.copyWith(
+              style: AppTextStyles.numericCode.copyWith(
                 color: valueColor,
-                fontSize: 14,
-                fontWeight: AppTextStyles.bold,
-                fontFamily: 'monospace',
+                fontFeatures: AppTextStyles.tabularFigures,
+                height: 1,
               ),
             ),
             const SizedBox(height: 4),
@@ -203,7 +196,6 @@ class _HeroStat extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.onAccent.withValues(alpha: .45),
-                fontSize: 10,
               ),
             ),
           ],
@@ -300,7 +292,6 @@ class _TabButton extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: active ? AppColors.onAccent : AppColors.text3,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),

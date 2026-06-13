@@ -111,7 +111,7 @@ class _SummaryCard extends StatelessWidget {
           Text(
             'Tóm tắt cấu hình',
             style: AppTextStyles.baseMedium.copyWith(
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
             ),
           ),
           const SizedBox(height: 12),
@@ -182,7 +182,7 @@ class _ModeTile extends StatelessWidget {
                   _modeLabel(mode),
                   style: AppTextStyles.caption.copyWith(
                     color: selected ? _configurationPrimary : AppColors.text1,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
                 const SizedBox(height: 4),

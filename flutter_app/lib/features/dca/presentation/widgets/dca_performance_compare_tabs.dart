@@ -174,9 +174,10 @@ class _WinnerBanner extends StatelessWidget {
                       TextSpan(
                         text:
                             '${snapshot.advantagePercent.abs().toStringAsFixed(2)}%',
-                        style: TextStyle(
+                        style: AppTextStyles.caption.copyWith(
                           color: color,
                           fontWeight: AppTextStyles.bold,
+                          fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
                       const TextSpan(text: ' in this period'),

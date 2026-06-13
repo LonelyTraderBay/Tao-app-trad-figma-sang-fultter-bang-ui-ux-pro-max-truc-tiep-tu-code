@@ -400,7 +400,6 @@ class _TinyBadge extends StatelessWidget {
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 8,
           height: 1.2,
           fontWeight: bold ? AppTextStyles.bold : AppTextStyles.medium,
         ),

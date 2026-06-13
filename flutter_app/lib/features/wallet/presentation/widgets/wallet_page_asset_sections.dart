@@ -18,7 +18,7 @@ class WalletSegmentedTabs extends StatelessWidget {
       radius: VitCardRadius.md,
       height: AppSpacing.searchBarCompactHeight,
       padding: AppSpacing.cardPaddingCompact,
-      borderColor: AppColors.cardBorder,
+      borderColor: AppColors.borderSolid,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -31,11 +31,11 @@ class WalletSegmentedTabs extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: active == tab.$1
-                        ? _walletPrimary.withValues(alpha: .12)
+                        ? _walletPrimary.withValues(alpha: .16)
                         : AppColors.transparent,
                     border: active == tab.$1
                         ? Border.all(
-                            color: _walletPrimary.withValues(alpha: .20),
+                            color: _walletPrimary.withValues(alpha: .30),
                           )
                         : null,
                     borderRadius: AppRadii.smRadius,
@@ -46,6 +46,9 @@ class WalletSegmentedTabs extends StatelessWidget {
                       color: active == tab.$1
                           ? _walletPrimary
                           : AppColors.text3,
+                      fontWeight: active == tab.$1
+                          ? AppTextStyles.medium
+                          : AppTextStyles.normal,
                     ),
                   ),
                 ),
@@ -153,13 +156,6 @@ class WalletAssetHeader extends StatelessWidget {
           foreground: AppColors.text2,
           background: _walletPanel2,
           onTap: () => onNavigate('/wallet/address-book'),
-        ),
-        const SizedBox(width: AppSpacing.rowGap),
-        _HeaderButton(
-          label: 'Phân tích',
-          foreground: _walletPrimary,
-          background: _walletPrimary.withValues(alpha: .12),
-          onTap: () => onNavigate('/wallet/portfolio-analytics'),
         ),
       ],
     );

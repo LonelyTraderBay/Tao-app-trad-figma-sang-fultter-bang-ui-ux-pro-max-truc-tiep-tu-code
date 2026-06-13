@@ -268,8 +268,7 @@ class _RadarPainter extends CustomPainter {
         canvas,
         '$tick',
         offset,
-        AppColors.text3,
-        9,
+        AppTextStyles.chartLabelXs.copyWith(color: AppColors.text3),
         align: TextAlign.left,
       );
     }
@@ -288,7 +287,13 @@ class _RadarPainter extends CustomPainter {
         : math.cos(angle) < -.3
         ? TextAlign.right
         : TextAlign.center;
-    _drawText(canvas, label, labelPoint, AppColors.text2, 10, align: align);
+    _drawText(
+      canvas,
+      label,
+      labelPoint,
+      AppTextStyles.micro.copyWith(color: AppColors.text2),
+      align: align,
+    );
   }
 
   @override
@@ -325,8 +330,7 @@ class _TrendPainter extends CustomPainter {
         canvas,
         '$y',
         Offset(chart.left - 8, dy - 6),
-        AppColors.text3,
-        10,
+        AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         align: TextAlign.right,
       );
     }
@@ -340,8 +344,7 @@ class _TrendPainter extends CustomPainter {
         canvas,
         history[i].month,
         Offset(x, chart.bottom + 12),
-        AppColors.text3,
-        10,
+        AppTextStyles.micro.copyWith(color: AppColors.text3),
         align: TextAlign.center,
       );
     }
@@ -399,8 +402,7 @@ class _PiePainter extends CustomPainter {
         canvas,
         '${slice.value}%',
         labelPoint,
-        AppColors.onAccent,
-        10,
+        AppTextStyles.numericMicro.copyWith(color: AppColors.onAccent),
         align: TextAlign.center,
       );
       start += sweep;
@@ -416,15 +418,11 @@ void _drawText(
   Canvas canvas,
   String text,
   Offset offset,
-  Color color,
-  double fontSize, {
+  TextStyle style, {
   TextAlign align = TextAlign.center,
 }) {
   final painter = TextPainter(
-    text: TextSpan(
-      text: text,
-      style: TextStyle(color: color, height: 1),
-    ),
+    text: TextSpan(text: text, style: style.copyWith(height: 1)),
     textAlign: align,
     textDirection: TextDirection.ltr,
     maxLines: 1,

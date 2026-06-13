@@ -65,9 +65,8 @@ class _ValidationCard extends StatelessWidget {
           Expanded(
             child: Text(
               item.message,
-              style: AppTextStyles.caption.copyWith(
+              style: AppTextStyles.captionSm.copyWith(
                 color: color,
-                fontSize: 11,
                 height: 1.35,
               ),
             ),
@@ -167,7 +166,7 @@ class _RiskPill extends StatelessWidget {
           },
           style: AppTextStyles.micro.copyWith(
             color: color,
-            fontWeight: FontWeight.w800,
+            fontWeight: AppTextStyles.extraBold,
           ),
         ),
       ),

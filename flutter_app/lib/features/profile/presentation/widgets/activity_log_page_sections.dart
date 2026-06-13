@@ -77,10 +77,9 @@ class _SuspiciousBanner extends StatelessWidget {
                   'Ph\u00E1t hi\u1EC7n $count ho\u1EA1t \u0111\u1ED9ng \u0111\u00E1ng ng\u1EDD',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.caption.copyWith(
                     color: _activityAmber,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
                 ),
@@ -91,7 +90,6 @@ class _SuspiciousBanner extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: _activityAmber,
-                    fontSize: 11,
                     height: 1,
                   ),
                 ),
@@ -138,10 +136,9 @@ class _FilterChip extends StatelessWidget {
         alignment: Alignment.center,
         child: Text(
           filter.label,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: selected ? _activityPrimary : AppColors.text2,
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
+            fontWeight: AppTextStyles.bold,
             height: 1,
           ),
         ),
@@ -189,8 +186,7 @@ class _ActivityCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: AppTextStyles.bold,
                               height: 1,
                             ),
                           ),
@@ -206,7 +202,6 @@ class _ActivityCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        fontSize: 12,
                         height: 1,
                       ),
                     ),
@@ -232,7 +227,6 @@ class _ActivityCard extends StatelessWidget {
             log.timestamp,
             style: AppTextStyles.micro.copyWith(
               color: _activityMuted,
-              fontSize: 11,
               height: 1,
             ),
           ),
@@ -277,12 +271,11 @@ class _StatusPill extends StatelessWidget {
         borderRadius: BorderRadius.circular(4),
       ),
       alignment: Alignment.center,
-      child: Text(
+        child: Text(
         config.label,
-        style: AppTextStyles.micro.copyWith(
+        style: AppTextStyles.captionSm.copyWith(
           color: config.color,
-          fontSize: 12,
-          fontWeight: FontWeight.w700,
+          fontWeight: AppTextStyles.bold,
           height: 1,
         ),
       ),

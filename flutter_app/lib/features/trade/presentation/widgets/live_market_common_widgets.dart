@@ -34,7 +34,6 @@ class LiveMarketLiveDot extends StatelessWidget {
           'LIVE',
           style: AppTextStyles.micro.copyWith(
             color: liveMarketGreen,
-            fontSize: 10,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -73,7 +72,6 @@ class LiveMarketCardHeader extends StatelessWidget {
             title,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
-              fontSize: 15,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -84,7 +82,6 @@ class LiveMarketCardHeader extends StatelessWidget {
             trailing!,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           )
@@ -145,9 +142,7 @@ class LiveMarketMetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: color,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
-              fontFamily: 'monospace',
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
             ),
@@ -176,7 +171,6 @@ class LiveMarketChip extends StatelessWidget {
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 10,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -196,11 +190,7 @@ class LiveMarketMutedLabel extends StatelessWidget {
     return Text(
       text,
       textAlign: align,
-      style: AppTextStyles.micro.copyWith(
-        color: AppColors.text3,
-        fontSize: 10,
-        height: 1.25,
-      ),
+      style: AppTextStyles.micro.copyWith(color: AppColors.text3, height: 1.25),
     );
   }
 }
@@ -230,7 +220,6 @@ class LiveMarketInfoStrip extends StatelessWidget {
               'OI tang + gia tang = bullish strong. OI tang + gia giam = bearish momentum. OI giam = positions dong.',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
                 height: 1.42,
               ),
             ),

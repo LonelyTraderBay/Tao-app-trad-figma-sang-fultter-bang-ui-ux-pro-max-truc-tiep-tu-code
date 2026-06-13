@@ -30,10 +30,9 @@ class _ReportStatusBadge extends StatelessWidget {
         ),
         child: Text(
           status.name.toUpperCase(),
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.chartLabelTiny.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: AppSpacing.x3,
           ),
         ),
       ),

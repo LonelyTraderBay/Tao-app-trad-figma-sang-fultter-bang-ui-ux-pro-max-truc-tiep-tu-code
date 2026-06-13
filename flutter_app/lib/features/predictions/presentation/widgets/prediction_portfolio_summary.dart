@@ -245,27 +245,39 @@ class PredictionPortfolioSharesNote extends StatelessWidget {
           Expanded(
             child: Text.rich(
               TextSpan(
-                children: const [
-                  TextSpan(text: 'Shares'),
+                children: [
+                  const TextSpan(text: 'Shares'),
                   TextSpan(
                     text:
                         ' represent your stake in a market outcome. Each share pays ',
-                    style: TextStyle(fontWeight: FontWeight.w400),
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      fontWeight: AppTextStyles.normal,
+                    ),
                   ),
-                  TextSpan(text: '\$1.00'),
+                  const TextSpan(text: '\$1.00'),
                   TextSpan(
                     text: ' if correct, ',
-                    style: TextStyle(fontWeight: FontWeight.w400),
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      fontWeight: AppTextStyles.normal,
+                    ),
                   ),
-                  TextSpan(text: '\$0.00'),
+                  const TextSpan(text: '\$0.00'),
                   TextSpan(
                     text: ' if wrong. ',
-                    style: TextStyle(fontWeight: FontWeight.w400),
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      fontWeight: AppTextStyles.normal,
+                    ),
                   ),
-                  TextSpan(text: 'P/L'),
+                  const TextSpan(text: 'P/L'),
                   TextSpan(
                     text: ' = current value minus amount invested.',
-                    style: TextStyle(fontWeight: FontWeight.w400),
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      fontWeight: AppTextStyles.normal,
+                    ),
                   ),
                 ],
               ),

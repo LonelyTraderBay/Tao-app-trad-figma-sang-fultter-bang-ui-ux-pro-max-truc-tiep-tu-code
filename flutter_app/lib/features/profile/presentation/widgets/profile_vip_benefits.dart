@@ -65,7 +65,7 @@ class _BenefitTierCard extends StatelessWidget {
                           tier.name,
                           style: AppTextStyles.base.copyWith(
                             color: accent,
-                            fontWeight: FontWeight.w900,
+                            fontWeight: AppTextStyles.heavy,
                             height: 1,
                           ),
                         ),
@@ -205,10 +205,7 @@ class _BenefitMetric extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: AppTextStyles.micro.copyWith(color: _vipMuted, fontSize: 10),
-        ),
+        Text(label, style: AppTextStyles.micro.copyWith(color: _vipMuted)),
         const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
         Text(
           value,
@@ -216,7 +213,7 @@ class _BenefitMetric extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.caption.copyWith(
             color: active ? _vipSuccess : AppColors.text2,
-            fontWeight: FontWeight.w900,
+            fontWeight: AppTextStyles.heavy,
             fontFeatures: AppTextStyles.tabularFigures,
             height: 1,
           ),
@@ -263,7 +260,7 @@ class _UpgradeCta extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: AppTextStyles.heavy,
                     height: 1,
                   ),
                 ),
@@ -297,7 +294,7 @@ class _UpgradeCta extends StatelessWidget {
                 'Giao d\u1ECBch',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.onAccent,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: AppTextStyles.heavy,
                   height: 1,
                 ),
               ),

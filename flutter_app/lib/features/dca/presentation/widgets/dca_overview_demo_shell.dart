@@ -17,12 +17,7 @@ class _DemoSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          title,
-          style: AppTextStyles.sectionTitle.copyWith(
-            fontSize: AppSpacing.dcaOverviewSectionTitleFontSize,
-          ),
-        ),
+        Text(title, style: AppTextStyles.sectionTitleXs),
         const SizedBox(height: AppSpacing.x2),
         Text(
           description,
@@ -165,8 +160,7 @@ class _ValueRow extends StatelessWidget {
                   ? '••••••'
                   : '₫${_formatFullVnd(data.currentValueVnd)}',
               maxLines: 1,
-              style: AppTextStyles.heroNumber.copyWith(
-                fontSize: AppSpacing.dcaOverviewHeroFontSize,
+              style: AppTextStyles.numericDisplay2xl.copyWith(
                 fontWeight: AppTextStyles.heavy,
                 height: AppSpacing.dcaOverviewHeroLineHeight,
                 color: AppColors.text1,

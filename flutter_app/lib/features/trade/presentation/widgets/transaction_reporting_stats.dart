@@ -63,10 +63,8 @@ class TransactionReportingStatsTab extends StatelessWidget {
       children: [
         Text(
           'Reporting Statistics',
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.badge.copyWith(
             color: AppColors.text3,
-            fontSize: 11,
-            fontWeight: AppTextStyles.bold,
             height: 1,
           ),
         ),
@@ -169,18 +167,14 @@ class _StatCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1,
                   ),
                 ),
                 const SizedBox(height: 9),
                 Text(
                   value,
-                  style: AppTextStyles.sectionTitle.copyWith(
+                  style: AppTextStyles.amountSm.copyWith(
                     color: AppColors.text1,
-                    fontSize: 20,
-                    fontWeight: AppTextStyles.bold,
-                    fontFeatures: AppTextStyles.tabularFigures,
                     height: 1,
                   ),
                 ),
@@ -189,11 +183,7 @@ class _StatCard extends StatelessWidget {
                   caption,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: color,
-                    fontSize: 9,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: color, height: 1),
                 ),
               ],
             ),
@@ -226,9 +216,8 @@ class _StatColumn extends StatelessWidget {
       children: [
         Text(
           title,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.badge.copyWith(
             color: AppColors.text3,
-            fontSize: 11,
             height: 1,
           ),
         ),
@@ -241,20 +230,17 @@ class _StatColumn extends StatelessWidget {
                   row.$1,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1,
                   ),
                 ),
               ),
               Text(
                 row.$2,
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.numericCode.copyWith(
                   color: AppColors.text1,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
                   height: 1,
                 ),
               ),

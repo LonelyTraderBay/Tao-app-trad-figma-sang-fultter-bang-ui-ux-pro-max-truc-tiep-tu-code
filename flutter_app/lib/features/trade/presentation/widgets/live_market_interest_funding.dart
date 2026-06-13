@@ -30,19 +30,16 @@ class _FundingCard extends StatelessWidget {
               children: [
                 Text(
                   'Next funding in',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                   ),
                 ),
                 const Spacer(),
                 Text(
                   data.nextFundingLabel,
-                  style: AppTextStyles.baseMedium.copyWith(
+                  style: AppTextStyles.amountSm.copyWith(
                     color: liveMarketPrimary,
-                    fontSize: 18,
                     fontWeight: AppTextStyles.bold,
-                    fontFamily: 'monospace',
                     fontFeatures: AppTextStyles.tabularFigures,
                     height: 1,
                   ),

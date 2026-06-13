@@ -79,17 +79,13 @@ class _SummaryCard extends StatelessWidget {
                 Text(
                   label,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: AppSpacing.adminFontMd,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
                 Text(
                   value,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.sectionTitle.copyWith(
-                    fontSize: AppSpacing.adminFont3xl,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
@@ -112,7 +108,6 @@ class _SummaryCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: AppSpacing.adminFontSm,
                       ),
                     ),
                   ],
@@ -297,10 +292,9 @@ class _MiniStat extends StatelessWidget {
               Text(
                 value,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.numericCode.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  fontFamily: 'monospace',
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
@@ -343,10 +337,9 @@ class _VariantResult extends StatelessWidget {
               const SizedBox(width: AppSpacing.x3),
               Text(
                 variant.conversionRateLabel,
-                style: AppTextStyles.micro.copyWith(
+                style: AppTextStyles.numericMicro.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  fontFamily: 'monospace',
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),

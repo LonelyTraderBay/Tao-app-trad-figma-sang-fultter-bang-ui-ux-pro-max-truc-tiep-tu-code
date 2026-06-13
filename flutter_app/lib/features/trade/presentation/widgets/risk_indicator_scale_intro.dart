@@ -136,9 +136,12 @@ class _SriWarning extends StatelessWidget {
             child: Text.rich(
               TextSpan(
                 children: [
-                  const TextSpan(
+                  TextSpan(
                     text: 'SRI 6 - High Risk: ',
-                    style: TextStyle(fontWeight: AppTextStyles.bold),
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.warn,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
                   const TextSpan(
                     text:

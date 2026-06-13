@@ -9,10 +9,14 @@ class WalletUnavailableBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final displayMessage = message == 'read-only or local navigation action'
+        ? 'Một số thao tác ví đang ở chế độ xem trước'
+        : message;
+
     return VitBanner(
       variant: VitBannerVariant.warning,
       icon: Icons.lock_outline_rounded,
-      message: message,
+      message: displayMessage,
     );
   }
 }

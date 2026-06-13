@@ -38,7 +38,6 @@ class _IdentityHero extends StatelessWidget {
                   snapshot.heroTitle,
                   style: AppTextStyles.sectionTitle.copyWith(
                     color: AppModuleAccents.p2p,
-                    fontSize: 22,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),

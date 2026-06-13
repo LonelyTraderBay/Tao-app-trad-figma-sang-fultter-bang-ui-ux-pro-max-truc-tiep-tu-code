@@ -97,11 +97,10 @@ class TransactionReportingTabs extends StatelessWidget {
                           tab.$2,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
+                          style: AppTextStyles.navLabel.copyWith(
                             color: activeId == tab.$1
                                 ? AppColors.primary
                                 : AppColors.text3,
-                            fontSize: 11,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),

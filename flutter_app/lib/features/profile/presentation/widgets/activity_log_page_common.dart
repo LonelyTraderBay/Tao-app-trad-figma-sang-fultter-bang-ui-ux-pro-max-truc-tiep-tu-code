@@ -25,7 +25,6 @@ class _DetailBlock extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.micro.copyWith(
                   color: _activityMuted,
-                  fontSize: 10,
                   height: 1,
                 ),
               ),
@@ -39,8 +38,7 @@ class _DetailBlock extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text1,
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
+            fontWeight: AppTextStyles.bold,
             height: 1,
           ),
         ),
@@ -85,7 +83,6 @@ class _ActivityFooter extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                fontSize: 11,
                 height: 1.4,
               ),
             ),

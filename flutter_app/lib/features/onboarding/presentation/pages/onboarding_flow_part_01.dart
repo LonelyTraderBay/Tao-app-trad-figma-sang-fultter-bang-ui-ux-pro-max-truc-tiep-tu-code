@@ -51,10 +51,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
                 onPressed: () => _skip(snapshot),
                 child: Text(
                   snapshot.welcome.skipLabel,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 13,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ),
             ),
@@ -284,7 +281,7 @@ class _WelcomeStep extends StatelessWidget {
             Text(
               welcome.title,
               textAlign: TextAlign.center,
-              style: AppTextStyles.pageTitle.copyWith(fontSize: 28),
+              style: AppTextStyles.pageTitle,
             ),
             const SizedBox(height: AppSpacing.x3),
             Text(

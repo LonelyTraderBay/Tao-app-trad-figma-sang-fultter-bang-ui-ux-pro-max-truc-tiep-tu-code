@@ -30,10 +30,7 @@ class _SavingsHero extends StatelessWidget {
                     const SizedBox(height: AppSpacing.x1),
                     Text(
                       snapshot.totalDepositedUsd,
-                      style: AppTextStyles.sectionTitle.copyWith(
-                        fontSize: AppSpacing.savingsConsumerHeroAmountFontSize,
-                        fontFeatures: AppTextStyles.tabularFigures,
-                      ),
+                      style: AppTextStyles.numericDisplayMd,
                     ),
                     const SizedBox(height: AppSpacing.x2),
                     Row(
@@ -201,9 +198,8 @@ class _InsightList extends StatelessWidget {
                       ),
                       Text(
                         insight.subtitle,
-                        style: AppTextStyles.caption.copyWith(
+                        style: AppTextStyles.captionSm.copyWith(
                           color: AppColors.text3,
-                          fontSize: AppSpacing.savingsConsumerCaptionFontSize,
                         ),
                       ),
                     ],

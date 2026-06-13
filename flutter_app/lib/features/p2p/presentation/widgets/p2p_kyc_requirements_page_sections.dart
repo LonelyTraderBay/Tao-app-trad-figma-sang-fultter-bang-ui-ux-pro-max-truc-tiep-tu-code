@@ -40,7 +40,6 @@ class _KycHero extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.sectionTitle.copyWith(
                     color: AppModuleAccents.p2p,
-                    fontSize: 22,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -160,9 +159,8 @@ class _KycTierCard extends StatelessWidget {
                         children: [
                           Text(
                             'Tier ${tier.id}',
-                            style: AppTextStyles.sectionTitle.copyWith(
+                            style: AppTextStyles.pageTitle.copyWith(
                               color: color,
-                              fontSize: 24,
                               height: 1.05,
                             ),
                           ),

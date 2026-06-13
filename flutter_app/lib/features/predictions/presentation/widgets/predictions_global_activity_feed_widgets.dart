@@ -61,12 +61,7 @@ class _ActivityRow extends StatelessWidget {
                 color: AppColors.surface3,
                 shape: BoxShape.circle,
               ),
-              child: Text(
-                activity.avatar,
-                style: const TextStyle(
-                  fontSize: AppSpacing.predictionActivityAvatarText,
-                ),
-              ),
+              child: Text(activity.avatar, style: AppTextStyles.avatarMd),
             ),
             const SizedBox(width: AppSpacing.predictionActivityRowGap),
             Expanded(

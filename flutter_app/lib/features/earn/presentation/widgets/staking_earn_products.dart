@@ -83,10 +83,8 @@ class _ProductCard extends StatelessWidget {
                             '${product.lockLabel} - ${product.participants}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.caption.copyWith(
+                            style: AppTextStyles.captionSm.copyWith(
                               color: AppColors.text2,
-                              fontSize: AppSpacing
-                                  .stakingCommunityProductCaptionFontSize,
                             ),
                           ),
                         ),
@@ -101,10 +99,8 @@ class _ProductCard extends StatelessWidget {
                 children: [
                   Text(
                     product.apy,
-                    style: AppTextStyles.sectionTitle.copyWith(
+                    style: AppTextStyles.amountXs.copyWith(
                       color: AppColors.buy,
-                      fontSize: AppSpacing.stakingCommunityProductRateFontSize,
-                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
                   Text(

@@ -21,10 +21,9 @@ class LaunchpadRebalanceDeviationCard extends StatelessWidget {
         children: [
           Text(
             'Do lech phan bo',
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              fontSize: AppSpacing.launchpadFontLg,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -56,7 +55,6 @@ class _DeviationRow extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                fontSize: AppSpacing.launchpadFontSm,
               ),
             ),
           ),

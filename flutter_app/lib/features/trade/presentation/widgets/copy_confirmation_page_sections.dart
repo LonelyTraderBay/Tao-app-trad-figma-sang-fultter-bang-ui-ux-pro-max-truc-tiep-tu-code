@@ -28,7 +28,7 @@ class _CriticalWarning extends StatelessWidget {
                   'Cảnh báo rủi ro quan trọng',
                   style: AppTextStyles.baseMedium.copyWith(
                     color: _confirmationRed,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -36,7 +36,7 @@ class _CriticalWarning extends StatelessWidget {
                   'Copy Trading có rủi ro cao. Bạn có thể mất toàn bộ số tiền \$${snapshot.configuration.copyCapital.toStringAsFixed(0)} đã cam kết.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.sellSoft,
-                    fontSize: 12,
+
                     height: 1.45,
                   ),
                 ),
@@ -67,7 +67,7 @@ class _ProviderSummary extends StatelessWidget {
               provider.avatar,
               style: AppTextStyles.baseMedium.copyWith(
                 color: _confirmationPrimary,
-                fontWeight: FontWeight.w800,
+                fontWeight: AppTextStyles.extraBold,
               ),
             ),
           ),
@@ -84,16 +84,13 @@ class _ProviderSummary extends StatelessWidget {
                 Text(
                   provider.name,
                   style: AppTextStyles.baseMedium.copyWith(
-                    fontWeight: FontWeight.w800,
+                    fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   'ROI +${provider.totalPnlPct.toStringAsFixed(1)}% · Max DD ${provider.maxDrawdown.toStringAsFixed(1)}%',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 11,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -195,7 +192,7 @@ class _SuitabilityReviewCard extends StatelessWidget {
                 'Confirm this amount fits your risk tolerance, provider drawdown, and portfolio limit before cooling-off starts.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  fontSize: 12,
+
                   height: 1.45,
                 ),
               ),
@@ -320,7 +317,7 @@ class _MaxLossCard extends StatelessWidget {
             'Kịch bản mất vốn tối đa',
             style: AppTextStyles.caption.copyWith(
               color: _confirmationRed,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
             ),
           ),
           const SizedBox(height: 6),
@@ -328,7 +325,7 @@ class _MaxLossCard extends StatelessWidget {
             'Bạn có thể mất tối đa \$${snapshot.maxLossAmount.toStringAsFixed(0)} nếu provider gặp drawdown nghiêm trọng.',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.sellSoft,
-              fontSize: 12,
+
               height: 1.45,
             ),
           ),

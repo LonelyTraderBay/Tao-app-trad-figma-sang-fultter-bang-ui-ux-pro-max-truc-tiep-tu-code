@@ -158,9 +158,8 @@ class _Hero extends StatelessWidget {
                   snapshot.heroTitle,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.pageTitle.copyWith(
+                  style: AppTextStyles.sectionTitle.copyWith(
                     color: AppColors.primary,
-                    fontSize: 21,
                     height: 1.15,
                   ),
                 ),

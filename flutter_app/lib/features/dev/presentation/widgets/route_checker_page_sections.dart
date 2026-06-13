@@ -298,10 +298,9 @@ class _FeaturedBadge extends StatelessWidget {
         ),
         child: Text(
           'FEATURED',
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.chartLabelTiny.copyWith(
             color: AppColors.warn,
             fontWeight: AppTextStyles.bold,
-            fontSize: AppSpacing.x3,
           ),
         ),
       ),

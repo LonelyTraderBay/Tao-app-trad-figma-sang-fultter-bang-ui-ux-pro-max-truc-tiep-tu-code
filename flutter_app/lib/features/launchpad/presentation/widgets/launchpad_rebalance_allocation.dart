@@ -23,10 +23,9 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
         children: [
           Text(
             'Hien tai vs Muc tieu',
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              fontSize: AppSpacing.launchpadFontLg,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -74,9 +73,8 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
                     const SizedBox(width: AppSpacing.x1),
                     Text(
                       asset.symbol,
-                      style: AppTextStyles.micro.copyWith(
+                      style: AppTextStyles.chartLabelXs.copyWith(
                         color: AppColors.text3,
-                        fontSize: AppSpacing.launchpadFontXs,
                       ),
                     ),
                   ],
@@ -106,10 +104,7 @@ class _DonutBlock extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: AppSpacing.launchpadFontXs,
-          ),
+          style: AppTextStyles.chartLabelXs.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: AppSpacing.x2),
         SizedBox(

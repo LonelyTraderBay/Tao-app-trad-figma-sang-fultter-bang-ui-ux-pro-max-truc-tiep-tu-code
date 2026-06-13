@@ -41,9 +41,8 @@ class _TierChip extends StatelessWidget {
           const SizedBox(height: AppSpacing.x1),
           Text(
             '+${_formatApy(tier.apyBonus)}%',
-            style: AppTextStyles.micro.copyWith(
+            style: AppTextStyles.chartLabelXs.copyWith(
               color: AppColors.text2,
-              fontSize: AppSpacing.launchpadFontXs,
               height: AppSpacing.launchpadLineHeightTight,
             ),
           ),

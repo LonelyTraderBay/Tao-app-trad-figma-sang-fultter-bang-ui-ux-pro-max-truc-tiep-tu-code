@@ -79,10 +79,7 @@ class _SecurityScoreCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Security Score',
-                      style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
-                    ),
+                    Text('Security Score', style: AppTextStyles.sectionTitle),
                     const SizedBox(height: AppSpacing.x2),
                     Text(
                       snapshot.scoreSubtitle,
@@ -125,7 +122,6 @@ class _SecurityScoreCard extends StatelessWidget {
                         '${snapshot.score}',
                         style: AppTextStyles.heroNumber.copyWith(
                           color: AppColors.buy,
-                          fontSize: 32,
                           height: 1,
                         ),
                       ),

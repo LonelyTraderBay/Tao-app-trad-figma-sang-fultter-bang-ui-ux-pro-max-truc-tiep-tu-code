@@ -200,9 +200,8 @@ class _MetricCard extends StatelessWidget {
                       Text(
                         title,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.micro.copyWith(
+                        style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          fontSize: AppSpacing.adminFontMd,
                         ),
                       ),
                       Text(
@@ -210,7 +209,6 @@ class _MetricCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.sectionTitle.copyWith(
-                          fontSize: AppSpacing.adminFont3xl,
                           fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
@@ -224,10 +222,7 @@ class _MetricCard extends StatelessWidget {
               caption,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: AppSpacing.adminFontMd,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
             ),
             const SizedBox(height: AppSpacing.x2),
             Wrap(
@@ -246,10 +241,7 @@ class _MetricCard extends StatelessWidget {
                   timeframe,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: AppSpacing.adminFontSm,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),

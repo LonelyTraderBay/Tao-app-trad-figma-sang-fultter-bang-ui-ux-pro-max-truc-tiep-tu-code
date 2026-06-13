@@ -68,16 +68,15 @@ class _SummaryCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
           const SizedBox(height: 10),
           Text(
             value,
-            style: AppTextStyles.heroNumber.copyWith(
+            style: AppTextStyles.sectionTitle.copyWith(
               color: AppColors.text1,
-              fontSize: 21,
+              fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
             ),
           ),
@@ -86,11 +85,7 @@ class _SummaryCard extends StatelessWidget {
             caption,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: captionColor,
-              fontSize: 9,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: captionColor, height: 1),
           ),
         ],
       ),
@@ -129,7 +124,6 @@ class _Tabs extends StatelessWidget {
                             color: activeId == tab.$1
                                 ? _cassPrimary
                                 : AppColors.text3,
-                            fontSize: 12,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),

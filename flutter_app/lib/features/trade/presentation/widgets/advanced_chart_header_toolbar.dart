@@ -56,9 +56,7 @@ class _AdvancedHeader extends StatelessWidget {
                     pair.baseAsset.substring(0, 3),
                     style: AppTextStyles.micro.copyWith(
                       color: logoColor,
-                      fontSize: 8,
                       fontWeight: AppTextStyles.bold,
-                      height: 1,
                     ),
                   ),
                 ),
@@ -92,11 +90,8 @@ class _AdvancedHeader extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: changeColor,
-                    fontSize: 15,
-                    fontFamily: 'monospace',
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
                     fontFeatures: AppTextStyles.tabularFigures,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -104,9 +99,7 @@ class _AdvancedHeader extends StatelessWidget {
                   _formatPercent(pair.changePct),
                   style: AppTextStyles.micro.copyWith(
                     color: changeColor,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.medium,
-                    height: 1,
                   ),
                 ),
               ],
@@ -142,10 +135,8 @@ class _OhlcvBar extends StatelessWidget {
                 'Mới nhất',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.sell,
-                  fontSize: 11,
-                  fontFamily: 'monospace',
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
               const SizedBox(width: 12),
@@ -194,18 +185,16 @@ class _OhlcvToken extends StatelessWidget {
         text: TextSpan(
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
-            fontFamily: 'monospace',
-            height: 1,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
           children: [
             TextSpan(
               text: '$label:',
-              style: const TextStyle(color: AppColors.text2),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
             ),
             TextSpan(
               text: value,
-              style: TextStyle(color: valueColor),
+              style: AppTextStyles.micro.copyWith(color: valueColor),
             ),
           ],
         ),
@@ -310,9 +299,8 @@ class _ChartToolbar extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: AppTextStyles.micro.copyWith(
                             color: _tradePrimary,
-                            fontSize: 11,
                             fontWeight: AppTextStyles.medium,
-                            height: 1.1,
+                            fontFeatures: AppTextStyles.tabularFigures,
                           ),
                         ),
                       ),
@@ -357,9 +345,8 @@ class _TimeframeButton extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: active ? AppColors.onAccent : AppColors.text3,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
       ),

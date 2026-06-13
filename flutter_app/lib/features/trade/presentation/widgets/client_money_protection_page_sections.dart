@@ -237,9 +237,12 @@ class _Overview extends StatelessWidget {
                               height: 1.35,
                             ),
                             children: [
-                              const TextSpan(
+                              TextSpan(
                                 text: 'Client Money Protection: ',
-                                style: TextStyle(fontWeight: FontWeight.w700),
+                                style: AppTextStyles.micro.copyWith(
+                                  color: AppColors.text1,
+                                  fontWeight: AppTextStyles.bold,
+                                ),
                               ),
                               TextSpan(text: snapshot.insolvencySummary),
                             ],

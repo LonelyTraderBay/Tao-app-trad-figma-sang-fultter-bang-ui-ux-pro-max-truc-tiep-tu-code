@@ -200,9 +200,8 @@ class _AdvancedTradeChartPainter extends CustomPainter {
     final tp = TextPainter(
       text: TextSpan(
         text: 'VOL',
-        style: AppTextStyles.micro.copyWith(
+        style: AppTextStyles.chartLabelXs.copyWith(
           color: AppColors.sell,
-          fontSize: 9,
           height: 1,
         ),
       ),

@@ -185,7 +185,7 @@ class _ResendControl extends StatelessWidget {
               children: [
                 TextSpan(
                   text: timer,
-                  style: const TextStyle(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
                   ),

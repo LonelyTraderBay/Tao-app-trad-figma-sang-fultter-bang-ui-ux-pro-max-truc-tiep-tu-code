@@ -41,7 +41,6 @@ class _BotCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.body.copyWith(
                               fontWeight: AppTextStyles.bold,
-                              fontSize: 14,
                             ),
                           ),
                         ),
@@ -75,7 +74,6 @@ class _BotCard extends StatelessWidget {
                           running ? 'Đang chạy' : 'Tạm dừng',
                           style: AppTextStyles.caption.copyWith(
                             color: running ? AppColors.buy : AppColors.warn,
-                            fontSize: 12,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),
@@ -87,7 +85,6 @@ class _BotCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text3,
-                              fontSize: 12,
                               height: 1,
                             ),
                           ),
@@ -105,16 +102,14 @@ class _BotCard extends StatelessWidget {
                     _formatSignedMoney(bot.profit),
                     style: AppTextStyles.caption.copyWith(
                       color: profitColor,
-                      fontSize: 14,
                       fontWeight: AppTextStyles.bold,
-                      fontFamily: 'monospace',
+                      fontFeatures: AppTextStyles.tabularFigures
                     ),
                   ),
                   Text(
                     _formatSignedPct(bot.profitPct),
                     style: AppTextStyles.caption.copyWith(
                       color: profitColor,
-                      fontSize: 12,
                       height: 1.15,
                     ),
                   ),
@@ -220,7 +215,6 @@ class _PairBadge extends StatelessWidget {
         pair,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 11,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -253,7 +247,6 @@ class _BotMiniStat extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
               ),
             ),
             const SizedBox(height: 3),
@@ -261,7 +254,6 @@ class _BotMiniStat extends StatelessWidget {
               value,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
@@ -315,7 +307,6 @@ class _BotActionButton extends StatelessWidget {
                   label,
                   style: AppTextStyles.caption.copyWith(
                     color: color,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -440,10 +431,12 @@ class _StrategyStat extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            Text(label, style: AppTextStyles.micro.copyWith(fontSize: 10)),
+            Text(label, style: AppTextStyles.micro),
           ],
         ),
       ),
     );
   }
 }
+
+

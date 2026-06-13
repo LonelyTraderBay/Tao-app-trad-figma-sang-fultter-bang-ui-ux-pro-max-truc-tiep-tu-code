@@ -200,10 +200,7 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'Chọn loại Crypto',
-                  style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
-                ),
+                Text('Chọn loại Crypto', style: AppTextStyles.sectionTitleSm),
                 const SizedBox(height: 12),
                 for (final option in snapshot.cryptoOptions)
                   BuyCryptoOptionRow(

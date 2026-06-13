@@ -34,10 +34,8 @@ class TransactionReportingComplianceNotice extends StatelessWidget {
               children: [
                 Text(
                   'MiFID II Article 26 Compliance',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.badge.copyWith(
                     color: transactionReportPrimary,
-                    fontSize: 11,
-                    fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
                 ),
@@ -46,7 +44,6 @@ class TransactionReportingComplianceNotice extends StatelessWidget {
                   'All transactions must be reported to ARM within T+1. Reports include 65+ RTS 22 fields. Auto-submission enabled.',
                   style: AppTextStyles.micro.copyWith(
                     color: transactionReportPrimary,
-                    fontSize: 10,
                     height: 1.4,
                   ),
                 ),
@@ -102,9 +99,8 @@ class TransactionReportingNoticePanel extends StatelessWidget {
               Expanded(
                 child: Text(
                   text,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
                   ),
                 ),
               ),

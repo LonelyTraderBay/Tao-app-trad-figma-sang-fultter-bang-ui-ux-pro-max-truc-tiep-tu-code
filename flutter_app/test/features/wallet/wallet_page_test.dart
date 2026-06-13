@@ -94,13 +94,24 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Ví tài sản'), findsOneWidget);
+    expect(
+      find.text('Một số thao tác ví đang ở chế độ xem trước'),
+      findsOneWidget,
+    );
     expect(find.text('\$57,664.00'), findsOneWidget);
     expect(find.text('Nạp'), findsOneWidget);
     expect(find.text('Mua định kỳ (DCA)'), findsOneWidget);
+    expect(find.text('Tài sản'), findsOneWidget);
+    expect(find.text('Công cụ ví'), findsOneWidget);
     expect(find.text('Danh sách'), findsOneWidget);
     expect(find.text('Tìm tài sản...'), findsOneWidget);
     expect(find.text('13 tài sản'), findsOneWidget);
     expect(find.text('USDT'), findsOneWidget);
+    expect(find.byKey(WalletPage.actionKey('deposit')), findsOneWidget);
+    expect(find.byKey(WalletPage.actionKey('withdraw')), findsOneWidget);
+    expect(find.byKey(WalletPage.actionKey('buy')), findsOneWidget);
+    expect(find.byKey(WalletPage.actionKey('transfer')), findsOneWidget);
+    expect(find.byKey(WalletPage.actionKey('history')), findsOneWidget);
   });
 
   testWidgets('SC-135 production wallet without backend fails closed in UI', (
@@ -144,11 +155,31 @@ void main() {
 
     await tester.tap(find.byKey(WalletPage.tabKey('chart')));
     await tester.pumpAndSettle();
-    expect(find.text('Phân bổ'), findsOneWidget);
+    expect(find.text('Phân bổ'), findsWidgets);
     expect(find.text('BTC'), findsWidgets);
 
     await tester.tap(find.byKey(WalletPage.actionKey('history')));
     await tester.pumpAndSettle();
     expect(find.text('Lịch sử giao dịch'), findsOneWidget);
+  });
+
+  testWidgets('SC-135 wallet actions keep their routes after redesign', (
+    tester,
+  ) async {
+    final cases = [
+      (WalletPage.actionKey('deposit'), 'Nạp USDT'),
+      (WalletPage.actionKey('withdraw'), 'Rút USDT'),
+      (WalletPage.actionKey('buy'), 'Mua Crypto'),
+      (WalletPage.actionKey('transfer'), 'Chuyển nội bộ'),
+      (WalletPage.actionKey('history'), 'Lịch sử giao dịch'),
+    ];
+
+    for (final testCase in cases) {
+      await pumpWallet(tester);
+      await tester.ensureVisible(find.byKey(testCase.$1));
+      await tester.tap(find.byKey(testCase.$1));
+      await tester.pumpAndSettle();
+      expect(find.text(testCase.$2), findsOneWidget);
+    }
   });
 }

@@ -26,7 +26,7 @@ class _AnalysisHeader extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Enterprise Fintech Card Analysis',
-                  style: AppTextStyles.sectionTitle.copyWith(fontSize: 19),
+                  style: AppTextStyles.sectionTitleSm,
                 ),
               ),
             ],

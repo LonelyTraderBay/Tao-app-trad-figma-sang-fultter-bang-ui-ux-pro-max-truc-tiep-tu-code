@@ -32,8 +32,7 @@ class _UnreadSummary extends StatelessWidget {
               '$unreadCount thông báo chưa đọc',
               style: AppTextStyles.caption.copyWith(
                 color: _notificationPrimary,
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
           ),
@@ -51,8 +50,7 @@ class _UnreadSummary extends StatelessWidget {
                 color: _notificationPrimary,
                 decoration: TextDecoration.underline,
                 decorationColor: _notificationPrimary,
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
           ),
@@ -131,9 +129,7 @@ class _FilterPill extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(
             color: active ? _notificationPrimary : _notificationMuted,
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
-            height: 1.15,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ),
@@ -206,11 +202,9 @@ class _NotificationCard extends StatelessWidget {
                           child: Text(
                             notification.title,
                             style: AppTextStyles.baseMedium.copyWith(
-                              fontSize: 14,
                               fontWeight: read
-                                  ? FontWeight.w700
-                                  : FontWeight.w800,
-                              height: 1.2,
+                                  ? AppTextStyles.bold
+                                  : AppTextStyles.extraBold,
                             ),
                           ),
                         ),
@@ -233,8 +227,7 @@ class _NotificationCard extends StatelessWidget {
                       notification.message,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        fontSize: 12,
-                        height: 1.42,
+                        fontWeight: AppTextStyles.normal,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -259,8 +252,7 @@ class _NotificationCard extends StatelessWidget {
                               color: notification.pnl! >= 0
                                   ? AppColors.buy
                                   : AppColors.sell,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: AppTextStyles.extraBold,
                             ),
                           ),
                       ],
@@ -295,10 +287,7 @@ class _MetaItem extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text3,
-            fontSize: 10,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
       ],
     );
@@ -324,8 +313,7 @@ class _PairChip extends StatelessWidget {
         '$side ${notification.pair}',
         style: AppTextStyles.caption.copyWith(
           color: color,
-          fontSize: 10,
-          fontWeight: FontWeight.w800,
+          fontWeight: AppTextStyles.extraBold,
         ),
       ),
     );

@@ -96,14 +96,13 @@ class _SummaryMetric extends StatelessWidget {
           value,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
-            color: color,
-            fontSize: small ? 14 : 16,
-            fontFamily: 'monospace',
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-            fontFeatures: AppTextStyles.tabularFigures,
-          ),
+          style: (small ? AppTextStyles.body : AppTextStyles.baseMedium)
+              .copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+                height: 1,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
         ),
       ],
     );
@@ -134,9 +133,8 @@ class _Section extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               title,
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.captionSm.copyWith(
                 color: AppColors.textMutedLight,
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),

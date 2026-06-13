@@ -261,9 +261,8 @@ class _ProductPerformanceCard extends StatelessWidget {
                 children: [
                   Text(
                     '+${product.roi.toStringAsFixed(2)}%',
-                    style: AppTextStyles.baseMedium.copyWith(
+                    style: AppTextStyles.sectionTitleSm.copyWith(
                       color: AppColors.buy,
-                      fontSize: AppSpacing.earnAnalyticsRoiFontSize,
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),

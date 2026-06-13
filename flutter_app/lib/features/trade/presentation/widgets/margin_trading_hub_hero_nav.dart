@@ -37,9 +37,7 @@ class _HeroCard extends StatelessWidget {
                       'Margin Trading Suite',
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: AppColors.onAccent,
-                        fontSize: 24,
                         fontWeight: AppTextStyles.bold,
-                        height: 1.16,
                       ),
                     ),
                     const SizedBox(height: 7),
@@ -47,9 +45,7 @@ class _HeroCard extends StatelessWidget {
                       'Margin tools with leverage limits and compliance checks',
                       style: AppTextStyles.body.copyWith(
                         color: AppColors.onAccent.withValues(alpha: .72),
-                        fontSize: 14,
                         fontWeight: AppTextStyles.medium,
-                        height: 1.35,
                       ),
                     ),
                   ],
@@ -94,13 +90,9 @@ class _HeroStat extends StatelessWidget {
             stat.value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.baseMedium.copyWith(
+            style: AppTextStyles.amountSm.copyWith(
               color: color,
-              fontSize: 18,
               fontWeight: AppTextStyles.bold,
-              fontFamily: 'monospace',
-              fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
             ),
           ),
           const SizedBox(height: 10),
@@ -111,7 +103,6 @@ class _HeroStat extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.onAccent.withValues(alpha: .62),
-              fontSize: 10,
               fontWeight: AppTextStyles.bold,
               height: 1.2,
             ),
@@ -145,9 +136,7 @@ class _NavigationCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.sectionTitle.copyWith(
                     color: AppColors.text1,
-                    fontSize: 22,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
               ),
@@ -156,11 +145,7 @@ class _NavigationCard extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             'Margin trading controls with risk limits, liquidation context, fee disclosure, and market intelligence.',
-            style: AppTextStyles.body.copyWith(
-              color: AppColors.text3,
-              fontSize: 14,
-              height: 1.55,
-            ),
+            style: AppTextStyles.body.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: 17),
           for (final item in items) ...[
@@ -217,9 +202,7 @@ class _MenuItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.body.copyWith(
                             color: AppColors.text1,
-                            fontSize: 14,
                             fontWeight: AppTextStyles.bold,
-                            height: 1.1,
                           ),
                         ),
                       ),
@@ -234,8 +217,6 @@ class _MenuItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      fontSize: 12,
-                      height: 1.35,
                     ),
                   ),
                 ],

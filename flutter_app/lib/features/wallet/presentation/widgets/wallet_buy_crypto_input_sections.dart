@@ -50,14 +50,7 @@ class BuyInputContent extends StatelessWidget {
           onCryptoTap: onCryptoTap,
         ),
         const SizedBox(height: 19),
-        Text(
-          'Phương thức thanh toán',
-          style: AppTextStyles.baseMedium.copyWith(
-            fontSize: 15,
-            fontWeight: FontWeight.w800,
-            height: 1,
-          ),
-        ),
+        Text('Phương thức thanh toán', style: AppTextStyles.baseMedium),
         const SizedBox(height: 18),
         _PaymentMethodGroup(
           icon: Icons.account_balance_rounded,
@@ -115,20 +108,12 @@ class _ZeroFeeBanner extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                fontSize: 12,
                 height: 1.45,
               ),
             ),
           ),
           const SizedBox(width: 10),
-          Text(
-            '0% phí',
-            style: AppTextStyles.micro.copyWith(
-              color: _buyGreen,
-              fontSize: 11,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
+          Text('0% phí', style: AppTextStyles.badge.copyWith(color: _buyGreen)),
         ],
       ),
     );
@@ -174,19 +159,14 @@ class _AmountCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Số tiền (VND)',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 13,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ),
               Text(
                 'Số dư: 0 VND',
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.captionSm.copyWith(
                   color: AppColors.text3,
-                  fontSize: 12,
-                  height: 1,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],
@@ -196,11 +176,7 @@ class _AmountCard extends StatelessWidget {
             children: [
               Text(
                 '₫',
-                style: AppTextStyles.sectionTitle.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: AppTextStyles.amountSm.copyWith(color: AppColors.text3),
               ),
               const SizedBox(width: 10),
               Expanded(
@@ -210,17 +186,17 @@ class _AmountCard extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   onChanged: (_) => onAmountChanged(),
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w800,
+                  style: AppTextStyles.amountMd.copyWith(
+                    color: AppColors.text1,
+                    fontFeatures: AppTextStyles.tabularFigures,
                     height: 1,
                   ),
                   decoration: InputDecoration(
                     hintText: '0',
-                    hintStyle: AppTextStyles.sectionTitle.copyWith(
+                    hintStyle: AppTextStyles.amountMd.copyWith(
                       color: AppColors.text2,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w800,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                      height: 1,
                     ),
                     border: InputBorder.none,
                     isCollapsed: true,
@@ -288,11 +264,8 @@ class _PresetChip extends StatelessWidget {
         ),
         child: Text(
           '${amount ~/ 1000}K',
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.badge.copyWith(
             color: selected ? AppColors.onAccent : AppColors.text2,
-            fontSize: 12,
-            fontWeight: FontWeight.w800,
-            height: 1,
           ),
         ),
       ),
@@ -329,20 +302,15 @@ class _ReceivePanel extends StatelessWidget {
               children: [
                 Text(
                   'Bạn sẽ nhận được',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 11,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   '${_formatCrypto(receiveAmount)} ${crypto.symbol}',
-                  style: AppTextStyles.baseMedium.copyWith(
+                  style: AppTextStyles.base.copyWith(
                     color: _buyGreen,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w800,
-                    height: 1,
+                    height: 1.1,
+                    fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
               ],
@@ -366,9 +334,8 @@ class _ReceivePanel extends StatelessWidget {
                   const SizedBox(width: 10),
                   Text(
                     crypto.symbol,
-                    style: AppTextStyles.caption.copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800,
+                    style: AppTextStyles.body.copyWith(
+                      fontWeight: AppTextStyles.medium,
                     ),
                   ),
                   const SizedBox(width: 7),

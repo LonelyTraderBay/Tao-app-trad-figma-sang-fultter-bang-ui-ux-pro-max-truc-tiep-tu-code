@@ -117,7 +117,6 @@ class MarketHeatmapSelectedCoinCard extends StatelessWidget {
                       '${coin.symbol}/USDT · ${coin.category}',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        fontSize: 12,
                         height: 1,
                       ),
                     ),

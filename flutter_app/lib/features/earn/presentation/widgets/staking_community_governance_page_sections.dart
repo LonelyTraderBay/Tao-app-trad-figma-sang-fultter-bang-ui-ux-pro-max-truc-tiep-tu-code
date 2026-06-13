@@ -102,10 +102,8 @@ class _StatTile extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           Text(
             stat.value,
-            style: AppTextStyles.sectionTitle.copyWith(
+            style: AppTextStyles.amountXs.copyWith(
               color: stat.tone == 'neutral' ? AppColors.text1 : color,
-              fontSize: AppSpacing.stakingGovernanceStatFontSize,
-              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
           Text(

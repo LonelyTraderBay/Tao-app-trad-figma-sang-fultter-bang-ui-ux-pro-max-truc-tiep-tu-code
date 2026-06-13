@@ -120,18 +120,12 @@ class _StrategyCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Next: ${strategy.nextBuy}',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: AppSpacing.launchpadFontSm,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
               Text(
                 '${strategy.executedOrders} orders - \$${strategy.amount.toStringAsFixed(0)}/order',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: AppSpacing.launchpadFontSm,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -253,10 +247,7 @@ class _MetricBlock extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: AppSpacing.launchpadFontSm,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: AppSpacing.x1),
         Text(
@@ -332,10 +323,9 @@ class _StatusPill extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
         child: Text(
           status.name.toUpperCase(),
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.chartLabelTiny.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: AppSpacing.launchpadFontXxs,
             height: AppSpacing.launchpadLineHeightTight,
           ),
         ),

@@ -197,9 +197,8 @@ class _PortfolioHero extends StatelessWidget {
           const SizedBox(height: AppSpacing.x2),
           Text(
             balance,
-            style: AppTextStyles.heroNumber.copyWith(
+            style: AppTextStyles.numericDisplayLg.copyWith(
               color: AppColors.text1,
-              fontSize: AppSpacing.savingsPortfolioHeroFontSize,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),

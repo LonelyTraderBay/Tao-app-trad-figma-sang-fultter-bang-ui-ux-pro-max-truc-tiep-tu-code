@@ -16,6 +16,9 @@ class _ChoiceChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final labelStyle = height < 32
+        ? AppTextStyles.badge
+        : AppTextStyles.captionSm;
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(height / 2),
@@ -35,9 +38,8 @@ class _ChoiceChipButton extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
+          style: labelStyle.copyWith(
             color: active ? _tradePrimary : AppColors.textMutedLight,
-            fontSize: height < 32 ? 11 : 12,
             fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
             height: 1,
           ),
@@ -70,7 +72,6 @@ class _SettingRow extends StatelessWidget {
                 label,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.bold,
                   height: 1.25,
                 ),
@@ -81,9 +82,8 @@ class _SettingRow extends StatelessWidget {
                   description!,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.navLabel.copyWith(
                     color: AppColors.text3,
-                    fontSize: 11,
                     height: 1.25,
                   ),
                 ),

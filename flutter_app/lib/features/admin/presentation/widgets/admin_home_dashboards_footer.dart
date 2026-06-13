@@ -80,10 +80,9 @@ class _DashboardCard extends StatelessWidget {
             dashboard.stat,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.numericCode.copyWith(
               color: accent,
               fontWeight: AppTextStyles.bold,
-              fontFamily: 'monospace',
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -118,10 +117,7 @@ class _FooterCard extends StatelessWidget {
           Text(
             'Last updated: ${snapshot.adminMetrics.footerUpdatedLabel}',
             textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: AppSpacing.adminFontSm,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),

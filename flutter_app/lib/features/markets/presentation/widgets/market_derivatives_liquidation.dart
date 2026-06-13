@@ -39,7 +39,7 @@ class MarketDerivativesLiquidationSummary extends StatelessWidget {
               stats.totalLiquidations24h,
               prefix: r'$',
             ),
-            style: AppTextStyles.heroNumber.copyWith(fontSize: 30),
+            style: AppTextStyles.amountMd,
           ),
           const SizedBox(height: 14),
           MarketDerivativesSplitBar(

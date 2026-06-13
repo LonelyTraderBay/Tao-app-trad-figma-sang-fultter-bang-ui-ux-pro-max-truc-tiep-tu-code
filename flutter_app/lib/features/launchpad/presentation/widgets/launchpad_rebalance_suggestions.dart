@@ -78,10 +78,9 @@ class _SuggestionCard extends StatelessWidget {
                             children: [
                               Text(
                                 suggestion.asset.symbol,
-                                style: AppTextStyles.caption.copyWith(
+                                style: AppTextStyles.captionSm.copyWith(
                                   color: AppColors.text1,
                                   fontWeight: AppTextStyles.bold,
-                                  fontSize: AppSpacing.launchpadFontLg,
                                 ),
                               ),
                               _ActionPill(
@@ -97,7 +96,6 @@ class _SuggestionCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              fontSize: AppSpacing.launchpadFontSm,
                             ),
                           ),
                         ],
@@ -109,17 +107,15 @@ class _SuggestionCard extends StatelessWidget {
                         children: [
                           Text(
                             '\$${suggestion.suggestedValue.toStringAsFixed(0)}',
-                            style: AppTextStyles.caption.copyWith(
+                            style: AppTextStyles.captionSm.copyWith(
                               color: color,
                               fontWeight: AppTextStyles.bold,
-                              fontSize: AppSpacing.launchpadFontLg,
                             ),
                           ),
                           Text(
                             '${launchpadRebalanceAmount(suggestion.suggestedAmount)} ${suggestion.asset.symbol}',
-                            style: AppTextStyles.micro.copyWith(
+                            style: AppTextStyles.chartLabelXs.copyWith(
                               color: AppColors.text3,
-                              fontSize: AppSpacing.launchpadFontXs,
                             ),
                           ),
                         ],
@@ -187,10 +183,9 @@ class _ActionPill extends StatelessWidget {
             const SizedBox(width: AppSpacing.launchpadGapXs),
             Text(
               launchpadRebalanceActionLabel(action),
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.chartLabelXs.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                fontSize: AppSpacing.launchpadFontXs,
                 height: AppSpacing.launchpadLineHeightTight,
               ),
             ),

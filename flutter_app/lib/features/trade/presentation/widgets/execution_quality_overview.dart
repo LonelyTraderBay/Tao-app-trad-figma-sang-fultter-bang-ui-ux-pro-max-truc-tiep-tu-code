@@ -37,7 +37,6 @@ class ExecutionQualityIntroCard extends StatelessWidget {
                   '3 công cụ đảm bảo execution tối ưu: bảo vệ khỏi slippage xấu, transparency về routing, và modify orders không mất queue position.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
                     height: 1.55,
                   ),
                 ),
@@ -84,7 +83,6 @@ class ExecutionQualityFeatureCard extends StatelessWidget {
                   Text(
                     feature.title,
                     style: AppTextStyles.caption.copyWith(
-                      fontSize: 14,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -93,7 +91,6 @@ class ExecutionQualityFeatureCard extends StatelessWidget {
                     feature.description,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      fontSize: 12,
                       height: 1.5,
                     ),
                   ),
@@ -152,7 +149,6 @@ class ExecutionQualityBenefitsCard extends StatelessWidget {
           Text(
             'Execution Quality Improvements',
             style: AppTextStyles.caption.copyWith(
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -181,7 +177,6 @@ class ExecutionQualityProgressCard extends StatelessWidget {
           Text(
             'Phase 2 Progress',
             style: AppTextStyles.caption.copyWith(
-              fontSize: 14,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -194,7 +189,6 @@ class ExecutionQualityProgressCard extends StatelessWidget {
                     item.label,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      fontSize: 12,
                     ),
                   ),
                 ),
@@ -233,7 +227,6 @@ class ExecutionQualityParityCard extends StatelessWidget {
                   'Tier-1 Exchange Parity Achieved',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.buy,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -242,7 +235,6 @@ class ExecutionQualityParityCard extends StatelessWidget {
                   'Phase 1 + Phase 2 = 100% feature parity với Binance/Coinbase Pro cho execution quality. Order amendment + slippage protection là standard features trên các sàn hàng đầu.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
                     height: 1.5,
                   ),
                 ),
@@ -282,7 +274,6 @@ class _BenefitItem extends StatelessWidget {
                 title,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.medium,
                 ),
               ),
@@ -291,7 +282,6 @@ class _BenefitItem extends StatelessWidget {
                 description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 11,
                   height: 1.35,
                 ),
               ),
@@ -302,3 +292,5 @@ class _BenefitItem extends StatelessWidget {
     );
   }
 }
+
+

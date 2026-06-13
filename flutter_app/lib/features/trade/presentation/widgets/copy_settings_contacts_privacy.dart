@@ -36,7 +36,6 @@ class _EmergencyContactCard extends StatelessWidget {
                   'Người liên hệ khẩn cấp sẽ được thông báo nếu tài khoản của bạn có hoạt động bất thường hoặc kích hoạt circuit breaker.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.warn,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.medium,
                     height: 1.45,
                   ),
@@ -152,8 +151,7 @@ class _PrivacyCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 9,
-                    height: 1.35,
+                    height: 1.2,
                   ),
                 ),
               ],
@@ -211,9 +209,8 @@ class _SettingsCard extends StatelessWidget {
 }
 
 TextStyle _cardTitleStyle() {
-  return AppTextStyles.caption.copyWith(
+  return AppTextStyles.captionSm.copyWith(
     color: AppColors.text1,
-    fontSize: 12,
     fontWeight: AppTextStyles.bold,
     height: 1.15,
   );

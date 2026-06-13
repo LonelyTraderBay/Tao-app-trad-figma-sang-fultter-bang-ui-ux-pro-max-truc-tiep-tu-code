@@ -97,10 +97,9 @@ class _StrategyCard extends StatelessWidget {
             strategy.name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
+            style: AppTextStyles.caption.copyWith(
               color: active ? strategy.accent : AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              fontSize: AppSpacing.launchpadFontMd,
             ),
           ),
           const SizedBox(height: AppSpacing.x1),
@@ -109,9 +108,8 @@ class _StrategyCard extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(
+            style: AppTextStyles.chartLabelXs.copyWith(
               color: AppColors.text3,
-              fontSize: AppSpacing.launchpadFontXs,
               height: AppSpacing.launchpadLineHeightDense,
             ),
           ),

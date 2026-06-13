@@ -145,9 +145,7 @@ class _RegulatoryNotice extends StatelessWidget {
                   'Mandatory PRIIPs Document',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -157,9 +155,7 @@ class _RegulatoryNotice extends StatelessWidget {
                   'format (max 3 pages).',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.35,
                   ),
                 ),
               ],
@@ -207,8 +203,6 @@ class _KidPreviewCard extends StatelessWidget {
                       document.title,
                       style: AppTextStyles.baseMedium.copyWith(
                         color: AppColors.text1,
-                        fontSize: 18,
-                        height: 1,
                       ),
                     ),
                     const SizedBox(height: 11),
@@ -217,8 +211,6 @@ class _KidPreviewCard extends StatelessWidget {
                       'Version ${document.version}',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
-                        height: 1,
                       ),
                     ),
                   ],
@@ -270,20 +262,14 @@ class _DocumentMetric extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 9,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const Spacer(),
           Text(
             value,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
         ],
@@ -317,9 +303,7 @@ class _KidSectionCard extends StatelessWidget {
                 section.title,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                 ),
               ),
             ),
@@ -411,7 +395,6 @@ class _ActionButton extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text1,
-            fontSize: 13,
             fontWeight: AppTextStyles.bold,
           ),
         ),
@@ -440,11 +423,9 @@ class _SectionLabel extends StatelessWidget {
         const SizedBox(width: 7),
         Text(
           text,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.navLabel.copyWith(
             color: AppColors.text2,
-            fontSize: 11,
             fontWeight: AppTextStyles.bold,
-            height: 1,
           ),
         ),
       ],

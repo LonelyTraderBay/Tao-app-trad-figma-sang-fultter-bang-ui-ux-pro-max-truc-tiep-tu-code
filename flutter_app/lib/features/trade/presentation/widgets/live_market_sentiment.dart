@@ -28,9 +28,8 @@ class LiveMarketSentimentTab extends StatelessWidget {
               Text(
                 '${snapshot.sentiment.score}',
                 textAlign: TextAlign.center,
-                style: AppTextStyles.heroNumber.copyWith(
+                style: AppTextStyles.numericDisplayHero.copyWith(
                   color: liveMarketAmber,
-                  fontSize: 42,
                 ),
               ),
             ],

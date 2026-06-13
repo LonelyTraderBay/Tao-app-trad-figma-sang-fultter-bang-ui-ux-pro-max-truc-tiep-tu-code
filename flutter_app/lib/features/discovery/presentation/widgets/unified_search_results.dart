@@ -27,7 +27,7 @@ class _ResultsState extends StatelessWidget {
             children: [
               TextSpan(
                 text: '${results.totalCount}',
-                style: const TextStyle(
+                style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
                 ),

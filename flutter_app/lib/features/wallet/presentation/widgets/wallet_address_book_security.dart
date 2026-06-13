@@ -120,10 +120,10 @@ class _SecurityTip extends StatelessWidget {
                   color: AppColors.text2,
                   height: 1.45,
                 ),
-                children: const [
+                children: [
                   TextSpan(
                     text: 'Bảo mật: ',
-                    style: TextStyle(
+                    style: AppTextStyles.caption.copyWith(
                       color: _bookPrimary,
                       fontWeight: AppTextStyles.bold,
                     ),

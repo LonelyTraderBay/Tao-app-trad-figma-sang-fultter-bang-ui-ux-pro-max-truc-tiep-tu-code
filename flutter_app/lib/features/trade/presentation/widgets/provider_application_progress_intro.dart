@@ -108,7 +108,7 @@ class _BenefitCard extends StatelessWidget {
                 Text(
                   benefit.title,
                   style: AppTextStyles.baseMedium.copyWith(
-                    fontWeight: FontWeight.w800,
+                    fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
                 const SizedBox(height: 3),
@@ -155,7 +155,7 @@ class _ResponsibilitiesCard extends StatelessWidget {
                   'Trách nhiệm quan trọng',
                   style: AppTextStyles.baseMedium.copyWith(
                     color: _providerWarning,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
                 const SizedBox(height: 6),

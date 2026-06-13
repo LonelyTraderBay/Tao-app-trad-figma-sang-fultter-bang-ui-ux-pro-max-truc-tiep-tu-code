@@ -188,9 +188,12 @@ class _InfoPanel extends StatelessWidget {
                   height: 1.45,
                 ),
                 children: [
-                  const TextSpan(
+                  TextSpan(
                     text: 'Giải thích\n',
-                    style: TextStyle(fontWeight: FontWeight.w800),
+                    style: AppTextStyles.micro.copyWith(
+                      color: _attributionPrimary,
+                      fontWeight: AppTextStyles.extraBold,
+                    ),
                   ),
                   const TextSpan(
                     text:
@@ -199,7 +202,10 @@ class _InfoPanel extends StatelessWidget {
                   TextSpan(
                     text:
                         'Beta ${snapshot.beta.toStringAsFixed(2)} nghĩa là khi thị trường +1%, bạn +${snapshot.beta.toStringAsFixed(2)}%.',
-                    style: const TextStyle(fontWeight: FontWeight.w700),
+                    style: AppTextStyles.micro.copyWith(
+                      color: _attributionPrimary,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
                 ],
               ),
@@ -245,7 +251,7 @@ class _ContributionBar extends StatelessWidget {
                 '${value >= 0 ? '+' : ''}${value.toStringAsFixed(1)}%',
                 style: AppTextStyles.caption.copyWith(
                   color: color,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: AppTextStyles.heavy,
                 ),
               ),
             ],
@@ -297,7 +303,7 @@ class _ProjectionTile extends StatelessWidget {
             '\$${value.toStringAsFixed(0)}',
             style: AppTextStyles.baseMedium.copyWith(
               color: color,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.heavy,
             ),
           ),
         ],
@@ -325,7 +331,7 @@ class _KeyValueRow extends StatelessWidget {
         Text(
           value,
           style: AppTextStyles.sectionTitle.copyWith(
-            fontWeight: FontWeight.w900,
+            fontWeight: AppTextStyles.heavy,
           ),
         ),
       ],

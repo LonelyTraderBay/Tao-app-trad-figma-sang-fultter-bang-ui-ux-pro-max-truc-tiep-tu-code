@@ -62,7 +62,7 @@ class _VerifyStep extends StatelessWidget {
           Text(
             'Bước 2: Xác minh mã',
             textAlign: TextAlign.center,
-            style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
+            style: AppTextStyles.sectionTitle,
           ),
           const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(

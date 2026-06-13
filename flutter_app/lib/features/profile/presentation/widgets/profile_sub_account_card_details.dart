@@ -70,7 +70,7 @@ class _SubAccountDetails extends StatelessWidget {
               children: [
                 TextSpan(
                   text: account.email,
-                  style: const TextStyle(color: AppColors.text2),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
               ],
             ),

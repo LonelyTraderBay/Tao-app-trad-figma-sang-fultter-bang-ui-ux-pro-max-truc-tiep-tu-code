@@ -42,9 +42,7 @@ class _RecordCard extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text1,
-                                fontSize: 13,
                                 fontWeight: AppTextStyles.bold,
-                                height: 1,
                               ),
                             ),
                           ),
@@ -60,7 +58,6 @@ class _RecordCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            fontSize: 10,
                             height: 1,
                           ),
                         ),
@@ -137,7 +134,6 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
               height: 1,
             ),
           ),
@@ -146,11 +142,9 @@ class _MetricBox extends StatelessWidget {
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.captionSm.copyWith(
               color: valueColor,
-              fontSize: 11,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
         ],
@@ -177,9 +171,7 @@ class _StatusPill extends StatelessWidget {
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
           fontWeight: AppTextStyles.bold,
-          height: 1,
         ),
       ),
     );
@@ -203,9 +195,7 @@ class _ExportButton extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text1,
-          fontSize: 13,
           fontWeight: AppTextStyles.bold,
-          height: 1,
         ),
       ),
     );
@@ -232,11 +222,9 @@ class _SectionLabel extends StatelessWidget {
         const SizedBox(width: 7),
         Text(
           text,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: AppColors.text2,
-            fontSize: 11,
             fontWeight: AppTextStyles.bold,
-            height: 1,
           ),
         ),
       ],

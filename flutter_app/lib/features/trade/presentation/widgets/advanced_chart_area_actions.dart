@@ -68,12 +68,7 @@ class _LegendChip extends StatelessWidget {
       ),
       child: Text(
         indicator.label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 11,
-          fontWeight: AppTextStyles.medium,
-          height: 1,
-        ),
+        style: AppTextStyles.navLabel.copyWith(color: color, height: 1),
       ),
     );
   }
@@ -230,7 +225,6 @@ class _IndicatorSheet extends StatelessWidget {
                             'Chỉ báo kỹ thuật',
                             style: AppTextStyles.baseMedium.copyWith(
                               fontWeight: AppTextStyles.bold,
-                              fontSize: 17,
                             ),
                           ),
                         ),

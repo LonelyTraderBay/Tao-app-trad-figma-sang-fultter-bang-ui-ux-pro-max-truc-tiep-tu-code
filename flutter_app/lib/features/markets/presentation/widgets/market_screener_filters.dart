@@ -64,7 +64,6 @@ class _PresetScroller extends StatelessWidget {
                       preset.name,
                       style: AppTextStyles.caption.copyWith(
                         color: active ? _marketPrimary : AppColors.text2,
-                        fontSize: 13,
                         fontWeight: AppTextStyles.medium,
                         height: 1,
                       ),
@@ -253,7 +252,6 @@ class _CategoryChip extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: active ? _marketPrimary : AppColors.text3,
-            fontSize: 12,
             fontWeight: AppTextStyles.medium,
             height: 1,
           ),
@@ -289,7 +287,7 @@ class _RangeInput extends StatelessWidget {
         onChanged(double.tryParse(normalized), false);
       },
       cursorColor: _marketPrimary,
-      style: AppTextStyles.caption.copyWith(fontSize: 12),
+      style: AppTextStyles.caption,
       decoration: InputDecoration(
         labelText: label,
         labelStyle: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -364,7 +362,6 @@ class _SortScroller extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                fontSize: 12,
                 height: 1,
               ),
             ),
@@ -419,7 +416,6 @@ class _SortChip extends StatelessWidget {
                 label,
                 style: AppTextStyles.caption.copyWith(
                   color: active ? _marketPrimary : AppColors.text3,
-                  fontSize: 12,
                   fontWeight: active
                       ? AppTextStyles.bold
                       : AppTextStyles.medium,
@@ -437,3 +433,5 @@ class _SortChip extends StatelessWidget {
     );
   }
 }
+
+

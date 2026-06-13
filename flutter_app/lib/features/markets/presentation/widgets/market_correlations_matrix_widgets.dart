@@ -78,9 +78,8 @@ class _CorrelationHeatmapPainter extends CustomPainter {
       final asset = assets[col];
       textPainter.text = TextSpan(
         text: asset.symbol,
-        style: AppTextStyles.micro.copyWith(
+        style: AppTextStyles.chartLabelTiny.copyWith(
           color: asset.color,
-          fontSize: 8,
           fontWeight: AppTextStyles.bold,
         ),
       );
@@ -95,9 +94,8 @@ class _CorrelationHeatmapPainter extends CustomPainter {
       final y = labelSize + row * cellSize + cellSize / 2;
       textPainter.text = TextSpan(
         text: asset.symbol,
-        style: AppTextStyles.micro.copyWith(
+        style: AppTextStyles.chartLabelTiny.copyWith(
           color: asset.color,
-          fontSize: 8,
           fontWeight: AppTextStyles.bold,
         ),
       );
@@ -133,11 +131,16 @@ class _CorrelationHeatmapPainter extends CustomPainter {
 
         textPainter.text = TextSpan(
           text: row == col ? '1.0' : value.toStringAsFixed(2),
-          style: AppTextStyles.micro.copyWith(
-            color: value >= .7 ? AppColors.onAccent : AppColors.text1,
-            fontSize: row == col ? 8 : 7,
-            fontWeight: row == col ? AppTextStyles.bold : AppTextStyles.medium,
-          ),
+          style:
+              (row == col
+                      ? AppTextStyles.chartLabelTiny
+                      : AppTextStyles.chartLabelNano)
+                  .copyWith(
+                    color: value >= .7 ? AppColors.onAccent : AppColors.text1,
+                    fontWeight: row == col
+                        ? AppTextStyles.bold
+                        : AppTextStyles.medium,
+                  ),
         );
         textPainter.layout();
         textPainter.paint(
@@ -189,10 +192,7 @@ class _CorrelationLegend extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 item.label,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 8,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),

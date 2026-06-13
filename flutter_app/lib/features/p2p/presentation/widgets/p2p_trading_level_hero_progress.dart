@@ -150,9 +150,10 @@ class _CurrentLevelHero extends StatelessWidget {
                           children: [
                             TextSpan(
                               text: '${_formatVnd(user.dailyUsed)} đ',
-                              style: TextStyle(
+                              style: AppTextStyles.caption.copyWith(
                                 color: accent,
                                 fontWeight: AppTextStyles.bold,
+                                fontFeatures: AppTextStyles.tabularFigures,
                               ),
                             ),
                           ],

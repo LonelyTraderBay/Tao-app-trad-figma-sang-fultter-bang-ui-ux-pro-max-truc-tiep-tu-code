@@ -112,11 +112,7 @@ class _RiyChartPainter extends CustomPainter {
     final painter = TextPainter(
       text: TextSpan(
         text: text,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: 10,
-          height: 1,
-        ),
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3, height: 1),
       ),
       textDirection: TextDirection.ltr,
     )..layout();
@@ -154,9 +150,8 @@ class _SectionLabel extends StatelessWidget {
         const SizedBox(width: 7),
         Text(
           text,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.navLabel.copyWith(
             color: AppColors.text2,
-            fontSize: 11,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

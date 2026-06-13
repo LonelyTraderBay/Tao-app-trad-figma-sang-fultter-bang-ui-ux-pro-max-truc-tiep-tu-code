@@ -37,7 +37,7 @@ class _CreateSubAccountForm extends StatelessWidget {
           Text(
             'T\u1EA1o t\u00E0i kho\u1EA3n ph\u1EE5',
             style: AppTextStyles.baseMedium.copyWith(
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
               height: 1,
             ),
           ),

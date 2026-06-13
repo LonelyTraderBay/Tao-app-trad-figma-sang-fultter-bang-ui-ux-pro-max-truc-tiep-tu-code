@@ -24,9 +24,8 @@ class _RiskWarning extends StatelessWidget {
           Expanded(
             child: Text(
               'Giao dịch hợp đồng tương lai có rủi ro cao. Bạn có thể mất toàn bộ ký quỹ. Chỉ giao dịch số tiền bạn có thể chấp nhận mất.',
-              style: AppTextStyles.caption.copyWith(
+              style: AppTextStyles.captionSm.copyWith(
                 color: AppColors.primary,
-                fontSize: 12,
                 height: 1.45,
               ),
             ),
@@ -58,9 +57,8 @@ class _FuturesSafetyChecklist extends StatelessWidget {
         children: [
           Text(
             'Futures order review',
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text1,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1.1,
             ),
@@ -81,7 +79,6 @@ class _FuturesSafetyChecklist extends StatelessWidget {
                     item,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      fontSize: 10,
                       height: 1.4,
                     ),
                   ),
@@ -149,10 +146,9 @@ class _PositionCard extends StatelessWidget {
               const Spacer(),
               Text(
                 '${position.pnl >= 0 ? '+' : '-'}\$${position.pnl.abs().toStringAsFixed(2)}',
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.numericCode.copyWith(
                   color: position.pnl >= 0 ? _futuresGreen : _futuresRed,
                   fontWeight: AppTextStyles.bold,
-                  fontFamily: 'monospace',
                 ),
               ),
             ],
@@ -202,9 +198,8 @@ class _PositionMetric extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             value,
-            style: AppTextStyles.micro.copyWith(
+            style: AppTextStyles.numericMicro.copyWith(
               color: color,
-              fontFamily: 'monospace',
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -267,9 +262,8 @@ class _AccountRow extends StatelessWidget {
           const Spacer(),
           Text(
             value,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.numericCode.copyWith(
               color: AppColors.text1,
-              fontFamily: 'monospace',
               fontWeight: AppTextStyles.bold,
             ),
           ),

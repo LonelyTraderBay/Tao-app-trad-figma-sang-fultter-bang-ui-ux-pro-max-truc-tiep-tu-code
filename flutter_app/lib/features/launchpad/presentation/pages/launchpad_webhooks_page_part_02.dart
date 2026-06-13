@@ -35,10 +35,7 @@ class _SubscriptionExpanded extends StatelessWidget {
           children: [
             Text(
               'Events',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: AppSpacing.launchpadFontXs,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
             const SizedBox(height: AppSpacing.x2),
             Wrap(
@@ -150,10 +147,7 @@ class _MetadataRows extends StatelessWidget {
                 children: [
                   Text(
                     row.label,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontSize: AppSpacing.launchpadFontSm,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(
@@ -162,11 +156,16 @@ class _MetadataRows extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.end,
-                      style: AppTextStyles.micro.copyWith(
-                        color: row.danger ? AppColors.sell : AppColors.text1,
-                        fontWeight: AppTextStyles.medium,
-                        fontFamily: row.copyValue == null ? null : 'monospace',
-                      ),
+                      style:
+                          (row.copyValue == null
+                                  ? AppTextStyles.micro
+                                  : AppTextStyles.monoCode)
+                              .copyWith(
+                                color: row.danger
+                                    ? AppColors.sell
+                                    : AppColors.text1,
+                                fontWeight: AppTextStyles.medium,
+                              ),
                     ),
                   ),
                   if (row.copyValue != null) ...[
@@ -289,10 +288,9 @@ class _DeliveryCard extends StatelessWidget {
                   children: [
                     Text(
                       delivery.eventType,
-                      style: AppTextStyles.caption.copyWith(
+                      style: AppTextStyles.captionSm.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        fontSize: AppSpacing.launchpadFontLg,
                       ),
                     ),
                     _StatusPill(
@@ -310,26 +308,22 @@ class _DeliveryCard extends StatelessWidget {
                       delivery.timestamp,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: AppSpacing.launchpadFontSm,
                       ),
                     ),
                     if (delivery.statusCode != null)
                       Text(
                         delivery.statusCode.toString(),
-                        style: AppTextStyles.micro.copyWith(
+                        style: AppTextStyles.numericMicro.copyWith(
                           color: delivery.statusCode! < 300
                               ? AppColors.buy
                               : AppColors.sell,
-                          fontFamily: 'monospace',
-                          fontSize: AppSpacing.launchpadFontSm,
                         ),
                       ),
                     if (delivery.responseTime != null)
                       Text(
                         '${delivery.responseTime}ms',
-                        style: AppTextStyles.micro.copyWith(
+                        style: AppTextStyles.numericMicro.copyWith(
                           color: AppColors.text3,
-                          fontSize: AppSpacing.launchpadFontSm,
                         ),
                       ),
                   ],
@@ -343,10 +337,8 @@ class _DeliveryCard extends StatelessWidget {
                           'tx: ${delivery.txHash}',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.micro.copyWith(
+                          style: AppTextStyles.monoCode.copyWith(
                             color: AppColors.text3,
-                            fontFamily: 'monospace',
-                            fontSize: AppSpacing.launchpadFontXs,
                           ),
                         ),
                       ),

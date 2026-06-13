@@ -21,8 +21,7 @@ class _PnlChartPainter extends CustomPainter {
         canvas,
         '\$$value',
         Offset(0, y - 6),
-        AppColors.text3,
-        10,
+        AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         width: 42,
         align: TextAlign.right,
       );
@@ -41,8 +40,7 @@ class _PnlChartPainter extends CustomPainter {
         canvas,
         item.label,
         Offset(x - 18, chart.bottom + 10),
-        AppColors.text3,
-        10,
+        AppTextStyles.micro.copyWith(color: AppColors.text3),
         width: 42,
         align: TextAlign.center,
       );
@@ -104,8 +102,7 @@ class _WinLossChartPainter extends CustomPainter {
         canvas,
         '$value',
         Offset(4, y - 6),
-        AppColors.text3,
-        10,
+        AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         width: 38,
         align: TextAlign.right,
       );
@@ -152,8 +149,7 @@ class _WinLossChartPainter extends CustomPainter {
         canvas,
         points[i].week,
         Offset(center - 16, chart.bottom + 10),
-        AppColors.text3,
-        10,
+        AppTextStyles.micro.copyWith(color: AppColors.text3),
         width: 32,
         align: TextAlign.center,
       );
@@ -168,8 +164,7 @@ class _WinLossChartPainter extends CustomPainter {
       canvas,
       'Wins',
       Offset(size.width / 2 - 20, legendY - 8),
-      _analyticsGreen,
-      12,
+      AppTextStyles.captionSm.copyWith(color: _analyticsGreen),
       width: 38,
     );
     canvas.drawRect(
@@ -180,8 +175,7 @@ class _WinLossChartPainter extends CustomPainter {
       canvas,
       'Losses',
       Offset(size.width / 2 + 36, legendY - 8),
-      _analyticsRed,
-      12,
+      AppTextStyles.captionSm.copyWith(color: _analyticsRed),
       width: 54,
     );
   }
@@ -231,17 +225,15 @@ void _paintText(
   Canvas canvas,
   String text,
   Offset offset,
-  Color color,
-  double fontSize, {
+  TextStyle style, {
   double width = 80,
   TextAlign align = TextAlign.left,
 }) {
   final painter = TextPainter(
     text: TextSpan(
       text: text,
-      style: TextStyle(
-        color: color,
-        fontWeight: FontWeight.w500,
+      style: style.copyWith(
+        fontWeight: AppTextStyles.medium,
         height: 1,
         decoration: TextDecoration.none,
       ),

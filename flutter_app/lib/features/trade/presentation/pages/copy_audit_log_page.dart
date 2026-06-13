@@ -188,7 +188,6 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                 Text(
                   'Export Audit Log',
                   style: AppTextStyles.baseMedium.copyWith(
-                    fontSize: 16,
                     fontWeight: AppTextStyles.bold,
                     height: 1.25,
                   ),
@@ -196,9 +195,8 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                 const SizedBox(height: 4),
                 Text(
                   'Chọn định dạng export',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
                   ),
                 ),
                 const SizedBox(height: 16),

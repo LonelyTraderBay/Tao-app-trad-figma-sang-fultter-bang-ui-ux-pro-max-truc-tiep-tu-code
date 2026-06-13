@@ -46,7 +46,6 @@ class _ScenarioCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.baseMedium.copyWith(
                           color: AppColors.text1,
-                          fontSize: 15,
                           height: 1.2,
                         ),
                       ),
@@ -56,9 +55,9 @@ class _ScenarioCard extends StatelessWidget {
                       _formatReturn(scenario.annualReturnPct),
                       style: AppTextStyles.baseMedium.copyWith(
                         color: color,
-                        fontSize: 16,
                         fontWeight: AppTextStyles.bold,
                         height: 1.1,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ],
@@ -122,7 +121,6 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
               height: 1.05,
             ),
           ),
@@ -131,9 +129,8 @@ class _MetricBox extends StatelessWidget {
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.numericCode.copyWith(
               color: valueColor,
-              fontSize: 13,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -170,7 +167,6 @@ class _InfoNote extends StatelessWidget {
               'what you might get back in extreme market conditions.',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
-                fontSize: 10,
                 fontWeight: AppTextStyles.bold,
                 height: 1.3,
               ),

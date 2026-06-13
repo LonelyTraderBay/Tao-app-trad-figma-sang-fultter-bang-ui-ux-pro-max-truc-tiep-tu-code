@@ -273,10 +273,9 @@ class _CodeRow extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.end,
-            style: AppTextStyles.micro.copyWith(
+            style: AppTextStyles.monoCode.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              fontFamily: 'monospace',
             ),
           ),
         ),

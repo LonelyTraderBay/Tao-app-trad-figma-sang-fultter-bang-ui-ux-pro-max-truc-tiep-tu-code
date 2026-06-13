@@ -66,7 +66,6 @@ class _StrategyCard extends StatelessWidget {
                       strategy.description,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        fontSize: 12,
                       ),
                     ),
                   ],
@@ -159,7 +158,7 @@ class _StrategyDetail extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(label, style: AppTextStyles.micro.copyWith(fontSize: 10)),
+            Text(label, style: AppTextStyles.micro),
             const SizedBox(height: 4),
             Text(
               value,
@@ -167,7 +166,6 @@ class _StrategyDetail extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: valueColor ?? AppColors.text1,
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -203,7 +201,6 @@ class _BotInfoCard extends StatelessWidget {
               'Hiệu suất trong quá khứ không đại diện cho kết quả tương lai.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                fontSize: 12,
                 height: 1.5,
               ),
             ),
@@ -309,14 +306,12 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
                         Text(
                           strategy.name,
                           style: AppTextStyles.sectionTitle.copyWith(
-                            fontSize: 20,
                           ),
                         ),
                         Text(
                           strategy.suitableFor,
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text2,
-                            fontSize: 12,
                           ),
                         ),
                       ],
@@ -341,7 +336,6 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
                   strategy.longDescription,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 13,
                   ),
                 ),
               ),
@@ -382,7 +376,6 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
                         'Tôi hiểu các rủi ro và đồng ý với điều khoản sử dụng Bot',
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text2,
-                          fontSize: 12,
                         ),
                       ),
                     ),
@@ -440,7 +433,6 @@ class _ParamPreview extends StatelessWidget {
           param.unit == null ? param.label : '${param.label} (${param.unit})',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 13,
           ),
         ),
         const SizedBox(height: 6),
@@ -456,7 +448,7 @@ class _ParamPreview extends StatelessWidget {
           child: Text(
             param.defaultValue,
             style: AppTextStyles.baseMedium.copyWith(
-              fontFamily: param.type == 'number' ? 'monospace' : null,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ),
@@ -464,3 +456,5 @@ class _ParamPreview extends StatelessWidget {
     );
   }
 }
+
+

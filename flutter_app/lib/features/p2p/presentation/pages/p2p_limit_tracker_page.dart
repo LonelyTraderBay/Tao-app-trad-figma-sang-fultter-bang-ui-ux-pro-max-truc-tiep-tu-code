@@ -249,7 +249,6 @@ class _UsageHero extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.onAccent.withValues(alpha: .90),
               fontWeight: AppTextStyles.bold,
-              fontSize: 12,
             ),
           ),
         ],
@@ -312,16 +311,12 @@ class _DayBreakdownCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    fontSize: 12,
                   ),
                 ),
               ),
               Text(
                 'Tổng: ${_formatMillions(item.total)}',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text3,
-                  fontSize: 12,
-                ),
+                style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -416,3 +411,5 @@ String _formatComma(double value, int decimals) {
   if (decimals == 0) return buffer.toString();
   return '$buffer.${parts.last}';
 }
+
+

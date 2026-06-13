@@ -22,10 +22,9 @@ class _SheetInputField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.bold,
-            fontSize: AppSpacing.launchpadFontMd,
           ),
         ),
         const SizedBox(height: AppSpacing.x2),
@@ -34,10 +33,9 @@ class _SheetInputField extends StatelessWidget {
           onChanged: onChanged,
           semanticLabel: label,
           hintText: hint,
-          textStyle: AppTextStyles.caption.copyWith(
-            color: AppColors.text1,
-            fontFamily: monospace ? 'monospace' : null,
-          ),
+          textStyle:
+              (monospace ? AppTextStyles.monoCode : AppTextStyles.caption)
+                  .copyWith(color: AppColors.text1),
         ),
       ],
     );
@@ -66,10 +64,9 @@ class _ChoiceGroup extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.bold,
-            fontSize: AppSpacing.launchpadFontMd,
           ),
         ),
         const SizedBox(height: AppSpacing.x2),
@@ -137,7 +134,6 @@ class _SelectablePill extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: active ? color : AppColors.text3,
               fontWeight: AppTextStyles.bold,
-              fontSize: AppSpacing.launchpadFontSm,
             ),
           ),
         ),
@@ -184,10 +180,9 @@ class _SmallActionButton extends StatelessWidget {
               const SizedBox(width: AppSpacing.x2),
               Text(
                 label,
-                style: AppTextStyles.micro.copyWith(
+                style: AppTextStyles.caption.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  fontSize: AppSpacing.launchpadFontMd,
                 ),
               ),
             ],

@@ -178,7 +178,6 @@ class VitStatusPill extends StatelessWidget {
                 count! > 99 ? '99+' : '${count!}',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: AppTextStyles.navLabel.fontSize,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),

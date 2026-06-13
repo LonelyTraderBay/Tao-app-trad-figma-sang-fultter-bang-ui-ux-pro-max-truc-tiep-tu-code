@@ -35,7 +35,6 @@ class _LimitDetailRow extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -119,7 +118,6 @@ class _UpgradeCard extends StatelessWidget {
                           'Tăng giới hạn lên đến ${_formatMillions(tier.monthlyTotal)} VND/tháng',
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text3,
-                            fontSize: 12,
                           ),
                         ),
                       ],
@@ -151,7 +149,6 @@ class _UpgradeCard extends StatelessWidget {
                         requirement,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text2,
-                          fontSize: 12,
                         ),
                       ),
                     ),
@@ -244,7 +241,6 @@ class _LimitInfoNotice extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppModuleAccents.p2p,
                     fontWeight: AppTextStyles.bold,
-                    fontSize: 12,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -301,3 +297,4 @@ String _formatComma(double value, int decimals) {
   if (decimals == 0) return buffer.toString();
   return '$buffer.${parts.last}';
 }
+

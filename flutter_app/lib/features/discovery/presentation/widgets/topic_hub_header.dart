@@ -151,10 +151,7 @@ class _TopicHero extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      topic.label,
-                      style: AppTextStyles.pageTitle.copyWith(fontSize: 28),
-                    ),
+                    Text(topic.label, style: AppTextStyles.pageTitle),
                     const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
                     Text(
                       topic.summary,

@@ -86,9 +86,8 @@ class _FormatCard extends StatelessWidget {
               format.description,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.navLabel.copyWith(
                 color: AppColors.text3,
-                fontSize: 11,
                 height: 1,
               ),
             ),

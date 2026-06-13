@@ -74,7 +74,7 @@ class _VipHero extends StatelessWidget {
                                       style: AppTextStyles.sectionTitle
                                           .copyWith(
                                             color: _vipGold,
-                                            fontWeight: FontWeight.w900,
+                                            fontWeight: AppTextStyles.heavy,
                                             height: 1,
                                           ),
                                     ),
@@ -161,7 +161,7 @@ class _HeroFeeBox extends StatelessWidget {
             value,
             style: AppTextStyles.sectionTitle.copyWith(
               color: _vipSuccess,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.heavy,
               height: 1,
               fontFeatures: AppTextStyles.tabularFigures,
             ),

@@ -39,9 +39,8 @@ class _EarningsTab extends StatelessWidget {
               const SizedBox(height: AppSpacing.x4),
               Text(
                 hideBalance ? '••••••' : '+\$77.72',
-                style: AppTextStyles.heroNumber.copyWith(
+                style: AppTextStyles.numericDisplayXl.copyWith(
                   color: AppColors.buy,
-                  fontSize: AppSpacing.savingsPortfolioEarningsFontSize,
                 ),
               ),
               const SizedBox(height: AppSpacing.x2),

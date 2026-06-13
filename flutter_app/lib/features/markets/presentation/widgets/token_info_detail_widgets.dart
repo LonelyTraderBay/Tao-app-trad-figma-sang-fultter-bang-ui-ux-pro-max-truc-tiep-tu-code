@@ -127,8 +127,7 @@ class _MiniStat extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             value,
-            style: AppTextStyles.sectionTitle.copyWith(
-              fontSize: 20,
+            style: AppTextStyles.amountSm.copyWith(
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),

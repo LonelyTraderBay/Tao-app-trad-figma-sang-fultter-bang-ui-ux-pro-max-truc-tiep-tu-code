@@ -25,10 +25,9 @@ class _StatusPill extends StatelessWidget {
             ],
             Text(
               label,
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.chartLabelXs.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                fontSize: AppSpacing.launchpadFontXs,
                 height: AppSpacing.launchpadLineHeightTight,
               ),
             ),
@@ -56,10 +55,9 @@ class _MiniPill extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
         child: Text(
           label,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.chartLabelXs.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: AppSpacing.launchpadFontXs,
             height: AppSpacing.launchpadLineHeightTight,
           ),
         ),

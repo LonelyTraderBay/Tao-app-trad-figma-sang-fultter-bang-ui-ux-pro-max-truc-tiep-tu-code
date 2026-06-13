@@ -56,13 +56,7 @@ class _VotingPower extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  power.value,
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    fontSize: AppSpacing.stakingGovernanceVotingPowerFontSize,
-                    fontFeatures: AppTextStyles.tabularFigures,
-                  ),
-                ),
+                Text(power.value, style: AppTextStyles.numericDisplayMd),
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Padding(

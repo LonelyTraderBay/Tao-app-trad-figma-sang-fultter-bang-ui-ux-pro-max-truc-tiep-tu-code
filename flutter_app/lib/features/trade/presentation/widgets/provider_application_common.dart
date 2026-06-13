@@ -23,7 +23,7 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontWeight: FontWeight.w800,
+            fontWeight: AppTextStyles.extraBold,
           ),
         ),
       ],
@@ -244,7 +244,9 @@ class _PanelHeader extends StatelessWidget {
         const SizedBox(width: 8),
         Text(
           title,
-          style: AppTextStyles.baseMedium.copyWith(fontWeight: FontWeight.w800),
+          style: AppTextStyles.baseMedium.copyWith(
+            fontWeight: AppTextStyles.extraBold,
+          ),
         ),
       ],
     );

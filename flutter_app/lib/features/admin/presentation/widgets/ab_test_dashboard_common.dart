@@ -72,9 +72,8 @@ class _ExpandedDetails extends StatelessWidget {
             const Spacer(),
             Text(
               '${test.sampleSize} / ${test.minSampleSize}',
-              style: AppTextStyles.caption.copyWith(
+              style: AppTextStyles.numericCode.copyWith(
                 fontWeight: AppTextStyles.bold,
-                fontFamily: 'monospace',
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
@@ -112,8 +111,6 @@ class _DetailStat extends StatelessWidget {
         Text(
           value,
           style: AppTextStyles.baseMedium.copyWith(
-            fontSize: AppSpacing.adminFontXl,
-            fontFamily: 'monospace',
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),

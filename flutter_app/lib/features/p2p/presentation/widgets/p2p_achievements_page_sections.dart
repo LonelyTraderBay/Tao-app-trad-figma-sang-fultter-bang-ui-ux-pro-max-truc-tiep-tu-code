@@ -39,8 +39,7 @@ class _SummaryCard extends StatelessWidget {
                     const SizedBox(height: AppSpacing.x1),
                     Text(
                       '${snapshot.unlockedCount}/${snapshot.achievements.length}',
-                      style: AppTextStyles.pageTitle.copyWith(
-                        fontSize: 29,
+                      style: AppTextStyles.amountMd.copyWith(
                         height: 1.05,
                         fontWeight: AppTextStyles.bold,
                         fontFeatures: AppTextStyles.tabularFigures,

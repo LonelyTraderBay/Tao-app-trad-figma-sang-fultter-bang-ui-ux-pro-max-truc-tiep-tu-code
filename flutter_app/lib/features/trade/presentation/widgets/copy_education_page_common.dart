@@ -20,7 +20,6 @@ class _ConceptRow extends StatelessWidget {
                 concept.term,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.bold,
                   height: 1.1,
                 ),
@@ -30,7 +29,6 @@ class _ConceptRow extends StatelessWidget {
                 concept.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 10,
                   height: 1.34,
                 ),
               ),
@@ -77,7 +75,6 @@ class _SupplementalTabContent extends StatelessWidget {
           Text(
             title,
             style: AppTextStyles.baseMedium.copyWith(
-              fontSize: 16,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -86,7 +83,6 @@ class _SupplementalTabContent extends StatelessWidget {
             description,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
               height: 1.5,
             ),
           ),
@@ -136,7 +132,6 @@ class _SmallGuideLine extends StatelessWidget {
             text,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
               height: 1.3,
             ),
           ),

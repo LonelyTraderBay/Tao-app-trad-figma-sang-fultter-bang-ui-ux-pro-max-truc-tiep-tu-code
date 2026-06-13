@@ -24,19 +24,16 @@ class _EstimateCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   estimate.operation,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text1,
-                    fontSize: AppSpacing.launchpadFontLg,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
               ),
               Text(
                 '${estimate.gasUnits} gas',
-                style: AppTextStyles.micro.copyWith(
+                style: AppTextStyles.numericMicro.copyWith(
                   color: AppColors.text3,
-                  fontFamily: 'monospace',
-                  fontSize: AppSpacing.launchpadFontXs,
                 ),
               ),
             ],
@@ -78,10 +75,7 @@ class _EstimateCostRow extends StatelessWidget {
             Expanded(
               child: Text(
                 cost.chain,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  fontSize: AppSpacing.launchpadFontSm,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text2),
               ),
             ),
             _CostText(cost.slow, AppColors.buy),
@@ -176,10 +170,7 @@ class _AddAlertCard extends StatelessWidget {
                 ),
                 Text(
                   'Thong bao khi gas dat nguong',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: AppSpacing.launchpadFontMd,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -232,20 +223,17 @@ class _AlertCard extends StatelessWidget {
               children: [
                 Text(
                   '${alert.chain} ${alert.direction == LaunchpadGasAlertDirection.below ? '<' : '>'} ${_formatGasValue(alert.threshold)} ${alert.unit}',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text1,
-                    fontSize: AppSpacing.launchpadFontLg,
                     fontWeight: AppTextStyles.bold,
+                    fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
                 Text(
                   '${alert.triggerCount} lan kich hoat${alert.lastTriggered == null ? '' : ' - ${alert.lastTriggered}'}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: AppSpacing.launchpadFontSm,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),

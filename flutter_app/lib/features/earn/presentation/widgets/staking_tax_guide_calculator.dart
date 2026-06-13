@@ -208,6 +208,9 @@ class _ResultRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final valueStyle = highlight
+        ? AppTextStyles.baseMedium
+        : AppTextStyles.body;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -223,12 +226,9 @@ class _ResultRow extends StatelessWidget {
         const SizedBox(width: AppSpacing.x3),
         Text(
           value,
-          style: AppTextStyles.caption.copyWith(
+          style: valueStyle.copyWith(
             color: color ?? AppColors.text1,
             fontWeight: AppTextStyles.bold,
-            fontSize: highlight
-                ? AppSpacing.stakingTaxResultFontSizeLarge
-                : AppSpacing.stakingTaxResultFontSize,
           ),
         ),
       ],
@@ -259,9 +259,8 @@ class _FaqCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x2),
           Text(
             faq.answer,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text2,
-              fontSize: AppSpacing.stakingTaxDetailFontSize,
               height: AppSpacing.stakingTaxFooterLineHeight,
             ),
           ),

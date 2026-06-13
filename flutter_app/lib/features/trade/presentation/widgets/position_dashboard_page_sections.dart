@@ -89,14 +89,12 @@ class _SummaryMetric extends StatelessWidget {
           value,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
-            color: color,
-            fontSize: large ? 18 : 13,
-            fontFamily: 'monospace',
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-            fontFeatures: AppTextStyles.tabularFigures,
-          ),
+          style: (large ? AppTextStyles.amountSm : AppTextStyles.numericCode)
+              .copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+                height: 1,
+              ),
         ),
       ],
     );
@@ -170,7 +168,6 @@ class _SortChips extends StatelessWidget {
             'SẮP XẾP',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -264,10 +261,8 @@ class _SortChip extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.badge.copyWith(
             color: active ? _tradePrimary : AppColors.text3,
-            fontSize: 11,
-            fontWeight: AppTextStyles.bold,
             height: 1,
           ),
         ),

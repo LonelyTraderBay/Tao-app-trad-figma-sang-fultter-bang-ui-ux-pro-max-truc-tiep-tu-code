@@ -81,9 +81,8 @@ class _QuickActionCard extends StatelessWidget {
             const Spacer(),
             Text(
               title,
-              style: AppTextStyles.caption.copyWith(
+              style: AppTextStyles.captionSm.copyWith(
                 color: AppColors.text1,
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
@@ -95,7 +94,6 @@ class _QuickActionCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
                 height: 1,
               ),
             ),

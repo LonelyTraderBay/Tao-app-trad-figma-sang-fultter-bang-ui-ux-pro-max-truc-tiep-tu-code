@@ -167,10 +167,9 @@ class _StatusLabel extends StatelessWidget {
         const SizedBox(width: AppSpacing.x2),
         Text(
           style.label,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.navLabel.copyWith(
             color: style.color,
             fontWeight: AppTextStyles.bold,
-            fontSize: 11,
           ),
         ),
       ],
@@ -196,10 +195,7 @@ class _CategoryPill extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text2,
-          fontSize: 11,
-        ),
+        style: AppTextStyles.navLabel.copyWith(color: AppColors.text2),
       ),
     );
   }

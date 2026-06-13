@@ -64,7 +64,6 @@ class _MoverRow extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontSize: 12,
                       fontWeight: AppTextStyles.bold,
                       fontFeatures: AppTextStyles.tabularFigures,
                       height: 1,
@@ -77,7 +76,6 @@ class _MoverRow extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: metricColor,
-                      fontSize: 12,
                       fontWeight: AppTextStyles.bold,
                       fontFeatures: AppTextStyles.tabularFigures,
                       height: 1,
@@ -207,7 +205,6 @@ class _MoverIdentity extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 11,
             height: 1,
           ),
         ),
@@ -233,7 +230,6 @@ class _MarketCapRankBadge extends StatelessWidget {
         '#$rank',
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          fontSize: 9,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -257,7 +253,6 @@ class _NewBadge extends StatelessWidget {
         'MỚI',
         style: AppTextStyles.micro.copyWith(
           color: _marketPrimary,
-          fontSize: 8,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -279,3 +274,4 @@ class _DataRefreshFooter extends StatelessWidget {
     );
   }
 }
+

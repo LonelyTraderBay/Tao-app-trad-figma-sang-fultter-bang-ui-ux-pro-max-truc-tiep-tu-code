@@ -116,9 +116,8 @@ class _StatTile extends StatelessWidget {
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.chartLabelXs.copyWith(
                 color: AppColors.text3,
-                fontSize: AppSpacing.launchpadFontXs,
                 height: AppSpacing.launchpadLineHeightShort,
               ),
             ),
@@ -252,10 +251,7 @@ class _CreateWebhookCard extends StatelessWidget {
                   'Dang ky nhan event tu smart contract',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: AppSpacing.launchpadFontMd,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -442,7 +438,6 @@ class _SubscriptionSummary extends StatelessWidget {
               '${subscription.eventTypes.length} events',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: AppSpacing.launchpadFontSm,
                 height: AppSpacing.launchpadLineHeightShort,
               ),
             ),
@@ -450,7 +445,6 @@ class _SubscriptionSummary extends StatelessWidget {
               '${subscription.triggerCount} triggers',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: AppSpacing.launchpadFontSm,
                 height: AppSpacing.launchpadLineHeightShort,
               ),
             ),

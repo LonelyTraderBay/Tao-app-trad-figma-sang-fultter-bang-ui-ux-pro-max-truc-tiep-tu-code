@@ -240,7 +240,10 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
                 });
                 Navigator.of(context).pop();
               },
-              child: const Text('Xóa', style: TextStyle(color: _bookRed)),
+              child: Text(
+                'Xóa',
+                style: AppTextStyles.caption.copyWith(color: _bookRed),
+              ),
             ),
           ],
         );

@@ -92,9 +92,8 @@ class _FilterChipButton extends StatelessWidget {
                 child: Text(
                   label,
                   maxLines: 1,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: textColor,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -129,9 +128,8 @@ class _SectionLabel extends StatelessWidget {
         ],
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: color,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             letterSpacing: .1,
           ),
@@ -180,8 +178,7 @@ class _NewsArticleCard extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       article.title,
-                      style: AppTextStyles.baseMedium.copyWith(
-                        fontSize: 15,
+                      style: AppTextStyles.body.copyWith(
                         height: 1.25,
                         fontWeight: AppTextStyles.bold,
                       ),
@@ -193,7 +190,6 @@ class _NewsArticleCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        fontSize: 13,
                         height: 1.34,
                       ),
                     ),
@@ -293,7 +289,7 @@ class _TypeAvatar extends StatelessWidget {
         color: type.color.withValues(alpha: .18),
         borderRadius: AppRadii.lgRadius,
       ),
-      child: Text(type.emoji, style: const TextStyle(fontSize: 20)),
+      child: Text(type.emoji, style: AppTextStyles.sectionTitleSm),
     );
   }
 }

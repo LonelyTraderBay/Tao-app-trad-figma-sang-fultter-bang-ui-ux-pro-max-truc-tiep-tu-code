@@ -54,10 +54,7 @@ class _PositionCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text(
-                position.pair,
-                style: AppTextStyles.baseMedium.copyWith(fontSize: 16),
-              ),
+              Text(position.pair, style: AppTextStyles.baseMedium),
               const SizedBox(width: 8),
               _MiniBadge(
                 label: '${position.side.toUpperCase()} ${position.leverage}x',

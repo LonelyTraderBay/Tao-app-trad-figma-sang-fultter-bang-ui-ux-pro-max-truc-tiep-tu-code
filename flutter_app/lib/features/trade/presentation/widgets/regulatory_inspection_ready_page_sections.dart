@@ -41,7 +41,7 @@ class _ComplianceScoreCard extends StatelessWidget {
                         snapshot.scoreLabel,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          fontSize: 11,
+                          fontWeight: AppTextStyles.normal,
                           height: 1.1,
                         ),
                       ),
@@ -52,9 +52,9 @@ class _ComplianceScoreCard extends StatelessWidget {
                         children: [
                           Text(
                             '${snapshot.complianceScore}%',
-                            style: AppTextStyles.heroNumber.copyWith(
+                            style: AppTextStyles.amountLg.copyWith(
                               color: _inspectionGreen,
-                              fontSize: 36,
+                              fontFeatures: AppTextStyles.tabularFigures,
                               height: 1,
                             ),
                           ),
@@ -63,7 +63,6 @@ class _ComplianceScoreCard extends StatelessWidget {
                             '/ 100%',
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text3,
-                              fontSize: 12,
                               height: 1,
                             ),
                           ),
@@ -122,8 +121,6 @@ class _ComplianceScoreCard extends StatelessWidget {
                   text: TextSpan(
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text1,
-                      fontFamily: 'Roboto',
-                      fontSize: 10,
                       fontWeight: AppTextStyles.bold,
                       height: 1.25,
                     ),
@@ -182,7 +179,6 @@ class _QuickStatCard extends StatelessWidget {
             stat.value,
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,
-              fontSize: 17,
               height: 1,
             ),
           ),
@@ -222,7 +218,6 @@ class _FrameworkCard extends StatelessWidget {
                   framework.name,
                   style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.text1,
-                    fontSize: 14,
                     height: 1,
                   ),
                 ),
@@ -231,7 +226,7 @@ class _FrameworkCard extends StatelessWidget {
                 '${framework.compliance}%',
                 style: AppTextStyles.baseMedium.copyWith(
                   color: _inspectionGreen,
-                  fontSize: 18,
+                  fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
               ),
@@ -280,7 +275,6 @@ class _RequirementRow extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    fontSize: 10,
                     height: 1,
                   ),
                 ),

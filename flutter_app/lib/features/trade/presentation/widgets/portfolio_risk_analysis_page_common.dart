@@ -17,16 +17,16 @@ class _PlaceholderPanel extends StatelessWidget {
             title,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 13,
               fontWeight: AppTextStyles.bold,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             description,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.navLabel.copyWith(
               color: AppColors.text2,
-              fontSize: 11,
+              fontWeight: AppTextStyles.normal,
+              height: 1.35,
             ),
           ),
         ],
@@ -68,20 +68,20 @@ class _StressScenarioPanel extends StatelessWidget {
                 Expanded(
                   child: Text(
                     scenario.name,
-                    style: AppTextStyles.caption.copyWith(
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.captionSm.copyWith(
                       color: AppColors.text1,
-                      fontSize: 12,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
                 ),
                 Text(
                   _formatSignedUsd(scenario.impact),
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.numericCode.copyWith(
                     color: scenario.impact >= 0
                         ? AppColors.buy
                         : AppColors.sell,
-                    fontSize: 14,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),

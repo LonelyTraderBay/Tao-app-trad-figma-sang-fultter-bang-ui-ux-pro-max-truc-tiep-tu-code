@@ -308,7 +308,6 @@ class _CountBadge extends StatelessWidget {
         count > 99 ? '99+' : '$count',
         style: AppTextStyles.micro.copyWith(
           color: AppColors.onAccent,
-          fontSize: AppTopHeaderTokens.titleBadgeFontSize,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),

@@ -118,7 +118,7 @@ class _ProgressLine extends StatelessWidget {
               value,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
-                fontWeight: FontWeight.w900,
+                fontWeight: AppTextStyles.heavy,
                 fontFeatures: AppTextStyles.tabularFigures,
                 height: 1,
               ),
@@ -163,7 +163,7 @@ class _TierTable extends StatelessWidget {
               child: Text(
                 'So s\u00E1nh c\u00E1c c\u1EA5p VIP',
                 style: AppTextStyles.body.copyWith(
-                  fontWeight: FontWeight.w900,
+                  fontWeight: AppTextStyles.heavy,
                   height: 1,
                 ),
               ),
@@ -203,8 +203,10 @@ class _TableHeader extends StatelessWidget {
     );
   }
 
-  TextStyle get _headerStyle =>
-      AppTextStyles.micro.copyWith(color: _vipMuted, fontSize: 11);
+  TextStyle get _headerStyle => AppTextStyles.navLabel.copyWith(
+    color: _vipMuted,
+    fontWeight: AppTextStyles.normal,
+  );
 }
 
 class _TierRow extends StatelessWidget {
@@ -238,7 +240,9 @@ class _TierRow extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: textColor,
-                      fontWeight: active ? FontWeight.w900 : FontWeight.w700,
+                      fontWeight: active
+                          ? AppTextStyles.heavy
+                          : AppTextStyles.bold,
                       height: 1.15,
                     ),
                   ),
@@ -282,7 +286,7 @@ class _TierRow extends StatelessWidget {
   TextStyle _feeStyle(bool active) {
     return AppTextStyles.micro.copyWith(
       color: active ? _vipSuccess : AppColors.text1,
-      fontWeight: FontWeight.w900,
+      fontWeight: AppTextStyles.heavy,
       fontFeatures: AppTextStyles.tabularFigures,
     );
   }
@@ -319,7 +323,7 @@ class _FeeSavingsCard extends StatelessWidget {
                 'Ti\u1EBFt ki\u1EC7m ph\u00ED c\u1EE7a b\u1EA1n',
                 style: AppTextStyles.body.copyWith(
                   color: _vipSuccess,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: AppTextStyles.heavy,
                   height: 1,
                 ),
               ),
@@ -377,7 +381,7 @@ class _SavingBox extends StatelessWidget {
             value,
             style: AppTextStyles.base.copyWith(
               color: _vipSuccess,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.heavy,
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
             ),

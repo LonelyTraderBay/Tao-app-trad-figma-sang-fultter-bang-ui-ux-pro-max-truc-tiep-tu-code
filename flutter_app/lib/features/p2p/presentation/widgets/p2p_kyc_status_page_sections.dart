@@ -40,7 +40,7 @@ class _OverallStatusCard extends StatelessWidget {
                       'Tier ${snapshot.tier} - ${snapshot.tierName}',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
+                      style: AppTextStyles.sectionTitle,
                     ),
                     const SizedBox(height: AppSpacing.x1),
                     Text(

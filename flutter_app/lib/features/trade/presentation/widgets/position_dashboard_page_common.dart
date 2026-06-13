@@ -31,9 +31,7 @@ class _PositionTile extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.baseMedium.copyWith(
-                    fontSize: 15,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
               ),
@@ -41,12 +39,9 @@ class _PositionTile extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 _formatSignedMoney(position.pnl),
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.amountSm.copyWith(
                   color: pnlColor,
-                  fontSize: 14,
-                  fontFamily: 'monospace',
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
@@ -139,15 +134,7 @@ class _TypeBadge extends StatelessWidget {
         color: color.withValues(alpha: .15),
         borderRadius: AppRadii.xsRadius,
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 9,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+      child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
     );
   }
 }
@@ -170,12 +157,7 @@ class _SideBadge extends StatelessWidget {
       ),
       child: Text(
         '${isLong ? 'LONG' : 'SHORT'}$leverage',
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontSize: 10,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
+        style: AppTextStyles.badge.copyWith(color: color),
       ),
     );
   }
@@ -203,25 +185,14 @@ class _PositionMetric extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontSize: 10,
-            height: 1.1,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: 7),
         Text(
           value,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
-            color: valueColor,
-            fontSize: 12,
-            fontFamily: 'monospace',
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-            fontFeatures: AppTextStyles.tabularFigures,
-          ),
+          style: AppTextStyles.numericCode.copyWith(color: valueColor),
         ),
       ],
     );
@@ -252,15 +223,7 @@ class _RiskChip extends StatelessWidget {
         children: [
           Icon(icon, color: color, size: 10),
           const SizedBox(width: 4),
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              fontSize: 10,
-              fontFamily: 'monospace',
-              height: 1,
-            ),
-          ),
+          Text(label, style: AppTextStyles.micro.copyWith(color: color)),
         ],
       ),
     );

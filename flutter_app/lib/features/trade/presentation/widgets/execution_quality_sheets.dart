@@ -28,7 +28,7 @@ class ExecutionQualityExecutionSheet extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _SheetRow(label: 'Order ID', value: report.orderId),
+          _SheetRow(label: 'Order ID', value: report.orderId, isCode: true),
           _SheetRow(label: 'Symbol', value: report.symbol),
           _SheetRow(
             label: 'Average fill',
@@ -65,7 +65,7 @@ class ExecutionQualityAmendmentSheet extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _SheetRow(label: 'Order ID', value: order.id),
+          _SheetRow(label: 'Order ID', value: order.id, isCode: true),
           _SheetRow(label: 'Symbol', value: order.symbol),
           _SheetRow(
             label: 'Current price',
@@ -102,10 +102,7 @@ class _ExecutionQualitySlippageSheetState
         children: [
           Text(
             'Set max slippage tolerance before the order is rejected.',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: 14),
           Row(
@@ -168,10 +165,7 @@ class _SheetFrame extends StatelessWidget {
             children: [
               const _SheetHandle(),
               const SizedBox(height: 18),
-              Text(
-                title,
-                style: AppTextStyles.sectionTitle.copyWith(fontSize: 20),
-              ),
+              Text(title, style: AppTextStyles.sectionTitleSm),
               const SizedBox(height: 12),
               child,
             ],
@@ -250,7 +244,7 @@ class _FillTile extends StatelessWidget {
             '${fill.amount.toStringAsFixed(1)} BTC @ \$${formatExecutionQualityMoney(fill.price)}',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontFamily: 'monospace',
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],
@@ -278,10 +272,15 @@ class _SheetHandle extends StatelessWidget {
 }
 
 class _SheetRow extends StatelessWidget {
-  const _SheetRow({required this.label, required this.value});
+  const _SheetRow({
+    required this.label,
+    required this.value,
+    this.isCode = false,
+  });
 
   final String label;
   final String value;
+  final bool isCode;
 
   @override
   Widget build(BuildContext context) {
@@ -292,10 +291,7 @@ class _SheetRow extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text3,
-                fontSize: 12,
-              ),
+              style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
             ),
           ),
           Flexible(
@@ -303,10 +299,11 @@ class _SheetRow extends StatelessWidget {
               value,
               textAlign: TextAlign.right,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(
-                fontWeight: AppTextStyles.bold,
-                fontFamily: 'monospace',
-              ),
+              style: (isCode ? AppTextStyles.monoCode : AppTextStyles.caption)
+                  .copyWith(
+                    fontWeight: AppTextStyles.bold,
+                    fontFeatures: isCode ? null : AppTextStyles.tabularFigures,
+                  ),
             ),
           ),
         ],

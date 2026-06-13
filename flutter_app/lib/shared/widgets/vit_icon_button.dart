@@ -42,7 +42,7 @@ class VitIconButton extends StatelessWidget {
         return const _IconButtonMetrics(
           height: 28,
           iconSize: 14,
-          fontSize: 11,
+          labelStyle: AppTextStyles.badge,
           gap: 4,
           paddingX: 8,
         );
@@ -50,7 +50,7 @@ class VitIconButton extends StatelessWidget {
         return const _IconButtonMetrics(
           height: 40,
           iconSize: 21,
-          fontSize: 13,
+          labelStyle: AppTextStyles.caption,
           gap: 6,
           paddingX: 12,
         );
@@ -58,7 +58,7 @@ class VitIconButton extends StatelessWidget {
         return const _IconButtonMetrics(
           height: 44,
           iconSize: 20,
-          fontSize: 14,
+          labelStyle: AppTextStyles.control,
           gap: 8,
           paddingX: 16,
         );
@@ -136,9 +136,8 @@ class VitIconButton extends StatelessWidget {
           SizedBox(width: metrics.gap),
           Text(
             label!,
-            style: AppTextStyles.caption.copyWith(
+            style: metrics.labelStyle.copyWith(
               color: style.foreground,
-              fontSize: metrics.fontSize,
               fontWeight: AppTextStyles.medium,
               height: 1,
             ),
@@ -189,14 +188,14 @@ class _IconButtonMetrics {
   const _IconButtonMetrics({
     required this.height,
     required this.iconSize,
-    required this.fontSize,
+    required this.labelStyle,
     required this.gap,
     required this.paddingX,
   });
 
   final double height;
   final double iconSize;
-  final double fontSize;
+  final TextStyle labelStyle;
   final double gap;
   final double paddingX;
 }

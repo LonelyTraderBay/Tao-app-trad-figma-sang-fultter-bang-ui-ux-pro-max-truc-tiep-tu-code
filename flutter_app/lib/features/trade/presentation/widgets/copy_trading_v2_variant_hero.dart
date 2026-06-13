@@ -239,7 +239,7 @@ class _BoldHero extends StatelessWidget {
             'Sao chép trader hàng đầu',
             style: AppTextStyles.sectionTitle.copyWith(
               color: AppColors.onAccent,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
             ),
           ),
           const SizedBox(height: 4),
@@ -404,7 +404,7 @@ class _BoldStatCard extends StatelessWidget {
               value,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.onAccent,
-                fontWeight: FontWeight.w800,
+                fontWeight: AppTextStyles.extraBold,
                 height: 1,
               ),
             ),

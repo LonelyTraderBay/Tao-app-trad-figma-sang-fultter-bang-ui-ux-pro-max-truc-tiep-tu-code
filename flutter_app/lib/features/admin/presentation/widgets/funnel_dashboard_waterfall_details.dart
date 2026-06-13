@@ -59,10 +59,9 @@ class _WaterfallStep extends StatelessWidget {
               children: [
                 Text(
                   '${step.reached}',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.numericCode.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    fontFamily: 'monospace',
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
@@ -77,22 +76,22 @@ class _WaterfallStep extends StatelessWidget {
         const SizedBox(height: AppSpacing.x2),
         ClipRRect(
           borderRadius: AppRadii.inputRadius,
-          child: const SizedBox(
+          child: SizedBox(
             height: AppSpacing.adminBox32,
             child: ColoredBox(
               color: AppColors.surface2,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.x4,
+                  ),
                   child: Text(
                     'hoàn thành',
-                    style: TextStyle(
+                    style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontSize: AppSpacing.adminFontMd,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: AppTextStyles.bold,
                       height: AppSpacing.adminLineHeightShort,
-                      decoration: TextDecoration.none,
                     ),
                   ),
                 ),
@@ -290,10 +289,9 @@ class _DetailStat extends StatelessWidget {
         ),
         Text(
           value,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.numericCode.copyWith(
             color: valueColor,
             fontWeight: AppTextStyles.bold,
-            fontFamily: 'monospace',
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),

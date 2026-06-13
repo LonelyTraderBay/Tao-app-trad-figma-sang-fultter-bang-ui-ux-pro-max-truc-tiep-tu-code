@@ -112,9 +112,8 @@ class _FilterTab extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: active ? _marketPrimary : AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -196,9 +195,8 @@ class _StatBox extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text3,
-              fontSize: 12,
               height: 1,
             ),
           ),
@@ -208,7 +206,6 @@ class _StatBox extends StatelessWidget {
             key: valueKey,
             style: AppTextStyles.sectionTitle.copyWith(
               color: valueColor,
-              fontSize: 22,
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
             ),

@@ -278,9 +278,8 @@ class _RiskFactorRow extends StatelessWidget {
                   factor.value,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text3,
-                    fontSize: 12,
                   ),
                 ),
               ],

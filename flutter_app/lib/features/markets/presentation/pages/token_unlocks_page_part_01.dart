@@ -234,10 +234,7 @@ class _UnlockHero extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             _formatCompactUsd(snapshot.totalValueNext30d),
-            style: AppTextStyles.pageTitle.copyWith(
-              color: AppColors.text1,
-              fontSize: 30,
-            ),
+            style: AppTextStyles.amountMd.copyWith(color: AppColors.text1),
           ),
           const SizedBox(height: 9),
           Row(
@@ -289,7 +286,7 @@ class _UnlockFilters extends StatelessWidget {
             color: _marketPrimary,
             onTap: () => onSortSelected(MarketUnlockSort.nearest),
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: 2),
           _FilterChipButton(
             key: TokenUnlocksPage.sortValueKey,
             label: 'Giá trị cao',
@@ -297,21 +294,21 @@ class _UnlockFilters extends StatelessWidget {
             color: _marketPrimary,
             onTap: () => onSortSelected(MarketUnlockSort.value),
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: 2),
           _FilterChipButton(
             label: 'Tác động',
             active: sortBy == MarketUnlockSort.impact,
             color: _marketPrimary,
             onTap: () => onSortSelected(MarketUnlockSort.impact),
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: 2),
           _FilterChipButton(
             label: 'Tất cả',
             active: impactFilter == null,
             color: AppColors.text3,
             onTap: onAllImpacts,
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: 2),
           for (final entry in impactConfigs.entries) ...[
             _FilterChipButton(
               key: entry.key == MarketUnlockImpact.high
@@ -322,7 +319,7 @@ class _UnlockFilters extends StatelessWidget {
               color: entry.value.color,
               onTap: () => onImpactSelected(entry.key),
             ),
-            if (entry.key != impactConfigs.keys.last) const SizedBox(width: 4),
+            if (entry.key != impactConfigs.keys.last) const SizedBox(width: 2),
           ],
         ],
       ),
@@ -350,7 +347,7 @@ class _FilterChipButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
         decoration: BoxDecoration(
           color: active
               ? color.withValues(alpha: color == AppColors.text3 ? .06 : .12)
@@ -366,7 +363,6 @@ class _FilterChipButton extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: active ? color : AppColors.text3,
-            fontSize: 9,
             fontWeight: AppTextStyles.medium,
           ),
         ),

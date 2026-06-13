@@ -57,10 +57,7 @@ class _MarketCapHero extends StatelessWidget {
                   _formatCompact(stats.totalMarketCap, prefix: r'$'),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.heroNumber.copyWith(
-                    fontSize: 26,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.pageTitle.copyWith(height: 1),
                 ),
               ),
               const SizedBox(width: 12),
@@ -469,11 +466,7 @@ class _FearGreedGauge extends StatelessWidget {
         const Spacer(),
         Text(
           '$value',
-          style: AppTextStyles.heroNumber.copyWith(
-            color: color,
-            fontSize: 27,
-            height: 1,
-          ),
+          style: AppTextStyles.amountMd.copyWith(color: color, height: 1),
         ),
         const SizedBox(height: 8),
         Text(

@@ -42,7 +42,6 @@ class _StatusCard extends StatelessWidget {
                     snapshot.statusTitle,
                     style: AppTextStyles.sectionTitle.copyWith(
                       color: AppColors.onAccent,
-                      fontSize: 22,
                       height: 1.12,
                     ),
                   ),

@@ -62,7 +62,7 @@ class _TrustButton extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.micro.copyWith(
                   color: color,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: AppTextStyles.heavy,
                   height: 1,
                 ),
               ),
@@ -107,7 +107,7 @@ class _LogoutButton extends StatelessWidget {
               '\u0110\u0103ng xu\u1EA5t',
               style: AppTextStyles.micro.copyWith(
                 color: _devicesRed,
-                fontWeight: FontWeight.w900,
+                fontWeight: AppTextStyles.heavy,
                 height: 1,
               ),
             ),
@@ -136,7 +136,7 @@ class _TinyPill extends StatelessWidget {
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontWeight: FontWeight.w900,
+          fontWeight: AppTextStyles.heavy,
           height: 1,
         ),
       ),

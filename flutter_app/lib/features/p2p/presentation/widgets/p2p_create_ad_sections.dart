@@ -280,12 +280,11 @@ class P2PCreateAdMultilineBlock extends StatelessWidget {
           controller: controller,
           maxLines: 3,
           cursorColor: AppColors.primary,
-          style: AppTextStyles.body.copyWith(fontSize: 14, height: 1.45),
+          style: AppTextStyles.body.copyWith(height: 1.45),
           decoration: InputDecoration.collapsed(
             hintText: hintText,
             hintStyle: AppTextStyles.body.copyWith(
               color: AppColors.text3,
-              fontSize: 14,
               height: 1.45,
             ),
           ),

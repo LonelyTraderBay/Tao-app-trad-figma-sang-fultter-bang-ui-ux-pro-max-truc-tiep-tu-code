@@ -112,7 +112,6 @@ class _EventMainInfo extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.baseMedium.copyWith(
-                  fontSize: 15,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -128,10 +127,7 @@ class _EventMainInfo extends StatelessWidget {
           '${event.os} · ${event.browser}',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text3,
-            fontSize: 12,
-          ),
+          style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: AppSpacing.x2),
         Wrap(

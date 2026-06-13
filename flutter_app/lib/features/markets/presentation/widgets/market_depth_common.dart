@@ -78,7 +78,7 @@ class MarketDepthPairSummary extends StatelessWidget {
           ),
           Text(
             '\$${formatMarketDepthPrice(pair.price)}',
-            style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
+            style: AppTextStyles.sectionTitle,
           ),
         ],
       ),

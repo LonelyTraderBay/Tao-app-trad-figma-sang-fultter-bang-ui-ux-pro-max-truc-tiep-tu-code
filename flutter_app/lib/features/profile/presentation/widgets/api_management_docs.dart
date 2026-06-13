@@ -34,7 +34,7 @@ class _ApiDocsCard extends StatelessWidget {
                 Text(
                   'T\u00E0i li\u1EC7u API',
                   style: AppTextStyles.body.copyWith(
-                    fontWeight: FontWeight.w800,
+                    fontWeight: AppTextStyles.extraBold,
                     height: 1.1,
                   ),
                 ),

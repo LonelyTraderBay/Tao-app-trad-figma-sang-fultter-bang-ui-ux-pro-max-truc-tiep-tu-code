@@ -72,7 +72,6 @@ class _HistorySection extends StatelessWidget {
                           swap.timestamp,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            fontSize: AppSpacing.launchpadFontSm,
                           ),
                         ),
                       ),
@@ -80,7 +79,6 @@ class _HistorySection extends StatelessWidget {
                         swap.txHash,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: AppSpacing.launchpadFontSm,
                         ),
                       ),
                     ],
@@ -115,10 +113,9 @@ class _StatusPill extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
         child: Text(
           status.name.toUpperCase(),
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.chartLabelTiny.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: AppSpacing.launchpadFontXxs,
             height: AppSpacing.launchpadLineHeightTight,
           ),
         ),

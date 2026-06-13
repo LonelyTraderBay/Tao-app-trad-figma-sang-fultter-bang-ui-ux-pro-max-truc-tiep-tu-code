@@ -79,31 +79,20 @@ class _RiskSummaryCard extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 10,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const Spacer(),
           Text(
             value,
-            style: AppTextStyles.sectionTitle.copyWith(
+            style: AppTextStyles.amountSm.copyWith(
               color: valueColor,
-              fontSize: 18,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             caption,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 9,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -135,11 +124,8 @@ class _RiskWarningPanel extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 'Cảnh báo rủi ro',
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.baseMedium.copyWith(
                   color: _riskWarningText,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w800,
-                  height: 1,
                 ),
               ),
             ],
@@ -152,10 +138,10 @@ class _RiskWarningPanel extends StatelessWidget {
                 '• $alert',
                 style: AppTextStyles.micro.copyWith(
                   color: _riskWarningText,
-                  fontSize: 10,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.45,
                 ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             if (alert != alerts.last) const SizedBox(height: 3),
@@ -195,14 +181,18 @@ class _RiskTabs extends StatelessWidget {
                       child: Center(
                         child: Text(
                           tab.label,
-                          style: AppTextStyles.caption.copyWith(
-                            color: tab.id == activeId
-                                ? _riskPrimary
-                                : AppColors.text3,
-                            fontSize: 12,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
+                          style:
+                              (tab.id == activeId
+                                      ? AppTextStyles.baseMedium
+                                      : AppTextStyles.caption)
+                                  .copyWith(
+                                    color: tab.id == activeId
+                                        ? _riskPrimary
+                                        : AppColors.text3,
+                                  ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
@@ -235,12 +225,7 @@ class _ExposureTab extends StatelessWidget {
           padding: const EdgeInsets.only(left: 10),
           child: Text(
             'Asset Allocation',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text2,
-              fontSize: 12,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
-            ),
+            style: AppTextStyles.baseMedium.copyWith(color: AppColors.text2),
           ),
         ),
         const SizedBox(height: 22),
@@ -292,10 +277,10 @@ class _AssetExposureRow extends StatelessWidget {
             asset.asset,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 11,
               fontWeight: AppTextStyles.medium,
-              height: 1,
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           const Spacer(),
           Column(
@@ -304,22 +289,16 @@ class _AssetExposureRow extends StatelessWidget {
             children: [
               Text(
                 _formatUsd(asset.value),
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.numericCode.copyWith(
                   color: AppColors.text1,
-                  fontSize: 12,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
               const SizedBox(height: 5),
               Text(
                 '${_formatPercent(asset.percent)}%',
-                style: AppTextStyles.micro.copyWith(
+                style: AppTextStyles.numericMicro.copyWith(
                   color: AppColors.text3,
-                  fontSize: 9,
-                  height: 1,
-                  fontFeatures: AppTextStyles.tabularFigures,
+                  height: 1.2,
                 ),
               ),
             ],
@@ -349,11 +328,9 @@ class _DiversificationNote extends StatelessWidget {
           Expanded(
             child: Text(
               'Diversification score $score/100. Khuyến nghị không để asset nào chiếm >30% portfolio.',
-              style: AppTextStyles.micro.copyWith(
-                color: _riskPrimary,
-                fontSize: 10,
-                height: 1.5,
-              ),
+              style: AppTextStyles.caption.copyWith(color: _riskPrimary),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],

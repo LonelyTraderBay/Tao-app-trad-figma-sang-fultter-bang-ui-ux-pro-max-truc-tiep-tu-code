@@ -279,6 +279,9 @@ class _RiskPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _riskColor(level);
+    final labelStyle = compact
+        ? AppTextStyles.chartLabelXs
+        : AppTextStyles.badge;
     return DecoratedBox(
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
@@ -293,10 +296,9 @@ class _RiskPill extends StatelessWidget {
           compact
               ? _riskLabel(level).toUpperCase()
               : '${_riskLabel(level).toUpperCase()} RISK',
-          style: AppTextStyles.micro.copyWith(
+          style: labelStyle.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: compact ? 9 : 11,
             height: AppSpacing.launchpadLineHeightBody,
           ),
         ),

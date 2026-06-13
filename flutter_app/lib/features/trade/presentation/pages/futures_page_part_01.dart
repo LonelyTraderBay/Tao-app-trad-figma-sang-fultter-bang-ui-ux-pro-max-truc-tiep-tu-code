@@ -163,7 +163,9 @@ class _FuturesHeader extends StatelessWidget {
                   children: [
                     Text(
                       pair.symbol,
-                      style: AppTextStyles.sectionTitle.copyWith(fontSize: 17),
+                      style: AppTextStyles.baseMedium.copyWith(
+                        fontWeight: AppTextStyles.bold,
+                      ),
                     ),
                     const SizedBox(width: 8),
                     Container(
@@ -177,10 +179,8 @@ class _FuturesHeader extends StatelessWidget {
                       ),
                       child: Text(
                         'FUTURES',
-                        style: AppTextStyles.micro.copyWith(
+                        style: AppTextStyles.badge.copyWith(
                           color: _futuresRed,
-                          fontSize: 11,
-                          fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
                       ),
@@ -190,9 +190,8 @@ class _FuturesHeader extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   '${_formatMoney(pair.price)} (+${pair.changePct.toStringAsFixed(2)}%)',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.numericCode.copyWith(
                     color: _futuresGreen,
-                    fontSize: 13,
                     height: 1,
                   ),
                 ),
@@ -285,7 +284,6 @@ class _FuturesTabs extends StatelessWidget {
                             color: active == tab.$1
                                 ? AppColors.onAccent
                                 : AppColors.text3,
-                            fontSize: 13,
                             fontWeight: AppTextStyles.bold,
                             height: 1,
                           ),
@@ -463,20 +461,16 @@ class _MarketStats extends StatelessWidget {
                     stats[i].$2,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.sectionTitle.copyWith(
+                    style: AppTextStyles.amountSm.copyWith(
                       color: stats[i].$3,
-                      fontSize: 20,
-                      fontFamily: 'monospace',
                       fontWeight: AppTextStyles.bold,
+                      height: 1,
                     ),
                   ),
                   const SizedBox(height: 6),
                   Text(
                     stats[i].$1,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 10,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),

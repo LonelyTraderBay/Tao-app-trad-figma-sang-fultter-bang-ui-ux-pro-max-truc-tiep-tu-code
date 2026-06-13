@@ -37,10 +37,8 @@ class _TopTradersCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   '${data.longPct.toStringAsFixed(1)}%',
-                  style: AppTextStyles.heroNumber.copyWith(
+                  style: AppTextStyles.amountLg.copyWith(
                     color: liveMarketGreen,
-                    fontSize: 36,
-                    fontFamily: 'monospace',
                     height: 1,
                   ),
                 ),
@@ -73,7 +71,6 @@ class _TopTradersCard extends StatelessWidget {
                         'Shifted ${data.change24h.abs().toStringAsFixed(1)}% to ${shortShift ? 'Short' : 'Long'}',
                         style: AppTextStyles.body.copyWith(
                           color: AppColors.text1,
-                          fontSize: 14,
                           fontWeight: AppTextStyles.bold,
                           height: 1.2,
                         ),

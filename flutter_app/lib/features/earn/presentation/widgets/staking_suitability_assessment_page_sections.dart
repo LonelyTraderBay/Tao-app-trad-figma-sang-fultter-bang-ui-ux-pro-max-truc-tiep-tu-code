@@ -83,8 +83,7 @@ class _QuestionCard extends StatelessWidget {
         children: [
           Text(
             question.question,
-            style: AppTextStyles.sectionTitle.copyWith(
-              fontSize: AppSpacing.stakingAssessmentQuestionFontSize,
+            style: AppTextStyles.sectionTitleXs.copyWith(
               height: AppSpacing.stakingAssessmentQuestionLineHeight,
             ),
           ),

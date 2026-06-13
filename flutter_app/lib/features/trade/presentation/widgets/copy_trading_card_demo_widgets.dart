@@ -35,8 +35,7 @@ class CopyTradingVariantSection extends StatelessWidget {
             Expanded(
               child: Text(
                 variant.title,
-                style: AppTextStyles.baseMedium.copyWith(
-                  fontSize: 18,
+                style: AppTextStyles.sectionTitleSm.copyWith(
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -130,7 +129,7 @@ class _HeroCopyCard extends StatelessWidget {
                   Text(
                     formatCopyTradingUsd(metrics.aumUsd),
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.heroNumber.copyWith(fontSize: 33),
+                    style: AppTextStyles.numericDisplayHeroSm,
                   ),
                   const SizedBox(height: AppSpacing.x3),
                   CopyTradingTrendPill(value: metrics.aumTrendPercent),
@@ -349,13 +348,7 @@ class _SecondaryMetric extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x3),
-          Text(
-            value,
-            style: AppTextStyles.sectionTitle.copyWith(
-              fontSize: 27,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
+          Text(value, style: AppTextStyles.numericDisplayLg),
         ],
       ),
     );

@@ -206,7 +206,6 @@ class _OrderTypeButton extends StatelessWidget {
             label,
             style: AppTextStyles.caption.copyWith(
               color: active ? _tradePrimary : AppColors.text2,
-              fontSize: 13,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -236,7 +235,7 @@ class _MarginInput extends StatelessWidget {
       ],
       textStyle: AppTextStyles.base.copyWith(
         color: AppColors.text1,
-        fontFamily: 'monospace',
+        fontFeatures: AppTextStyles.tabularFigures,
       ),
       suffix: Text(
         'USDT',
@@ -274,10 +273,10 @@ class _PercentRow extends StatelessWidget {
                 ),
                 child: Text(
                   '$pct%',
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.numericCode.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
+                    height: 1,
                   ),
                 ),
               ),
@@ -330,9 +329,8 @@ class _PreviewCard extends StatelessWidget {
                   const Spacer(),
                   Text(
                     row.$2,
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.numericCode.copyWith(
                       color: row.$3,
-                      fontFamily: 'monospace',
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -385,9 +383,8 @@ class _ToggleChip extends StatelessWidget {
             const SizedBox(width: 7),
             Text(
               label,
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.captionSm.copyWith(
                 color: active ? activeColor : AppColors.text2,
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
               ),
             ),

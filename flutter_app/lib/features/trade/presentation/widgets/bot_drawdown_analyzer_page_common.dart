@@ -135,8 +135,7 @@ class _UnderwaterPainter extends CustomPainter {
         canvas,
         '$value%',
         Offset(12, y - 5),
-        AppColors.text3,
-        10,
+        AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         width: 44,
         align: TextAlign.right,
       );
@@ -149,8 +148,7 @@ class _UnderwaterPainter extends CustomPainter {
         canvas,
         points[index].monthLabel,
         Offset(x - 14, chart.bottom + 10),
-        AppColors.text3,
-        10,
+        AppTextStyles.micro.copyWith(color: AppColors.text3),
         width: 30,
         align: TextAlign.center,
       );
@@ -223,8 +221,7 @@ class _DurationPainter extends CustomPainter {
         canvas,
         '$value',
         Offset(22, y - 5),
-        AppColors.text3,
-        10,
+        AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         width: 34,
         align: TextAlign.right,
       );
@@ -248,8 +245,7 @@ class _DurationPainter extends CustomPainter {
         canvas,
         item.range,
         Offset(barArea.left + i * slot, chart.bottom + 9),
-        AppColors.text3,
-        10,
+        AppTextStyles.micro.copyWith(color: AppColors.text3),
         width: slot,
         align: TextAlign.center,
       );
@@ -265,18 +261,15 @@ void _paintText(
   Canvas canvas,
   String text,
   Offset offset,
-  Color color,
-  double fontSize, {
+  TextStyle style, {
   double width = 80,
   TextAlign align = TextAlign.left,
 }) {
   final painter = TextPainter(
     text: TextSpan(
       text: text,
-      style: TextStyle(
-        color: color,
-        fontSize: fontSize,
-        fontWeight: FontWeight.w500,
+      style: style.copyWith(
+        fontWeight: AppTextStyles.medium,
         height: 1,
         decoration: TextDecoration.none,
       ),

@@ -176,7 +176,6 @@ class _TagPill extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: color,
-              fontSize: 8,
               fontWeight: strong ? AppTextStyles.bold : AppTextStyles.medium,
             ),
           ),
@@ -207,9 +206,23 @@ class _NewsMeta extends StatelessWidget {
         _MetaSeparator(style: style),
         const Icon(Icons.schedule_rounded, size: 10, color: AppColors.text3),
         const SizedBox(width: 4),
-        Text(news.timeAgo, style: style),
+        Flexible(
+          child: Text(
+            news.timeAgo,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: style,
+          ),
+        ),
         _MetaSeparator(style: style),
-        Text(news.readTime, style: style),
+        Flexible(
+          child: Text(
+            news.readTime,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: style,
+          ),
+        ),
       ],
     );
   }
@@ -224,7 +237,7 @@ class _MetaSeparator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 7),
-      child: Text('•', style: style.copyWith(fontSize: 8)),
+      child: Text('•', style: style),
     );
   }
 }

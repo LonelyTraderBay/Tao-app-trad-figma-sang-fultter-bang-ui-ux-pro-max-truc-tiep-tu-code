@@ -133,9 +133,8 @@ class _ToolTile extends StatelessWidget {
             tool.description,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
+            style: AppTextStyles.chartLabelXs.copyWith(
               color: AppColors.text3,
-              fontSize: AppSpacing.launchpadFontXs,
               height: AppSpacing.launchpadLineHeightShort,
             ),
           ),

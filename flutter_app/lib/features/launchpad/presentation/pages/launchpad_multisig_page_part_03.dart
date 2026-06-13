@@ -400,10 +400,9 @@ class _MiniPill extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
         child: Text(
           label,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.chartLabelTiny.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: AppSpacing.launchpadFontXxs,
             height: AppSpacing.launchpadLineHeightTight,
           ),
         ),

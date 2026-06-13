@@ -33,7 +33,7 @@ class _BackupCodesStep extends StatelessWidget {
         Text(
           'Bước 3: Mã dự phòng',
           textAlign: TextAlign.center,
-          style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
+          style: AppTextStyles.sectionTitle,
         ),
         const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text(

@@ -29,7 +29,7 @@ class _InputCard extends StatelessWidget {
         children: [
           _NumberField(
             key: RIYCalculatorPage.investmentKey,
-            label: 'Initial Investment (€)',
+            label: 'Initial Investment (â‚¬)',
             initialValue: _formatInput(investment),
             onChanged: (value) {
               final parsed = double.tryParse(value);
@@ -96,9 +96,8 @@ class _NumberField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: AppColors.text2,
-            fontSize: 11,
             height: 1,
           ),
         ),
@@ -115,11 +114,7 @@ class _NumberField extends StatelessWidget {
             ],
             onChanged: onChanged,
             cursorColor: _riyPrimary,
-            style: AppTextStyles.baseMedium.copyWith(
-              color: AppColors.text1,
-              fontSize: 16,
-              height: 1,
-            ),
+            style: AppTextStyles.base.copyWith(color: AppColors.text1),
             decoration: InputDecoration(
               filled: true,
               fillColor: _riyPanel2,
@@ -159,19 +154,11 @@ class _ResultMetric extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
                 height: 1,
               ),
             ),
             const Spacer(),
-            Text(
-              value,
-              style: AppTextStyles.baseMedium.copyWith(
-                color: color,
-                fontSize: 18,
-                height: 1,
-              ),
-            ),
+            Text(value, style: AppTextStyles.amountSm.copyWith(color: color)),
           ],
         ),
       ),
@@ -204,21 +191,15 @@ class _CostImpactCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     'Cost Impact',
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.base.copyWith(
                       color: AppColors.text1,
-                      fontSize: 14,
                       fontWeight: AppTextStyles.bold,
-                      height: 1,
                     ),
                   ),
                 ),
                 Text(
                   '-${_formatEur(difference)}',
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: _riyRed,
-                    fontSize: 20,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.sectionTitleSm.copyWith(color: _riyRed),
                 ),
               ],
             ),
@@ -235,7 +216,6 @@ class _CostImpactCard extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
-                  fontSize: 10,
                   fontWeight: AppTextStyles.bold,
                   height: 1.25,
                 ),

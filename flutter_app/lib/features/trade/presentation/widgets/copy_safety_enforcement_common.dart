@@ -210,7 +210,7 @@ class _EmergencyPanel extends StatelessWidget {
               children: [
                 Text(
                   'Emergency stop activated',
-                  style: AppTextStyles.baseMedium.copyWith(fontSize: 16),
+                  style: AppTextStyles.baseMedium,
                 ),
                 const SizedBox(height: 10),
                 Text(

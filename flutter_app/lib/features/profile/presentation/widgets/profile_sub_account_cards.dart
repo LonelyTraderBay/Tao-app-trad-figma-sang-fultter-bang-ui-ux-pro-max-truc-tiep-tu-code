@@ -53,7 +53,7 @@ class _SubAccountCard extends StatelessWidget {
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTextStyles.baseMedium.copyWith(
-                                    fontWeight: FontWeight.w800,
+                                    fontWeight: AppTextStyles.extraBold,
                                     height: 1,
                                   ),
                                 ),
@@ -110,7 +110,7 @@ class _SubAccountCard extends StatelessWidget {
                               ? '\u2022\u2022\u2022\u2022'
                               : _formatUsd(account.balance),
                           style: AppTextStyles.body.copyWith(
-                            fontWeight: FontWeight.w800,
+                            fontWeight: AppTextStyles.extraBold,
                             height: 1,
                             fontFeatures: AppTextStyles.tabularFigures,
                           ),

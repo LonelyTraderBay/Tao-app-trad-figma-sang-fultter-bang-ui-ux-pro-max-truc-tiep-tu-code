@@ -39,7 +39,6 @@ class _DocumentCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -51,7 +50,6 @@ class _DocumentCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 9,
                     height: 1,
                   ),
                 ),
@@ -65,11 +63,10 @@ class _DocumentCard extends StatelessWidget {
               color: _inspectionGreen.withValues(alpha: .13),
               borderRadius: AppRadii.inputRadius,
             ),
-            child: Text(
+              child: Text(
               document.status,
               style: AppTextStyles.micro.copyWith(
                 color: _inspectionGreen,
-                fontSize: 9,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
@@ -118,7 +115,6 @@ class _InspectorPortalCard extends StatelessWidget {
                       snapshot.portalTitle,
                       style: AppTextStyles.baseMedium.copyWith(
                         color: AppColors.text1,
-                        fontSize: 16,
                         height: 1.1,
                       ),
                     ),
@@ -127,7 +123,7 @@ class _InspectorPortalCard extends StatelessWidget {
                       snapshot.portalDescription,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
+                        fontWeight: AppTextStyles.normal,
                         height: 1.35,
                       ),
                     ),
@@ -145,10 +141,8 @@ class _InspectorPortalCard extends StatelessWidget {
             leading: const Icon(Icons.open_in_new_rounded, size: 15),
             child: Text(
               snapshot.portalCta,
-              style: AppTextStyles.caption.copyWith(
+              style: AppTextStyles.control.copyWith(
                 color: AppColors.text1,
-                fontFamily: 'Roboto',
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
@@ -178,8 +172,6 @@ class _ReportButton extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: AppTextStyles.body.copyWith(
           color: AppColors.onAccent,
-          fontFamily: 'Roboto',
-          fontSize: 14,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -210,7 +202,6 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

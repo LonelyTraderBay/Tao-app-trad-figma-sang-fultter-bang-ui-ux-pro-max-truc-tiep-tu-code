@@ -23,8 +23,7 @@ class _ShowcaseTitle extends StatelessWidget {
                 snapshot.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.baseMedium.copyWith(
-                  fontSize: AppSpacing.devFont2xl,
+                style: AppTextStyles.sectionTitleXs.copyWith(
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -32,10 +31,7 @@ class _ShowcaseTitle extends StatelessWidget {
                 snapshot.subtitle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontSize: AppSpacing.devFontLg,
-                ),
+                style: AppTextStyles.captionSm.copyWith(color: AppColors.text2),
               ),
             ],
           ),
@@ -321,10 +317,9 @@ class _FlowRow extends StatelessWidget {
                     children: [
                       Text(
                         flow.from,
-                        style: AppTextStyles.caption.copyWith(
+                        style: AppTextStyles.captionSm.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.medium,
-                          fontSize: AppSpacing.devFontLg,
                         ),
                       ),
                       const Icon(
@@ -334,10 +329,9 @@ class _FlowRow extends StatelessWidget {
                       ),
                       Text(
                         flow.to,
-                        style: AppTextStyles.caption.copyWith(
+                        style: AppTextStyles.captionSm.copyWith(
                           color: accent,
                           fontWeight: AppTextStyles.medium,
-                          fontSize: AppSpacing.devFontLg,
                         ),
                       ),
                     ],

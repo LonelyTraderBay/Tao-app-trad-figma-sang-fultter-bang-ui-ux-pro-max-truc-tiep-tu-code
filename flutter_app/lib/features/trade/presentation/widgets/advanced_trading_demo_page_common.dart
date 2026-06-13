@@ -97,21 +97,15 @@ class _ValueRow extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 12,
-              height: 1,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
         ),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
             color: _toneColor(tone),
-            fontSize: 13,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: 1,
           ),
         ),
       ],
@@ -170,7 +164,6 @@ class _DemoSheet extends StatelessWidget {
                         title,
                         style: AppTextStyles.baseMedium.copyWith(
                           color: AppColors.onAccent,
-                          fontSize: 16,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -178,7 +171,6 @@ class _DemoSheet extends StatelessWidget {
                         'Demo control state only. Backend execution stays in draft mode for SC-088.',
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          fontSize: 12,
                         ),
                       ),
                       const SizedBox(height: 16),

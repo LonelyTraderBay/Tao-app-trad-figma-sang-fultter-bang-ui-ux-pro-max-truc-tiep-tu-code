@@ -136,10 +136,7 @@ class _ActionTab extends StatelessWidget {
       children: [
         Text(
           description,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text3,
-            fontSize: 12,
-          ),
+          style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: 12),
         ExecutionQualityGradientButton(
@@ -181,9 +178,8 @@ class _TabButton extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.navLabel.copyWith(
             color: active ? AppColors.onAccent : AppColors.text2,
-            fontSize: 11,
             fontWeight: AppTextStyles.bold,
           ),
         ),

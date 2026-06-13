@@ -74,11 +74,9 @@ class _StrategyButton extends StatelessWidget {
                 strategy.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.captionSm.copyWith(
                   color: selected ? color : AppColors.text1,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                 ),
               ),
             ),
@@ -182,11 +180,9 @@ class _ChoicePill extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: selected ? AppColors.onAccent : AppColors.text1,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
-            height: 1,
           ),
         ),
       ),
@@ -208,11 +204,7 @@ class _CapitalInput extends StatelessWidget {
       inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
       suffix: Text(
         'USDT',
-        style: AppTextStyles.caption.copyWith(
-          color: AppColors.text3,
-          fontSize: 13,
-          height: 1,
-        ),
+        style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
       ),
     );
   }
@@ -251,19 +243,16 @@ class _BacktestPeriodCard extends StatelessWidget {
               children: [
                 Text(
                   'Backtest Period',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Testing ${strategyId.toUpperCase()} strategy on $pair from ${range.periodLabel} with \$$capital initial capital.',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text3,
-                    fontSize: 11,
                     height: 1.6,
                   ),
                 ),
@@ -293,11 +282,9 @@ class _RunFooter extends StatelessWidget {
         leading: const Icon(Icons.play_arrow_outlined, size: 19),
         child: Text(
           'Run Backtest',
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.control.copyWith(
             color: AppColors.onAccent,
-            fontSize: 14,
             fontWeight: AppTextStyles.bold,
-            height: 1,
           ),
         ),
       ),
@@ -325,11 +312,9 @@ class _SectionLabel extends StatelessWidget {
         const SizedBox(width: 7),
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
-            height: 1,
           ),
         ),
       ],

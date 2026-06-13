@@ -23,7 +23,6 @@ class ComparisonSparklineCard extends StatelessWidget {
             'Biểu đồ giá 24h',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 13,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -98,7 +97,6 @@ class ComparisonMetricSection extends StatelessWidget {
               'So sánh chi tiết',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                fontSize: 13,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -168,7 +166,6 @@ class _MetricCard extends StatelessWidget {
                               : index == bestIndex
                               ? comparisonToolPrimary
                               : AppColors.text1,
-                          fontSize: 15,
                           fontWeight: AppTextStyles.bold,
                           fontFeatures: AppTextStyles.tabularFigures,
                           height: 1,
@@ -178,11 +175,9 @@ class _MetricCard extends StatelessWidget {
                         const SizedBox(height: 9),
                         Text(
                           'TỐT NHẤT',
-                          style: AppTextStyles.micro.copyWith(
+                          style: AppTextStyles.badge.copyWith(
                             color: comparisonToolPrimary,
-                            fontSize: 8,
                             fontWeight: AppTextStyles.bold,
-                            height: 1,
                           ),
                         ),
                       ],

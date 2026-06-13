@@ -76,7 +76,7 @@ class ConvertHistoryRow extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontFamily: 'monospace',
+                          fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
                     ),
@@ -154,10 +154,7 @@ class ConvertAssetSheet extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 18, 20, 12),
               child: Row(
                 children: [
-                  Text(
-                    'Chọn tài sản',
-                    style: AppTextStyles.sectionTitle.copyWith(fontSize: 20),
-                  ),
+                  Text('Chọn tài sản', style: AppTextStyles.sectionTitleSm),
                   const Spacer(),
                   IconButton(
                     onPressed: () => Navigator.of(context).pop(),
@@ -210,7 +207,7 @@ class ConvertAssetSheet extends StatelessWidget {
                               color: disabled
                                   ? AppColors.text3.withValues(alpha: .55)
                                   : AppColors.text2,
-                              fontFamily: 'monospace',
+                              fontFeatures: AppTextStyles.tabularFigures,
                             ),
                           ),
                   );

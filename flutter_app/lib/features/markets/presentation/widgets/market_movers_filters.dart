@@ -254,7 +254,6 @@ class _ResultSummary extends StatelessWidget {
             'LIVE',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.buy,
-              fontSize: 9,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),

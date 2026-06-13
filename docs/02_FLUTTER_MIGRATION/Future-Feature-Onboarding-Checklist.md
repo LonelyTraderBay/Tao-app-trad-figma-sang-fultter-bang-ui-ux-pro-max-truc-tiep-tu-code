@@ -60,6 +60,25 @@ flutter_app/lib/features/<feature>/
       increase the P0 module design-token baseline when they touch Wallet,
       Trade, P2P, Markets, Profile, security, or KYC surfaces.
 
+## Typography Gates
+
+- [ ] Text uses semantic `AppTextStyles` tokens (`pageTitle`, `sectionTitle`,
+      `body`, `caption`, `captionSm`, `micro`, `badge`, `control`, `navLabel`)
+      instead of local `TextStyle(fontSize: ...)`.
+- [ ] Color changes use `.copyWith(color: ...)`; local
+      `copyWith(fontSize: ...)` is not added unless a chart/canvas or code-like
+      exception is documented.
+- [ ] Amount, price, P/L, percentage, order id, address, hash, and API-key text
+      uses `amount*`, `numeric*`, or `monoCode` tokens with tabular figures
+      where appropriate.
+- [ ] Local `fontFamily` is limited to approved code/hash/address/API or
+      chart/canvas exceptions; normal financial values use numeric tokens, not
+      ad hoc monospace.
+- [ ] `FontWeight.w800/w900` is expressed through `AppTextStyles.extraBold`,
+      `AppTextStyles.heavy`, or an existing semantic text token.
+- [ ] The design-token audit `Typography Debt By Module` section is reviewed
+      for the touched module before handoff.
+
 ## Size Gates
 
 - [ ] Page files stay within `200-500` lines.

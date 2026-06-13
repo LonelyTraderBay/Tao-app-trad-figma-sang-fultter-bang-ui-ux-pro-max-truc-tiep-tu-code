@@ -84,9 +84,8 @@ class _ExecutionBars extends StatelessWidget {
                 children: [
                   Text(
                     execution.tokens.toStringAsFixed(1),
-                    style: AppTextStyles.micro.copyWith(
+                    style: AppTextStyles.chartLabelXs.copyWith(
                       color: AppColors.text3,
-                      fontSize: AppSpacing.launchpadFontXs,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x1),
@@ -109,9 +108,8 @@ class _ExecutionBars extends StatelessWidget {
                   const SizedBox(height: AppSpacing.x2),
                   Text(
                     execution.date.split(' ').first,
-                    style: AppTextStyles.micro.copyWith(
+                    style: AppTextStyles.chartLabelXs.copyWith(
                       color: AppColors.text3,
-                      fontSize: AppSpacing.launchpadFontXs,
                     ),
                   ),
                 ],

@@ -62,8 +62,8 @@ class _DepthRow extends StatelessWidget {
               _formatPrice(level.price),
               style: AppTextStyles.micro.copyWith(
                 color: color,
-                fontFamily: 'monospace',
                 fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
           ),
@@ -158,8 +158,8 @@ class _TradeRow extends StatelessWidget {
               _formatPrice(trade.price),
               style: AppTextStyles.micro.copyWith(
                 color: color,
-                fontFamily: 'monospace',
                 fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
           ),

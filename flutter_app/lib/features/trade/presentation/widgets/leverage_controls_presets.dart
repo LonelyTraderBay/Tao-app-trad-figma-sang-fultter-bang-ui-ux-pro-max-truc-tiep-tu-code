@@ -22,8 +22,7 @@ class _LeverageSlider extends StatelessWidget {
         children: [
           Text(
             'Kéo để điều chỉnh',
-            style: AppTextStyles.caption.copyWith(
-              fontSize: 12,
+            style: AppTextStyles.captionSm.copyWith(
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -97,9 +96,8 @@ class _StopButton extends StatelessWidget {
         ),
         child: Text(
           '${leverage}x',
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.numericCode.copyWith(
             color: active ? AppColors.onAccent : AppColors.text2,
-            fontSize: 12,
             fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
             height: 1,
           ),
@@ -129,8 +127,7 @@ class _PresetGrid extends StatelessWidget {
         children: [
           Text(
             'Chọn nhanh',
-            style: AppTextStyles.caption.copyWith(
-              fontSize: 12,
+            style: AppTextStyles.captionSm.copyWith(
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -205,9 +202,8 @@ class _PresetButton extends StatelessWidget {
         ),
         child: Text(
           '${leverage}x',
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.numericCode.copyWith(
             color: active ? AppColors.onAccent : AppColors.text2,
-            fontSize: 14,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

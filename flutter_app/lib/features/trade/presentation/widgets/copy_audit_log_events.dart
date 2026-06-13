@@ -31,9 +31,8 @@ class _AuditEventCard extends StatelessWidget {
               children: [
                 Text(
                   event.title,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800,
+                  style: AppTextStyles.body.copyWith(
+                    fontWeight: AppTextStyles.medium,
                     height: 1.18,
                   ),
                 ),
@@ -44,7 +43,6 @@ class _AuditEventCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.medium,
                     height: 1.25,
                   ),
@@ -82,7 +80,6 @@ class _EventMetaRow extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
             height: 1,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
@@ -92,7 +89,6 @@ class _EventMetaRow extends StatelessWidget {
           '•',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
             height: 1,
           ),
         ),
@@ -121,7 +117,7 @@ class _TypeBadge extends StatelessWidget {
         _eventTypeLabel(type),
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontWeight: FontWeight.w800,
+          fontWeight: AppTextStyles.bold,
           height: 1,
         ),
       ),
@@ -149,7 +145,6 @@ class _EventMetadataPanel extends StatelessWidget {
           '${metadata.oldValue} → ${metadata.newValue}',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 10,
             height: 1,
           ),
         ),
@@ -229,18 +224,15 @@ class _MetadataValue extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 9,
             height: 1,
           ),
         ),
         const SizedBox(height: 6),
         Text(
           value,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.numericMicro.copyWith(
             color: valueColor,
-            fontSize: 11,
             fontWeight: AppTextStyles.bold,
-            height: 1,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),

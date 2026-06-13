@@ -23,16 +23,16 @@ class _FieldSection extends StatelessWidget {
             text: label,
             children: [
               if (required)
-                const TextSpan(
+                TextSpan(
                   text: ' *',
-                  style: TextStyle(color: _apiRed),
+                  style: AppTextStyles.caption.copyWith(color: _apiRed),
                 ),
               if (optional != null)
                 TextSpan(
                   text: ' ($optional)',
-                  style: const TextStyle(
+                  style: AppTextStyles.caption.copyWith(
                     color: _apiMuted,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: AppTextStyles.normal,
                   ),
                 ),
             ],
@@ -189,7 +189,7 @@ class _SuccessIcon extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: AppTextStyles.sectionTitle.copyWith(fontSize: 20),
+          style: AppTextStyles.sectionTitleSm,
         ),
       ],
     );

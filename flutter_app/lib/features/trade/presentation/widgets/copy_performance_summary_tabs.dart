@@ -15,7 +15,7 @@ class _PerformanceSummary extends StatelessWidget {
           Text(
             'Tổng quan so sánh',
             style: AppTextStyles.baseMedium.copyWith(
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
             ),
           ),
           const SizedBox(height: 14),
@@ -61,17 +61,20 @@ class _PerformanceSummary extends StatelessWidget {
                       size: 15,
                     ),
                     const SizedBox(width: 8),
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Chênh lệch hiệu suất',
-                        style: TextStyle(color: AppColors.buy20),
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.buy20,
+                        ),
                       ),
                     ),
                     Text(
                       '${snapshot.performanceGapPct.toStringAsFixed(2)}%',
                       style: AppTextStyles.baseMedium.copyWith(
                         color: _performanceGreen,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: AppTextStyles.extraBold,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ],
@@ -132,7 +135,8 @@ class _ReturnCard extends StatelessWidget {
             value,
             style: AppTextStyles.sectionTitle.copyWith(
               color: foreground,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
           const SizedBox(height: 3),
@@ -180,8 +184,8 @@ class _PerformanceTabs extends StatelessWidget {
                                 ? _performancePrimary
                                 : AppColors.text3,
                             fontWeight: activeTab == tab.$1
-                                ? FontWeight.w800
-                                : FontWeight.w600,
+                                ? AppTextStyles.extraBold
+                                : AppTextStyles.medium,
                           ),
                         ),
                       ),
@@ -216,7 +220,7 @@ class _OverviewTab extends StatelessWidget {
           'Đường vốn so sánh (30 ngày)',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontWeight: FontWeight.w800,
+            fontWeight: AppTextStyles.extraBold,
           ),
         ),
         const SizedBox(height: 10),
@@ -241,7 +245,7 @@ class _OverviewTab extends StatelessWidget {
           'Phân bổ Slippage',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontWeight: FontWeight.w800,
+            fontWeight: AppTextStyles.extraBold,
           ),
         ),
         const SizedBox(height: 10),

@@ -39,11 +39,7 @@ class _CircuitBreakerCard extends StatelessWidget {
             'Tự động dừng TẤT CẢ copy khi tổng portfolio lỗ quá X%',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 9,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           if (enabled) ...[
             const Spacer(),
@@ -53,8 +49,7 @@ class _CircuitBreakerCard extends StatelessWidget {
                   'Ngưỡng kích hoạt',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    fontSize: 10,
-                    height: 1,
+                    height: 1.2,
                   ),
                 ),
                 const Spacer(),
@@ -62,9 +57,8 @@ class _CircuitBreakerCard extends StatelessWidget {
                   '-${threshold.toStringAsFixed(0)}%',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.sell,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: 1.2,
                   ),
                 ),
               ],
@@ -163,8 +157,7 @@ class _NotificationRow extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 9,
-                    height: 1,
+                    height: 1.5,
                   ),
                 ),
               ],
@@ -273,9 +266,8 @@ class _ChannelButton extends StatelessWidget {
               label,
               style: AppTextStyles.caption.copyWith(
                 color: active ? _settingsPrimary : AppColors.text2,
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: 1.1,
               ),
             ),
           ],

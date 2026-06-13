@@ -139,10 +139,7 @@ class _SentimentHero extends StatelessWidget {
             children: [
               Text(
                 '${global.overallScore}',
-                style: AppTextStyles.heroNumber.copyWith(
-                  color: scoreColor,
-                  fontSize: 30,
-                ),
+                style: AppTextStyles.heroNumber.copyWith(color: scoreColor),
               ),
               const SizedBox(width: 6),
               Padding(

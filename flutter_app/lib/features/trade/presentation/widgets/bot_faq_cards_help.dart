@@ -46,8 +46,7 @@ class _FaqCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
+
                         height: 1.45,
                       ),
                     ),
@@ -77,7 +76,6 @@ class _FaqCard extends StatelessWidget {
                   item.answer,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                     height: 1.65,
                   ),
                 ),
@@ -130,18 +128,15 @@ class _StatCard extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 11,
               height: 1,
             ),
           ),
           const SizedBox(height: 10),
           Text(
             value,
-            style: AppTextStyles.baseMedium.copyWith(
+            style: AppTextStyles.amountSm.copyWith(
               color: AppColors.text1,
-              fontSize: 25,
-              fontWeight: AppTextStyles.bold,
-              fontFamily: 'Roboto',
+              fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
             ),
           ),
@@ -166,7 +161,6 @@ class _HelpCard extends StatelessWidget {
             'Still need help?',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              fontSize: 13,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -176,7 +170,6 @@ class _HelpCard extends StatelessWidget {
             "Can't find your answer? Our support team is here to help 24/7.",
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 11,
               height: 1.45,
             ),
           ),
@@ -230,7 +223,6 @@ class _HelpButton extends StatelessWidget {
         label,
         style: AppTextStyles.caption.copyWith(
           color: foreground,
-          fontSize: 12,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -286,7 +278,6 @@ class _SectionLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

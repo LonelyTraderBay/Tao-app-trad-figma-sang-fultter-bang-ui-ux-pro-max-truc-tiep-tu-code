@@ -359,7 +359,9 @@ class _VotingPowerNote extends StatelessWidget {
                   TextSpan(text: '${snapshot.votingPowerPrefix} '),
                   TextSpan(
                     text: snapshot.votingPower,
-                    style: const TextStyle(fontWeight: AppTextStyles.bold),
+                    style: AppTextStyles.caption.copyWith(
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
                   TextSpan(text: ' ${snapshot.votingPowerSuffix}'),
                 ],

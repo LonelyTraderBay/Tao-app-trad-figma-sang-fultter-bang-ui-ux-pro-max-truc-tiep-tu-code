@@ -163,10 +163,9 @@ class _WalletSide extends StatelessWidget {
                 balance.walletLabel,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.control.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  fontSize: 14,
                 ),
               ),
             ),

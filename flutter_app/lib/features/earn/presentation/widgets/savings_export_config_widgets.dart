@@ -49,9 +49,7 @@ class _ExportHero extends StatelessWidget {
                     ),
                     Text(
                       '${snapshot.createdReports}',
-                      style: AppTextStyles.heroNumber.copyWith(
-                        fontSize: AppSpacing.earnExportHeroStatFontSize,
-                      ),
+                      style: AppTextStyles.amountLg,
                     ),
                   ],
                 ),

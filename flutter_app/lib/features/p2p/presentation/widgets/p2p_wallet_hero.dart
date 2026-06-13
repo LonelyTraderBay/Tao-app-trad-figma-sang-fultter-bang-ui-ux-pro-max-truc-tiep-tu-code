@@ -179,10 +179,7 @@ class _WalletInfoBanner extends StatelessWidget {
       borderColor: AppModuleAccents.p2p.withValues(alpha: .28),
       padding: const EdgeInsets.all(AppSpacing.x3),
       iconSize: 16,
-      messageStyle: AppTextStyles.caption.copyWith(
-        color: AppColors.text2,
-        fontSize: 12,
-      ),
+      messageStyle: AppTextStyles.captionSm.copyWith(color: AppColors.text2),
     );
   }
 }

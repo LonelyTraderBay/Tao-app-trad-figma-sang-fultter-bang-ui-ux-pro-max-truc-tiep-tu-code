@@ -31,7 +31,6 @@ class VitStatusBar extends StatelessWidget {
               _timeLabel(),
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.statusBarText,
-                fontFamily: 'Roboto',
                 fontWeight: AppTextStyles.medium,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),

@@ -24,9 +24,8 @@ class _SettingsSection extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               title,
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.captionSm.copyWith(
                 color: AppColors.textMutedLight,
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
                 height: 1.2,
               ),
@@ -315,9 +314,8 @@ class _ChoiceBlock extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.captionSm.copyWith(
                   color: AppColors.textMutedLight,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1.2,
                 ),
@@ -328,7 +326,6 @@ class _ChoiceBlock extends StatelessWidget {
                 trailing!,
                 style: AppTextStyles.caption.copyWith(
                   color: _tradePrimary,
-                  fontFamily: 'monospace',
                   fontWeight: AppTextStyles.bold,
                   height: 1.2,
                   fontFeatures: AppTextStyles.tabularFigures,

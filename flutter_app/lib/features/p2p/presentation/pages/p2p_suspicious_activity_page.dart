@@ -186,7 +186,6 @@ class _SummaryCard extends StatelessWidget {
                   '$unreviewedCount cảnh báo mới',
                   style: AppTextStyles.sectionTitle.copyWith(
                     color: AppColors.warn,
-                    fontSize: 22,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -259,7 +258,6 @@ class _AlertCard extends StatelessWidget {
                 Text(
                   alert.message,
                   style: AppTextStyles.baseMedium.copyWith(
-                    fontSize: 15,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),

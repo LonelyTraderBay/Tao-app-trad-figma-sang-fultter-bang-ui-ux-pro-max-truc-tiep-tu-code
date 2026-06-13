@@ -169,7 +169,7 @@ class _ConceptList extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: '${concept.$1}: ',
-                    style: const TextStyle(
+                    style: AppTextStyles.caption.copyWith(
                       color: AppModuleAccents.p2p,
                       fontWeight: AppTextStyles.bold,
                     ),

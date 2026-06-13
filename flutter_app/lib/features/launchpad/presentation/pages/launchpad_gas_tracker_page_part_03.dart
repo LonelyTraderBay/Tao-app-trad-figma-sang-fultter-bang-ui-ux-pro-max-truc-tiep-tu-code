@@ -44,7 +44,6 @@ class _SelectablePill extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: active ? color : AppColors.text3,
                 fontWeight: AppTextStyles.bold,
-                fontSize: AppSpacing.launchpadFontMd,
               ),
             ),
           ),
@@ -74,7 +73,6 @@ class _ChainBadge extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: price.accent,
           fontWeight: AppTextStyles.bold,
-          fontSize: AppSpacing.launchpadFontSm,
         ),
       ),
     );
@@ -110,7 +108,6 @@ class _TrendPill extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                fontSize: AppSpacing.launchpadFontXs,
                 height: AppSpacing.launchpadLineHeightTight,
               ),
             ),
@@ -143,7 +140,6 @@ class _TrendInline extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: AppSpacing.launchpadFontSm,
           ),
         ),
       ],
@@ -159,13 +155,7 @@ class _Legend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      label,
-      style: AppTextStyles.micro.copyWith(
-        color: color,
-        fontSize: AppSpacing.launchpadFontXxs,
-      ),
-    );
+    return Text(label, style: AppTextStyles.micro.copyWith(color: color));
   }
 }
 
@@ -179,11 +169,9 @@ class _CostText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       value,
-      style: AppTextStyles.micro.copyWith(
+      style: AppTextStyles.numericMicro.copyWith(
         color: color,
-        fontFamily: 'monospace',
         fontWeight: AppTextStyles.medium,
-        fontSize: AppSpacing.launchpadFontSm,
       ),
     );
   }
@@ -272,10 +260,7 @@ class _GasChartPainter extends CustomPainter {
       final index = const ['32', '16', '8', '0'].indexOf(label);
       labelPainter.text = TextSpan(
         text: label,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: AppSpacing.launchpadFontXs,
-        ),
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
       );
       labelPainter.layout();
       labelPainter.paint(

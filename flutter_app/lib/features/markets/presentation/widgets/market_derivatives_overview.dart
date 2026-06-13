@@ -47,7 +47,7 @@ class MarketDerivativesOpenInterestHero extends StatelessWidget {
                   stats.totalOpenInterest,
                   prefix: r'$',
                 ),
-                style: AppTextStyles.heroNumber.copyWith(fontSize: 30),
+                style: AppTextStyles.amountMd,
               ),
               const SizedBox(width: 10),
               Padding(
@@ -179,10 +179,9 @@ class _StatCard extends StatelessWidget {
           const Spacer(),
           Text(
             value,
-            style: AppTextStyles.base.copyWith(
+            style: AppTextStyles.amountSm.copyWith(
               color: valueColor ?? AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              fontSize: 17,
             ),
           ),
           if (change != null)

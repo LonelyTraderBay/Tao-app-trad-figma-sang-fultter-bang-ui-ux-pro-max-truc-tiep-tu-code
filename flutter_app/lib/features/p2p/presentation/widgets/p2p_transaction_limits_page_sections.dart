@@ -225,10 +225,9 @@ class _UsageLimitRow extends StatelessWidget {
                 item.label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.captionSm.copyWith(
                   color: AppColors.text2,
                   fontWeight: AppTextStyles.bold,
-                  fontSize: 12,
                 ),
               ),
             ),

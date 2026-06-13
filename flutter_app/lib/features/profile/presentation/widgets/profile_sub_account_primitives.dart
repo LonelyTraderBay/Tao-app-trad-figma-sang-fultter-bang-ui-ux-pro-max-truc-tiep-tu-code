@@ -38,7 +38,7 @@ class _AccountAvatar extends StatelessWidget {
         initial,
         style: AppTextStyles.caption.copyWith(
           color: color,
-          fontWeight: FontWeight.w900,
+          fontWeight: AppTextStyles.heavy,
           height: 1,
         ),
       ),

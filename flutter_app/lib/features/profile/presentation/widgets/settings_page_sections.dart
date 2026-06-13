@@ -11,8 +11,7 @@ class _SectionTitle extends StatelessWidget {
       label,
       style: AppTextStyles.micro.copyWith(
         color: AppColors.sectionLabel,
-        fontSize: 11,
-        fontWeight: FontWeight.w700,
+        fontWeight: AppTextStyles.bold,
         height: 1,
       ),
     );
@@ -49,8 +48,7 @@ class _CurrencyCard extends StatelessWidget {
                   '\u0110\u01A1n v\u1ECB ti\u1EC1n t\u1EC7 hi\u1EC3n th\u1ECB',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
                 ),
@@ -106,8 +104,7 @@ class _CurrencyChip extends StatelessWidget {
           currency,
           style: AppTextStyles.micro.copyWith(
             color: selected ? AppColors.onAccent : AppColors.text2,
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
+            fontWeight: AppTextStyles.bold,
             height: 1,
           ),
         ),
@@ -178,8 +175,7 @@ class _LanguageRow extends StatelessWidget {
                 language.label,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
               ),
@@ -274,8 +270,7 @@ class _SettingsRow extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
                 ),
@@ -286,8 +281,7 @@ class _SettingsRow extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: _settingsMuted,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: AppTextStyles.medium,
                     height: 1,
                   ),
                 ),
@@ -365,3 +359,4 @@ class _SettingsSwitch extends StatelessWidget {
     );
   }
 }
+

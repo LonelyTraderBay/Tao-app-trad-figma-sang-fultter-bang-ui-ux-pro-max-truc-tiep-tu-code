@@ -16,12 +16,7 @@ class _SectionTitle extends StatelessWidget {
           size: AppSpacing.dcaScheduleSectionIcon,
         ),
         const SizedBox(width: AppSpacing.x3),
-        Text(
-          title,
-          style: AppTextStyles.sectionTitle.copyWith(
-            fontSize: AppSpacing.dcaScheduleSectionTitleFontSize,
-          ),
-        ),
+        Text(title, style: AppTextStyles.sectionTitleXs),
       ],
     );
   }

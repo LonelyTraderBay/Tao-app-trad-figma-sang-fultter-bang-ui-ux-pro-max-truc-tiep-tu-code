@@ -18,7 +18,7 @@ class _ProviderCard extends StatelessWidget {
               provider.avatar,
               style: AppTextStyles.baseMedium.copyWith(
                 color: _configurationPrimary,
-                fontWeight: FontWeight.w800,
+                fontWeight: AppTextStyles.extraBold,
               ),
             ),
           ),
@@ -35,15 +35,15 @@ class _ProviderCard extends StatelessWidget {
                 Text(
                   provider.name,
                   style: AppTextStyles.baseMedium.copyWith(
-                    fontWeight: FontWeight.w800,
+                    fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   'ROI +${provider.totalPnlPct.toStringAsFixed(1)}% · Max DD ${provider.maxDrawdown.toStringAsFixed(1)}%',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.navLabel.copyWith(
                     color: AppColors.text3,
-                    fontSize: 11,
+                    fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
               ],
@@ -110,7 +110,8 @@ class _CapitalSection extends StatelessWidget {
                     '${allocationPercent.toStringAsFixed(1)}%',
                     style: AppTextStyles.baseMedium.copyWith(
                       color: allocationColor,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: AppTextStyles.extraBold,
+                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
                 ],
@@ -217,7 +218,8 @@ class _ModeSection extends StatelessWidget {
                         '${copyRatio.toStringAsFixed(0)}%',
                         textAlign: TextAlign.right,
                         style: AppTextStyles.baseMedium.copyWith(
-                          fontWeight: FontWeight.w800,
+                          fontWeight: AppTextStyles.extraBold,
+                          fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
                     ),

@@ -67,9 +67,7 @@ class _TotalStats extends StatelessWidget {
                   fit: BoxFit.scaleDown,
                   child: Text(
                     _formatUsd(snapshot.totalValue, decimals: 0),
-                    style: AppTextStyles.heroNumber.copyWith(
-                      fontSize: AppSpacing.stakingProductMetricFontSize,
-                    ),
+                    style: AppTextStyles.numericDisplayXl,
                   ),
                 ),
               ),

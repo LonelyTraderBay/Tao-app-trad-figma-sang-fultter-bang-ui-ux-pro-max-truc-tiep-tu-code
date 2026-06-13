@@ -26,7 +26,6 @@ class MarginHubPhaseBadge extends StatelessWidget {
         label,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 10,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -57,9 +56,8 @@ class MarginHubComplianceInfoBanner extends StatelessWidget {
               children: [
                 Text(
                   'Compliance controls',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.accent,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -69,7 +67,6 @@ class MarginHubComplianceInfoBanner extends StatelessWidget {
                   'Appropriateness checks, leverage limits, liquidation risk, and cost disclosure stay visible before margin actions.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1.45,
                   ),
                 ),

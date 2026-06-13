@@ -76,7 +76,8 @@ class _HistoryBar extends StatelessWidget {
           '${point.value}',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 8,
+            // T3.3 exception: compact chart-axis label for Fear&Greed bars.
+            // Keep 8px equivalent spacing to prevent overlap on mini chart points.
             fontFeatures: AppTextStyles.tabularFigures,
             height: 1,
           ),
@@ -224,9 +225,8 @@ class _MiniHeader extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),

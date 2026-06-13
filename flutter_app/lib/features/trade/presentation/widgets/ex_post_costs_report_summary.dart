@@ -26,9 +26,7 @@ class _ComplianceNotice extends StatelessWidget {
                   'Annual Cost Report Available',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -37,9 +35,7 @@ class _ComplianceNotice extends StatelessWidget {
                   'Required by PRIIPs regulation.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.35,
                   ),
                 ),
               ],
@@ -75,17 +71,16 @@ class _SummaryCard extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
-                height: 1,
+                height: 1.2,
               ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
             const Spacer(),
             Text(
               value,
-              style: AppTextStyles.heroNumber.copyWith(
+              style: AppTextStyles.amountSm.copyWith(
                 color: muted ? AppColors.text3 : AppColors.text1,
-                fontSize: 20,
-                height: 1,
               ),
             ),
           ],
@@ -128,9 +123,7 @@ class _YearTabs extends StatelessWidget {
                             color: activeYear == report.year
                                 ? _reportPrimary
                                 : AppColors.text3,
-                            fontSize: 12,
                             fontWeight: AppTextStyles.bold,
-                            height: 1,
                           ),
                         ),
                       ),
@@ -179,9 +172,7 @@ class _CostBreakdownCard extends StatelessWidget {
                     title,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontSize: 13,
                       fontWeight: AppTextStyles.bold,
-                      height: 1,
                     ),
                   ),
                 ),
@@ -193,18 +184,12 @@ class _CostBreakdownCard extends StatelessWidget {
                     _formatEur(actual),
                     style: AppTextStyles.baseMedium.copyWith(
                       color: AppColors.text1,
-                      fontSize: 16,
-                      height: 1,
                     ),
                   ),
                   const SizedBox(height: 9),
                   Text(
                     'Est: ${_formatEur(estimate)}',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 9,
-                      height: 1,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),

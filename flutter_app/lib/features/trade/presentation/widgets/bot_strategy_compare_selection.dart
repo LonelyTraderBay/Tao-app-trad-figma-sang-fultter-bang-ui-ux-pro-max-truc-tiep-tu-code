@@ -184,7 +184,9 @@ class _BestStrategyCard extends StatelessWidget {
                     children: [
                       TextSpan(
                         text: strategy.name,
-                        style: const TextStyle(fontWeight: FontWeight.w700),
+                        style: AppTextStyles.caption.copyWith(
+                          fontWeight: AppTextStyles.bold,
+                        ),
                       ),
                       TextSpan(
                         text:

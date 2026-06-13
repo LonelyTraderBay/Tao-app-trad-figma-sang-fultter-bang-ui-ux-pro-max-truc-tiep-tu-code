@@ -11,7 +11,7 @@ class _SectionLabel extends StatelessWidget {
       label,
       style: AppTextStyles.caption.copyWith(
         color: AppColors.text2,
-        fontWeight: FontWeight.w800,
+        fontWeight: AppTextStyles.extraBold,
         letterSpacing: .2,
       ),
     );

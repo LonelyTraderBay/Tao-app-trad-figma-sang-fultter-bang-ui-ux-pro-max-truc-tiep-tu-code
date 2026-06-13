@@ -133,7 +133,7 @@ class _WelcomeAssessment extends StatelessWidget {
                   provider.avatar,
                   style: AppTextStyles.baseMedium.copyWith(
                     color: _assessmentPrimary,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
               ),
@@ -145,15 +145,16 @@ class _WelcomeAssessment extends StatelessWidget {
                     Text(
                       provider.name,
                       style: AppTextStyles.baseMedium.copyWith(
-                        fontWeight: FontWeight.w800,
+                        fontWeight: AppTextStyles.extraBold,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'ROI +${provider.totalPnlPct.toStringAsFixed(1)}% · Max DD ${provider.maxDrawdown.toStringAsFixed(1)}%',
-                      style: AppTextStyles.caption.copyWith(
+                      style: AppTextStyles.navLabel.copyWith(
                         color: AppColors.text3,
-                        fontSize: 11,
+                        fontWeight: AppTextStyles.normal,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ],
@@ -185,7 +186,7 @@ class _WelcomeAssessment extends StatelessWidget {
             'Bắt đầu đánh giá',
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.onAccent,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
             ),
           ),
         ),
@@ -220,15 +221,15 @@ class _QuestionsSummary extends StatelessWidget {
                 Text(
                   question.question,
                   style: AppTextStyles.baseMedium.copyWith(
-                    fontWeight: FontWeight.w800,
+                    fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   question.description,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.navLabel.copyWith(
                     color: AppColors.text3,
-                    fontSize: 11,
+                    fontWeight: AppTextStyles.normal,
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -253,7 +254,7 @@ class _QuestionsSummary extends StatelessWidget {
             'Tiếp tục cấu hình',
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.onAccent,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
             ),
           ),
         ),
@@ -301,15 +302,15 @@ class _ProcessRow extends StatelessWidget {
               Text(
                 title,
                 style: AppTextStyles.baseMedium.copyWith(
-                  fontWeight: FontWeight.w800,
+                  fontWeight: AppTextStyles.extraBold,
                 ),
               ),
               const SizedBox(height: 2),
               Text(
                 description,
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.navLabel.copyWith(
                   color: AppColors.text3,
-                  fontSize: 11,
+                  fontWeight: AppTextStyles.normal,
                 ),
               ),
             ],

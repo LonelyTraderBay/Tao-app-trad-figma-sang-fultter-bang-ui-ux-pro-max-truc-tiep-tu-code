@@ -115,8 +115,10 @@ class _DropoutChartPainter extends CustomPainter {
         canvas,
         '${4 - i}',
         Offset(2, y - 7),
-        color: AppColors.text3,
-        fontSize: AppSpacing.adminFontSm,
+        style: AppTextStyles.numericMicro.copyWith(
+          color: AppColors.text3,
+          height: AppSpacing.adminLineHeightTight,
+        ),
       );
     }
 
@@ -138,19 +140,10 @@ class _DropoutChartPainter extends CustomPainter {
     Canvas canvas,
     String text,
     Offset offset, {
-    required Color color,
-    required double fontSize,
+    required TextStyle style,
   }) {
     final painter = TextPainter(
-      text: TextSpan(
-        text: text,
-        style: TextStyle(
-          color: color,
-          fontSize: fontSize,
-          height: AppSpacing.adminLineHeightTight,
-          fontFeatures: AppTextStyles.tabularFigures,
-        ),
-      ),
+      text: TextSpan(text: text, style: style),
       textDirection: TextDirection.ltr,
     )..layout(maxWidth: AppSpacing.adminPainterLabelMaxWidth);
     painter.paint(canvas, offset);
@@ -163,9 +156,8 @@ class _DropoutChartPainter extends CustomPainter {
     final painter = TextPainter(
       text: TextSpan(
         text: text,
-        style: const TextStyle(
+        style: AppTextStyles.chartLabelXs.copyWith(
           color: AppColors.text3,
-          fontSize: AppSpacing.adminFontXs,
           height: AppSpacing.adminLineHeightTight,
         ),
       ),

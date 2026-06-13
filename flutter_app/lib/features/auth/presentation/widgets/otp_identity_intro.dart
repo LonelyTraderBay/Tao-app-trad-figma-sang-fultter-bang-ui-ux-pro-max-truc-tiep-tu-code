@@ -37,7 +37,7 @@ class _OtpIntro extends StatelessWidget {
         Text(
           'Nhập mã xác minh',
           textAlign: TextAlign.center,
-          style: AppTextStyles.sectionTitle.copyWith(fontSize: 24),
+          style: AppTextStyles.pageTitle,
         ),
         const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text.rich(
@@ -46,9 +46,10 @@ class _OtpIntro extends StatelessWidget {
             children: [
               TextSpan(
                 text: contact,
-                style: const TextStyle(
+                style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
+                  height: 1.6,
                 ),
               ),
             ],
@@ -61,14 +62,14 @@ class _OtpIntro extends StatelessWidget {
         ),
         const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
         Text.rich(
-          const TextSpan(
+          TextSpan(
             text: '(Demo: nhập ',
             children: [
               TextSpan(
                 text: '123456',
-                style: TextStyle(color: _authPrimary),
+                style: AppTextStyles.caption.copyWith(color: _authPrimary),
               ),
-              TextSpan(text: ')'),
+              const TextSpan(text: ')'),
             ],
           ),
           textAlign: TextAlign.center,

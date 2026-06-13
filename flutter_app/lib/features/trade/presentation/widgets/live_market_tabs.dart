@@ -55,11 +55,10 @@ class LiveMarketUnderlineTabs extends StatelessWidget {
                     tab.$2,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.captionSm.copyWith(
                       color: activeId == tab.$1
                           ? liveMarketPrimary
                           : AppColors.text3,
-                      fontSize: 12,
                       fontWeight: AppTextStyles.bold,
                       height: 1,
                     ),

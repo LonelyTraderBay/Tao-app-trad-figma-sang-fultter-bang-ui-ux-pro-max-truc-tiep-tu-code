@@ -147,7 +147,6 @@ class _StatusCard extends StatelessWidget {
                         'Status',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
                           height: 1.2,
                         ),
                       ),
@@ -156,7 +155,6 @@ class _StatusCard extends StatelessWidget {
                         snapshot.statusLabel,
                         style: AppTextStyles.base.copyWith(
                           color: AppColors.text1,
-                          fontSize: 16,
                           fontWeight: AppTextStyles.bold,
                           height: 1,
                         ),
@@ -206,24 +204,21 @@ class _StatusMetricBox extends StatelessWidget {
         color: _trackingPanel2,
         borderRadius: AppRadii.inputRadius,
       ),
-      child: Column(
+          child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 9,
               height: 1,
             ),
           ),
           const Spacer(),
           Text(
             value,
-            style: AppTextStyles.micro.copyWith(
+            style: AppTextStyles.badge.copyWith(
               color: AppColors.text1,
-              fontSize: 11,
-              fontWeight: AppTextStyles.bold,
               height: 1,
             ),
           ),
@@ -268,9 +263,8 @@ class _SectionLabel extends StatelessWidget {
         const SizedBox(width: 6),
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -354,9 +348,8 @@ class _TimelineStepRow extends StatelessWidget {
               children: [
                 Text(
                   step.title,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text1,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1.15,
                   ),
@@ -366,7 +359,6 @@ class _TimelineStepRow extends StatelessWidget {
                   step.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1.2,
                   ),
                 ),
@@ -375,7 +367,6 @@ class _TimelineStepRow extends StatelessWidget {
                   step.dateLabel,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 9,
                     height: 1,
                   ),
                 ),
@@ -451,9 +442,8 @@ class _TrackingActionButton extends StatelessWidget {
       trailing: const Icon(Icons.chevron_right_rounded, size: 18),
       child: Text(
         action.label,
-        style: AppTextStyles.caption.copyWith(
+        style: AppTextStyles.captionSm.copyWith(
           color: AppColors.text1,
-          fontSize: 12,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -477,3 +467,4 @@ class _Card extends StatelessWidget {
     );
   }
 }
+

@@ -33,9 +33,8 @@ class _ConsentTile extends StatelessWidget {
           Expanded(
             child: Text(
               item.label,
-              style: AppTextStyles.caption.copyWith(
+              style: AppTextStyles.captionSm.copyWith(
                 color: AppColors.text1,
-                fontSize: 12,
                 height: 1.4,
               ),
             ),
@@ -69,9 +68,8 @@ class _CoolingOffCard extends StatelessWidget {
           Expanded(
             child: Text(
               'Sau khi xác nhận, bạn có $hours giờ cooling-off để review lại quyết định trước khi copy chính thức kích hoạt.',
-              style: AppTextStyles.caption.copyWith(
+              style: AppTextStyles.captionSm.copyWith(
                 color: _confirmationPrimary,
-                fontSize: 11,
                 height: 1.45,
               ),
             ),
@@ -103,7 +101,7 @@ class _NextStepsCard extends StatelessWidget {
           Text(
             'Điều gì xảy ra tiếp theo?',
             style: AppTextStyles.baseMedium.copyWith(
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
             ),
           ),
           const SizedBox(height: 12),
@@ -118,7 +116,7 @@ class _NextStepsCard extends StatelessWidget {
                     '${index + 1}',
                     style: AppTextStyles.micro.copyWith(
                       color: _confirmationPrimary,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: AppTextStyles.extraBold,
                     ),
                   ),
                 ),
@@ -126,9 +124,8 @@ class _NextStepsCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     steps[index],
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.captionSm.copyWith(
                       color: AppColors.text2,
-                      fontSize: 12,
                       height: 1.35,
                     ),
                   ),

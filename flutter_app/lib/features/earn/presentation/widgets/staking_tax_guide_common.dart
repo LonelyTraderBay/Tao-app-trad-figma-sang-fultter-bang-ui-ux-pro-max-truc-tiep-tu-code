@@ -99,6 +99,9 @@ class StakingTaxCodeBadge extends StatelessWidget {
         : (small
               ? AppSpacing.stakingTaxCodeBadgeSmall
               : AppSpacing.stakingTaxCodeBadgeRegular);
+    final style = small
+        ? AppTextStyles.numericMicro
+        : (large ? AppTextStyles.baseMedium : AppTextStyles.body);
     return Container(
       width: size,
       height: size,
@@ -109,14 +112,9 @@ class StakingTaxCodeBadge extends StatelessWidget {
       ),
       child: Text(
         code,
-        style: AppTextStyles.caption.copyWith(
+        style: style.copyWith(
           color: AppColors.text1,
           fontWeight: AppTextStyles.bold,
-          fontSize: small
-              ? AppSpacing.stakingTaxCodeFontSmall
-              : (large
-                    ? AppSpacing.stakingTaxCodeFontLarge
-                    : AppSpacing.stakingTaxCodeFontRegular),
         ),
       ),
     );

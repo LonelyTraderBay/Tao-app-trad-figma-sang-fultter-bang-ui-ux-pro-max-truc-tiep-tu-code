@@ -103,11 +103,14 @@ class AddressPreviewPanel extends StatelessWidget {
                   child: Text(
                     row.$2,
                     textAlign: TextAlign.right,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                      fontFamily: row.$1 == 'Địa chỉ' ? 'Roboto Mono' : null,
-                    ),
+                    style:
+                        (row.$1 == 'Địa chỉ'
+                                ? AppTextStyles.monoCode
+                                : AppTextStyles.caption)
+                            .copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
+                            ),
                   ),
                 ),
               ],

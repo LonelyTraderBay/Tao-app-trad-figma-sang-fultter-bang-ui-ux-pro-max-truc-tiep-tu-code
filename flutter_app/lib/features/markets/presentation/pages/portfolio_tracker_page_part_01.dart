@@ -295,7 +295,7 @@ class _TotalValueHero extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             _mask(_formatUsd(stats.totalValue), hidden, long: true),
-            style: AppTextStyles.heroNumber.copyWith(fontSize: 30),
+            style: AppTextStyles.amountMd,
           ),
           const SizedBox(height: 4),
           Row(
@@ -450,7 +450,6 @@ class _AllocationCard extends StatelessWidget {
                           'tài sản',
                           style: AppTextStyles.micro.copyWith(
                             color: _marketPrimary,
-                            fontSize: 9,
                           ),
                         ),
                       ],

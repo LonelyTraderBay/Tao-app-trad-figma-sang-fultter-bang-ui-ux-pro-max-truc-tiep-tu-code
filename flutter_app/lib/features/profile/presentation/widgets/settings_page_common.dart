@@ -20,8 +20,7 @@ class _AppInfoCard extends StatelessWidget {
             'TH\u00D4NG TIN \u1EE8NG D\u1EE4NG',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
+              fontWeight: AppTextStyles.bold,
               height: 1,
             ),
           ),
@@ -38,7 +37,6 @@ class _AppInfoCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        fontSize: 13,
                         height: 1,
                       ),
                     ),
@@ -48,8 +46,7 @@ class _AppInfoCard extends StatelessWidget {
                     row.value,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: AppTextStyles.medium,
                       height: 1,
                     ),
                   ),

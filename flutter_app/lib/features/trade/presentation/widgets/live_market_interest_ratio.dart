@@ -44,7 +44,6 @@ class _LongShortCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1,
             ),
           ),
@@ -54,9 +53,7 @@ class _LongShortCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle.copyWith(
               color: liveMarketGreen,
-              fontSize: 21,
               fontWeight: AppTextStyles.bold,
-              fontFamily: 'monospace',
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
             ),
@@ -112,9 +109,8 @@ class _ToggleBar extends StatelessWidget {
               ),
               child: Text(
                 'By Accounts',
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.captionSm.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -125,9 +121,8 @@ class _ToggleBar extends StatelessWidget {
             child: Center(
               child: Text(
                 'By Volume',
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.captionSm.copyWith(
                   color: AppColors.text3,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.medium,
                   height: 1,
                 ),
@@ -160,9 +155,8 @@ class _TrendLabel extends StatelessWidget {
       const SizedBox(width: 4),
       Text(
         text,
-        style: AppTextStyles.caption.copyWith(
+        style: AppTextStyles.captionSm.copyWith(
           color: color,
-          fontSize: 12,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),

@@ -20,7 +20,7 @@ class _EmailStep extends StatelessWidget {
         Text(
           'Đặt lại mật khẩu',
           textAlign: TextAlign.center,
-          style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
+          style: AppTextStyles.sectionTitle,
         ),
         const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text(
@@ -124,7 +124,7 @@ class _OtpStep extends StatelessWidget {
         Text(
           'Nhập mã OTP',
           textAlign: TextAlign.center,
-          style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
+          style: AppTextStyles.sectionTitle,
         ),
         const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text.rich(
@@ -133,7 +133,7 @@ class _OtpStep extends StatelessWidget {
             children: [
               TextSpan(
                 text: email,
-                style: const TextStyle(color: AppColors.text1),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text1),
               ),
             ],
           ),
@@ -231,7 +231,7 @@ class _ResetStep extends StatelessWidget {
         Text(
           'Mật khẩu mới',
           textAlign: TextAlign.center,
-          style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
+          style: AppTextStyles.sectionTitle,
         ),
         const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text(
@@ -313,7 +313,7 @@ class _SuccessStep extends StatelessWidget {
           Text(
             'Thành công!',
             textAlign: TextAlign.center,
-            style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
+            style: AppTextStyles.sectionTitle,
           ),
           const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(

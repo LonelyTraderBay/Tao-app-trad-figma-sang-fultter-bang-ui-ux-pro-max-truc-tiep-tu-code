@@ -116,10 +116,7 @@ class _QuickLinkCard extends StatelessWidget {
                   eyebrow,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: color,
-                    fontSize: 11,
-                  ),
+                  style: AppTextStyles.navLabel.copyWith(color: color),
                 ),
                 Text(
                   title,

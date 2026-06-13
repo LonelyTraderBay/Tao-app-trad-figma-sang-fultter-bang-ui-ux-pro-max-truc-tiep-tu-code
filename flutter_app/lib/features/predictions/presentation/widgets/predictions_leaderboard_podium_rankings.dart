@@ -64,12 +64,7 @@ class _PodiumColumn extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Text(
-          trader.avatar,
-          style: const TextStyle(
-            fontSize: AppSpacing.predictionLeaderboardPodiumAvatar,
-          ),
-        ),
+        Text(trader.avatar, style: AppTextStyles.avatarLg),
         const SizedBox(height: AppSpacing.predictionLeaderboardPodiumAvatarGap),
         Text(
           trader.user,

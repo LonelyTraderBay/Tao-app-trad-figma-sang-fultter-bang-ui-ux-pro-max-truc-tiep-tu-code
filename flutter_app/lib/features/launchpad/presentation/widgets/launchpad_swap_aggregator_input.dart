@@ -70,9 +70,8 @@ class _SwapInputCard extends StatelessWidget {
                   textAlign: TextAlign.end,
                   semanticLabel: 'Launchpad swap amount',
                   hintText: '0.00',
-                  textStyle: AppTextStyles.base.copyWith(
+                  textStyle: AppTextStyles.amountSm.copyWith(
                     color: AppColors.text1,
-                    fontSize: AppSpacing.launchpadFontXl,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -110,9 +109,8 @@ class _SwapInputCard extends StatelessWidget {
                   children: [
                     Text(
                       '~${output.toStringAsFixed(4)}',
-                      style: AppTextStyles.base.copyWith(
+                      style: AppTextStyles.amountSm.copyWith(
                         color: AppColors.text1,
-                        fontSize: AppSpacing.launchpadFontXl,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -164,10 +162,9 @@ class _TokenButton extends StatelessWidget {
             ),
             child: Text(
               token.substring(0, 2),
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.badge.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                fontSize: AppSpacing.launchpadFontXs,
               ),
             ),
           ),

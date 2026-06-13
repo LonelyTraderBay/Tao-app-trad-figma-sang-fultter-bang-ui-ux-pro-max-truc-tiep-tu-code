@@ -56,11 +56,7 @@ class _OverallRiskCard extends StatelessWidget {
                     const SizedBox(height: AppSpacing.x1),
                     Text(
                       '${project.score.overall}/100',
-                      style: AppTextStyles.heroNumber.copyWith(
-                        fontSize:
-                            AppSpacing.launchpadFont3xl +
-                            AppSpacing.launchpadGapXxs,
-                      ),
+                      style: AppTextStyles.amountLg,
                     ),
                     const SizedBox(height: AppSpacing.x2),
                     _RiskPill(level: project.level),
@@ -239,10 +235,9 @@ class _QuickCheckCard extends StatelessWidget {
           const Spacer(),
           Text(
             check.label,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              fontSize: AppSpacing.launchpadFontLg,
             ),
           ),
         ],

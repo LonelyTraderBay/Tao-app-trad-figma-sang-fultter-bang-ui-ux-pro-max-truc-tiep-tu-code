@@ -39,7 +39,7 @@ class _SuccessToast extends StatelessWidget {
                   ),
                   Text(
                     'Bot đang hoạt động và giao dịch tự động',
-                    style: AppTextStyles.caption.copyWith(fontSize: 12),
+                    style: AppTextStyles.captionSm,
                   ),
                 ],
               ),

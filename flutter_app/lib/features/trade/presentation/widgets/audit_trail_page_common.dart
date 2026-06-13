@@ -36,11 +36,9 @@ class _AuditEntryCard extends StatelessWidget {
                         entry.action,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
+                        style: AppTextStyles.captionSm.copyWith(
                           color: AppColors.text1,
-                          fontSize: 12,
                           fontWeight: AppTextStyles.bold,
-                          height: 1.1,
                         ),
                       ),
                     ),
@@ -53,31 +51,19 @@ class _AuditEntryCard extends StatelessWidget {
                   entry.details,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    fontSize: 10,
-                    height: 1.1,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
                 const SizedBox(height: 5),
                 Text(
                   _metadata(entry),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 9,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
                 const SizedBox(height: 5),
                 Text(
                   'ID: ${entry.id}',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 8,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -115,9 +101,7 @@ class _CategoryBadge extends StatelessWidget {
         entry.categoryLabel,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 9,
           fontWeight: AppTextStyles.bold,
-          height: 1,
         ),
       ),
     );
@@ -145,10 +129,7 @@ class _ExportActions extends StatelessWidget {
                 format,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontFamily: 'Roboto',
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                 ),
               ),
             ),

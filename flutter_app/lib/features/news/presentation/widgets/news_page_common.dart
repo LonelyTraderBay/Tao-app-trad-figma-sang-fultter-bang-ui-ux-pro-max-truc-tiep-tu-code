@@ -40,10 +40,7 @@ class _ArticleSheet extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            type.emoji,
-                            style: const TextStyle(fontSize: 24),
-                          ),
+                          Text(type.emoji, style: AppTextStyles.sectionTitle),
                           const SizedBox(width: 10),
                           Container(
                             padding: const EdgeInsets.symmetric(
@@ -56,9 +53,8 @@ class _ArticleSheet extends StatelessWidget {
                             ),
                             child: Text(
                               type.label,
-                              style: AppTextStyles.caption.copyWith(
+                              style: AppTextStyles.captionSm.copyWith(
                                 color: type.color,
-                                fontSize: 12,
                                 fontWeight: AppTextStyles.bold,
                                 height: 1,
                               ),
@@ -69,10 +65,7 @@ class _ArticleSheet extends StatelessWidget {
                       const SizedBox(height: 12),
                       Text(
                         article.title,
-                        style: AppTextStyles.sectionTitle.copyWith(
-                          fontSize: 22,
-                          height: 1.3,
-                        ),
+                        style: AppTextStyles.sectionTitle.copyWith(height: 1.3),
                       ),
                       const SizedBox(height: 8),
                       Row(
@@ -85,9 +78,8 @@ class _ArticleSheet extends StatelessWidget {
                           const SizedBox(width: 6),
                           Text(
                             article.publishedAtLabel,
-                            style: AppTextStyles.caption.copyWith(
+                            style: AppTextStyles.captionSm.copyWith(
                               color: AppColors.text2,
-                              fontSize: 12,
                             ),
                           ),
                         ],
@@ -127,9 +119,8 @@ class _ArticleSheet extends StatelessWidget {
                         onPressed: () => Navigator.of(context).pop(),
                         child: Text(
                           'Đóng',
-                          style: AppTextStyles.baseMedium.copyWith(
+                          style: AppTextStyles.control.copyWith(
                             color: AppColors.onAccent,
-                            fontSize: 15,
                           ),
                         ),
                       ),

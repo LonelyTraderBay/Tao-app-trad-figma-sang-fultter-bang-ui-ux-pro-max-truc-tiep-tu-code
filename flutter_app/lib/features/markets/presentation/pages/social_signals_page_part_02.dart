@@ -39,7 +39,7 @@ class _SignalCard extends StatelessWidget {
                   children: [
                     Text(
                       signal.providerAvatar,
-                      style: const TextStyle(fontSize: 16, height: 1),
+                      style: AppTextStyles.base.copyWith(height: 1),
                     ),
                     const SizedBox(width: 8),
                     Flexible(
@@ -64,7 +64,6 @@ class _SignalCard extends StatelessWidget {
                       '${signal.providerWinRate.toStringAsFixed(1)}% win',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 8,
                       ),
                     ),
                     const Spacer(),
@@ -103,7 +102,6 @@ class _SignalCard extends StatelessWidget {
                       color: statusConfig.color,
                       background: statusConfig.color.withValues(alpha: .12),
                       height: 18,
-                      fontSize: 8,
                     ),
                     const SizedBox(width: 6),
                     _TinyBadge(
@@ -111,7 +109,6 @@ class _SignalCard extends StatelessWidget {
                       color: AppColors.text3,
                       background: AppColors.surface2,
                       height: 18,
-                      fontSize: 8,
                     ),
                   ],
                 ),
@@ -212,7 +209,6 @@ class _ExpandedSignalDetail extends StatelessWidget {
                             _formatPrice(signal.targets[index]),
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.buy,
-                              fontSize: 12,
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
@@ -329,7 +325,6 @@ class _TinyBadge extends StatelessWidget {
     required this.color,
     required this.background,
     this.height = 16,
-    this.fontSize = 7,
     this.horizontalPadding = 5,
   });
 
@@ -337,7 +332,6 @@ class _TinyBadge extends StatelessWidget {
   final Color color;
   final Color background;
   final double height;
-  final double fontSize;
   final double horizontalPadding;
 
   @override
@@ -356,7 +350,6 @@ class _TinyBadge extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: fontSize,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -407,7 +400,10 @@ class _ProviderCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              Text(provider.avatar, style: const TextStyle(fontSize: 24)),
+              Text(
+                provider.avatar,
+                style: AppTextStyles.micro.copyWith(color: AppColors.text1),
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -431,7 +427,6 @@ class _ProviderCard extends StatelessWidget {
                           label: tierConfig.label,
                           color: tierConfig.color,
                           background: tierConfig.background,
-                          fontSize: 9,
                           height: 18,
                         ),
                       ],

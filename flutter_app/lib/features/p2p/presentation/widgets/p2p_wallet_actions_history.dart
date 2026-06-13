@@ -235,9 +235,8 @@ class _TransactionRow extends StatelessWidget {
                   _statusLabel(tx.status),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: _statusColor(tx.status),
-                    fontSize: 12,
                   ),
                 ),
               ],

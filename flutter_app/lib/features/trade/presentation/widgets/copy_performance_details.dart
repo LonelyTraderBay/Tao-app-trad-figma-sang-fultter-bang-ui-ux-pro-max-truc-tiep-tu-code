@@ -28,7 +28,7 @@ class _TradesTab extends StatelessWidget {
                       child: Text(
                         trade.pair,
                         style: AppTextStyles.baseMedium.copyWith(
-                          fontWeight: FontWeight.w800,
+                          fontWeight: AppTextStyles.extraBold,
                         ),
                       ),
                     ),
@@ -124,7 +124,8 @@ class _CostsTab extends StatelessWidget {
                   Text(
                     '\$${item.value.toStringAsFixed(0)}',
                     style: AppTextStyles.baseMedium.copyWith(
-                      fontWeight: FontWeight.w800,
+                      fontWeight: AppTextStyles.extraBold,
+                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
                 ],
@@ -164,7 +165,7 @@ class _MetricsTab extends StatelessWidget {
                     metric.name,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: AppTextStyles.extraBold,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -270,7 +271,8 @@ class _SmallMetricCard extends StatelessWidget {
             value,
             style: AppTextStyles.baseMedium.copyWith(
               color: valueColor,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],

@@ -189,7 +189,7 @@ class _Hero extends StatelessWidget {
         Text(
           snapshot.heroTitle,
           textAlign: TextAlign.center,
-          style: AppTextStyles.pageTitle.copyWith(fontSize: 24, height: 1.1),
+          style: AppTextStyles.pageTitle.copyWith(height: 1.1),
         ),
         const SizedBox(height: AppSpacing.x3),
         ConstrainedBox(
@@ -197,10 +197,7 @@ class _Hero extends StatelessWidget {
           child: Text(
             snapshot.heroSubtitle,
             textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
           ),
         ),
       ],
@@ -354,13 +351,10 @@ class _NoteField extends StatelessWidget {
             expands: true,
             textAlignVertical: TextAlignVertical.top,
             cursorColor: AppColors.primary,
-            style: AppTextStyles.body.copyWith(fontSize: 14),
+            style: AppTextStyles.body,
             decoration: InputDecoration.collapsed(
               hintText: hint,
-              hintStyle: AppTextStyles.body.copyWith(
-                color: AppColors.text3,
-                fontSize: 14,
-              ),
+              hintStyle: AppTextStyles.body.copyWith(color: AppColors.text3),
             ),
           ),
         ),

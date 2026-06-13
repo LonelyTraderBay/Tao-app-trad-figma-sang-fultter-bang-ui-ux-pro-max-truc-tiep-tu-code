@@ -4284,6 +4284,7 @@ final class AppSpacing {
   static const double serviceTileGridAspectStandard = 1.68;
   static const double serviceTileGridAspectCompact = 1.88;
   static const double serviceTileLabelGap = 3;
+  static const double serviceTileLabelGapCompact = 2;
   static const int serviceTileCrossAxisCount = 3;
   static const double serviceTileAccentBarThickness = 4;
   static const double serviceTileAccentBarHeight = 28;

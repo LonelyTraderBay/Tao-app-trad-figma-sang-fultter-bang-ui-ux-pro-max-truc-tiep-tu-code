@@ -25,7 +25,6 @@ class _PositionModeCard extends StatelessWidget {
                 'Position Mode',
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -67,7 +66,6 @@ class _PositionModeCard extends StatelessWidget {
                 : 'Có thể giữ đồng thời Long VÀ Short cho cùng 1 cặp. Dùng cho hedging strategy.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
               height: 1.5,
             ),
           ),
@@ -109,7 +107,6 @@ class _ModeButton extends StatelessWidget {
             label,
             style: AppTextStyles.caption.copyWith(
               color: active ? AppColors.onAccent : AppColors.text3,
-              fontSize: 12,
               fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
               height: 1,
             ),
@@ -165,7 +162,6 @@ class _UnderlineTabs extends StatelessWidget {
                       color: activeId == tab.$1
                           ? AppColors.primary
                           : AppColors.text3,
-                      fontSize: 11,
                       fontWeight: activeId == tab.$1
                           ? AppTextStyles.bold
                           : AppTextStyles.medium,
@@ -200,7 +196,6 @@ class _PositionTab extends StatelessWidget {
                 'Position Management Features',
                 style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: 16,
                   fontWeight: AppTextStyles.bold,
                   height: 1.1,
                 ),
@@ -210,7 +205,6 @@ class _PositionTab extends StatelessWidget {
                 'Professional tools để quản lý vị thế hiệu quả',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  fontSize: 12,
                   height: 1.45,
                 ),
               ),
@@ -251,7 +245,6 @@ class _ActionButton extends StatelessWidget {
         textAlign: TextAlign.center,
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text1,
-          fontSize: 13,
           fontWeight: AppTextStyles.bold,
           height: 1.25,
         ),
@@ -276,7 +269,6 @@ class _MockPositionCard extends StatelessWidget {
             'Mock Position (Demo)',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),
@@ -321,7 +313,6 @@ class _OrdersTab extends StatelessWidget {
                 'Loại lệnh',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -339,7 +330,6 @@ class _OrdersTab extends StatelessWidget {
                 'Time In Force',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -361,3 +351,4 @@ class _OrdersTab extends StatelessWidget {
     );
   }
 }
+

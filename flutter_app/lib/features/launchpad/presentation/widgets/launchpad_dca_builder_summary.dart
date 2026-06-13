@@ -70,6 +70,9 @@ class _SummaryMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final valueStyle = large
+        ? AppTextStyles.amountBase
+        : AppTextStyles.baseMedium;
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,9 +84,8 @@ class _SummaryMetric extends StatelessWidget {
           const SizedBox(height: AppSpacing.x2),
           Text(
             value,
-            style: AppTextStyles.base.copyWith(
+            style: valueStyle.copyWith(
               color: color,
-              fontSize: large ? 20 : 16,
               fontWeight: AppTextStyles.bold,
             ),
           ),

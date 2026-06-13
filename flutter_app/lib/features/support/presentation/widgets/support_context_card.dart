@@ -155,9 +155,8 @@ class _TimelineRow extends StatelessWidget {
                   ),
                   child: Text(
                     '$index',
-                    style: AppTextStyles.micro.copyWith(
+                    style: AppTextStyles.numericMicro.copyWith(
                       color: AppColors.primary,
-                      fontSize: 8,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),

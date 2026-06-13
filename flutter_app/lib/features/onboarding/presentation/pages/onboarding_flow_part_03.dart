@@ -101,7 +101,6 @@ class _DisclosurePill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.medium,
-            fontSize: 9,
           ),
         ),
       ),
@@ -140,9 +139,8 @@ class _RecommendationCard extends StatelessWidget {
                 Text(recommendation.title, style: AppTextStyles.baseMedium),
                 Text(
                   recommendation.description,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                   ),
                 ),
               ],
@@ -180,10 +178,7 @@ class _BulletRow extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.captionSm.copyWith(color: AppColors.text2),
           ),
         ),
       ],

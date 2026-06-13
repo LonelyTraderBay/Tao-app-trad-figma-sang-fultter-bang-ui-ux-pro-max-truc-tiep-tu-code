@@ -38,9 +38,8 @@ class _SettingsSection extends StatelessWidget {
                 label,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: 1.1,
                 ),
               ),
             ],
@@ -122,9 +121,8 @@ class _ModeButton extends StatelessWidget {
           _modeLabel(mode),
           style: AppTextStyles.caption.copyWith(
             color: active ? AppColors.onAccent : AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: 1.1,
           ),
         ),
       ),
@@ -182,8 +180,7 @@ class _SliderCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 9,
-                          height: 1.2,
+                          height: 1.4,
                         ),
                       ),
                     ],
@@ -195,9 +192,8 @@ class _SliderCard extends StatelessWidget {
                 valueLabel,
                 style: AppTextStyles.caption.copyWith(
                   color: color,
-                  fontSize: 14,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: 1.1,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
@@ -220,8 +216,7 @@ class _SliderCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 9,
-                height: 1,
+                height: 1.4,
               ),
             ),
           ],

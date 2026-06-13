@@ -18,7 +18,7 @@ class _StatusBadge extends StatelessWidget {
         active ? '\u2022 Active' : '\u2022 Disabled',
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontWeight: FontWeight.w800,
+          fontWeight: AppTextStyles.extraBold,
           height: 1,
         ),
       ),
@@ -92,7 +92,7 @@ class _SecretRow extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: labelColor,
-                fontWeight: FontWeight.w800,
+                fontWeight: AppTextStyles.extraBold,
                 height: 1,
               ),
             ),
@@ -104,7 +104,7 @@ class _SecretRow extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
-                fontWeight: FontWeight.w800,
+                fontWeight: AppTextStyles.extraBold,
                 height: 1,
               ),
             ),
@@ -200,7 +200,7 @@ class _SmallBadge extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: color,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
               height: 1,
             ),
           ),
@@ -265,7 +265,7 @@ class _RegenerateButton extends StatelessWidget {
               'T\u1EA1o l\u1EA1i Secret',
               style: AppTextStyles.micro.copyWith(
                 color: _apiPrimary,
-                fontWeight: FontWeight.w800,
+                fontWeight: AppTextStyles.extraBold,
                 height: 1,
               ),
             ),

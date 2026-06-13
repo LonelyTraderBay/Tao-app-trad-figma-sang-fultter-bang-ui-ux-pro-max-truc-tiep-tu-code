@@ -30,10 +30,7 @@ class _EmptyNotifications extends StatelessWidget {
                 ? 'Không có thông báo chưa đọc'
                 : 'Chưa có thông báo nào',
             textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 13,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
         ],
       ),

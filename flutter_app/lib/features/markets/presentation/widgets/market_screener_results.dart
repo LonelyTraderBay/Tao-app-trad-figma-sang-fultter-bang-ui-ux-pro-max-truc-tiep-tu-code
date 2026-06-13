@@ -76,7 +76,6 @@ class _ScreenerRow extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.body.copyWith(
-                      fontSize: 15,
                       fontWeight: AppTextStyles.bold,
                       height: 1.1,
                     ),
@@ -88,7 +87,7 @@ class _ScreenerRow extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1,
+                      height: 1.3,
                     ),
                   ),
                 ],
@@ -116,7 +115,6 @@ class _ScreenerRow extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.body.copyWith(
-                      fontSize: 14,
                       fontWeight: AppTextStyles.bold,
                       fontFeatures: AppTextStyles.tabularFigures,
                       height: 1.1,
@@ -142,10 +140,9 @@ class _ScreenerRow extends StatelessWidget {
                             '${up ? '+' : ''}${pair.change24h.toStringAsFixed(2)}%',
                             style: AppTextStyles.caption.copyWith(
                               color: color,
-                              fontSize: 12,
                               fontWeight: AppTextStyles.medium,
                               fontFeatures: AppTextStyles.tabularFigures,
-                              height: 1,
+                              height: 1.2,
                             ),
                           ),
                         ],
@@ -181,9 +178,8 @@ class _ScreenerAvatar extends StatelessWidget {
         pair.baseAsset.substring(0, pair.baseAsset.length < 2 ? 1 : 2),
         style: AppTextStyles.caption.copyWith(
           color: pair.logoColor,
-          fontSize: 12,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: 1.2,
         ),
       ),
     );

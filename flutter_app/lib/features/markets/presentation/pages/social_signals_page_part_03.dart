@@ -101,9 +101,8 @@ class _HeroMetric extends StatelessWidget {
       children: [
         Text(
           value,
-          style: AppTextStyles.sectionTitle.copyWith(
+          style: AppTextStyles.sectionTitleSm.copyWith(
             color: color,
-            fontSize: 20,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
@@ -260,7 +259,6 @@ class _SignalResultRow extends StatelessWidget {
                           signal.direction == TradingSignalDirection.long
                           ? AppColors.buy10
                           : AppColors.sell10,
-                      fontSize: 8,
                       height: 17,
                     ),
                   ],

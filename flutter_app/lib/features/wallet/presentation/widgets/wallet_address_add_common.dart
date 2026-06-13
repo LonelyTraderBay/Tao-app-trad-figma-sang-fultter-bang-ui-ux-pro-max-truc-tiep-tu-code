@@ -70,16 +70,16 @@ class AddressFieldLabel extends StatelessWidget {
         children: [
           TextSpan(text: label),
           if (required)
-            const TextSpan(
+            TextSpan(
               text: ' *',
-              style: TextStyle(color: addressAddRed),
+              style: AppTextStyles.caption.copyWith(color: addressAddRed),
             ),
           if (optionalText != null)
             TextSpan(
               text: ' $optionalText',
-              style: const TextStyle(
+              style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                fontWeight: FontWeight.w400,
+                fontWeight: AppTextStyles.normal,
               ),
             ),
         ],

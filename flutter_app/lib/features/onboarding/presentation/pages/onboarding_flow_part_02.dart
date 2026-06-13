@@ -44,10 +44,7 @@ class _GoalsStep extends StatelessWidget {
               ? 'Bạn có thể bỏ qua bước này'
               : 'Đã chọn ${selectedGoals.length} mục tiêu',
           textAlign: TextAlign.center,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text3,
-            fontSize: 12,
-          ),
+          style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
         ),
       ],
     );
@@ -89,7 +86,7 @@ class _CompleteStep extends StatelessWidget {
             Text(
               'Sẵn sàng!',
               textAlign: TextAlign.center,
-              style: AppTextStyles.pageTitle.copyWith(fontSize: 28),
+              style: AppTextStyles.pageTitle,
             ),
             const SizedBox(height: AppSpacing.x2),
             Text(
@@ -193,7 +190,7 @@ class _StepHeading extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: AppTextStyles.sectionTitle.copyWith(fontSize: 24),
+          style: AppTextStyles.sectionTitle,
         ),
         const SizedBox(height: AppSpacing.x2),
         Text(
@@ -451,9 +448,8 @@ class _TrustCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   pillar.description,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text2,
-                    fontSize: 12,
                   ),
                 ),
               ],

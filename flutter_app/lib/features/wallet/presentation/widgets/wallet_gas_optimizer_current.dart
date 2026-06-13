@@ -144,7 +144,7 @@ class _GasStatusCard extends StatelessWidget {
                 TextSpan(
                   text:
                       '${vsAverage.abs().toStringAsFixed(0)}% ${vsAverage < 0 ? 'below' : 'above'}',
-                  style: TextStyle(
+                  style: AppTextStyles.caption.copyWith(
                     color: color,
                     fontWeight: AppTextStyles.bold,
                   ),

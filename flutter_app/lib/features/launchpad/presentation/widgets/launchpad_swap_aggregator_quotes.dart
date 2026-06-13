@@ -202,10 +202,9 @@ class _BestPill extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
         child: Text(
           'BEST',
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.chartLabelTiny.copyWith(
             color: AppColors.onAccent,
             fontWeight: AppTextStyles.bold,
-            fontSize: AppSpacing.launchpadFontXxs,
             height: AppSpacing.launchpadLineHeightTight,
           ),
         ),
@@ -240,10 +239,7 @@ class _Metric extends StatelessWidget {
           Text(
             label,
             textAlign: align,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: AppSpacing.launchpadFontSm,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           Text(
             value,

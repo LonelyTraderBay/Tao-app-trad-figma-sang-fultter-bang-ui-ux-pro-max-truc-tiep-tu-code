@@ -229,7 +229,7 @@ class _AvatarEditor extends StatelessWidget {
                 initial,
                 style: AppTextStyles.sectionTitle.copyWith(
                   color: AppColors.onAccent,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: AppTextStyles.heavy,
                   height: 1,
                 ),
               ),
@@ -303,7 +303,7 @@ class _EditProfileField extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            fontWeight: FontWeight.w900,
+            fontWeight: AppTextStyles.heavy,
             height: 1,
           ),
         ),

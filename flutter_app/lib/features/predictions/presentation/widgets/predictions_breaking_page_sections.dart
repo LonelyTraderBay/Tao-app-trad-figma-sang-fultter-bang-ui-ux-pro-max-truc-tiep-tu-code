@@ -236,11 +236,12 @@ class _MoverCard extends StatelessWidget {
                         children: [
                           TextSpan(
                             text: '${topOutcome.chance}%',
-                            style: TextStyle(
+                            style: AppTextStyles.numericMicro.copyWith(
                               color: topOutcome.chance >= 50
                                   ? AppColors.buy
                                   : AppColors.sell,
                               fontWeight: AppTextStyles.bold,
+                              fontFeatures: AppTextStyles.tabularFigures,
                             ),
                           ),
                         ],

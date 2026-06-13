@@ -169,6 +169,10 @@ class _TokenBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = size <= 28
+        ? AppTextStyles.numericMicro
+        : AppTextStyles.captionSm;
+
     return Container(
       width: size,
       height: size,
@@ -179,10 +183,9 @@ class _TokenBadge extends StatelessWidget {
       ),
       child: Text(
         holding.symbol.substring(0, math.min(2, holding.symbol.length)),
-        style: AppTextStyles.caption.copyWith(
+        style: textStyle.copyWith(
           color: holding.color,
           fontWeight: AppTextStyles.bold,
-          fontSize: size <= 28 ? 10 : 12,
         ),
       ),
     );
@@ -326,10 +329,7 @@ class _PerformancePainter extends CustomPainter {
     for (final index in [0, points.length ~/ 2, points.length - 1]) {
       textPainter.text = TextSpan(
         text: points[index].date,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: 9,
-        ),
+        style: AppTextStyles.chartLabelXs.copyWith(color: AppColors.text3),
       );
       textPainter.layout();
       final x = (index / (points.length - 1) * size.width).clamp(

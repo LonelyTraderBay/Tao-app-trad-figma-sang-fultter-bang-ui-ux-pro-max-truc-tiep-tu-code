@@ -146,7 +146,7 @@ class _ApiKeyHeader extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.baseMedium.copyWith(
-                        fontWeight: FontWeight.w800,
+                        fontWeight: AppTextStyles.extraBold,
                         height: 1.2,
                       ),
                     ),

@@ -120,9 +120,8 @@ class ExecutionQualityGradientButton extends StatelessWidget {
                 label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.control.copyWith(
                   color: AppColors.onAccent,
-                  fontSize: 14,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -152,7 +151,6 @@ class ExecutionQualityStatusPill extends StatelessWidget {
         complete ? 'âœ“ Complete' : 'â³ Pending',
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 10,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),

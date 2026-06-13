@@ -10,8 +10,8 @@ class WalletDcaCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.standard,
       radius: VitCardRadius.md,
-      padding: AppSpacing.cardPadding,
-      borderColor: AppColors.cardBorder,
+      padding: const EdgeInsets.all(AppSpacing.homeNextActionCardPadding),
+      borderColor: _walletPurple.withValues(alpha: .28),
       child: Column(
         children: [
           Row(
@@ -19,9 +19,9 @@ class WalletDcaCard extends StatelessWidget {
               _IconCircle(
                 icon: Icons.sync_alt_rounded,
                 color: _walletPurple,
-                size: AppSpacing.iconLg,
+                size: AppSpacing.homeNextActionIconContainer,
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.homeCommandRowSpacing),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,6 +46,9 @@ class WalletDcaCard extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: _walletGreen.withValues(alpha: .12),
+                            border: Border.all(
+                              color: _walletGreen.withValues(alpha: .18),
+                            ),
                             borderRadius: AppRadii.mdRadius,
                           ),
                           child: Text(
@@ -104,7 +107,7 @@ class WalletDcaCard extends StatelessWidget {
             variant: VitCardVariant.inner,
             radius: VitCardRadius.md,
             padding: AppSpacing.cardPaddingCompact,
-            borderColor: AppColors.onAccent.withValues(alpha: .24),
+            borderColor: _walletAmber.withValues(alpha: .24),
             child: Row(
               children: [
                 _IconCircle(
@@ -165,7 +168,7 @@ class _DcaStatCard extends StatelessWidget {
       ),
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      borderColor: AppColors.borderSolid,
+      borderColor: iconColor.withValues(alpha: .18),
       child: Row(
         children: [
           _IconCircle(icon: icon, color: iconColor, size: AppSpacing.iconLg),
@@ -276,17 +279,29 @@ class _ToolButton extends StatelessWidget {
     final color = Color(tool.colorHex);
     return VitCard(
       onTap: onTap,
-      height: AppSpacing.searchBarCompactHeight,
+      height: AppSpacing.searchBarCompactHeight + AppSpacing.x2,
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.searchBarHorizontalPadding,
       ),
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      borderColor: AppColors.cardBorder,
+      borderColor: color.withValues(alpha: .22),
       child: Row(
         children: [
-          Icon(_toolIcon(tool.iconKey), color: color, size: AppSpacing.iconSm),
-          const SizedBox(width: AppSpacing.x1),
+          Container(
+            width: AppSpacing.iconLg,
+            height: AppSpacing.iconLg,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: .12),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              _toolIcon(tool.iconKey),
+              color: color,
+              size: AppSpacing.iconSm,
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               tool.label,

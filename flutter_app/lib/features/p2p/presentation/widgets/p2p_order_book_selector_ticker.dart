@@ -121,10 +121,7 @@ class _MarketTicker extends StatelessWidget {
             children: [
               Text(
                 '${market.asset}/VND',
-                style: AppTextStyles.pageTitle.copyWith(
-                  fontSize: 24,
-                  fontWeight: AppTextStyles.bold,
-                ),
+                style: AppTextStyles.numericDisplaySm,
               ),
               const SizedBox(width: AppSpacing.x2),
               _ChangePill(value: market.changePct),

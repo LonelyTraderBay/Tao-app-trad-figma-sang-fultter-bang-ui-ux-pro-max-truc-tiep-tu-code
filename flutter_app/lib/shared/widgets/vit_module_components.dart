@@ -33,12 +33,15 @@ extension VitServiceTileDensitySpacing on VitServiceTileDensity {
   }
 
   double get labelGap {
-    return AppSpacing.serviceTileLabelGap;
+    return switch (this) {
+      VitServiceTileDensity.compact => AppSpacing.serviceTileLabelGapCompact,
+      VitServiceTileDensity.standard => AppSpacing.serviceTileLabelGap,
+    };
   }
 
   TextStyle get labelStyle {
     return switch (this) {
-      VitServiceTileDensity.compact => AppTextStyles.micro.copyWith(height: 1),
+      VitServiceTileDensity.compact => AppTextStyles.micro,
       VitServiceTileDensity.standard => AppTextStyles.caption,
     };
   }
@@ -124,7 +127,6 @@ class VitServiceTile extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: AppTextStyles.micro.copyWith(
                                 color: accentColor,
-                                fontSize: AppSpacing.serviceTileBadgeFont,
                                 fontWeight: AppTextStyles.bold,
                               ),
                             ),

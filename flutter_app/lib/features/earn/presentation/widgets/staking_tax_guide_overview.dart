@@ -130,9 +130,8 @@ class _IncomeEventCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x2),
           Text(
             event.description,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text2,
-              fontSize: AppSpacing.stakingTaxDetailFontSize,
               height: AppSpacing.stakingTaxEventLineHeight,
             ),
           ),

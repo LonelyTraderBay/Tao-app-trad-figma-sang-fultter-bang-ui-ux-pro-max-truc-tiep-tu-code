@@ -136,15 +136,19 @@ class _AgreementRow extends StatelessWidget {
                   child: Text.rich(
                     TextSpan(
                       text: 'Tôi đã đọc và đồng ý với ',
-                      children: const [
+                      children: [
                         TextSpan(
                           text: 'Điều khoản dịch vụ',
-                          style: TextStyle(color: _authPrimary),
+                          style: AppTextStyles.caption.copyWith(
+                            color: _authPrimary,
+                          ),
                         ),
                         TextSpan(text: ' và '),
                         TextSpan(
                           text: 'Chính sách bảo mật',
-                          style: TextStyle(color: _authPrimary),
+                          style: AppTextStyles.caption.copyWith(
+                            color: _authPrimary,
+                          ),
                         ),
                         TextSpan(text: ' của VitTrade.'),
                       ],
@@ -255,7 +259,7 @@ class _PasswordStrength extends StatelessWidget {
         if (label.isNotEmpty)
           Text(
             'Mật khẩu $label',
-            style: AppTextStyles.micro.copyWith(color: color, fontSize: 12),
+            style: AppTextStyles.captionSm.copyWith(color: color),
           ),
       ],
     );

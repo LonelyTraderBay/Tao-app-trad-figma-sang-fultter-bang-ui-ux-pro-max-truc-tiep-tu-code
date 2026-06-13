@@ -23,9 +23,7 @@ class _ComplianceNotice extends StatelessWidget {
                   snapshot.complianceTitle,
                   style: AppTextStyles.micro.copyWith(
                     color: _auditPrimary,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.1,
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -35,7 +33,6 @@ class _ComplianceNotice extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: _auditPrimary,
-                    fontSize: 9,
                     height: 1.35,
                   ),
                 ),
@@ -127,11 +124,9 @@ class _AuditFilterPill extends StatelessWidget {
           tab.label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: active ? _auditPrimary : _auditMuted,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
-            height: 1,
           ),
         ),
       ),

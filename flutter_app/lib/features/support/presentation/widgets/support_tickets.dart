@@ -81,10 +81,9 @@ class _TicketSection extends StatelessWidget {
       children: [
         Text(
           title,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.bold,
-            fontSize: 12,
           ),
         ),
         const SizedBox(height: AppSpacing.x4),
@@ -178,9 +177,8 @@ class _TicketCard extends StatelessWidget {
                     const SizedBox(width: AppSpacing.x2),
                     Text(
                       lastMessage.sender == 'user' ? 'Bạn' : 'Hỗ trợ',
-                      style: AppTextStyles.micro.copyWith(
+                      style: AppTextStyles.navLabel.copyWith(
                         color: AppColors.text2,
-                        fontSize: 11,
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x2),

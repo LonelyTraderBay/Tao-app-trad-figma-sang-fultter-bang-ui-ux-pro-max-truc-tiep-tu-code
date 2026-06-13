@@ -26,7 +26,6 @@ class _ProcessNotice extends StatelessWidget {
                   snapshot.processTitle,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 11,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -36,7 +35,6 @@ class _ProcessNotice extends StatelessWidget {
                   snapshot.processDescription,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.bold,
                     height: 1.35,
                   ),
@@ -106,7 +104,6 @@ class _CategoryField extends StatelessWidget {
                     value ?? 'Select category',
                     style: AppTextStyles.base.copyWith(
                       color: AppColors.text1,
-                      fontSize: 16,
                       height: 1,
                     ),
                   ),
@@ -178,7 +175,6 @@ class _TextInputBlock extends StatelessWidget {
                   : TextAlignVertical.center,
               style: AppTextStyles.base.copyWith(
                 color: AppColors.text1,
-                fontSize: multiline ? 16 : 14,
                 height: multiline ? 1.35 : 1,
               ),
               decoration: InputDecoration(
@@ -187,7 +183,6 @@ class _TextInputBlock extends StatelessWidget {
                 hintMaxLines: multiline ? 3 : 1,
                 hintStyle: AppTextStyles.base.copyWith(
                   color: AppColors.text3,
-                  fontSize: 16,
                   fontWeight: AppTextStyles.bold,
                   height: multiline ? 1.4 : 1,
                 ),
@@ -206,7 +201,6 @@ class _TextInputBlock extends StatelessWidget {
           '${controller.text.length}/$maxLength characters (min $minLength)',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 9,
             height: 1,
           ),
         ),
@@ -245,7 +239,6 @@ class _EvidenceUploadCard extends StatelessWidget {
               'Upload Evidence (Optional)',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
-                fontSize: 12,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
@@ -256,7 +249,6 @@ class _EvidenceUploadCard extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                fontSize: 10,
                 height: 1,
               ),
             ),
@@ -273,7 +265,6 @@ class _EvidenceUploadCard extends StatelessWidget {
                 'Choose Files',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 12,
                   fontWeight: AppTextStyles.bold,
                   height: 1,
                 ),
@@ -328,7 +319,6 @@ class _TermsCard extends StatelessWidget {
                     snapshot.termsIntro,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      fontSize: 11,
                       height: 1.45,
                     ),
                   ),
@@ -338,7 +328,6 @@ class _TermsCard extends StatelessWidget {
                       '- $term',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        fontSize: 10,
                         height: 1.5,
                       ),
                     ),
@@ -351,3 +340,5 @@ class _TermsCard extends StatelessWidget {
     );
   }
 }
+
+

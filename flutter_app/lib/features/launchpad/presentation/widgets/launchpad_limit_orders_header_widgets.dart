@@ -80,14 +80,7 @@ class _StatCell extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.x2),
-          Text(
-            value,
-            style: AppTextStyles.base.copyWith(
-              color: color,
-              fontSize: AppSpacing.launchpadFont2xl,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
+          Text(value, style: AppTextStyles.amountSm.copyWith(color: color)),
         ],
       ),
     );

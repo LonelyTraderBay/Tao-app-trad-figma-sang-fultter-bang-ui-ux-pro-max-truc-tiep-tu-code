@@ -29,7 +29,6 @@ class _FeaturedGasCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.portfolioTextDim,
-                    fontSize: AppSpacing.launchpadFontMd,
                     fontWeight: AppTextStyles.medium,
                   ),
                 ),
@@ -69,7 +68,6 @@ class _FeaturedGasCard extends StatelessWidget {
               '${price.unit} - Updated ${price.lastUpdated}',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.portfolioTextMuted,
-                fontSize: AppSpacing.launchpadFontXs,
               ),
             ),
           ),
@@ -109,7 +107,6 @@ class _TierValue extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
-              fontSize: AppSpacing.launchpadFontXxs,
               height: AppSpacing.launchpadLineHeightShort,
             ),
           ),
@@ -288,10 +285,9 @@ class _GasChartCard extends StatelessWidget {
         children: [
           Text(
             'Gas 24h - ${price.chain}',
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.captionSm.copyWith(
               fontWeight: AppTextStyles.bold,
               color: AppColors.text1,
-              fontSize: AppSpacing.launchpadFontLg,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -323,9 +319,8 @@ class _Eip1559Card extends StatelessWidget {
         children: [
           Text(
             'EIP-1559',
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text1,
-              fontSize: AppSpacing.launchpadFontLg,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -388,10 +383,7 @@ class _FeeBox extends StatelessWidget {
             const SizedBox(height: AppSpacing.x1),
             Text(
               label,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontSize: AppSpacing.launchpadFontXs,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ],
         ),
@@ -460,18 +452,16 @@ class _ChainComparisonCard extends StatelessWidget {
               children: [
                 Text(
                   price.chain,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text1,
-                    fontSize: AppSpacing.launchpadFontLg,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   '${_formatGasValue(price.slow)} / ${_formatGasValue(price.standard)} / ${_formatGasValue(price.fast)} ${price.unit}',
-                  style: AppTextStyles.micro.copyWith(
+                  style: AppTextStyles.numericMicro.copyWith(
                     color: AppColors.text3,
-                    fontSize: AppSpacing.launchpadFontSm,
                   ),
                 ),
               ],

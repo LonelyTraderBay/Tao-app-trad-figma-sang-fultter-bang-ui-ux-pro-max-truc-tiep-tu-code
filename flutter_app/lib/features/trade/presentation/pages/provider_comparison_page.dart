@@ -161,7 +161,6 @@ class _WarningBanner extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.warningText,
                 height: 1.45,
-                fontSize: 10,
               ),
             ),
           ),
@@ -187,7 +186,7 @@ class _ComparisonTable extends StatelessWidget {
             'Metric',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontWeight: FontWeight.w800,
+              fontWeight: AppTextStyles.extraBold,
             ),
           ),
         ),
@@ -260,7 +259,7 @@ class _CategoryRow extends StatelessWidget {
             label,
             style: AppTextStyles.caption.copyWith(
               color: color,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.heavy,
             ),
           ),
         ],
@@ -304,7 +303,6 @@ class _LegendPanel extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
               height: 1.35,
-              fontSize: 9,
             ),
           ),
         ],

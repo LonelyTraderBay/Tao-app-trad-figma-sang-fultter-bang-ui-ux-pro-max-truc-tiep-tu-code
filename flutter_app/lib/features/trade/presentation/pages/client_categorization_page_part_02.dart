@@ -194,10 +194,13 @@ class _OptUpCard extends StatelessWidget {
                         color: _clientAmber,
                         height: 1.3,
                       ),
-                      children: const [
+                      children: [
                         TextSpan(
                           text: 'Warning: ',
-                          style: TextStyle(fontWeight: FontWeight.w700),
+                          style: AppTextStyles.micro.copyWith(
+                            color: _clientAmber,
+                            fontWeight: AppTextStyles.bold,
+                          ),
                         ),
                         TextSpan(
                           text:

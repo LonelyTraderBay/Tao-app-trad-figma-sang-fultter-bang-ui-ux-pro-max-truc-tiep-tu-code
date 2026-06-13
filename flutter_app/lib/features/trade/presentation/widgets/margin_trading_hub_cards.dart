@@ -63,9 +63,8 @@ class _FeatureCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     item,
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.captionSm.copyWith(
                       color: AppColors.text2,
-                      fontSize: 12,
                       height: 1.45,
                     ),
                   ),
@@ -107,7 +106,6 @@ class _ComplianceCard extends StatelessWidget {
                       compliance.title,
                       style: AppTextStyles.baseMedium.copyWith(
                         color: _hubGreen,
-                        fontSize: 16,
                         fontWeight: AppTextStyles.bold,
                         height: 1.2,
                       ),
@@ -115,9 +113,8 @@ class _ComplianceCard extends StatelessWidget {
                     const SizedBox(height: 7),
                     Text(
                       compliance.description,
-                      style: AppTextStyles.caption.copyWith(
+                      style: AppTextStyles.captionSm.copyWith(
                         color: AppColors.text2,
-                        fontSize: 12,
                         height: 1.45,
                       ),
                     ),
@@ -146,9 +143,8 @@ class _ComplianceCard extends StatelessWidget {
                 ),
                 child: Text(
                   '${compliance.regulations[index]} v',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: _hubGreen,
-                    fontSize: 12,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),

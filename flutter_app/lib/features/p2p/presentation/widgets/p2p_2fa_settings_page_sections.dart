@@ -43,7 +43,6 @@ class _TwoFactorStatusCard extends StatelessWidget {
                     '2FA đã bật ($enabledMethods phương thức)',
                     style: AppTextStyles.sectionTitle.copyWith(
                       color: AppColors.onAccent,
-                      fontSize: 21,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x2),

@@ -31,10 +31,8 @@ class _WarningNotice extends StatelessWidget {
               children: [
                 Text(
                   'Not a Guarantee',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.badge.copyWith(
                     color: _scenarioAmber,
-                    fontSize: 11,
-                    fontWeight: AppTextStyles.bold,
                     height: 1.1,
                   ),
                 ),
@@ -45,7 +43,6 @@ class _WarningNotice extends StatelessWidget {
                   'differ significantly.',
                   style: AppTextStyles.micro.copyWith(
                     color: _scenarioAmber,
-                    fontSize: 10,
                     fontWeight: AppTextStyles.medium,
                     height: 1.35,
                   ),
@@ -73,18 +70,16 @@ class _InvestmentCard extends StatelessWidget {
         children: [
           Text(
             'Example Investment',
-            style: AppTextStyles.micro.copyWith(
+            style: AppTextStyles.navLabel.copyWith(
               color: AppColors.text3,
-              fontSize: 11,
               height: 1.2,
             ),
           ),
           const SizedBox(height: 12),
           Text(
             _formatEur(investment),
-            style: AppTextStyles.heroNumber.copyWith(
+            style: AppTextStyles.amountMd.copyWith(
               color: AppColors.text1,
-              fontSize: 28,
               height: 1,
             ),
           ),
@@ -128,11 +123,10 @@ class _HoldingPeriodSelector extends StatelessWidget {
                 ),
                 child: Text(
                   '$period ${period == 1 ? 'Year' : 'Years'}',
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.captionSm.copyWith(
                     color: selectedPeriod == period
                         ? AppColors.onAccent
                         : AppColors.text2,
-                    fontSize: 12,
                     fontWeight: selectedPeriod == period
                         ? AppTextStyles.bold
                         : AppTextStyles.medium,
@@ -169,9 +163,8 @@ class _SectionLabel extends StatelessWidget {
         const SizedBox(width: 7),
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: AppColors.text2,
-            fontSize: 12,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),

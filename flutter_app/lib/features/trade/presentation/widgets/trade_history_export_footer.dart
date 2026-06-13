@@ -24,9 +24,8 @@ class _TaxNote extends StatelessWidget {
             child: Text(
               'File xuất phục vụ mục đích lưu trữ và khai thuế. Không phải tài liệu '
               'chính thức về thuế. Tham khảo ý kiến chuyên gia thuế cho trường hợp cụ thể.',
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.navLabel.copyWith(
                 color: _tradePrimary,
-                fontSize: 11,
                 height: 1.45,
               ),
             ),

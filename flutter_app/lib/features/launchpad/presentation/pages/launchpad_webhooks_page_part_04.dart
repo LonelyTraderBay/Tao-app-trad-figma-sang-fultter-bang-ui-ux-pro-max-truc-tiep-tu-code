@@ -25,10 +25,7 @@ class _InfoBanner extends StatelessWidget {
           Expanded(
             child: Text(
               'Webhooks gui HTTP POST den URL cua ban moi khi event xay ra tren blockchain. Dam bao endpoint co the xu ly payload va tra ve 2xx status code.',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                fontSize: AppSpacing.launchpadFontMd,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],

@@ -151,10 +151,7 @@ class _PairCorrelationRow extends StatelessWidget {
                   ),
                   Text(
                     _correlationLabel(value),
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontSize: 8,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
@@ -186,7 +183,6 @@ class _AssetDot extends StatelessWidget {
         symbol.substring(0, 2),
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 7,
           fontWeight: AppTextStyles.bold,
         ),
       ),

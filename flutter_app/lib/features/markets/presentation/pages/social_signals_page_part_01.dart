@@ -404,9 +404,8 @@ class _FilterChipButton extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: active ? color : AppColors.text3,
-            fontSize: 12,
             fontWeight: AppTextStyles.medium,
           ),
         ),

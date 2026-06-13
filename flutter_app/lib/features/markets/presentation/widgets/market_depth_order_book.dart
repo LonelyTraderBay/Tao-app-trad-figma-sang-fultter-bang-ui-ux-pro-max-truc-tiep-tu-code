@@ -184,9 +184,8 @@ class _BookCell extends StatelessWidget {
       child: Text(
         text,
         textAlign: alignRight ? TextAlign.right : TextAlign.left,
-        style: AppTextStyles.caption.copyWith(
+        style: AppTextStyles.captionSm.copyWith(
           color: color ?? AppColors.text1,
-          fontSize: 12,
           fontFeatures: AppTextStyles.tabularFigures,
         ),
       ),

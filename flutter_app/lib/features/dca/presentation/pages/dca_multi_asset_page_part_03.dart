@@ -55,9 +55,9 @@ class _SuccessCallout extends StatelessWidget {
             children: [
               Text(
                 score,
-                style: AppTextStyles.heroNumber.copyWith(
+                style: AppTextStyles.amountMd.copyWith(
                   color: AppColors.buy,
-                  fontSize: AppSpacing.dcaMultiScoreFontSize,
+                  height: AppSpacing.dcaMultiTightLineHeight,
                 ),
               ),
               const SizedBox(width: AppSpacing.x2),

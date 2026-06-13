@@ -155,21 +155,14 @@ class _MiniStat extends StatelessWidget {
         children: [
           Text(
             value,
-            style: AppTextStyles.sectionTitle.copyWith(
-              color: color,
-              fontSize: 22,
-              height: 1,
-            ),
+            style: AppTextStyles.sectionTitle.copyWith(color: color, height: 1),
           ),
           const SizedBox(height: 8),
           Text(
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 10,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),

@@ -48,7 +48,6 @@ class _AlertCard extends StatelessWidget {
                       Text(
                         alert.symbol,
                         style: AppTextStyles.baseMedium.copyWith(
-                          fontSize: 15,
                           fontWeight: AppTextStyles.bold,
                           height: 1.1,
                         ),
@@ -71,7 +70,6 @@ class _AlertCard extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.caption.copyWith(
                                 color: conditionColor,
-                                fontSize: 12,
                                 fontWeight: AppTextStyles.bold,
                                 fontFeatures: AppTextStyles.tabularFigures,
                                 height: 1,
@@ -132,7 +130,6 @@ class _AlertCard extends StatelessWidget {
                             'Giá hiện tại',
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text3,
-                              fontSize: 12,
                               height: 1,
                             ),
                           ),
@@ -141,7 +138,6 @@ class _AlertCard extends StatelessWidget {
                             _formatUsd(alert.currentPrice),
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
-                              fontSize: 12,
                               fontWeight: AppTextStyles.bold,
                               fontFeatures: AppTextStyles.tabularFigures,
                               height: 1,
@@ -219,7 +215,6 @@ class _AlertCard extends StatelessWidget {
                       'Kích hoạt lúc 11:30:00 17/2/2024',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        fontSize: 12,
                         height: 1,
                       ),
                     ),
@@ -256,7 +251,6 @@ class _AssetAvatar extends StatelessWidget {
         symbol.length <= 3 ? symbol : symbol.substring(0, 3),
         style: AppTextStyles.caption.copyWith(
           color: color,
-          fontSize: 12,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -282,7 +276,6 @@ class _TriggeredPill extends StatelessWidget {
         'Đã kích hoạt',
         style: AppTextStyles.caption.copyWith(
           color: AppColors.buy,
-          fontSize: 12,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -315,3 +308,4 @@ class _EmptyAlertsCard extends StatelessWidget {
     );
   }
 }
+

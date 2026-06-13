@@ -325,7 +325,6 @@ class _HeaderActionBadge extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
-                fontSize: AppTopHeaderTokens.actionBadgeFontSize,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),

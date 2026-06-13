@@ -210,10 +210,8 @@ class _TxCard extends StatelessWidget {
                                   children: [
                                     Text(
                                       '${tx.signedCount}/${tx.threshold} signed',
-                                      style: AppTextStyles.micro.copyWith(
-                                        color: AppColors.text3,
-                                        fontSize: AppSpacing.launchpadFontSm,
-                                      ),
+                                      style: AppTextStyles.numericMicro
+                                          .copyWith(color: AppColors.text3),
                                     ),
                                     const SizedBox(width: AppSpacing.x2),
                                     _MiniPill(
@@ -223,10 +221,8 @@ class _TxCard extends StatelessWidget {
                                     const SizedBox(width: AppSpacing.x2),
                                     Text(
                                       '#${tx.nonce}',
-                                      style: AppTextStyles.micro.copyWith(
-                                        color: AppColors.text3,
-                                        fontSize: AppSpacing.launchpadFontSm,
-                                      ),
+                                      style: AppTextStyles.numericMicro
+                                          .copyWith(color: AppColors.text3),
                                     ),
                                   ],
                                 ),
@@ -464,10 +460,7 @@ class _SignerRow extends StatelessWidget {
           if (signer.signedAt != null)
             Text(
               signer.signedAt!,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.buy,
-                fontSize: AppSpacing.launchpadFontXxs,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.buy),
             ),
         ],
       ),

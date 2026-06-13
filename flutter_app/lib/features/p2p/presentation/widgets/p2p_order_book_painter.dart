@@ -43,8 +43,10 @@ class _DepthChartPainter extends CustomPainter {
         canvas,
         _formatAxis(tick),
         Offset(0, y - 7),
-        AppColors.text3,
-        9,
+        AppTextStyles.chartLabelXs.copyWith(
+          color: AppColors.text3,
+          fontWeight: AppTextStyles.medium,
+        ),
         width: chartLeft - 6,
         align: TextAlign.right,
       );
@@ -77,8 +79,10 @@ class _DepthChartPainter extends CustomPainter {
         canvas,
         labels[i],
         Offset(x - 16, origin.dy + 7),
-        AppColors.text3,
-        9,
+        AppTextStyles.chartLabelXs.copyWith(
+          color: AppColors.text3,
+          fontWeight: AppTextStyles.medium,
+        ),
         width: 36,
         align: TextAlign.center,
       );
@@ -96,20 +100,12 @@ void _paintText(
   Canvas canvas,
   String text,
   Offset offset,
-  Color color,
-  double size, {
+  TextStyle style, {
   double? width,
   TextAlign align = TextAlign.left,
 }) {
   final painter = TextPainter(
-    text: TextSpan(
-      text: text,
-      style: TextStyle(
-        color: color,
-        fontSize: size,
-        fontWeight: FontWeight.w500,
-      ),
-    ),
+    text: TextSpan(text: text, style: style),
     textAlign: align,
     textDirection: TextDirection.ltr,
   )..layout(maxWidth: width ?? double.infinity);

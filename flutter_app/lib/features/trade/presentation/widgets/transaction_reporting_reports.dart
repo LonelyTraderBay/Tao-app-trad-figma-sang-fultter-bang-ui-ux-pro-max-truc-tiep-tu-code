@@ -31,7 +31,6 @@ class TransactionReportsSection extends StatelessWidget {
           '${reports.length} Reports',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
-            fontSize: 11,
             fontWeight: AppTextStyles.bold,
             height: 1,
           ),
@@ -117,7 +116,6 @@ class _ReportCard extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTextStyles.caption.copyWith(
                                     color: AppColors.text1,
-                                    fontSize: 13,
                                     fontWeight: AppTextStyles.bold,
                                     height: 1,
                                   ),
@@ -137,7 +135,6 @@ class _ReportCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              fontSize: 10,
                               height: 1,
                             ),
                           ),
@@ -197,7 +194,6 @@ class _ReportCard extends StatelessWidget {
                       sla.label,
                       style: AppTextStyles.micro.copyWith(
                         color: sla.color,
-                        fontSize: 9,
                         fontWeight: AppTextStyles.bold,
                         height: 1,
                       ),
@@ -229,7 +225,6 @@ class _ReportCard extends StatelessWidget {
                             report.errorMessage!,
                             style: AppTextStyles.micro.copyWith(
                               color: transactionReportRed,
-                              fontSize: 9,
                               height: 1.3,
                             ),
                           ),
@@ -286,7 +281,6 @@ class _DetailValue extends StatelessWidget {
           '$label: ',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            fontSize: 9,
             height: 1,
           ),
         ),
@@ -297,7 +291,6 @@ class _DetailValue extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              fontSize: 10,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
@@ -343,7 +336,6 @@ class _ActionChip extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: color,
-                fontSize: 10,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
@@ -375,7 +367,6 @@ class _SmallPill extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: AppTextStyles.micro.copyWith(
           color: color,
-          fontSize: 10,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),
@@ -422,3 +413,4 @@ class _EmptyReports extends StatelessWidget {
     );
   }
 }
+

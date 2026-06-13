@@ -57,9 +57,7 @@ class SavingsSmartSummary extends StatelessWidget {
                     ),
                     Text(
                       '${snapshot.pendingCount}',
-                      style: AppTextStyles.heroNumber.copyWith(
-                        fontSize: AppSpacing.savingsConsumerStatFontSize,
-                      ),
+                      style: AppTextStyles.numericDisplay3xl,
                     ),
                   ],
                 ),

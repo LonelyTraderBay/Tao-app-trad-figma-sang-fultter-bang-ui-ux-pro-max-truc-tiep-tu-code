@@ -28,7 +28,7 @@ class _ResetExpired extends StatelessWidget {
           Text(
             'Phiên xác minh đã hết hạn',
             textAlign: TextAlign.center,
-            style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
+            style: AppTextStyles.sectionTitle,
           ),
           const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
@@ -71,7 +71,7 @@ class _ResetHero extends StatelessWidget {
         Text(
           'Tạo mật khẩu mới',
           textAlign: TextAlign.center,
-          style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
+          style: AppTextStyles.sectionTitle,
         ),
         const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text(
@@ -130,7 +130,7 @@ class _PasswordRuleRow extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: AppTextStyles.caption.copyWith(color: color, fontSize: 12),
+            style: AppTextStyles.caption.copyWith(color: color),
           ),
         ),
       ],
@@ -159,7 +159,7 @@ class _InlinePasswordState extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.micro.copyWith(color: color, fontSize: 12),
+            style: AppTextStyles.micro.copyWith(color: color),
           ),
         ),
       ],
@@ -194,7 +194,7 @@ class _ResetSuccess extends StatelessWidget {
           Text(
             'Đổi mật khẩu thành công!',
             textAlign: TextAlign.center,
-            style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
+            style: AppTextStyles.sectionTitle,
           ),
           const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
           Text(
@@ -211,3 +211,5 @@ class _ResetSuccess extends StatelessWidget {
     );
   }
 }
+
+

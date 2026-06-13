@@ -65,7 +65,8 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                   AppSpacing.walletBottomInsetVisualChrome
             : DeviceMetrics.nativeBottomChrome +
                   AppSpacing.walletBottomInsetNativeChrome) +
-        MediaQuery.paddingOf(context).bottom;
+        MediaQuery.paddingOf(context).bottom +
+        AppSpacing.searchBarCompactHeight;
     final assets = _filteredAssets(snapshot.assets);
     final showBack = context.canPop();
 
@@ -103,6 +104,17 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                       setState(() => _balanceHidden = !_balanceHidden),
                   onNavigate: _navigate,
                 ),
+                WalletSectionHeader(
+                  title: _tab == 'assets' ? 'Tài sản' : 'Phân bổ',
+                  icon: _tab == 'assets'
+                      ? Icons.account_balance_wallet_outlined
+                      : Icons.donut_large_rounded,
+                  iconColor: AppColors.primary,
+                  actionLabel: _tab == 'assets' ? 'Phân tích' : null,
+                  onAction: _tab == 'assets'
+                      ? () => _navigate('/wallet/portfolio-analytics')
+                      : null,
+                ),
                 WalletSegmentedTabs(active: _tab, onChanged: _setTab),
                 VitCard(
                   variant: VitCardVariant.standard,
@@ -123,7 +135,17 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                         )
                       : WalletAllocationCard(assets: snapshot.assets),
                 ),
+                const WalletSectionHeader(
+                  title: 'Mua định kỳ',
+                  icon: Icons.sync_alt_rounded,
+                  iconColor: AppColors.accent,
+                ),
                 WalletDcaCard(dca: snapshot.dca),
+                const WalletSectionHeader(
+                  title: 'Công cụ ví',
+                  icon: Icons.grid_view_rounded,
+                  iconColor: AppColors.primary,
+                ),
                 WalletToolGrid(tools: snapshot.tools, onNavigate: _navigate),
               ],
             ),

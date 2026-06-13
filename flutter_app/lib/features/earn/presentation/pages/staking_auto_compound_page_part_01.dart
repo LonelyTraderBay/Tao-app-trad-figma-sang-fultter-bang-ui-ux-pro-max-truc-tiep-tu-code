@@ -285,10 +285,7 @@ class _SummaryCard extends StatelessWidget {
                     const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
                     Text(
                       '$active/${positions.length}',
-                      style: AppTextStyles.heroNumber.copyWith(
-                        fontSize:
-                            AppSpacing.stakingAutoCompoundHeroStatFontSize,
-                      ),
+                      style: AppTextStyles.numericDisplayXl,
                     ),
                     Text(
                       'positions',

@@ -31,12 +31,7 @@ class _RankingRow extends StatelessWidget {
           Expanded(
             child: Row(
               children: [
-                Text(
-                  trader.avatar,
-                  style: const TextStyle(
-                    fontSize: AppSpacing.predictionLeaderboardTraderAvatar,
-                  ),
-                ),
+                Text(trader.avatar, style: AppTextStyles.avatarMd),
                 const SizedBox(
                   width: AppSpacing.predictionLeaderboardTraderGap,
                 ),
@@ -202,12 +197,7 @@ class _BiggestWinCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(
-                      trader.avatar,
-                      style: const TextStyle(
-                        fontSize: AppSpacing.predictionLeaderboardWinAvatar,
-                      ),
-                    ),
+                    Text(trader.avatar, style: AppTextStyles.avatarSm),
                     const SizedBox(
                       width: AppSpacing.predictionLeaderboardWinAvatarGap,
                     ),

@@ -50,7 +50,7 @@ class _SecuritySummaryCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.baseMedium.copyWith(
-                        fontWeight: FontWeight.w900,
+                        fontWeight: AppTextStyles.heavy,
                         height: 1,
                       ),
                     ),
@@ -138,7 +138,7 @@ class _SummaryStat extends StatelessWidget {
             value,
             style: AppTextStyles.caption.copyWith(
               color: color,
-              fontWeight: FontWeight.w900,
+              fontWeight: AppTextStyles.heavy,
               height: 1,
             ),
           ),
@@ -159,7 +159,7 @@ class _SectionHeader extends StatelessWidget {
       label,
       style: AppTextStyles.micro.copyWith(
         color: AppColors.text2,
-        fontWeight: FontWeight.w900,
+        fontWeight: AppTextStyles.heavy,
         height: 1,
       ),
     );
@@ -191,7 +191,7 @@ class _OtherDevicesHeader extends StatelessWidget {
               '\u0110\u0103ng xu\u1EA5t t\u1EA5t c\u1EA3',
               style: AppTextStyles.micro.copyWith(
                 color: _devicesRed,
-                fontWeight: FontWeight.w900,
+                fontWeight: AppTextStyles.heavy,
                 height: 1,
               ),
             ),
@@ -288,7 +288,7 @@ class _DeviceDetails extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: AppTextStyles.heavy,
                   height: 1,
                 ),
               ),

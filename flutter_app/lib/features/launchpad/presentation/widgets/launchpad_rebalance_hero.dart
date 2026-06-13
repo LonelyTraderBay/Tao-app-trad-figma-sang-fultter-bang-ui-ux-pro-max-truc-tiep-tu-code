@@ -36,10 +36,9 @@ class LaunchpadRebalanceHero extends StatelessWidget {
               const SizedBox(width: AppSpacing.x2),
               Text(
                 'Portfolio Value',
-                style: AppTextStyles.micro.copyWith(
+                style: AppTextStyles.caption.copyWith(
                   color: AppColors.portfolioTextDim,
                   fontWeight: AppTextStyles.medium,
-                  fontSize: AppSpacing.launchpadFontMd,
                 ),
               ),
             ],
@@ -47,9 +46,8 @@ class LaunchpadRebalanceHero extends StatelessWidget {
           const SizedBox(height: AppSpacing.x2),
           Text(
             '\$${launchpadRebalanceMoney(totalValue)}',
-            style: AppTextStyles.pageTitle.copyWith(
+            style: AppTextStyles.numericDisplayXl.copyWith(
               color: AppColors.text1,
-              fontSize: AppSpacing.launchpadFont3xl,
             ),
           ),
           const SizedBox(height: AppSpacing.x1),
@@ -57,7 +55,6 @@ class LaunchpadRebalanceHero extends StatelessWidget {
             '$assetCount assets - Deviation: ${totalDeviation.toStringAsFixed(1)}%',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
-              fontSize: AppSpacing.launchpadFontSm,
             ),
           ),
         ],

@@ -386,9 +386,7 @@ class _HoldingsTab extends StatelessWidget {
                         const SizedBox(height: AppSpacing.x2),
                         Text(
                           _formatUsd(snapshot.holdingsValue),
-                          style: AppTextStyles.heroNumber.copyWith(
-                            fontSize: AppSpacing.stakingProductMetricFontSize,
-                          ),
+                          style: AppTextStyles.numericDisplayXl,
                         ),
                       ],
                     ),

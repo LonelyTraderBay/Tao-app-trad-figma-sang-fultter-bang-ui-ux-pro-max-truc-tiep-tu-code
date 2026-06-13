@@ -14,11 +14,9 @@ class _SummarySection extends StatelessWidget {
           padding: const EdgeInsets.only(left: 10),
           child: Text(
             'Thống kê tổng quan',
-            style: AppTextStyles.micro.copyWith(
+            style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text2,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
         ),
@@ -99,18 +97,14 @@ class _SummaryCard extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 10,
-              height: 1,
+              fontWeight: AppTextStyles.medium,
             ),
           ),
           const SizedBox(height: 10),
           Text(
             value,
-            style: AppTextStyles.sectionTitle.copyWith(
+            style: AppTextStyles.amountSm.copyWith(
               color: color,
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-              height: 1,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
@@ -147,7 +141,6 @@ class _ExportFormatButton extends StatelessWidget {
                   format.label,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.bold,
                     height: 1.1,
                   ),
@@ -157,7 +150,6 @@ class _ExportFormatButton extends StatelessWidget {
                   format.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    fontSize: 10,
                     height: 1.1,
                   ),
                 ),

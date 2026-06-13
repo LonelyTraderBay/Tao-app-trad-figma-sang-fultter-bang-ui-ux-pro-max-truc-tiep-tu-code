@@ -77,13 +77,7 @@ class _DeviceStat extends StatelessWidget {
           child: Icon(icon, color: color, size: AppSpacing.iconMd),
         ),
         const SizedBox(height: AppSpacing.x2),
-        Text(
-          value,
-          style: AppTextStyles.sectionTitle.copyWith(
-            color: color,
-            fontSize: 20,
-          ),
-        ),
+        Text(value, style: AppTextStyles.amountSm.copyWith(color: color)),
         const SizedBox(height: AppSpacing.x1),
         Text(
           label,

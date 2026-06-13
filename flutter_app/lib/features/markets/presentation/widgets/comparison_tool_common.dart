@@ -33,6 +33,7 @@ class ComparisonAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final labelStyle = size <= 26 ? AppTextStyles.micro : AppTextStyles.badge;
     return Container(
       width: size,
       height: size,
@@ -43,9 +44,8 @@ class ComparisonAvatar extends StatelessWidget {
       ),
       child: Text(
         pair.baseAsset.substring(0, pair.baseAsset.length < 2 ? 1 : 2),
-        style: AppTextStyles.micro.copyWith(
+        style: labelStyle.copyWith(
           color: pair.logoColor,
-          fontSize: size <= 26 ? 10 : 11,
           fontWeight: AppTextStyles.bold,
           height: 1,
         ),

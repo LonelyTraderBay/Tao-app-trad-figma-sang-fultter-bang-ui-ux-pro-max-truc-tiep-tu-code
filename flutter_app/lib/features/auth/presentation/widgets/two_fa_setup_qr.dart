@@ -15,29 +15,31 @@ class _QrStep extends StatelessWidget {
         Text(
           'Bước 1: Quét mã QR',
           textAlign: TextAlign.center,
-          style: AppTextStyles.sectionTitle.copyWith(fontSize: 22),
+          style: AppTextStyles.sectionTitle,
         ),
         const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
         Text.rich(
           TextSpan(
             text: 'Mở ứng dụng ',
-            children: const [
+            children: [
               TextSpan(
                 text: 'Google Authenticator',
-                style: TextStyle(
+                style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
+                  height: 1.5,
                 ),
               ),
-              TextSpan(text: ' hoặc '),
+              const TextSpan(text: ' hoặc '),
               TextSpan(
                 text: 'Authy',
-                style: TextStyle(
+                style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
+                  height: 1.5,
                 ),
               ),
-              TextSpan(text: ' và quét mã QR\nbên dưới.'),
+              const TextSpan(text: ' và quét mã QR\nbên dưới.'),
             ],
           ),
           textAlign: TextAlign.center,

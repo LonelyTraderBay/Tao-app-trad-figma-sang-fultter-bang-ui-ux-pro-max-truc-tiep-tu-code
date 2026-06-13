@@ -37,8 +37,7 @@ class _SmartAlertCard extends StatelessWidget {
                           alert.type,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.baseMedium.copyWith(
-                            fontSize: AppSpacing.x4,
+                          style: AppTextStyles.caption.copyWith(
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
@@ -131,10 +130,9 @@ class _StatusBadge extends StatelessWidget {
         ),
         child: Text(
           status.name.toUpperCase(),
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.chartLabelTiny.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            fontSize: AppSpacing.x3,
           ),
         ),
       ),

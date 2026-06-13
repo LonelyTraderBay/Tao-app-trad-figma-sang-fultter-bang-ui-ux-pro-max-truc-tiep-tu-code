@@ -197,10 +197,8 @@ class _SavingsProductCard extends StatelessWidget {
                             _productSubtitle(product),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.caption.copyWith(
+                            style: AppTextStyles.captionSm.copyWith(
                               color: AppColors.text2,
-                              fontSize:
-                                  AppSpacing.savingsConsumerCaptionFontSize,
                             ),
                           ),
                         ),
@@ -216,10 +214,8 @@ class _SavingsProductCard extends StatelessWidget {
                 children: [
                   Text(
                     product.apy,
-                    style: AppTextStyles.sectionTitle.copyWith(
+                    style: AppTextStyles.amountXs.copyWith(
                       color: AppColors.buy,
-                      fontSize: AppSpacing.savingsConsumerProductRateFontSize,
-                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
                   Text(

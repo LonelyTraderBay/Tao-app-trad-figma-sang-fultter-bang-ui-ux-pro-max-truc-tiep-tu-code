@@ -73,9 +73,9 @@ class _AssetBadge extends StatelessWidget {
         fit: BoxFit.scaleDown,
         child: Text(
           asset,
-          style: _microBold.copyWith(
+          style: AppTextStyles.chartLabelTiny.copyWith(
             color: color,
-            fontSize: AppSpacing.savingsWhatIfAssetFontSize,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ),

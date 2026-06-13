@@ -413,10 +413,7 @@ class _AxisLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
-      style: AppTextStyles.micro.copyWith(
-        color: AppColors.text3,
-        fontSize: AppSpacing.stakingAutoCompoundAxisFontSize,
-      ),
+      style: AppTextStyles.chartLabelXs.copyWith(color: AppColors.text3),
     );
   }
 }

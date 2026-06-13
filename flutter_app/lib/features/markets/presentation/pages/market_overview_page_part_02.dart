@@ -296,7 +296,6 @@ class _QuickMoverRow extends StatelessWidget {
             textAlign: TextAlign.right,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              fontSize: 10,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
               height: 1,
@@ -316,7 +315,6 @@ class _QuickMoverRow extends StatelessWidget {
             _formatSignedPercent(mover.change24h),
             style: AppTextStyles.micro.copyWith(
               color: color,
-              fontSize: 10,
               fontWeight: AppTextStyles.bold,
               height: 1,
             ),

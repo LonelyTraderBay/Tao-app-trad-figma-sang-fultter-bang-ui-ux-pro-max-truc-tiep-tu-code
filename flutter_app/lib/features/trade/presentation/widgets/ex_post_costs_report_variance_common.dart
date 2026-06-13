@@ -50,7 +50,6 @@ class _VarianceNoteView extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: color,
-                fontSize: 9,
                 fontWeight: AppTextStyles.bold,
                 height: 1,
               ),
@@ -90,7 +89,6 @@ class _VarianceCard extends StatelessWidget {
                   'Total Variance',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    fontSize: 13,
                     fontWeight: AppTextStyles.bold,
                     height: 1,
                   ),
@@ -103,9 +101,8 @@ class _VarianceCard extends StatelessWidget {
                     ? '-'
                     : ''}'
                 '${_formatEur(variance.abs())}',
-                style: AppTextStyles.baseMedium.copyWith(
+                style: AppTextStyles.amountSm.copyWith(
                   color: higher ? _reportRed : _reportGreen,
-                  fontSize: 18,
                   height: 1,
                 ),
               ),
@@ -123,7 +120,6 @@ class _VarianceCard extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                fontSize: 10,
                 height: 1.35,
               ),
             ),
@@ -154,10 +150,8 @@ class _SectionLabel extends StatelessWidget {
         const SizedBox(width: 7),
         Text(
           text,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.badge.copyWith(
             color: AppColors.text2,
-            fontSize: 11,
-            fontWeight: AppTextStyles.bold,
             height: 1,
           ),
         ),

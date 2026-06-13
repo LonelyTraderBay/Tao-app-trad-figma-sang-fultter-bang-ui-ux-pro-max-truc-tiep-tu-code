@@ -95,11 +95,9 @@ class _VipHistoryMetric extends StatelessWidget {
           const SizedBox(height: AppSpacing.x2),
           Text(
             value,
-            style: AppTextStyles.micro.copyWith(
+            style: AppTextStyles.numericCode.copyWith(
               color: valueColor,
-              fontSize: 12,
-              fontWeight: FontWeight.w900,
-              fontFeatures: AppTextStyles.tabularFigures,
+              fontWeight: AppTextStyles.heavy,
             ),
           ),
         ],

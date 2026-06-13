@@ -119,28 +119,44 @@ class _HowItWorksNote extends StatelessWidget {
           const SizedBox(width: AppSpacing.predictionRewardsNoteGap),
           Expanded(
             child: Text.rich(
-              const TextSpan(
+              TextSpan(
                 children: [
-                  TextSpan(text: 'How it works:'),
+                  const TextSpan(text: 'How it works:'),
                   TextSpan(
                     text: ' Place a ',
-                    style: TextStyle(fontWeight: FontWeight.w400),
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      height: AppSpacing.predictionRewardsNoteLineHeight,
+                      fontWeight: AppTextStyles.normal,
+                    ),
                   ),
-                  TextSpan(text: 'limit order'),
+                  const TextSpan(text: 'limit order'),
                   TextSpan(
                     text: ' (not market order) within the ',
-                    style: TextStyle(fontWeight: FontWeight.w400),
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      height: AppSpacing.predictionRewardsNoteLineHeight,
+                      fontWeight: AppTextStyles.normal,
+                    ),
                   ),
-                  TextSpan(text: 'Max Spread'),
+                  const TextSpan(text: 'Max Spread'),
                   TextSpan(
                     text: ' and hold at least ',
-                    style: TextStyle(fontWeight: FontWeight.w400),
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      height: AppSpacing.predictionRewardsNoteLineHeight,
+                      fontWeight: AppTextStyles.normal,
+                    ),
                   ),
-                  TextSpan(text: 'Min Shares'),
+                  const TextSpan(text: 'Min Shares'),
                   TextSpan(
                     text:
                         '. Rewards are distributed daily in USDT at 00:00 UTC.',
-                    style: TextStyle(fontWeight: FontWeight.w400),
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      height: AppSpacing.predictionRewardsNoteLineHeight,
+                      fontWeight: AppTextStyles.normal,
+                    ),
                   ),
                 ],
               ),

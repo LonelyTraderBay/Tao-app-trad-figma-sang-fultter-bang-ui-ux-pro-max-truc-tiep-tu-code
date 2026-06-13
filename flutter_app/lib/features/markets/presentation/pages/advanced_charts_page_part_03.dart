@@ -276,7 +276,6 @@ class _PivotPointCell extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              fontSize: 8,
               height: 1.2,
             ),
           ),
@@ -287,7 +286,6 @@ class _PivotPointCell extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              fontSize: 8,
               height: 1.2,
             ),
           ),

@@ -206,7 +206,7 @@ class _SidePill extends StatelessWidget {
           buy ? 'BUY' : 'SELL',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.onAccent,
-            fontWeight: FontWeight.w800,
+            fontWeight: AppTextStyles.extraBold,
           ),
         ),
       ),
@@ -272,10 +272,7 @@ class _InlineInfo extends StatelessWidget {
         Flexible(
           child: Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontSize: 10,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ),
       ],
@@ -308,7 +305,8 @@ class _MiniRow extends StatelessWidget {
           value,
           style: AppTextStyles.micro.copyWith(
             color: valueColor,
-            fontWeight: FontWeight.w800,
+            fontWeight: AppTextStyles.extraBold,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
       ],

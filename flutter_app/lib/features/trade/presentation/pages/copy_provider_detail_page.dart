@@ -119,20 +119,19 @@ class CopyProviderDetailPage extends ConsumerWidget {
                         ),
                         icon: const Icon(Icons.chevron_right_rounded, size: 18),
                         label: Text(
-                          'Đánh giá rủi ro',
+                          'ÄÃ¡nh giÃ¡ rá»§i ro',
                           style: AppTextStyles.baseMedium.copyWith(
                             color: AppColors.onAccent,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: AppTextStyles.extraBold,
                           ),
                         ),
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'Hiệu suất quá khứ không đảm bảo kết quả tương lai. Copy Trading có rủi ro cao.',
+                        'Hiá»‡u suáº¥t quÃ¡ khá»© khÃ´ng Ä‘áº£m báº£o káº¿t quáº£ tÆ°Æ¡ng lai. Copy Trading cÃ³ rá»§i ro cao.',
                         textAlign: TextAlign.center,
-                        style: AppTextStyles.caption.copyWith(
+                        style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          fontSize: 10,
                           height: 1.45,
                         ),
                       ),
@@ -199,7 +198,6 @@ class _ProviderNotFound extends StatelessWidget {
                         message,
                         style: AppTextStyles.base.copyWith(
                           color: AppColors.text2,
-                          fontSize: 14,
                         ),
                       ),
                     ],
@@ -237,10 +235,9 @@ class _RiskWarning extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(
             child: Text(
-              'Hiệu suất quá khứ không đảm bảo lợi nhuận tương lai. Bạn có thể mất toàn bộ vốn đầu tư.',
-              style: AppTextStyles.caption.copyWith(
+              'Hiá»‡u suáº¥t quÃ¡ khá»© khÃ´ng Ä‘áº£m báº£o lá»£i nhuáº­n tÆ°Æ¡ng lai. Báº¡n cÃ³ thá»ƒ máº¥t toÃ n bá»™ vá»‘n Ä‘áº§u tÆ°.',
+              style: AppTextStyles.micro.copyWith(
                 color: AppColors.caution,
-                fontSize: 10,
                 height: 1.4,
               ),
             ),
@@ -271,9 +268,8 @@ class _ProviderCard extends StatelessWidget {
             backgroundColor: _providerPrimary.withValues(alpha: .16),
             child: Text(
               provider.avatar,
-              style: AppTextStyles.sectionTitle.copyWith(
+              style: AppTextStyles.sectionTitleSm.copyWith(
                 color: _providerPrimary,
-                fontSize: 20,
               ),
             ),
           ),
@@ -285,7 +281,7 @@ class _ProviderCard extends StatelessWidget {
                 Text(
                   provider.name,
                   style: AppTextStyles.baseMedium.copyWith(
-                    fontWeight: FontWeight.w800,
+                    fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -303,10 +299,9 @@ class _ProviderCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '${provider.totalTrades} trades · ${provider.avgHoldingTime} avg hold',
-                  style: AppTextStyles.caption.copyWith(
+                  '${provider.totalTrades} trades Â· ${provider.avgHoldingTime} avg hold',
+                  style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text3,
-                    fontSize: 11,
                   ),
                 ),
               ],
@@ -363,16 +358,13 @@ class _MetricGrid extends StatelessWidget {
                   metric.$2,
                   style: AppTextStyles.baseMedium.copyWith(
                     color: metric.$3,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   metric.$1,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    fontSize: 10,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -399,10 +391,9 @@ class _Pill extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
         child: Text(
           label,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.micro.copyWith(
             color: color,
-            fontSize: 10,
-            fontWeight: FontWeight.w700,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ),
@@ -420,8 +411,8 @@ Color _riskColor(TradeCopyRiskLevel level) {
 
 String _riskLabel(TradeCopyRiskLevel level) {
   return switch (level) {
-    TradeCopyRiskLevel.low => 'Rủi ro thấp',
-    TradeCopyRiskLevel.medium => 'Rủi ro trung bình',
-    TradeCopyRiskLevel.high => 'Rủi ro cao',
+    TradeCopyRiskLevel.low => 'Rá»§i ro tháº¥p',
+    TradeCopyRiskLevel.medium => 'Rá»§i ro trung bÃ¬nh',
+    TradeCopyRiskLevel.high => 'Rá»§i ro cao',
   };
 }

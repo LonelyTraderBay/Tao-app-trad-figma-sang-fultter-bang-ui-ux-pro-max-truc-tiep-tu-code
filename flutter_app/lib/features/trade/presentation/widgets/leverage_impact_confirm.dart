@@ -54,7 +54,6 @@ class _ImpactCard extends StatelessWidget {
                 'Ước tính tác động',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -63,10 +62,7 @@ class _ImpactCard extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             'Với ký quỹ \$${_formatWholeNumber(margin)} USDT',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontSize: 12,
-            ),
+            style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: 11),
           for (final row in rows)
@@ -100,20 +96,17 @@ class _ImpactRow extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: AppTextStyles.caption.copyWith(
+              style: AppTextStyles.captionSm.copyWith(
                 color: AppColors.text3,
-                fontSize: 12,
                 height: 1.15,
               ),
             ),
           ),
           Text(
             value,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.numericCode.copyWith(
               color: valueColor,
-              fontSize: 12,
               fontWeight: AppTextStyles.bold,
-              fontFamily: 'monospace',
               height: 1.15,
             ),
           ),
@@ -168,7 +161,6 @@ class _RiskTipsCard extends StatelessWidget {
                 'Lưu ý quan trọng',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.sell,
-                  fontSize: 13,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -191,9 +183,8 @@ class _RiskTipsCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     tip,
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.captionSm.copyWith(
                       color: AppColors.text2,
-                      fontSize: 12,
                       height: 1.4,
                     ),
                   ),

@@ -87,9 +87,8 @@ class _OverviewTab extends StatelessWidget {
               const SizedBox(height: AppSpacing.x3),
               Text(
                 '+${summary.averageRoiAth}%',
-                style: AppTextStyles.heroNumber.copyWith(
+                style: AppTextStyles.numericDisplay4xl.copyWith(
                   color: AppColors.buy,
-                  fontSize: AppSpacing.launchpadFont4xl,
                 ),
               ),
               Text(

@@ -20,10 +20,7 @@ class _RadarLabel extends StatelessWidget {
       alignment: Alignment((x * 2) - 1, (y * 2) - 1),
       child: Text(
         metrics[index].label,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontSize: AppSpacing.launchpadFontSm,
-        ),
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
       ),
     );
   }

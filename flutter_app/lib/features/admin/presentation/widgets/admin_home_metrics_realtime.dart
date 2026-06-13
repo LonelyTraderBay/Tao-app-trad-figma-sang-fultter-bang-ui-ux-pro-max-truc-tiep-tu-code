@@ -56,13 +56,10 @@ class _MetricCard extends StatelessWidget {
               metric.value,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.baseMedium.copyWith(
-                fontSize: AppSpacing.adminFont2xl,
-                fontWeight: AppTextStyles.bold,
+              style: AppTextStyles.amountSm.copyWith(
                 color: metric.label == 'Health'
                     ? AppColors.buy
                     : AppColors.text1,
-                fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
             const SizedBox(height: AppSpacing.x2),
@@ -82,10 +79,7 @@ class _MetricCard extends StatelessWidget {
                   metric.timeframeLabel,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontSize: AppSpacing.adminFontSm,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -237,10 +231,9 @@ class _PauseButton extends StatelessWidget {
             ),
             child: Text(
               isLive ? 'Tạm dừng' : 'Tiếp tục',
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
                 fontWeight: AppTextStyles.bold,
-                fontSize: AppSpacing.adminFontMd,
               ),
             ),
           ),

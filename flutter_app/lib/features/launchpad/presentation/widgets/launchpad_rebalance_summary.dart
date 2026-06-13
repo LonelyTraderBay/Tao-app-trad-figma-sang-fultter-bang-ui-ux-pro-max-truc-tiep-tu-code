@@ -37,10 +37,9 @@ class LaunchpadRebalanceSummaryCard extends StatelessWidget {
               const SizedBox(width: AppSpacing.x2),
               Text(
                 'Tom tat rebalance',
-                style: AppTextStyles.caption.copyWith(
+                style: AppTextStyles.captionSm.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  fontSize: AppSpacing.launchpadFontLg,
                 ),
               ),
             ],
@@ -94,18 +93,15 @@ class LaunchpadRebalanceSummaryRow extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontSize: AppSpacing.launchpadFontMd,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
             ),
             Text(
               value,
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.caption.copyWith(
                 color: color ?? AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                fontSize: AppSpacing.launchpadFontMd,
+                fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
           ],
@@ -139,10 +135,7 @@ class LaunchpadRebalanceWarningBanner extends StatelessWidget {
           Expanded(
             child: Text(
               'Day la de xuat tu dong dua tren ty le muc tieu. Gia token co the thay doi giua luc xem va luc thuc hien. Luon kiem tra lai truoc khi giao dich.',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                fontSize: AppSpacing.launchpadFontMd,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],

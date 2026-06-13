@@ -196,7 +196,6 @@ class _MetricColumn extends StatelessWidget {
           value,
           style: AppTextStyles.sectionTitle.copyWith(
             color: valueColor,
-            fontSize: AppSpacing.x5,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
