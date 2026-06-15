@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
+
+class VitAccentPill extends StatelessWidget {
+  const VitAccentPill({
+    super.key,
+    required this.label,
+    required this.accentColor,
+    this.size = VitStatusPillSize.sm,
+    this.semanticStatus,
+  });
+
+  final String label;
+  final Color accentColor;
+  final VitStatusPillSize size;
+  final VitStatusPillStatus? semanticStatus;
+
+  _AccentPillMetrics get _metrics {
+    return switch (size) {
+      VitStatusPillSize.sm => const _AccentPillMetrics(
+        minHeight: AppSpacing.homeChipMinHeight,
+        paddingX: AppSpacing.homeChipHorizontalPadding,
+        paddingY: AppSpacing.homeChipVerticalPadding,
+        style: AppTextStyles.micro,
+      ),
+      VitStatusPillSize.md => const _AccentPillMetrics(
+        minHeight: AppSpacing.statusPillHeightMd,
+        paddingX: AppSpacing.statusPillHorizontalPaddingMd,
+        paddingY: AppSpacing.x1,
+        style: AppTextStyles.navLabel,
+      ),
+      VitStatusPillSize.lg => const _AccentPillMetrics(
+        minHeight: AppSpacing.statusPillHeightLg,
+        paddingX: AppSpacing.statusPillHorizontalPaddingLg,
+        paddingY: AppSpacing.x2,
+        style: AppTextStyles.navLabel,
+      ),
+    };
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final metrics = _metrics;
+    return Semantics(
+      label: semanticStatus == null ? label : '$label ${semanticStatus!.name}',
+      child: Container(
+        constraints: BoxConstraints(minHeight: metrics.minHeight),
+        padding: EdgeInsets.symmetric(
+          horizontal: metrics.paddingX,
+          vertical: metrics.paddingY,
+        ),
+        decoration: BoxDecoration(
+          color: accentColor.withValues(alpha: .14),
+          borderRadius: AppRadii.pillRadius,
+          border: Border.all(color: accentColor.withValues(alpha: .26)),
+        ),
+        child: Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: metrics.style.copyWith(
+            color: accentColor,
+            fontWeight: AppTextStyles.bold,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AccentPillMetrics {
+  const _AccentPillMetrics({
+    required this.minHeight,
+    required this.paddingX,
+    required this.paddingY,
+    required this.style,
+  });
+
+  final double minHeight;
+  final double paddingX;
+  final double paddingY;
+  final TextStyle style;
+}

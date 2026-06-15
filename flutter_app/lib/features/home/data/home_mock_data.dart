@@ -28,11 +28,21 @@ class HomeMockData {
   );
 
   static const announcements = [
-    HomeAnnouncement(text: '🎉 Phí giao dịch 0% cho BTC/USDT trong 7 ngày!'),
     HomeAnnouncement(
-      text: '⚡ Ra mắt tính năng P2P - Mua bán USDT bằng VND ngay!',
+      id: 'btc-fee-campaign',
+      text: 'Phí giao dịch 0% cho BTC/USDT trong 7 ngày!',
+      type: HomeAnnouncementType.campaign,
     ),
-    HomeAnnouncement(text: '🔒 Bật 2FA để bảo vệ tài khoản VitTrade'),
+    HomeAnnouncement(
+      id: 'p2p-launch-info',
+      text: 'Ra mắt tính năng P2P - Mua bán USDT bằng VND ngay!',
+      type: HomeAnnouncementType.info,
+    ),
+    HomeAnnouncement(
+      id: 'security-2fa',
+      text: 'Bật 2FA để bảo vệ tài khoản VitTrade',
+      type: HomeAnnouncementType.security,
+    ),
   ];
 
   static const quickActions = [

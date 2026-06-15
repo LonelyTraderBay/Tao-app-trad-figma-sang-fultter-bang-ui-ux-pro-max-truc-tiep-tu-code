@@ -8,9 +8,12 @@ class VitAutoHideHeaderScaffold extends StatefulWidget {
     required this.child,
     this.bottomInset,
     this.semanticLabel,
+    this.headerKey,
+    this.bodyKey,
     this.initiallyVisible = true,
     this.hideThreshold = 24,
     this.showAtTopThreshold = 8,
+    this.slideOffset = 0.25,
   });
 
   static const headerHostKey = Key('vit_auto_hide_header_scaffold_header');
@@ -20,9 +23,12 @@ class VitAutoHideHeaderScaffold extends StatefulWidget {
   final Widget child;
   final double? bottomInset;
   final String? semanticLabel;
+  final Key? headerKey;
+  final Key? bodyKey;
   final bool initiallyVisible;
   final double hideThreshold;
   final double showAtTopThreshold;
+  final double slideOffset;
 
   @override
   State<VitAutoHideHeaderScaffold> createState() =>
@@ -92,9 +98,15 @@ class _VitAutoHideHeaderScaffoldState extends State<VitAutoHideHeaderScaffold> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _AutoHideHeaderHost(visible: _headerVisible, child: widget.header),
+          _AutoHideHeaderHost(
+            hostKey:
+                widget.headerKey ?? VitAutoHideHeaderScaffold.headerHostKey,
+            visible: _headerVisible,
+            slideOffset: widget.slideOffset,
+            child: widget.header,
+          ),
           Expanded(
-            key: VitAutoHideHeaderScaffold.bodyHostKey,
+            key: widget.bodyKey ?? VitAutoHideHeaderScaffold.bodyHostKey,
             child: NotificationListener<ScrollNotification>(
               onNotification: _handleScrollNotification,
               child: body,
@@ -107,9 +119,16 @@ class _VitAutoHideHeaderScaffoldState extends State<VitAutoHideHeaderScaffold> {
 }
 
 class _AutoHideHeaderHost extends StatelessWidget {
-  const _AutoHideHeaderHost({required this.visible, required this.child});
+  const _AutoHideHeaderHost({
+    required this.hostKey,
+    required this.visible,
+    required this.slideOffset,
+    required this.child,
+  });
 
+  final Key hostKey;
   final bool visible;
+  final double slideOffset;
   final Widget child;
 
   @override
@@ -118,7 +137,7 @@ class _AutoHideHeaderHost extends StatelessWidget {
     const curve = Curves.easeOutCubic;
 
     return ClipRect(
-      key: VitAutoHideHeaderScaffold.headerHostKey,
+      key: hostKey,
       child: AnimatedAlign(
         alignment: Alignment.topCenter,
         heightFactor: visible ? 1 : 0,
@@ -131,7 +150,7 @@ class _AutoHideHeaderHost extends StatelessWidget {
             duration: duration,
             curve: curve,
             child: AnimatedSlide(
-              offset: visible ? Offset.zero : const Offset(0, -0.25),
+              offset: visible ? Offset.zero : Offset(0, -slideOffset),
               duration: duration,
               curve: curve,
               child: child,

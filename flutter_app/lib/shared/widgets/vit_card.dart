@@ -22,6 +22,7 @@ class VitCard extends StatelessWidget {
     this.constraints,
     this.alignment,
     this.borderColor,
+    this.background,
     this.clip = false,
     this.onTap,
   });
@@ -36,6 +37,7 @@ class VitCard extends StatelessWidget {
   final BoxConstraints? constraints;
   final AlignmentGeometry? alignment;
   final Color? borderColor;
+  final Widget? background;
   final bool clip;
   final VoidCallback? onTap;
 
@@ -99,6 +101,15 @@ class VitCard extends StatelessWidget {
     Widget content = child;
     if (padding != null) {
       content = Padding(padding: padding!, child: content);
+    }
+    if (background != null) {
+      content = Stack(
+        fit: StackFit.passthrough,
+        children: [
+          Positioned.fill(child: background!),
+          content,
+        ],
+      );
     }
 
     final decorated = Container(

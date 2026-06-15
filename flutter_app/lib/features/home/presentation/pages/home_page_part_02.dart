@@ -10,16 +10,17 @@ class _HomeDiscoverySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionHeader(title: 'Dự đoán & Thách đấu'),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
-        _DiscoveryCard(
+        const VitSectionHeader(title: 'Dự đoán & Thách đấu'),
+        const SizedBox(height: AppSpacing.x4),
+        VitDiscoveryActionCard(
           title: 'Prediction Markets',
-          badge: 'Prediction Market',
+          badgeLabel: 'Prediction Market',
           subtitle: 'Thị trường xác suất, vị thế và portfolio',
           actionLabel: 'Khám phá thị trường',
           icon: Icons.adjust_rounded,
-          color: AppColors.accent,
-          border: AppColors.accent20,
+          accentColor: AppColors.accent,
+          borderColor: AppColors.accent20,
+          variant: VitDiscoveryActionCardVariant.compact,
           background: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -27,17 +28,17 @@ class _HomeDiscoverySection extends StatelessWidget {
           ),
           onTap: () => onNavigate('/markets/predictions'),
         ),
-        const Padding(
-          padding: EdgeInsets.only(top: AppSpacing.homeSectionCtaGap),
-        ),
-        _DiscoveryCard(
+        const SizedBox(height: AppSpacing.homeSectionCtaGap),
+        VitDiscoveryActionCard(
           title: 'Open Arena',
-          badge: 'Arena Points only',
+          badgeLabel: 'Arena Points only',
           subtitle: 'Tạo mode chơi, mở room, dùng Arena Points',
           actionLabel: 'Vào Arena',
           icon: Icons.sports_esports_outlined,
-          color: AppColors.warn,
-          border: AppColors.warningBorder,
+          accentColor: AppColors.warn,
+          borderColor: AppColors.warningBorder,
+          badgeStatus: VitStatusPillStatus.warning,
+          variant: VitDiscoveryActionCardVariant.compact,
           background: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -45,7 +46,7 @@ class _HomeDiscoverySection extends StatelessWidget {
           ),
           onTap: () => onNavigate('/arena'),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const SizedBox(height: AppSpacing.x2),
         Text(
           'Predictions sử dụng vị thế thực. Arena sử dụng Points (không phải tiền thật).',
           textAlign: TextAlign.center,
@@ -74,23 +75,35 @@ class _MarketSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _SectionHeader(
+        VitSectionHeader(
           title: 'Thị trường',
           actionLabel: 'Xem tất cả',
           onAction: () => onNavigate('/markets'),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitTabBar(
           activeKey: activeTab,
           onChanged: onTabChanged,
           tabs: const [
-            VitTabItem(key: 'hot', label: '🔥 Hot'),
-            VitTabItem(key: 'gainers', label: '📈 Tăng'),
-            VitTabItem(key: 'losers', label: '📉 Giảm'),
-            VitTabItem(key: 'new', label: '🆕 Mới'),
+            VitTabItem(
+              key: 'hot',
+              label: 'Hot',
+              icon: Icons.local_fire_department_rounded,
+            ),
+            VitTabItem(
+              key: 'gainers',
+              label: 'Tăng',
+              icon: Icons.trending_up_rounded,
+            ),
+            VitTabItem(
+              key: 'losers',
+              label: 'Giảm',
+              icon: Icons.trending_down_rounded,
+            ),
+            VitTabItem(key: 'new', label: 'Mới', icon: Icons.fiber_new_rounded),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitCard(
           clip: true,
           child: Column(
@@ -127,14 +140,14 @@ class _TrendingSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _SectionHeader(
+        VitSectionHeader(
           title: 'Xu hướng',
           icon: Icons.bolt_rounded,
           iconColor: AppColors.warn,
           actionLabel: 'Xem tất cả',
           onAction: () => onNavigate('/markets'),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         SizedBox(
           height: AppSpacing.homeTrendingSectionHeight,
           child: ListView.separated(
@@ -155,8 +168,9 @@ class _TrendingSection extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          _CoinAvatar(
-                            pair: pair,
+                          VitAssetAvatar(
+                            label: pair.baseAsset,
+                            accentColor: pair.logoColor,
                             size: AppSpacing.homeTrendingIconSize,
                             radius: AppRadii.xsRadius,
                           ),
@@ -181,9 +195,7 @@ class _TrendingSection extends StatelessWidget {
                           fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: AppSpacing.x1),
-                      ),
+                      const SizedBox(height: AppSpacing.x1),
                       Text(
                         _formatPct(pair.change24h),
                         style: AppTextStyles.micro.copyWith(
@@ -227,14 +239,14 @@ class _RankedListSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _SectionHeader(
+        VitSectionHeader(
           title: title,
           icon: icon,
           iconColor: iconColor,
           actionLabel: 'Xem tất cả',
           onAction: () => onNavigate('/markets'),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitCard(
           clip: true,
           child: Column(
@@ -261,173 +273,6 @@ class _RankedListSection extends StatelessWidget {
   }
 }
 
-class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({
-    required this.title,
-    this.icon,
-    this.iconColor,
-    this.actionLabel,
-    this.onAction,
-  });
-
-  final String title;
-  final IconData? icon;
-  final Color? iconColor;
-  final String? actionLabel;
-  final VoidCallback? onAction;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        if (icon != null) ...[
-          Icon(
-            icon,
-            color: iconColor ?? AppColors.text1,
-            size: AppSpacing.iconMd,
-          ),
-          const SizedBox(width: AppSpacing.homeSectionHeaderIconGap),
-        ],
-        Expanded(
-          child: Text(
-            title,
-            style: AppTextStyles.sectionTitle.copyWith(
-              fontWeight: AppTextStyles.bold,
-              height: AppSpacing.homeSectionHeaderTitleLineHeight,
-            ),
-          ),
-        ),
-        if (actionLabel != null && onAction != null)
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: onAction,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x3,
-                vertical: AppSpacing.x2,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    actionLabel!,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.primary,
-                      fontWeight: AppTextStyles.medium,
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.x1),
-                  const Icon(
-                    Icons.chevron_right_rounded,
-                    color: AppColors.primary,
-                    size: AppSpacing.homeSectionHeaderChevronSize,
-                  ),
-                ],
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-class _DiscoveryCard extends StatelessWidget {
-  const _DiscoveryCard({
-    required this.title,
-    required this.badge,
-    required this.subtitle,
-    required this.actionLabel,
-    required this.icon,
-    required this.color,
-    required this.border,
-    required this.background,
-    required this.onTap,
-  });
-
-  final String title;
-  final String badge;
-  final String subtitle;
-  final String actionLabel;
-  final IconData icon;
-  final Color color;
-  final Color border;
-  final Gradient background;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      onTap: onTap,
-      borderColor: border,
-      padding: AppSpacing.cardPadding,
-      child: Row(
-        children: [
-          Container(
-            width: AppSpacing.homeDiscoveryIconContainer,
-            height: AppSpacing.homeDiscoveryIconContainer,
-            decoration: BoxDecoration(
-              gradient: background,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Icon(
-              icon,
-              color: color,
-              size: AppSpacing.homeDiscoveryIconSize,
-            ),
-          ),
-          const SizedBox(width: AppSpacing.homeMarketIconGap),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Wrap(
-                  spacing: AppSpacing.x3,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    Text(
-                      title,
-                      style: AppTextStyles.body.copyWith(
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    VitStatusPill(
-                      label: badge,
-                      status: color == AppColors.warn
-                          ? VitStatusPillStatus.warning
-                          : VitStatusPillStatus.purple,
-                      size: VitStatusPillSize.sm,
-                    ),
-                  ],
-                ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
-                Text(
-                  subtitle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
-                Text(
-                  actionLabel,
-                  style: AppTextStyles.micro.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.medium,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Icon(
-            Icons.chevron_right_rounded,
-            color: color,
-            size: AppSpacing.homeSectionActionChevronSize,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _MarketRow extends StatelessWidget {
   const _MarketRow({
     required this.pair,
@@ -441,78 +286,23 @@ class _MarketRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.homeSectionHorizontalPadding,
-          vertical: AppSpacing.homeSectionVerticalPadding,
-        ),
-        child: Row(
-          children: [
-            _CoinAvatar(pair: pair),
-            const SizedBox(width: AppSpacing.homeMarketIconGap),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    pair.symbol,
-                    style: AppTextStyles.body.copyWith(
-                      fontWeight: AppTextStyles.medium,
-                    ),
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
-                  Text(
-                    'Vol \$${_formatBillions(pair.volume24h)}B',
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
-              ),
-            ),
-            if (showSparkline) ...[
-              SizedBox(
-                width: AppSpacing.homeSparklineWidth,
-                height: AppSpacing.homeSparklineHeight,
-                child: CustomPaint(
-                  painter: _SparklinePainter(
-                    values: pair.sparkline,
-                    color: pair.change24h >= 0 ? AppColors.buy : AppColors.sell,
-                  ),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.homeMarketIconGap),
-            ],
-            SizedBox(
-              width: AppSpacing.homeRankedValueColumnWidth,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    _formatUsd(pair.price),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.body.copyWith(
-                      fontWeight: AppTextStyles.medium,
-                      fontFeatures: AppTextStyles.tabularFigures,
-                    ),
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
-                  Text(
-                    _formatPct(pair.change24h),
-                    style: AppTextStyles.micro.copyWith(
-                      color: pair.change24h >= 0
-                          ? AppColors.buy
-                          : AppColors.sell,
-                      fontWeight: AppTextStyles.medium,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+    final trend = pair.change24h >= 0
+        ? VitTrendDirection.positive
+        : VitTrendDirection.negative;
+
+    return VitMarketPairRow(
+      leading: VitAssetAvatar(
+        label: pair.baseAsset,
+        accentColor: pair.logoColor,
       ),
+      title: pair.symbol,
+      subtitle: 'Vol \$${_formatBillions(pair.volume24h)}B',
+      price: _formatUsd(pair.price),
+      changeLabel: _formatPct(pair.change24h),
+      trend: trend,
+      sparkline: pair.sparkline,
+      showSparkline: showSparkline,
+      onTap: onTap,
     );
   }
 }

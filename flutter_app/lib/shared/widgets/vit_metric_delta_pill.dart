@@ -1,0 +1,144 @@
+import 'package:flutter/material.dart';
+
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+
+enum VitMetricDeltaTone { positive, negative, neutral, warning }
+
+enum VitMetricDeltaPillSize { sm, md }
+
+class VitMetricDeltaPill extends StatelessWidget {
+  const VitMetricDeltaPill({
+    super.key,
+    required this.label,
+    this.tone = VitMetricDeltaTone.neutral,
+    this.icon,
+    this.size = VitMetricDeltaPillSize.sm,
+  });
+
+  final String label;
+  final VitMetricDeltaTone tone;
+  final IconData? icon;
+  final VitMetricDeltaPillSize size;
+
+  _MetricDeltaPalette get _palette {
+    return switch (tone) {
+      VitMetricDeltaTone.positive => const _MetricDeltaPalette(
+        foreground: AppColors.buy,
+        background: AppColors.buy15,
+        border: AppColors.buy20,
+        defaultIcon: Icons.trending_up_rounded,
+      ),
+      VitMetricDeltaTone.negative => const _MetricDeltaPalette(
+        foreground: AppColors.sell,
+        background: AppColors.sell15,
+        border: AppColors.sell20,
+        defaultIcon: Icons.trending_down_rounded,
+      ),
+      VitMetricDeltaTone.warning => const _MetricDeltaPalette(
+        foreground: AppColors.warn,
+        background: AppColors.warn15,
+        border: AppColors.warningBorder,
+        defaultIcon: Icons.warning_amber_rounded,
+      ),
+      VitMetricDeltaTone.neutral => const _MetricDeltaPalette(
+        foreground: AppColors.text2,
+        background: AppColors.surface2,
+        border: AppColors.cardBorder,
+      ),
+    };
+  }
+
+  _MetricDeltaMetrics get _metrics {
+    return switch (size) {
+      VitMetricDeltaPillSize.sm => const _MetricDeltaMetrics(
+        paddingX: AppSpacing.homePortfolioBadgeHorizontalPadding,
+        paddingY: AppSpacing.homePortfolioBadgeVerticalPadding,
+        iconSize: AppSpacing.homePortfolioBadgeIcon,
+        textStyle: AppTextStyles.caption,
+      ),
+      VitMetricDeltaPillSize.md => const _MetricDeltaMetrics(
+        paddingX: AppSpacing.statusPillHorizontalPaddingMd,
+        paddingY: AppSpacing.x2,
+        iconSize: AppSpacing.homeNextActionIconSize,
+        textStyle: AppTextStyles.caption,
+      ),
+    };
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = _palette;
+    final metrics = _metrics;
+    final resolvedIcon = icon ?? palette.defaultIcon;
+
+    return Semantics(
+      label: '${tone.name} delta $label',
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: metrics.paddingX,
+          vertical: metrics.paddingY,
+        ),
+        decoration: BoxDecoration(
+          color: palette.background,
+          border: Border.all(color: palette.border),
+          borderRadius: AppRadii.smRadius,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (resolvedIcon != null) ...[
+              Icon(
+                resolvedIcon,
+                color: palette.foreground,
+                size: metrics.iconSize,
+              ),
+              const SizedBox(width: AppSpacing.x1),
+            ],
+            Flexible(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: metrics.textStyle.copyWith(
+                  color: palette.foreground,
+                  fontWeight: AppTextStyles.medium,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MetricDeltaPalette {
+  const _MetricDeltaPalette({
+    required this.foreground,
+    required this.background,
+    required this.border,
+    this.defaultIcon,
+  });
+
+  final Color foreground;
+  final Color background;
+  final Color border;
+  final IconData? defaultIcon;
+}
+
+class _MetricDeltaMetrics {
+  const _MetricDeltaMetrics({
+    required this.paddingX,
+    required this.paddingY,
+    required this.iconSize,
+    required this.textStyle,
+  });
+
+  final double paddingX;
+  final double paddingY;
+  final double iconSize;
+  final TextStyle textStyle;
+}

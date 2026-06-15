@@ -51,6 +51,12 @@ search/discovery, and profile sections with clear separation.
 - Dark theme is the active baseline.
 - Home establishes the global app chrome, neutral surfaces, shared card/CTA
   treatment, and primary brand behavior.
+- Use `docs/03_DESIGN_SYSTEM/VitTrade-Home-UI-Rollout-Playbook.md` when
+  applying Home's UI foundation to Wallet, Markets, Trade, P2P, Profile, Arena,
+  Predictions, Earn, DCA, Launchpad, Discovery/Search,
+  Notifications/News/Support, Admin, or Dev surfaces.
+- Use `docs/03_DESIGN_SYSTEM/VitTrade-Home-UI-Rollout-Execution-Plan.md` to
+  track screen-by-screen rollout batches and avoid missing route surfaces.
 - Module identity is an accent layer only.
 - Retired web screenshots are obsolete history and must not drive new native UI.
 

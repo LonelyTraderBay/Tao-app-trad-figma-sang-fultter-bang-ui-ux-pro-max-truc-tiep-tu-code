@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -16,6 +17,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
 
 const _walletBackground = AppColors.bg;
 
@@ -58,6 +61,7 @@ class _WalletPageState extends ConsumerState<WalletPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(walletSnapshotProvider);
+    final pendingDeposits = ref.watch(walletPendingDepositsProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -88,9 +92,9 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                   )
                 : null,
           ),
-          child: SingleChildScrollView(
+          child: VitInsetScrollView(
             key: WalletPage.contentKey,
-            padding: EdgeInsets.only(bottom: bottomInset),
+            bottomInset: bottomInset,
             child: VitPageContent(
               padding: VitContentPadding.defaultPadding,
               customGap: AppSpacing.x4,
@@ -104,12 +108,19 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                       setState(() => _balanceHidden = !_balanceHidden),
                   onNavigate: _navigate,
                 ),
-                WalletSectionHeader(
+                if (snapshot.actions.isNotEmpty &&
+                    pendingDeposits.pendingCount > 0)
+                  WalletPendingDepositStatusCard(
+                    pendingDeposits: pendingDeposits,
+                    onNavigate: _navigate,
+                  ),
+                VitSectionHeader(
                   title: _tab == 'assets' ? 'Tài sản' : 'Phân bổ',
                   icon: _tab == 'assets'
                       ? Icons.account_balance_wallet_outlined
                       : Icons.donut_large_rounded,
-                  iconColor: AppColors.primary,
+                  iconColor: AppModuleAccents.wallet,
+                  accentColor: AppModuleAccents.wallet,
                   actionLabel: _tab == 'assets' ? 'Phân tích' : null,
                   onAction: _tab == 'assets'
                       ? () => _navigate('/wallet/portfolio-analytics')
@@ -135,16 +146,17 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                         )
                       : WalletAllocationCard(assets: snapshot.assets),
                 ),
-                const WalletSectionHeader(
+                const VitSectionHeader(
                   title: 'Mua định kỳ',
                   icon: Icons.sync_alt_rounded,
                   iconColor: AppColors.accent,
                 ),
                 WalletDcaCard(dca: snapshot.dca),
-                const WalletSectionHeader(
+                const VitSectionHeader(
                   title: 'Công cụ ví',
                   icon: Icons.grid_view_rounded,
-                  iconColor: AppColors.primary,
+                  iconColor: AppModuleAccents.wallet,
+                  accentColor: AppModuleAccents.wallet,
                 ),
                 WalletToolGrid(tools: snapshot.tools, onNavigate: _navigate),
               ],

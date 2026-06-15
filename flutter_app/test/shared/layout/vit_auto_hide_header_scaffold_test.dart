@@ -16,6 +16,20 @@ void main() {
     expect(_headerHeight(tester), greaterThan(0));
   });
 
+  testWidgets('custom header and body keys are exposed', (
+    WidgetTester tester,
+  ) async {
+    const headerKey = Key('custom_auto_hide_header');
+    const bodyKey = Key('custom_auto_hide_body');
+
+    await tester.pumpWidget(
+      _scaffoldHarness(headerKey: headerKey, bodyKey: bodyKey),
+    );
+
+    expect(find.byKey(headerKey), findsOneWidget);
+    expect(find.byKey(bodyKey), findsOneWidget);
+  });
+
   testWidgets('header hides on downward scroll', (WidgetTester tester) async {
     await tester.pumpWidget(_scaffoldHarness());
 
@@ -132,12 +146,16 @@ Widget _scaffoldHarness({
   bool useShell = false,
   ShellRenderMode renderMode = ShellRenderMode.native,
   double bottomInset = 0,
+  Key? headerKey,
+  Key? bodyKey,
 }) {
   final page = VitPageLayout(
     variant: VitPageVariant.flush,
     child: VitAutoHideHeaderScaffold(
       semanticLabel: 'Auto hide header test',
       bottomInset: bottomInset,
+      headerKey: headerKey,
+      bodyKey: bodyKey,
       header: VitHeader(
         title: 'Auto Header',
         subtitle: 'Scroll aware',

@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
 
-final class HomeAnnouncement {
-  const HomeAnnouncement({required this.text});
+enum HomeAnnouncementType { info, campaign, security, risk }
 
+extension HomeAnnouncementTypeX on HomeAnnouncementType {
+  bool get surfacesOnHome {
+    return switch (this) {
+      HomeAnnouncementType.campaign ||
+      HomeAnnouncementType.security ||
+      HomeAnnouncementType.risk => true,
+      HomeAnnouncementType.info => false,
+    };
+  }
+}
+
+final class HomeAnnouncement {
+  const HomeAnnouncement({
+    required this.id,
+    required this.text,
+    required this.type,
+    this.active = true,
+  });
+
+  final String id;
   final String text;
+  final HomeAnnouncementType type;
+  final bool active;
 }
 
 final class HomeQuickAction {

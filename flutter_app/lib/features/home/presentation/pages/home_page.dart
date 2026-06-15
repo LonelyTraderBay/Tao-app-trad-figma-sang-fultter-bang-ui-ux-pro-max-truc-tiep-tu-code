@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -27,8 +27,14 @@ class HomePage extends ConsumerStatefulWidget {
 
   static const contentKey = Key('sc007_home_scroll_content');
   static const headerKey = Key('sc007_home_header');
+  static const announcementKey = Key('sc007_home_announcement');
   static const nextActionKey = Key('sc007_home_next_action');
+  static const marketTickerKey = Key('sc007_home_market_ticker');
+  static const productsSectionKey = Key('sc007_home_products_section');
   static const recentProductsKey = Key('sc007_home_recent_products');
+  static const recentProductsSectionKey = Key(
+    'sc007_home_recent_products_section',
+  );
   static const moreProductsSheetKey = Key('sc007_home_more_products_sheet');
 
   static Key recentProductKey(String id) => Key('sc007_home_recent_$id');
@@ -38,3 +44,7 @@ class HomePage extends ConsumerStatefulWidget {
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
 }
+
+enum HomeDensityVariant { compact, comfortable }
+
+enum HomeSurfaceOrder { productsBeforeRecent, recentBeforeProducts }

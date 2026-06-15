@@ -153,7 +153,7 @@ unresolved=0
 | earn | `AppRoutePaths.earnVotingProposalRoute` | `StakingVotingPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/earn/presentation/pages/staking_voting_page.dart` |
 | earn | `AppRoutePaths.earnWebhooks` | `StakingWebhooksPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/earn/presentation/pages/staking_webhooks_page.dart` |
 | enterprise_states | `AppRoutePaths.enterpriseStates` | `EnterpriseStatesPage` | no_top_header | no_top_header | `flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart` |
-| home | `AppRoutePaths.home` | `HomePage` | auto_hide_header | home_collapsible_custom | `flutter_app/lib/features/home/presentation/pages/home_page.dart` |
+| home | `AppRoutePaths.home` | `HomePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/home/presentation/pages/home_page.dart` |
 | launchpad | `AppRoutePaths.launchpad` | `LaunchpadPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/launchpad_page.dart` |
 | launchpad | `AppRoutePaths.launchpadAbiDiff` | `LaunchpadAbiDiffPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/launchpad_abi_diff_page.dart` |
 | launchpad | `AppRoutePaths.launchpadAddressBook` | `LaunchpadAddressBookPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/launchpad_address_book_page.dart` |

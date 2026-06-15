@@ -4292,9 +4292,10 @@ final class AppSpacing {
   static const double serviceTileMinHeight = 54;
   static const double serviceTileCompactLabelHeight = 28;
 
-  static const int homeQuickActionCompactCount = 9;
-  static const int homeQuickActionStandardCount = 12;
-  static const double homeQuickActionDensityBreakpoint = 410;
+  static const int homeQuickActionCompactCount = 6;
+  static const int homeQuickActionStandardCount = 9;
+  static const double homeQuickActionDensityBreakpoint = 480;
+  static const double homeAnnouncementAutoHideScrollOffset = 96;
   static const double homeAnnouncementIcon = 18;
   static const double homeAnnouncementChevron = 16;
   static const double homeAnnouncementIconGap = 12;
@@ -4306,12 +4307,24 @@ final class AppSpacing {
   static const double homeAnnouncementDotRadius = 3;
   static const double homeAnnouncementCardVerticalPadding = 10;
   static const double homeAnnouncementCardHorizontalPadding = 14;
+  static const EdgeInsets homeAnnouncementCardPadding = EdgeInsets.symmetric(
+    horizontal: homeAnnouncementCardHorizontalPadding,
+    vertical: homeAnnouncementCardVerticalPadding,
+  );
+  static const EdgeInsets homeAnnouncementCardPaddingCompact =
+      EdgeInsets.symmetric(horizontal: 12, vertical: 8);
   static const double homeActionRowGap = 8;
   static const double homePortfolioHeaderIcon = 18;
   static const double homePortfolioHeaderActionPadding = 6;
   static const double homePortfolioBadgeHorizontalPadding = 10;
   static const double homePortfolioBadgeVerticalPadding = 4;
   static const double homePortfolioBadgeIcon = 12;
+  static const EdgeInsets homePortfolioCardPadding = EdgeInsets.fromLTRB(
+    homeAnnouncementCardHorizontalPadding,
+    homePortfolioBadgeVerticalPadding + x1,
+    homeAnnouncementCardHorizontalPadding,
+    homePortfolioBadgeVerticalPadding,
+  );
   static const double homePortfolioActionSpacing = 10;
   static const double homeRecentProductWidth = 146;
   static const double homeRecentProductHeight = 86;
@@ -4332,6 +4345,13 @@ final class AppSpacing {
   static const double homeChevronGap = 4;
   static const double homeMoreProductsSheetHandleWidth = 36;
   static const double homeMoreProductsSheetHandleHeight = 4;
+  static const EdgeInsets homeMoreProductsSheetPadding = EdgeInsets.fromLTRB(
+    homeSectionCtaGap,
+    x2,
+    homeSectionCtaGap,
+    homeSectionCtaGap,
+  );
+  static const double sheetPanelMaxHeightFactor = 0.72;
   static const double homeDiscoverySectionGap = 10;
   static const double homeMarketSectionGap = 12;
   static const double homeSectionHeaderIconGap = 6;
@@ -4346,6 +4366,16 @@ final class AppSpacing {
   static const double homeTrendingIconSize = 28;
   static const double homeDiscoveryIconContainer = 44;
   static const double homeDiscoveryIconSize = 20;
+  static const double homeDiscoveryCompactIconContainer = 34;
+  static const double homeDiscoveryCompactIconSize = 16;
+  static const EdgeInsets homeDiscoveryCompactPadding = EdgeInsets.symmetric(
+    horizontal: 12,
+    vertical: 10,
+  );
+  static const double homeMarketTickerCardWidth = 146;
+  static const double homeMarketTickerCardMinHeight = 74;
+  static const double homeMarketTickerStripGap = x3;
+  static const EdgeInsets homeMarketTickerCardPadding = EdgeInsets.all(12);
   static const double homeDividerHeight = 1;
   static const double homeListRowPadding = 14;
   static const double homeRankedRowRankChipWidth = 20;

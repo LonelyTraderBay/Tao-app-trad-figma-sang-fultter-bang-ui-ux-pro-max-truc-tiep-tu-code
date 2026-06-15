@@ -1,83 +1,91 @@
 # VitTrade Home UI/UX Layer Analysis Report
 
-**Status:** Reference report for AI-assisted design and implementation  
-**Surface:** `SC-007 HomePage`  
-**Generated:** 2026-06-13  
-**Purpose:** Help future AI agents understand how the current Home screen is layered, why each layer exists, and how to reuse the pattern safely for Wallet or other financial modules.
+**Status:** Reference report for AI-assisted design and implementation
+**Surface:** `SC-007 HomePage`
+**Generated:** 2026-06-14
+**Purpose:** Help future AI agents understand how the current Home screen is layered, measured, and reused safely for Wallet or other financial modules.
+
+For module-by-module rollout guidance, use
+`docs/03_DESIGN_SYSTEM/VitTrade-Home-UI-Rollout-Playbook.md`. This report
+explains Home's layers; the playbook maps those layers to other modules,
+required shared components, token rules, safety rules, and verification.
 
 ---
 
 ## 1. Source Of Truth
 
-Use these files as the implementation source of truth:
+This report reflects the current Flutter source inspected on 2026-06-14. It is
+documentation-only and does not depend on screenshot artifacts being current.
 
-| Area | File |
+| Area | Source |
 | --- | --- |
-| Home page shell and top-screen layout | `flutter_app/lib/features/home/presentation/pages/home_page_part_01.dart` |
-| Discovery, market, trending, ranked sections | `flutter_app/lib/features/home/presentation/pages/home_page_part_02.dart` |
-| Ranked row, coin avatar, glow, sparkline helpers | `flutter_app/lib/features/home/presentation/pages/home_page_part_03.dart` |
-| Home page public widget and keys | `flutter_app/lib/features/home/presentation/pages/home_page.dart` |
-| Shared cards | `flutter_app/lib/shared/widgets/vit_card.dart` |
-| Shared service tiles | `flutter_app/lib/shared/widgets/vit_module_components.dart` |
-| Shared top chrome | `flutter_app/lib/shared/layout/vit_top_chrome.dart` |
-| Shared bottom nav | `flutter_app/lib/shared/layout/vit_bottom_nav.dart` |
-| Theme spacing tokens | `flutter_app/lib/app/theme/app_spacing.dart` |
-| Theme color tokens | `flutter_app/lib/app/theme/app_colors.dart` |
-| Theme typography tokens | `flutter_app/lib/app/theme/app_text_styles.dart` |
+| Home public widget, keys, density and surface order enums | `flutter_app/lib/features/home/presentation/pages/home_page.dart` |
+| Home shell, header, announcement, portfolio, next action, ticker, products, recent rail | `flutter_app/lib/features/home/presentation/pages/home_page_part_01.dart` |
+| Discovery, market, trending, and market row sections | `flutter_app/lib/features/home/presentation/pages/home_page_part_02.dart` |
+| Ranked row and formatting helpers | `flutter_app/lib/features/home/presentation/pages/home_page_part_03.dart` |
+| Auto-hide header scaffold | `flutter_app/lib/shared/layout/vit_auto_hide_header_scaffold.dart` |
+| Top chrome | `flutter_app/lib/shared/layout/vit_top_chrome.dart` |
+| Page layout/content primitives | `flutter_app/lib/shared/layout/vit_page_layout.dart`, `flutter_app/lib/shared/layout/vit_page_content.dart` |
+| Inset scroll primitive | `flutter_app/lib/shared/widgets/vit_inset_scroll_view.dart` |
+| Announcement banner | `flutter_app/lib/shared/widgets/vit_announcement_banner.dart` |
+| Section header | `flutter_app/lib/shared/widgets/vit_section_header.dart` |
+| Portfolio card foundation and CTA | `flutter_app/lib/shared/widgets/vit_card.dart`, `flutter_app/lib/shared/widgets/vit_cta_button.dart` |
+| Hero glow and metric delta | `flutter_app/lib/shared/widgets/vit_hero_glow.dart`, `flutter_app/lib/shared/widgets/vit_metric_delta_pill.dart` |
+| Next action card | `flutter_app/lib/shared/widgets/vit_next_action_card.dart` |
+| Market ticker | `flutter_app/lib/shared/widgets/vit_market_ticker.dart` |
+| Product grid and tiles | `flutter_app/lib/shared/widgets/vit_action_tile_grid.dart`, `flutter_app/lib/shared/widgets/vit_module_components.dart`, `flutter_app/lib/shared/widgets/vit_compact_product_card.dart` |
+| Discovery cards | `flutter_app/lib/shared/widgets/vit_discovery_action_card.dart` |
+| Market avatars, rows, ranked rows, sparklines | `flutter_app/lib/shared/widgets/vit_asset_avatar.dart`, `flutter_app/lib/shared/widgets/vit_market_rows.dart`, `flutter_app/lib/shared/widgets/vit_sparkline.dart` |
+| Theme tokens | `flutter_app/lib/app/theme/app_colors.dart`, `flutter_app/lib/app/theme/app_spacing.dart`, `flutter_app/lib/app/theme/app_text_styles.dart`, `flutter_app/lib/app/theme/device_metrics.dart` |
 
-Captured emulator evidence:
+Captured artifacts under `flutter_app/run-artifacts/` can be regenerated for
+visual QA, but this report does not claim existing artifact files are current.
 
-| State | Artifact |
-| --- | --- |
-| Top of Home | `flutter_app/run-artifacts/home_ui_analysis_top.png` |
-| Mid-scroll Home | `flutter_app/run-artifacts/home_ui_analysis_mid.png` |
-| Lower-scroll Home | `flutter_app/run-artifacts/home_ui_analysis_lower.png` |
-| Top UI tree | `flutter_app/run-artifacts/home_ui_analysis_top.xml` |
-| Mid UI tree | `flutter_app/run-artifacts/home_ui_analysis_mid.xml` |
-| Lower UI tree | `flutter_app/run-artifacts/home_ui_analysis_lower.xml` |
-
-External UI/UX reference used only as a secondary lens:
-
-- Fintech crypto mobile trading dark dashboard.
-- Pattern: dense mobile command center with visible navigation, dark/OLED foundation, financial action hierarchy, compact discovery cards, and market-data lists.
-- Do not replace VitTrade tokens or local design patterns with external fonts, colors, or landing-page structures.
+External UI/UX references are secondary only. The current VitTrade shared
+primitives, tokens, and financial safety rules win over external dashboard
+patterns.
 
 ---
 
 ## 2. Executive Summary
 
-Home is designed as a **financial command center**, not a marketing landing page.
+Home is a **financial command center**. It starts with account context and money
+actions, then moves into resume flows, product access, discovery boundaries, and
+market data.
 
-The screen prioritizes:
-
-1. App identity and global actions.
-2. Financial account overview.
-3. Primary money actions.
-4. Resume/recent workflows.
-5. Product launcher.
-6. Discovery for adjacent modules.
-7. Market data and ranked trading signals.
-
-The important design idea is the sequence:
+Current reading sequence:
 
 ```text
-Brand chrome
+App shell
+-> auto-hide root brand header
 -> compact announcement
--> hero portfolio card
+-> portfolio hero
 -> next action
+-> market ticker
+-> product launcher
 -> recent products
--> product grid
 -> discovery boundary
--> market data
--> trending/ranked lists
+-> market tabs/list
+-> trending rail
+-> ranked gainers
+-> ranked losers
 -> persistent bottom nav
 ```
 
-This creates a clear reading order:
+The updated Home implementation is more shared-primitive driven than earlier
+iterations. Section headers, announcements, action cards, product cards, market
+rows, ranked rows, avatars, ticker cards, and scroll insets are reusable shared
+components rather than local one-off Home-only widgets.
 
-- **First viewport:** identity, balance, money actions, next task.
-- **Second viewport:** tools/products and discovery.
-- **Lower content:** data-heavy market exploration.
+Design intent:
+
+1. Keep global identity and notifications available at the top.
+2. Make portfolio value and money actions the first major visual block.
+3. Keep unfinished work visible through a single resume card.
+4. Show live market pulse before broad product navigation fatigue sets in.
+5. Put `Sản phẩm` before `Gần đây` in the current source order.
+6. Keep Prediction Markets and Open Arena separated by explicit safety copy.
+7. Move data-heavy market exploration lower on the page.
 
 ---
 
@@ -88,98 +96,129 @@ This creates a clear reading order:
 Implementation:
 
 - `VitPageLayout`
+- `ShellRenderMode`
 - `VitAppShell`
 - `VitBottomNav`
-- `ShellRenderMode`
+- `DeviceMetrics`
 
-Observed behavior:
+Behavior:
 
-- The Home route sits inside the shared app shell.
-- Bottom navigation remains fixed.
-- Active destination is `home`.
-- Scroll content receives bottom inset so lower content is not hidden behind the bottom nav.
+- Native shell uses `VitPageVariant.flush`.
+- Visual QA shell uses the default page variant.
+- Bottom navigation remains persistent outside the Home scroll body.
+- Home computes `bottomScrollInset` from bottom chrome, safe-area bottom padding,
+  and Home-specific scroll inset tokens.
 
-UX role:
+Bottom inset formula:
 
-- Keeps the user oriented at all times.
-- Supports fast cross-module movement: Home, Markets, Trade, Wallet, Profile.
-- Makes Home feel like the app's operating center rather than a one-off screen.
+```text
+bottomScrollInset =
+  bottomChrome
+  + MediaQuery.padding.bottom
+  + modeSpecificHomeExtraInset
+```
+
+Mode-specific tokens:
+
+| Mode | Bottom chrome | Extra inset |
+| --- | ---: | ---: |
+| Native shell | `DeviceMetrics.nativeBottomChrome = 72` | `AppSpacing.homeBottomSheetScrollInset = 16` |
+| Visual QA frame | `DeviceMetrics.bottomChrome = 90` | `AppSpacing.homeBottomSheetScrollInsetVisual = 40` |
 
 AI implementation rule:
 
-- Do not remove bottom inset when changing Home or Home-like pages.
-- If a page follows Home layout, reserve enough bottom padding for bottom nav and native safe area.
-- Never place critical actions only under the bottom nav overlay area.
+- Do not remove bottom inset when changing Home-like pages.
+- Do not place critical financial actions where bottom navigation can cover
+  them.
+- Keep route and shell semantics unchanged unless the route contract itself is
+  being changed.
 
 ---
 
-### Layer 1 - Root Brand Header
+### Layer 1 - Auto-Hide Root Brand Header
 
 Implementation:
 
-- `_CollapsibleHomeHeader`
+- `VitAutoHideHeaderScaffold`
 - `_HomeHeader`
 - `VitTopChrome(type: VitTopChromeType.rootBrand)`
+- `VitHeaderActionItem`
 
 Content:
 
 - Title: `VitTrade`
-- Action: search
-- Action: notifications with unread count
+- Search action routes to `/search`
+- Notifications action routes to `/notifications`
+- Notification badge uses `notificationUnreadCountProvider`
 
 Behavior:
 
-- Header is visible at the top.
-- It collapses on downward scroll.
-- It returns when scrolling upward.
-- Animation uses align, opacity, and slide.
+| Token / Prop | Value |
+| --- | ---: |
+| Hide threshold | `AppSpacing.homeScrollHideThreshold = 24` |
+| Show-at-top threshold | `AppSpacing.homeScrollShowThreshold = 8` |
+| Hidden slide offset | `AppSpacing.homeSlideOffsetUp = 0.25` |
+| Animation duration | `180ms` |
+| Animation curve | `Curves.easeOutCubic` |
 
 UX role:
 
-- Establishes app identity.
-- Provides global actions without competing with portfolio data.
-- Saves vertical space after the user starts exploring content.
+- Establishes app identity without spending the whole first viewport on chrome.
+- Search and notifications are available at the top and return when the user
+  scrolls upward.
+- Header collapse gives the dense dashboard more vertical room after exploration
+  begins.
 
 AI implementation rule:
 
 - Use `rootBrand` only for Home or true app-level root surfaces.
-- Module pages should usually use module headers such as `rootModule`, not the brand header.
-- If copying Home rhythm to another page, copy the spacing and hierarchy, not the `VitTrade` brand title.
+- Module pages should keep module identity even if they copy Home spacing.
+- Do not fork a local header behavior when `VitAutoHideHeaderScaffold` fits.
 
 ---
 
-### Layer 2 - Announcement Banner
+### Layer 2 - Compact Announcement
 
 Implementation:
 
+- `_visibleAnnouncements(HomeSnapshot)`
+- `_handleHomeScrollNotification(...)`
 - `_AnnouncementBanner`
-- `VitCard(radius: VitCardRadius.sm)`
+- `VitAnnouncementBanner(variant: compact)`
 
-Content example:
+Visibility logic:
 
-- `Phi giao dich 0% cho BTC/USDT trong 7 ngay!`
-- Gift icon
-- Chevron
-- Carousel dots
+- Announcement must be active.
+- Announcement type must be allowed on Home through `surfacesOnHome`.
+- Announcement ID must not be in `_sessionHiddenAnnouncementIds`.
+- The first visible announcement is rendered.
 
-UX role:
+Behavior:
 
-- Small promotional/status layer.
-- Gives timely product context without stealing hero priority.
-- The dots imply a carousel/news rail, even when only the first item is visible.
+- The close action hides the current announcement for the session.
+- Campaign announcements auto-hide after vertical scroll reaches
+  `AppSpacing.homeAnnouncementAutoHideScrollOffset = 96`.
+- Compact variant uses a one-line text row with ellipsis.
 
-Visual role:
+Visual metrics:
 
-- Compact card.
-- Low-height row.
-- Primary accent border.
-- Muted text with icon lead.
+| Metric | Value |
+| --- | ---: |
+| Outer width | `contentWidth` |
+| Card radius | `VitCardRadius.sm` |
+| Compact padding | `12h / 8v` |
+| Standard padding | `14h / 10v` |
+| Leading icon | `18` |
+| Icon gap | `12` |
+| Arrow/close gap | `8` |
+| Chevron | `16` |
+| Text token | `caption` |
 
 AI implementation rule:
 
-- Keep announcements short.
-- Use this layer for status, campaign, fee, or operational notices.
-- Do not turn this into a large hero. Home's hero is the portfolio card.
+- Keep announcements short and operational.
+- Use this layer for campaign, risk, security, or info notices.
+- Do not turn the announcement into the page hero.
 
 ---
 
@@ -189,49 +228,55 @@ Implementation:
 
 - `_PortfolioCard`
 - `VitCard(variant: VitCardVariant.hero, radius: VitCardRadius.lg)`
-- `_PortfolioGlow`
+- `VitHeroGlow`
+- `VitMetricDeltaPill`
+- `VitInlineIconAction`
 - `VitCtaButton`
 
 Content:
 
-- Label: `Tong tai san (USDT)`
-- Eye toggle for privacy.
-- Main balance.
-- Daily PnL chip.
-- Context label: `hom nay`
-- Primary actions: `Nap`, `Rut`, `Vi`
+- Label: `Tổng tài sản (USDT)`
+- Eye toggle for balance masking.
+- Main balance using `AppTextStyles.heroNumber`.
+- Positive daily PnL pill.
+- Context label: `hôm nay`.
+- Three CTAs: `Nạp`, `Rút`, `Ví`.
 
-UX role:
+Visual metrics:
 
-- This is the screen's highest-priority information block.
-- It answers: "How much do I have?" and "What can I do next with money?"
-- It also proves privacy support through the visibility toggle.
+| Metric | Value |
+| --- | ---: |
+| Outer width | `contentWidth` |
+| Radius | `VitCardRadius.lg` |
+| Padding | `14 left/right`, `7 top`, `4 bottom` |
+| Eye icon | `18` |
+| Eye tap padding | `6` |
+| Hero number token | `heroNumber` |
+| PnL chip padding | `10h / 4v` |
+| PnL chip icon | `12` |
+| Action row gap | `8` |
+| CTA height | `44` |
+| CTA gap | `10` |
 
-Visual role:
+CTA width formula:
 
-- Largest card on screen.
-- Hero variant and glow create depth.
-- Large numeric text gives financial hierarchy.
-- CTA row anchors the card and converts overview into action.
+```text
+buttonWidth = (contentWidth - 28 horizontalCardPadding - 20 actionGaps) / 3
+```
+
+| Viewport | Content width | CTA width |
+| --- | ---: | ---: |
+| `360dp` | `320` | `90.67dp` |
+| `440dp` | `400` | `117.33dp` |
+| `448dp` emulator | `408` | `120dp` |
+| `480dp` | `440` | `130.67dp` |
 
 AI implementation rule:
 
-- Preserve privacy/masking behavior.
-- Preserve financial action safety paths.
-- Use tokenized typography such as `AppTextStyles.heroNumber`.
-- Use `VitCtaButton` for the action row.
-- Do not replace financial copy with marketing copy.
-
-Reusable pattern for Wallet:
-
-```text
-Module title
--> wallet-specific hero label
--> masked/unmasked balance
--> equivalent/sub-balance
--> primary money actions
--> secondary wallet actions
-```
+- Preserve masking and route behavior.
+- Preserve financial action labels and safety paths.
+- Use tabular figures for financial values.
+- Keep this as the only hero-weight card in the first viewport.
 
 ---
 
@@ -239,253 +284,395 @@ Module title
 
 Implementation:
 
-- `_HomeCommandCenter`
-- `_SectionHeader(title: 'Tiep theo')`
-- `_NextActionCard`
-- `_CommandChip`
+- `_NextActionSection`
+- `VitSectionHeader(title: 'Tiếp theo')`
+- `VitNextActionCard`
 
-Content example:
+Content:
 
-- Title: `Hoan tat rut USDT`
-- State: `Next`
-- Subtitle: `TRC20 san sang, can xem lai phi va xac nhan 2FA`
-- CTA: `Tiep tuc`
+- Icon from `HomeNextAction.icon`.
+- Title from `HomeNextAction.title`.
+- Status label from `HomeNextAction.stateLabel`.
+- Subtitle from `HomeNextAction.subtitle`.
+- CTA label from `HomeNextAction.ctaLabel`.
+- Route from `HomeNextAction.routePath`.
+
+Visual metrics:
+
+| Metric | Value |
+| --- | ---: |
+| Outer width | `contentWidth` |
+| Card padding | `14` |
+| Icon box | `42w x 42h` |
+| Icon size | `20` |
+| Icon-to-content gap | `12` |
+| Title token | `body` + bold |
+| Subtitle token | `micro` |
+| CTA token | `caption` + bold |
+| Chevron gap | `4` |
+| Chevron size | `18` |
 
 UX role:
 
-- Turns Home into a resume hub.
-- Reduces unfinished high-risk flows.
-- Helps users continue a withdrawal or other task with context.
-
-Financial safety role:
-
-- The subtitle explicitly references fees and 2FA.
-- This is not decorative copy; it is safety guidance.
+- Makes Home a resume hub.
+- Keeps unfinished financial workflows discoverable without adding another
+  large hero.
 
 AI implementation rule:
 
-- Do not delete fee, risk, confirmation, 2FA, or next-step copy.
-- For financial tasks, keep the pending action context specific.
-- Use one clear CTA label.
+- Do not delete fee, risk, confirmation, 2FA, limit, masking, or next-step copy
+  from financial next actions.
+- Keep title and subtitle compact with ellipsis.
 
 ---
 
-### Layer 5 - Recent Products
+### Layer 5 - Market Ticker
 
 Implementation:
 
-- `_HomeCommandCenter`
-- `_SectionHeader(title: 'Gan day')`
-- `_RecentProductTile`
-- Horizontal `ListView.separated`
+- `_MarketTickerSection`
+- `VitMarketTickerStrip`
+- `VitMarketTickerCard`
+- `VitMarketTickerData`
+- `VitAssetAvatar`
 
-Content examples:
+Content:
 
-- `Spot / BTC/USDT / Spot order`
-- `P2P / P2P USDT/VND / Escrow`
-- `Earn / ETH staking / Earn`
+- Uses `controller.hotPairs.take(3)`.
+- Each item shows avatar, symbol, price, change label, and directional tone.
+- Each card routes to `/pair/{pair.id}`.
+
+Visual metrics:
+
+| Metric | Value |
+| --- | ---: |
+| Card width | `146` |
+| Card min height | `74` |
+| Strip gap | `AppSpacing.x3` |
+| Card padding | `12` |
+| Avatar size | `28` |
+| Title token | `caption` + bold |
+| Price token | `caption` + tabular figures |
+| Change token | `micro` + bold |
 
 UX role:
 
-- Provides memory of recent activity.
-- Lets users jump back into recently used contexts.
-- Reduces reliance on the larger product grid.
+- Gives a compact market pulse before product navigation.
+- Uses horizontal affordance without blocking core financial actions.
+- Keeps market movement visible without making the user scroll to the full
+  market list.
 
-Visual role:
+AI implementation rule:
 
-- Horizontal cards.
-- Fixed-width tiles.
-- Compact icon + status chip + title + context.
+- Use buy/sell directional tokens for movement only.
+- Keep prices and percentages tabular.
+- Do not add required user actions only inside this horizontal strip.
+
+---
+
+### Layer 6 - Product Launcher
+
+Implementation:
+
+- `_ProductsSection`
+- `HomeSurfaceOrder.productsBeforeRecent`
+- `VitSectionHeader(title: 'Sản phẩm')`
+- `_QuickActionsGrid`
+- `VitActionTileGrid`
+- `VitServiceTile`
+- `_MoreProductsSheet`
+- `VitSheetPanel`
+
+Current order:
+
+```text
+Product launcher appears before recent products.
+```
+
+Density logic:
+
+| Condition | Density | Primary item count |
+| --- | --- | ---: |
+| `screenWidth <= 480dp` | Compact | `6` |
+| `screenWidth > 480dp` | Standard | `9` |
+
+Grid metrics:
+
+| Metric | Compact | Standard |
+| --- | ---: | ---: |
+| Columns | `3` | `3` |
+| Gap | `8` | `8` |
+| Aspect ratio | `1.88` | `1.68` |
+| Tile padding | `6` | `8` |
+| Icon box | `22` | `26` |
+| Icon size | `16` | `20` |
+| Label token | `micro` | `caption` |
+| Badge max width | `52` | `52` |
+| Top stripe | `2h` | `2h` |
+
+Grid formula:
+
+```text
+tileWidth = (contentWidth - (gridGap * 2)) / 3
+tileHeight = tileWidth / densityAspectRatio
+```
+
+Current compact sizes:
+
+| Viewport | Content width | Tile width | Tile height |
+| --- | ---: | ---: | ---: |
+| `360dp` | `320` | `101.33` | `53.90` |
+| `440dp` | `400` | `128.00` | `68.09` |
+| `448dp` emulator | `408` | `130.67` | `69.50` |
+| `480dp` | `440` | `141.33` | `75.18` |
+
+Standard example above breakpoint:
+
+| Viewport | Content width | Tile width | Tile height |
+| --- | ---: | ---: | ---: |
+| `520dp` | `480` | `154.67` | `92.06` |
+
+AI implementation rule:
+
+- Keep the 3-column grid; do not force four columns on phone.
+- Keep labels and badges short.
+- Use the bottom sheet for overflow products.
+- Do not add every route to the primary grid without prioritization.
+
+---
+
+### Layer 7 - Recent Products
+
+Implementation:
+
+- `_RecentProductsSection`
+- `VitSectionHeader(title: 'Gần đây')`
+- `_RecentProductTile`
+- `VitCompactProductCard`
+- Horizontal `ListView.separated`
+
+Visual metrics:
+
+| Metric | Value |
+| --- | ---: |
+| Tile width | `146` |
+| Rail height | `86` |
+| Tile gap | `10` |
+| Tile padding | `12h / 5v` |
+| Icon box | `28w x 28h` |
+| Icon size | `15` |
+| Title token | `caption` + bold |
+| Metadata token | `micro` |
+
+Visible capacity:
+
+| Viewport | Content width | Approx visible tiles |
+| --- | ---: | --- |
+| `360dp` | `320` | `2 full + partial` |
+| `440dp` | `400` | `2 full + strong partial` |
+| `448dp` emulator | `408` | `2 full + strong partial` |
+| `480dp` | `440` | `2 full + near-full partial` |
+
+UX role:
+
+- Gives quick return paths to recently used contexts.
+- The partial trailing tile communicates horizontal scroll.
+- It is lower priority than current product access in the current source order.
 
 AI implementation rule:
 
 - Keep recent items horizontally scrollable.
-- Keep labels compact.
-- Ensure each tile has a real destination route.
+- Ensure each tile keeps a real route.
+- Do not put mandatory financial actions only in this optional rail.
 
 ---
 
-### Layer 6 - Product Grid
-
-Implementation:
-
-- `_SectionHeader(title: 'San pham')`
-- `_QuickActionsGrid`
-- `VitServiceTile`
-- `VitServiceTileDensity.compact` below the Home density breakpoint
-
-Content examples:
-
-- `Mua nhanh`
-- `Convert`
-- `Nap/Rut`
-- `P2P`
-- `Mua dinh ky`
-- `Staking`
-- `Tiet kiem`
-- `Launchpad`
-- `Du doan`
-
-Behavior:
-
-- Compact screens show fewer primary actions.
-- Remaining products are available via `Xem them` bottom sheet.
-
-UX role:
-
-- This is the app launcher.
-- It balances broad product access with scan-friendly 3-column density.
-
-Visual role:
-
-- 3-column grid.
-- Small cards.
-- Icon, label, and badge.
-- Accent strip/color helps category differentiation.
-
-AI implementation rule:
-
-- Do not blind-add every route into the primary grid.
-- Prioritize by usage, money relevance, and user task frequency.
-- Keep compact density safe for 360px width.
-- Use `VitServiceTile`, not custom local grid cards.
-
-Known current note:
-
-- Market tab labels currently include emoji-like text. If strict enterprise polish is required, replace with icon widgets from the app icon system instead of text emoji.
-
----
-
-### Layer 7 - Discovery Boundary
+### Layer 8 - Discovery Boundary
 
 Implementation:
 
 - `_HomeDiscoverySection`
-- `_DiscoveryCard`
+- `VitSectionHeader(title: 'Dự đoán & Thách đấu')`
+- `VitDiscoveryActionCard(variant: compact)`
 - `VitStatusPill`
 
 Content:
 
 - `Prediction Markets`
 - `Open Arena`
-- Boundary copy: Predictions use real positions; Arena uses Points, not real money.
+- Boundary copy: Predictions use real positions; Arena uses Points, not real
+  money.
 
-UX role:
+Compact card metrics:
 
-- Introduces adjacent product areas after core product access.
-- Makes the Prediction/Arena distinction explicit.
+| Metric | Value |
+| --- | ---: |
+| Outer width | `contentWidth` |
+| Padding | `12h / 10v` |
+| Icon box | `34w x 34h` |
+| Icon size | `16` |
+| Icon-to-content gap | `12` |
+| Title token | `caption` + bold |
+| Subtitle token | `micro` |
+| Action token | `micro` + medium |
+| Trailing chevron | `16` |
 
 Financial safety role:
 
-- Keeps wallet/cash concepts separate from Arena Points.
-- Prevents misleading payout or profit expectations in Arena.
+- Prediction Markets and Open Arena remain separate.
+- Arena copy stays points-only.
+- Prediction copy can mention positions, probability, portfolio, and P/L where
+  appropriate.
 
 AI implementation rule:
 
 - Never merge Prediction and Arena financial language.
-- Arena copy must stay points-only.
-- Prediction copy may use positions, probability, portfolio, and P/L where appropriate.
+- Do not remove the boundary copy.
+- Keep discovery compact; it supports the page, not replaces the portfolio hero.
 
 ---
 
-### Layer 8 - Market Section
+### Layer 9 - Market Section
 
 Implementation:
 
 - `_MarketSection`
-- `_SectionHeader(title: 'Thi truong')`
+- `VitSectionHeader(title: 'Thị trường')`
 - `VitTabBar`
-- `_MarketRow`
-- `_SparklinePainter`
+- `VitTabItem` with Material icons and text labels
+- `VitCard`
+- `VitMarketPairRow`
+- `VitAssetAvatar`
+- `VitSparkline`
 
-Content:
+Tabs:
 
-- Tabs: Hot, gainers, losers, new.
-- Rows: coin avatar, pair, volume, sparkline, price, percent change.
+| Key | Label | Icon |
+| --- | --- | --- |
+| `hot` | `Hot` | `Icons.local_fire_department_rounded` |
+| `gainers` | `Tăng` | `Icons.trending_up_rounded` |
+| `losers` | `Giảm` | `Icons.trending_down_rounded` |
+| `new` | `Mới` | `Icons.fiber_new_rounded` |
 
-UX role:
+Market row metrics:
 
-- Gives market pulse inside Home.
-- Allows transition from account overview to trading context.
-- Makes Home useful even when the user is not performing a wallet task.
+| Metric | Value |
+| --- | ---: |
+| Row padding | `16h / 14v` |
+| Avatar | `34w x 34h` |
+| Avatar gap | `12` |
+| Sparkline | `64w x 30h` |
+| Sparkline gap | `12` |
+| Right value column | `85w` |
+| Divider | `1h` |
+| Symbol token | `body` + medium |
+| Volume token | `micro` |
+| Price token | `body` + tabular figures |
+| Change token | `micro` + medium |
 
-Visual role:
+Width model:
 
-- Data-dense card.
-- Rows with clear left/middle/right structure.
-- Green/red movement colors.
-- Sparkline adds trend recognition without requiring a full chart.
+```text
+rowInnerWidth = contentWidth - 32
+leftTextColumn =
+  rowInnerWidth
+  - 34 avatar
+  - 12 avatarGap
+  - 64 sparkline
+  - 12 sparklineGap
+  - 85 valueColumn
+```
+
+At `360dp`, `leftTextColumn` is about `81dp`, so symbols and volume text must
+remain compact and ellipsized.
 
 AI implementation rule:
 
 - Preserve tab switching.
-- Keep numeric values tabular.
-- Use buy/sell color tokens only for directional movement.
-- Do not rely on color alone where compliance copy matters.
+- Use tabular figures for price and percent values.
+- Use directional colors only for movement.
+- Keep rows dense; do not convert every row into a large card.
 
 ---
 
-### Layer 9 - Trending And Ranked Lists
+### Layer 10 - Trending And Ranked Lists
 
 Implementation:
 
 - `_TrendingSection`
 - `_RankedListSection`
 - `_RankedRow`
-- `_CoinAvatar`
+- `VitAssetAvatar`
+- `VitRankedAssetRow`
 
-Content:
+Trending rail metrics:
 
-- `Xu huong`
-- `Top tang gia`
-- `Top giam gia`
+| Metric | Value |
+| --- | ---: |
+| Rail height | `128` |
+| Tile width | `148` |
+| Tile padding | `16` |
+| Tile gap | `12` |
+| Avatar size | `28` |
+| Asset token | `body` |
+| Price token | `base` + tabular figures |
+| Change token | `micro` |
+
+Ranked row metrics:
+
+| Metric | Value |
+| --- | ---: |
+| Row padding | `16h / 14v` |
+| Rank chip width | `20` |
+| Avatar | `34` |
+| Badge padding | `12h / 6v` |
+| Rank token | `caption` + bold |
+| Pair token | `body` + medium |
+| Percent token | `caption` + bold |
 
 UX role:
 
-- Creates lower-page market discovery.
-- Encourages exploration into pair detail routes.
-- Separates broad market overview from ranked lists.
-
-Visual role:
-
-- Trending uses horizontal cards.
-- Ranked lists use vertical rows.
-- Percent badges carry green/red emphasis.
+- Trending rail supports exploratory browsing.
+- Ranked gainers and losers provide dense comparative scanning.
+- Pair rows route to pair detail pages.
 
 AI implementation rule:
 
-- Keep ranked rows compact.
-- Keep rank, asset, and movement easy to scan.
-- Do not use oversized cards for every market item; the lower page should stay dense.
+- Keep lower-page market content dense.
+- Keep rank, asset, and movement visible.
+- Avoid adding extra metadata unless row height is intentionally redesigned.
 
 ---
 
 ## 4. Screen Reading Order
 
-For AI agents, the practical hierarchy is:
+For AI agents, the current practical hierarchy is:
 
 ```text
 1. Global identity and global actions
-2. Timely notice
+2. Timely operational/campaign notice
 3. Account balance and money actions
 4. Resume task
-5. Recent contexts
+5. Fast market pulse
 6. Product launcher
-7. Product discovery with safety boundaries
-8. Market pulse
-9. Market exploration and ranked lists
+7. Recent contexts
+8. Prediction/Arena discovery with safety boundary
+9. Market tabs and rows
+10. Trending and ranked market exploration
 ```
 
-If applying Home style to another screen, preserve this order conceptually:
+For Home-like module pages, keep the concept but replace the identity and data
+with module-specific content:
 
 ```text
-Module identity
--> module-specific hero
+Module header
+-> module hero
 -> primary action cluster
 -> resume/status/context card
--> local tools or recent items
--> data lists
--> secondary discovery
+-> local tools
+-> recent or secondary shortcuts
+-> module data lists
+-> optional discovery
 ```
 
 ---
@@ -496,40 +683,44 @@ Module identity
 
 Home uses VitTrade dark financial tokens:
 
-| Token Type | Examples |
+| Role | Tokens |
 | --- | --- |
-| Background/surface | `AppColors.surface`, `surface2`, `cardBg` |
+| Background/surface | `AppColors.bg`, `surface`, `surface2`, `cardBg` |
 | Primary/trust | `AppColors.primary`, `primary08`, `primary12`, `primary20` |
 | Financial movement | `AppColors.buy`, `buy10`, `buy15`, `sell`, `sell10`, `sell20` |
 | Discovery/accent | `AppColors.accent`, `accent15`, `accent20` |
 | Warning/Arena | `AppColors.warn`, `warn10`, `warn15`, `warningBorder` |
-| Text | `AppColors.text1`, `text2`, `text3` |
+| Text | `AppColors.text1`, `text2`, `text3`, `onAccent` |
 
 Rules:
 
 - Use primary/gold for trust and main actions.
 - Use green/red only for directional market movement.
-- Use purple/accent for discovery or advanced product paths.
-- Use warning/amber for Arena or caution-adjacent surfaces.
+- Use accent tones for discovery and advanced product paths.
+- Use warning/amber for Arena or caution-adjacent states.
 - Do not invent local colors in Home-like financial screens.
 
 ### Typography
 
 Home uses `AppTextStyles` tokens:
 
-| Purpose | Token Examples |
+| Purpose | Token |
 | --- | --- |
 | Hero balance | `heroNumber` |
 | Section title | `sectionTitle` |
-| Body row title | `body` |
-| Small metadata | `caption`, `micro` |
-| Numeric values | token style plus `AppTextStyles.tabularFigures` |
+| Card and row title | `body` |
+| Price emphasis | `base` or `body` + `AppTextStyles.tabularFigures` |
+| Banner and compact actions | `caption` |
+| Metadata, badges, helper text | `micro` |
 
 Rules:
 
-- Use tabular figures for money, price, percentage, and market values.
-- Keep section titles prominent but not hero-sized.
-- Do not use local `TextStyle(...)`, local `fontSize`, or local `fontFamily` outside theme.
+- Use tabular figures for money, price, amount, percentage, and market values.
+- Keep section titles prominent but never hero-sized.
+- Do not use local `TextStyle(...)`, local `fontSize`, or local `fontFamily`
+  outside theme.
+- Do not scale font size with viewport width. Change density, wrapping,
+  max lines, or token choice instead.
 
 ### Spacing
 
@@ -538,31 +729,28 @@ Important Home spacing tokens:
 | Purpose | Token |
 | --- | --- |
 | Page side padding | `AppSpacing.contentPad` |
-| Native shell gap | `AppSpacing.homeNativeShellCustomGap` |
-| Hero action height | `AppSpacing.homeHeroActionHeight` |
+| Native shell custom gap | `AppSpacing.homeNativeShellCustomGap` |
+| Header behavior | `homeScrollHideThreshold`, `homeScrollShowThreshold`, `homeSlideOffsetUp` |
+| Announcement | `homeAnnouncementCardPaddingCompact`, `homeAnnouncementAutoHideScrollOffset` |
+| Hero CTA height | `AppSpacing.homeHeroActionHeight` |
+| Product density | `homeQuickActionDensityBreakpoint`, `homeQuickActionCompactCount`, `homeQuickActionStandardCount` |
 | Recent product size | `homeRecentProductWidth`, `homeRecentProductHeight` |
-| Section header line height | `homeSectionHeaderTitleLineHeight` |
-| Market row/card gaps | `homeMarketIconGap`, `homeMarketSectionGap` |
-| Bottom safety inset | `homeBottomSheetScrollInset`, `homeBottomSheetScrollInsetVisual` |
-
-Rules:
-
-- Keep Home dense but not cramped.
-- Use compact gaps for command-center blocks.
-- Use stronger spacing before major section transitions.
-- Always account for bottom nav.
+| Market ticker | `homeMarketTickerCardWidth`, `homeMarketTickerCardMinHeight` |
+| Market rows | `homeSparklineWidth`, `homeSparklineHeight`, `homeRankedValueColumnWidth` |
+| Bottom safety | `homeBottomSheetScrollInset`, `homeBottomSheetScrollInsetVisual` |
 
 ---
 
 ## 6. Measurement Model
 
 All dimensions in this report use **Flutter logical dp** unless explicitly
-marked as physical pixels. Do not use physical pixels as layout constants.
+marked as physical pixels. Physical pixels are evidence only, not layout
+constants.
 
-Current observed emulator evidence:
+Observed emulator reference:
 
 | Metric | Value |
-| --- | --- |
+| --- | ---: |
 | Physical size | `1344x2992 px` |
 | Android density | `480 dpi` |
 | Flutter density factor | `3.0` |
@@ -579,429 +767,107 @@ viewportHeightDp = physicalHeightPx / devicePixelRatio
 contentWidth = viewportWidthDp - (AppSpacing.contentPad * 2)
 ```
 
-Home uses `AppSpacing.contentPad = 20`, so content width is:
+With `AppSpacing.contentPad = 20`:
 
-| Viewport | Formula | `contentWidth` |
-| --- | --- | --- |
-| Minimum phone | `360 - 40` | `320 dp` |
-| QA phone | `440 - 40` | `400 dp` |
-| Current emulator | `448 - 40` | `408 dp` |
-| Large phone | `480 - 40` | `440 dp` |
+| Viewport | Formula | Content width |
+| --- | --- | ---: |
+| Minimum phone | `360 - 40` | `320dp` |
+| QA phone | `440 - 40` | `400dp` |
+| Current emulator | `448 - 40` | `408dp` |
+| Large phone | `480 - 40` | `440dp` |
 
-Primary Home cards fill `contentWidth`. They should not add local external
-horizontal margin. Internal card padding can vary by component, but the outer
-card should align to the same left and right content rail.
-
-Implementation anchors:
-
-- `VitPageContent` adds `left/right = AppSpacing.contentPad`.
-- Home uses `VitContentPadding.compact`, so top content padding is `8`.
-- Home native vertical gap uses `AppSpacing.homeNativeShellCustomGap = 12`.
-- Shared default card padding is `AppSpacing.cardPadding = 16`.
-- Shared compact card padding is `AppSpacing.cardPaddingCompact = 12`.
+Primary vertical cards fill `contentWidth`. They should not add another local
+horizontal margin outside the shared page/content rail.
 
 ---
 
 ## 7. Typography Matrix
 
-Use this matrix when deciding Home-like typography. These are source tokens
-from `AppTextStyles`; do not recreate them locally.
+These source tokens come from `AppTextStyles`. Do not recreate them locally.
 
-| Token | Size | Height | Approx line box | Weight baseline | Primary Home use |
-| --- | ---: | ---: | ---: | --- | --- |
-| `microTiny` | `7` | `1.0` | `7 dp` | `normal` | Tiny internal labels only |
-| `micro` | `10` | `1.5` | `15 dp` | `normal` | Metadata, badges, helper text |
-| `captionSm` | `12` | `1.5` | `18 dp` | `normal` | Compact labels when `micro` is too small |
-| `caption` | `13` | `1.5` | `19.5 dp` | `normal` | Banner text, chips, section actions |
-| `body` | `14` | `1.5` | `21 dp` | `normal` | Row titles, card titles |
-| `base` | `16` | `1.5` | `24 dp` | `normal` | Secondary numeric emphasis |
-| `sectionTitle` | `21` | `1.272` | `~26.7 dp` | `bold` | Home section headers |
-| `pageTitle` | `26` | `1.272` | `~33.1 dp` | `bold` | Page-level titles outside compact panels |
-| `heroNumber` | `34` | `1.272` | `~43.2 dp` | `bold` | Portfolio balance hero |
+| Token | Size | Height | Approx line box | Primary Home use |
+| --- | ---: | ---: | ---: | --- |
+| `microTiny` | `7` | `1.0` | `7dp` | Tiny internal labels only |
+| `micro` | `10` | `1.5` | `15dp` | Metadata, badges, helper text |
+| `captionSm` | `12` | `1.5` | `18dp` | Compact labels where `micro` is too small |
+| `caption` | `13` | `1.5` | `19.5dp` | Banner text, actions, ticker values |
+| `body` | `14` | `1.5` | `21dp` | Row titles, card titles |
+| `base` | `16` | `1.5` | `24dp` | Secondary numeric emphasis |
+| `sectionTitle` | `21` | `1.272` | `~26.7dp` | Home section headers |
+| `pageTitle` | `26` | `1.272` | `~33.1dp` | Page-level titles outside compact panels |
+| `heroNumber` | `34` | `1.272` | `~43.2dp` | Portfolio balance hero |
 
-Home-specific typography rules:
-
-- Money, price, percentage, amount, and market values use tabular figures.
-- `heroNumber` already includes `AppTextStyles.tabularFigures`.
-- If a numeric value uses another token, add
-  `fontFeatures: AppTextStyles.tabularFigures`.
-- Section headers use `sectionTitle` with
-  `height: AppSpacing.homeSectionHeaderTitleLineHeight`.
-- Compact service tiles use `micro` in compact density and `caption` in
-  standard density.
-- Do not use local `TextStyle(...)`, local `fontSize`, local `fontFamily`, or
-  direct hardcoded `FontWeight.w800/w900` outside theme.
-- Do not scale font size with viewport width. Change layout density, wrapping,
-  max lines, or token choice instead.
-
-Recommended token mapping for Home-like modules:
+Recommended mapping:
 
 | UI part | Preferred token |
 | --- | --- |
 | Hero balance | `heroNumber` |
-| Hero label | `caption` + medium weight |
-| Hero PnL chip | `caption` + medium/bold weight |
+| Hero label | `caption` + medium |
 | Hero supporting text | `micro` |
-| Section header | `sectionTitle` |
-| Section action | `caption` + medium weight |
-| Card title | `body` + bold/medium weight |
+| Section header | `sectionTitle` with `homeSectionHeaderTitleLineHeight` |
+| Section action | `caption` + medium |
+| Card title | `body` + bold/medium |
 | Card metadata | `micro` |
-| Grid tile label compact | `micro` + bold weight |
-| Grid tile label standard | `caption` + bold weight |
-| Market row symbol | `body` + medium weight |
+| Service tile compact label | `micro` + bold |
+| Service tile standard label | `caption` + bold |
+| Market row symbol | `body` + medium |
 | Market row price | `body` + tabular figures |
-| Market row change | `micro` + medium weight |
+| Market row change | `micro` + medium |
+| Ticker title/value | `caption` + bold/medium |
 
 ---
 
-## 8. Card And Spacing Metrics
-
-This section describes how Home cards consume screen width. All outer primary
-cards align to the same `contentWidth` rail unless the component is explicitly
-horizontal-scroll content.
-
-### Announcement Banner
-
-Implementation: `_AnnouncementBanner`
-
-| Metric | Value |
-| --- | --- |
-| Outer width | `contentWidth` |
-| Card radius | `VitCardRadius.sm` |
-| Horizontal padding | `14` |
-| Vertical padding | `10` |
-| Leading icon | `18` |
-| Icon-to-text gap | `12` |
-| Trailing chevron | `16` |
-| Text token | `caption` |
-| Dot active size | `16w x 5h` |
-| Dot inactive size | `5w x 5h` |
-| Dot gap | `5` |
-
-Width math:
-
-```text
-innerWidth = contentWidth - 28
-textWidth = innerWidth - 18 icon - 12 gap - 8 arrowGap - 16 chevron
-```
-
-At `360dp`, `textWidth ~= 238 dp`. Keep announcement copy short and use one
-line with ellipsis.
-
-### Portfolio Hero
-
-Implementation: `_PortfolioCard`
-
-| Metric | Value |
-| --- | --- |
-| Outer width | `contentWidth` |
-| Variant | `VitCardVariant.hero` |
-| Radius | `VitCardRadius.lg` |
-| Horizontal padding | `14` |
-| Top padding | `homePortfolioBadgeVerticalPadding + x1 = 7` |
-| Bottom padding | `4` |
-| Header eye icon | `18` |
-| Header eye tap padding | `6` |
-| Hero number token | `heroNumber` |
-| PnL chip padding | `10h / 4v` |
-| PnL icon | `12` |
-| Action row top gap | `8` |
-| CTA height | `44` |
-| CTA gap | `10` |
-
-CTA width formula:
-
-```text
-buttonWidth = (contentWidth - heroHorizontalPaddingTotal - actionGapsTotal) / 3
-buttonWidth = (contentWidth - 28 - 20) / 3
-```
-
-CTA widths by viewport:
-
-| Viewport | Content | Button width |
-| --- | ---: | ---: |
-| `360dp` | `320` | `90.67 dp` |
-| `440dp` | `400` | `117.33 dp` |
-| `448dp` emulator | `408` | `120 dp` |
-| `480dp` | `440` | `130.67 dp` |
-
-Rules:
-
-- Keep three CTAs only when labels are short.
-- If a module needs longer labels, use two primary buttons plus secondary
-  chips below.
-- Preserve the privacy toggle and numeric hierarchy.
-
-### Next Action Card
-
-Implementation: `_NextActionCard`
-
-| Metric | Value |
-| --- | --- |
-| Outer width | `contentWidth` |
-| Padding | `14` |
-| Icon box | `42w x 42h` |
-| Icon size | `20` |
-| Icon-to-text gap | `12` |
-| Inner label gap | `6` |
-| Chip min height | `20` |
-| Chip padding | `7h / 4v` |
-| Chevron gap | `4` |
-| Chevron size | `18` |
-| Title token | `body` |
-| Subtitle token | `micro` |
-| CTA token | `caption` |
-
-Layout model:
-
-```text
-cardWidth = contentWidth
-innerWidth = contentWidth - 28 padding
-textColumnWidth = innerWidth - 42 icon - 12 gap - ctaWidth - 4 gap - 18 chevron
-```
-
-Keep title and subtitle to one line with ellipsis. This card is a resume
-surface, not a long explanation block.
-
-### Recent Product Rail
-
-Implementation: `_RecentProductTile`
-
-| Metric | Value |
-| --- | --- |
-| Tile size | `146w x 86h` |
-| Rail height | `86` |
-| Tile horizontal gap | `10` |
-| Tile padding | `12h / 5v` |
-| Icon box | `28w x 28h` |
-| Icon text size | `15` |
-| Title token | `caption` |
-| Metadata token | `micro` |
-
-Visible capacity:
-
-| Viewport | Content | Approx visible tiles |
-| --- | ---: | ---: |
-| `360dp` | `320` | `2 full + partial` |
-| `440dp` | `400` | `2 full + strong partial` |
-| `448dp` emulator | `408` | `2 full + strong partial` |
-| `480dp` | `440` | `2 full + near-full partial` |
-
-The partial trailing tile is intentional; it signals horizontal scroll without
-requiring additional text.
-
-### Product Grid
-
-Implementation: `_QuickActionsGrid` + `VitServiceTile`
-
-| Metric | Compact | Standard |
-| --- | ---: | ---: |
-| Density breakpoint | `<410dp` | `>=410dp` |
-| Primary item count | `9` | `12` |
-| Columns | `3` | `3` |
-| Cross/main gap | `8` | `8` |
-| Aspect ratio | `1.88` | `1.68` |
-| Tile padding | `6` | `8` |
-| Icon box | `22` | `26` |
-| Icon size | `16` | `20` |
-| Label gap | `2` | `3` |
-| Label token | `micro` | `caption` |
-| Badge max width | `52` | `52` |
-| Top stripe | `2h` | `2h` |
-
-Grid formula:
-
-```text
-tileWidth = (contentWidth - (gridGap * 2)) / 3
-tileHeight = tileWidth / aspectRatio
-```
-
-Grid sizes:
-
-| Viewport | Density | Content | Tile width | Tile height |
-| --- | --- | ---: | ---: | ---: |
-| `360dp` | Compact | `320` | `101.33` | `53.90` |
-| `440dp` | Standard | `400` | `128.00` | `76.19` |
-| `448dp` emulator | Standard | `408` | `130.67` | `77.78` |
-| `480dp` | Standard | `440` | `141.33` | `84.13` |
-
-Rules:
-
-- Tile height derives from aspect ratio, not fixed hardcode.
-- Keep label to one line.
-- Keep badge short because badge max width is `52`.
-- If a tile needs more explanatory copy, it does not belong in this grid.
-
-### Discovery Card
-
-Implementation: `_DiscoveryCard`
-
-| Metric | Value |
-| --- | --- |
-| Outer width | `contentWidth` |
-| Padding | `16` |
-| Icon box | `44w x 44h` |
-| Icon size | `20` |
-| Icon-to-content gap | `12` |
-| Title token | `body` |
-| Subtitle token | `micro` |
-| Action token | `micro` |
-| Trailing chevron | `16` |
-
-Layout model:
-
-```text
-innerWidth = contentWidth - 32
-contentColumn = innerWidth - 44 icon - 12 gap - 16 chevron
-```
-
-At `360dp`, `contentColumn ~= 216 dp`, so title/subtitle must stay compact.
-
-### Market Row
-
-Implementation: `_MarketRow`
-
-| Metric | Value |
-| --- | --- |
-| Outer width | `contentWidth` |
-| Row padding | `16h / 14v` |
-| Coin avatar | `34w x 34h` |
-| Avatar gap | `12` |
-| Sparkline | `64w x 30h` |
-| Sparkline gap | `12` |
-| Right value column | `85w` |
-| Divider height | `1` |
-| Symbol token | `body` |
-| Volume token | `micro` |
-| Price token | `body` + tabular figures |
-| Change token | `micro` |
-
-Content width model:
-
-```text
-rowInnerWidth = contentWidth - 32
-leftTextColumn = rowInnerWidth - 34 avatar - 12 gap - 64 sparkline - 12 gap - 85 valueColumn
-```
-
-At `360dp`, `leftTextColumn ~= 81 dp`; symbols must be short and secondary
-text should be ellipsized if needed.
-
-### Trending Rail
-
-Implementation: `_TrendingSection`
-
-| Metric | Value |
-| --- | --- |
-| Rail height | `128` |
-| Tile width | `148` |
-| Tile padding | `16` |
-| Tile gap | `12` |
-| Icon size | `28` |
-| Asset token | `body` |
-| Price token | `base` + tabular figures |
-| Change token | `micro` |
-
-Visible capacity:
-
-| Viewport | Content | Approx visible tiles |
-| --- | ---: | ---: |
-| `360dp` | `320` | `2 full + partial` |
-| `440dp` | `400` | `2 full + strong partial` |
-| `480dp` | `440` | `2 full + near-full partial` |
-
-### Ranked Row
-
-Implementation: `_RankedRow`
-
-| Metric | Value |
-| --- | --- |
-| Outer width | `contentWidth` |
-| Row padding | `16h / 14v` |
-| Rank chip width | `20` |
-| Row item gap | `12` |
-| Coin avatar | `34` |
-| Percent badge padding | `12h / 6v` |
-| Rank token | `caption` |
-| Pair token | `body` |
-| Percent token | `caption` |
-
-Rules:
-
-- Use vertical ranked rows for dense comparative scanning.
-- Keep rank, asset, and percentage visible.
-- Avoid additional metadata unless the row height is intentionally increased.
-
----
-
-## 9. Screen Utilization Rules
+## 8. Screen Utilization Rules
 
 ### Full-Width Content Rule
 
-Primary vertical cards use the available `contentWidth`:
+Primary vertical surfaces use:
 
 ```text
-outerCardWidth = viewportWidthDp - 40
+outerWidth = viewportWidthDp - 40
 ```
 
-This keeps the screen filled while preserving a consistent 20dp left/right
-touch-safe gutter. Do not add another horizontal margin around primary cards.
+This keeps a consistent `20dp` left/right gutter while still using the whole
+phone width effectively.
 
 ### Horizontal Scroll Rule
 
-Recent and trending rails use fixed item widths and intentionally expose a
+Market ticker, recent products, and trending use fixed item widths to expose a
 partial next card:
 
 ```text
 visibleHint = contentWidth - (fullTiles * itemWidth) - gaps
 ```
 
-This hint teaches scrollability without adding instructional text. Use it only
-for optional discovery content, not mandatory financial actions.
+Use this only for optional discovery content. Required money actions must remain
+fully visible.
 
 ### Dense Grid Rule
 
-The product launcher fills 3 columns:
+Product launcher uses 3 columns:
 
 ```text
 tileWidth = (contentWidth - 16) / 3
 tileHeight = tileWidth / densityAspectRatio
 ```
 
-Use compact density below `410dp`. Do not force four columns on phone. Do not
-increase copy length inside the tile to compensate for missing navigation.
+Compact density applies through `480dp` screen width. Standard density starts
+above that breakpoint.
 
 ### Vertical Density Rule
 
 Home uses a descending density pattern:
 
 ```text
-hero = largest block
-next action = medium block
-recent/products = compact navigation
+portfolio hero = largest block
+next action = medium resume block
+market ticker = compact pulse
+product/recent = compact navigation
 market/ranked = dense data
 ```
 
-Do not make every section a hero card. The screen works because the largest
-visual treatment appears once, then the rest becomes progressively denser.
-
-### Bottom Safety Rule
-
-Bottom navigation reserves shell space:
-
-| Mode | Bottom chrome |
-| --- | ---: |
-| Native | `72 dp` |
-| Visual QA | `90 dp` |
-
-Home adds extra scroll inset:
-
-| Mode | Extra inset |
-| --- | ---: |
-| Native | `homeBottomSheetScrollInset = 16` |
-| Visual QA | `homeBottomSheetScrollInsetVisual = 40` |
-
-Keep this pattern for Home-like pages so the last row can scroll above the
-bottom nav and remain tappable.
+Do not make every section a hero card. The page works because visual weight is
+reserved for the portfolio hero.
 
 ### Header Space Rule
 
@@ -1017,92 +883,99 @@ Root header metrics:
 | Action icon | `20` |
 | Action gap | `8` |
 
-Use `rootBrand` for Home only. Module pages should use module chrome while
-keeping the same content rail and section rhythm.
-
 ### Touch Target Rule
 
-Use these minimums:
+Minimums:
 
 - Hero CTAs: `44h`.
 - Header action buttons: `40w x 40h`.
 - Bottom nav item area: `52h`.
-- Compact chips: `20h`, only for status labels, not primary actions.
+- Compact chips: `20h`, only for status labels.
 - Financial actions should not be smaller than compact CTA height.
 
 ---
 
-## 10. Interaction Model
+## 9. Interaction Model
 
-| Interaction | Behavior | UX Intent |
+| Interaction | Behavior | UX intent |
 | --- | --- | --- |
-| Scroll down | Header collapses | Give content more vertical space |
-| Scroll up | Header returns | Restore global actions |
+| Scroll down | Header hides after `24dp` threshold | Give content more vertical room |
+| Scroll near top | Header returns at `8dp` threshold | Restore global identity/actions |
+| Scroll up | Header returns | Let users reach search/notifications quickly |
+| Announcement close | Hides current announcement for the session | Reduce repeated noise |
+| Campaign scroll past `96dp` | Hides campaign announcements for the session | Keep campaign content from occupying exploration space |
 | Eye toggle | Masks/unmasks portfolio balance | Privacy in public spaces |
-| Hero CTA | Opens deposit, withdraw, wallet | Direct financial action |
-| Next action card | Resumes pending workflow | Reduce abandoned financial task |
-| Recent tile | Opens recent product context | Fast return |
+| Hero CTA | Opens deposit, withdraw, wallet routes | Direct financial action |
+| Next action card | Opens pending workflow route | Reduce abandoned financial tasks |
+| Market ticker card | Opens pair detail | Quick market pulse to detail |
 | Product tile | Opens module route | App launcher |
-| `Xem them` | Opens more products sheet | Keep primary grid compact |
+| `Xem thêm` | Opens more products bottom sheet | Keep primary grid compact |
+| Recent tile | Opens recent product context | Fast return |
 | Market tab | Switches market list | Explore market subsets |
 | Market/ranked row | Opens pair detail | Convert insight to action |
 
 ---
 
-## 11. Accessibility And UX Notes
+## 10. Accessibility And UX Notes
 
 Strengths:
 
-- Most interactive surfaces expose semantic labels through Flutter widgets.
-- Bottom navigation remains visible.
+- Header is wrapped in shared semantics through the auto-hide scaffold.
+- Section headers use `Semantics(header: true)`.
+- Product tiles expose button semantics and labels.
+- Announcement banner exposes a semantic announcement label.
 - Balance masking is present.
-- Financial actions are large enough for touch.
-- Home route is covered by responsive visual QA.
+- Financial CTAs are large enough for touch.
+- Bottom navigation remains visible.
 
-Risks:
+Risks to watch:
 
-- Some labels in source appear mojibake in file display, though emulator UI renders Vietnamese correctly.
-- Market tab labels include emoji-like characters. These are visually expressive but less enterprise-consistent than icon widgets.
-- Header collapse can hide search/notification while deep-scrolling.
-- Horizontal lists require users to discover sideways scrolling.
+- Header can be hidden while deep-scrolling, so important global actions should
+  not be the only way to complete a local task.
+- Horizontal rails require discoverability; the partial next card is the main
+  affordance.
+- Dense market rows leave limited text width at `360dp`; keep symbols and
+  subtitles short.
+- Some Vietnamese text may appear mojibake in terminal displays; validate the
+  actual Flutter UI before treating terminal rendering as UI truth.
 
 AI recommendations:
 
-- If changing tabs, replace text emoji with icon widgets and keep labels.
-- Keep horizontal scroll sections only where recency/trending is valuable.
-- Do not hide critical financial actions only inside horizontal scroll.
-- Validate at 360px, 440px, and 480px phone widths.
+- Keep icon tabs paired with text labels.
+- Keep horizontal scroll sections optional.
+- Do not hide critical financial actions only inside horizontal rails or sheets.
+- Validate at `360dp`, `440dp`, and `480dp` phone widths for Home-like changes.
 
 ---
 
-## 12. Home As A Template For Wallet
+## 11. Home As A Template For Wallet
 
 When using Home as the visual standard for Wallet, copy these concepts:
 
-1. A strong hero card.
+1. A strong module-specific hero card.
 2. Large financial number.
 3. Privacy toggle.
 4. Primary CTA row.
-5. Compact secondary action row or chips.
-6. Section headers with optional action link.
-7. Card hierarchy: hero first, dense lists below.
+5. Compact secondary action or tools area.
+6. Shared section headers with optional action links.
+7. Clear hierarchy: hero first, dense lists below.
 8. Bottom nav clearance.
 
 Do not copy:
 
-- `VitTrade` brand header into module pages.
-- Product launcher wholesale.
-- Prediction/Arena discovery unless the module needs it.
-- Home-specific market rankings into wallet-specific surfaces.
+- The `VitTrade` root brand header into module pages.
+- The Home product launcher wholesale.
+- Prediction/Arena discovery unless the module explicitly needs it.
+- Home-specific market ranking into wallet-specific surfaces.
 
 Wallet-specific adaptation:
 
 ```text
-Vi tai san
+Ví tài sản
 -> wallet balance hero
 -> deposit / withdraw / transfer
 -> buy / history compact actions
--> Tai san / Phan bo
+-> Tài sản / Phân bổ
 -> search/filter/assets
 -> DCA card
 -> wallet tools
@@ -1111,14 +984,15 @@ Vi tai san
 Safety requirements:
 
 - Preserve masking.
-- Preserve available/in-order/frozen breakdown.
-- Preserve deposit, withdraw, transfer, buy, history navigation.
+- Preserve available, in-order, and frozen balance breakdowns.
+- Preserve deposit, withdraw, transfer, buy, and history navigation.
 - Preserve service unavailable and fail-closed copy.
-- Do not remove fee, limit, risk, preview, confirmation, masking, or next-step copy.
+- Do not remove fee, limit, risk, preview, confirmation, masking, or next-step
+  copy.
 
 ---
 
-## 13. AI Implementation Checklist
+## 12. AI Implementation Checklist
 
 Before changing Home or a Home-like page:
 
@@ -1126,20 +1000,33 @@ Before changing Home or a Home-like page:
 - [ ] Read `docs/00_START_HERE.md`.
 - [ ] Inspect current screen source files.
 - [ ] Inspect shared primitives before creating local widgets.
-- [ ] Use `VitPageLayout`, `VitPageContent`, `VitCard`, `VitCtaButton`, `VitTabBar`, `VitServiceTile` where applicable.
+- [ ] Use `VitPageLayout`, `VitPageContent`, `VitCard`, `VitCtaButton`,
+  `VitTabBar`, `VitSectionHeader`, `VitActionTileGrid`, and `VitServiceTile`
+  where applicable.
+- [ ] Use `VitAutoHideHeaderScaffold` for Home-like auto-hide header behavior.
+- [ ] Use `VitInsetScrollView` or equivalent bottom-inset pattern where bottom
+  chrome can overlap content.
 - [ ] Use `AppColors`, `AppSpacing`, `AppTextStyles`, and density tokens.
-- [ ] Preserve route paths and semantic keys unless the task explicitly changes them.
+- [ ] Preserve route paths and semantic keys unless the task explicitly changes
+  them.
 - [ ] Preserve financial safety copy.
-- [ ] Verify 360px layout does not overflow.
-- [ ] Run focused tests for touched module.
-- [ ] Run `flutter analyze`.
-- [ ] Run `dart run tool/design_token_consistency_audit.dart --check`.
+- [ ] Verify `360dp` layout does not overflow.
+- [ ] Run focused tests for touched module when code changes.
+- [ ] Run `flutter analyze` when code changes.
+- [ ] Run `dart run tool/design_token_consistency_audit.dart --check` when code
+  or token usage changes.
 
 ---
 
-## 14. Recommended Verification For Home-Like Changes
+## 13. Recommended Verification For Home-Like Changes
 
-Run from `flutter_app/`:
+Documentation-only change:
+
+```bash
+git diff --check -- docs/03_DESIGN_SYSTEM/VitTrade-Home-UI-UX-Layer-Analysis-Report.md
+```
+
+Code or UI change:
 
 ```bash
 dart format <changed files>
@@ -1156,7 +1043,8 @@ dart run tool/design_token_consistency_audit.dart
 dart run tool/design_token_consistency_audit.dart --check
 ```
 
-If validating on emulator:
+If validating on emulator, regenerate fresh evidence instead of relying on old
+run artifacts:
 
 ```bash
 flutter run -d emulator-5554 --debug --no-resident
@@ -1166,12 +1054,16 @@ adb -s emulator-5554 exec-out uiautomator dump /dev/tty > run-artifacts/home_aft
 
 ---
 
-## 15. Key Takeaways For Future AI Agents
+## 14. Key Takeaways For Future AI Agents
 
 - Home is the app command center, not a marketing page.
-- The first viewport must answer: identity, assets, money actions, next task.
+- The first viewport must answer: identity, assets, money actions, and next task.
+- Current Home uses shared primitives for header, scroll inset, section headers,
+  cards, ticker, product tiles, market rows, avatars, and ranked rows.
+- Product launcher currently appears before recent products.
+- Compact product density applies through `480dp` screen width.
 - Use Home's hierarchy and rhythm for Wallet, but keep Wallet's module identity.
-- Financial UI must preserve safety, masking, fees, risk, and confirmation context.
-- Use shared primitives and tokens; do not create local hardcoded typography or colors.
+- Financial UI must preserve safety, masking, fees, risk, confirmation, and
+  next-step context.
 - Keep dense market/product sections below the financial hero.
 - Validate every visual change against small-phone responsive QA.

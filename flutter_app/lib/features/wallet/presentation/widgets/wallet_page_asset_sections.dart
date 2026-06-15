@@ -12,50 +12,34 @@ class WalletSegmentedTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const tabs = [('assets', 'Danh sách'), ('chart', 'Phân bổ')];
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
-      height: AppSpacing.searchBarCompactHeight,
-      padding: AppSpacing.cardPaddingCompact,
-      borderColor: AppColors.borderSolid,
-      child: Row(
-        children: [
-          for (final tab in tabs)
-            Expanded(
-              child: GestureDetector(
-                key: Key('sc135_wallet_tab_${tab.$1}'),
-                behavior: HitTestBehavior.opaque,
-                onTap: () => onChanged(tab.$1),
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: active == tab.$1
-                        ? _walletPrimary.withValues(alpha: .16)
-                        : AppColors.transparent,
-                    border: active == tab.$1
-                        ? Border.all(
-                            color: _walletPrimary.withValues(alpha: .30),
-                          )
-                        : null,
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                  child: Text(
-                    tab.$2,
-                    style: AppTextStyles.caption.copyWith(
-                      color: active == tab.$1
-                          ? _walletPrimary
-                          : AppColors.text3,
-                      fontWeight: active == tab.$1
-                          ? AppTextStyles.medium
-                          : AppTextStyles.normal,
-                    ),
+    const tabs = [
+      VitTabItem(key: 'assets', label: 'Danh s\u00E1ch'),
+      VitTabItem(key: 'chart', label: 'Ph\u00E2n b\u1ED5'),
+    ];
+
+    return Stack(
+      children: [
+        VitTabBar(
+          tabs: tabs,
+          activeKey: active,
+          onChanged: onChanged,
+          variant: VitTabBarVariant.segment,
+        ),
+        Positioned.fill(
+          child: Row(
+            children: [
+              for (final tab in tabs)
+                Expanded(
+                  child: GestureDetector(
+                    key: Key('sc135_wallet_tab_${tab.key}'),
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () => onChanged(tab.key),
                   ),
                 ),
-              ),
-            ),
-        ],
-      ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -122,7 +106,7 @@ class WalletSearchAndFilter extends StatelessWidget {
       fieldKey: const Key('sc135_wallet_search'),
       filterKey: const Key('sc135_wallet_filter'),
       controller: controller,
-      placeholder: 'Tìm tài sản...',
+      placeholder: 'T\u00ECm t\u00E0i s\u1EA3n...',
       variant: VitSearchBarVariant.compact,
       filterActive: filterActive,
       onChanged: onChanged,
@@ -147,57 +131,22 @@ class WalletAssetHeader extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            '$count tài sản',
+            '$count t\u00E0i s\u1EA3n',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
         ),
-        _HeaderButton(
-          label: 'Sổ địa chỉ',
-          foreground: AppColors.text2,
-          background: _walletPanel2,
-          onTap: () => onNavigate('/wallet/address-book'),
+        VitCtaButton(
+          height: AppSpacing.searchBarCompactHeight,
+          density: VitDensity.compact,
+          variant: VitCtaButtonVariant.ghost,
+          fullWidth: false,
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.searchBarHorizontalPadding,
+          ),
+          onPressed: () => onNavigate('/wallet/address-book'),
+          child: const Text('S\u1ED5 \u0111\u1ECBa ch\u1EC9'),
         ),
       ],
-    );
-  }
-}
-
-class _HeaderButton extends StatelessWidget {
-  const _HeaderButton({
-    required this.label,
-    required this.foreground,
-    required this.background,
-    required this.onTap,
-  });
-
-  final String label;
-  final Color foreground;
-  final Color background;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.searchBarHorizontalPadding,
-        ),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: background,
-          border: Border.all(color: foreground.withValues(alpha: .22)),
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: foreground,
-            fontFeatures: AppTextStyles.tabularFigures,
-          ),
-        ),
-      ),
     );
   }
 }
@@ -217,12 +166,12 @@ class WalletAssetList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (assets.isEmpty) {
-      return VitCard(
+      return const VitCard(
         alignment: Alignment.center,
         variant: VitCardVariant.standard,
-        child: Text(
-          'Không tìm thấy tài sản',
-          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+        child: VitEmptyState(
+          title: 'Kh\u00F4ng t\u00ECm th\u1EA5y t\u00E0i s\u1EA3n',
+          icon: Icons.account_balance_wallet_outlined,
         ),
       );
     }
@@ -273,24 +222,12 @@ class _AssetRow extends StatelessWidget {
             padding: AppSpacing.transferCardPadding,
             child: Row(
               children: [
-                Container(
-                  width: AppSpacing.transferIcon,
-                  height: AppSpacing.transferIcon,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: color.withValues(alpha: .16),
-                    shape: BoxShape.circle,
-                    border: Border.all(color: color.withValues(alpha: .45)),
-                  ),
-                  child: Text(
-                    asset.symbol.length > 3
-                        ? asset.symbol.substring(0, 3)
-                        : asset.symbol,
-                    style: AppTextStyles.micro.copyWith(
-                      color: color,
-                      fontFeatures: AppTextStyles.tabularFigures,
-                    ),
-                  ),
+                VitAssetAvatar(
+                  label: asset.symbol,
+                  accentColor: color,
+                  size: AppSpacing.transferIcon,
+                  radius: AppRadii.pillRadius,
+                  border: true,
                 ),
                 const SizedBox(width: AppSpacing.rowGapRegular),
                 Expanded(
@@ -334,7 +271,9 @@ class _AssetRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      hidden ? '••••' : _formatAssetAmount(asset.balance),
+                      hidden
+                          ? '\u2022\u2022\u2022\u2022'
+                          : _formatAssetAmount(asset.balance),
                       style: AppTextStyles.amountSm.copyWith(
                         color: AppColors.text1,
                         fontFeatures: AppTextStyles.tabularFigures,
@@ -342,7 +281,9 @@ class _AssetRow extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.rowGapCompact),
                     Text(
-                      hidden ? '••••' : '≈ ${_formatUsd(asset.usdValue)}',
+                      hidden
+                          ? '\u2022\u2022\u2022\u2022'
+                          : '\u2248 ${_formatUsd(asset.usdValue)}',
                       style: AppTextStyles.numericMicro.copyWith(
                         color: AppColors.text2,
                       ),

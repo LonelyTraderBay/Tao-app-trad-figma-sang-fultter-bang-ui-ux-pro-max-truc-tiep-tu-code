@@ -39,25 +39,10 @@ class WalletDcaCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: AppSpacing.x1),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.homeSectionHeaderChevronSize,
-                            vertical: AppSpacing.x1,
-                          ),
-                          decoration: BoxDecoration(
-                            color: _walletGreen.withValues(alpha: .12),
-                            border: Border.all(
-                              color: _walletGreen.withValues(alpha: .18),
-                            ),
-                            borderRadius: AppRadii.mdRadius,
-                          ),
-                          child: Text(
-                            dca.returnLabel,
-                            style: AppTextStyles.micro.copyWith(
-                              color: _walletGreen,
-                              fontFeatures: AppTextStyles.tabularFigures,
-                            ),
-                          ),
+                        VitMetricDeltaPill(
+                          label: dca.returnLabel,
+                          tone: VitMetricDeltaTone.positive,
+                          icon: Icons.trending_up_rounded,
                         ),
                       ],
                     ),
@@ -245,76 +230,27 @@ class WalletToolGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        for (var row = 0; row < 2; row++) ...[
-          Row(
-            children: [
-              for (var col = 0; col < 2; col++) ...[
-                Expanded(
-                  child: _ToolButton(
-                    tool: tools[row * 2 + col],
-                    onTap: () => onNavigate(tools[row * 2 + col].route),
-                  ),
-                ),
-                if (col == 0) const SizedBox(width: AppSpacing.gridGap),
-              ],
-            ],
-          ),
-          if (row == 0) const SizedBox(height: AppSpacing.x2),
-        ],
-      ],
-    );
-  }
-}
+    if (tools.isEmpty) {
+      return const VitEmptyState(
+        title: 'Kh\u00F4ng c\u00F3 c\u00F4ng c\u1EE5 v\u00ED',
+        icon: Icons.grid_view_rounded,
+      );
+    }
 
-class _ToolButton extends StatelessWidget {
-  const _ToolButton({required this.tool, required this.onTap});
-
-  final WalletTool tool;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = Color(tool.colorHex);
-    return VitCard(
-      onTap: onTap,
-      height: AppSpacing.searchBarCompactHeight + AppSpacing.x2,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.searchBarHorizontalPadding,
-      ),
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
-      borderColor: color.withValues(alpha: .22),
-      child: Row(
-        children: [
-          Container(
-            width: AppSpacing.iconLg,
-            height: AppSpacing.iconLg,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              _toolIcon(tool.iconKey),
-              color: color,
-              size: AppSpacing.iconSm,
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              tool.label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                fontFeatures: AppTextStyles.tabularFigures,
-              ),
-            ),
-          ),
-        ],
-      ),
+    return VitActionTileGrid(
+      density: VitDensity.compact,
+      crossAxisCount: 2,
+      itemCount: tools.length,
+      itemBuilder: (context, index, density) {
+        final tool = tools[index];
+        return VitServiceTile(
+          density: density,
+          icon: _toolIcon(tool.iconKey),
+          label: tool.label,
+          accentColor: Color(tool.colorHex),
+          onTap: () => onNavigate(tool.route),
+        );
+      },
     );
   }
 }

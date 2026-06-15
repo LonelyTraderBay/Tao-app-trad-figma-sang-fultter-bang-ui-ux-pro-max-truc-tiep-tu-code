@@ -14,8 +14,8 @@ final class AppGradients {
   static const LinearGradient portfolio = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFF2A1A05), Color(0xFF15120D), AppColors.bg],
-    stops: [0, 0.5, 1],
+    colors: [Color(0xFF1C140A), Color(0xFF11141A), AppColors.bg],
+    stops: [0, 0.58, 1],
   );
 
   static const RadialGradient frameOuter = RadialGradient(

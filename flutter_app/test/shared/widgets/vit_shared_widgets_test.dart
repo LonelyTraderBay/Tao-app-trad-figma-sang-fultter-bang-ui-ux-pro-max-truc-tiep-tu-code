@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
@@ -80,6 +81,7 @@ void main() {
             const VitCard(
               variant: VitCardVariant.hero,
               padding: EdgeInsets.all(16),
+              background: ColoredBox(color: AppColors.primary08),
               child: Text('hero card'),
             ),
           ],
@@ -92,6 +94,12 @@ void main() {
 
     expect(taps, 1);
     expect(find.text('hero card'), findsOneWidget);
+    expect(
+      find.byWidgetPredicate(
+        (widget) => widget is ColoredBox && widget.color == AppColors.primary08,
+      ),
+      findsOneWidget,
+    );
 
     final heroContainer = tester.widget<Container>(
       find
@@ -264,4 +272,399 @@ void main() {
 
     expect(retry, 1);
   });
+
+  testWidgets('Home foundation primitives render and dispatch actions', (
+    tester,
+  ) async {
+    var sectionTaps = 0;
+    var tileTaps = 0;
+    var marketTaps = 0;
+    var rankedTaps = 0;
+    var productTaps = 0;
+
+    await tester.pumpWidget(
+      _wrap(
+        SizedBox(
+          width: 360,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              VitSectionHeader(
+                title: 'Markets',
+                icon: Icons.trending_up_rounded,
+                iconColor: AppColors.buy,
+                actionLabel: 'View',
+                onAction: () => sectionTaps++,
+              ),
+              const SizedBox(height: 8),
+              const VitAccentPill(
+                label: 'Live',
+                accentColor: AppColors.buy,
+                semanticStatus: VitStatusPillStatus.success,
+              ),
+              const SizedBox(height: 8),
+              const SizedBox(
+                width: 96,
+                height: 32,
+                child: VitSparkline(
+                  values: [1, 2.4, 1.8, 3.1, 2.7],
+                  color: AppColors.buy,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const VitAssetAvatar(label: 'BTC', accentColor: AppColors.warn),
+              const SizedBox(height: 8),
+              VitActionTileGrid(
+                density: VitDensity.compact,
+                itemCount: 1,
+                itemBuilder: (context, index, density) {
+                  return VitServiceTile(
+                    icon: Icons.swap_horiz_rounded,
+                    label: 'Swap',
+                    accentColor: AppColors.primary,
+                    density: density,
+                    onTap: () => tileTaps++,
+                  );
+                },
+              ),
+              const SizedBox(height: 8),
+              VitMarketPairRow(
+                leading: const VitAssetAvatar(
+                  label: 'BTC',
+                  accentColor: AppColors.warn,
+                ),
+                title: 'BTC/USDT',
+                subtitle: 'Vol \$1.20B',
+                price: '\$68,000.00',
+                changeLabel: '+2.10%',
+                trend: VitTrendDirection.positive,
+                sparkline: const [1, 1.4, 1.2, 1.8],
+                onTap: () => marketTaps++,
+              ),
+              VitRankedAssetRow(
+                rank: 1,
+                leading: const VitAssetAvatar(
+                  label: 'ETH',
+                  accentColor: AppColors.accent,
+                ),
+                title: 'ETH/USDT',
+                badgeLabel: '-1.30%',
+                trend: VitTrendDirection.negative,
+                onTap: () => rankedTaps++,
+              ),
+              const SizedBox(height: 8),
+              VitCompactProductCard(
+                icon: Icons.account_balance_wallet_outlined,
+                title: 'Recent',
+                subtitle: 'Wallet',
+                accentColor: AppColors.primary,
+                badgeLabel: 'Ready',
+                onTap: () => productTaps++,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text('Markets'), findsOneWidget);
+    expect(find.text('Live'), findsOneWidget);
+    expect(find.byType(VitSparkline), findsWidgets);
+    expect(find.text('BTC/USDT'), findsOneWidget);
+    expect(find.text('ETH/USDT'), findsOneWidget);
+    expect(find.text('Recent'), findsOneWidget);
+
+    await tester.tap(find.text('View'));
+    await tester.ensureVisible(find.text('Swap'));
+    await tester.tap(find.text('Swap'));
+    await tester.ensureVisible(find.text('BTC/USDT'));
+    await tester.tap(find.text('BTC/USDT'));
+    await tester.ensureVisible(find.text('ETH/USDT'));
+    await tester.tap(find.text('ETH/USDT'));
+    await tester.ensureVisible(find.text('Recent'));
+    await tester.tap(find.text('Recent'));
+    await tester.pump();
+
+    expect(sectionTaps, 1);
+    expect(tileTaps, 1);
+    expect(marketTaps, 1);
+    expect(rankedTaps, 1);
+    expect(productTaps, 1);
+  });
+
+  testWidgets('VitCarouselDots renders active and inactive widths', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(const VitCarouselDots(itemCount: 3, activeIndex: 1)),
+    );
+
+    final inactiveSize = tester.getSize(
+      find.byKey(const ValueKey('vit_carousel_dot_0')),
+    );
+    final activeSize = tester.getSize(
+      find.byKey(const ValueKey('vit_carousel_dot_1')),
+    );
+
+    expect(inactiveSize.width, AppSpacing.homeAnnouncementDotInactiveWidth);
+    expect(activeSize.width, AppSpacing.homeAnnouncementDotActiveWidth);
+    expect(find.bySemanticsLabel('Carousel page 2 of 3'), findsOneWidget);
+  });
+
+  testWidgets('VitMetricDeltaPill renders semantic tones', (tester) async {
+    await tester.pumpWidget(
+      _wrap(
+        const Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            VitMetricDeltaPill(
+              label: '+12.34%',
+              tone: VitMetricDeltaTone.positive,
+            ),
+            SizedBox(height: 8),
+            VitMetricDeltaPill(
+              label: '-2.10%',
+              tone: VitMetricDeltaTone.negative,
+            ),
+            SizedBox(height: 8),
+            VitMetricDeltaPill(label: '0.00%'),
+          ],
+        ),
+      ),
+    );
+
+    expect(find.text('+12.34%'), findsOneWidget);
+    expect(find.text('-2.10%'), findsOneWidget);
+    expect(find.text('0.00%'), findsOneWidget);
+
+    final positiveIcon = tester.widget<Icon>(
+      find.byIcon(Icons.trending_up_rounded),
+    );
+    final negativeIcon = tester.widget<Icon>(
+      find.byIcon(Icons.trending_down_rounded),
+    );
+
+    expect(positiveIcon.color, AppColors.buy);
+    expect(negativeIcon.color, AppColors.sell);
+    final neutralText = tester.widget<Text>(find.text('0.00%'));
+    expect(neutralText.style?.color, AppColors.text2);
+  });
+
+  testWidgets('VitNextActionCard dispatches taps', (tester) async {
+    var taps = 0;
+
+    await tester.pumpWidget(
+      _wrap(
+        VitNextActionCard(
+          icon: Icons.file_upload_outlined,
+          title: 'Complete withdrawal',
+          subtitle: 'Review saved USDT request',
+          statusLabel: 'Pending',
+          ctaLabel: 'Resume',
+          accentColor: AppColors.primary,
+          onTap: () => taps++,
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Complete withdrawal'));
+    await tester.pump();
+
+    expect(find.text('Pending'), findsOneWidget);
+    expect(find.text('Resume'), findsOneWidget);
+    expect(taps, 1);
+  });
+
+  testWidgets('VitDiscoveryActionCard renders badge action and tap', (
+    tester,
+  ) async {
+    var taps = 0;
+
+    await tester.pumpWidget(
+      _wrap(
+        VitDiscoveryActionCard(
+          title: 'Prediction Markets',
+          badgeLabel: 'Prediction Market',
+          subtitle: 'Probability markets',
+          actionLabel: 'Explore',
+          icon: Icons.adjust_rounded,
+          accentColor: AppColors.accent,
+          borderColor: AppColors.accent20,
+          background: const LinearGradient(
+            colors: [AppColors.accent15, AppColors.primary08],
+          ),
+          onTap: () => taps++,
+        ),
+      ),
+    );
+
+    expect(find.text('Prediction Markets'), findsOneWidget);
+    expect(find.text('Prediction Market'), findsOneWidget);
+    expect(find.text('Explore'), findsOneWidget);
+
+    await tester.tap(find.text('Prediction Markets'));
+    await tester.pump();
+
+    expect(taps, 1);
+  });
+
+  testWidgets('VitDiscoveryActionCard compact variant keeps action contract', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(
+        VitDiscoveryActionCard(
+          title: 'Open Arena',
+          badgeLabel: 'Arena Points only',
+          subtitle: 'Points-only room',
+          actionLabel: 'Enter',
+          icon: Icons.sports_esports_outlined,
+          accentColor: AppColors.warn,
+          borderColor: AppColors.warningBorder,
+          background: const LinearGradient(
+            colors: [AppColors.warn15, AppColors.warn10],
+          ),
+          variant: VitDiscoveryActionCardVariant.compact,
+          onTap: () {},
+        ),
+      ),
+    );
+
+    final card = tester.widget<VitDiscoveryActionCard>(
+      find.byType(VitDiscoveryActionCard),
+    );
+
+    expect(card.variant, VitDiscoveryActionCardVariant.compact);
+    expect(find.text('Arena Points only'), findsOneWidget);
+    expect(find.text('Enter'), findsOneWidget);
+  });
+
+  testWidgets('VitActionTileGrid maxVisibleItems caps rendered tiles', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(
+        VitActionTileGrid(
+          itemCount: 3,
+          maxVisibleItems: 2,
+          itemBuilder: (context, index, density) {
+            return VitServiceTile(
+              icon: Icons.bolt_rounded,
+              label: 'Action $index',
+              accentColor: AppColors.primary,
+              density: density,
+            );
+          },
+        ),
+      ),
+    );
+
+    expect(find.text('Action 0'), findsOneWidget);
+    expect(find.text('Action 1'), findsOneWidget);
+    expect(find.text('Action 2'), findsNothing);
+  });
+
+  testWidgets('VitAnnouncementBanner supports compact, dots, and dismiss', (
+    tester,
+  ) async {
+    var dismissed = 0;
+
+    await tester.pumpWidget(
+      _wrap(
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            VitAnnouncementBanner(
+              message: 'Campaign update',
+              itemCount: 2,
+              activeIndex: 1,
+              onDismiss: () => dismissed++,
+            ),
+            const SizedBox(height: 8),
+            const VitAnnouncementBanner(
+              message: 'Compact update',
+              itemCount: 2,
+              variant: VitAnnouncementBannerVariant.compact,
+            ),
+          ],
+        ),
+      ),
+    );
+
+    expect(find.text('Campaign update'), findsOneWidget);
+    expect(find.text('Compact update'), findsOneWidget);
+    expect(find.byType(VitCarouselDots), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Dismiss announcement'));
+    await tester.pump();
+
+    expect(dismissed, 1);
+  });
+
+  testWidgets('VitMarketTickerStrip renders trends and dispatches taps', (
+    tester,
+  ) async {
+    var taps = 0;
+
+    await tester.pumpWidget(
+      _wrap(
+        VitMarketTickerStrip(
+          items: [
+            VitMarketTickerData(
+              title: 'BTC/USDT',
+              price: '\$68,000.00',
+              changeLabel: '+2.10%',
+              trend: VitTrendDirection.positive,
+              onTap: () => taps++,
+            ),
+            const VitMarketTickerData(
+              title: 'ETH/USDT',
+              price: '\$3,400.00',
+              changeLabel: '-1.20%',
+              trend: VitTrendDirection.negative,
+            ),
+          ],
+        ),
+      ),
+    );
+
+    expect(find.text('BTC/USDT'), findsOneWidget);
+    expect(find.text('-1.20%'), findsOneWidget);
+
+    await tester.tap(find.text('BTC/USDT'));
+    await tester.pump();
+
+    expect(taps, 1);
+  });
+
+  testWidgets(
+    'VitSheetHandle and VitSheetPanel render tokenized sheet chrome',
+    (tester) async {
+      await tester.pumpWidget(
+        _wrap(
+          const SizedBox(
+            height: 260,
+            child: VitSheetPanel(
+              title: 'More products',
+              child: Center(child: Text('Sheet child')),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(VitSheetHandle), findsOneWidget);
+      expect(find.text('More products'), findsOneWidget);
+      expect(find.text('Sheet child'), findsOneWidget);
+
+      final handleSize = tester.getSize(
+        find.descendant(
+          of: find.byType(VitSheetHandle),
+          matching: find.byType(Container),
+        ),
+      );
+
+      expect(handleSize.width, AppSpacing.homeMoreProductsSheetHandleWidth);
+      expect(handleSize.height, AppSpacing.homeMoreProductsSheetHandleHeight);
+    },
+  );
 }

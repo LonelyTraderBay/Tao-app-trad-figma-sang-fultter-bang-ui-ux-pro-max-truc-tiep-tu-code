@@ -79,8 +79,8 @@ void main() {
     test('map gradients, typography, spacing, radii, and device metrics', () {
       expect(AppGradients.navCenter.colors.last, const Color(0xFFB96000));
       expect(AppGradients.portfolio.colors, const [
-        Color(0xFF2A1A05),
-        Color(0xFF15120D),
+        Color(0xFF1C140A),
+        Color(0xFF11141A),
         Color(0xFF07090D),
       ]);
       expect(AppTextStyles.pageTitle.fontSize, 26);

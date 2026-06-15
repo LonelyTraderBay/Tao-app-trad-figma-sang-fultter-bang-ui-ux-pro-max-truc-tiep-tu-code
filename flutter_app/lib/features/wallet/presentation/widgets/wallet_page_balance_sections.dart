@@ -39,112 +39,102 @@ class WalletBalanceHero extends StatelessWidget {
         AppSpacing.homePortfolioBadgeVerticalPadding,
       ),
       borderColor: _walletPrimary.withValues(alpha: .20),
-      child: Stack(
+      background: const VitHeroGlow(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Positioned.fill(child: _WalletHeroGlow()),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          Row(
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Tổng tài sản ước tính',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.portfolioTextDim,
-                        fontWeight: AppTextStyles.medium,
-                      ),
-                    ),
+              Expanded(
+                child: Text(
+                  'Tổng tài sản ước tính',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.portfolioTextDim,
+                    fontWeight: AppTextStyles.medium,
                   ),
-                  InkWell(
-                    key: const Key('sc135_wallet_balance_toggle'),
-                    onTap: onToggle,
-                    borderRadius: AppRadii.smRadius,
-                    child: Padding(
-                      padding: const EdgeInsets.all(
-                        AppSpacing.homePortfolioHeaderActionPadding,
-                      ),
-                      child: Icon(
-                        hidden
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
-                        color: AppColors.portfolioTextDim,
-                        size: AppSpacing.homePortfolioHeaderIcon,
-                      ),
-                    ),
+                ),
+              ),
+              VitInlineIconAction(
+                key: const Key('sc135_wallet_balance_toggle'),
+                tooltip: hidden ? 'Show balance' : 'Hide balance',
+                onPressed: onToggle,
+                icon: hidden
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined,
+                color: AppColors.portfolioTextDim,
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.homeSectionInnerGap),
+          Text(
+            hidden ? '••••••' : _formatUsd(snapshot.totalUsd),
+            style: AppTextStyles.heroNumber.copyWith(
+              color: AppColors.onAccent,
+              letterSpacing: 0,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            hidden
+                ? '••••• BTC'
+                : '≈ ${snapshot.totalBtc.toStringAsFixed(8)} BTC',
+            style: AppTextStyles.numericMicro.copyWith(
+              color: AppColors.portfolioTextMuted,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x5),
+          _BreakdownRow(snapshot: snapshot, hidden: hidden),
+          const SizedBox(height: AppSpacing.homeActionRowGap),
+          Row(
+            children: [
+              for (var i = 0; i < primaryActions.length; i++) ...[
+                Expanded(
+                  child: _HeroActionButton(
+                    action: primaryActions[i],
+                    primary: i == 0,
+                    onTap: () => onNavigate(primaryActions[i].route),
                   ),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.homeSectionInnerGap),
-              Text(
-                hidden ? '••••••' : _formatUsd(snapshot.totalUsd),
-                style: AppTextStyles.heroNumber.copyWith(
-                  color: AppColors.onAccent,
-                  letterSpacing: 0,
                 ),
-              ),
-              const SizedBox(height: AppSpacing.x3),
-              Text(
-                hidden
-                    ? '••••• BTC'
-                    : '≈ ${snapshot.totalBtc.toStringAsFixed(8)} BTC',
-                style: AppTextStyles.numericMicro.copyWith(
-                  color: AppColors.portfolioTextMuted,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.x5),
-              _BreakdownRow(snapshot: snapshot, hidden: hidden),
-              const SizedBox(height: AppSpacing.homeActionRowGap),
-              Row(
-                children: [
-                  for (var i = 0; i < primaryActions.length; i++) ...[
-                    Expanded(
-                      child: _HeroActionButton(
-                        action: primaryActions[i],
-                        primary: i == 0,
-                        onTap: () => onNavigate(primaryActions[i].route),
-                      ),
-                    ),
-                    if (i != primaryActions.length - 1)
-                      const SizedBox(
-                        width: AppSpacing.homePortfolioActionSpacing,
-                      ),
-                  ],
-                ],
-              ),
-              if (secondaryActions.isNotEmpty) ...[
-                const SizedBox(height: AppSpacing.x3),
-                _CompactActionRow(
-                  actions: secondaryActions,
-                  onNavigate: onNavigate,
-                ),
+                if (i != primaryActions.length - 1)
+                  const SizedBox(width: AppSpacing.homePortfolioActionSpacing),
               ],
             ],
           ),
+          if (secondaryActions.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.x3),
+            _CompactActionRow(
+              actions: secondaryActions,
+              onNavigate: onNavigate,
+            ),
+          ],
         ],
       ),
     );
   }
 }
 
-class _WalletHeroGlow extends StatelessWidget {
-  const _WalletHeroGlow();
+class WalletPendingDepositStatusCard extends StatelessWidget {
+  const WalletPendingDepositStatusCard({
+    super.key,
+    required this.pendingDeposits,
+    required this.onNavigate,
+  });
+
+  final WalletPendingDepositsSnapshot pendingDeposits;
+  final ValueChanged<String> onNavigate;
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: RadialGradient(
-          center: const Alignment(.58, -.68),
-          radius: .82,
-          colors: [
-            AppColors.primary12,
-            AppColors.primary08.withValues(alpha: .08),
-            AppColors.transparent,
-          ],
-          stops: const [0, .36, 1],
-        ),
-      ),
+    final count = pendingDeposits.pendingCount;
+    return VitNextActionCard(
+      icon: Icons.access_time_rounded,
+      title: '$count giao d\u1ECBch n\u1EA1p \u0111ang ch\u1EDD',
+      subtitle:
+          'Theo d\u00F5i x\u00E1c nh\u1EADn blockchain v\u00E0 b\u01B0\u1EDBc ti\u1EBFp theo',
+      statusLabel: '\u0110ang x\u1EED l\u00FD',
+      ctaLabel: 'Xem',
+      accentColor: _walletAmber,
+      onTap: () => onNavigate('/wallet/pending-deposits'),
     );
   }
 }
@@ -210,38 +200,17 @@ class _CompactActionChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(action.colorHex);
-    return VitCard(
+    return VitCtaButton(
       key: Key('sc135_wallet_action_${action.id}'),
-      onTap: onTap,
       height: AppSpacing.searchBarCompactHeight,
+      density: VitDensity.compact,
+      variant: VitCtaButtonVariant.ghost,
+      onPressed: onTap,
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.searchBarHorizontalPadding,
       ),
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
-      borderColor: color.withValues(alpha: .24),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            _actionIcon(action.iconKey),
-            color: color,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x1),
-          Flexible(
-            child: Text(
-              action.label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                fontWeight: AppTextStyles.medium,
-              ),
-            ),
-          ),
-        ],
-      ),
+      leading: Icon(_actionIcon(action.iconKey), color: color),
+      child: Text(action.label),
     );
   }
 }
@@ -279,22 +248,11 @@ class _BreakdownRow extends StatelessWidget {
                 children: [
                   FittedBox(
                     fit: BoxFit.scaleDown,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          items[i].$4,
-                          color: items[i].$3,
-                          size: AppSpacing.iconSm,
-                        ),
-                        const SizedBox(width: AppSpacing.x1),
-                        Text(
-                          items[i].$1,
-                          style: AppTextStyles.numericMicro.copyWith(
-                            color: AppColors.text3,
-                          ),
-                        ),
-                      ],
+                    child: VitStatusPill(
+                      label: items[i].$1,
+                      status: _breakdownStatus(items[i].$3),
+                      icon: items[i].$4,
+                      size: VitStatusPillSize.sm,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x2),
@@ -314,4 +272,11 @@ class _BreakdownRow extends StatelessWidget {
       ),
     );
   }
+}
+
+VitStatusPillStatus _breakdownStatus(Color color) {
+  if (color == _walletGreen) return VitStatusPillStatus.success;
+  if (color == _walletAmber) return VitStatusPillStatus.warning;
+  if (color == _walletRed) return VitStatusPillStatus.error;
+  return VitStatusPillStatus.neutral;
 }
